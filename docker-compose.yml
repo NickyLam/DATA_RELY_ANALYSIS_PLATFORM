@@ -1,0 +1,239 @@
+version: '3.8'
+
+services:
+  # PostgreSQL - DataHub 后端存储
+  postgres:
+    image: postgres:15-alpine
+    container_name: lineage-postgres
+    environment:
+      POSTGRES_USER: datahub
+      POSTGRES_PASSWORD: datahub123
+      POSTGRES_DB: datahub
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init-postgres.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U datahub -d datahub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - lineage-network
+
+  # Neo4j - 图数据库
+  neo4j:
+    image: neo4j:5.15.0-community
+    container_name: lineage-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/neo4j123
+      NEO4J_server_memory_pagecache_size: 256M
+      NEO4J_server_memory_heap_initial__size: 512M
+      NEO4J_server_memory_heap_max__size: 512M
+      NEO4J_dbms_security_procedures_unrestricted: apoc.*
+      NEO4J_dbms_security_allow__csv__import__from__file__urls: true
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - ./docker/neo4j-init:/var/lib/neo4j/init
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - lineage-network
+
+  # Redis - 缓存（可选）
+  redis:
+    image: redis:7-alpine
+    container_name: lineage-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - lineage-network
+
+  # DataHub GMS (Generalized Metadata Service)
+  datahub-gms:
+    image: linkedin/datahub-gms:v0.13.0
+    container_name: lineage-datahub-gms
+    environment:
+      DATAHUB_GMS_HOST: datahub-gms
+      DATAHUB_GMS_PORT: 8080
+      EBEAN_DATASOURCE_USERNAME: datahub
+      EBEAN_DATASOURCE_PASSWORD: datahub123
+      EBEAN_DATASOURCE_HOST: postgres:5432
+      EBEAN_DATASOURCE_URL: jdbc:postgresql://postgres:5432/datahub
+      EBEAN_DATASOURCE_DRIVER: org.postgresql.Driver
+      KAFKA_BOOTSTRAP_SERVER: kafka:9092
+      ELASTICSEARCH_HOST: elasticsearch:9200
+      ELASTICSEARCH_USE_SSL: "false"
+      GRAPH_SERVICE_IMPL: neo4j
+      NEO4J_HOST: neo4j:7687
+      NEO4J_URI: bolt://neo4j:7687
+      NEO4J_USERNAME: neo4j
+      NEO4J_PASSWORD: neo4j123
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - lineage-network
+
+  # DataHub Frontend
+  datahub-frontend:
+    image: linkedin/datahub-frontend-react:v0.13.0
+    container_name: lineage-datahub-frontend
+    environment:
+      DATAHUB_GMS_HOST: datahub-gms
+      DATAHUB_GMS_PORT: 8080
+      DATAHUB_FRONTEND_HOST: datahub-frontend
+      DATAHUB_FRONTEND_PORT: 9002
+    ports:
+      - "9002:9002"
+    depends_on:
+      datahub-gms:
+        condition: service_healthy
+    networks:
+      - lineage-network
+
+  # Kafka - DataHub 消息队列
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: lineage-kafka
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    networks:
+      - lineage-network
+
+  # Zookeeper - Kafka 依赖
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: lineage-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    volumes:
+      - zookeeper_data:/var/lib/zookeeper/data
+    networks:
+      - lineage-network
+
+  # Elasticsearch - DataHub 搜索引擎
+  elasticsearch:
+    image: elasticsearch:8.11.0
+    container_name: lineage-elasticsearch
+    environment:
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - lineage-network
+
+  # Backend API - 血缘分析平台后端
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: lineage-backend
+    environment:
+      DATABASE_URL: postgresql://datahub:datahub123@postgres:5432/datahub
+      NEO4J_URI: bolt://neo4j:7687
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: neo4j123
+      REDIS_URL: redis://redis:6379
+      DATAHUB_GMS_URL: http://datahub-gms:8080
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      datahub-gms:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    networks:
+      - lineage-network
+
+  # Frontend - 血缘分析平台前端
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: lineage-frontend
+    environment:
+      VITE_API_URL: http://localhost:8000
+      VITE_DATAHUB_URL: http://localhost:9002
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - lineage-network
+
+volumes:
+  postgres_data:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+  redis_data:
+  kafka_data:
+  zookeeper_data:
+  elasticsearch_data:
+
+networks:
+  lineage-network:
+    driver: bridge
