@@ -64,9 +64,12 @@
 - **状态管理**：Zustand / Redux Toolkit
 
 ### 数据层
-- **元数据存储**：PostgreSQL 15+ (或复用 DataHub 的 MySQL)
+- **元数据存储**：PostgreSQL 15+ (LTS 版本)
+  - **选择理由**：许可证完全开源（PostgreSQL License）、JSONB 性能优秀、银行合规友好、扩展性强
+  - **二期备选**：TiDB（国产分布式数据库，适用于元数据量超过 100 万表的场景）
 - **图数据库**：Neo4j 5.x (LTS 版本)
 - **搜索引擎**：Elasticsearch 8.x (可选，用于全文搜索优化)
+- **缓存**：Redis 7.0+ (可选，用于缓存热点血缘查询结果)
 
 ### 开源组件
 - **元数据平台**：DataHub 0.13+ (推荐) 或 OpenMetadata 1.0+
