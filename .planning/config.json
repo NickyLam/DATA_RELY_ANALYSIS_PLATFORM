@@ -1,0 +1,37 @@
+{
+  "project_name": "data-lineage-platform",
+  "display_name": "数据血缘分析平台",
+  "version": "1.0.0",
+  "phase": "initialization",
+  "tech_stack": {
+    "backend": {
+      "language": "Python",
+      "version": "3.11+",
+      "framework": "FastAPI",
+      "orm": "SQLAlchemy"
+    },
+    "frontend": {
+      "framework": "React",
+      "version": "18+",
+      "language": "TypeScript",
+      "build_tool": "Vite"
+    },
+    "database": {
+      "relational": "PostgreSQL 15+",
+      "graph": "Neo4j 5.x"
+    },
+    "deployment": "docker-compose"
+  },
+  "workflow": {
+    "current_milestone": "M1",
+    "auto_commit": true,
+    "require_tests": true,
+    "code_review_required": true
+  },
+  "compliance": {
+    "banking_grade": true,
+    "lts_versions_only": true,
+    "audit_logging": true,
+    "data_masking": true
+  }
+}
