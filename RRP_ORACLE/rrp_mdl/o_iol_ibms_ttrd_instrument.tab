@@ -1,0 +1,213 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT
+(
+  i_code                    VARCHAR2(75),
+  a_type                    VARCHAR2(30),
+  m_type                    VARCHAR2(30),
+  currency                  VARCHAR2(5),
+  i_name                    VARCHAR2(383),
+  p_type                    VARCHAR2(30),
+  p_class                   VARCHAR2(150),
+  p_ls                      VARCHAR2(2),
+  mtr_date                  VARCHAR2(15),
+  term                      VARCHAR2(9),
+  u_i_code                  VARCHAR2(75),
+  u_a_type                  VARCHAR2(30),
+  u_m_type                  VARCHAR2(30),
+  coupon_type               NUMBER,
+  issue_mode                NUMBER,
+  payment_freq              VARCHAR2(9),
+  cash_times                NUMBER,
+  seniority                 VARCHAR2(30),
+  party_id                  NUMBER,
+  chinesespell              VARCHAR2(150),
+  update_user               VARCHAR2(150),
+  update_time               VARCHAR2(35),
+  account_user              VARCHAR2(45),
+  account_time              VARCHAR2(30),
+  par_value                 NUMBER(31,8),
+  fwd_irc                   VARCHAR2(450),
+  dis_irc                   VARCHAR2(450),
+  coupon                    NUMBER(33,8),
+  previous_version_mtr_date VARCHAR2(15),
+  grp_id                    VARCHAR2(45),
+  term_day                  NUMBER,
+  remain_term_day           NUMBER,
+  issue_volume              NUMBER(31,2),
+  state                     VARCHAR2(2),
+  i_id                      NUMBER,
+  start_date                VARCHAR2(15),
+  weight_limit              NUMBER(8,6),
+  t_path                    VARCHAR2(300),
+  p_class_act               VARCHAR2(90),
+  issuer_id                 NUMBER,
+  warrantor_id              NUMBER,
+  issuer_t_path             VARCHAR2(300),
+  b_actual_mtr_date         VARCHAR2(15),
+  core_acct_code            VARCHAR2(45),
+  q_currency                VARCHAR2(5),
+  is_spv_asset              VARCHAR2(2),
+  real_i_code               VARCHAR2(75),
+  principal                 NUMBER(31,4),
+  first_payment_date        VARCHAR2(30),
+  daycount                  VARCHAR2(45),
+  match_code                VARCHAR2(750),
+  credit_classfy            VARCHAR2(30),
+  is_using_credit           VARCHAR2(3),
+  credit_weight             NUMBER(12,6),
+  apr_txn                   VARCHAR2(150),
+  reply_code                VARCHAR2(192),
+  acting_code               VARCHAR2(45),
+  prod_code                 VARCHAR2(24),
+  tax_code                  VARCHAR2(30),
+  charge_item               VARCHAR2(150),
+  fee_number                VARCHAR2(75),
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT
+  is '金融工具表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.i_name
+  is '金融工具名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.p_type
+  is '产品类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.p_class
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.p_ls
+  is '区分是long还是short（l：long；s：short）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.mtr_date
+  is '到期日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.term
+  is '期限';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.u_i_code
+  is '标的金融工具';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.u_a_type
+  is '标的资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.u_m_type
+  is '标的市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.coupon_type
+  is '1－固定利率；2－浮动利率；3－零息票利率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.issue_mode
+  is '1－面值发行；2－贴现发行';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.payment_freq
+  is '付息周期,如 1y，6m，7d';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.cash_times
+  is '付息次数（一年付息几次）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.seniority
+  is '清偿等级（仅用于债券）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.chinesespell
+  is '中文简写';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.update_user
+  is '更新人员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.account_user
+  is '复核人员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.account_time
+  is '复核时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.par_value
+  is '券别值';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.fwd_irc
+  is '远期利率曲线';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.dis_irc
+  is '折现利率曲线';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.coupon
+  is '执行利率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.previous_version_mtr_date
+  is '上个版本的到期日,用于刷金融工具时指定从该日开始刷.当前该金融工具的到期指令的到期日为该日.修改时用该字段记录修改前的到期日,刷新指令时清除该值.';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.grp_id
+  is '组合号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.term_day
+  is '期限天数';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.remain_term_day
+  is '剩余期限';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.issue_volume
+  is '发行数量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.state
+  is '国家名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.i_id
+  is '机构ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.start_date
+  is '起息日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.weight_limit
+  is '风险权重';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.t_path
+  is '交易对手客户分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.p_class_act
+  is '会计产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.issuer_id
+  is '发行人编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.warrantor_id
+  is '担保人id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.issuer_t_path
+  is '发行人客户分类名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.b_actual_mtr_date
+  is '实际到期日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.core_acct_code
+  is '定期帐号核心账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.q_currency
+  is '计价货币币种';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.is_spv_asset
+  is '是否spv资产0：否 1：是';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.real_i_code
+  is '实际金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.principal
+  is '本金';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.first_payment_date
+  is '首次付息日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.daycount
+  is '计息基准';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.match_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.credit_classfy
+  is '授信分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.is_using_credit
+  is '是否占用授信，0-不占用，1-占用(仅非标使用)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.credit_weight
+  is '授信权重(%)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.apr_txn
+  is '批复编号-华兴';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.reply_code
+  is '批复号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.acting_code
+  is '记账科目号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.prod_code
+  is '产品编码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.tax_code
+  is '免税代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.charge_item
+  is '收费项';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.fee_number
+  is '费用编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT.etl_timestamp
+  is 'etl处理时间';
+

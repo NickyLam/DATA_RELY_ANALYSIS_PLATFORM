@@ -1,0 +1,50 @@
+﻿create table RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE
+(
+  amount         NUMBER(17,2),
+  branch         VARCHAR2(12),
+  ccy            VARCHAR2(3),
+  company        VARCHAR2(20),
+  tailbox_id     VARCHAR2(30),
+  tran_timestamp VARCHAR2(26),
+  update_date    DATE,
+  available_amt  NUMBER(17,2),
+  amount_prev    NUMBER(17,2),
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE
+  is '尾箱现金余额表';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.amount
+  is '金额';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.branch
+  is '机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.ccy
+  is '币种';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.tailbox_id
+  is '尾箱代号';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.update_date
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.available_amt
+  is '可用余额';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.amount_prev
+  is '期初金额';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NCBS_TB_CASH_BALANCE.etl_timestamp
+  is 'ETL处理时间戳';
+

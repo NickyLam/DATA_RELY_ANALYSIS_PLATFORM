@@ -1,0 +1,177 @@
+﻿create table RRP_MDL.O_IOL_ICMS_FLOW_TASK
+(
+  serialno         VARCHAR2(128),
+  endtime          DATE,
+  riskscanresult   VARCHAR2(800),
+  standardtime1    NUMBER(22),
+  flowstate        VARCHAR2(800),
+  phasetype        VARCHAR2(128),
+  phaseopinion1    VARCHAR2(2000),
+  standardtime2    NUMBER(22),
+  phasename        VARCHAR2(320),
+  applytype        VARCHAR2(128),
+  relativeobjectno VARCHAR2(128),
+  migtflag         VARCHAR2(160),
+  flowname         VARCHAR2(320),
+  orgname          VARCHAR2(320),
+  relanoticeno     VARCHAR2(128),
+  relativeserialno VARCHAR2(128),
+  flowno           VARCHAR2(128),
+  forkstate        VARCHAR2(72),
+  forkno           VARCHAR2(128),
+  phaseopinion4    VARCHAR2(2000),
+  version          VARCHAR2(72),
+  clienty          NUMBER(22),
+  width            NUMBER(22),
+  baseflowno       VARCHAR2(128),
+  phaseopinion     VARCHAR2(4000),
+  objectno         VARCHAR2(128),
+  phaseno          VARCHAR2(128),
+  userid           VARCHAR2(128),
+  processtaskno    VARCHAR2(128),
+  begintime        DATE,
+  costlob          VARCHAR2(128),
+  allforkno        VARCHAR2(800),
+  groupinfo        VARCHAR2(4000),
+  objecttype       VARCHAR2(128),
+  username         VARCHAR2(320),
+  orgid            VARCHAR2(128),
+  owner            VARCHAR2(128),
+  processinstno    VARCHAR2(128),
+  phaseaction      VARCHAR2(4000),
+  phaseopinion2    VARCHAR2(2000),
+  checklistresult  VARCHAR2(800),
+  autodecision     VARCHAR2(800),
+  assignedtaskno   VARCHAR2(128),
+  taskstate        VARCHAR2(72),
+  parentflowno     VARCHAR2(128),
+  phasechoice      VARCHAR2(2000),
+  phaseopinion3    VARCHAR2(2000),
+  clientx          NUMBER(22),
+  heigth           NUMBER(22),
+  start_dt         DATE,
+  end_dt           DATE,
+  id_mark          VARCHAR2(10),
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_FLOW_TASK
+  is '流程任务';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.serialno
+  is '流程节点编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.endtime
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.riskscanresult
+  is '风险探测结果';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.standardtime1
+  is '标准审批用时';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.flowstate
+  is '流程状态';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.phasetype
+  is '当前阶段类型';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.phaseopinion1
+  is '节点意见1';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.standardtime2
+  is '最长审批用时';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.phasename
+  is '当前阶段名称';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.applytype
+  is '申请类型';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.relativeobjectno
+  is '流程对象流水号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.migtflag
+  is '迁移标志：crsrcrilcupl';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.flowname
+  is '流程模型名称';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.orgname
+  is '机构名称';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.relanoticeno
+  is '关联意见号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.relativeserialno
+  is '上一流水号字段';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.flowno
+  is '流程模型编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.forkstate
+  is '分支状态';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.forkno
+  is '并行分支编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.phaseopinion4
+  is '意见详情4';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.version
+  is '版本';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.clienty
+  is '图元Y坐标';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.width
+  is '图元宽度';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.baseflowno
+  is '流程号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.phaseopinion
+  is '意见详情';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.objectno
+  is '流程对象编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.phaseno
+  is '当前阶段编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.userid
+  is '用户编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.processtaskno
+  is '流程任务编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.begintime
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.costlob
+  is '审批成本归属';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.allforkno
+  is '所有的并行分支编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.groupinfo
+  is '集团信息';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.objecttype
+  is '流程对象任务类型';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.username
+  is '用户名称';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.orgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.owner
+  is '所属人';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.processinstno
+  is '流程实例编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.phaseaction
+  is '节点操作';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.phaseopinion2
+  is '意见详情2';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.checklistresult
+  is '检查清单结果';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.autodecision
+  is '自动审批判断结果';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.assignedtaskno
+  is '指定任务编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.taskstate
+  is '任务状态';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.parentflowno
+  is '父流程号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.phasechoice
+  is '阶段意见';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.phaseopinion3
+  is '意见详情3';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.clientx
+  is '图元X坐标';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.heigth
+  is '图元高度';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_TASK.etl_timestamp
+  is 'ETL处理时间戳';
+

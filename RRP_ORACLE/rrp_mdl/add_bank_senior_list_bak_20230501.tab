@@ -1,0 +1,26 @@
+﻿create table RRP_MDL.ADD_BANK_SENIOR_LIST_BAK_20230501
+(
+  emp_id    VARCHAR2(200),
+  emp_nm    VARCHAR2(500),
+  app_dt    VARCHAR2(10),
+  assign_dt VARCHAR2(200),
+  flag      VARCHAR2(3)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_BANK_SENIOR_LIST_BAK_20230501
+  is '高管信息补录表';
+comment on column RRP_MDL.ADD_BANK_SENIOR_LIST_BAK_20230501.emp_id
+  is '高管员工编号';
+comment on column RRP_MDL.ADD_BANK_SENIOR_LIST_BAK_20230501.emp_nm
+  is '高管员工名称';
+comment on column RRP_MDL.ADD_BANK_SENIOR_LIST_BAK_20230501.app_dt
+  is '批复日期';
+comment on column RRP_MDL.ADD_BANK_SENIOR_LIST_BAK_20230501.assign_dt
+  is '任职日期';
+comment on column RRP_MDL.ADD_BANK_SENIOR_LIST_BAK_20230501.flag
+  is '有效标志';
+

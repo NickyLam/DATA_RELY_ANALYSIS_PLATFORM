@@ -1,0 +1,69 @@
+﻿create table RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX
+(
+  tjrq          NUMBER(22),
+  sjly          VARCHAR2(45),
+  cph           VARCHAR2(150),
+  khh           VARCHAR2(150),
+  khdxdh        NUMBER(22),
+  jgkhdxdh      NUMBER(22),
+  jgdh          VARCHAR2(150),
+  fpjs          VARCHAR2(2),
+  zhdh          VARCHAR2(150),
+  tadm          VARCHAR2(150),
+  zlbl          NUMBER(19,5),
+  zs            NUMBER(25,4),
+  cpmc          VARCHAR2(150),
+  ssjgdh        VARCHAR2(300),
+  sshydh        VARCHAR2(60),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX
+  is '绩效报表-代理代销中收明细';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.tjrq
+  is '统计日期';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.sjly
+  is '数据来源';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.cph
+  is '产品号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.khh
+  is '客户号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.khdxdh
+  is '考核对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.jgkhdxdh
+  is '机构考核对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.jgdh
+  is '机构代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.fpjs
+  is '分配角色';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.zhdh
+  is '账号代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.tadm
+  is 'TA代码';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.zlbl
+  is '增量比例';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.zs
+  is '中收';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.cpmc
+  is '产品名称';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.ssjgdh
+  is '所属机构代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.sshydh
+  is '所属员工工号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_DLDXZSMX.etl_timestamp
+  is 'ETL处理时间戳';
+

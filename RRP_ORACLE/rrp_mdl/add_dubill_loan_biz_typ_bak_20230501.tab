@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501
+(
+  bus_breed_id       VARCHAR2(20) not null,
+  bus_breed_name     VARCHAR2(100),
+  item_cd            VARCHAR2(60) not null,
+  item_name          VARCHAR2(100),
+  acct_typ           VARCHAR2(20),
+  acct_typ_name      VARCHAR2(100),
+  date_sourcesd      VARCHAR2(30),
+  add_time           VARCHAR2(20),
+  mian_acct_typ_flag VARCHAR2(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501
+  is '贷款业务类型码值映射表';
+comment on column RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501.bus_breed_id
+  is '业务品种代码';
+comment on column RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501.bus_breed_name
+  is '业务品种名称';
+comment on column RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501.item_cd
+  is '科目号';
+comment on column RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501.item_name
+  is '科目名称';
+comment on column RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501.acct_typ
+  is '账户类型';
+comment on column RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501.acct_typ_name
+  is '账户类型名称';
+comment on column RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501.date_sourcesd
+  is '数据来源';
+comment on column RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501.add_time
+  is '添加时间';
+comment on column RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501.mian_acct_typ_flag
+  is '主要贷款类型';
+alter table RRP_MDL.ADD_DUBILL_LOAN_BIZ_TYP_BAK_20230501
+  add constraint PK_ADD_DUBILL_LOAN_BIZ_TYP primary key (BUS_BREED_ID, ITEM_CD)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

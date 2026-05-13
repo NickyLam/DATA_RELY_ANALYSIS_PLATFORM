@@ -1,0 +1,110 @@
+﻿create table RRP_MDL.M_TRA_FINC_AST_DTL
+(
+  data_dt          CHAR(8) not null,
+  lgl_rep_id       VARCHAR2(200),
+  tra_dt           CHAR(8),
+  prod_id          VARCHAR2(200),
+  prod_regd_id     VARCHAR2(200) not null,
+  prod_nm          VARCHAR2(500),
+  isu_org_id       VARCHAR2(200) not null,
+  isu_org_nm       VARCHAR2(500),
+  isu_org_typ      VARCHAR2(10),
+  tra_regd_id      VARCHAR2(200),
+  bank_tra_id      VARCHAR2(200) not null,
+  tra_typ          VARCHAR2(10) not null,
+  cntpr_nm         VARCHAR2(500),
+  cntpr_typ        VARCHAR2(10),
+  cur              CHAR(3),
+  ast_id           VARCHAR2(200),
+  bank_ast_lby_id  VARCHAR2(200),
+  ast_lby_regd_id  VARCHAR2(200),
+  ast_lby_typ_lv1  VARCHAR2(10),
+  ast_lby_typ_lvl2 VARCHAR2(10),
+  tra_circ_place   VARCHAR2(500),
+  ast_nm           VARCHAR2(500),
+  idy              VARCHAR2(10),
+  amt              NUMBER(30,2),
+  cnv_cny_amt      NUMBER(30,2),
+  num              INTEGER,
+  co_deal_full_prc NUMBER(30,2),
+  co_deal_net_prc  NUMBER(30,2),
+  exp_yld_rto      NUMBER(18,4),
+  ast_mtr_mode     VARCHAR2(10),
+  remarks          VARCHAR2(2000),
+  dept_line        VARCHAR2(500),
+  data_src         VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.M_TRA_FINC_AST_DTL
+  is '理财产品资产交易流水';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.tra_dt
+  is '交易日期';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.prod_id
+  is '产品编号';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.prod_regd_id
+  is '产品登记编号';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.prod_nm
+  is '产品名称';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.isu_org_id
+  is '发行机构编号';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.isu_org_nm
+  is '发行机构名称';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.isu_org_typ
+  is '发行机构类型';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.tra_regd_id
+  is '交易登记编号';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.bank_tra_id
+  is '行内交易编号';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.tra_typ
+  is '交易类型';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.cntpr_nm
+  is '交易对手名称';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.cntpr_typ
+  is '交易对手类型';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.cur
+  is '币种';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.ast_id
+  is '资产编号';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.bank_ast_lby_id
+  is '行内资产负债编号';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.ast_lby_regd_id
+  is '资产负债登记编号';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.ast_lby_typ_lv1
+  is '资产负债类别一级';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.ast_lby_typ_lvl2
+  is '资产负债类别二级';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.tra_circ_place
+  is '交易流通场所';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.ast_nm
+  is '资产名称';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.idy
+  is '行业';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.amt
+  is '发生金额';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.cnv_cny_amt
+  is '折算人民币金额';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.num
+  is '数量';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.co_deal_full_prc
+  is '单位成交全价';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.co_deal_net_prc
+  is '单位成交净价';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.exp_yld_rto
+  is '到期收益率';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.ast_mtr_mode
+  is '资产计量方式';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.remarks
+  is '备注';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_TRA_FINC_AST_DTL.data_src
+  is '数据来源';
+

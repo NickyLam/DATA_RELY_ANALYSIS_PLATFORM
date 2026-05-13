@@ -1,0 +1,22 @@
+﻿create table RRP_MDL.ORG_CONFIG_BF
+(
+  org_id        VARCHAR2(200),
+  org_id1       VARCHAR2(200),
+  fin_inst_code VARCHAR2(200),
+  fin_lics_num  VARCHAR2(200),
+  org_name      VARCHAR2(500),
+  bkname        VARCHAR2(120)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

@@ -1,0 +1,93 @@
+﻿create table RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H
+(
+  agt_id              VARCHAR2(250),
+  lp_id               VARCHAR2(100),
+  ser_num             VARCHAR2(100),
+  obj_id              VARCHAR2(100),
+  obj_type_name       VARCHAR2(500),
+  bank_id             VARCHAR2(100),
+  bank_name           VARCHAR2(500),
+  bank_role_type_cd   VARCHAR2(30),
+  agent_flg           VARCHAR2(10),
+  promis_loan_curr_cd VARCHAR2(30),
+  promis_loan_amt     NUMBER(30,2),
+  cotas_name          VARCHAR2(500),
+  cont_mode_cd        VARCHAR2(30),
+  rgst_teller_id      VARCHAR2(100),
+  rgst_org_id         VARCHAR2(100),
+  rgst_dt             DATE,
+  update_teller_id    VARCHAR2(100),
+  update_org_id       VARCHAR2(100),
+  modif_dt            DATE,
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  src_table_name      VARCHAR2(100),
+  job_cd              VARCHAR2(10),
+  etl_timestamp       TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H
+  is '贷款授信组织方式信息历史';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.ser_num
+  is '序列号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.obj_id
+  is '对象编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.obj_type_name
+  is '对象类型名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.bank_id
+  is '成员行行号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.bank_name
+  is '成员行行名';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.bank_role_type_cd
+  is '成员行银团角色类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.agent_flg
+  is '代理标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.promis_loan_curr_cd
+  is '承贷币种代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.promis_loan_amt
+  is '承担贷款金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.cotas_name
+  is '联系人名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.cont_mode_cd
+  is '联系方式';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.rgst_org_id
+  is '登记机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.update_teller_id
+  is '更新柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.update_org_id
+  is '更新机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.modif_dt
+  is '变更日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CRDT_ORG_WAY_INFO_H.etl_timestamp
+  is 'ETL处理时间戳';
+

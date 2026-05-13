@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.M_LOAN_DUBILL_UNITE_WL_REPAY_PLAN_TMP
+(
+  dubil_id       VARCHAR2(100),
+  prod_id        VARCHAR2(60),
+  tot_perds      NUMBER(10),
+  repay_perds    NUMBER(10),
+  curr_perds     NUMBER(10),
+  wld_curr_perds NUMBER(10),
+  lxqkqs         INTEGER,
+  ljqkqs         INTEGER
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_LOAN_DUBILL_UNITE_WL_REPAY_PLAN_TMP
+  is '联合网贷还款计划临时表';
+comment on column RRP_MDL.M_LOAN_DUBILL_UNITE_WL_REPAY_PLAN_TMP.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.M_LOAN_DUBILL_UNITE_WL_REPAY_PLAN_TMP.prod_id
+  is '产品编号';
+comment on column RRP_MDL.M_LOAN_DUBILL_UNITE_WL_REPAY_PLAN_TMP.tot_perds
+  is '原始总期数';
+comment on column RRP_MDL.M_LOAN_DUBILL_UNITE_WL_REPAY_PLAN_TMP.repay_perds
+  is '原始还款期数';
+comment on column RRP_MDL.M_LOAN_DUBILL_UNITE_WL_REPAY_PLAN_TMP.curr_perds
+  is '当前期数';
+comment on column RRP_MDL.M_LOAN_DUBILL_UNITE_WL_REPAY_PLAN_TMP.wld_curr_perds
+  is '微粒贷当前期数';
+comment on column RRP_MDL.M_LOAN_DUBILL_UNITE_WL_REPAY_PLAN_TMP.lxqkqs
+  is '连续欠款期数';
+comment on column RRP_MDL.M_LOAN_DUBILL_UNITE_WL_REPAY_PLAN_TMP.ljqkqs
+  is '累计欠款期数';
+

@@ -1,0 +1,99 @@
+﻿create table RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO
+(
+  etl_dt                       DATE,
+  lp_id                        VARCHAR2(60),
+  cust_id                      VARCHAR2(60),
+  shard_cust_id                VARCHAR2(100),
+  shard_name                   VARCHAR2(750),
+  shard_type_cd                VARCHAR2(60),
+  shard_orgnz_type_cd          VARCHAR2(60),
+  shard_local_nation_cd        VARCHAR2(10),
+  shard_orgnz_cd               VARCHAR2(60),
+  shard_bus_lics_id            VARCHAR2(60),
+  contrior_econ_compnt_cd      VARCHAR2(60),
+  nature_ps_shard_cert_type_cd VARCHAR2(20),
+  nature_ps_shard_cert_no      VARCHAR2(90),
+  ghb_shard_flg                VARCHAR2(10),
+  unify_soci_crdt_cd           VARCHAR2(60),
+  share_ratio                  NUMBER(18,6),
+  contri_way_cd                VARCHAR2(10),
+  contri_curr_cd               VARCHAR2(10),
+  contri_amt                   NUMBER(30,2),
+  hold_dt                      DATE,
+  shard_valid_flg              VARCHAR2(10),
+  actl_ctrler_flg              VARCHAR2(10),
+  rela_ps_id                   VARCHAR2(100),
+  contrior_type_cd             VARCHAR2(30),
+  contrior_idti_cate_cd        VARCHAR2(30),
+  job_cd                       VARCHAR2(10),
+  shard_hold_shares_qtty       NUMBER(30,6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO
+  is '对公客户股东信息';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.shard_cust_id
+  is '股东客户编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.shard_name
+  is '股东名称';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.shard_type_cd
+  is '股东类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.shard_orgnz_type_cd
+  is '股东组织机构类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.shard_local_nation_cd
+  is '国家和地区代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.shard_orgnz_cd
+  is '股东组织机构代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.shard_bus_lics_id
+  is '股东营业执照编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.contrior_econ_compnt_cd
+  is '企业出资人经济成分代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.nature_ps_shard_cert_type_cd
+  is '自然人股东证件类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.nature_ps_shard_cert_no
+  is '自然人股东证件号码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.ghb_shard_flg
+  is '本行股东标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.unify_soci_crdt_cd
+  is '统一社会信用代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.share_ratio
+  is '持股比例';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.contri_way_cd
+  is '出资方式代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.contri_curr_cd
+  is '出资币种代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.contri_amt
+  is '出资金额';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.hold_dt
+  is '入股日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.shard_valid_flg
+  is '股东有效标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.actl_ctrler_flg
+  is '实际控制人标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.rela_ps_id
+  is '关联人编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.contrior_type_cd
+  is '出资人类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.contrior_idti_cate_cd
+  is '出资人身份类别代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO.shard_hold_shares_qtty
+  is '股东持股数量';
+

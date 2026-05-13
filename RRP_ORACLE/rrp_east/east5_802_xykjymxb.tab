@@ -1,0 +1,169 @@
+﻿create table RRP_EAST.EAST5_802_XYKJYMXB
+(
+  jyxlh      VARCHAR2(100),
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  yhjgmc     VARCHAR2(450),
+  mxkmbh     VARCHAR2(60),
+  mxkmmc     VARCHAR2(300),
+  khtybh     VARCHAR2(70),
+  khmc_oth   VARCHAR2(5),
+  khmc_orig  VARCHAR2(70),
+  khmc       VARCHAR2(450),
+  zjlb       VARCHAR2(60),
+  zjhm_orig  VARCHAR2(70),
+  zjhm       VARCHAR2(70),
+  xykzh      VARCHAR2(60),
+  kh         VARCHAR2(60),
+  kpjylx     VARCHAR2(60),
+  jyjdbz     VARCHAR2(3),
+  hxjyrq     VARCHAR2(8),
+  hxjysj     VARCHAR2(6),
+  bz         VARCHAR2(3),
+  jyje       NUMBER(20,2),
+  zhye       NUMBER(20,2),
+  dfzh       VARCHAR2(60),
+  dfhm_oth   VARCHAR2(5),
+  dfhm_orig  VARCHAR2(200),
+  dfhm       VARCHAR2(450),
+  dfxh       VARCHAR2(30),
+  dfxm       VARCHAR2(450),
+  shbh       VARCHAR2(200),
+  shmc       VARCHAR2(450),
+  zy         VARCHAR2(600),
+  xsxxjybz   VARCHAR2(6),
+  sxfbz      VARCHAR2(3),
+  sxfje      NUMBER(20,2),
+  jyzdrq     VARCHAR2(8),
+  zchkrq     VARCHAR2(8),
+  fqfkbz     VARCHAR2(3),
+  tqjqbz     VARCHAR2(3),
+  jyqd       VARCHAR2(60),
+  ipdz       VARCHAR2(40),
+  macdz      VARCHAR2(60),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  address    VARCHAR2(500),
+  rid        VARCHAR2(50) not null
+)
+partition by list (CJRQ)
+(
+  partition PARTITION_20220630 values ('20220630')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values ('20220930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.jyxlh
+  is '交易序列号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.jrxkzh
+  is '金融许可证号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.nbjgh
+  is '内部机构号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.yhjgmc
+  is '银行机构名称';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.mxkmbh
+  is '明细科目编号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.mxkmmc
+  is '明细科目名称';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.khtybh
+  is '客户统一编号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.khmc_oth
+  is '客户是否个人客户';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.khmc_orig
+  is '客户名称（脱敏前）';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.khmc
+  is '客户名称';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.zjlb
+  is '证件类别';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.zjhm_orig
+  is '证件号码（脱敏前）';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.zjhm
+  is '证件号码';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.xykzh
+  is '信用卡账号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.kh
+  is '卡号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.kpjylx
+  is '卡片交易类型';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.jyjdbz
+  is '交易借贷标志';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.hxjyrq
+  is '核心交易日期';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.hxjysj
+  is '核心交易时间';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.bz
+  is '币种';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.jyje
+  is '交易金额';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.zhye
+  is '账户余额';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.dfzh
+  is '对方账号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.dfhm_oth
+  is '户名是否自然人名称';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.dfhm_orig
+  is '对方户名（脱敏前）';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.dfhm
+  is '对方户名';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.dfxh
+  is '对方行号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.dfxm
+  is '对方行名';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.shbh
+  is '商户编号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.shmc
+  is '商户名称';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.zy
+  is '摘要';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.xsxxjybz
+  is '线上线下交易标志';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.sxfbz
+  is '手续费币种';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.sxfje
+  is '手续费金额';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.jyzdrq
+  is '交易账单日期';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.zchkrq
+  is '最迟还款日期';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.fqfkbz
+  is '分期付款标志';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.tqjqbz
+  is '提前结清标志';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.jyqd
+  is '交易渠道';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.ipdz
+  is 'IP地址';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.macdz
+  is 'MAC地址';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.bbz
+  is '备注';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.cjrq
+  is '采集日期';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.issued_no
+  is '填报机构';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.org_no
+  is '报送机构';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.dept_no
+  is '部门编号';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.src_sys_id
+  is '来源系统ID';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.address
+  is '归属地';
+comment on column RRP_EAST.EAST5_802_XYKJYMXB.rid
+  is '数据主键';
+

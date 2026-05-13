@@ -1,0 +1,59 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501
+(
+  deal_id         NUMBER,
+  deal_name       VARCHAR2(11),
+  aspclient_id    NUMBER,
+  balance_id      NUMBER,
+  paydate         NUMBER,
+  keepfolder_id   NUMBER,
+  assettype       VARCHAR2(20),
+  bondscode       VARCHAR2(20),
+  coupontype      VARCHAR2(1),
+  principalamount NUMBER,
+  interestamount  NUMBER,
+  lastmodified    TIMESTAMP(6),
+  act_paydate     NUMBER,
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501
+  is '还本付息交易';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.deal_id
+  is '引用表ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.deal_name
+  is '引用表名';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.aspclient_id
+  is '部门编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.balance_id
+  is '引用表2ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.paydate
+  is '还本付息日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.keepfolder_id
+  is '账户ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.assettype
+  is '资产类别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.bondscode
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.coupontype
+  is '本息类型';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.principalamount
+  is '还本金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.interestamount
+  is '付息金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.lastmodified
+  is '最后修改时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.act_paydate
+  is '实际支付日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS_BAK_20230501.id_mark
+  is '增删标志';
+

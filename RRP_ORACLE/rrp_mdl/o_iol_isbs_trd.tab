@@ -1,0 +1,161 @@
+﻿create table RRP_MDL.O_IOL_ISBS_TRD
+(
+  grarat        NUMBER(12,6),
+  ovddat        DATE,
+  pntref        VARCHAR2(24),
+  spddat        DATE,
+  pctfin        NUMBER(5,2),
+  nam           VARCHAR2(60),
+  ownref        VARCHAR2(24),
+  pntnam        VARCHAR2(60),
+  finact        VARCHAR2(32),
+  intrat        NUMBER(14,6),
+  inr           VARCHAR2(12),
+  delflg        VARCHAR2(2),
+  actyld        NUMBER(12,6),
+  ownusr        VARCHAR2(12),
+  fintyp        VARCHAR2(5),
+  ver           VARCHAR2(6),
+  pnttyp        VARCHAR2(9),
+  stagod        VARCHAR2(9),
+  lstintdat     DATE,
+  stacty        VARCHAR2(3),
+  clsdat        DATE,
+  feetyp        VARCHAR2(2),
+  issdat        DATE,
+  restcur       VARCHAR2(5),
+  actrat        NUMBER(12,6),
+  credat        DATE,
+  feeamt        NUMBER(18,3),
+  itfblk        VARCHAR2(1202),
+  matdat        DATE,
+  opndat        DATE,
+  finblk        VARCHAR2(300),
+  etyextkey     VARCHAR2(12),
+  dftype        VARCHAR2(30),
+  bchkeyinr     VARCHAR2(12),
+  branchinr     VARCHAR2(12),
+  guaflg        VARCHAR2(2),
+  dfrate        NUMBER(12,6),
+  restamt       NUMBER(18,3),
+  pntinr        VARCHAR2(12),
+  tenday        NUMBER(3),
+  stttendat     DATE,
+  marrat        NUMBER(12,6),
+  irtcod        VARCHAR2(9),
+  extnmb        NUMBER(4),
+  ovdflg        VARCHAR2(2),
+  actfinday     NUMBER(5),
+  fincod        VARCHAR2(36),
+  subtyp        VARCHAR2(3),
+  intsetway     VARCHAR2(2),
+  ratadj        VARCHAR2(2),
+  totalamt      NUMBER(18,3),
+  acthkdat      DATE,
+  dfint         NUMBER(18,3),
+  dfdelrate     NUMBER(12,6),
+  dffee         NUMBER(18,3),
+  iflastcol     VARCHAR2(2),
+  irtmic        VARCHAR2(5),
+  hangno        VARCHAR2(60),
+  fkqrref       VARCHAR2(24),
+  conno         VARCHAR2(45),
+  jjpph         VARCHAR2(45),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_TRD
+  is '进口融资业务信息(保存短字节)';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.pntref
+  is '父类参考号';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.spddat
+  is '过期日期';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.nam
+  is '交易名称';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.ownref
+  is '交易参考号和角色';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.pntnam
+  is '父类交易名称';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.intrat
+  is '借款利率（%）';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.inr
+  is '内部唯一 ID';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.delflg
+  is '删除标志';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.ownusr
+  is '经办人';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.fintyp
+  is '业务品种';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.ver
+  is '版本文本';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.pnttyp
+  is '保函交易类型';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.stagod
+  is '货物代码';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.stacty
+  is 'Country Code';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.clsdat
+  is '关闭日期';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.feetyp
+  is '费率类型';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.credat
+  is '创建日期';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.feeamt
+  is '实付平台服务费汇总金额';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.matdat
+  is '效期到期日';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.opndat
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.etyextkey
+  is '实体关键字';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.bchkeyinr
+  is '所属机构INR';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.branchinr
+  is '业务所属机构INR';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.dfrate
+  is '代付利率';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.pntinr
+  is '父业务主键';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.tenday
+  is '最大到期日';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.stttendat
+  is '付款期限开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.irtcod
+  is '浮动类型';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.fincod
+  is '借据号';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.subtyp
+  is '收费子类别';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.intsetway
+  is '结息方式代码';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.totalamt
+  is '金额';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.dfdelrate
+  is '代付罚息利率';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.iflastcol
+  is '是否最后一次归集';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.irtmic
+  is '计息基准';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ISBS_TRD.etl_timestamp
+  is 'ETL处理时间戳';
+

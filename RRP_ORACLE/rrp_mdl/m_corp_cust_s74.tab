@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.M_CORP_CUST_S74
+(
+  data_dt             VARCHAR2(400),
+  sign_netw_id        VARCHAR2(400),
+  cust_name           VARCHAR2(400),
+  cust_id             VARCHAR2(400),
+  conl_bk_status_cd   VARCHAR2(400),
+  conl_bk_status_name VARCHAR2(400),
+  sign_mbank_flg      VARCHAR2(400),
+  mbank_sign_dt       VARCHAR2(400)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250228 values ('20250228')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250930 values ('20250930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.M_CORP_CUST_S74
+  is '对公客户信息';
+comment on column RRP_MDL.M_CORP_CUST_S74.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_CORP_CUST_S74.sign_netw_id
+  is '开户网点编号';
+comment on column RRP_MDL.M_CORP_CUST_S74.cust_name
+  is '客户名称';
+comment on column RRP_MDL.M_CORP_CUST_S74.cust_id
+  is '客户编号';
+comment on column RRP_MDL.M_CORP_CUST_S74.conl_bk_status_cd
+  is '网银客户状态代码';
+comment on column RRP_MDL.M_CORP_CUST_S74.conl_bk_status_name
+  is '企业网银状态';
+comment on column RRP_MDL.M_CORP_CUST_S74.sign_mbank_flg
+  is '开通手机银行标志';
+comment on column RRP_MDL.M_CORP_CUST_S74.mbank_sign_dt
+  is '签约银企通时间';
+

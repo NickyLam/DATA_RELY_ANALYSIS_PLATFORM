@@ -1,0 +1,276 @@
+﻿create table RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT
+(
+  etl_dt                   DATE,
+  lp_id                    VARCHAR2(60),
+  ext_secu_acct_id         VARCHAR2(60),
+  intnal_secu_acct_id      VARCHAR2(60),
+  acct_id                  VARCHAR2(60),
+  fin_instm_id             VARCHAR2(100),
+  asset_type_id            VARCHAR2(60),
+  std_prod_id              VARCHAR2(60),
+  market_type_id           VARCHAR2(60),
+  bus_id                   VARCHAR2(60),
+  comb_tran_num            VARCHAR2(90),
+  obj_id                   VARCHAR2(60),
+  prod_type_cd             VARCHAR2(30),
+  asset_type_name          VARCHAR2(250),
+  level5_cls_cd            VARCHAR2(10),
+  acct_name                VARCHAR2(500),
+  subj_id                  VARCHAR2(60),
+  int_subj_id              VARCHAR2(100),
+  int_adj_subj_id          VARCHAR2(100),
+  tran_market_id           VARCHAR2(60),
+  exchg_acct_id            VARCHAR2(60),
+  cntpty_cust_id           VARCHAR2(60),
+  cntpty_id                VARCHAR2(60),
+  cntpty_name              VARCHAR2(375),
+  cntpty_acct_num          VARCHAR2(300),
+  cntpty_acct_name         VARCHAR2(750),
+  cntpty_open_bank_num     VARCHAR2(90),
+  cntpty_open_bank_name    VARCHAR2(750),
+  cntpty_cls_descb         VARCHAR2(1000),
+  cntpty_idf_code          VARCHAR2(150),
+  cntpty_idf_code_type_cd  VARCHAR2(100),
+  tran_type_cd             VARCHAR2(10),
+  bank_flg                 VARCHAR2(10),
+  cty_cd                   VARCHAR2(10),
+  value_dt                 DATE,
+  exp_dt                   DATE,
+  cash_dt                  DATE,
+  tenor_cd                 VARCHAR2(10),
+  int_accr_base_cd         VARCHAR2(10),
+  int_rat_adj_way_cd       VARCHAR2(10),
+  base_rat_type_cd         VARCHAR2(10),
+  int_rat_adj_freq_cd      VARCHAR2(10),
+  apv_odd_no               VARCHAR2(90),
+  curr_cd                  VARCHAR2(10),
+  fac_val_amt              NUMBER(38,8),
+  fac_val_int_rat          NUMBER(18,8),
+  base_rat                 NUMBER(18,8),
+  exec_int_rat             NUMBER(18,8),
+  pay_int_ped_cd           VARCHAR2(10),
+  auto_redt_flg            VARCHAR2(10),
+  actl_bal                 NUMBER(30,8),
+  pric_bal                 NUMBER(30,8),
+  currt_bal                NUMBER(30,8),
+  acru_int                 NUMBER(30,8),
+  recvbl_uncol_pric        NUMBER(30,8),
+  recvbl_uncol_int         NUMBER(30,8),
+  last_update_dt           DATE,
+  cap_type_cd              VARCHAR2(10),
+  asset_four_cls_cd        VARCHAR2(10),
+  asset_thd_cls_cd         VARCHAR2(30),
+  belong_org_id            VARCHAR2(60),
+  tran_amt                 NUMBER(38,8),
+  extra_dimen_cd           VARCHAR2(10),
+  stl_dt                   DATE,
+  ovdue_status             VARCHAR2(450),
+  ovdue_flg                VARCHAR2(10),
+  pric_ovdue_dt            DATE,
+  pric_ovdue_days          NUMBER(10),
+  int_ovdue_dt             DATE,
+  int_ovdue_days           NUMBER(10),
+  acct_char_descb          VARCHAR2(150),
+  acct_attr_descb          VARCHAR2(150),
+  actl_finer_cust_id       VARCHAR2(60),
+  actl_finer_name          VARCHAR2(750),
+  actl_finer_group_name    VARCHAR2(500),
+  inpwn_vch_id             VARCHAR2(60),
+  inpwn_vch_asset_type_id  VARCHAR2(60),
+  inpwn_vch_market_type_id VARCHAR2(60),
+  inpwn_cert_face_lmt      NUMBER(30,8),
+  inpwn_vch_discnt_rat     NUMBER(30,8),
+  inpwn_vch_pct            NUMBER(30,8),
+  tran_seq_num             VARCHAR2(90),
+  job_cd                   VARCHAR2(10),
+  asset_uniq_idf_id        VARCHAR2(200),
+  trans_loan_flg           VARCHAR2(32),
+  int_recvbl               NUMBER(30,8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT
+  is '同业现金借贷';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.ext_secu_acct_id
+  is '外部证券账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.intnal_secu_acct_id
+  is '内部证券账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.fin_instm_id
+  is '金融工具编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.asset_type_id
+  is '资产类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.market_type_id
+  is '市场类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.comb_tran_num
+  is '组合交易号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.obj_id
+  is '对象编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.prod_type_cd
+  is '产品类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.asset_type_name
+  is '资产类型名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.level5_cls_cd
+  is '五级分类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.int_subj_id
+  is '利息科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.int_adj_subj_id
+  is '利息调整科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.tran_market_id
+  is '交易市场编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.exchg_acct_id
+  is '交易所账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cntpty_cust_id
+  is '交易对手客户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cntpty_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cntpty_acct_num
+  is '交易对手账号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cntpty_acct_name
+  is '交易对手账户名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cntpty_open_bank_num
+  is '交易对手开户行号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cntpty_open_bank_name
+  is '交易对手开户行名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cntpty_cls_descb
+  is '交易对手分类描述';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cntpty_idf_code
+  is '交易对手标识编码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cntpty_idf_code_type_cd
+  is '交易对手标识编码类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.tran_type_cd
+  is '交易类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.bank_flg
+  is '银行标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cty_cd
+  is '国家代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cash_dt
+  is '兑付日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.tenor_cd
+  is '期限代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.int_accr_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.int_rat_adj_way_cd
+  is '利率调整方式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.base_rat_type_cd
+  is '基准利率类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.int_rat_adj_freq_cd
+  is '利率调整频率代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.apv_odd_no
+  is '审批单号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.fac_val_amt
+  is '票面金额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.fac_val_int_rat
+  is '票面利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.base_rat
+  is '基准利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.pay_int_ped_cd
+  is '付息周期代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.auto_redt_flg
+  is '自动转存标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.actl_bal
+  is '实际余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.pric_bal
+  is '本金余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.acru_int
+  is '应计利息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.recvbl_uncol_pric
+  is '应收未收本金';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.recvbl_uncol_int
+  is '应收未收利息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.last_update_dt
+  is '上次更新日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.cap_type_cd
+  is '资金类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.asset_four_cls_cd
+  is '资产四分类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.asset_thd_cls_cd
+  is '资产三分类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.extra_dimen_cd
+  is '额外维度代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.stl_dt
+  is '结算日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.ovdue_status
+  is '逾期状态';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.ovdue_flg
+  is '逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.pric_ovdue_dt
+  is '本金逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.pric_ovdue_days
+  is '贷款本金逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.int_ovdue_dt
+  is '利息逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.int_ovdue_days
+  is '利息逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.acct_char_descb
+  is '账户性质描述';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.acct_attr_descb
+  is '账户属性描述';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.actl_finer_cust_id
+  is '实际融资人客户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.actl_finer_name
+  is '实际融资人名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.actl_finer_group_name
+  is '实际融资人集团名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.inpwn_vch_id
+  is '质押券编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.inpwn_vch_asset_type_id
+  is '质押券资产类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.inpwn_vch_market_type_id
+  is '质押券市场类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.inpwn_cert_face_lmt
+  is '质押券面额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.inpwn_vch_discnt_rat
+  is '质押券折价率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.inpwn_vch_pct
+  is '质押券占比';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.tran_seq_num
+  is '交易序号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.asset_uniq_idf_id
+  is '资产唯一标识编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.trans_loan_flg
+  is '转贷款标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_CASH_DEBIT_CRDT.int_recvbl
+  is '应收利息';
+

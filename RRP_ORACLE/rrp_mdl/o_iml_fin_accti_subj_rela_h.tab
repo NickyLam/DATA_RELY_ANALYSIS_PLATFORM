@@ -1,0 +1,69 @@
+﻿create table RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H
+(
+  sob_id         VARCHAR2(100),
+  lp_id          VARCHAR2(100),
+  accti_id       VARCHAR2(100),
+  amt_type_cd    VARCHAR2(30),
+  subj_id        VARCHAR2(100),
+  bus_type_cd    VARCHAR2(30),
+  effect_dt      DATE,
+  invalid_dt     DATE,
+  subj_name      VARCHAR2(500),
+  status_cd      VARCHAR2(30),
+  subj_descb     VARCHAR2(500),
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10),
+  src_table_name VARCHAR2(100),
+  job_cd         VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H
+  is '核算科目关系历史';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.sob_id
+  is '账套编号';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.accti_id
+  is '核算编号';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.amt_type_cd
+  is '金额类型代码';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.bus_type_cd
+  is '业务类型代码';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.effect_dt
+  is '科目生效日期';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.invalid_dt
+  is '科目失效日期';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.subj_name
+  is '科目名称';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.status_cd
+  is '状态代码';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.subj_descb
+  is '科目描述';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_SUBJ_RELA_H.etl_timestamp
+  is 'etl处理时间戳';
+

@@ -1,0 +1,18 @@
+﻿create table RRP_MDL.XZY_YL
+(
+  reference_table VARCHAR2(200) not null,
+  reference_proc  VARCHAR2(200) not null
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

@@ -1,0 +1,156 @@
+﻿create table RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP
+(
+  data_date                    DATE,
+  loan_ref_id                  NUMBER(22),
+  loan_ref_no                  VARCHAR2(100),
+  i_code                       VARCHAR2(80),
+  i_code_name                  VARCHAR2(100),
+  product_type                 VARCHAR2(100),
+  asset_thd_cls_cd             VARCHAR2(10),
+  product_name                 VARCHAR2(100),
+  start_date                   DATE,
+  due_date                     DATE,
+  sourceid                     VARCHAR2(10),
+  org_cd                       VARCHAR2(40),
+  subject_cd                   VARCHAR2(60),
+  interest_receive_subject_cd  VARCHAR2(60),
+  accrual_class_subject_cd     VARCHAR2(60),
+  interest_adjust_subject_cd   VARCHAR2(60),
+  fairvalue_changes_subject_cd VARCHAR2(60),
+  provision_single_subject_cd  VARCHAR2(60),
+  asset_balance                NUMBER(22,2),
+  ccy_name                     VARCHAR2(10),
+  asset_balance_hcurr          NUMBER(22,6),
+  receivable_int               NUMBER(22,6),
+  accrued_int                  NUMBER(22,6),
+  int_adj                      NUMBER(22,6),
+  fair_value_change            NUMBER(22,6),
+  provision                    NUMBER(22,6),
+  spv_cust_no                  VARCHAR2(40),
+  spv_cust_name                VARCHAR2(100),
+  spv_cust_type                VARCHAR2(100),
+  cust_name                    VARCHAR2(100),
+  uder_actl_finer_cust_char    VARCHAR2(80),
+  ccp_type_cd                  VARCHAR2(50),
+  ead_orig                     NUMBER(22,6),
+  ead_provision                NUMBER(22,6),
+  portfoliotypedesc            VARCHAR2(200),
+  rwbandid                     NUMBER(22,3),
+  allocatedcrm                 NUMBER(22,2),
+  crm_rwbandid_wtd             NUMBER(22,3),
+  crm_cover_rwaamount          NUMBER(22,2),
+  crm_ncover_rwaamount         NUMBER(22,2),
+  rwaamount                    NUMBER(22,2),
+  register_date                DATE,
+  crm_cash_amt                 NUMBER(22,2),
+  crm_deposit_amt              NUMBER(22,2),
+  crm_national_debt_amt        NUMBER(22,2),
+  crm_policy_bank_amt          NUMBER(22,2),
+  crm_bank_amt                 NUMBER(22,2),
+  crm_pse_sov_amt              NUMBER(22,2),
+  crm_oth_amt                  NUMBER(22,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.data_date
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.loan_ref_id
+  is '债项ID';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.loan_ref_no
+  is '债项编号';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.i_code
+  is '交易代码';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.i_code_name
+  is '金融工具名称';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.product_type
+  is '分类标记： CF01 普通票据 CF02 供应链票据 CF03 等分化票据';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.asset_thd_cls_cd
+  is '金融资产分类';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.product_name
+  is '金融产品全称';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.start_date
+  is '设备启用日期 yyyy-mm-dd';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.due_date
+  is '应缴日期';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.sourceid
+  is '所属条线';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.org_cd
+  is '机构编码';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.subject_cd
+  is '科目代码';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.interest_receive_subject_cd
+  is '应收利息科目代码';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.accrual_class_subject_cd
+  is '应计科目代码';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.interest_adjust_subject_cd
+  is '利息调整科目代码';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.fairvalue_changes_subject_cd
+  is '公允价值变动科目代码';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.provision_single_subject_cd
+  is '准备金科目代码';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.asset_balance
+  is '资产余额（本币）';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.ccy_name
+  is '币种名称';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.asset_balance_hcurr
+  is '资产余额(本币）';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.receivable_int
+  is '应收利息本币';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.accrued_int
+  is '应计利息本币';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.int_adj
+  is '利息调增金额';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.fair_value_change
+  is '公允价值变动(本币)';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.provision
+  is '准备金（本币）';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.spv_cust_no
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.spv_cust_name
+  is '交易对手';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.spv_cust_type
+  is '客户分类';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.uder_actl_finer_cust_char
+  is '实际融资客户性质';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.ccp_type_cd
+  is '交易对手类型代码';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.ead_orig
+  is '原始风险暴露(本币）';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.ead_provision
+  is '扣减准备金后的风险暴露(本币)';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.portfoliotypedesc
+  is '填报项目';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.rwbandid
+  is '债项权重';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.allocatedcrm
+  is '缓释品金额(折本币)';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.crm_rwbandid_wtd
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.crm_cover_rwaamount
+  is '缓释未覆盖部分RWA';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.crm_ncover_rwaamount
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.rwaamount
+  is 'RWA';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.register_date
+  is '份额注册日期';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.crm_cash_amt
+  is '保证金金额';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.crm_deposit_amt
+  is '存单金额';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.crm_national_debt_amt
+  is '国债金额';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.crm_policy_bank_amt
+  is '我国政策性银行0%';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.crm_bank_amt
+  is '我国商业银行';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.crm_pse_sov_amt
+  is '我国公共部门实体20%';
+comment on column RRP_MDL.O_IOL_RWA_REPORT_FB_INVEST_TMP.crm_oth_amt
+  is '未知';
+

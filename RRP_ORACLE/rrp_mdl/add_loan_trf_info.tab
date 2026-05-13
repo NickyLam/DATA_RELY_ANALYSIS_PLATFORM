@@ -1,0 +1,113 @@
+﻿create table RRP_MDL.ADD_LOAN_TRF_INFO
+(
+  lgl_rep_id           VARCHAR2(200),
+  trf_cont_id          VARCHAR2(200),
+  org_id               VARCHAR2(200),
+  cntpr_nm             VARCHAR2(500),
+  crdt_cntpr_typ       VARCHAR2(10),
+  cur                  CHAR(3),
+  trf_prin_tot_amt     NUMBER(30,2),
+  trf_int_tot_amt      NUMBER(30,2),
+  trf_tot_prc          NUMBER(30,2),
+  trf_cncl_amt         NUMBER(30,2),
+  trf_retrv_cash_amt   NUMBER(30,2),
+  not_trf_slf_hold_amt NUMBER(30,2),
+  loss_amt             NUMBER(30,2),
+  trf_retrv_oth_amt    NUMBER(30,2),
+  trf_cont_start_dt    CHAR(8),
+  trf_cont_exp_dt      CHAR(8),
+  trf_etr_acc          VARCHAR2(200),
+  trf_entr_acc_nm      VARCHAR2(500),
+  cntpr_trf_acc        VARCHAR2(200),
+  cntpr_trf_acc_nm     VARCHAR2(500),
+  cntpr_trf_dt         CHAR(8),
+  cntpr_aldy_pay_amt   NUMBER(30,2),
+  mrgn_pct             NUMBER(18,4),
+  mrgn_cur             CHAR(3),
+  mrgn                 NUMBER(30,2),
+  ast_trf_mode         VARCHAR2(10),
+  tra_pltf             VARCHAR2(10),
+  yd_cntr_regd_amt     NUMBER(30,2),
+  bank_trf_flg         CHAR(1),
+  batch_trf_flg        CHAR(1),
+  trf_drc              VARCHAR2(10),
+  trf_cont_stat        VARCHAR2(10),
+  dept_line            VARCHAR2(500),
+  data_src             VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_LOAN_TRF_INFO
+  is '信贷资产转让信息补录表';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_cont_id
+  is '转让合同号';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.cntpr_nm
+  is '交易对手名称';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.crdt_cntpr_typ
+  is '信贷交易对手类型';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.cur
+  is '币种';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_prin_tot_amt
+  is '转让贷款本金总额';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_int_tot_amt
+  is '转让贷款利息总额';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_tot_prc
+  is '转让总价';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_cncl_amt
+  is '转让核销金额';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_retrv_cash_amt
+  is '转让收回现金金额';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.not_trf_slf_hold_amt
+  is '未转让自持金额';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.loss_amt
+  is '损失金额';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_retrv_oth_amt
+  is '转让收回其他对价';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_cont_start_dt
+  is '转让合同起始日期';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_cont_exp_dt
+  is '转让合同到期日期';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_etr_acc
+  is '转让价款入账账号';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_entr_acc_nm
+  is '转让价款入账账户名称';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.cntpr_trf_acc
+  is '交易对手转账账号';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.cntpr_trf_acc_nm
+  is '交易对手转账账号户名';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.cntpr_trf_dt
+  is '交易对手转账日期';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.cntpr_aldy_pay_amt
+  is '交易对手已支付金额';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.mrgn_pct
+  is '保证金比例';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.mrgn_cur
+  is '保证金币种';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.mrgn
+  is '保证金';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.ast_trf_mode
+  is '资产转让方式';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.tra_pltf
+  is '交易平台';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.yd_cntr_regd_amt
+  is '银登中心登记金额';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.bank_trf_flg
+  is '行内转让标志';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.batch_trf_flg
+  is '批量转让标志';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_drc
+  is '转让方向';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.trf_cont_stat
+  is '转让合同状态';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.ADD_LOAN_TRF_INFO.data_src
+  is '数据来源';
+

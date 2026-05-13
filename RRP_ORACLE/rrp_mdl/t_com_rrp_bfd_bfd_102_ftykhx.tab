@@ -1,0 +1,52 @@
+﻿create table RRP_MDL.T_COM_RRP_BFD_BFD_102_FTYKHX
+(
+  rid                 VARCHAR2(50) not null,
+  fin_org_no          VARCHAR2(18),
+  name                VARCHAR2(200),
+  id_type             VARCHAR2(3),
+  id_no               VARCHAR2(60),
+  base_acct_no        VARCHAR2(60),
+  base_acct_org_name  VARCHAR2(200),
+  mgr_scope           VARCHAR2(1000),
+  reg_amt             NUMBER(20,2),
+  paid_in_amt         NUMBER(20,2),
+  tot_asst_amt        NUMBER(20,2),
+  oper_rev_amt        NUMBER(20,2),
+  ee_num              NUMBER(10),
+  pub_com_mark        VARCHAR2(1),
+  first_loan_dt       VARCHAR2(10),
+  reg_addr            VARCHAR2(400),
+  area_cd             VARCHAR2(9),
+  mgt_sts             VARCHAR2(2),
+  estb_dt             VARCHAR2(10),
+  ind_cd              VARCHAR2(3),
+  ent_scale           VARCHAR2(4),
+  econ_type           VARCHAR2(5),
+  prin_econ_dept      VARCHAR2(3),
+  credit_amt          NUMBER(20,2),
+  use_credit_amt      NUMBER(20,2),
+  rela_mark           VARCHAR2(1),
+  act_ctrl_id_type    VARCHAR2(60),
+  act_ctrl_id_no      VARCHAR2(400),
+  ccr_lvl_num         NUMBER(3),
+  ccr_lvl             NUMBER(3),
+  org_no              VARCHAR2(20),
+  data_dt             VARCHAR2(10),
+  dept_no             VARCHAR2(20),
+  issued_no           VARCHAR2(20),
+  rpt_org_no          VARCHAR2(30),
+  data_ources         VARCHAR2(2),
+  data_modify         VARCHAR2(2),
+  force_sub_sts       VARCHAR2(1),
+  force_sub_reason    VARCHAR2(200),
+  rule_name           VARCHAR2(2000),
+  rule_id             VARCHAR2(1000),
+  cust_id             VARCHAR2(60),
+  orig_act_ctrl_id_no VARCHAR2(400)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

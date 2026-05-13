@@ -1,0 +1,171 @@
+﻿create table RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512
+(
+  evt_id                    VARCHAR2(250),
+  lp_id                     VARCHAR2(100),
+  tran_flow_num             VARCHAR2(100),
+  refund_acct_belong_org_id VARCHAR2(100),
+  acpt_pay_instr_cd         VARCHAR2(30),
+  tran_curr_cd              VARCHAR2(30),
+  tran_amt                  NUMBER(30),
+  tran_cate_cd              VARCHAR2(30),
+  tran_dt                   DATE,
+  tran_tm                   TIMESTAMP(6),
+  tran_status_cd            VARCHAR2(30),
+  pay_status_cd             VARCHAR2(30),
+  batch_no                  VARCHAR2(60),
+  ova_flow_num              VARCHAR2(100),
+  plat_tran_flow_num        VARCHAR2(100),
+  plat_tran_dt              DATE,
+  plat_tran_tm              TIMESTAMP(6),
+  create_tm                 TIMESTAMP(6),
+  check_entry_descb         VARCHAR2(500),
+  check_entry_status_id     VARCHAR2(100),
+  payer_acct_type_cd        VARCHAR2(30),
+  core_revs_flow_num        VARCHAR2(100),
+  core_revs_dt              DATE,
+  core_tran_dt              DATE,
+  core_tran_status_cd       VARCHAR2(30),
+  core_flow_num             VARCHAR2(100),
+  core_req_flow_num         VARCHAR2(100),
+  core_resp_code            VARCHAR2(100),
+  core_resp_info            VARCHAR2(500),
+  recver_agt_id             VARCHAR2(100),
+  recver_acct_id            VARCHAR2(100),
+  recver_acct_type_cd       VARCHAR2(30),
+  recver_acct_name          VARCHAR2(500),
+  recver_acct_belong_org_id VARCHAR2(100),
+  adj_entry_way_cd          VARCHAR2(30),
+  refund_acct_id            VARCHAR2(100),
+  sys_return_code           VARCHAR2(100),
+  sys_return_comnt          VARCHAR2(500),
+  sys_type_cd               VARCHAR2(30),
+  sys_flow_num              VARCHAR2(100),
+  bus_return_code           VARCHAR2(100),
+  bus_return_dt             DATE,
+  bus_return_comnt          VARCHAR2(500),
+  aldy_clear_flg            VARCHAR2(10),
+  aldy_adj_entry_flg        VARCHAR2(10),
+  aldy_tran_flg             VARCHAR2(10),
+  init_indent_amt           NUMBER(30),
+  init_pay_bank_tran_flow   VARCHAR2(100),
+  init_tran_flow_num        VARCHAR2(100),
+  final_update_tm           TIMESTAMP(6),
+  etl_dt                    DATE,
+  src_table_name            VARCHAR2(100),
+  job_cd                    VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.tran_flow_num
+  is '转移流水号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.refund_acct_belong_org_id
+  is '退款方账户所属机构编号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.acpt_pay_instr_cd
+  is '收付款指令代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.tran_curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.tran_amt
+  is '金额';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.tran_cate_cd
+  is '交易类别代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.tran_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.tran_tm
+  is '销售时间';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.tran_status_cd
+  is '转账状态代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.pay_status_cd
+  is '支付状态代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.batch_no
+  is '理赔批次号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.ova_flow_num
+  is '全局流水号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.plat_tran_flow_num
+  is '平台交易流水号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.plat_tran_dt
+  is '平台交易日期';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.plat_tran_tm
+  is '平台交易时间';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.create_tm
+  is '创建时间';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.check_entry_descb
+  is '对账描述';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.check_entry_status_id
+  is '对账状态编号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.payer_acct_type_cd
+  is '付款方账户类型代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.core_revs_flow_num
+  is '核心冲正流水号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.core_revs_dt
+  is '核心冲正日期';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.core_tran_dt
+  is '核心交易日期';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.core_tran_status_cd
+  is '核心交易状态代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.core_flow_num
+  is '核心流水号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.core_req_flow_num
+  is '核心请求流水号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.core_resp_code
+  is '核心响应码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.core_resp_info
+  is '核心响应信息';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.recver_agt_id
+  is '收款方协议编号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.recver_acct_id
+  is '收款方账户编号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.recver_acct_type_cd
+  is '接收方账户类型代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.recver_acct_name
+  is '收款人户名称';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.recver_acct_belong_org_id
+  is '收款方账户所属机构编号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.adj_entry_way_cd
+  is '调账方式代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.refund_acct_id
+  is '退款方账户编号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.sys_return_code
+  is '系统返回码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.sys_return_comnt
+  is '系统返回说明';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.sys_type_cd
+  is '系统类型代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.sys_flow_num
+  is '系统间流水号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.bus_return_code
+  is '业务返回码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.bus_return_dt
+  is '业务返回日期';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.bus_return_comnt
+  is '业务返回说明';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.aldy_clear_flg
+  is '已清算标志';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.aldy_adj_entry_flg
+  is '已调账标志';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.aldy_tran_flg
+  is '已转移标志';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.init_indent_amt
+  is '原订单金额';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.init_pay_bank_tran_flow
+  is '原付款行交易流水号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.init_tran_flow_num
+  is '原交易流水号';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.final_update_tm
+  is '最后更新时间';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_EVT_PPPS_PS_REFUND_FLOW_BAK_20230512.etl_timestamp
+  is 'ETL处理时间戳';
+

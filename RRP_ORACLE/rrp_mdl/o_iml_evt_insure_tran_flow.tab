@@ -1,0 +1,135 @@
+﻿create table RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW
+(
+  evt_id              VARCHAR2(250),
+  lp_id               VARCHAR2(60),
+  tran_dt             DATE,
+  flow_num            VARCHAR2(150),
+  rela_flow_num       VARCHAR2(150),
+  ta_cd               VARCHAR2(30),
+  std_prod_id         VARCHAR2(2000),
+  prod_id             VARCHAR2(60),
+  insure_pl_num       VARCHAR2(250),
+  cust_mgr_id         VARCHAR2(60),
+  cust_id             VARCHAR2(60),
+  cust_type_cd        VARCHAR2(30),
+  tran_cd             VARCHAR2(30),
+  tran_cd_name        VARCHAR2(100),
+  bank_acct_id        VARCHAR2(60),
+  vouch_type_cd       VARCHAR2(30),
+  vouch_id            VARCHAR2(60),
+  curr_cd             VARCHAR2(30),
+  tran_amt            NUMBER(30,2),
+  comm_fee            NUMBER(30,2),
+  tran_org_id         VARCHAR2(60),
+  operr_id            VARCHAR2(60),
+  auth_teller_id      VARCHAR2(60),
+  tran_chn_cd         VARCHAR2(30),
+  return_code         VARCHAR2(45),
+  return_info         VARCHAR2(1500),
+  policy_dt           DATE,
+  policy_cfm_flow_num VARCHAR2(150),
+  host_dt             DATE,
+  host_flow_num       VARCHAR2(150),
+  host_tran_cd        VARCHAR2(30),
+  host_return_code    VARCHAR2(45),
+  host_return_info    VARCHAR2(1500),
+  tran_status_cd      VARCHAR2(30),
+  tran_tm             VARCHAR2(45),
+  insure_print_id     VARCHAR2(100),
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW
+  is '保险交易流水';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.flow_num
+  is '流水号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.rela_flow_num
+  is '关联流水号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.ta_cd
+  is 'TA代码';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.prod_id
+  is '交易产品编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.insure_pl_num
+  is '保险单号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.cust_id
+  is '交易客户编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.tran_cd
+  is '交易代码';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.tran_cd_name
+  is '交易代码名称';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.bank_acct_id
+  is '银行账户编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.vouch_type_cd
+  is '凭证类型代码';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.vouch_id
+  is '凭证编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.comm_fee
+  is '手续费';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.operr_id
+  is '操作员编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.auth_teller_id
+  is '授权柜员编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.tran_chn_cd
+  is '交易渠道编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.return_code
+  is '返回码';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.return_info
+  is '返回信息';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.policy_dt
+  is '保单日期';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.policy_cfm_flow_num
+  is '保单确认流水号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.host_dt
+  is '主机日期';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.host_flow_num
+  is '主机流水号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.host_tran_cd
+  is '主机交易代码';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.host_return_code
+  is '主机返回码';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.host_return_info
+  is '主机返回信息';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.insure_print_id
+  is '保险打印单编号';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_EVT_INSURE_TRAN_FLOW.id_mark
+  is '删除标识';
+

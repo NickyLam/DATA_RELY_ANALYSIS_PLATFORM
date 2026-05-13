@@ -1,0 +1,24 @@
+﻿create table RRP_MDL.YANG_TEST
+(
+  owner                 VARCHAR2(100 CHAR),
+  depend_pro_name       VARCHAR2(100 CHAR),
+  run_finish            VARCHAR2(100 CHAR),
+  owner2                VARCHAR2(100 CHAR),
+  owner_table           VARCHAR2(100 CHAR),
+  owner_name            VARCHAR2(100 CHAR),
+  owner_ori_end_time    VARCHAR2(100 CHAR),
+  owner_module_end_time VARCHAR2(100 CHAR)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

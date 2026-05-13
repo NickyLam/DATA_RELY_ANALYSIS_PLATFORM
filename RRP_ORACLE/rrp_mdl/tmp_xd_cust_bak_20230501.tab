@@ -1,0 +1,15 @@
+﻿create table RRP_MDL.TMP_XD_CUST_BAK_20230501
+(
+  cust_id  VARCHAR2(60),
+  distr_dt DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.TMP_XD_CUST_BAK_20230501.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.TMP_XD_CUST_BAK_20230501.distr_dt
+  is '放款日期';
+

@@ -1,0 +1,186 @@
+﻿create table RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO
+(
+  etl_dt                   DATE,
+  lp_id                    VARCHAR2(60),
+  cust_acct_id             VARCHAR2(100),
+  cust_sub_acct_id         VARCHAR2(60),
+  ibank_obj_id             VARCHAR2(60),
+  asset_uniq_idf_id        VARCHAR2(100),
+  cust_id                  VARCHAR2(60),
+  subj_id                  VARCHAR2(60),
+  std_prod_id              VARCHAR2(100),
+  int_recvbl_subj_id       VARCHAR2(60),
+  acct_name                VARCHAR2(100),
+  open_bank_name           VARCHAR2(500),
+  open_bank_lp_org_cust_id VARCHAR2(60),
+  open_bank_lp_name        VARCHAR2(100),
+  open_acct_org_id         VARCHAR2(60),
+  open_dt                  DATE,
+  open_flow_num            VARCHAR2(100),
+  clos_acct_dt             DATE,
+  clos_acct_flow_num       VARCHAR2(100),
+  acct_cls_cd              VARCHAR2(60),
+  acct_char_cd             VARCHAR2(10),
+  acct_char_descb          VARCHAR2(500),
+  acct_attr_descb          VARCHAR2(500),
+  obank_open_org_dist      VARCHAR2(250),
+  obank_nation             VARCHAR2(250),
+  obank_cntpty_cls         VARCHAR2(250),
+  obank_open_org_lp_name   VARCHAR2(375),
+  obank_open_org_id        VARCHAR2(60),
+  obank_bank_no            VARCHAR2(375),
+  obank_swift_id           VARCHAR2(250),
+  obank_acct_id            VARCHAR2(250),
+  obank_acct_name          VARCHAR2(250),
+  obank_curr_bal           NUMBER(31,8),
+  obank_open_dt            DATE,
+  obank_clos_acct_dt       DATE,
+  int_start_dt             DATE,
+  int_end_dt               DATE,
+  exp_dt                   DATE,
+  acct_status_cd           VARCHAR2(60),
+  use_range_cd             VARCHAR2(10),
+  curr_cd                  VARCHAR2(60),
+  base_rat                 NUMBER(18,8),
+  int_rat_float_way_cd     VARCHAR2(60),
+  int_accr_base_cd         VARCHAR2(60),
+  cap_char_cd              VARCHAR2(10),
+  pay_int_freq             VARCHAR2(10),
+  int_rat_flo_val          NUMBER(18,8),
+  exec_int_rat             NUMBER(18,8),
+  int_recvbl               NUMBER(31,8),
+  currt_acru_int           NUMBER(30,2),
+  td_acru_int              NUMBER(30,2),
+  currt_bal                NUMBER(30,2),
+  cl_curr_currt_bal        NUMBER(30,2),
+  job_cd                   VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6),
+  acct_usage_cd            VARCHAR2(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO
+  is '存放同业账户信息';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.cust_acct_id
+  is '客户账户编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.cust_sub_acct_id
+  is '账户子账号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.ibank_obj_id
+  is '同业对象编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.asset_uniq_idf_id
+  is '资产唯一标识编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.int_recvbl_subj_id
+  is '应收利息科目编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.open_bank_name
+  is '开户行名称';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.open_bank_lp_org_cust_id
+  is '开户行法人机构客户编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.open_bank_lp_name
+  is '开户行法人名称';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.open_acct_org_id
+  is '开户机构编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.open_dt
+  is '开户日期';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.open_flow_num
+  is '开户流水号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.clos_acct_dt
+  is '销户日期';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.clos_acct_flow_num
+  is '销户流水号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.acct_cls_cd
+  is '账户分类代码';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.acct_char_cd
+  is '账户性质代码';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.acct_char_descb
+  is '账户性质描述';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.acct_attr_descb
+  is '账户属性描述';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_open_org_dist
+  is '他行开户机构行政区划';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_nation
+  is '他行国籍';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_cntpty_cls
+  is '他行交易对手分类';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_open_org_lp_name
+  is '他行开户机构法人名称';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_open_org_id
+  is '他行开户机构编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_bank_no
+  is '他行银行行号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_swift_id
+  is '他行SWIFT编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_acct_id
+  is '他行账户编号';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_acct_name
+  is '他行账户名称';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_curr_bal
+  is '他行当前余额';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_open_dt
+  is '他行开户日期';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.obank_clos_acct_dt
+  is '他行销户日期';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.int_start_dt
+  is '计息开始日期';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.int_end_dt
+  is '计息结束日期';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.acct_status_cd
+  is '账户状态代码';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.use_range_cd
+  is '使用范围代码';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.base_rat
+  is '基准利率';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.int_rat_float_way_cd
+  is '利率浮动方式代码';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.int_accr_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.cap_char_cd
+  is '资金性质代码';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.pay_int_freq
+  is '付息频率';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.int_rat_flo_val
+  is '利率浮动值';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.int_recvbl
+  is '应收利息';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.currt_acru_int
+  is '当期应计利息';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.td_acru_int
+  is '当日应计利息';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.cl_curr_currt_bal
+  is '折本币当期余额';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.etl_timestamp
+  is '数据处理时间';
+comment on column RRP_MDL.O_ICL_CMM_NOSTRO_ACCT_INFO.acct_usage_cd
+  is '账户用途代码';
+

@@ -1,0 +1,75 @@
+﻿create table RRP_MDL.O_IOL_ICMS_FINA_ROW
+(
+  rowno         NUMBER(22),
+  sheetno       VARCHAR2(64),
+  subjectno     VARCHAR2(32),
+  valueone      VARCHAR2(25),
+  valuetwo      VARCHAR2(25),
+  inputuserid   VARCHAR2(32),
+  inputorgid    VARCHAR2(32),
+  inputdate     DATE,
+  updateuserid  VARCHAR2(32),
+  updateorgid   VARCHAR2(32),
+  updatedate    DATE,
+  rowname       VARCHAR2(160),
+  displayorder  VARCHAR2(32),
+  valuethree    NUMBER(24,6),
+  valuefour     NUMBER(24,6),
+  standardvalue NUMBER(24,6),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_FINA_ROW
+  is '财报行数据;财报数据 原表名: report_data';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.rowno
+  is '行号';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.sheetno
+  is '报表号';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.subjectno
+  is '科目';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.valueone
+  is '值一';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.valuetwo
+  is '值二';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.inputdate
+  is '登记日期登记日期时间';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.rowname
+  is '行名称';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.displayorder
+  is '显示次序';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.valuethree
+  is '列3值';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.valuefour
+  is '列4值';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.standardvalue
+  is '标准值';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_ROW.id_mark
+  is '增删标志';
+

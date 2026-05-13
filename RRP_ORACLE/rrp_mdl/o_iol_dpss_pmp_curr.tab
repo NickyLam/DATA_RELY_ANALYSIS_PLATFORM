@@ -1,0 +1,71 @@
+﻿create table RRP_MDL.O_IOL_DPSS_PMP_CURR
+(
+  ledge_cod             VARCHAR2(4),
+  byname                VARCHAR2(10),
+  curr_code             VARCHAR2(2),
+  curr_nam              VARCHAR2(12),
+  curr_simple           VARCHAR2(3),
+  curr_sign             VARCHAR2(3),
+  issu_nation_cod       VARCHAR2(3),
+  add_curr_carry        VARCHAR2(3),
+  price_decimal         NUMBER(10),
+  min_cur_unit          NUMBER(10),
+  min_unit              NUMBER(10),
+  min_accunit           NUMBER(10),
+  rsv_amt_unit          NUMBER(10),
+  draw_cash_lmt         NUMBER(17,2),
+  curr_lvl              VARCHAR2(1),
+  join_other_curr_flg   VARCHAR2(1),
+  join_curr             VARCHAR2(2),
+  commonwealth_curr_flg VARCHAR2(1),
+  dat_expln             VARCHAR2(128),
+  resv_lfield           VARCHAR2(200),
+  mod_date              VARCHAR2(8),
+  mod_time              NUMBER(10),
+  mod_opr               VARCHAR2(8),
+  mod_unit              VARCHAR2(10),
+  row_cnt               VARCHAR2(32),
+  time_sign             NUMBER(16),
+  record_sts            VARCHAR2(1),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_DPSS_PMP_CURR
+  is '货币参数表';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.ledge_cod
+  is '法人代码';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.curr_code
+  is '币种编码';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.curr_lvl
+  is '最终风险等级  t1h_risk_lvl_map';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.dat_expln
+  is '说明';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.resv_lfield
+  is '备用字段';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.mod_date
+  is '维护日期';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.mod_time
+  is '维护时间';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.mod_opr
+  is '维护柜员';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.mod_unit
+  is '维护机构代码';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.row_cnt
+  is '序列号';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.time_sign
+  is '时间戳';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.record_sts
+  is '移植标志 0-已移出 1-移出错 2-已移入 3-移入错';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_DPSS_PMP_CURR.id_mark
+  is '增删标志';
+

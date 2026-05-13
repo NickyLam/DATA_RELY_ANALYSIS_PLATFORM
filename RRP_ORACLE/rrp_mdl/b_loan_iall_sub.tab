@@ -1,0 +1,77 @@
+﻿create table RRP_MDL.B_LOAN_IALL_SUB
+(
+  data_dt          CHAR(8) not null,
+  lgl_rep_id       VARCHAR2(200),
+  cust_id          VARCHAR2(200) not null,
+  org_id           VARCHAR2(200),
+  acc_id           VARCHAR2(200),
+  invest_obj_id    VARCHAR2(200),
+  seq_no           VARCHAR2(200),
+  coop_co_id       VARCHAR2(200),
+  iall_typ         VARCHAR2(10),
+  cur              CHAR(3),
+  biz_dt           CHAR(8),
+  invest_mode      VARCHAR2(10),
+  invest_amt       NUMBER(30,2),
+  book_bal         NUMBER(30,2),
+  year_profit_loss NUMBER(30,2),
+  dept_line        VARCHAR2(500),
+  data_src         VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_LOAN_IALL_SUB
+  is '投贷联动贷款子表';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.cust_id
+  is '客户编号';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.acc_id
+  is '账户编号';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.invest_obj_id
+  is '投资对象编号';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.seq_no
+  is '流水号';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.coop_co_id
+  is '合作公司编号';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.iall_typ
+  is '投贷联动类型';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.cur
+  is '币种';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.biz_dt
+  is '业务发生日期';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.invest_mode
+  is '投资方式';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.invest_amt
+  is '投资金额';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.book_bal
+  is '账面余额';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.year_profit_loss
+  is '当年损益';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_LOAN_IALL_SUB.data_src
+  is '数据来源';
+alter table RRP_MDL.B_LOAN_IALL_SUB
+  add constraint PK_B_LOAN_IALL_SUB primary key (DATA_DT, CUST_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

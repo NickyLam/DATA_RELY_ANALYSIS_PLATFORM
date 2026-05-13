@@ -1,0 +1,132 @@
+﻿create table RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01
+(
+  data_dt         CHAR(8) not null,
+  lgl_rep_id      VARCHAR2(200),
+  tra_seq_no      VARCHAR2(200) not null,
+  acc_id          VARCHAR2(200) not null,
+  ext_acc         VARCHAR2(200),
+  cust_id         VARCHAR2(200),
+  cust_nm         VARCHAR2(500),
+  org_id          VARCHAR2(200),
+  subj_id         VARCHAR2(200),
+  cur             CHAR(3),
+  corp_ind_flg    CHAR(1),
+  time_dmd_flg    CHAR(1),
+  tra_amt         NUMBER(30,2),
+  open_acc_org_id VARCHAR2(500),
+  hdl_org_id      VARCHAR2(200),
+  acc_bal         NUMBER(30,2),
+  opp_acc         VARCHAR2(200),
+  opp_acc_nm      VARCHAR2(500),
+  opp_pbc_no      VARCHAR2(200),
+  opp_bank_nm     VARCHAR2(500),
+  tra_chan        VARCHAR2(10),
+  cash_trf_flg    CHAR(1),
+  agt_nm          VARCHAR2(500),
+  agt_crdl_typ    VARCHAR2(10),
+  agt_crdl_no     VARCHAR2(100),
+  tra_tlr_no      VARCHAR2(30),
+  grant_tlr_no    VARCHAR2(30),
+  abstr           VARCHAR2(2000),
+  flush_patch_flg CHAR(1),
+  tra_dr_cr_flg   CHAR(1),
+  adv_draw_flg    CHAR(1),
+  tra_dt          CHAR(8),
+  tra_tm          TIMESTAMP(6),
+  tra_med_typ     VARCHAR2(10),
+  tra_typ         VARCHAR2(10),
+  dep_in_out_flg  VARCHAR2(10),
+  ip              VARCHAR2(500),
+  mac             VARCHAR2(500),
+  postscript      VARCHAR2(2000),
+  dept_line       VARCHAR2(500),
+  data_src        VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.tra_seq_no
+  is '交易流水号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.acc_id
+  is '账户编号:EF05AI01';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.ext_acc
+  is '外部账号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.cust_nm
+  is '客户名称';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.org_id
+  is '银行编号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.subj_id
+  is '科目编号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.cur
+  is '账号币种';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.corp_ind_flg
+  is '对公对私标志';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.time_dmd_flg
+  is '定活标志';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.tra_amt
+  is '交易金额';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.open_acc_org_id
+  is '开户机构';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.hdl_org_id
+  is '经办机构编号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.acc_bal
+  is '累计余额';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.opp_acc
+  is '对方账号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.opp_acc_nm
+  is '交易对手户名';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.opp_pbc_no
+  is '对方行号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.opp_bank_nm
+  is '交易对手行名';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.tra_chan
+  is '交易渠道';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.cash_trf_flg
+  is '现转标志';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.agt_nm
+  is '代办人姓名';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.agt_crdl_typ
+  is '代办人证件类型';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.agt_crdl_no
+  is '代办人证件号码';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.tra_tlr_no
+  is '交易柜员号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.grant_tlr_no
+  is '授权柜员号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.abstr
+  is '摘要';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.flush_patch_flg
+  is '冲补抹标志';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.tra_dr_cr_flg
+  is '交易借贷标志';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.adv_draw_flg
+  is '可提前支取标志';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.tra_dt
+  is '成交日期';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.tra_tm
+  is '交易时间';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.tra_med_typ
+  is '交易介质类型';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.tra_typ
+  is '交易类型';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.dep_in_out_flg
+  is '存入存出类型';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.ip
+  is 'IP地址';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.mac
+  is 'mac地址';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.postscript
+  is '附言';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP01.data_src
+  is '数据来源（参见[字典:AML0045]）';
+

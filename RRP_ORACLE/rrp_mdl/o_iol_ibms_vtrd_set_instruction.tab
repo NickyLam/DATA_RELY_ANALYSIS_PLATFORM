@@ -1,0 +1,141 @@
+﻿create table RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION
+(
+  inst_id           NUMBER(16),
+  trade_id          VARCHAR2(45),
+  inst_type         NUMBER,
+  inst_grp_id       NUMBER(16),
+  trd_type          VARCHAR2(15),
+  set_type          VARCHAR2(30),
+  theory_set_date   VARCHAR2(15),
+  real_set_date     VARCHAR2(15),
+  h_m_type          VARCHAR2(30),
+  h_a_type          VARCHAR2(30),
+  h_i_code          VARCHAR2(75),
+  party_id          NUMBER,
+  party_name        VARCHAR2(300),
+  order_id          VARCHAR2(75),
+  is_theory_payment VARCHAR2(2),
+  bj_market         VARCHAR2(30),
+  bj_state          NUMBER,
+  ext_ord_id        VARCHAR2(75),
+  exe_market        VARCHAR2(45),
+  create_time       VARCHAR2(29),
+  update_time       VARCHAR2(35),
+  update_user       VARCHAR2(150),
+  account_time      VARCHAR2(29),
+  account_user      VARCHAR2(30),
+  memo              VARCHAR2(750),
+  update_user_id    VARCHAR2(45),
+  cal_date          VARCHAR2(15),
+  ref_cash_inst_id  NUMBER(16),
+  ref_secu_inst_id  NUMBER(16),
+  inst_setgrp_id    NUMBER(16),
+  state             NUMBER(16),
+  operator_id       VARCHAR2(45),
+  operator_name     VARCHAR2(150),
+  print_times       NUMBER,
+  due_order         VARCHAR2(2),
+  due_obj_key       NUMBER(16),
+  generate_type     NUMBER,
+  ref_inst_id       NUMBER(16),
+  is_real_acctg     VARCHAR2(2),
+  etl_dt            DATE,
+  etl_timestamp     TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION
+  is '主指令表(视图)';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.inst_id
+  is '指令id';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.trade_id
+  is '交易单号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.inst_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.inst_grp_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.trd_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.set_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.theory_set_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.real_set_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.h_m_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.h_a_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.h_i_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.party_name
+  is '当事人名称';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.order_id
+  is '序列编号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.is_theory_payment
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.bj_market
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.bj_state
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.ext_ord_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.exe_market
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.update_user
+  is '更新人员';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.account_time
+  is '复核时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.account_user
+  is '复核人员';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.update_user_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.cal_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.ref_cash_inst_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.ref_secu_inst_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.inst_setgrp_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.state
+  is '国家名称';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.operator_id
+  is '操作人ID';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.operator_name
+  is '经办人姓名';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.print_times
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.due_order
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.due_obj_key
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.generate_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.ref_inst_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.is_real_acctg
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION.etl_timestamp
+  is 'etl处理时间';
+

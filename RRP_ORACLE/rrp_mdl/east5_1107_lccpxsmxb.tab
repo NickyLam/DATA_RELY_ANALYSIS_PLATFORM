@@ -1,0 +1,132 @@
+﻿create table RRP_MDL.EAST5_1107_LCCPXSMXB
+(
+  rid        VARCHAR2(50) not null,
+  htbh       VARCHAR2(100),
+  jyxlh      VARCHAR2(100) not null,
+  jrxkzh     VARCHAR2(30),
+  fxjgdm     VARCHAR2(30),
+  fxjgmc     VARCHAR2(450),
+  khmc       VARCHAR2(150),
+  khzjlb     VARCHAR2(60),
+  khzjhm     VARCHAR2(70),
+  glhqckzh   VARCHAR2(60),
+  glzhkhh    VARCHAR2(450),
+  glzhkhszd  VARCHAR2(2000),
+  sfdx       VARCHAR2(3),
+  dxjgmc     VARCHAR2(450),
+  dxjgjrjgdm VARCHAR2(30),
+  dxjgssjgbm VARCHAR2(30),
+  lccpdm     VARCHAR2(200),
+  lccpmc     VARCHAR2(300),
+  cpdjbm     VARCHAR2(30),
+  ywzl       VARCHAR2(60),
+  bz         VARCHAR2(3),
+  ywqrrq     VARCHAR2(8) not null,
+  ywqrsj     VARCHAR2(6),
+  qrjz       NUMBER(20,6),
+  qrje       NUMBER(20,2),
+  zsrmbje    NUMBER(20,2),
+  qrfe       NUMBER(20,6),
+  sxfje      NUMBER(20,2),
+  jyqd       VARCHAR2(60),
+  jygyh      VARCHAR2(30),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8) not null,
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  address    VARCHAR2(200)
+)
+partition by list (YWQRRQ)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace USERS
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.EAST5_1107_LCCPXSMXB
+  is '理财产品销售明细表';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.htbh
+  is '合同编号';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.jyxlh
+  is '交易序列号';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.fxjgdm
+  is '发行机构代码';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.fxjgmc
+  is '发行机构名称';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.khmc
+  is '客户名称';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.khzjlb
+  is '客户证件类别';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.khzjhm
+  is '客户证件号码';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.glhqckzh
+  is '客户理财交易账号';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.glzhkhh
+  is '客户理财交易账号开户行';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.glzhkhszd
+  is '关联账号开户所在地';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.sfdx
+  is '是否代销';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.dxjgmc
+  is '代销机构名称';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.dxjgjrjgdm
+  is '代销机构代码';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.dxjgssjgbm
+  is '代销机构所属监管机构';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.lccpdm
+  is '理财产品代码';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.lccpmc
+  is '理财产品名称';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.cpdjbm
+  is '产品登记编码';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.ywzl
+  is '业务种类';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.bz
+  is '币种';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.ywqrrq
+  is '业务确认日期';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.ywqrsj
+  is '业务确认时间';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.qrjz
+  is '确认净值';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.qrje
+  is '确认金额';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.zsrmbje
+  is '折算人民币金额';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.qrfe
+  is '确认份额';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.sxfje
+  is '手续费金额';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.jyqd
+  is '交易渠道';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.jygyh
+  is '交易柜员号';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.cjrq
+  is '采集日期';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.org_no
+  is '报送机构';
+comment on column RRP_MDL.EAST5_1107_LCCPXSMXB.address
+  is '归属地';
+alter table RRP_MDL.EAST5_1107_LCCPXSMXB
+  add primary key (CJRQ, RID, JYXLH, YWQRRQ)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

@@ -1,0 +1,83 @@
+﻿create table RRP_MDL.IMAS_112_DGKHXX_ALL
+(
+  rid                     VARCHAR2(50) not null,
+  data_dt                 VARCHAR2(10),
+  cust_no                 VARCHAR2(30),
+  org_no                  VARCHAR2(30),
+  prin_econ_dept          VARCHAR2(5),
+  fin_org_type_no         VARCHAR2(3),
+  ent_scale               VARCHAR2(6),
+  holding_type            VARCHAR2(5),
+  domestic_overseas_signs VARCHAR2(1),
+  area_cd                 VARCHAR2(6),
+  reg_addr                VARCHAR2(600),
+  credit_amt              NUMBER(22,2),
+  use_credit_amt          NUMBER(22,2),
+  ind_cd                  VARCHAR2(3),
+  rural_city_sign         VARCHAR2(1),
+  c_cust_type             VARCHAR2(100),
+  cust_nm                 VARCHAR2(750),
+  org_nm                  VARCHAR2(750),
+  lp_org_cust_id          VARCHAR2(100),
+  dept_no                 VARCHAR2(30),
+  issued_no               VARCHAR2(20),
+  rpt_org_no              VARCHAR2(20),
+  data_ources             VARCHAR2(3),
+  data_modify             VARCHAR2(2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.IMAS_112_DGKHXX_ALL
+  is '对公客户信息全量表';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.rid
+  is '数据主键';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.data_dt
+  is '数据日期';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.cust_no
+  is '交易客户编号';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.org_no
+  is '所属机构';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.prin_econ_dept
+  is '国民经济部门分类';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.fin_org_type_no
+  is '金融机构类型代码';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.ent_scale
+  is '企业规模';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.holding_type
+  is '控股类型';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.domestic_overseas_signs
+  is '境内境外标志';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.area_cd
+  is '经营所在地行政区划代码';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.reg_addr
+  is '注册地址';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.credit_amt
+  is '授信总额';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.use_credit_amt
+  is '已用额度';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.ind_cd
+  is '所属行业';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.rural_city_sign
+  is '农村城市标志';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.c_cust_type
+  is '借款人类型';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.cust_nm
+  is '客户名称';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.org_nm
+  is '所属机构名称';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.lp_org_cust_id
+  is '交易对手对应法人核心客户号';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.dept_no
+  is '部门编号';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.issued_no
+  is '填报机构';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.rpt_org_no
+  is '报送机构号';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.data_ources
+  is '数据来源';
+comment on column RRP_MDL.IMAS_112_DGKHXX_ALL.data_modify
+  is '数据修改';
+

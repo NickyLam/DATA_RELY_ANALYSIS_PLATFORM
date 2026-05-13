@@ -1,0 +1,138 @@
+﻿create table RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO
+(
+  channeldate                   DATE,
+  chan_biz_seq_num              VARCHAR2(64),
+  tx_seq_num                    VARCHAR2(33),
+  orig_tx_seq_num               VARCHAR2(33),
+  orig_core_tran_flow_num       VARCHAR2(33),
+  blip_id                       VARCHAR2(255),
+  isagent                       VARCHAR2(2),
+  agent_person_name             VARCHAR2(200),
+  agent_person_cert_type_cd     VARCHAR2(4),
+  agent_person_cert_num         VARCHAR2(60),
+  agent_person_tel_num          VARCHAR2(30),
+  agent_person_nation_cd        VARCHAR2(3),
+  agent_gender_cd               VARCHAR2(1),
+  agent_career_typeone_code     VARCHAR2(10),
+  agent_career_typeone          VARCHAR2(100),
+  agent_career_typetwo_code     VARCHAR2(10),
+  agent_career_typetwo          VARCHAR2(100),
+  agent_career_cd               VARCHAR2(255),
+  agent_person_provincecode     VARCHAR2(10),
+  agent_person_province         VARCHAR2(100),
+  agent_person_citycode         VARCHAR2(10),
+  agent_person_city             VARCHAR2(100),
+  agent_person_countycode       VARCHAR2(10),
+  agent_person_county           VARCHAR2(100),
+  agent_person_contact_adr      VARCHAR2(512),
+  agent_person_auth_adr         VARCHAR2(512),
+  agent_person_start_dt         VARCHAR2(8),
+  agent_person_end_dt           VARCHAR2(8),
+  agent_type                    VARCHAR2(1),
+  agent_person_reason           VARCHAR2(256),
+  agent_person_networkchk_serno VARCHAR2(36),
+  agent_person_networkchk_ret   VARCHAR2(4),
+  agent_person_faceident_res    VARCHAR2(8),
+  agent_person_faceident_score  VARCHAR2(8),
+  agent_person_handchk_ret      VARCHAR2(3),
+  note1                         VARCHAR2(100),
+  note2                         VARCHAR2(200),
+  orig_channeldate              DATE,
+  etl_dt                        DATE,
+  etl_timestamp                 TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO
+  is '代理人补录登记簿';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.channeldate
+  is '渠道日期';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.chan_biz_seq_num
+  is '渠道流水号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.tx_seq_num
+  is '业务流水号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.orig_tx_seq_num
+  is '原交易业务流水号（交易订单号）';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.orig_core_tran_flow_num
+  is '原交易全局流水号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.blip_id
+  is '影像批次号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.isagent
+  is '是否代办';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_name
+  is '代办人名称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_cert_type_cd
+  is '代办人证件类型';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_cert_num
+  is '代办人证件号码';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_tel_num
+  is '代办人手机号或代办人电话号码';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_nation_cd
+  is '代办人国籍';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_gender_cd
+  is '代办人性别';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_career_typeone_code
+  is '代办人职业-分类1代码';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_career_typeone
+  is '代办人职业-分类1名称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_career_typetwo_code
+  is '代办人职业-分类2代码';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_career_typetwo
+  is '代办人职业-分类2名称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_career_cd
+  is '代办人职业（详细说明）';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_provincecode
+  is '代办人联系地址-省代码';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_province
+  is '代办人联系地址-省名称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_citycode
+  is '代办人联系地址-市代码';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_city
+  is '代办人联系地址-市名称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_countycode
+  is '代办人联系地址-区代码';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_county
+  is '代办人联系地址-区名称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_contact_adr
+  is '代办人联系地址（详细地址）';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_auth_adr
+  is '代办人发证机关地址';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_start_dt
+  is '代办人证件开始日期';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_end_dt
+  is '代办人证件到期日期';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_type
+  is '代理人类型（1-普通代理；2-监护代理；3-经办人办理）';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_reason
+  is '代办理由';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_networkchk_serno
+  is '代办人联网核查流水号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_networkchk_ret
+  is '代办人联网核查结果';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_faceident_res
+  is '代办人人脸识别结果';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_faceident_score
+  is '代办人人脸识别分数';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.agent_person_handchk_ret
+  is '代办人手工审定结果 1-通过 2-强制通过 3-不通过';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.note1
+  is '备用1';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.note2
+  is '备用2';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.orig_channeldate
+  is '原交易渠道日期';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_NIBS_IB_LOG_AGENTFILL_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

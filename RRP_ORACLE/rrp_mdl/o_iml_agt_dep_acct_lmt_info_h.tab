@@ -1,0 +1,327 @@
+﻿create table RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H
+(
+  agt_id                     VARCHAR2(250),
+  lp_id                      VARCHAR2(100),
+  acct_id                    VARCHAR2(100),
+  tran_lmt_type_cd           VARCHAR2(30),
+  lmt_id                     VARCHAR2(100),
+  acct_lmt_status_cd         VARCHAR2(30),
+  lmt_acct_range_cd          VARCHAR2(30),
+  acct_lmt_amt               NUMBER(30,2),
+  sub_lmt_cate_cd            VARCHAR2(30),
+  actl_ctrl_amt              NUMBER(30,2),
+  actl_effect_dt             DATE,
+  effect_dt                  DATE,
+  invalid_dt                 DATE,
+  ova_flow_num               VARCHAR2(100),
+  cust_id                    VARCHAR2(100),
+  cust_name                  VARCHAR2(500),
+  dep_tenor                  NUMBER(10),
+  tenor_type_cd              VARCHAR2(30),
+  acct_aldy_check_flg        VARCHAR2(10),
+  acct_check_dt              DATE,
+  tran_ref_no                VARCHAR2(60),
+  tran_cd                    VARCHAR2(30),
+  tran_chn_cd                VARCHAR2(30),
+  tran_memo_descb            VARCHAR2(500),
+  tran_dt                    DATE,
+  tran_tm                    TIMESTAMP(6),
+  tran_amt                   NUMBER(30,2),
+  tran_teller_id             VARCHAR2(100),
+  tran_org_id                VARCHAR2(100),
+  cntpty_acct_prod_id        VARCHAR2(100),
+  cntpty_acct_id             VARCHAR2(100),
+  cntpty_acct_name           VARCHAR2(1000),
+  cntpty_cust_acct_num       VARCHAR2(60),
+  cntpty_curr_cd             VARCHAR2(30),
+  cntpty_open_acct_org_id    VARCHAR2(100),
+  vouch_type_cd              VARCHAR2(30),
+  begin_check_id             VARCHAR2(100),
+  begin_amt                  NUMBER(30,2),
+  termnt_check_id            VARCHAR2(100),
+  stop_amt                   NUMBER(30,2),
+  aldy_paid_amt              NUMBER(30,2),
+  pay_amt                    NUMBER(30,2),
+  tot_pay_cnt                NUMBER(10),
+  aldy_pay_cnt               NUMBER(10),
+  interp_flg                 VARCHAR2(10),
+  pm_flg                     VARCHAR2(10),
+  mtg_acct_id                VARCHAR2(100),
+  mtg_cust_acct_num          VARCHAR2(60),
+  mtg_acct_curr_cd           VARCHAR2(30),
+  mtg_acct_type_cd           VARCHAR2(30),
+  matn_way_cd                VARCHAR2(30),
+  stl_flow_id                VARCHAR2(100),
+  check_entry_code           VARCHAR2(60),
+  revs_flg                   VARCHAR2(10),
+  wait_to_froz_seq_num       VARCHAR2(60),
+  full_amt_froz_flg          VARCHAR2(10),
+  ct_froz_flg                VARCHAR2(10),
+  froz_org_name              VARCHAR2(500),
+  froz_org_law_doc_num       VARCHAR2(250),
+  froz_lev                   VARCHAR2(30),
+  unfrz_org_name             VARCHAR2(500),
+  unfrz_org_law_doc_num      VARCHAR2(250),
+  unloss_tm                  TIMESTAMP(6),
+  unloss_teller_id           VARCHAR2(100),
+  can_deduct_amt             NUMBER(30,2),
+  deduct_law_doc_num         VARCHAR2(60),
+  auth_org_name              VARCHAR2(500),
+  exec_org_cd                VARCHAR2(30),
+  asit_exec_item             VARCHAR2(500),
+  enforc_ps_1_name           VARCHAR2(500),
+  enforc_ps_1_cert_a_type_cd VARCHAR2(30),
+  enforc_ps_1_cert_a_no      VARCHAR2(250),
+  enforc_ps_1_cert_b_type_cd VARCHAR2(30),
+  enforc_ps_1_cert_b_no      VARCHAR2(250),
+  enforc_ps_2_name           VARCHAR2(500),
+  enforc_ps_2_cert_a_type_cd VARCHAR2(30),
+  enforc_ps_2_cert_a_no      VARCHAR2(60),
+  enforc_ps_2_cert_b_type_cd VARCHAR2(30),
+  enforc_ps_2_cert_b_no      VARCHAR2(60),
+  operr_1_name               VARCHAR2(500),
+  operr_1_cert_a_type_cd     VARCHAR2(30),
+  operr_1_cert_a_no          VARCHAR2(60),
+  operr_1_cert_b_type_cd     VARCHAR2(30),
+  operr_1_cert_b_no          VARCHAR2(60),
+  operr_2_name               VARCHAR2(500),
+  operr_2_cert_a_type_cd     VARCHAR2(30),
+  operr_2_cert_a_no          VARCHAR2(60),
+  operr_2_cert_b_type_cd     VARCHAR2(30),
+  operr_2_cert_b_no          VARCHAR2(60),
+  proof_cate_cd              VARCHAR2(30),
+  src_module_type_cd         VARCHAR2(30),
+  sign_chn_id                VARCHAR2(100),
+  sign_teller_id             VARCHAR2(60),
+  check_teller_id            VARCHAR2(100),
+  auth_teller_id             VARCHAR2(100),
+  final_modif_dt             DATE,
+  final_modif_teller_id      VARCHAR2(100),
+  start_dt                   DATE,
+  end_dt                     DATE,
+  id_mark                    VARCHAR2(10),
+  src_table_name             VARCHAR2(100),
+  job_cd                     VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H
+  is '存款账户限制信息历史';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tran_lmt_type_cd
+  is '交易限制类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.lmt_id
+  is '限制编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.acct_lmt_status_cd
+  is '账户限制状态代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.lmt_acct_range_cd
+  is '限制账户范围代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.acct_lmt_amt
+  is '账户限制金额';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.sub_lmt_cate_cd
+  is '子限制类别代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.actl_ctrl_amt
+  is '实际控制金额';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.actl_effect_dt
+  is '实际生效日期';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.effect_dt
+  is '生效日期';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.invalid_dt
+  is '失效日期';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.ova_flow_num
+  is '全局流水号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.dep_tenor
+  is '存款期限';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tenor_type_cd
+  is '期限类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.acct_aldy_check_flg
+  is '账户已复核标志';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.acct_check_dt
+  is '账户复核日期';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tran_ref_no
+  is '交易参考号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tran_cd
+  is '交易码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tran_chn_cd
+  is '交易渠道代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tran_memo_descb
+  is '交易摘要描述';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.cntpty_acct_prod_id
+  is '交易对手账户产品编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.cntpty_acct_id
+  is '交易对手账户编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.cntpty_acct_name
+  is '交易对手账户名称';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.cntpty_cust_acct_num
+  is '交易对手客户账号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.cntpty_curr_cd
+  is '交易对手币种代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.cntpty_open_acct_org_id
+  is '交易对手开户机构编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.vouch_type_cd
+  is '凭证类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.begin_check_id
+  is '起始支票编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.begin_amt
+  is '起始金额';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.termnt_check_id
+  is '终止支票编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.stop_amt
+  is '截止金额';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.aldy_paid_amt
+  is '已还金额';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.pay_amt
+  is '支付金额';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.tot_pay_cnt
+  is '总支付笔数';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.aldy_pay_cnt
+  is '已支付笔数';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.interp_flg
+  is '中断标志';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.pm_flg
+  is '抵质押标志';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.mtg_acct_id
+  is '抵押账户编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.mtg_cust_acct_num
+  is '抵押客户账号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.mtg_acct_curr_cd
+  is '抵押账户币种代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.mtg_acct_type_cd
+  is '抵押账户类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.matn_way_cd
+  is '维护方式代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.stl_flow_id
+  is '结算流水编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.check_entry_code
+  is '对账编码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.revs_flg
+  is '冲正标志';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.wait_to_froz_seq_num
+  is '轮候冻结序号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.full_amt_froz_flg
+  is '全额冻结标志';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.ct_froz_flg
+  is '续冻标志';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.froz_org_name
+  is '冻结机关名称';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.froz_org_law_doc_num
+  is '冻结机关法律文书号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.froz_lev
+  is '冻结级别';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.unfrz_org_name
+  is '解冻机关名称';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.unfrz_org_law_doc_num
+  is '解冻机关法律文书号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.unloss_tm
+  is '解挂时间';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.unloss_teller_id
+  is '解挂柜员编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.can_deduct_amt
+  is '可扣划金额';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.deduct_law_doc_num
+  is '扣划法律文书号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.auth_org_name
+  is '有权机关名称';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.exec_org_cd
+  is '执行机关代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.asit_exec_item
+  is '协助执行事项';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.enforc_ps_1_name
+  is '执法人1名称';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.enforc_ps_1_cert_a_type_cd
+  is '执法人1证件A类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.enforc_ps_1_cert_a_no
+  is '执法人1证件A号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.enforc_ps_1_cert_b_type_cd
+  is '执法人1证件B类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.enforc_ps_1_cert_b_no
+  is '执法人1证件B号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.enforc_ps_2_name
+  is '执法人2名称';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.enforc_ps_2_cert_a_type_cd
+  is '执法人2证件A类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.enforc_ps_2_cert_a_no
+  is '执法人2证件A号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.enforc_ps_2_cert_b_type_cd
+  is '执法人2证件B类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.enforc_ps_2_cert_b_no
+  is '执法人2证件B号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.operr_1_name
+  is '经办人1名称';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.operr_1_cert_a_type_cd
+  is '经办人1证件A类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.operr_1_cert_a_no
+  is '经办人1证件A号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.operr_1_cert_b_type_cd
+  is '经办人1证件B类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.operr_1_cert_b_no
+  is '经办人1证件B号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.operr_2_name
+  is '经办人2名称';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.operr_2_cert_a_type_cd
+  is '经办人2证件A类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.operr_2_cert_a_no
+  is '经办人2证件A号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.operr_2_cert_b_type_cd
+  is '经办人2证件B类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.operr_2_cert_b_no
+  is '经办人2证件B号码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.proof_cate_cd
+  is '证明人证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.src_module_type_cd
+  is '源模块类型代码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.sign_chn_id
+  is '签约渠道编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.sign_teller_id
+  is '签约柜员编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.check_teller_id
+  is '复核柜员编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.auth_teller_id
+  is '授权柜员编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.final_modif_dt
+  is '最后修改日期';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.final_modif_teller_id
+  is '最后修改柜员编号';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_DEP_ACCT_LMT_INFO_H.etl_timestamp
+  is 'ETL处理时间戳';
+

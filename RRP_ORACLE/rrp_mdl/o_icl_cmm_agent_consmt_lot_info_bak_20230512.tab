@@ -1,0 +1,161 @@
+﻿create table RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512
+(
+  etl_dt              DATE,
+  lp_id               VARCHAR2(60),
+  ta_cd               VARCHAR2(10),
+  prod_id             VARCHAR2(60),
+  std_prod_id         VARCHAR2(60),
+  tran_acct_id        VARCHAR2(60),
+  consmt_bus_type_cd  VARCHAR2(10),
+  cap_stl_acct_num    VARCHAR2(60),
+  cust_id             VARCHAR2(60),
+  cont_id             VARCHAR2(60),
+  belong_org_id       VARCHAR2(60),
+  bank_id             VARCHAR2(60),
+  seller_id           VARCHAR2(60),
+  ec_flg_cd           VARCHAR2(10),
+  divd_way_cd         VARCHAR2(10),
+  cust_type_cd        VARCHAR2(10),
+  lot_type_cd         VARCHAR2(10),
+  fir_subscr_dt       DATE,
+  final_activ_acct_dt DATE,
+  actl_value_dt       DATE,
+  actl_exp_dt         DATE,
+  divd_ratio          NUMBER(18,8),
+  yld_rat             NUMBER(18,8),
+  acm_prft            NUMBER(30,2),
+  unpaid_prft         NUMBER(30,2),
+  froz_unpaid_prft    NUMBER(30,2),
+  curr_issue_prft     NUMBER(30,2),
+  td_prft             NUMBER(30,2),
+  tran_froz_lot       NUMBER(30,2),
+  lonterm_froz_lot    NUMBER(30,2),
+  loc_froz_lot        NUMBER(30,2),
+  ld_tot_lot          NUMBER(30,2),
+  uncfm_prod_amt      NUMBER(30,2),
+  redem_amt           NUMBER(30,2),
+  buy_cost            NUMBER(30,2),
+  tot_lot             NUMBER(30,2),
+  nv                  NUMBER(18,8),
+  curr_bal            NUMBER(30,2),
+  ear_d_bal           NUMBER(30,2),
+  ear_m_bal           NUMBER(30,2),
+  ear_s_bal           NUMBER(30,2),
+  ear_y_bal           NUMBER(30,2),
+  y_acm_bal           NUMBER(30,2),
+  s_acm_bal           NUMBER(30,2),
+  m_acm_bal           NUMBER(30,2),
+  y_avg_bal           NUMBER(30,2),
+  q_avg_bal           NUMBER(30,2),
+  m_avg_bal           NUMBER(30,2),
+  job_cd              VARCHAR2(10),
+  etl_timestamp       TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512
+  is '代理代销份额信息';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.ta_cd
+  is 'ta代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.tran_acct_id
+  is '交易账户编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.consmt_bus_type_cd
+  is '代销业务类型代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.cap_stl_acct_num
+  is '资金结算账号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.cont_id
+  is '合约编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.belong_org_id
+  is '归属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.bank_id
+  is '银行编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.seller_id
+  is '销售商编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.ec_flg_cd
+  is '钞汇标志代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.divd_way_cd
+  is '分红方式代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.lot_type_cd
+  is '份额类型代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.fir_subscr_dt
+  is '首次认购日期';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.final_activ_acct_dt
+  is '最后动户日期';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.actl_value_dt
+  is '实际起息日期';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.actl_exp_dt
+  is '实际到期日期';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.divd_ratio
+  is '分红比例';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.yld_rat
+  is '收益率';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.acm_prft
+  is '累计收益';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.unpaid_prft
+  is '未付收益';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.froz_unpaid_prft
+  is '冻结未付收益';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.curr_issue_prft
+  is '本期收益';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.td_prft
+  is '本日收益';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.tran_froz_lot
+  is '交易冻结份额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.lonterm_froz_lot
+  is '长期冻结份额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.loc_froz_lot
+  is '本地冻结份额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.ld_tot_lot
+  is '上日总份额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.uncfm_prod_amt
+  is '未确认产品金额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.redem_amt
+  is '赎回金额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.buy_cost
+  is '买入成本';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.tot_lot
+  is '总份额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.nv
+  is '净值';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.curr_bal
+  is '当前余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.ear_d_bal
+  is '日初余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.ear_m_bal
+  is '月初余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.ear_s_bal
+  is '季初余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.ear_y_bal
+  is '年初余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.y_acm_bal
+  is '年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.s_acm_bal
+  is '季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.m_acm_bal
+  is '月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.y_avg_bal
+  is '年日均余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.q_avg_bal
+  is '季日均余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.m_avg_bal
+  is '月日均余额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_LOT_INFO_BAK_20230512.etl_timestamp
+  is '数据处理时间';
+

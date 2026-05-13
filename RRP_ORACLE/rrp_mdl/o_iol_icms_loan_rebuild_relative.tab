@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_RELATIVE
+(
+  serialno       VARCHAR2(64),
+  objecttype     VARCHAR2(64),
+  objectno       VARCHAR2(64),
+  etl_dt         DATE,
+  etl_timestamp  TIMESTAMP(6),
+  balance        NUMBER(22,6),
+  businesssum    NUMBER(22,6),
+  classifyresult VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_RELATIVE
+  is '贷款重组关联表';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_RELATIVE.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_RELATIVE.objecttype
+  is '对象类型';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_RELATIVE.objectno
+  is '对象编号';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_RELATIVE.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_RELATIVE.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_RELATIVE.balance
+  is '时点借据余额';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_RELATIVE.businesssum
+  is '时点借据金额';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_RELATIVE.classifyresult
+  is '时点五级分类';
+

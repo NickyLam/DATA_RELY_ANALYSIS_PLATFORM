@@ -1,0 +1,234 @@
+﻿create table RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION
+(
+  object_id                VARCHAR2(150),
+  s_info_windcode          VARCHAR2(60),
+  b_info_fullname          VARCHAR2(750),
+  b_info_issuer            VARCHAR2(150),
+  b_issue_announcement     VARCHAR2(12),
+  b_issue_firstissue       VARCHAR2(12),
+  b_issue_lastissue        VARCHAR2(12),
+  b_issue_amountplan       NUMBER(24,8),
+  b_issue_amountact        NUMBER(24,8),
+  b_info_issueprice        NUMBER(20,4),
+  b_info_par               NUMBER(20),
+  b_info_couponrate        NUMBER(20,4),
+  b_info_spread            NUMBER(20,4),
+  b_info_carrydate         VARCHAR2(12),
+  b_info_enddate           VARCHAR2(12),
+  b_info_maturitydate      VARCHAR2(12),
+  b_info_term_year_        NUMBER(20,4),
+  b_info_term_day_         NUMBER(20,4),
+  b_info_paymentdate       VARCHAR2(12),
+  b_info_paymenttype       NUMBER(9),
+  b_info_interestfrequency VARCHAR2(30),
+  b_info_form              VARCHAR2(15),
+  b_info_coupon            NUMBER(9),
+  b_info_interesttype      NUMBER(9),
+  b_info_act               NUMBER(20,4),
+  b_issue_fee              NUMBER(20,4),
+  b_redemption_feeration   NUMBER(20,4),
+  b_info_taxrate           NUMBER(20,4),
+  crncy_code               VARCHAR2(15),
+  s_info_name              VARCHAR2(150),
+  s_info_exchmarket        VARCHAR2(15),
+  b_info_guarantor         VARCHAR2(150),
+  b_info_guartype          NUMBER(9),
+  b_info_listdate          VARCHAR2(12),
+  b_info_yearsnumber       NUMBER(20),
+  s_div_recorddate         VARCHAR2(12),
+  b_info_codebyplacing     VARCHAR2(15),
+  b_info_delistdate        VARCHAR2(12),
+  b_info_issuetype         NUMBER(9),
+  b_info_guarintroduction  VARCHAR2(1500),
+  b_info_bgndbyplacing     VARCHAR2(12),
+  b_info_enddbyplacing     VARCHAR2(12),
+  b_info_amountbyplacing   NUMBER(20,4),
+  b_info_underwritingcode  NUMBER(9),
+  b_info_issuercode        VARCHAR2(150),
+  b_info_formercode        VARCHAR2(60),
+  b_info_coupontxt         VARCHAR2(3000),
+  is_failure               NUMBER(5),
+  is_crossmarket           NUMBER(5),
+  b_info_coupondatetxt     VARCHAR2(3000),
+  b_info_subordinateornot  NUMBER(5),
+  b_tendrst_referyield     NUMBER(20,4),
+  b_info_curpar            NUMBER(20,4),
+  s_info_formerwindcode    VARCHAR2(60),
+  is_corporate_bond        NUMBER(5),
+  b_info_issuertype        VARCHAR2(150),
+  b_info_specialbondtype   VARCHAR2(60),
+  is_payadvanced           VARCHAR2(2),
+  is_callable              VARCHAR2(2),
+  is_chooseright           VARCHAR2(2),
+  is_netprice              NUMBER(1),
+  is_act_days              NUMBER(1),
+  is_incbonds              NUMBER(5),
+  issue_object             VARCHAR2(150),
+  b_info_actualbenchmark   VARCHAR2(12),
+  register_file_type_code  NUMBER(9),
+  register_file_number     VARCHAR2(1500),
+  list_ann_date            VARCHAR2(12),
+  start_dt                 DATE,
+  end_dt                   DATE,
+  id_mark                  VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION
+  is '中国债券基本资料';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.object_id
+  is '对象ID';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.s_info_windcode
+  is 'Wind代码';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_fullname
+  is '债券名称';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_issuer
+  is '发行人';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_issue_announcement
+  is '发行公告日';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_issue_firstissue
+  is '发行起始日';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_issue_lastissue
+  is '发行截止日';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_issue_amountplan
+  is '计划发行总量(亿元)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_issue_amountact
+  is '实际发行总量(亿元)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_issueprice
+  is '发行价格';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_par
+  is '面值';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_couponrate
+  is '发行票面利率(%)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_spread
+  is '利差(%)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_carrydate
+  is '计息起始日';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_enddate
+  is '计息截止日';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_maturitydate
+  is '到期日';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_term_year_
+  is '债券期限(年)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_term_day_
+  is '债券期限(天)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_paymentdate
+  is '兑付日';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_paymenttype
+  is '计息方式';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_interestfrequency
+  is '付息频率';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_form
+  is '债券形式';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_coupon
+  is '息票品种';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_interesttype
+  is '附息利率品种';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_act
+  is '特殊年计息天数';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_issue_fee
+  is '发行手续费率(%)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_redemption_feeration
+  is '兑付手续费率(%)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_taxrate
+  is '所得税率';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.crncy_code
+  is '货币代码';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.s_info_name
+  is '债券简称';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.s_info_exchmarket
+  is '交易所';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_guarantor
+  is '担保人';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_guartype
+  is '担保方式';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_listdate
+  is '上市日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_yearsnumber
+  is '年内序号';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.s_div_recorddate
+  is '兑付登记起始日';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_codebyplacing
+  is '上网发行认购代码';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_delistdate
+  is '退市日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_issuetype
+  is '发行方式';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_guarintroduction
+  is '担保简介';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_bgndbyplacing
+  is '上网发行起始日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_enddbyplacing
+  is '上网发行截止日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_amountbyplacing
+  is '上网发行数量(亿元)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_underwritingcode
+  is '承销方式代码';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_issuercode
+  is '发行人编号';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_formercode
+  is '原债券代码';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_coupontxt
+  is '利率说明';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.is_failure
+  is '是否发行失败';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.is_crossmarket
+  is '是否跨市场';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_coupondatetxt
+  is '付息日说明';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_subordinateornot
+  is '是否次级债或混合资本债';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_tendrst_referyield
+  is '参考收益率';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_curpar
+  is '最新面值';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.s_info_formerwindcode
+  is '原Wind代码';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.is_corporate_bond
+  is '是否公司债';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_issuertype
+  is '发行人类型';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_specialbondtype
+  is '特殊债券类型';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.is_payadvanced
+  is '是否可提前兑付';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.is_callable
+  is '是否可赎回';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.is_chooseright
+  is '是否有选择权';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.is_netprice
+  is '是否净价';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.is_act_days
+  is '是否按实际天数计息';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.is_incbonds
+  is '是否增发债';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.issue_object
+  is '发行对象';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.b_info_actualbenchmark
+  is '计息基准';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.register_file_type_code
+  is '注册文件类型代码';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.register_file_number
+  is '注册文件号';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.list_ann_date
+  is '上市公告日';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_WIND_CBONDDESCRIPTION.etl_timestamp
+  is 'etl处理时间';
+

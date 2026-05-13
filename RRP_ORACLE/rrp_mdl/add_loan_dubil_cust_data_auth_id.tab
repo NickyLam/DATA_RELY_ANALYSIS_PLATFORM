@@ -1,0 +1,33 @@
+﻿create table RRP_MDL.ADD_LOAN_DUBIL_CUST_DATA_AUTH_ID
+(
+  data_src          VARCHAR2(20),
+  cust_id           VARCHAR2(200),
+  cont_id           VARCHAR2(200),
+  rcpt_id           VARCHAR2(200),
+  cust_data_auth_id VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_LOAN_DUBIL_CUST_DATA_AUTH_ID
+  is '贷款合同对应客户数据授权书编号';
+comment on column RRP_MDL.ADD_LOAN_DUBIL_CUST_DATA_AUTH_ID.data_src
+  is '数据来源';
+comment on column RRP_MDL.ADD_LOAN_DUBIL_CUST_DATA_AUTH_ID.cust_id
+  is '客户号';
+comment on column RRP_MDL.ADD_LOAN_DUBIL_CUST_DATA_AUTH_ID.cont_id
+  is '合同号';
+comment on column RRP_MDL.ADD_LOAN_DUBIL_CUST_DATA_AUTH_ID.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.ADD_LOAN_DUBIL_CUST_DATA_AUTH_ID.cust_data_auth_id
+  is '客户数据授权书编号';
+

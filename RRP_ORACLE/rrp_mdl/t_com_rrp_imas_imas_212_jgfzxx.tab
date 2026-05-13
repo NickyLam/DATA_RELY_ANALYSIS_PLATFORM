@@ -1,0 +1,24 @@
+﻿create table RRP_MDL.T_COM_RRP_IMAS_IMAS_212_JGFZXX
+(
+  rid                        VARCHAR2(50) not null,
+  data_dt                    VARCHAR2(10) not null,
+  org_no                     VARCHAR2(30),
+  fin_org_name               VARCHAR2(200),
+  fin_org_code               VARCHAR2(14),
+  fin_org_social_credit_code VARCHAR2(18),
+  immediate_superior_no      VARCHAR2(30),
+  immediate_superior_name    VARCHAR2(200),
+  area_cd                    VARCHAR2(6),
+  org_lvl                    VARCHAR2(2),
+  dept_no                    VARCHAR2(30),
+  issued_no                  VARCHAR2(20),
+  rpt_org_no                 VARCHAR2(20),
+  data_ources                VARCHAR2(30),
+  data_modify                VARCHAR2(2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

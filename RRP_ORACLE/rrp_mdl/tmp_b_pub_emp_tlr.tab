@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.TMP_B_PUB_EMP_TLR
+(
+  data_dt      CHAR(8) not null,
+  lgl_rep_id   VARCHAR2(200),
+  tlr_no       VARCHAR2(30),
+  emp_id       VARCHAR2(200),
+  org_id       VARCHAR2(200),
+  tlr_typ      VARCHAR2(500),
+  ent_tlr_flg  CHAR(1),
+  post_id      VARCHAR2(200),
+  tlr_auth_lvl VARCHAR2(10),
+  on_duty_dt   CHAR(8),
+  tlr_stat     VARCHAR2(10),
+  dept_line    VARCHAR2(500),
+  data_src     VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.data_dt
+  is '数据日期';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.tlr_no
+  is '经办柜员';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.emp_id
+  is '员工ID.';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.org_id
+  is '银行编号';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.tlr_typ
+  is '柜员类型';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.ent_tlr_flg
+  is '实体柜员标志';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.post_id
+  is '当前岗位（参见[字典:AML0113]）';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.tlr_auth_lvl
+  is '柜员权限级别';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.on_duty_dt
+  is '上岗日期';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.tlr_stat
+  is '柜员状态';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.dept_line
+  is '部门条线';
+comment on column RRP_MDL.TMP_B_PUB_EMP_TLR.data_src
+  is '数据来源（参见[字典:AML0045]）';
+

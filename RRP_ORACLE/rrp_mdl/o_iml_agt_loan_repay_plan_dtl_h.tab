@@ -1,0 +1,135 @@
+﻿create table RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H
+(
+  agt_id              VARCHAR2(250),
+  lp_id               VARCHAR2(100),
+  repay_plan_id       VARCHAR2(100),
+  acct_id             VARCHAR2(100),
+  cust_id             VARCHAR2(100),
+  curr_pd             NUMBER(10),
+  amt_type_cd         VARCHAR2(30),
+  value_dt            DATE,
+  int_set_dt          DATE,
+  plan_repay_amt      NUMBER(30,2),
+  aldy_paid_amt       NUMBER(30,2),
+  pric_amt            NUMBER(30,2),
+  iss_flg             VARCHAR2(10),
+  advise_odd_no       VARCHAR2(60),
+  iss_int_rat         NUMBER(18,8),
+  iss_amt             NUMBER(30,2),
+  doc_bal             NUMBER(30,2),
+  doc_exp_dt          DATE,
+  grace_dt            DATE,
+  tran_dt             DATE,
+  stl_dt              DATE,
+  full_amt_callbk_flg VARCHAR2(10),
+  doc_create_way_cd   VARCHAR2(30),
+  tran_ref_no         VARCHAR2(60),
+  tax_category_cd     VARCHAR2(30),
+  tax_rat             NUMBER(18,6),
+  tax_amt             NUMBER(30,2),
+  doc_ld_unpaid_amt   NUMBER(30,2),
+  ld_bal_update_dt    DATE,
+  delay_pay_int_flg   VARCHAR2(10),
+  wrt_off_pric        NUMBER(30,2),
+  tran_teller_id      VARCHAR2(100),
+  final_modif_dt      DATE,
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  src_table_name      VARCHAR2(100),
+  job_cd              VARCHAR2(10),
+  etl_timestamp       TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H
+  is '贷款还款计划明细历史';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.repay_plan_id
+  is '还款计划编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.curr_pd
+  is '当前期次';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.amt_type_cd
+  is '金额类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.int_set_dt
+  is '结息日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.plan_repay_amt
+  is '计划还款金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.aldy_paid_amt
+  is '已还金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.pric_amt
+  is '本金金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.iss_flg
+  is '出单标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.advise_odd_no
+  is '通知单号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.iss_int_rat
+  is '出单利率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.iss_amt
+  is '出单金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.doc_bal
+  is '单据余额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.doc_exp_dt
+  is '单据到期日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.grace_dt
+  is '宽限日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.stl_dt
+  is '结算日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.full_amt_callbk_flg
+  is '全额回收标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.doc_create_way_cd
+  is '单据生成方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.tran_ref_no
+  is '交易参考号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.tax_category_cd
+  is '税种代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.tax_rat
+  is '税率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.tax_amt
+  is '税金';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.doc_ld_unpaid_amt
+  is '单据上日未还金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.ld_bal_update_dt
+  is '上日余额更新日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.delay_pay_int_flg
+  is '延期付息标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.wrt_off_pric
+  is '核销本金';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.final_modif_dt
+  is '最后修改日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_REPAY_PLAN_DTL_H.etl_timestamp
+  is 'etl处理时间戳';
+

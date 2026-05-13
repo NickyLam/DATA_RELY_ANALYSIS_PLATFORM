@@ -1,0 +1,171 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY
+(
+  i_code             VARCHAR2(75),
+  a_type             VARCHAR2(30),
+  m_type             VARCHAR2(30),
+  l_code             VARCHAR2(113),
+  i_name             VARCHAR2(300),
+  currency           VARCHAR2(5),
+  country            VARCHAR2(3),
+  q_type             VARCHAR2(3),
+  p_type             VARCHAR2(45),
+  p_class            VARCHAR2(150),
+  list_date          VARCHAR2(15),
+  open_date          VARCHAR2(15),
+  issuer             VARCHAR2(300),
+  risk_rating        NUMBER(22),
+  trustee            VARCHAR2(383),
+  imp_date           VARCHAR2(15),
+  pipe_id            NUMBER(22),
+  chinesespell       VARCHAR2(150),
+  update_user        VARCHAR2(150),
+  update_time        VARCHAR2(35),
+  account_user       VARCHAR2(45),
+  account_time       VARCHAR2(30),
+  issuer_id          NUMBER(22),
+  trustee_id         NUMBER(22),
+  usable_flag        NUMBER(22),
+  product_rate       VARCHAR2(150),
+  rate_institution   VARCHAR2(150),
+  open_type          VARCHAR2(30),
+  start_open_date    VARCHAR2(30),
+  end_open_date      VARCHAR2(30),
+  guarantee_way      VARCHAR2(3),
+  guarantee_infor    VARCHAR2(450),
+  ctrct_id           VARCHAR2(75),
+  platform           VARCHAR2(3),
+  invest_direction   VARCHAR2(750),
+  final_invest       VARCHAR2(15),
+  five_class         VARCHAR2(3),
+  contract_version   VARCHAR2(3),
+  extordid           VARCHAR2(75),
+  mitigation_freq    VARCHAR2(15),
+  manager_id         NUMBER(16),
+  manager_value      VARCHAR2(383),
+  risk_proportion    NUMBER(14,6),
+  middle_classify    VARCHAR2(75),
+  small_classify     VARCHAR2(75),
+  closing_start_date VARCHAR2(15),
+  closing_end_date   VARCHAR2(15),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY
+  is '净值型产品信息表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.l_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.i_name
+  is '金融工具名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.country
+  is '国家及地区';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.q_type
+  is '利率/净值';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.p_type
+  is '产品类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.p_class
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.list_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.open_date
+  is '开户日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.issuer
+  is '发行人/融资者';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.risk_rating
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.trustee
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.imp_date
+  is '导入日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.pipe_id
+  is '导入管道';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.chinesespell
+  is '中文简写';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.update_user
+  is '更新人员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.account_user
+  is '复核人员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.account_time
+  is '复核时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.issuer_id
+  is '发行人编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.trustee_id
+  is '托管人编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.usable_flag
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.product_rate
+  is '产品评级';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.rate_institution
+  is '评级机构';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.open_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.start_open_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.end_open_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.guarantee_way
+  is '担保方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.guarantee_infor
+  is '担保物情况';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.ctrct_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.platform
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.invest_direction
+  is '投资方向';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.final_invest
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.five_class
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.contract_version
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.extordid
+  is '外部成交编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.mitigation_freq
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.manager_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.manager_value
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.risk_proportion
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.middle_classify
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.small_classify
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.closing_start_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.closing_end_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY.etl_timestamp
+  is 'etl处理时间';
+

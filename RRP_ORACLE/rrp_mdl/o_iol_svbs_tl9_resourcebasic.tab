@@ -1,0 +1,81 @@
+﻿create table RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC
+(
+  resourceid     VARCHAR2(192),
+  parent         VARCHAR2(192),
+  resourcename   VARCHAR2(192),
+  accesscontrol  VARCHAR2(3),
+  updatetime     DATE,
+  createtime     DATE,
+  recordstatus   VARCHAR2(3),
+  resourcetypeid VARCHAR2(6),
+  icon           VARCHAR2(384),
+  catalog_id     VARCHAR2(24),
+  specialflag    VARCHAR2(24),
+  showflag       VARCHAR2(3),
+  systemid       VARCHAR2(192),
+  url            VARCHAR2(384),
+  given_name     VARCHAR2(192),
+  details        VARCHAR2(768),
+  sort_no        NUMBER,
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC
+  is '资源基础信息表';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.resourceid
+  is '资源ID';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.parent
+  is '父级资源ID';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.resourcename
+  is '资源名称';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.accesscontrol
+  is '访问控制';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.updatetime
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.createtime
+  is '创建日期';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.recordstatus
+  is '记录状态';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.resourcetypeid
+  is '资源类型ID';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.icon
+  is '图标';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.catalog_id
+  is '分类ID';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.specialflag
+  is '特别ID';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.showflag
+  is '显示标志';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.systemid
+  is '系统标识';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.url
+  is '资源路径';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.given_name
+  is '资源英文名称';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.details
+  is '详情';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.sort_no
+  is '排序序号';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_SVBS_TL9_RESOURCEBASIC.etl_timestamp
+  is 'ETL处理时间戳';
+

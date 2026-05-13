@@ -1,0 +1,99 @@
+﻿create table RRP_MDL.O_IOL_ISBS_IMG
+(
+  inr         VARCHAR2(12),
+  msgid       VARCHAR2(53),
+  objtyp      VARCHAR2(9),
+  objinr      VARCHAR2(12),
+  fileid      VARCHAR2(75),
+  filnam      VARCHAR2(120),
+  filpth      VARCHAR2(120),
+  inifrm      VARCHAR2(9),
+  filefrm     VARCHAR2(6),
+  filetype    VARCHAR2(6),
+  filedesc    VARCHAR2(180),
+  vldflg      VARCHAR2(6),
+  fpid        VARCHAR2(75),
+  invtp       VARCHAR2(6),
+  invnb       VARCHAR2(30),
+  invoicecode VARCHAR2(30),
+  untaxamt    NUMBER(18,3),
+  invdt       DATE,
+  yxflg       VARCHAR2(2),
+  branch      VARCHAR2(12),
+  ownref      VARCHAR2(60),
+  delflg      VARCHAR2(2),
+  updow       VARCHAR2(5),
+  isdow       VARCHAR2(2),
+  usrkey      VARCHAR2(15),
+  credat      TIMESTAMP(6),
+  etl_dt      DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_IMG
+  is '发票信息表';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.inr
+  is '内部唯一id';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.msgid
+  is '支付报单号信息序号';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.objtyp
+  is '关联对象类型';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.objinr
+  is '关联对象inr';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.fileid
+  is '文件序号';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.filnam
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.filpth
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.inifrm
+  is '交易名';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.filefrm
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.filetype
+  is '文件格式类型编码:0-Jpg,1-PDF,2-Word';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.filedesc
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.vldflg
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.fpid
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.invtp
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.invnb
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.invoicecode
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.untaxamt
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.invdt
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.yxflg
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.branch
+  is '机构编号';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.ownref
+  is '业务编号';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.delflg
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.updow
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.isdow
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.usrkey
+  is '未知';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.credat
+  is '创建日期';
+comment on column RRP_MDL.O_IOL_ISBS_IMG.etl_dt
+  is '数据日期';
+

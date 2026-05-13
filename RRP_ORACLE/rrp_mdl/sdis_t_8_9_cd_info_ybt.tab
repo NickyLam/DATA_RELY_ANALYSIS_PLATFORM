@@ -1,0 +1,26 @@
+﻿create table RRP_MDL.SDIS_T_8_9_CD_INFO_YBT
+(
+  pd_cd   VARCHAR2(200),
+  wflx    NUMBER(20,2),
+  yflx    NUMBER(20,2),
+  yrged   NUMBER(20,2),
+  data_dt VARCHAR2(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.SDIS_T_8_9_CD_INFO_YBT
+  is '一表通';
+comment on column RRP_MDL.SDIS_T_8_9_CD_INFO_YBT.pd_cd
+  is '账户名称';
+comment on column RRP_MDL.SDIS_T_8_9_CD_INFO_YBT.wflx
+  is '未付利息';
+comment on column RRP_MDL.SDIS_T_8_9_CD_INFO_YBT.yflx
+  is '已付利息';
+comment on column RRP_MDL.SDIS_T_8_9_CD_INFO_YBT.yrged
+  is '账户状态';
+comment on column RRP_MDL.SDIS_T_8_9_CD_INFO_YBT.data_dt
+  is '数据时间';
+

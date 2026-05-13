@@ -1,0 +1,20 @@
+﻿create table RRP_MDL.ETL_FLOW_ETL_REFERENCES_YBT
+(
+  sys_id          VARCHAR2(20) not null,
+  proc_name       VARCHAR2(50) not null,
+  reference_table VARCHAR2(200) not null,
+  reference_proc  VARCHAR2(200) not null
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

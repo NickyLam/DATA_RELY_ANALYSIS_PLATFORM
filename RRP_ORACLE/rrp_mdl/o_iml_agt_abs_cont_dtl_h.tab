@@ -1,0 +1,132 @@
+﻿create table RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H
+(
+  agt_id                     VARCHAR2(250),
+  lp_id                      VARCHAR2(100),
+  asset_bag_cont_dtl_seq_num VARCHAR2(60),
+  asset_bag_cont_id          VARCHAR2(100),
+  loan_num                   VARCHAR2(60),
+  distr_flow_num             VARCHAR2(100),
+  prod_id                    VARCHAR2(100),
+  curr_cd                    VARCHAR2(30),
+  acct_id                    VARCHAR2(100),
+  cust_id                    VARCHAR2(100),
+  accti_status_cd            VARCHAR2(30),
+  bal                        NUMBER(30,2),
+  asset_acct_status_cd       VARCHAR2(30),
+  issue_batch_no             VARCHAR2(60),
+  issue_flow_num             VARCHAR2(100),
+  issue_convt_prem           NUMBER(30,2),
+  issue_revo_batch_no        VARCHAR2(60),
+  circl_buy_flg              VARCHAR2(10),
+  circl_buy_batch_no         VARCHAR2(60),
+  circl_buy_flow_num         VARCHAR2(100),
+  circl_buy_dt               DATE,
+  revo_pkg_batch_no          VARCHAR2(60),
+  revo_pkg_tran_flow_num     VARCHAR2(100),
+  revo_tran_ref_no           VARCHAR2(60),
+  redem_tran_flow_num        VARCHAR2(100),
+  redem_batch_no             VARCHAR2(60),
+  redem_convt_prem           NUMBER(30,2),
+  pkg_batch_no               VARCHAR2(60),
+  pkg_flow_num               VARCHAR2(100),
+  pkg_tran_dt                DATE,
+  tran_code_descb            VARCHAR2(500),
+  final_modif_dt             DATE,
+  start_dt                   DATE,
+  end_dt                     DATE,
+  id_mark                    VARCHAR2(10),
+  src_table_name             VARCHAR2(100),
+  job_cd                     VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H
+  is '资产证券化合同历史';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.asset_bag_cont_dtl_seq_num
+  is '资产包合同明细序号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.asset_bag_cont_id
+  is '资产包合同编号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.loan_num
+  is '贷款号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.distr_flow_num
+  is '放款流水号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.accti_status_cd
+  is '核算状态代码';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.bal
+  is '余额';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.asset_acct_status_cd
+  is '资产账户状态代码';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.issue_batch_no
+  is '发行批次号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.issue_flow_num
+  is '发行流水号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.issue_convt_prem
+  is '发行折溢价';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.issue_revo_batch_no
+  is '发行撤销批次号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.circl_buy_flg
+  is '循环购买标志';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.circl_buy_batch_no
+  is '循环购买批次号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.circl_buy_flow_num
+  is '循环购买流水号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.circl_buy_dt
+  is '循环购买日期';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.revo_pkg_batch_no
+  is '撤包批次号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.revo_pkg_tran_flow_num
+  is '撤包交易流水号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.revo_tran_ref_no
+  is '撤销交易参考号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.redem_tran_flow_num
+  is '赎回交易流水号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.redem_batch_no
+  is '赎回批次号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.redem_convt_prem
+  is '赎回折溢价';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.pkg_batch_no
+  is '封包批次号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.pkg_flow_num
+  is '封包流水号';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.pkg_tran_dt
+  is '封包交易日期';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.tran_code_descb
+  is '交易码描述';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.final_modif_dt
+  is '最后修改日期';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_ABS_CONT_DTL_H.etl_timestamp
+  is 'etl处理时间戳';
+

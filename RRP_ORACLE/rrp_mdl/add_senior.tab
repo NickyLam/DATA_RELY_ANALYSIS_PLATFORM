@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.ADD_SENIOR
+(
+  cust_id      VARCHAR2(255),
+  cust_name    VARCHAR2(383),
+  job          VARCHAR2(383),
+  gender       VARCHAR2(383),
+  open_acc_flg VARCHAR2(255),
+  data_dt      VARCHAR2(255),
+  id_card      VARCHAR2(255),
+  id_card2     VARCHAR2(255),
+  data_time    VARCHAR2(20),
+  org_no       VARCHAR2(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_SENIOR
+  is '银行高管补录表';
+comment on column RRP_MDL.ADD_SENIOR.cust_id
+  is '客户号';
+comment on column RRP_MDL.ADD_SENIOR.cust_name
+  is '客户名称';
+comment on column RRP_MDL.ADD_SENIOR.job
+  is '职务';
+comment on column RRP_MDL.ADD_SENIOR.gender
+  is '性别';
+comment on column RRP_MDL.ADD_SENIOR.open_acc_flg
+  is '是否开户';
+comment on column RRP_MDL.ADD_SENIOR.data_dt
+  is '数据时间';
+comment on column RRP_MDL.ADD_SENIOR.id_card
+  is '证件号码';
+comment on column RRP_MDL.ADD_SENIOR.id_card2
+  is '证件号码2';
+comment on column RRP_MDL.ADD_SENIOR.data_time
+  is '数据时间';
+comment on column RRP_MDL.ADD_SENIOR.org_no
+  is '机构默认总行';
+

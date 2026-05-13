@@ -1,0 +1,77 @@
+﻿create table RRP_MDL.B_CPTL_BOND_UWRT_INFO
+(
+  data_dt          CHAR(8) not null,
+  lgl_rep_id       VARCHAR2(200),
+  org_id           VARCHAR2(200),
+  prod_id          VARCHAR2(200),
+  uwrt_mode        VARCHAR2(10),
+  uwrt_bal         NUMBER(30,2),
+  pay_dt           CHAR(8),
+  cur              CHAR(3),
+  mod_dur          INTEGER,
+  dur              INTEGER,
+  bond_typ         VARCHAR2(10),
+  year_coupon_rate NUMBER(20,6),
+  bond_exp_dt      CHAR(8),
+  isu_subj_rtg     VARCHAR2(10),
+  isu_subj_typ     VARCHAR2(10),
+  dept_line        VARCHAR2(500),
+  data_src         VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_CPTL_BOND_UWRT_INFO
+  is '债券承销信息';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.prod_id
+  is '产品编号';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.uwrt_mode
+  is '承销方式';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.uwrt_bal
+  is '承销余额';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.pay_dt
+  is '缴款日期';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.cur
+  is '币种';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.mod_dur
+  is '修正久期';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.dur
+  is '久期';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.bond_typ
+  is '债券类型';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.year_coupon_rate
+  is '年息票率';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.bond_exp_dt
+  is '债券到期日期';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.isu_subj_rtg
+  is '发行主体评级';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.isu_subj_typ
+  is '发行主体类型';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_CPTL_BOND_UWRT_INFO.data_src
+  is '数据来源';
+alter table RRP_MDL.B_CPTL_BOND_UWRT_INFO
+  add constraint PK_B_CPTL_BOND_UWRT_INFO primary key (DATA_DT)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

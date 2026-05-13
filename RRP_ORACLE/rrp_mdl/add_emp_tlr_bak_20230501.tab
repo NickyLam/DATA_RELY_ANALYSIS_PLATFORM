@@ -1,0 +1,18 @@
+﻿create table RRP_MDL.ADD_EMP_TLR_BAK_20230501
+(
+  tlr_no    VARCHAR2(30),
+  emp_id    VARCHAR2(200),
+  update_dt CHAR(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.ADD_EMP_TLR_BAK_20230501.tlr_no
+  is '经办柜员';
+comment on column RRP_MDL.ADD_EMP_TLR_BAK_20230501.emp_id
+  is '员工ID.';
+comment on column RRP_MDL.ADD_EMP_TLR_BAK_20230501.update_dt
+  is '待跟进日期';
+

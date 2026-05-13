@@ -1,0 +1,136 @@
+﻿create table RRP_EAST.EAST5_1106_LCCPZCJYXXB
+(
+  jyrq            VARCHAR2(8),
+  fqjysj          VARCHAR2(6),
+  cpdjbm          VARCHAR2(30),
+  cpmc            VARCHAR2(450),
+  fxjgdm          VARCHAR2(30),
+  jrxkzh          VARCHAR2(30),
+  fxjgmc          VARCHAR2(450),
+  fxjglx          VARCHAR2(30),
+  jydjbm          VARCHAR2(30),
+  hnjybm          VARCHAR2(40),
+  zjldlx          VARCHAR2(120),
+  jydsfmc         VARCHAR2(450),
+  jydsfsfwbjglccp VARCHAR2(3),
+  jydsflx         VARCHAR2(120),
+  bz              VARCHAR2(3),
+  zcid            VARCHAR2(30),
+  hnzcfzbm        VARCHAR2(40),
+  zcfzdjbm        VARCHAR2(30),
+  zcfzlbyj        VARCHAR2(120),
+  zcfzlbej        VARCHAR2(120),
+  jyltcs          VARCHAR2(60),
+  zcmc            VARCHAR2(450),
+  hy              VARCHAR2(90),
+  fsje            NUMBER(20,2),
+  zsrmbje         NUMBER(20,2),
+  sl              NUMBER(20,6),
+  dwcjqj          NUMBER(20,4),
+  dwcjjj          NUMBER(20,4),
+  dqsyl           NUMBER(20,2),
+  zcjlfs          VARCHAR2(30),
+  bbz             VARCHAR2(600),
+  cjrq            VARCHAR2(8),
+  issued_no       VARCHAR2(50),
+  org_no          VARCHAR2(20),
+  dept_no         VARCHAR2(10),
+  src_sys_id      VARCHAR2(10),
+  address         VARCHAR2(500),
+  rid             VARCHAR2(50) not null
+)
+partition by list (CJRQ)
+(
+  partition PARTITION_20220630 values ('20220630')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values ('20220930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.jyrq
+  is '交易日期';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.fqjysj
+  is '交易发起时间';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.cpdjbm
+  is '产品登记编码';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.cpmc
+  is '产品名称';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.fxjgdm
+  is '发行机构代码';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.jrxkzh
+  is '金融许可证号';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.fxjgmc
+  is '发行机构名称';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.fxjglx
+  is '发行机构类型';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.jydjbm
+  is '交易登记编码';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.hnjybm
+  is '行内交易编码';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.zjldlx
+  is '资金流动类型';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.jydsfmc
+  is '交易对手方名称';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.jydsfsfwbjglccp
+  is '交易对手方是否为本行理财产品';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.jydsflx
+  is '交易对手方类型';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.bz
+  is '币种';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.zcid
+  is '资产ID';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.hnzcfzbm
+  is '行内资产/负债编码';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.zcfzdjbm
+  is '资产负债登记编码';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.zcfzlbyj
+  is '资产/负债类别（一级）';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.zcfzlbej
+  is '资产/负债类别（二级）';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.jyltcs
+  is '交易流通场所';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.zcmc
+  is '资产名称';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.hy
+  is '行业';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.fsje
+  is '发生金额';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.zsrmbje
+  is '折算人民币金额';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.sl
+  is '数量';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.dwcjqj
+  is '单位成交全价';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.dwcjjj
+  is '单位成交净价';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.dqsyl
+  is '到期收益率';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.zcjlfs
+  is '资产计量方式';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.bbz
+  is '备注';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.cjrq
+  is '采集日期';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.issued_no
+  is '填报机构';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.org_no
+  is '报送机构';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.dept_no
+  is '部门编号';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.src_sys_id
+  is '来源系统ID';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.address
+  is '归属地';
+comment on column RRP_EAST.EAST5_1106_LCCPZCJYXXB.rid
+  is '数据主键';
+

@@ -1,0 +1,18 @@
+﻿create table RRP_EAST.CONFIG_ETL_FREQ
+(
+  proc_name VARCHAR2(100),
+  freq_typ  VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

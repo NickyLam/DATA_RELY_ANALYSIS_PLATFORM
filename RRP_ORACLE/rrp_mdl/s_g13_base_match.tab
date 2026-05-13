@@ -1,0 +1,39 @@
+﻿create table RRP_MDL.S_G13_BASE_MATCH
+(
+  id            VARCHAR2(8),
+  name          VARCHAR2(75),
+  guartype      VARCHAR2(30),
+  fieldidx      NUMBER(22),
+  preid         VARCHAR2(8),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.S_G13_BASE_MATCH
+  is 'G13贷款押品分配结果表';
+comment on column RRP_MDL.S_G13_BASE_MATCH.id
+  is '主键ID';
+comment on column RRP_MDL.S_G13_BASE_MATCH.name
+  is '用户姓名';
+comment on column RRP_MDL.S_G13_BASE_MATCH.guartype
+  is '担保方式 质押 3      信用 0      抵押 2      保证 1';
+comment on column RRP_MDL.S_G13_BASE_MATCH.fieldidx
+  is '排序';
+comment on column RRP_MDL.S_G13_BASE_MATCH.preid
+  is '包含下层统计id';
+comment on column RRP_MDL.S_G13_BASE_MATCH.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.S_G13_BASE_MATCH.etl_timestamp
+  is 'ETL处理时间戳';
+

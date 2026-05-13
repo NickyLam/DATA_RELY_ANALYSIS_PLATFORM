@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.M_MRPT_RGST_MOBILE_NO
+(
+  data_dt             VARCHAR2(10),
+  mobile_no           VARCHAR2(90),
+  acct_num            VARCHAR2(150),
+  acct_name           VARCHAR2(300),
+  mobile_no_status_cd VARCHAR2(10),
+  rgst_vc             VARCHAR2(15)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_MRPT_RGST_MOBILE_NO
+  is '客户账户注册手机号明细-手工报表专用';
+comment on column RRP_MDL.M_MRPT_RGST_MOBILE_NO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_RGST_MOBILE_NO.mobile_no
+  is '手机号码';
+comment on column RRP_MDL.M_MRPT_RGST_MOBILE_NO.acct_num
+  is '账号';
+comment on column RRP_MDL.M_MRPT_RGST_MOBILE_NO.acct_name
+  is '账号名称';
+comment on column RRP_MDL.M_MRPT_RGST_MOBILE_NO.mobile_no_status_cd
+  is '手机号码状态';
+comment on column RRP_MDL.M_MRPT_RGST_MOBILE_NO.rgst_vc
+  is '登记时间';
+

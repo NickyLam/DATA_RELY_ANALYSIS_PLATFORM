@@ -1,0 +1,84 @@
+﻿create table RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE
+(
+  bond_id            VARCHAR2(60),
+  lp_id              VARCHAR2(60),
+  price_dt           DATE,
+  tran_market_name   VARCHAR2(100),
+  surp_tenor         NUMBER(18),
+  recmd_flg          VARCHAR2(10),
+  full_price         NUMBER(30,8),
+  net_price          NUMBER(30,8),
+  exp_yld_rat        NUMBER(18,6),
+  duran              NUMBER(18,10),
+  coret_duran        NUMBER(18,10),
+  valid_flg          VARCHAR2(10),
+  acru_int           NUMBER(30,8),
+  end_day_full_price NUMBER(30,8),
+  estim_yld_rat      NUMBER(18,6),
+  estim_coret_duran  NUMBER(18,6),
+  estim_cvty         NUMBER(18,6),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  src_table_name     VARCHAR2(100),
+  job_cd             VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE
+  is '债券公允价格';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.bond_id
+  is '债券编号';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.price_dt
+  is '价格日期';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.tran_market_name
+  is '交易市场名称';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.surp_tenor
+  is '剩余期限';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.recmd_flg
+  is '推荐标志';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.full_price
+  is '全价';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.net_price
+  is '净价';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.exp_yld_rat
+  is '到期收益率';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.duran
+  is '久期';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.coret_duran
+  is '修正久期';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.valid_flg
+  is '有效标志';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.acru_int
+  is '应计利息';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.end_day_full_price
+  is '日终全价';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.estim_yld_rat
+  is '估价收益率';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.estim_coret_duran
+  is '估价修正久期';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.estim_cvty
+  is '估价凸性';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PRD_BOND_FAIR_PRICE.job_cd
+  is '任务编码';
+

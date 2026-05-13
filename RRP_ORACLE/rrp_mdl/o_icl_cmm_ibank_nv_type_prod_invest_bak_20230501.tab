@@ -1,0 +1,309 @@
+﻿create table RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501
+(
+  etl_dt                         DATE,
+  lp_id                          VARCHAR2(60),
+  ext_secu_acct_id               VARCHAR2(60),
+  intnal_secu_acct_id            VARCHAR2(60),
+  fin_instm_id                   VARCHAR2(100),
+  asset_type_id                  VARCHAR2(60),
+  std_prod_id                    VARCHAR2(60),
+  market_type_id                 VARCHAR2(60),
+  bus_id                         VARCHAR2(60),
+  comb_tran_num                  VARCHAR2(60),
+  obj_id                         VARCHAR2(60),
+  prod_type_cd                   VARCHAR2(30),
+  asset_type_name                VARCHAR2(250),
+  class_crdt_flg                 VARCHAR2(10),
+  abs_flg                        VARCHAR2(10),
+  acct_name                      VARCHAR2(250),
+  subj_id                        VARCHAR2(100),
+  int_subj_id                    VARCHAR2(100),
+  int_adj_subj_id                VARCHAR2(100),
+  tran_market_id                 VARCHAR2(60),
+  exchg_acct_id                  VARCHAR2(60),
+  cntpty_cls_descb               VARCHAR2(1000),
+  bank_flg                       VARCHAR2(10),
+  cty_cd                         VARCHAR2(10),
+  value_dt                       DATE,
+  exp_dt                         DATE,
+  subscr_dt                      DATE,
+  tenor_cd                       VARCHAR2(10),
+  int_accr_base_cd               VARCHAR2(10),
+  int_rat_adj_way_cd             VARCHAR2(10),
+  curr_cd                        VARCHAR2(10),
+  fac_val_amt                    NUMBER(30,2),
+  fac_val_int_rat                NUMBER(18,8),
+  pay_int_ped_cd                 VARCHAR2(10),
+  auto_redt_flg                  VARCHAR2(10),
+  actl_qtty                      NUMBER(18),
+  actl_bal                       NUMBER(30,8),
+  pric_bal                       NUMBER(30,8),
+  currt_bal                      NUMBER(30,8),
+  acru_int                       NUMBER(30,8),
+  int_recvbl                     NUMBER(30,8),
+  recvbl_uncol_pric              NUMBER(30,8),
+  recvbl_uncol_int               NUMBER(30,8),
+  int_adj_amt                    NUMBER(30,8),
+  evha_val_chag                  NUMBER(30,8),
+  nv_prod_flg                    VARCHAR2(10),
+  base_rat                       NUMBER(30,8),
+  spd                            NUMBER(30,8),
+  base_rat_mult                  NUMBER(30,8),
+  td_nv                          NUMBER(30,8),
+  book_bal                       NUMBER(30,8),
+  curr_bal                       NUMBER(30,8),
+  last_update_dt                 DATE,
+  cap_type_cd                    VARCHAR2(10),
+  asset_four_cls_cd              VARCHAR2(10),
+  asset_thd_cls_cd               VARCHAR2(30),
+  belong_org_id                  VARCHAR2(60),
+  uder_asset_dir_indus_categy_cd VARCHAR2(60),
+  uder_bond_cd                   VARCHAR2(60),
+  uder_bond_name                 VARCHAR2(500),
+  uder_bond_flg                  VARCHAR2(10),
+  uder_asset_type_id             VARCHAR2(10),
+  uder_bond_rating               VARCHAR2(10),
+  uder_actl_finer_name           VARCHAR2(500),
+  uder_post_denom                NUMBER(30,8),
+  uder_actl_finer_cust_id        VARCHAR2(60),
+  uder_actl_finer_belong_group   VARCHAR2(300),
+  uder_actl_finer_cust_char      VARCHAR2(100),
+  uder_coll_way_cd               VARCHAR2(60),
+  uder_cbond_estim_full_price    NUMBER(30,8),
+  uder_cbond_estim_net_price     NUMBER(30,8),
+  uder_csecu_full_price_evltion  NUMBER(30,8),
+  uder_csecu_net_price_evltion   NUMBER(30,8),
+  uder_csecu_coret_duran         NUMBER(30,8),
+  uder_csecu_bp_val              NUMBER(30,8),
+  uder_csecu_estim_cvty          NUMBER(30,8),
+  uder_estim_coret_duran         NUMBER(30,8),
+  uder_bp_val                    NUMBER(30,8),
+  uder_estim_cvty                NUMBER(30,8),
+  final_dir_type_cd              VARCHAR2(10),
+  final_dir_indus_gen            VARCHAR2(10),
+  final_dir_indus_subclass       VARCHAR2(60),
+  dir_ind_fund_part              NUMBER(30,8),
+  dir_debt_eqty_part             NUMBER(30,8),
+  dir_pe_part                    NUMBER(30,8),
+  dir_pam_prod_part              NUMBER(30,8),
+  extra_dimen_cd                 VARCHAR2(10),
+  stl_dt                         DATE,
+  ovdue_status                   VARCHAR2(300),
+  in_out_tab_flg_cd              VARCHAR2(10),
+  ovdue_flg                      VARCHAR2(10),
+  pric_ovdue_flg                 VARCHAR2(10),
+  pric_ovdue_dt                  DATE,
+  pric_ovdue_days                NUMBER(10),
+  int_ovdue_flg                  VARCHAR2(10),
+  int_ovdue_dt                   DATE,
+  int_ovdue_days                 NUMBER(10),
+  job_cd                         VARCHAR2(10),
+  etl_timestamp                  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501
+  is '同业净值型产品投资';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.ext_secu_acct_id
+  is '外部证券账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.intnal_secu_acct_id
+  is '内部证券账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.fin_instm_id
+  is '金融工具编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.asset_type_id
+  is '资产类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.market_type_id
+  is '市场类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.comb_tran_num
+  is '组合交易号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.obj_id
+  is '对象编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.prod_type_cd
+  is '产品类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.asset_type_name
+  is '资产类型名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.class_crdt_flg
+  is '类信贷标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.abs_flg
+  is 'ABS标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.int_subj_id
+  is '利息科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.int_adj_subj_id
+  is '利息调整科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.tran_market_id
+  is '交易市场编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.exchg_acct_id
+  is '交易所账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.cntpty_cls_descb
+  is '交易对手分类描述';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.bank_flg
+  is '银行标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.cty_cd
+  is '国家代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.subscr_dt
+  is '认购日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.tenor_cd
+  is '期限代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.int_accr_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.int_rat_adj_way_cd
+  is '利率调整方式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.fac_val_amt
+  is '票面金额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.fac_val_int_rat
+  is '票面利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.pay_int_ped_cd
+  is '付息周期代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.auto_redt_flg
+  is '自动转存标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.actl_qtty
+  is '实际数量';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.actl_bal
+  is '实际余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.pric_bal
+  is '本金余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.acru_int
+  is '应计利息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.int_recvbl
+  is '应收利息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.recvbl_uncol_pric
+  is '应收未收本金';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.recvbl_uncol_int
+  is '应收未收利息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.int_adj_amt
+  is '利息调整金额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.evha_val_chag
+  is '公允价值变动';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.nv_prod_flg
+  is '净值产品标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.base_rat
+  is '基准利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.spd
+  is '利差';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.base_rat_mult
+  is '基准利率倍数';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.td_nv
+  is '当日净值';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.book_bal
+  is '账面余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.curr_bal
+  is '当前余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.last_update_dt
+  is '上次更新日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.cap_type_cd
+  is '资金类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.asset_four_cls_cd
+  is '资产四分类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.asset_thd_cls_cd
+  is '资产三分类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_asset_dir_indus_categy_cd
+  is '底层资产投向行业门类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_bond_cd
+  is '底层债券代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_bond_name
+  is '底层债券名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_bond_flg
+  is '底层债券标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_asset_type_id
+  is '底层资产类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_bond_rating
+  is '底层债券评级';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_actl_finer_name
+  is '底层实际融资人名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_post_denom
+  is '底层持仓面额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_actl_finer_cust_id
+  is '底层实际融资人客户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_actl_finer_belong_group
+  is '底层实际融资人所属集团';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_actl_finer_cust_char
+  is '底层实际融资人客户性质';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_coll_way_cd
+  is '底层募集方式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_cbond_estim_full_price
+  is '底层中债估价全价';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_cbond_estim_net_price
+  is '底层中债估价净价';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_csecu_full_price_evltion
+  is '底层中证全价估值';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_csecu_net_price_evltion
+  is '底层中证净价估值';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_csecu_coret_duran
+  is '底层中证修正久期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_csecu_bp_val
+  is '底层中证基点价值';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_csecu_estim_cvty
+  is '底层中证估价凸性';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_estim_coret_duran
+  is '底层估价修正久期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_bp_val
+  is '底层基点价值';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.uder_estim_cvty
+  is '底层估价凸性';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.final_dir_type_cd
+  is '最终投向类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.final_dir_indus_gen
+  is '最终投向行业_大类';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.final_dir_indus_subclass
+  is '最终投向行业_细类';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.dir_ind_fund_part
+  is '投向产业基金的部分';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.dir_debt_eqty_part
+  is '投向债转股的部分';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.dir_pe_part
+  is '投向私募股权投资基金的部分';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.dir_pam_prod_part
+  is '投向私募资产管理产品的部分';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.extra_dimen_cd
+  is '额外维度代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.stl_dt
+  is '结算日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.ovdue_status
+  is '逾期状态';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.in_out_tab_flg_cd
+  is '表内外标志代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.ovdue_flg
+  is '逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.pric_ovdue_flg
+  is '本金逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.pric_ovdue_dt
+  is '本金逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.pric_ovdue_days
+  is '本金逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.int_ovdue_flg
+  is '利息逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.int_ovdue_dt
+  is '利息逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.int_ovdue_days
+  is '利息逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_NV_TYPE_PROD_INVEST_BAK_20230501.etl_timestamp
+  is '数据处理时间';
+

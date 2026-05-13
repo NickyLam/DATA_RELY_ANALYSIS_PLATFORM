@@ -1,0 +1,126 @@
+﻿create table RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL
+(
+  etl_dt              DATE,
+  lp_id               VARCHAR2(60),
+  tran_flow_id        VARCHAR2(60),
+  decl_num            VARCHAR2(60),
+  remit_id            VARCHAR2(60),
+  remiter_name        VARCHAR2(100),
+  remit_cmplt_dt      DATE,
+  remit_char          VARCHAR2(60),
+  value_day           DATE,
+  exp_day             TIMESTAMP(6),
+  recver_cust_type_cd VARCHAR2(60),
+  recver_name         VARCHAR2(200),
+  recver_cn_name      VARCHAR2(250),
+  recver_cty_cd       VARCHAR2(10),
+  recver_descb        VARCHAR2(200),
+  curr_cd             VARCHAR2(10),
+  remit_amt           NUMBER(30,2),
+  remit_type_cd       VARCHAR2(10),
+  tran_cd             VARCHAR2(60),
+  tran_postsc         VARCHAR2(2000),
+  tran_dtl_cd         VARCHAR2(60),
+  tran_dtl_postsc     VARCHAR2(2000),
+  tran_teller_id      VARCHAR2(60),
+  tran_org_name       VARCHAR2(500),
+  tran_org_id         VARCHAR2(60),
+  msg_info_1          VARCHAR2(60),
+  msg_info_2          VARCHAR2(60),
+  fee_amt             NUMBER(30,2),
+  usd_fee_amt         NUMBER(30,2),
+  remiter_cty_cd      VARCHAR2(10),
+  belong_org_id       VARCHAR2(60),
+  job_cd              VARCHAR2(10),
+  core_tran_flow_num  VARCHAR2(90),
+  cust_id             VARCHAR2(60),
+  remit_acct_num      VARCHAR2(60),
+  recvbl_num          VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL
+  is '汇出汇款明细';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.tran_flow_id
+  is '交易流水编号';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.decl_num
+  is '申报号码';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.remit_id
+  is '汇款编号';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.remiter_name
+  is '汇款人名称';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.remit_cmplt_dt
+  is '汇款完成日期';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.remit_char
+  is '汇款性质';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.value_day
+  is '起息日';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.exp_day
+  is '到期日';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.recver_cust_type_cd
+  is '收款方客户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.recver_name
+  is '收款人名称';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.recver_cn_name
+  is '收款人中文名称';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.recver_cty_cd
+  is '收款人国家代码';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.recver_descb
+  is '收款人描述';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.remit_amt
+  is '汇款金额';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.remit_type_cd
+  is '汇款类型代码';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.tran_cd
+  is '交易代码';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.tran_postsc
+  is '交易附言';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.tran_dtl_cd
+  is '交易明细代码';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.tran_dtl_postsc
+  is '交易明细附言';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.tran_org_name
+  is '交易机构名称';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.msg_info_1
+  is '报文信息1';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.msg_info_2
+  is '报文信息2';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.fee_amt
+  is '费用金额';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.usd_fee_amt
+  is '折美元费用金额';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.remiter_cty_cd
+  is '汇款人国家代码';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.core_tran_flow_num
+  is '核心交易流水号';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.remit_acct_num
+  is '汇款账号';
+comment on column RRP_MDL.O_ICL_CMM_OUT_REMIT_DTL.recvbl_num
+  is '收款账号';
+

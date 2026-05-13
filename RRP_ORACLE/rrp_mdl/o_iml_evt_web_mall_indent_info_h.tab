@@ -1,0 +1,177 @@
+﻿create table RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H
+(
+  evt_id                  VARCHAR2(250),
+  lp_id                   VARCHAR2(60),
+  indent_flow_num         VARCHAR2(150),
+  tran_flow_num           VARCHAR2(150),
+  init_indent_flow_num    VARCHAR2(150),
+  init_indent_tran_dt     DATE,
+  tran_dt                 DATE,
+  tran_tm                 DATE,
+  tran_code               VARCHAR2(45),
+  tran_status_cd          VARCHAR2(30),
+  pay_sucs_dt             DATE,
+  pay_sucs_tm             DATE,
+  resp_code               VARCHAR2(45),
+  resp_code_descb         VARCHAR2(1500),
+  pay_card_num            VARCHAR2(150),
+  card_name               VARCHAR2(375),
+  ibank_no                VARCHAR2(150),
+  bank_name               VARCHAR2(375),
+  card_type_cd            VARCHAR2(30),
+  recv_bill_brch_id       VARCHAR2(100),
+  caller_ova_flow_num     VARCHAR2(150),
+  caller_onl_ova_flow_num VARCHAR2(150),
+  dispatch_status_cd      VARCHAR2(30),
+  pick_goods_way_cd       VARCHAR2(30),
+  mercht_no               VARCHAR2(150),
+  recver_name             VARCHAR2(150),
+  recver_mobile_no        VARCHAR2(30),
+  recver_local_prov       VARCHAR2(90),
+  recver_local_city       VARCHAR2(90),
+  recver_local_rg_county  VARCHAR2(90),
+  recver_local_town       VARCHAR2(90),
+  recver_dtl_addr         VARCHAR2(750),
+  indent_tot_amt          NUMBER(30,2),
+  indent_point_type_cd    VARCHAR2(30),
+  indent_tot_point        NUMBER(30,2),
+  fregt_amt               NUMBER(30,2),
+  cust_id                 VARCHAR2(100),
+  cust_name               VARCHAR2(375),
+  cust_open_acct_org_id   VARCHAR2(100),
+  bank_cust_mgr_id        VARCHAR2(100),
+  tot_comm_fee_inco       NUMBER(30,2),
+  agency_id               VARCHAR2(100),
+  pay_card_open_org_id    VARCHAR2(500),
+  tran_org_id             VARCHAR2(100),
+  surp_aval_amt           NUMBER(30,2),
+  surp_aval_point         NUMBER(30,2),
+  point_mall_order_no     VARCHAR2(150),
+  merchd_type_cd          VARCHAR2(30),
+  start_dt                DATE,
+  end_dt                  DATE,
+  id_mark                 VARCHAR2(10),
+  job_cd                  VARCHAR2(10),
+  src_table_name          VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H
+  is '网上商城订单信息历史';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.indent_flow_num
+  is '订单流水号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.init_indent_flow_num
+  is '原订单流水号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.init_indent_tran_dt
+  is '原订单交易日期';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.tran_code
+  is '交易码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.pay_sucs_dt
+  is '付款成功日期';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.pay_sucs_tm
+  is '付款成功时间';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.resp_code
+  is '响应码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.resp_code_descb
+  is '响应码描述';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.pay_card_num
+  is '支付卡号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.card_name
+  is '卡名称';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.ibank_no
+  is '银行联行号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.bank_name
+  is '银行名称';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.card_type_cd
+  is '卡类型代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.recv_bill_brch_id
+  is '收单分行编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.caller_ova_flow_num
+  is '调用方全局流水号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.caller_onl_ova_flow_num
+  is '调用方联机全局流水号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.dispatch_status_cd
+  is '发货状态代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.pick_goods_way_cd
+  is '提货方式代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.mercht_no
+  is '商户号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.recver_name
+  is '收货人名称';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.recver_mobile_no
+  is '收货人手机号码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.recver_local_prov
+  is '收货人所在省';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.recver_local_city
+  is '收货人所在市';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.recver_local_rg_county
+  is '收货人所在区县';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.recver_local_town
+  is '收货人所在镇';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.recver_dtl_addr
+  is '收货人详细地址';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.indent_tot_amt
+  is '订单总金额';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.indent_point_type_cd
+  is '订单积分类型代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.indent_tot_point
+  is '订单总积分';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.fregt_amt
+  is '运费金额';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.cust_id
+  is '交易客户编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.cust_open_acct_org_id
+  is '客户开户机构编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.bank_cust_mgr_id
+  is '银行客户经理编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.tot_comm_fee_inco
+  is '总手续费收入';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.agency_id
+  is '代理商编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.pay_card_open_org_id
+  is '支付卡开户机构编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.surp_aval_amt
+  is '剩余可用金额';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.surp_aval_point
+  is '剩余可用积分';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.point_mall_order_no
+  is '积分商城订单号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.merchd_type_cd
+  is '商品类型代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_INDENT_INFO_H.src_table_name
+  is '源表名称';
+

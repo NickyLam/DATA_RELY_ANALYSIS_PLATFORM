@@ -1,0 +1,79 @@
+﻿create table RRP_MDL.O_IOL_ICMS_FINA_SHEET
+(
+  sheetno            VARCHAR2(64),
+  reporttypeno       VARCHAR2(32),
+  sheettype          VARCHAR2(18),
+  reportno           VARCHAR2(32),
+  customerid         VARCHAR2(32),
+  accountingmonth    VARCHAR2(18),
+  reportscope        VARCHAR2(18),
+  reportperiod       VARCHAR2(18),
+  deleteflag         VARCHAR2(1),
+  calculateerrorinfo VARCHAR2(4000),
+  inputuserid        VARCHAR2(32),
+  inputorgid         VARCHAR2(32),
+  inputdate          DATE,
+  updateuserid       VARCHAR2(32),
+  updateorgid        VARCHAR2(32),
+  updatedate         DATE,
+  reportname         VARCHAR2(80),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_FINA_SHEET
+  is '财报表;财报表 即一个表(如资产负债表),记录只能来自模型
+原表名:report_record';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.sheetno
+  is '报表号';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.reporttypeno
+  is '财报类型编号';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.sheettype
+  is '报表类型';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.reportno
+  is '财报号';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.customerid
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.accountingmonth
+  is '会计月';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.reportscope
+  is '报表口径';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.reportperiod
+  is '报表周期';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.deleteflag
+  is '删除标志';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.calculateerrorinfo
+  is '计算错误信息';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.reportname
+  is '报表名称';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_SHEET.id_mark
+  is '增删标志';
+

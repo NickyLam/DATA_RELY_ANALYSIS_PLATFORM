@@ -1,0 +1,51 @@
+﻿create table RRP_MDL.O_IML_AST_COL_OBANK_GUAR
+(
+  asset_id                VARCHAR2(100),
+  lp_id                   VARCHAR2(100),
+  seq_num                 VARCHAR2(100),
+  hxb_prior_seq_comb_cd   NUMBER,
+  obank_name              VARCHAR2(750),
+  obank_set_sec_right_amt NUMBER(20,4),
+  start_dt                DATE,
+  end_dt                  DATE,
+  id_mark                 VARCHAR2(10),
+  job_cd                  VARCHAR2(10),
+  src_table_name          VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AST_COL_OBANK_GUAR
+  is '押品他行担保';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.asset_id
+  is '押品编号';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.seq_num
+  is '序号';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.hxb_prior_seq_comb_cd
+  is '我行优先偿权顺序组合代码';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.obank_name
+  is '他行名称';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.obank_set_sec_right_amt
+  is '他行设定担保权金额';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_AST_COL_OBANK_GUAR.src_table_name
+  is '源表名称';
+

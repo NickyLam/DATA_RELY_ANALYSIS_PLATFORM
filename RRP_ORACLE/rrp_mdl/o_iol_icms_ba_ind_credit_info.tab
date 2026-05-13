@@ -1,0 +1,123 @@
+﻿create table RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO
+(
+  serialno           VARCHAR2(32),
+  baserialno         VARCHAR2(32),
+  reportdate         VARCHAR2(10),
+  reportid           VARCHAR2(40),
+  certtype           VARCHAR2(4),
+  certid             VARCHAR2(60),
+  customername       VARCHAR2(100),
+  customerid         VARCHAR2(30),
+  customertype       VARCHAR2(10),
+  relativetype       VARCHAR2(10),
+  inputuserid        VARCHAR2(40),
+  inputorgid         VARCHAR2(40),
+  inputdate          DATE,
+  updateuserid       VARCHAR2(40),
+  updateorgid        VARCHAR2(40),
+  updatedate         DATE,
+  reportremark       VARCHAR2(2000),
+  qryopertp          VARCHAR2(2000),
+  authotype          VARCHAR2(20),
+  biometrics         VARCHAR2(20),
+  status             VARCHAR2(10),
+  pbcdata            VARCHAR2(2000),
+  migtflag           VARCHAR2(80),
+  authodate          DATE,
+  authostrdate       DATE,
+  authoenddate       DATE,
+  supplyflag         VARCHAR2(2),
+  supplycomplete     VARCHAR2(1),
+  iscreditflag       VARCHAR2(2),
+  craserialno        VARCHAR2(32),
+  xxdyxserialno      VARCHAR2(32),
+  creditvalidatetime VARCHAR2(10),
+  etl_dt             DATE,
+  etl_timestamp      TIMESTAMP(6),
+  authobkid          VARCHAR2(64)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO
+  is '个人客户征信信息';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.baserialno
+  is '申请流水号';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.reportdate
+  is '报告日期';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.reportid
+  is '报告ID';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.certtype
+  is '证件类型';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.certid
+  is '证件号码';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.customername
+  is '客户姓名';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.customerid
+  is '客户号';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.customertype
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.relativetype
+  is '关联人类型';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.reportremark
+  is '征信报告备注';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.qryopertp
+  is '查询操作申请类型';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.authotype
+  is '授权方式';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.biometrics
+  is '生物识别技术';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.status
+  is '请求结果状态';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.pbcdata
+  is '征信查询结果';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.migtflag
+  is '迁移标志：crs rcr ilc upl';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.authodate
+  is '授权时间';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.authostrdate
+  is '授权起始时间';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.authoenddate
+  is '授权结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.supplyflag
+  is '补录标识YesNo 1-是 ，0-否';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.supplycomplete
+  is '影像资料是否补充完全YesNo,1-是，0-否';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.iscreditflag
+  is '是否查询征信报告';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.craserialno
+  is '征信申请流程关联流水号';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.xxdyxserialno
+  is '新兴贷用信申请关联流水号';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.creditvalidatetime
+  is '征信有效期';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IOL_ICMS_BA_IND_CREDIT_INFO.authobkid
+  is '客户数据授权书编号';
+

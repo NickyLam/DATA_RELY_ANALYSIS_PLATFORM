@@ -1,0 +1,90 @@
+﻿create table RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO
+(
+  etl_dt                   DATE,
+  lp_id                    VARCHAR2(60),
+  acct_id                  VARCHAR2(60),
+  dubil_id                 VARCHAR2(100),
+  cont_id                  VARCHAR2(60),
+  std_prod_id              VARCHAR2(60),
+  cust_id                  VARCHAR2(60),
+  belong_org_id            VARCHAR2(60),
+  appl_teller_id           VARCHAR2(60),
+  fir_wrt_off_dt           DATE,
+  curr_cd                  VARCHAR2(60),
+  actl_wrtoff_loan_pric    NUMBER(30,2),
+  actl_wrtoff_in_bs_int    NUMBER(30,2),
+  actl_wrtoff_off_bs_int   NUMBER(30,2),
+  wrt_off_advc_money_amt   NUMBER(38,6),
+  wrt_off_retra_pric       NUMBER(30,2),
+  wrt_off_retra_in_bs_int  NUMBER(30,2),
+  wrt_off_retra_off_bs_int NUMBER(30,2),
+  wrt_off_retra_advc_fee   NUMBER(30,2),
+  wrt_off_retra_cnt        NUMBER(22),
+  all_retra_flg            VARCHAR2(10),
+  final_wrt_off_retra_dt   DATE,
+  job_cd                   VARCHAR2(10),
+  tran_timestamp           DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO
+  is '贷款核销信息';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.appl_teller_id
+  is '申请柜员编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.fir_wrt_off_dt
+  is '首次核销日期';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.actl_wrtoff_loan_pric
+  is '实核贷款本金';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.actl_wrtoff_in_bs_int
+  is '实核表内利息';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.actl_wrtoff_off_bs_int
+  is '实核表外利息';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.wrt_off_advc_money_amt
+  is '核销垫付款项金额';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.wrt_off_retra_pric
+  is '核销收回本金';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.wrt_off_retra_in_bs_int
+  is '核销收回表内利息';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.wrt_off_retra_off_bs_int
+  is '核销收回表外利息';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.wrt_off_retra_advc_fee
+  is '核销收回垫付费用';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.wrt_off_retra_cnt
+  is '核销收回笔数';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.all_retra_flg
+  is '全部收回标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.final_wrt_off_retra_dt
+  is '最后核销收回日期';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_WRT_OFF_INFO.tran_timestamp
+  is '交易时间';
+

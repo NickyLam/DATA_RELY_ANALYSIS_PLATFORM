@@ -1,0 +1,78 @@
+﻿create table RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501
+(
+  lgl_rep_id       VARCHAR2(200),
+  org_id           VARCHAR2(200) not null,
+  coop_agrt_id     VARCHAR2(200) not null,
+  pnr_nm           VARCHAR2(500),
+  pnr_crdl_typ     VARCHAR2(10),
+  pnr_crdl_no      VARCHAR2(100) not null,
+  pnr_typ          VARCHAR2(10),
+  coop_mode        VARCHAR2(10),
+  pnr_fnd_pct      NUMBER(18,4),
+  agrt_start_dt    VARCHAR2(8),
+  agrt_exp_dt      VARCHAR2(8),
+  act_end_dt       VARCHAR2(8),
+  pnr_regd_land_cd VARCHAR2(10),
+  rst_flg          VARCHAR2(1),
+  agrt_stat        VARCHAR2(10),
+  coop_prod        VARCHAR2(500),
+  dept_line        VARCHAR2(500),
+  data_src         VARCHAR2(500),
+  modify_date      VARCHAR2(8),
+  dbfs             VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501
+  is '互联网贷款合作协议表';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.org_id
+  is '机构编号';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.coop_agrt_id
+  is '合作协议编号';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.pnr_nm
+  is '合作方名称';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.pnr_crdl_typ
+  is '合作方证件类别';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.pnr_crdl_no
+  is '合作方证件号码';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.pnr_typ
+  is '合作方类型';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.coop_mode
+  is '合作方式';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.pnr_fnd_pct
+  is '合作方出资比例';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.agrt_start_dt
+  is '协议起始日期';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.agrt_exp_dt
+  is '协议到期日期';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.act_end_dt
+  is '实际终止日期';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.pnr_regd_land_cd
+  is '合作方注册地代码';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.rst_flg
+  is '限制标志';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.agrt_stat
+  is '协议状态';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.coop_prod
+  is '合作产品';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.dept_line
+  is '部门条线';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.data_src
+  is '数据来源';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.modify_date
+  is '修改日期';
+comment on column RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501.dbfs
+  is '担保方式';
+alter table RRP_MDL.ADD_LOAN_NET_COOP_SUB_BAK_20230501
+  add constraint PK_ADD_LOAN_NET_COOP_SUB primary key (ORG_ID, COOP_AGRT_ID, PNR_CRDL_NO)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

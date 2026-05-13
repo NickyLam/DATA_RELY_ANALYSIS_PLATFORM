@@ -1,0 +1,174 @@
+﻿create table RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT
+(
+  vouch_id            VARCHAR2(60),
+  lp_id               VARCHAR2(60),
+  dep_rcpt_cd         VARCHAR2(30),
+  asset_type_cd       VARCHAR2(30),
+  market_type_cd      VARCHAR2(30),
+  curr_cd             VARCHAR2(10),
+  quot_way_cd         VARCHAR2(10),
+  dep_rcpt_name       VARCHAR2(150),
+  prod_type_cd        VARCHAR2(30),
+  prod_type_name      VARCHAR2(150),
+  int_rat_pct_spd_bp  NUMBER(18,8),
+  issue_qtty          NUMBER(30,2),
+  issue_price         NUMBER(30,2),
+  lowt_issue_price    NUMBER(30,2),
+  higt_issue_price    NUMBER(30,2),
+  value_dt            DATE,
+  exp_dt              DATE,
+  tenor_val           NUMBER(10),
+  fir_int_rat_cfm_dt  DATE,
+  pay_int_freq_cd     VARCHAR2(10),
+  issue_way_cd        VARCHAR2(10),
+  coupon_type_cd      VARCHAR2(10),
+  base_rat_id         VARCHAR2(60),
+  base_asset_type_id  VARCHAR2(60),
+  base_market_type_id VARCHAR2(60),
+  stl_status_cd       VARCHAR2(10),
+  pay_dt              DATE,
+  cash_dt             DATE,
+  issue_dt            DATE,
+  annual_int_rat      NUMBER(18,8),
+  int_accr_base_cd    VARCHAR2(250),
+  fir_pay_int_dt      DATE,
+  invt_bid_way_cd     VARCHAR2(10),
+  lowt_yld_rat        NUMBER(18,6),
+  higt_yld_rat        NUMBER(18,6),
+  actl_issue_qtty     NUMBER(30,2),
+  issuer_name         VARCHAR2(750),
+  range               VARCHAR2(375),
+  rating_org          VARCHAR2(750),
+  rating              VARCHAR2(30),
+  fac_val             NUMBER(30,2),
+  start_issue_dt      DATE,
+  end_issue_dt        DATE,
+  max_subscr_qtty     NUMBER(30,2),
+  min_subscr_qtty     NUMBER(30,2),
+  sig_max_subscr_qtty NUMBER(30,2),
+  create_dt           DATE,
+  update_dt           DATE,
+  etl_dt              DATE,
+  id_mark             VARCHAR2(10),
+  src_table_name      VARCHAR2(100),
+  job_cd              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT
+  is '同业存单表';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.vouch_id
+  is '凭证编号';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.dep_rcpt_cd
+  is '存单代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.asset_type_cd
+  is '资产类型代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.market_type_cd
+  is '市场类型代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.quot_way_cd
+  is '报价方式代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.dep_rcpt_name
+  is '存单名称';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.prod_type_cd
+  is '产品类型代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.prod_type_name
+  is '产品类型名称';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.int_rat_pct_spd_bp
+  is '利率%、利差BP';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.issue_qtty
+  is '发行量(亿元)';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.issue_price
+  is '发行价格';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.lowt_issue_price
+  is '最低发行价格';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.higt_issue_price
+  is '最高发行价格';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.tenor_val
+  is '期限值(天)';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.fir_int_rat_cfm_dt
+  is '首次利率确定日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.pay_int_freq_cd
+  is '付息频率代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.issue_way_cd
+  is '发行方式代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.coupon_type_cd
+  is '息票类型代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.base_rat_id
+  is '基准利率编号';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.base_asset_type_id
+  is '基准资产类型编号';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.base_market_type_id
+  is '基准市场类型编号';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.stl_status_cd
+  is '结算状态代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.pay_dt
+  is '缴款日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.cash_dt
+  is '兑付日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.issue_dt
+  is '发行日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.annual_int_rat
+  is '年化利率';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.int_accr_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.fir_pay_int_dt
+  is '首次付息日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.invt_bid_way_cd
+  is '招标方式代码';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.lowt_yld_rat
+  is '最低收益率';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.higt_yld_rat
+  is '最高收益率';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.actl_issue_qtty
+  is '实际发行量(亿元)';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.issuer_name
+  is '发行人名称';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.range
+  is '范围';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.rating_org
+  is '评级机构';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.rating
+  is '评级';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.fac_val
+  is '票面';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.start_issue_dt
+  is '开始发行日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.end_issue_dt
+  is '结束发行日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.max_subscr_qtty
+  is '最大认购量';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.min_subscr_qtty
+  is '最小认购量';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.sig_max_subscr_qtty
+  is '单笔最大认购量';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_IBANK_DEP_RCPT.job_cd
+  is '任务编码';
+

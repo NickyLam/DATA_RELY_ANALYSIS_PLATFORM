@@ -1,0 +1,66 @@
+﻿create table RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501
+(
+  nbjgh   VARCHAR2(30) not null,
+  kjkmbh  VARCHAR2(60) not null,
+  bz      VARCHAR2(3) not null,
+  ycjfye  NUMBER(20,2),
+  ycdfye  NUMBER(20,2),
+  yjfse   NUMBER(20,2),
+  ydfse   NUMBER(20,2),
+  jcjfye  NUMBER(20,2),
+  jcdfye  NUMBER(20,2),
+  jjfse   NUMBER(20,2),
+  jdfse   NUMBER(20,2),
+  bncjfye NUMBER(20,2),
+  bncdfye NUMBER(20,2),
+  bnjfse  NUMBER(20,2),
+  bndfse  NUMBER(20,2),
+  ncjfye  NUMBER(20,2),
+  ncdfye  NUMBER(20,2),
+  njfse   NUMBER(20,2),
+  ndfse   NUMBER(20,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.kjkmbh
+  is '会计科目编号';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.bz
+  is '申请控制金额币种';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.ycjfye
+  is '月初借方余额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.ycdfye
+  is '月初贷方余额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.yjfse
+  is '月初借方发生额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.ydfse
+  is '月初贷方发生额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.jcjfye
+  is '季初借方余额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.jcdfye
+  is '季初贷方余额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.jjfse
+  is '季借方发生额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.jdfse
+  is '季贷方发生额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.bncjfye
+  is '半年初借方余额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.bncdfye
+  is '半年初贷方余额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.bnjfse
+  is '半年借方发生额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.bndfse
+  is '半年贷方发生额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.ncjfye
+  is '年初借方余额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.ncdfye
+  is '年初贷方余额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.njfse
+  is '年借方发生额';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_MQHY_BAK_20230501.ndfse
+  is '年贷方发生额';
+

@@ -1,0 +1,103 @@
+﻿create table RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT
+(
+  prd_code        VARCHAR2(30),
+  ta_code         VARCHAR2(14),
+  prd_name        VARCHAR2(375),
+  prd_name2       VARCHAR2(375),
+  prd_type        VARCHAR2(2),
+  prd_sub_type    VARCHAR2(2),
+  prd_busin_flag  VARCHAR2(15),
+  prd_limit_flag  VARCHAR2(2),
+  curr_type       VARCHAR2(5),
+  online_flag     VARCHAR2(2),
+  begin_date      NUMBER,
+  end_date        NUMBER,
+  prd_add_flag    VARCHAR2(2),
+  targ_prd_code   VARCHAR2(48),
+  waver_days      NUMBER,
+  master_agiorate NUMBER(18,2),
+  check_type      VARCHAR2(2),
+  control_flag    VARCHAR2(375),
+  reserve1        VARCHAR2(375),
+  reserve2        VARCHAR2(375),
+  reserve3        VARCHAR2(375),
+  reserve4        VARCHAR2(375),
+  pmin_amt        NUMBER(18,2),
+  omin_amt        NUMBER(18,2),
+  pmax_amt        NUMBER(18,2),
+  omax_amt        NUMBER(18,2),
+  punit_amt       NUMBER(18,2),
+  ounit_amt       NUMBER(18,2),
+  amt1            NUMBER(18,2),
+  amt2            NUMBER(18,2),
+  amt3            NUMBER(18,2),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10),
+  etl_timestamp   TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT
+  is '保险产品信息表';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.prd_code
+  is '借款对应的产品编码';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.ta_code
+  is 'ta代码';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.prd_name
+  is '原产品编';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.prd_name2
+  is '产品别名';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.prd_type
+  is '产品类型:1.网贷,2.经营贷';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.curr_type
+  is '币别[代码T003][参考CFG_T_CURRENCY_TYPE]';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.online_flag
+  is '是否联机';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.begin_date
+  is '生效日期';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.end_date
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.targ_prd_code
+  is '目标产品代码';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.check_type
+  is '核对类型';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.control_flag
+  is 'BTA参数控制位#';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.reserve1
+  is '备用字段1';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.reserve2
+  is '备用字段2';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.reserve3
+  is '备注3';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.reserve4
+  is '备用字段';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.pmax_amt
+  is '个人单笔最大购买金额';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.omax_amt
+  is '机构最大申购金额';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.amt1
+  is '金额1';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.amt2
+  is '保留金额2';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.amt3
+  is '保留金额3';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREPRODUCT.etl_timestamp
+  is 'ETL处理时间戳';
+

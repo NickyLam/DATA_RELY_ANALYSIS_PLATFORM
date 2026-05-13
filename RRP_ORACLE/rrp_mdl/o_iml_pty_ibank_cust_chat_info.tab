@@ -1,0 +1,93 @@
+﻿create table RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO
+(
+  party_id               VARCHAR2(100),
+  lp_id                  VARCHAR2(60),
+  fin_inst_cate_cd       VARCHAR2(30),
+  open_acct_lics_num     VARCHAR2(60),
+  fx_mang_lics_num       VARCHAR2(60),
+  fin_lics_num           VARCHAR2(60),
+  csrc_cd_no             VARCHAR2(30),
+  ibank_no               VARCHAR2(60),
+  swift_id               VARCHAR2(60),
+  apv_num                VARCHAR2(60),
+  apv_num_valid_dt       DATE,
+  corp_fori_exch_cd      VARCHAR2(30),
+  cbrc_oss_code          VARCHAR2(60),
+  cbrc_oss_code_valid_dt DATE,
+  insure_lics_num        VARCHAR2(60),
+  insure_lics_valid_dt   DATE,
+  secu_lics_num          VARCHAR2(60),
+  secu_lics_valid_dt     DATE,
+  intstl_factor_cert_num VARCHAR2(60),
+  fin_inst_code          VARCHAR2(60),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  src_table_name         VARCHAR2(100),
+  job_cd                 VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO
+  is '同业客户特有信息';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.fin_inst_cate_cd
+  is '金融机构类别代码';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.open_acct_lics_num
+  is '开户许可证号码';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.fx_mang_lics_num
+  is '外汇经营许可证号码';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.fin_lics_num
+  is '金融许可证号码';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.csrc_cd_no
+  is '证监会代码证号';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.ibank_no
+  is '联行号';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.swift_id
+  is 'swift编号';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.apv_num
+  is '审批文号';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.apv_num_valid_dt
+  is '审批文号有效日期';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.corp_fori_exch_cd
+  is '企业外管代码';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.cbrc_oss_code
+  is '银监会非现场监管编码';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.cbrc_oss_code_valid_dt
+  is '银监会非现场监管编码有效日期';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.insure_lics_num
+  is '保险许可证号码';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.insure_lics_valid_dt
+  is '保险许可证有效日期';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.secu_lics_num
+  is '证券许可证号码';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.secu_lics_valid_dt
+  is '证券许可证有效日期';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.intstl_factor_cert_num
+  is '国结保理商证号';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.fin_inst_code
+  is '金融机构编码';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PTY_IBANK_CUST_CHAT_INFO.job_cd
+  is '任务编码';
+

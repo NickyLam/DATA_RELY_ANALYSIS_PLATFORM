@@ -1,0 +1,74 @@
+﻿create table RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE
+(
+  data_date                  VARCHAR2(8),
+  serialno                   VARCHAR2(40),
+  duebillno                  VARCHAR2(40),
+  businesstype               VARCHAR2(18),
+  customerid                 VARCHAR2(40),
+  customername               VARCHAR2(80),
+  customertype               VARCHAR2(20),
+  industrytype               VARCHAR2(18),
+  scope                      VARCHAR2(18),
+  assets_type                VARCHAR2(2),
+  balance                    NUMBER(18,6),
+  classifyresult             VARCHAR2(18),
+  classifyresult_change_date VARCHAR2(20),
+  risk_check_result          VARCHAR2(2),
+  add_to_list_date           VARCHAR2(20),
+  remark                     VARCHAR2(2000),
+  manageuserid               VARCHAR2(10),
+  manageorgid                VARCHAR2(32),
+  inputuserid                VARCHAR2(10),
+  inputorgid                 VARCHAR2(32),
+  inputdate                  VARCHAR2(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE
+  is '特殊资产处置台账申请表';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.data_date
+  is '数据日期';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.serialno
+  is '流水号';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.duebillno
+  is '借据号';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.businesstype
+  is '业务品种';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.customerid
+  is '客户编号';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.customername
+  is '客户名称';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.customertype
+  is '客户类型';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.industrytype
+  is '所属行业';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.scope
+  is '企业规模';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.assets_type
+  is '资产类型';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.balance
+  is '本金余额';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.classifyresult
+  is '风险分类';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.classifyresult_change_date
+  is '下调不良时间';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.risk_check_result
+  is '风险排查结果';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.add_to_list_date
+  is '列入铁骑名单时间';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.remark
+  is '备注';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.manageuserid
+  is '客户经理';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.manageorgid
+  is '所属机构';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.inputuserid
+  is '登记人';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.S_IOL_CRSS_SPECIAL_ASSETS_MANAGE.inputdate
+  is '登记时间';
+

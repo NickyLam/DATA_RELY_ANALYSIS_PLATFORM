@@ -1,0 +1,41 @@
+﻿create table RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501
+(
+  cust_id        VARCHAR2(200),
+  cust_nm        VARCHAR2(500),
+  cert_type_cd   VARCHAR2(10),
+  edw_value_name VARCHAR2(200),
+  crdl_typ       VARCHAR2(10),
+  rrp_value_name VARCHAR2(200),
+  crdl_no        VARCHAR2(100),
+  crdl_eff_dt    CHAR(8),
+  crdl_exp_dt    CHAR(8),
+  crdl_upd_dt    CHAR(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501
+  is '对公客户证件信息临时表';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501.cust_id
+  is '客户号';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501.cust_nm
+  is '客户名称';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501.cert_type_cd
+  is '数仓证件类型';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501.edw_value_name
+  is '数仓证件类型名称';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501.crdl_typ
+  is '监管证件类型';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501.rrp_value_name
+  is '监管证件类型名称';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501.crdl_no
+  is '证件号';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501.crdl_eff_dt
+  is '证件生效日期';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501.crdl_exp_dt
+  is '证件失效日期';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO_BAK_20230501.crdl_upd_dt
+  is '证件更新日期';
+

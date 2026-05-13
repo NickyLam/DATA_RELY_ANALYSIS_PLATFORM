@@ -1,0 +1,53 @@
+﻿create table RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND
+(
+  stdrwbandid        NUMBER(9),
+  reportid           NUMBER(9),
+  stdrwbanddesc      NVARCHAR2(750),
+  stdrwbandfloor     NUMBER(10,8),
+  stdrwbandceiling   NUMBER(10,8),
+  creationdate       DATE,
+  lastupdatedate     DATE,
+  stdrwbandgroupid   NUMBER(9),
+  stdrwbandgroupdesc NVARCHAR2(750),
+  stdrwbandlcldsc    NVARCHAR2(750),
+  stdrwband          NUMBER(18,3),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND
+  is '权重等级表';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.stdrwbandid
+  is '标准法下风险权重等级标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.reportid
+  is '监管机关报表标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.stdrwbanddesc
+  is '标准法下风险权重等级描述';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.stdrwbandfloor
+  is '标准法下风险权重等级下限';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.stdrwbandceiling
+  is '标准法下风险权重等级上限';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.creationdate
+  is '创建日期';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.lastupdatedate
+  is '上次更新日期';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.stdrwbandgroupid
+  is '标准法下风险权重等级组标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.stdrwbandgroupdesc
+  is '标准法下风险权重等级组描述';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.stdrwbandlcldsc
+  is '标准法下风险权重等级中文描述';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.stdrwband
+  is '风险权重数值';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_SL_STDRWBAND.id_mark
+  is '增删标志';
+

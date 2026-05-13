@@ -1,0 +1,12 @@
+﻿create table RRP_EAST.XZY_EAST_KH
+(
+  khtybh   VARCHAR2(70),
+  cjrq     VARCHAR2(8) not null,
+  tab_name CHAR(16)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+

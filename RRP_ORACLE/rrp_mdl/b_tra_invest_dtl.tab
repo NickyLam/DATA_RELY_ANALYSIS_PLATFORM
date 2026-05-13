@@ -1,0 +1,59 @@
+﻿create table RRP_MDL.B_TRA_INVEST_DTL
+(
+  data_dt      CHAR(8) not null,
+  lgl_rep_id   VARCHAR2(200),
+  org_id       VARCHAR2(200),
+  acc_id       VARCHAR2(200) not null,
+  seq_no       VARCHAR2(200) not null,
+  ulyg_prod_id VARCHAR2(200),
+  cur          CHAR(3),
+  buy_sell_flg CHAR(1),
+  tra_amt      NUMBER(30,2),
+  dept_line    VARCHAR2(500),
+  data_src     VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_TRA_INVEST_DTL
+  is '投资业务交易流水';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.acc_id
+  is '账户编号';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.seq_no
+  is '流水号';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.ulyg_prod_id
+  is '标的产品编号';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.cur
+  is '币种';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.buy_sell_flg
+  is '买入卖出标志';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.tra_amt
+  is '交易金额';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_TRA_INVEST_DTL.data_src
+  is '数据来源';
+alter table RRP_MDL.B_TRA_INVEST_DTL
+  add constraint PK_B_TRA_INVEST_DTL primary key (DATA_DT, ACC_ID, SEQ_NO)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

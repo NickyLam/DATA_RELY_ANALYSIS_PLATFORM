@@ -1,0 +1,84 @@
+﻿create table RRP_MDL.O_IML_PRD_FEE_TYPE_PARA
+(
+  lp_id                                 VARCHAR2(100),
+  fee_type_id                           VARCHAR2(100),
+  fee_type_descb                        VARCHAR2(500),
+  prod_group_cd                         VARCHAR2(30),
+  fee_proj_id                           VARCHAR2(100),
+  fee_curr_cd                           VARCHAR2(30),
+  amort_flg                             VARCHAR2(10),
+  amort_tenor_type_cd                   VARCHAR2(30),
+  fee_rat_calc_way_cd                   VARCHAR2(30),
+  end_day_onl_cd                        VARCHAR2(30),
+  charge_curr_cate_cd                   VARCHAR2(30),
+  ratio_bf_convt_flg                    VARCHAR2(10),
+  discnt_type_cd                        VARCHAR2(30),
+  need_provi_flg                        VARCHAR2(10),
+  fee_price_std_descb                   VARCHAR2(4000),
+  prefr_charge_std_contn_prefr_tm_descb VARCHAR2(4000),
+  start_dt                              DATE,
+  end_dt                                DATE,
+  id_mark                               VARCHAR2(10),
+  src_table_name                        VARCHAR2(100),
+  job_cd                                VARCHAR2(10),
+  etl_timestamp                         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PRD_FEE_TYPE_PARA
+  is '费用产品信息历史';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.fee_type_id
+  is '费用类型编号';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.fee_type_descb
+  is '费用类型描述';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.prod_group_cd
+  is '产品组代码';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.fee_proj_id
+  is '费用项目编号';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.fee_curr_cd
+  is '费用币种代码';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.amort_flg
+  is '摊销标志';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.amort_tenor_type_cd
+  is '摊销期限类型代码';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.fee_rat_calc_way_cd
+  is '费率计算方式代码';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.end_day_onl_cd
+  is '日终联机代码';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.charge_curr_cate_cd
+  is '收费币种类别代码';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.ratio_bf_convt_flg
+  is '比率前折算标志';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.discnt_type_cd
+  is '折扣类型代码';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.need_provi_flg
+  is '需要计提标志';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.fee_price_std_descb
+  is '费用价格标准描述';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.prefr_charge_std_contn_prefr_tm_descb
+  is '优惠收费标准含优惠时间描述';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_PRD_FEE_TYPE_PARA.etl_timestamp
+  is 'ETL处理时间戳';
+

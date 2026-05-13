@@ -1,0 +1,24 @@
+﻿create table RRP_MDL.M_CRDT_LMT_INFO_TEMP05
+(
+  cust_id       VARCHAR2(200),
+  first_crdt_dt CHAR(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_CRDT_LMT_INFO_TEMP05
+  is '客户首次授信日期';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_TEMP05.cust_id
+  is '客户号';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_TEMP05.first_crdt_dt
+  is '首次授信日期';
+

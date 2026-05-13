@@ -1,0 +1,183 @@
+﻿create table RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN
+(
+  data_date                    DATE,
+  loan_ref_id                  NUMBER(9),
+  loan_ref_no                  VARCHAR2(150),
+  sec_no                       VARCHAR2(150),
+  asset_thd_cls_cd             VARCHAR2(45),
+  seniority_id                 VARCHAR2(30),
+  s_grade                      VARCHAR2(30),
+  grade                        VARCHAR2(30),
+  src_system_id                VARCHAR2(30),
+  product_name                 VARCHAR2(60),
+  start_date                   DATE,
+  due_date                     DATE,
+  org_cd                       VARCHAR2(90),
+  cust_no                      VARCHAR2(150),
+  cust_name                    VARCHAR2(300),
+  reg_country_cd               VARCHAR2(60),
+  rating_cd                    VARCHAR2(90),
+  ccp_type_cd                  VARCHAR2(15),
+  assettype_id                 VARCHAR2(15),
+  subject_cd                   VARCHAR2(90),
+  interest_receive_subject_cd  VARCHAR2(90),
+  accrual_class_subject_cd     VARCHAR2(90),
+  interest_adjust_subject_cd   VARCHAR2(90),
+  fairvalue_changes_subject_cd VARCHAR2(90),
+  provision_single_subject_cd  VARCHAR2(90),
+  ccy_name                     VARCHAR2(1500),
+  asset_balance                NUMBER(22,2),
+  asset_balance_hcurr          NUMBER(22,6),
+  receivable_int               NUMBER(22,6),
+  accrued_int                  NUMBER(22,6),
+  int_adj                      NUMBER(22,6),
+  fair_value_change            NUMBER(22,6),
+  provision                    NUMBER(22,6),
+  ead_orig                     NUMBER(22,6),
+  ead_provision                NUMBER(22,6),
+  portfoliotypedesc            VARCHAR2(300),
+  rwbandid                     NUMBER(18,3),
+  rwaamount                    NUMBER(18,2),
+  crm_cash_amt                 NUMBER(18,2),
+  crm_government_amt           NUMBER(18,2),
+  crm_pbc_mat                  NUMBER(18,2),
+  crm_policy_bank_amt          NUMBER(18,2),
+  crm_pse_sov_amt              NUMBER(18,2),
+  crm_bank_amt                 NUMBER(18,2),
+  crm_bonds_issued_amt         NUMBER(18,2),
+  crm_governments_aa_amt       NUMBER(18,2),
+  crm_governments_a_amt        NUMBER(18,2),
+  crm_governments_bbb_amt      NUMBER(18,2),
+  crm_pses_aa_amt              NUMBER(18,2),
+  crm_pses_a_amt               NUMBER(18,2),
+  crm_mdbs_biss_imfs_amt       NUMBER(18,2),
+  first_org_cd                 VARCHAR2(90),
+  first_cust_name              VARCHAR2(750),
+  etl_dt                       DATE,
+  etl_timestamp                TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN
+  is '债项填报信息表-标准债权';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.data_date
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.loan_ref_id
+  is '债项id';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.loan_ref_no
+  is '借据号';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.sec_no
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.asset_thd_cls_cd
+  is '资产三分类代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.seniority_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.s_grade
+  is '债项/主体评级';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.grade
+  is '评分';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.src_system_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.product_name
+  is '产品名称';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.start_date
+  is '起息日';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.due_date
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.org_cd
+  is '组织机构代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.cust_no
+  is '核心客户号';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.reg_country_cd
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.rating_cd
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.ccp_type_cd
+  is '实际融资主体客户类型(引擎)';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.assettype_id
+  is '资产类型id';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.subject_cd
+  is '科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.interest_receive_subject_cd
+  is '应收利息科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.accrual_class_subject_cd
+  is '应计科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.interest_adjust_subject_cd
+  is '利息调整科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.fairvalue_changes_subject_cd
+  is '公允价值变动科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.provision_single_subject_cd
+  is '准备金科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.ccy_name
+  is '币种代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.asset_balance
+  is '资产余额(原币)';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.asset_balance_hcurr
+  is '资产余额(本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.receivable_int
+  is '应收利息(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.accrued_int
+  is '应计利息(本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.int_adj
+  is '利息调整';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.fair_value_change
+  is '公允价值变动(本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.provision
+  is '计提准备金(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.ead_orig
+  is '原始风险暴露(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.ead_provision
+  is '扣减准备金后的风险暴露(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.portfoliotypedesc
+  is '填报项目';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.rwbandid
+  is '风险权重区间标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.rwaamount
+  is 'rwa（风险加权资产）金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_cash_amt
+  is '保证金金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_government_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_pbc_mat
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_policy_bank_amt
+  is '我国政策性银行';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_pse_sov_amt
+  is '我国公共部门实体';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_bank_amt
+  is '我国商业银行';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_bonds_issued_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_governments_aa_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_governments_a_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_governments_bbb_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_pses_aa_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_pses_a_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.crm_mdbs_biss_imfs_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.first_org_cd
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.first_cust_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_STD_LOAN.etl_timestamp
+  is 'etl处理时间';
+

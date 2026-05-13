@@ -1,0 +1,150 @@
+﻿create table RRP_MDL.O_IML_AGT_FX_SPOT
+(
+  etl_dt              DATE,
+  agt_id              VARCHAR2(60),
+  lp_id               VARCHAR2(60),
+  bus_id              VARCHAR2(60),
+  dept_id             VARCHAR2(60),
+  org_id              VARCHAR2(60),
+  input_dt            DATE,
+  tran_dt             DATE,
+  value_dt            DATE,
+  curr_pairs_id       VARCHAR2(60),
+  bag_exch_rat        NUMBER(18,8),
+  brch_exch_rat       NUMBER(18,8),
+  cost_exch_rat       NUMBER(18,8),
+  fst_curr_cd         VARCHAR2(10),
+  secd_curr_cd        VARCHAR2(10),
+  fst_curr_tran_amt   NUMBER(30,2),
+  secd_curr_tran_amt  NUMBER(30,2),
+  tran_aim_cd         VARCHAR2(10),
+  cntpty_id           VARCHAR2(60),
+  cntpty_abbr         VARCHAR2(750),
+  tran_splt_type_cd   VARCHAR2(10),
+  tran_dir_cd         VARCHAR2(10),
+  tran_flow_num       VARCHAR2(90),
+  ctr_nt_status_cd    VARCHAR2(10),
+  bag_id              VARCHAR2(60),
+  tran_mode_cd        VARCHAR2(10),
+  tran_src_cd         VARCHAR2(10),
+  tran_site_cd        VARCHAR2(10),
+  clear_way_cd        VARCHAR2(10),
+  rela_tran_id        VARCHAR2(60),
+  portf_tran_id       VARCHAR2(60),
+  portf_id            VARCHAR2(60),
+  portf_name          VARCHAR2(750),
+  portf_type_name     VARCHAR2(150),
+  portf_status_cd     VARCHAR2(10),
+  portf_rela_tran_id  VARCHAR2(60),
+  clear_org_cd        VARCHAR2(10),
+  modif_rela_flow_num VARCHAR2(90),
+  create_dt           DATE,
+  update_dt           DATE,
+  id_mark             VARCHAR2(10),
+  job_cd              VARCHAR2(10),
+  src_table_name      VARCHAR2(200),
+  dealer_acct_num     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_FX_SPOT
+  is '外汇即期交易';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.dept_id
+  is '部门编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.input_dt
+  is '录入日期';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.curr_pairs_id
+  is '货币对编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.bag_exch_rat
+  is '成交汇率';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.brch_exch_rat
+  is '分行汇率';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.cost_exch_rat
+  is '成本汇率';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.fst_curr_cd
+  is '第一币种代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.secd_curr_cd
+  is '第二货币代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.fst_curr_tran_amt
+  is '第一币种交易金额';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.secd_curr_tran_amt
+  is '第二币种交易金额';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.tran_aim_cd
+  is '交易目的代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.cntpty_abbr
+  is '交易对手简称';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.tran_splt_type_cd
+  is '交易拆分类型代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.tran_dir_cd
+  is '交易方向代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.ctr_nt_status_cd
+  is '成交单状态代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.bag_id
+  is '成交编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.tran_mode_cd
+  is '交易模式代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.tran_src_cd
+  is '交易来源代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.tran_site_cd
+  is '交易场所代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.clear_way_cd
+  is '清算方式代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.rela_tran_id
+  is '关联交易编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.portf_tran_id
+  is '投组交易编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.portf_id
+  is '投组编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.portf_name
+  is '投组名称';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.portf_type_name
+  is '投组类型名称';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.portf_status_cd
+  is '投组状态代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.portf_rela_tran_id
+  is '投组关联交易编号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.clear_org_cd
+  is '清算机构代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.modif_rela_flow_num
+  is '交易修改关联流水号';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_FX_SPOT.dealer_acct_num
+  is '交易员账号';
+

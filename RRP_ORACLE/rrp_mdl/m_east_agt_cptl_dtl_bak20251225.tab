@@ -1,0 +1,79 @@
+﻿create table RRP_MDL.M_EAST_AGT_CPTL_DTL_BAK20251225
+(
+  data_dt                  CHAR(8) not null,
+  lgl_rep_id               VARCHAR2(200),
+  org_id                   VARCHAR2(200),
+  cust_id                  VARCHAR2(200),
+  cust_nm                  VARCHAR2(750),
+  cust_acc                 VARCHAR2(300),
+  open_bank_nm             VARCHAR2(750),
+  tra_id                   VARCHAR2(200) not null,
+  agcy_consi_tra_typ       VARCHAR2(10),
+  consi_prod_nm            VARCHAR2(750),
+  tra_dir                  VARCHAR2(15),
+  tra_dt                   CHAR(8),
+  cur                      CHAR(3),
+  tra_amt                  NUMBER(30,2),
+  isu_org_nm               VARCHAR2(750),
+  isu_org_rtg              VARCHAR2(300),
+  isu_org_rtg_org_nm       VARCHAR2(750),
+  isu_org_liq_acc          VARCHAR2(300),
+  isu_org_liq_bank_nm      VARCHAR2(750),
+  fin_psn_nm               VARCHAR2(750),
+  fin_psn_blng_idy         VARCHAR2(15),
+  comm_cur                 CHAR(3),
+  comm_amt                 NUMBER(30,2),
+  cash_trf_flg             CHAR(1),
+  hdlr_no                  VARCHAR2(30),
+  dept_line                VARCHAR2(750),
+  data_src                 VARCHAR2(500),
+  bus_cd                   VARCHAR2(30),
+  tra_shr                  VARCHAR2(30),
+  divd_way_cd              VARCHAR2(30),
+  finc_prod_id             VARCHAR2(60),
+  prd_attr                 VARCHAR2(30),
+  mgr_nm                   VARCHAR2(750),
+  curr_amt                 NUMBER(30,2),
+  divd_way                 VARCHAR2(30),
+  finc_cust_id             VARCHAR2(200),
+  finc_acct_id             VARCHAR2(200),
+  prod_id                  VARCHAR2(200),
+  prod_attr_cd             VARCHAR2(30),
+  tran_cd                  VARCHAR2(200),
+  hx_typedetail            VARCHAR2(45),
+  tran_status_cd           VARCHAR2(200),
+  flow_num                 VARCHAR2(200),
+  cfm_dt                   VARCHAR2(10),
+  risk_level_cd            VARCHAR2(200),
+  agency_fee               NUMBER(20,2),
+  nv                       NUMBER(20,2),
+  tot_lot                  NUMBER(20,2),
+  end_dt                   VARCHAR2(10),
+  tran_chn_cd              VARCHAR2(200),
+  comm_fee                 NUMBER(20,2),
+  insure_prod_proj_type_cd VARCHAR2(200),
+  ctrl_flg_info            VARCHAR2(300),
+  consmt_bus_type_cd       VARCHAR2(100),
+  ta_cd                    VARCHAR2(100),
+  field_value              VARCHAR2(150),
+  mger_name                VARCHAR2(375),
+  insure_pl_num            VARCHAR2(200),
+  policy_dt                CHAR(8),
+  tran_status_insur_cd     VARCHAR2(200),
+  mon_flg                  CHAR(1),
+  tran_dt                  DATE,
+  tran_tm                  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

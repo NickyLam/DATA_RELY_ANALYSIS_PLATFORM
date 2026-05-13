@@ -1,0 +1,89 @@
+﻿create table RRP_MDL.O_IOL_ISBS_USR_BAK_20230501
+(
+  inr          CHAR(8) not null,
+  extkey       CHAR(8),
+  nam          CHAR(40),
+  lgiflg       CHAR(1),
+  ssnbegdattim TIMESTAMP(6),
+  ssninr       CHAR(8),
+  ver          CHAR(4),
+  pri          CHAR(1),
+  ety          CHAR(8),
+  usg          CHAR(6),
+  lstdiadat    DATE,
+  relcur       CHAR(3),
+  relamt       NUMBER(18,3),
+  relamt2nd    NUMBER(18,3),
+  relgrp       CHAR(1),
+  tel          CHAR(30),
+  fax          CHAR(30),
+  eml          CHAR(80),
+  quepow       NUMBER(6,2),
+  etyextkey    CHAR(8),
+  oenr         CHAR(4),
+  etaextkey    CHAR(8),
+  resusrflg    CHAR(1),
+  start_dt     DATE,
+  end_dt       DATE,
+  id_mark      VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_USR_BAK_20230501
+  is '用户信息';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.inr
+  is '内部唯一ID';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.extkey
+  is '用户ID';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.nam
+  is '用户名字';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.lgiflg
+  is '禁止登录';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.ssnbegdattim
+  is '最近登录时间';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.ssninr
+  is '连接 ID';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.ver
+  is '版本号';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.pri
+  is '实体标志';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.ety
+  is '实体';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.usg
+  is '用户组';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.lstdiadat
+  is '最近DIA查看时间';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.relcur
+  is '授权币种';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.relamt
+  is '授权金额';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.relamt2nd
+  is '授权金额';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.relgrp
+  is '授权组';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.tel
+  is '电话';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.fax
+  is '传真';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.eml
+  is '电子信箱';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.quepow
+  is '可用时间';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.etyextkey
+  is '实体名称';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.oenr
+  is '组织';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.etaextkey
+  is '实体地址';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.resusrflg
+  is '客户经理';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_USR_BAK_20230501.id_mark
+  is '增删标志';
+

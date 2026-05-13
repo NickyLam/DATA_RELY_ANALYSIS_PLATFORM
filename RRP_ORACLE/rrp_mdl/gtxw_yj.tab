@@ -1,0 +1,20 @@
+﻿create table RRP_MDL.GTXW_YJ
+(
+  cust_id           VARCHAR2(64),
+  cust_name         VARCHAR2(2000),
+  opr_cust_typ_zjxw VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.GTXW_YJ
+  is '个体小微_银监配置表';
+comment on column RRP_MDL.GTXW_YJ.cust_id
+  is '客户号';
+comment on column RRP_MDL.GTXW_YJ.cust_name
+  is '客户名称';
+comment on column RRP_MDL.GTXW_YJ.opr_cust_typ_zjxw
+  is '经营性客户类型_字节小微';
+

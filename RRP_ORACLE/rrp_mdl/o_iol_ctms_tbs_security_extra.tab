@@ -1,0 +1,69 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA
+(
+  security_code             VARCHAR2(24),
+  allow_netting             VARCHAR2(2),
+  depository_trust          VARCHAR2(30),
+  asset_type                VARCHAR2(30),
+  cb_stock_id               VARCHAR2(15),
+  cb_stock_name             VARCHAR2(60),
+  payment_back_mode         NUMBER(1),
+  breach_contract           VARCHAR2(2),
+  perpetual                 VARCHAR2(2),
+  n_bsns_day                NUMBER,
+  issuer_country_name       VARCHAR2(75),
+  issuer_location           VARCHAR2(192),
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6),
+  local_government_classify VARCHAR2(2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA
+  is '债券扩展信息';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.security_code
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.allow_netting
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.depository_trust
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.asset_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.cb_stock_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.cb_stock_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.payment_back_mode
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.breach_contract
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.perpetual
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.n_bsns_day
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.issuer_country_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.issuer_location
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.etl_timestamp
+  is 'etl处理时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA.local_government_classify
+  is '地方政府债分类';
+

@@ -1,0 +1,173 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501
+(
+  security_code         VARCHAR2(16),
+  security_name         VARCHAR2(128),
+  security_type         CHAR(1),
+  issuer                VARCHAR2(64),
+  guarantee             VARCHAR2(64),
+  ccy                   CHAR(3),
+  int_ccy               CHAR(3),
+  issue_date            CHAR(8),
+  start_coupon_date     CHAR(8),
+  maturity_date         CHAR(8),
+  lot_size              NUMBER(10),
+  day_count             CHAR(1),
+  rate_type             CHAR(1),
+  fixed_rate            NUMBER(24,12),
+  floating_rate         CHAR(15),
+  floating_rate_ind     NUMBER(2),
+  floating_spread       NUMBER(13,10),
+  fixing_freq           CHAR(2),
+  ffixing_date          CHAR(8),
+  coupon_freq           CHAR(2),
+  fcoupon_date          CHAR(8),
+  payment_freq          CHAR(2),
+  compound_freq         CHAR(2),
+  option_type           CHAR(1),
+  back_amt              NUMBER(17,2),
+  number_issued         NUMBER(27,12),
+  aution_rate           NUMBER(17,12),
+  aution_price          NUMBER(17,12),
+  first_trade_date      CHAR(8),
+  market_type           CHAR(1),
+  repo_ratio            NUMBER(7,4),
+  security_short_name   CHAR(128),
+  convertable           CHAR(1),
+  convert_security_code CHAR(16),
+  discount_rate         CHAR(1),
+  cap                   NUMBER(13,10),
+  floor                 NUMBER(13,10),
+  fixing_rate_methoh    CHAR(1),
+  note                  VARCHAR2(256),
+  floating_rate_scale   NUMBER(1),
+  stop_trade_date       CHAR(8),
+  collateral_id         CHAR(1),
+  floater_factor_op     CHAR(1),
+  floater_factor        NUMBER(12,8),
+  fixing_rules          CHAR(1),
+  org_term              NUMBER,
+  org_term_mult         CHAR(1),
+  isjx                  CHAR(1),
+  modify_date           DATE,
+  compound              CHAR(1),
+  security_type_new     VARCHAR2(3),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501
+  is '债券基本资料视图';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.security_code
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.security_name
+  is '债券名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.security_type
+  is '债券类别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.issuer
+  is '发行人';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.guarantee
+  is '担保人';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.ccy
+  is '本金币种';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.int_ccy
+  is '利息币种';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.issue_date
+  is '发行日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.start_coupon_date
+  is '起息日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.maturity_date
+  is '到期日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.lot_size
+  is '债券发行最小单位';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.day_count
+  is '计息基准';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.rate_type
+  is '利率方式';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.fixed_rate
+  is '票面利率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.floating_rate
+  is '基准利率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.floating_rate_ind
+  is '浮动方向';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.floating_spread
+  is '基本利差';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.fixing_freq
+  is '重置频率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.ffixing_date
+  is '首次利率重置日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.coupon_freq
+  is '计息频率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.fcoupon_date
+  is '首次付息日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.payment_freq
+  is '付息频率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.compound_freq
+  is '复利频率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.option_type
+  is '选择权类别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.back_amt
+  is '每期还本金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.number_issued
+  is '发行金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.aution_rate
+  is '标售利率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.aution_price
+  is '发行价格';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.first_trade_date
+  is '上市交易日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.market_type
+  is '市场类别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.repo_ratio
+  is '质押比';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.security_short_name
+  is '债券简称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.convertable
+  is '是否是可转换债券';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.convert_security_code
+  is '转换债券码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.discount_rate
+  is '是否贴现债';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.cap
+  is '浮动利率上限';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.floor
+  is '浮动利率下限';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.fixing_rate_methoh
+  is '利率重置方法';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.note
+  is '债券备注';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.floating_rate_scale
+  is '利率小数位数';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.stop_trade_date
+  is '停止流通日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.collateral_id
+  is '担保品';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.floater_factor_op
+  is '浮动利率重算因子运算子';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.floater_factor
+  is '浮动利率重算因子';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.fixing_rules
+  is '是否有利率重置公式';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.org_term
+  is '原始合约上的期限';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.org_term_mult
+  is '原始合约上的期限单位';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.isjx
+  is '是否计应收利息';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.modify_date
+  is '修改日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.compound
+  is '是否复利';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.security_type_new
+  is '债券类别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_SECURITY_BAK_20230501.id_mark
+  is '增删标志';
+

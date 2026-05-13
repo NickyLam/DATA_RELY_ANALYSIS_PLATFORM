@@ -1,0 +1,105 @@
+﻿create table RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS
+(
+  id               VARCHAR2(48),
+  task_id          VARCHAR2(48),
+  process_id       VARCHAR2(48),
+  node_id          VARCHAR2(48),
+  task_name        VARCHAR2(384),
+  task_flag        NUMBER(22),
+  assign_id        VARCHAR2(48),
+  task_description VARCHAR2(384),
+  task_comment     VARCHAR2(384),
+  create_time      VARCHAR2(48),
+  taked_time       VARCHAR2(48),
+  deal_time        VARCHAR2(48),
+  name1            VARCHAR2(384),
+  name2            VARCHAR2(384),
+  name3            VARCHAR2(384),
+  name4            VARCHAR2(384),
+  name5            VARCHAR2(384),
+  name6            VARCHAR2(384),
+  name7            VARCHAR2(384),
+  name8            VARCHAR2(384),
+  task_mark        VARCHAR2(48),
+  protocol_no      VARCHAR2(60),
+  contract_id      VARCHAR2(60),
+  node_name        VARCHAR2(384),
+  assign_name      VARCHAR2(384),
+  parent_id        VARCHAR2(150),
+  approve_flag     VARCHAR2(2),
+  etl_dt           DATE,
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS
+  is '审批历史表';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.id
+  is '主键ID';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.task_id
+  is '任务编号';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.process_id
+  is '流程实例编号';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.node_id
+  is '节点编号';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.task_name
+  is '任务名称';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.task_flag
+  is '任务完成标志';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.assign_id
+  is '操作员编号';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.task_description
+  is '审批描述';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.task_comment
+  is '备注';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.taked_time
+  is '领用时间';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.deal_time
+  is '处理时间';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.name1
+  is '备用字段1';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.name2
+  is '业务批次ID';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.name3
+  is '备用字段3';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.name4
+  is '业务汇总金额';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.name5
+  is '业务机构编号';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.name6
+  is '上级机构编号';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.name7
+  is '备用字段7';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.name8
+  is '备用字段8';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.task_mark
+  is '任务备注';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.protocol_no
+  is '业务协议编号';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.contract_id
+  is '业务批次ID';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.node_name
+  is '节点名称';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.assign_name
+  is '操作员名称';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.parent_id
+  is '父节点ID';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.approve_flag
+  is '审批意见: 1-同意 2-拒绝 3-退回';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_BDMS_TBL_TASK_HIS.etl_timestamp
+  is 'ETL处理时间戳';
+

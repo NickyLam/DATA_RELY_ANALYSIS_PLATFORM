@@ -1,0 +1,186 @@
+﻿create table RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501
+(
+  stock_info_id                  VARCHAR2(20),
+  stockholder_id                 VARCHAR2(20),
+  stockholder_name               VARCHAR2(255),
+  certificate_type               VARCHAR2(10),
+  certificate_code               VARCHAR2(255),
+  organization_code              VARCHAR2(255),
+  stockholder_type               VARCHAR2(10),
+  stockholder_property           VARCHAR2(10),
+  stock_own_amount               NUMBER(20),
+  stock_limit_amount             NUMBER(20),
+  stock_pledge_amount            NUMBER(20),
+  stock_freeze_amount            NUMBER(20),
+  address                        VARCHAR2(400),
+  post_code                      VARCHAR2(10),
+  linkman                        VARCHAR2(255),
+  phone                          VARCHAR2(60),
+  stock_certificate_code         VARCHAR2(255),
+  interest_account               VARCHAR2(255),
+  interest_account_name          VARCHAR2(255),
+  interest_account_bank          VARCHAR2(255),
+  stockholder_begin_date         DATE,
+  stockholder_end_date           DATE,
+  is_privillege_make_sure        VARCHAR2(1),
+  status                         VARCHAR2(1),
+  last_updated_stamp             TIMESTAMP(6),
+  last_updated_tx_stamp          TIMESTAMP(6),
+  created_stamp                  TIMESTAMP(6),
+  created_tx_stamp               TIMESTAMP(6),
+  sharehoder_neew_name           VARCHAR2(255),
+  dominant_stockholder           VARCHAR2(20),
+  national_economy_code          VARCHAR2(255),
+  nature_of_ownership            VARCHAR2(20),
+  final_beneficiary              VARCHAR2(255),
+  actual_controller              VARCHAR2(255),
+  holding_organization           VARCHAR2(20),
+  indirector                     VARCHAR2(20),
+  controller_ratio               VARCHAR2(10),
+  main_stockholder               VARCHAR2(20),
+  stock_statistic_type           VARCHAR2(10),
+  start_dt                       DATE,
+  end_dt                         DATE,
+  id_mark                        VARCHAR2(10),
+  etl_timestamp                  TIMESTAMP(6),
+  east_stockholder_type          VARCHAR2(10),
+  stockholder_certificate_type   VARCHAR2(10),
+  stockholder_registration_place VARCHAR2(400),
+  stockholder_share_bank_amount  NUMBER(20),
+  stockholder_hold_bank_amount   NUMBER(20),
+  bad_information                VARCHAR2(400),
+  is_power_restraint             VARCHAR2(20),
+  capital_source                 VARCHAR2(10),
+  fund_account                   VARCHAR2(255),
+  pledge_proportion              VARCHAR2(60),
+  last_time_change_date          DATE,
+  east_remark                    VARCHAR2(400),
+  foreign_stockholder            VARCHAR2(20),
+  nationality                    VARCHAR2(255),
+  parent_company_place           VARCHAR2(255)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501
+  is '股东信息表';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stock_info_id
+  is '主键ID';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stockholder_id
+  is '股东编号';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stockholder_name
+  is '股东名称';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.certificate_type
+  is '证件类型';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.certificate_code
+  is '证件号码';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.organization_code
+  is '组织机构代码';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stockholder_type
+  is '股东类型';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stockholder_property
+  is '股权性质';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stock_own_amount
+  is '持股数量';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stock_limit_amount
+  is '限售股数';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stock_pledge_amount
+  is '质押股数';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stock_freeze_amount
+  is '冻结股数';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.address
+  is '具体住所';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.post_code
+  is '邮编';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.linkman
+  is '联系人';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.phone
+  is '电话';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stock_certificate_code
+  is '股权证编号';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.interest_account
+  is '派息账户账号';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.interest_account_name
+  is '派息账户户名';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.interest_account_bank
+  is '派息账户开户行';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stockholder_begin_date
+  is '成为本行股东日期';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stockholder_end_date
+  is '终止成为本行股东日期';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.is_privillege_make_sure
+  is '是否确权';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.status
+  is '状态';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.last_updated_stamp
+  is '最后更新时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.last_updated_tx_stamp
+  is '最后更新事务时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.created_stamp
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.created_tx_stamp
+  is '创建交易时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.sharehoder_neew_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.dominant_stockholder
+  is '是否为控股股东';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.national_economy_code
+  is '国民经济行业代码';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.nature_of_ownership
+  is '所有制性质';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.final_beneficiary
+  is '最终受益人';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.actual_controller
+  is '实际控制人';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.holding_organization
+  is 'G07实际控制人管理机构';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.indirector
+  is '是否派驻董监高';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.controller_ratio
+  is '实际控制人及一致行动人持股比例(%)';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.main_stockholder
+  is '是否主要股东';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stock_statistic_type
+  is 'G07报表股东类型';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.east_stockholder_type
+  is 'EAST股东或关联方类型';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stockholder_certificate_type
+  is 'EAST股东或关联方证件类别';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stockholder_registration_place
+  is 'EAST股东或关联方注册地';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stockholder_share_bank_amount
+  is 'EAST作为主要股东参股商业银行的数量';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.stockholder_hold_bank_amount
+  is 'EAST作为主要股东控股商业银行的数量';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.bad_information
+  is 'EAST不良信息';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.is_power_restraint
+  is 'EAST是否限权';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.capital_source
+  is 'EAST入股资金来源';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.fund_account
+  is 'EAST入股资金账号';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.pledge_proportion
+  is 'EAST质押比例';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.last_time_change_date
+  is 'EAST最近一次变动日期';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.east_remark
+  is 'EAST备注';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.foreign_stockholder
+  is 'G08外资股东';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.nationality
+  is 'G08国别(地区)';
+comment on column RRP_MDL.O_IOL_NOAS_OA_STOCKHOLDER_INFO_BAK_20230501.parent_company_place
+  is 'G08母公司所在国家(地区)';
+

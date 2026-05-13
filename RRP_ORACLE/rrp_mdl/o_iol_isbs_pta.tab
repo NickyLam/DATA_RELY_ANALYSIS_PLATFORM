@@ -1,0 +1,88 @@
+﻿create table RRP_MDL.O_IOL_ISBS_PTA
+(
+  inr           VARCHAR2(12),
+  ptyinr        VARCHAR2(12),
+  nam           VARCHAR2(60),
+  pri           VARCHAR2(2),
+  eno           VARCHAR2(5),
+  objtyp        VARCHAR2(9),
+  objinr        VARCHAR2(12),
+  objkey        VARCHAR2(36),
+  usg           VARCHAR2(5),
+  ver           VARCHAR2(6),
+  bic           VARCHAR2(17),
+  adrsta        VARCHAR2(2),
+  ptytyp        VARCHAR2(23),
+  ptyextkey     VARCHAR2(36),
+  tid           VARCHAR2(35),
+  etgextkey     VARCHAR2(12),
+  branchinr     VARCHAR2(12),
+  bchkeyinr     VARCHAR2(12),
+  nam1          VARCHAR2(60),
+  issbchinf     VARCHAR2(60),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_PTA
+  is 'pty和adr的连接表';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.inr
+  is '内部唯一ID号';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.ptyinr
+  is '联系实体INR';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.nam
+  is '地址名';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.pri
+  is '优先权';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.eno
+  is '用户的外部ID';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.objtyp
+  is '关联地址种类';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.objinr
+  is '关联地址INR';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.objkey
+  is '关联地址关键值';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.usg
+  is '地址使用代码';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.ver
+  is '版本号';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.bic
+  is '地址BIC';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.adrsta
+  is '地址状态';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.ptytyp
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.ptyextkey
+  is '客户唯一键值';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.tid
+  is '与TC通信时客户地址的唯一ID';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.etgextkey
+  is '实体组唯一键值';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.branchinr
+  is '所属机构号';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.bchkeyinr
+  is '经办机构号';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.nam1
+  is '中文名称';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ISBS_PTA.etl_timestamp
+  is 'ETL处理时间戳';
+

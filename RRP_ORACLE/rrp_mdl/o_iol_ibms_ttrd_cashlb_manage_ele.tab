@@ -1,0 +1,311 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE
+(
+  i_code                         VARCHAR2(75),
+  a_type                         VARCHAR2(30),
+  m_type                         VARCHAR2(30),
+  coupon                         NUMBER(14,8),
+  final_use_comp                 VARCHAR2(383),
+  business_category              VARCHAR2(3),
+  is_two_high_one_left           VARCHAR2(2),
+  is_government_platform         VARCHAR2(2),
+  is_industry_fund               VARCHAR2(2),
+  out_grade                      VARCHAR2(15),
+  in_grade                       VARCHAR2(15),
+  in_grade_mtr_date              VARCHAR2(15),
+  comp_area_province             VARCHAR2(150),
+  comp_area_city                 VARCHAR2(150),
+  is_convert_debt_pro            VARCHAR2(2),
+  und_asset_type_opt             VARCHAR2(12),
+  management_mode                VARCHAR2(12),
+  is_entrusted_loan              VARCHAR2(2),
+  num_of_carries                 VARCHAR2(12),
+  approval_id                    VARCHAR2(90),
+  total_goods_amount             NUMBER(31,4),
+  approval_amount                NUMBER(31,4),
+  risk_weight                    VARCHAR2(30),
+  is_multi_financier             VARCHAR2(2),
+  actual_financier_id            VARCHAR2(90),
+  financier_nature               VARCHAR2(150),
+  parent_group                   VARCHAR2(383),
+  is_asset_base_securities       VARCHAR2(2),
+  is_credit_item                 VARCHAR2(2),
+  investment_type                VARCHAR2(6),
+  raise_way                      VARCHAR2(75),
+  risk_assets_weight             VARCHAR2(75),
+  risky_assets_classify          VARCHAR2(75),
+  g31_classify                   VARCHAR2(75),
+  final_use_comp_relevance_info  VARCHAR2(3000),
+  business_category_min          VARCHAR2(75),
+  mitigation_freq                VARCHAR2(15),
+  not_undasset_type              VARCHAR2(15),
+  not_undasset_type_two          VARCHAR2(15),
+  invest_fund_part               NUMBER(33,8),
+  invest_market_part             NUMBER(33,8),
+  invest_finance_formanagepart   NUMBER(33,8),
+  invest_finance_forcapitalpart  NUMBER(33,8),
+  is_undasset_loan               VARCHAR2(2),
+  middle_class                   VARCHAR2(75),
+  is_equity_product              VARCHAR2(2),
+  special_purpose_vehicle_type   VARCHAR2(75),
+  asset_product_statistics_code  VARCHAR2(75),
+  issuer_region_code             VARCHAR2(75),
+  excute_mode                    VARCHAR2(75),
+  special_purpose_vehicle_code   VARCHAR2(75),
+  issuer_code                    VARCHAR2(75),
+  ensure_codes                   VARCHAR2(1500),
+  is_nonstandard                 VARCHAR2(2),
+  is_publicoffer                 VARCHAR2(2),
+  fund_use                       VARCHAR2(150),
+  is_decide_openbusiness         VARCHAR2(2),
+  openbusiness_begdate           VARCHAR2(30),
+  excute_mode_hx                 VARCHAR2(75),
+  special_purpose_vehicle_hx     VARCHAR2(383),
+  product_manager                VARCHAR2(383),
+  guarantee_description          VARCHAR2(383),
+  investment_direction_max       VARCHAR2(75),
+  investment_direction_min       VARCHAR2(75),
+  under_debt_class               VARCHAR2(75),
+  under_debt_rating              VARCHAR2(383),
+  is_goverment_invest_fund       VARCHAR2(2),
+  is_pioneer_invest_fund         VARCHAR2(2),
+  is_remote_business             VARCHAR2(2),
+  is_local_gover_invest_platform VARCHAR2(2),
+  add_credit_way                 VARCHAR2(75),
+  add_credit_subject_name        VARCHAR2(383),
+  update_time                    VARCHAR2(29),
+  scale                          VARCHAR2(6),
+  pay_mode                       VARCHAR2(2),
+  industry_fund_amount           NUMBER(31,4),
+  trade_platform                 VARCHAR2(2),
+  is_over_capacity               VARCHAR2(2),
+  is_shareholder                 VARCHAR2(2),
+  structure_type                 VARCHAR2(75),
+  product_size                   NUMBER(31,4),
+  senior_size                    NUMBER(31,4),
+  investment_share_type          VARCHAR2(2),
+  private_fund_amount            NUMBER(31,4),
+  private_product_amount         NUMBER(31,4),
+  business_category_mid          VARCHAR2(75),
+  through_type                   VARCHAR2(45),
+  is_invest_debt                 VARCHAR2(2),
+  is_consumer_service            VARCHAR2(2),
+  business_category_small        VARCHAR2(75),
+  is_asset_secu                  VARCHAR2(2),
+  is_no_grade_secu               VARCHAR2(2),
+  start_dt                       DATE,
+  end_dt                         DATE,
+  id_mark                        VARCHAR2(10),
+  etl_timestamp                  TIMESTAMP(6),
+  is_green_finance               VARCHAR2(2),
+  first_option_type              VARCHAR2(6),
+  second_option_type             VARCHAR2(15)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE
+  is '现金借贷金融工具表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.coupon
+  is '执行利率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.final_use_comp
+  is '最终用款企业';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.business_category
+  is '行业归属';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_two_high_one_left
+  is '是否“两高一剩”，1是，0否';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_government_platform
+  is '是否政府融资平台，1是，0否';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_industry_fund
+  is '是否产业基金，1是，0否';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.out_grade
+  is '外部评级';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.in_grade
+  is '内部评级';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.in_grade_mtr_date
+  is '内部评级到期日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.comp_area_province
+  is '用款企业所属区域（省）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.comp_area_city
+  is '用款企业所属区域（市）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_convert_debt_pro
+  is '是否投向市场化债转股相关产品';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.und_asset_type_opt
+  is '底层资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.management_mode
+  is '管理方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_entrusted_loan
+  is '是否委托贷款';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.num_of_carries
+  is 'spv载体个数';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.approval_id
+  is '核准件编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.total_goods_amount
+  is '产品总金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.approval_amount
+  is '批复金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.risk_weight
+  is '风险权重';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_multi_financier
+  is '是否多融资人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.actual_financier_id
+  is '实际融资人客户号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.financier_nature
+  is '实际融资人客户性质';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.parent_group
+  is '实际融资人所属集团';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_asset_base_securities
+  is '是否资产证券化产品';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_credit_item
+  is '是否信贷类项目';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.investment_type
+  is '按投资产品类型划分';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.raise_way
+  is '产品募集方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.risk_assets_weight
+  is '风险权重';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.risky_assets_classify
+  is '风险资产分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.g31_classify
+  is 'g31产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.final_use_comp_relevance_info
+  is '最终用款企业关联方信息(华兴需求)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.business_category_min
+  is '行业细类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.mitigation_freq
+  is '缓释频率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.not_undasset_type
+  is '非底层资产分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.not_undasset_type_two
+  is '非底层资产分类2';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.invest_fund_part
+  is '投向产业基金的部分';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.invest_market_part
+  is '投向市场化债转股相关产品的部分';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.invest_finance_formanagepart
+  is '投向金融资产投资公司发行的私募资产管理产品';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.invest_finance_forcapitalpart
+  is '投向金融资产投资公司或其附属机构发行的私募股权投资基金';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_undasset_loan
+  is '底层资产是否为投放贷款';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.middle_class
+  is '业务种类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_equity_product
+  is '是否为净值型产品';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.special_purpose_vehicle_type
+  is '特定目的载体类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.asset_product_statistics_code
+  is '资管产品统计编码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.issuer_region_code
+  is '发行人地区代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.excute_mode
+  is '运行方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.special_purpose_vehicle_code
+  is '特定目的载体代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.issuer_code
+  is '发行人代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.ensure_codes
+  is '0';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_nonstandard
+  is '0';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_publicoffer
+  is '0';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.fund_use
+  is '资金用途和来源';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_decide_openbusiness
+  is '是否定开业务';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.openbusiness_begdate
+  is '开放周期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.excute_mode_hx
+  is '运行方式（华兴）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.special_purpose_vehicle_hx
+  is '特定目的载体代码（华兴）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.product_manager
+  is '产品管理方';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.guarantee_description
+  is '担保描述';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.investment_direction_max
+  is '资金投向大类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.investment_direction_min
+  is '资金投向小类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.under_debt_class
+  is '底层为债券的债券分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.under_debt_rating
+  is '底层为债券的评级';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_goverment_invest_fund
+  is '是否政府投资基金';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_pioneer_invest_fund
+  is '是否创业投资基金';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_remote_business
+  is '是否异地业务';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_local_gover_invest_platform
+  is '是否地方政府融资平台';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.add_credit_way
+  is '增信方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.add_credit_subject_name
+  is '增信主体名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.scale
+  is '企业规模';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.pay_mode
+  is '还本付息方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.industry_fund_amount
+  is '投向产业基金部分金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.trade_platform
+  is '交易平台';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_over_capacity
+  is '是否产能过剩行业';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_shareholder
+  is '是否本行股东及其关联方';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.structure_type
+  is '产品结构类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.product_size
+  is '产品总规模';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.senior_size
+  is '劣后规模';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.investment_share_type
+  is '我行投资份额属于优先还是夹层';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.private_fund_amount
+  is '投向金融资产投资公司或其附属机构发行的私募股权投资基金金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.private_product_amount
+  is '投向金融资产投资公司发行的私募资产管理产品金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.business_category_mid
+  is '投向行业中类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.through_type
+  is '穿透类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_invest_debt
+  is '是否投向市场化债转股';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_consumer_service
+  is '是否为消费服务类融资';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.business_category_small
+  is '投向行业细类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_asset_secu
+  is '是否资产支持证券(1:是 0:否）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_no_grade_secu
+  is '是否无评级资产证券化(1:是 0:否）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.etl_timestamp
+  is 'etl处理时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_CASHLB_MANAGE_ELE.is_green_finance
+  is '是否属于绿色融资';
+

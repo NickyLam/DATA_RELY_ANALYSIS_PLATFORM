@@ -1,0 +1,135 @@
+﻿create table RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL
+(
+  etl_dt                     DATE,
+  lp_id                      VARCHAR2(60),
+  tran_flow_num              VARCHAR2(200),
+  ova_chn_flow_num           VARCHAR2(100),
+  core_tran_flow_num         VARCHAR2(200),
+  sorc_sys_flow_num          VARCHAR2(100),
+  osb_tran_flow_num          VARCHAR2(200),
+  rela_timing_task_id        VARCHAR2(200),
+  chn_cd                     VARCHAR2(60),
+  tran_dt                    DATE,
+  tran_tm                    VARCHAR2(60),
+  core_tran_dt               DATE,
+  tran_type_code             VARCHAR2(250),
+  tran_status_cd             VARCHAR2(10),
+  tran_return_code           VARCHAR2(250),
+  tran_acct_id               VARCHAR2(200),
+  tran_acct_name             VARCHAR2(500),
+  tran_amt                   NUMBER(30,4),
+  curr_cd                    VARCHAR2(10),
+  elec_chn_user_id           VARCHAR2(200),
+  cust_id                    VARCHAR2(200),
+  termn_ip_addr              VARCHAR2(500),
+  tran_comm_fee              NUMBER(30,4),
+  termn_mac_addr             VARCHAR2(500),
+  termn_equip_model          VARCHAR2(200),
+  termn_equip_id             VARCHAR2(200),
+  cntpty_acct_id             VARCHAR2(60),
+  cntpty_acct_name           VARCHAR2(500),
+  cntpty_acct_open_bank_num  VARCHAR2(60),
+  cntpty_acct_open_bank_name VARCHAR2(500),
+  cntpty_acct_prov_cd        VARCHAR2(10),
+  cntpty_acct_city_cd        VARCHAR2(10),
+  memo_cd                    VARCHAR2(60),
+  memo_descb                 VARCHAR2(500),
+  tran_batch_no              VARCHAR2(60),
+  tran_org_id                VARCHAR2(60),
+  camp_emply_id              VARCHAR2(60),
+  olbk_tran_src_cd           VARCHAR2(10),
+  job_cd                     VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL
+  is '电子渠道交易明细';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.ova_chn_flow_num
+  is '全局渠道流水号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.core_tran_flow_num
+  is '核心交易流水号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.sorc_sys_flow_num
+  is '源系统流水号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.osb_tran_flow_num
+  is 'OSB交易流水号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.rela_timing_task_id
+  is '关联定时任务编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.chn_cd
+  is '渠道代码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.core_tran_dt
+  is '核心交易日期';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_type_code
+  is '交易类型编码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_return_code
+  is '交易返回码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_acct_id
+  is '交易账户编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_acct_name
+  is '交易账户名称';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.elec_chn_user_id
+  is '电子渠道用户编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.termn_ip_addr
+  is '终端IP地址';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_comm_fee
+  is '交易手续费';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.termn_mac_addr
+  is '终端MAC地址';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.termn_equip_model
+  is '终端设备型号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.termn_equip_id
+  is '终端设备编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.cntpty_acct_id
+  is '交易对手账户编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.cntpty_acct_name
+  is '交易对手账户名称';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.cntpty_acct_open_bank_num
+  is '交易对手账户开户行号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.cntpty_acct_open_bank_name
+  is '交易对手账户开户行名';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.cntpty_acct_prov_cd
+  is '交易对手账户省份代码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.cntpty_acct_city_cd
+  is '交易对手账户城市代码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.memo_cd
+  is '摘要代码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.memo_descb
+  is '摘要描述';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_batch_no
+  is '交易批次号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.camp_emply_id
+  is '营销员工编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.olbk_tran_src_cd
+  is '网银交易来源代码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CHN_TRAN_DTL.job_cd
+  is '任务代码';
+

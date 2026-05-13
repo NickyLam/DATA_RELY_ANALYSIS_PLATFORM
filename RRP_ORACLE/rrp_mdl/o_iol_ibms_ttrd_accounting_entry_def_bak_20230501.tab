@@ -1,0 +1,90 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501
+(
+  as_id               VARCHAR2(30),
+  acting_entry_name_1 VARCHAR2(255),
+  acting_entry_name_2 VARCHAR2(255),
+  acting_entry_name_3 VARCHAR2(255),
+  acting_code         VARCHAR2(100),
+  property            VARCHAR2(30),
+  entry_direction     VARCHAR2(10),
+  acting_entry_code_1 VARCHAR2(50),
+  acting_entry_code_2 VARCHAR2(50),
+  acting_entry_code_3 VARCHAR2(50),
+  entry_type_3        VARCHAR2(10),
+  entry_type          VARCHAR2(30),
+  entry_type_1        VARCHAR2(10),
+  entry_type_2        VARCHAR2(10),
+  entry_type_4        VARCHAR2(10),
+  entry_type_5        VARCHAR2(10),
+  gzb_type            VARCHAR2(10),
+  acting_entry_name_4 VARCHAR2(255),
+  acting_entry_name_5 VARCHAR2(255),
+  acting_entry_code_4 VARCHAR2(50),
+  acting_entry_code_5 VARCHAR2(50),
+  entry_type_6        VARCHAR2(200),
+  entry_type_7        VARCHAR2(20),
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.as_id
+  is '序号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_entry_name_1
+  is '一级科目名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_entry_name_2
+  is '二级科目名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_entry_name_3
+  is '三级科目名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_code
+  is '核算码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.property
+  is '科目属性 1 资产 2 负债 3_0 共同类(可供出售类债券投资公允价值变动) 3_1 实收资本金 3_2 平准金或未分配利润 5 损益类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.entry_direction
+  is '科目方向 1：借 2：贷 0：未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_entry_code_1
+  is '一级科目';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_entry_code_2
+  is '二级科目';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_entry_code_3
+  is '三级科目';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.entry_type_3
+  is '0 - 默认值，其他科目，11 - 利息收入增值税，12 - 买卖损益增值税，13 - 利息收入增值税附加税，14 - 买卖损益增值税附加税，21 - 利息收入增值税，22 - 买卖损益增值税，23 - 利息收入增值税附加税，24 - 买卖损益增值税附加税,
+131 - 利息收入增值税城建附加税，132 - 利息收入增值税中央教育附加税，133 - 利息收入增值税地方教育附加税，141 - 买卖损益增值税城建附加税，142 - 买卖损益增值税中央教育附加税，143 — 买卖损益增值税地方教育附加税，
+231 - 利息收入增值税城建附加税，232 - 利息收入增值税中央教育附加税，233 - 利息收入增值税地方教育附加税，241 - 买卖损益增值税城建附加税，242 - 买卖损益增值税中央教育附加税，243 - 买卖损益增值税地方教育附加税；其中1开头为计税科目，2开头为缴纳科目';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.entry_type
+  is '分录类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.entry_type_1
+  is '00 - 默认值，11 - 银行表内，12 - 银行表外，21 - 理财表内，22 - 理财表外';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.entry_type_2
+  is '-1：默认值，0：汇兑损益科目，1：货币型科目，2：非货币型科目';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.entry_type_4
+  is '00 - 默认值，11 - 管理账表内，12 - 管理账表外，21 - 核心账表内，22 - 核心账表外';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.entry_type_5
+  is '会计账户类别默认0, 1:交易类(FVTPL), 2:持有到期类(AMC)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.gzb_type
+  is '0默认值，1成本，2利息调整，3利息，3.1应计利息，3.2预收利息，4估值，4.1估值资产，4.2估值负债，5损益，5.1利息收入，5.1.1计提利息收入，5.1.2摊销收入，5.2价差，
+5.2.1价差收入，5.2.2已实现估值损益，5.3估值损益，5.4费用损益，5.5重分类损益，5.6重分类利息收入，6费用成本，7无负债结算，8税，9资金，X其他';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_entry_name_4
+  is '四级科目名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_entry_name_5
+  is '五级科目名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_entry_code_4
+  is '四级科目';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.acting_entry_code_5
+  is '五级科目';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.entry_type_6
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.entry_type_7
+  is '0  默认值 ；  1_S 期限品种 空头；1_L 期限品种 多头；2 子产品';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_ENTRY_DEF_BAK_20230501.id_mark
+  is '增删标志';
+

@@ -1,0 +1,99 @@
+﻿create table RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H
+(
+  evt_id                VARCHAR2(250),
+  lp_id                 VARCHAR2(60),
+  merchd_sub_flow_num   VARCHAR2(150),
+  indent_flow_num       VARCHAR2(150),
+  merchd_id             VARCHAR2(100),
+  std_prod_id           VARCHAR2(100),
+  merchd_name           VARCHAR2(375),
+  merchd_descb          VARCHAR2(1500),
+  merchd_tot_qtty       VARCHAR2(30),
+  cors_merchd_tot_amt   NUMBER(30,2),
+  tran_type_cd          VARCHAR2(30),
+  cors_merchd_tot_point VARCHAR2(30),
+  rtn_goods_status_cd   VARCHAR2(30),
+  tran_flow_num         VARCHAR2(150),
+  provi_name            VARCHAR2(375),
+  singl_merchd_comm_fee NUMBER(30,2),
+  merchd_type_cd        VARCHAR2(30),
+  tran_status_cd        VARCHAR2(30),
+  indent_info_create_tm DATE,
+  indent_info_update_tm DATE,
+  addit_data_1          VARCHAR2(150),
+  addit_data_2          VARCHAR2(150),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10),
+  job_cd                VARCHAR2(10),
+  src_table_name        VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H
+  is '网上商城商品子订单信息历史';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.merchd_sub_flow_num
+  is '商品子订单流水号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.indent_flow_num
+  is '订单流水号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.merchd_id
+  is '商品编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.merchd_name
+  is '商品名称';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.merchd_descb
+  is '商品描述';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.merchd_tot_qtty
+  is '商品总数量';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.cors_merchd_tot_amt
+  is '对应商品总金额';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.tran_type_cd
+  is '交易类型代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.cors_merchd_tot_point
+  is '对应商品总积分';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.rtn_goods_status_cd
+  is '退货状态代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.provi_name
+  is '供应商名称';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.singl_merchd_comm_fee
+  is '单个商品手续费';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.merchd_type_cd
+  is '商品类型代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.indent_info_create_tm
+  is '订单信息创建时间';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.indent_info_update_tm
+  is '订单信息更新时间';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.addit_data_1
+  is '附加数据1';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.addit_data_2
+  is '附加数据2';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_EVT_WEB_MALL_MERCHD_SUB_INFO_H.src_table_name
+  is '源表名称';
+

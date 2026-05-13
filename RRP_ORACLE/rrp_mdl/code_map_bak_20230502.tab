@@ -1,0 +1,39 @@
+﻿create table RRP_MDL.CODE_MAP_BAK_20230502
+(
+  src_class_code VARCHAR2(200),
+  src_class_name VARCHAR2(200),
+  src_value_code VARCHAR2(200),
+  src_value_name VARCHAR2(500),
+  tar_class_code VARCHAR2(200),
+  tar_class_name VARCHAR2(200),
+  tar_value_code VARCHAR2(200),
+  tar_value_name VARCHAR2(500),
+  mod_flg        VARCHAR2(20),
+  data_dt        VARCHAR2(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.CODE_MAP_BAK_20230502.src_class_code
+  is '源码值编号';
+comment on column RRP_MDL.CODE_MAP_BAK_20230502.src_class_name
+  is '源码编号名称';
+comment on column RRP_MDL.CODE_MAP_BAK_20230502.src_value_code
+  is '源码值';
+comment on column RRP_MDL.CODE_MAP_BAK_20230502.src_value_name
+  is '源码值名称';
+comment on column RRP_MDL.CODE_MAP_BAK_20230502.tar_class_code
+  is '目标码值编号';
+comment on column RRP_MDL.CODE_MAP_BAK_20230502.tar_class_name
+  is '目标码值编号名称';
+comment on column RRP_MDL.CODE_MAP_BAK_20230502.tar_value_code
+  is '目标码值';
+comment on column RRP_MDL.CODE_MAP_BAK_20230502.tar_value_name
+  is '目标名称';
+comment on column RRP_MDL.CODE_MAP_BAK_20230502.mod_flg
+  is '标志6';
+comment on column RRP_MDL.CODE_MAP_BAK_20230502.data_dt
+  is '数据日期';
+

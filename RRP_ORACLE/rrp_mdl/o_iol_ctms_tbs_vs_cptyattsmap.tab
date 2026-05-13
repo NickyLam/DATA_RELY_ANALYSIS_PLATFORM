@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_VS_CPTYATTSMAP
+(
+  aspclient_id  NUMBER,
+  cptys_id      NUMBER,
+  commonatts_id NUMBER,
+  lastmodified  TIMESTAMP(6),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_VS_CPTYATTSMAP
+  is '交易对手分类对应视图';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_CPTYATTSMAP.aspclient_id
+  is '部门代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_CPTYATTSMAP.cptys_id
+  is '交易对手序号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_CPTYATTSMAP.commonatts_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_CPTYATTSMAP.lastmodified
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_CPTYATTSMAP.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_CPTYATTSMAP.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_CPTYATTSMAP.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_CPTYATTSMAP.etl_timestamp
+  is 'etl处理时间';
+

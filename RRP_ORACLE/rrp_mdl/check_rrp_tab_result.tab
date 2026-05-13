@@ -1,0 +1,49 @@
+﻿create table RRP_MDL.CHECK_RRP_TAB_RESULT
+(
+  check_dt           TIMESTAMP(6),
+  rrp_type           VARCHAR2(20),
+  check_table_nm     VARCHAR2(75),
+  check_table_nm_cn  VARCHAR2(100),
+  join_key           VARCHAR2(200),
+  join_key_en        VARCHAR2(200),
+  check_column_id    VARCHAR2(200),
+  check_column_nm    VARCHAR2(75),
+  check_column_nm_cn VARCHAR2(150),
+  check_column_val   VARCHAR2(4000),
+  src_column_val     VARCHAR2(4000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.CHECK_RRP_TAB_RESULT
+  is '监管明细数据集校验结果表';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.check_dt
+  is '校验执行时间';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.rrp_type
+  is '校验报送模块代码';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.check_table_nm
+  is '校验表英文名';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.check_table_nm_cn
+  is '校验表中文名';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.join_key
+  is '校验表业务主键字段中文名 ，以+号分隔';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.join_key_en
+  is '校验表业务主键字段英文名 ，以+号分隔';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.check_column_id
+  is '校验表业务主键值，以+号分隔';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.check_column_nm
+  is '对比字段英文名';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.check_column_nm_cn
+  is '对比字段中文名';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.check_column_val
+  is '对比字段字段异常值-新一代';
+comment on column RRP_MDL.CHECK_RRP_TAB_RESULT.src_column_val
+  is '对比字段字段异常值-原报送';
+create index RRP_MDL.IND_CHECK_RRP_TAB_RESULT on RRP_MDL.CHECK_RRP_TAB_RESULT (RRP_TYPE, CHECK_TABLE_NM, CHECK_COLUMN_NM)
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

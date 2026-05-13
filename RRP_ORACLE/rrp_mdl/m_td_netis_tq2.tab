@@ -1,0 +1,60 @@
+﻿create table RRP_MDL.M_TD_NETIS_TQ2
+(
+  ods_src_dt  VARCHAR2(8) not null,
+  ods_load_dt VARCHAR2(30),
+  sys_cd      VARCHAR2(4),
+  trans_dt    NUMBER(20) not null,
+  ts          INTEGER,
+  spv         VARCHAR2(15) not null,
+  cap         VARCHAR2(18) not null,
+  trans_count NUMBER,
+  duration    NUMBER,
+  succ_cn     VARCHAR2(90),
+  succ_rate   NUMBER,
+  rr_rate     NUMBER,
+  sys_name    VARCHAR2(90),
+  trans_time  VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_TD_NETIS_TQ2
+  is '手工报表TQ2';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.ods_src_dt
+  is '数据日期';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.ods_load_dt
+  is '装数时间';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.sys_cd
+  is '数据来源，天旦';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.trans_dt
+  is '交易日期';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.ts
+  is 'UNIX绝对时间戳，分钟颗粒度';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.spv
+  is '天旦路径图，有APP1，APP2等等';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.cap
+  is '对应的节点编号，有CAP1，CAP2等等';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.trans_count
+  is '对应交易量';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.duration
+  is '响应时间';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.succ_cn
+  is '成功笔数';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.succ_rate
+  is '成功率';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.rr_rate
+  is '响应率';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.sys_name
+  is '所属系统';
+comment on column RRP_MDL.M_TD_NETIS_TQ2.trans_time
+  is '交易时间';
+

@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE_BAK_20230501
+(
+  security_code   CHAR(16),
+  extra_type      VARCHAR2(8),
+  extra_code      VARCHAR2(128),
+  customer_number NUMBER(5),
+  modify_user     NUMBER(5),
+  modify_date     DATE,
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE_BAK_20230501.security_code
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE_BAK_20230501.extra_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE_BAK_20230501.extra_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE_BAK_20230501.customer_number
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE_BAK_20230501.modify_user
+  is '修改人ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE_BAK_20230501.modify_date
+  is '修改日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE_BAK_20230501.id_mark
+  is '增删标志';
+

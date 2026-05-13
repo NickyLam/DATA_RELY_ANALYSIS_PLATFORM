@@ -1,0 +1,246 @@
+﻿create table RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION
+(
+  data_date                   DATE,
+  loan_ref_no                 VARCHAR2(150),
+  sec_items_issue_no          VARCHAR2(150),
+  sec_items_issue_name        VARCHAR2(150),
+  items_tranche_no            VARCHAR2(60),
+  items_tranche_name          VARCHAR2(150),
+  on_off_id                   VARCHAR2(30),
+  sec_priority_rating_flag    VARCHAR2(30),
+  market_type_id              VARCHAR2(15),
+  org_cd                      VARCHAR2(45),
+  org_name                    VARCHAR2(150),
+  overdue_days                NUMBER(22),
+  five_class_cd               VARCHAR2(30),
+  five_class_name             VARCHAR2(30),
+  product_no                  VARCHAR2(45),
+  product_name                VARCHAR2(150),
+  sec_sp_rating_cd            VARCHAR2(30),
+  sec_rating_org_cd           VARCHAR2(30),
+  sec_rating_org_name         VARCHAR2(150),
+  sec_ecternal_rating_cd      VARCHAR2(30),
+  items_tranche_due_day       DATE,
+  items_seniority             VARCHAR2(30),
+  issue_amt_total             NUMBER(18,2),
+  amt_cur                     NUMBER(18,2),
+  sec_stc_flag                VARCHAR2(30),
+  anew_asset_sec_flag         VARCHAR2(30),
+  sec_start_date              DATE,
+  sec_end_date                DATE,
+  sec_pool_a                  NUMBER(25,9),
+  sec_pool_d                  NUMBER(25,9),
+  sec_pool_t                  NUMBER(25,9),
+  sec_pool_mr                 NUMBER(25,9),
+  sec_rating_floor_rw         NUMBER(25,9),
+  sec_rating_ceil_rw          NUMBER(25,9),
+  sec_orig_rw                 NUMBER(18,6),
+  sec_pool_rw                 NUMBER(18,6),
+  sec_rw                      NUMBER(18,6),
+  sec_rw_adj                  NUMBER(18,6),
+  ccy_cd                      VARCHAR2(15),
+  ccy_name                    VARCHAR2(45),
+  subject_cd                  VARCHAR2(24),
+  subject_name                VARCHAR2(300),
+  accrued_subject_cd          VARCHAR2(24),
+  accrued_subject_name        VARCHAR2(300),
+  receivable_subject_cd       VARCHAR2(24),
+  receivable_subject_name     VARCHAR2(300),
+  accrued_receiv_subject_cd   VARCHAR2(24),
+  accrued_receiv_subject_name VARCHAR2(300),
+  intadj_subject_cd           VARCHAR2(24),
+  intadj_subject_name         VARCHAR2(300),
+  fairchange_subject_cd       VARCHAR2(24),
+  fairchange_subject_name     VARCHAR2(300),
+  provision_subject_cd        VARCHAR2(24),
+  provision_subject_name      VARCHAR2(300),
+  balance                     NUMBER(18,2),
+  balance_hcurr               NUMBER(18,2),
+  receivable_int              NUMBER(18,2),
+  accrued_receiv_int          NUMBER(18,2),
+  accrued_int                 NUMBER(18,2),
+  int_adj                     NUMBER(18,2),
+  fair_value_change           NUMBER(18,2),
+  provision                   NUMBER(18,2),
+  asset_balance               NUMBER(18,2),
+  ead_orig                    NUMBER(18,2),
+  ccf                         NUMBER(18,6),
+  ead_afterccf                NUMBER(18,2),
+  ead_afterpro                NUMBER(18,2),
+  rwa                         NUMBER(18,2),
+  after_miti_rwa              NUMBER(18,2),
+  after_adj_rwa               NUMBER(18,2),
+  report_no                   VARCHAR2(30),
+  report_line_no              VARCHAR2(60),
+  load_date                   VARCHAR2(30),
+  book_type_id                VARCHAR2(30),
+  etl_dt                      DATE,
+  etl_timestamp               TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION
+  is '内部管理报表_资产证券化';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.data_date
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.loan_ref_no
+  is '债项编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_items_issue_no
+  is '资产证券化发行编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_items_issue_name
+  is '资产证券化发行产品名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.items_tranche_no
+  is '资产证券化档次编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.items_tranche_name
+  is '资产证券化档次名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.on_off_id
+  is '表内外资产标志：01 表内,02 表外';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_priority_rating_flag
+  is '证券化优先档次标志：1 优先档，0 非优先档';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.market_type_id
+  is '市场类型代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.org_cd
+  is '账务机构';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.org_name
+  is '账务机构名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.overdue_days
+  is '逾期天数';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.five_class_cd
+  is '五级分类代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.five_class_name
+  is '五级分类名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.product_no
+  is '产品代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.product_name
+  is '产品名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_sp_rating_cd
+  is '外部评级代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_rating_org_cd
+  is '证券评级机构代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_rating_org_name
+  is '证券评级机构名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_ecternal_rating_cd
+  is '债券标普评级';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.items_tranche_due_day
+  is '持有档次的预期到期日';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.items_seniority
+  is '项目档次优先级：1 优先档，0 非优先档';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.issue_amt_total
+  is '产品当期总余额';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.amt_cur
+  is '产品当期总余额';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_stc_flag
+  is '资产证券化简单透明可比标志：1 STC，0 非STC';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.anew_asset_sec_flag
+  is '再资产证券化标志：1 是，0 否';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_start_date
+  is '证券起息日';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_end_date
+  is '证券到期日';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_pool_a
+  is '档次起始点A';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_pool_d
+  is '档次分离点D';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_pool_t
+  is '厚度T';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_pool_mr
+  is '剩余有效期限';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_rating_floor_rw
+  is '外部评级1年期权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_rating_ceil_rw
+  is '外部评级5年期权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_orig_rw
+  is '资产证券化原始权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_pool_rw
+  is '资产池平均权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_rw
+  is '资产证券化调整后权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.sec_rw_adj
+  is '资产证券化底线调整后的权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.ccy_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.ccy_name
+  is '币种名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.subject_cd
+  is '本金科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.subject_name
+  is '本金科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.accrued_subject_cd
+  is '应计利息科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.accrued_subject_name
+  is '应计利息科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.receivable_subject_cd
+  is '应收利息科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.receivable_subject_name
+  is '应收利息科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.accrued_receiv_subject_cd
+  is '应收未收利息科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.accrued_receiv_subject_name
+  is '应收未收利息名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.intadj_subject_cd
+  is '利息调整科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.intadj_subject_name
+  is '利息调整科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.fairchange_subject_cd
+  is '公允价值变动科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.fairchange_subject_name
+  is '公允价值变动科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.provision_subject_cd
+  is '准备金科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.provision_subject_name
+  is '准备金科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.balance
+  is '本金余额（原币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.balance_hcurr
+  is '本金余额（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.receivable_int
+  is '应收利息(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.accrued_receiv_int
+  is '应收未收利息（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.accrued_int
+  is '应计利息(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.int_adj
+  is '利息调整(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.fair_value_change
+  is '公允价值变动(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.provision
+  is '计提准备金(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.asset_balance
+  is '资产余额(本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.ead_orig
+  is '原始风险暴露(本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.ccf
+  is '表外信用风险转换系数';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.ead_afterccf
+  is '转换后的风险暴露(本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.ead_afterpro
+  is '扣减准备金后的风险暴露（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.rwa
+  is '风险加权资产';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.after_miti_rwa
+  is '缓释后的风险加权资产';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.after_adj_rwa
+  is '考虑监管上限调整后的风险加权资产';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.report_no
+  is '报表编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.report_line_no
+  is '报表栏位号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.load_date
+  is '加载日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.book_type_id
+  is '账簿类型：BANK_BOOK 银行账簿，TRADE_BOOK 交易账簿';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_SECURITIZATION.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,94 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501
+(
+  id                   NUMBER,
+  a_type               VARCHAR2(20),
+  p_type               VARCHAR2(20),
+  p_type_name          VARCHAR2(100),
+  is_auto_prft         NUMBER,
+  is_allow_delay       NUMBER,
+  amort_method         NUMBER,
+  amort_method_name    VARCHAR2(100),
+  is_tprice            NUMBER,
+  fv_type              NUMBER,
+  is_allow_withdraw    NUMBER(4),
+  is_allow_accrue      NUMBER(4),
+  is_allow_receiveai   NUMBER(4),
+  is_auto_overdue      NUMBER(4),
+  pending_account      VARCHAR2(30),
+  pending_account_name VARCHAR2(30),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501
+  is '资产类型表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.id
+  is '产品分类ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.p_type
+  is '产品类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.p_type_name
+  is '产品类型名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.is_auto_prft
+  is '是否自动息差；1：是，0：否';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.is_allow_delay
+  is '是否允许延迟到期；0:自动确认1:允许延期手动确认2:不允许延期手动确认';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.amort_method
+  is '摊销算法；
+-1:不摊销，
+0:直线摊销，
+1:到期收益率算法，
+使用交易全价，
+2:到期收益率算法，
+使用条款全价，
+3:平价收益率算法，
+使用交易全价，
+4:平价收益率算法，
+使用条款全价，
+5:日实际利率摊销算法，
+使用公式计算的日摊销利息收入，
+6:日实际利率摊销算法，
+使用公式计算的日实际利息收入，
+7:年实际利率摊销算法，
+使用公式计算的日摊销利息收入，
+8:年实际利率摊销算法，
+使用公式计算的日实际利息收入，
+9:到期收益率算法，每天贴现，使用交易全价，
+10:到期收益率算法，每天贴现，使用条款全价，
+11:平价收益率算法，每天贴现，使用交易全价，
+12:平价收益率算法，每天贴现，使用条款全价';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.amort_method_name
+  is '摊销算法名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.is_tprice
+  is '是否估值';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.fv_type
+  is '估值类型；
+  0:不估值，
+  1:手工维护优先，次之外部导入，最后系统定价,
+  2:手工维护优先，而后系统定价，最后外部导入
+  3:手工维护优先，而后外部导入，不使用系统定价';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.is_allow_withdraw
+  is '是否允许支取 0:不允许支持 1:允许支持（不需要审批） 2:允许支持（需要审批）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.is_allow_accrue
+  is '是否允许计提';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.is_allow_receiveai
+  is '是否允许随时收息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.is_auto_overdue
+  is '是否自动逾期;1:是，0：否';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.pending_account
+  is '挂账账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.pending_account_name
+  is '挂账账户户名';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_P_TYPE_BAK_20230501.id_mark
+  is '增删标志';
+

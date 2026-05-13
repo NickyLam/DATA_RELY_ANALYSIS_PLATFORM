@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.TSQY_1104_ORG
+(
+  org_id      VARCHAR2(32),
+  org_name    VARCHAR2(512),
+  belong_dist VARCHAR2(64),
+  belong_city VARCHAR2(64),
+  belong_prov VARCHAR2(64),
+  update_time VARCHAR2(32)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.TSQY_1104_ORG
+  is '1104特色区域报表机构表';
+comment on column RRP_MDL.TSQY_1104_ORG.org_id
+  is '机构编号';
+comment on column RRP_MDL.TSQY_1104_ORG.org_name
+  is '机构名称';
+comment on column RRP_MDL.TSQY_1104_ORG.belong_dist
+  is '所属区县';
+comment on column RRP_MDL.TSQY_1104_ORG.belong_city
+  is '所属城市';
+comment on column RRP_MDL.TSQY_1104_ORG.belong_prov
+  is '所属省份';
+comment on column RRP_MDL.TSQY_1104_ORG.update_time
+  is '更新时间';
+

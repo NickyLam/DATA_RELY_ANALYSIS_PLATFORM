@@ -1,0 +1,125 @@
+﻿create table RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL
+(
+  evt_id              VARCHAR2(250),
+  lp_id               VARCHAR2(60),
+  bal_chg_dtl_id      VARCHAR2(60),
+  bus_id              VARCHAR2(60),
+  bus_tab_name        VARCHAR2(250),
+  dept_id             VARCHAR2(60),
+  acct_b_id           VARCHAR2(60),
+  asset_type_name     VARCHAR2(100),
+  bus_cate_name       VARCHAR2(100),
+  main_asset_id       VARCHAR2(100),
+  minor_asset_id      VARCHAR2(100),
+  actl_acpt_pay_dt    DATE,
+  hold_pos            NUMBER(38,8),
+  hold_denom          NUMBER(38,8),
+  net_price_cost      NUMBER(38,8),
+  int_adj             NUMBER(38,8),
+  evha_val_chag       NUMBER(38,8),
+  int_cost            NUMBER(38,8),
+  full_price_cost     NUMBER(38,8),
+  impam_prep          NUMBER(38,8),
+  spd_prft            NUMBER(38,8),
+  amort_prft          NUMBER(38,8),
+  int_prft            NUMBER(38,8),
+  evha_val_chag_pl    NUMBER(38,8),
+  impam_loss          NUMBER(38,8),
+  tran_fee            NUMBER(38,8),
+  actl_int_rat        NUMBER(38,8),
+  value_dt            DATE,
+  exp_dt              DATE,
+  final_update_tm     TIMESTAMP(6),
+  happ_amt            NUMBER(38,8),
+  last_bal_chg_dtl_id VARCHAR2(60),
+  strk_bal_flg        VARCHAR2(30),
+  comm_fee_inco       NUMBER(18,8),
+  comm_fee_expns      NUMBER(18,8),
+  etl_dt              DATE,
+  src_table_name      VARCHAR2(100),
+  job_cd              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL
+  is '本币资金资产余额变动明细';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.bal_chg_dtl_id
+  is '余额变动明细编号';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.bus_tab_name
+  is '业务表名';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.dept_id
+  is '部门编号';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.acct_b_id
+  is '账簿编号';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.asset_type_name
+  is '资产类型名称';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.bus_cate_name
+  is '业务类别名称';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.main_asset_id
+  is '主资产编号';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.minor_asset_id
+  is '次资产编号';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.actl_acpt_pay_dt
+  is '实际收付日期';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.hold_pos
+  is '持有仓位';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.hold_denom
+  is '持有面额';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.net_price_cost
+  is '净价成本';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.int_adj
+  is '利息调整';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.evha_val_chag
+  is '公允价值变动';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.int_cost
+  is '利息成本';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.full_price_cost
+  is '全价成本';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.impam_prep
+  is '减值准备';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.spd_prft
+  is '价差收益';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.amort_prft
+  is '摊销收益';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.int_prft
+  is '利息收益';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.evha_val_chag_pl
+  is '公允价值变动损益';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.impam_loss
+  is '减值损失';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.tran_fee
+  is '交易费用';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.actl_int_rat
+  is '实际利率';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.final_update_tm
+  is '最后更新时间';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.happ_amt
+  is '发生金额';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.last_bal_chg_dtl_id
+  is '上次余额变动明细编号';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.strk_bal_flg
+  is '冲账标志';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.comm_fee_inco
+  is '手续费收入';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.comm_fee_expns
+  is '手续费支出';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_DC_CAP_ASSET_BAL_CHG_DTL_YZL.job_cd
+  is '任务编码';
+

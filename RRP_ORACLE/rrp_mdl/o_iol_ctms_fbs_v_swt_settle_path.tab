@@ -1,0 +1,147 @@
+﻿create table RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH
+(
+  infr_srno             NUMBER(8),
+  cus_number            VARCHAR2(384),
+  cus_branch_number     VARCHAR2(384),
+  settle_path_name      VARCHAR2(384),
+  mem_code_srno         VARCHAR2(15),
+  crncy_accnt_code_desc VARCHAR2(384),
+  default_path_indc     NUMBER(2),
+  settle_type_indc      NUMBER(2),
+  prdct_srno            VARCHAR2(384),
+  account_bank_type     VARCHAR2(8),
+  account_bank_bic      VARCHAR2(384),
+  account_bank_desc     VARCHAR2(384),
+  account_bank_accnt    VARCHAR2(384),
+  benifit_bank_type     VARCHAR2(8),
+  benifit_bank_bic      VARCHAR2(384),
+  benifit_bank_desc     VARCHAR2(384),
+  benifit_bank_accnt    VARCHAR2(384),
+  mid_bank_type         VARCHAR2(8),
+  mid_bank_bic          VARCHAR2(384),
+  mid_bank_desc         VARCHAR2(384),
+  mid_bank_accnt        VARCHAR2(384),
+  agency_bank_type      VARCHAR2(8),
+  agency_bank_bic       VARCHAR2(384),
+  agency_bank_desc      VARCHAR2(384),
+  agency_bank_accnt     VARCHAR2(384),
+  order_bank_type       VARCHAR2(8),
+  order_bank_bic        VARCHAR2(384),
+  order_bank_desc       VARCHAR2(384),
+  order_bank_account    VARCHAR2(384),
+  crtd_user_id          VARCHAR2(384),
+  crtd_date             DATE,
+  updtd_user_id         VARCHAR2(384),
+  updtd_date            DATE,
+  system_name           VARCHAR2(30),
+  account_bank_cname    VARCHAR2(384),
+  mid_bank_cname        VARCHAR2(384),
+  agency_bank_cname     VARCHAR2(384),
+  benifit_bank_cname    VARCHAR2(384),
+  order_bank_cname      VARCHAR2(384),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH
+  is '清算路径视图';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.infr_srno
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.cus_number
+  is '机构的唯一标识号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.cus_branch_number
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.settle_path_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.mem_code_srno
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.crncy_accnt_code_desc
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.default_path_indc
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.settle_type_indc
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.prdct_srno
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.account_bank_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.account_bank_bic
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.account_bank_desc
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.account_bank_accnt
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.benifit_bank_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.benifit_bank_bic
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.benifit_bank_desc
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.benifit_bank_accnt
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.mid_bank_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.mid_bank_bic
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.mid_bank_desc
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.mid_bank_accnt
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.agency_bank_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.agency_bank_bic
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.agency_bank_desc
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.agency_bank_accnt
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.order_bank_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.order_bank_bic
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.order_bank_desc
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.order_bank_account
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.crtd_user_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.crtd_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.updtd_user_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.updtd_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.system_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.account_bank_cname
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.mid_bank_cname
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.agency_bank_cname
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.benifit_bank_cname
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.order_bank_cname
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SWT_SETTLE_PATH.etl_timestamp
+  is 'etl处理时间';
+

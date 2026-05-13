@@ -1,0 +1,71 @@
+﻿create table RRP_MDL.M_LOAN_CHG_INFO
+(
+  data_dt               CHAR(8),
+  lgl_rep_id            VARCHAR2(200),
+  cont_id               VARCHAR2(200),
+  rcpt_id               VARCHAR2(200),
+  cust_id               VARCHAR2(200),
+  org_id                VARCHAR2(200),
+  loan_chg_typ          VARCHAR2(10),
+  tra_dt                CHAR(8),
+  loan_act_dstr_dt      CHAR(8),
+  cur                   CHAR(3),
+  bgn_year_loan_lvl5_cl VARCHAR2(10),
+  tra_lvl5_cl           VARCHAR2(10),
+  tra_orig_val          NUMBER(30,2),
+  tra_amt               NUMBER(30,2),
+  bank_trf_flg          CHAR(1),
+  batch_trf_flg         CHAR(1),
+  ast_typ               VARCHAR2(10),
+  pre_tax_cncl_flg      CHAR(1),
+  dept_line             VARCHAR2(500),
+  data_src              VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.M_LOAN_CHG_INFO
+  is '贷款变动信息';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.cont_id
+  is '合同编号';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.loan_chg_typ
+  is '贷款变动类型';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.tra_dt
+  is '交易日期';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.loan_act_dstr_dt
+  is '贷款实际发放日期';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.cur
+  is '币种';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.bgn_year_loan_lvl5_cl
+  is '年初五级分类';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.tra_lvl5_cl
+  is '交易时五级分类';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.tra_orig_val
+  is '交易原值';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.tra_amt
+  is '交易金额';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.bank_trf_flg
+  is '行内转让标志';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.batch_trf_flg
+  is '批量转让标志';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.ast_typ
+  is '资产类型';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.pre_tax_cncl_flg
+  is '税前核销标志';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_LOAN_CHG_INFO.data_src
+  is '数据来源';
+

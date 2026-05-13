@@ -1,0 +1,40 @@
+﻿create table RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4
+(
+  nbjgh   VARCHAR2(30) not null,
+  kjkmbh  VARCHAR2(60) not null,
+  bz      VARCHAR2(3) not null,
+  qcjfye  NUMBER(20,2),
+  qcdfye  NUMBER(20,2),
+  jffse   NUMBER(20,2),
+  dffse   NUMBER(20,2),
+  qmjfye  NUMBER(20,2),
+  qmdfye  NUMBER(20,2),
+  org_lev VARCHAR2(30),
+  org     VARCHAR2(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4.kjkmbh
+  is '会计科目编号';
+comment on column RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4.bz
+  is '申请控制金额币种';
+comment on column RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4.qcjfye
+  is '期初借方余额';
+comment on column RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4.qcdfye
+  is '期初贷方余额';
+comment on column RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4.jffse
+  is '临时表字段';
+comment on column RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4.dffse
+  is '临时表字段';
+comment on column RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4.qmjfye
+  is '期末借方余额';
+comment on column RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4.qmdfye
+  is '期末贷方余额';
+comment on column RRP_MDL.TMP_EAST5_401_ZZKJQKMB_4.org
+  is '机构';
+

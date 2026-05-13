@@ -1,0 +1,57 @@
+﻿create table RRP_MDL.A_PHB_S71_BUSINESS_20241231
+(
+  bgrq         VARCHAR2(8),
+  jywym        VARCHAR2(90),
+  zhwym        VARCHAR2(53),
+  khwym        VARCHAR2(45),
+  cust_nam     VARCHAR2(300),
+  zwjgbh       VARCHAR2(18),
+  zwjgmc       VARCHAR2(300),
+  dklb         VARCHAR2(45),
+  tjywpz       VARCHAR2(50),
+  tjywpzmc     VARCHAR2(600),
+  grdkytlb     VARCHAR2(41),
+  grdkytlbmc   VARCHAR2(750),
+  fkr          VARCHAR2(12),
+  ysqsrq       VARCHAR2(12),
+  ysdqrq       VARCHAR2(12),
+  qxy          NUMBER(6),
+  ysqxlb       VARCHAR2(14),
+  tjdbfs       VARCHAR2(14),
+  sndkfl       VARCHAR2(50),
+  sndkflmc     VARCHAR2(750),
+  tjxwqylb     VARCHAR2(23),
+  tjxwqylbmc   VARCHAR2(750),
+  wjfl         VARCHAR2(14),
+  sfbl         VARCHAR2(5),
+  fkje         NUMBER(20,4),
+  tjye         NUMBER(20,4),
+  tjye_w       NUMBER(20,6),
+  zxll         NUMBER(20,6),
+  nhlxsy       NUMBER(20,4),
+  sxzed        NUMBER(20,4),
+  sfphxwqy     VARCHAR2(5),
+  phxwsxqj     VARCHAR2(90),
+  phsnsxqj     VARCHAR2(90),
+  fkssxed      NUMBER(20,4),
+  lsfksfphxwqy VARCHAR2(14),
+  phjrsxqj     VARCHAR2(90),
+  phfksxqj     VARCHAR2(90),
+  sfcydbdk     VARCHAR2(5),
+  sfwhbxd      VARCHAR2(5),
+  sfcjr        VARCHAR2(5),
+  sffpxexd     VARCHAR2(5),
+  sfjtnc       VARCHAR2(5),
+  sflspkh      VARCHAR2(5),
+  sfnh         VARCHAR2(5),
+  departmentd  VARCHAR2(96),
+  grfnhjydbz   VARCHAR2(45),
+  fkstjxwlb    VARCHAR2(450),
+  fksnhbs      VARCHAR2(450)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+

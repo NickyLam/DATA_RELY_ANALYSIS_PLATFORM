@@ -1,0 +1,84 @@
+﻿create table RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H
+(
+  flow_num                VARCHAR2(100),
+  lp_id                   VARCHAR2(100),
+  party_id                VARCHAR2(250),
+  cust_id                 VARCHAR2(100),
+  rgst_dt                 DATE,
+  warn_type_cd            VARCHAR2(30),
+  start_dt                DATE,
+  end_dt                  DATE,
+  id_mark                 VARCHAR2(10),
+  obj_id                  VARCHAR2(100),
+  obj_type_name           VARCHAR2(500),
+  warn_id                 VARCHAR2(500),
+  warn_descb              VARCHAR2(1000),
+  warn_hibchy             VARCHAR2(60),
+  warn_status_cd          VARCHAR2(30),
+  warn_sgn_idtfy_comnt    VARCHAR2(4000),
+  risk_ctrl_measure_descb VARCHAR2(4000),
+  rgst_teller_id          VARCHAR2(100),
+  rgst_org_id             VARCHAR2(100),
+  modif_dt                DATE,
+  update_org_id           VARCHAR2(100),
+  update_teller_id        VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H
+  is '客户风险预警信息历史';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.flow_num
+  is '流水号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.warn_type_cd
+  is '警示类型代码';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.obj_id
+  is '对象编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.obj_type_name
+  is '对象类型名称';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.warn_id
+  is '预警编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.warn_descb
+  is '预警描述';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.warn_hibchy
+  is '预警层级';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.warn_status_cd
+  is '预警状态代码';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.warn_sgn_idtfy_comnt
+  is '预警信号认定说明';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.risk_ctrl_measure_descb
+  is '风险控制措施描述';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.rgst_org_id
+  is '登记机构编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.modif_dt
+  is '变更日期';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.update_org_id
+  is '更新机构编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_INFO_H.update_teller_id
+  is '更新柜员编号';
+

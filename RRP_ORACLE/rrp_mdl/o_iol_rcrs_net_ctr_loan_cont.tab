@@ -1,0 +1,245 @@
+﻿create table RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT
+(
+  cont_no                VARCHAR2(32),
+  serno                  VARCHAR2(32),
+  loan_code              VARCHAR2(32),
+  cus_id                 VARCHAR2(32),
+  cus_name               VARCHAR2(80),
+  help_comp_id           VARCHAR2(32),
+  help_comp_name         VARCHAR2(80),
+  cont_type              VARCHAR2(2),
+  cn_cont_no             VARCHAR2(80),
+  cur_type               VARCHAR2(3),
+  cont_amt               NUMBER(16,2),
+  total_issue_amt        NUMBER(16,2),
+  total_recyle_amt       NUMBER(16,2),
+  avail_amt              NUMBER(16,2),
+  term_type              VARCHAR2(3),
+  term                   VARCHAR2(10),
+  loan_start_date        VARCHAR2(10),
+  loan_end_date          VARCHAR2(10),
+  prd_code               VARCHAR2(32),
+  prd_name               VARCHAR2(80),
+  prd_pk                 VARCHAR2(32),
+  limit_ind              VARCHAR2(1),
+  lmt_serno              VARCHAR2(32),
+  fina_br_id             VARCHAR2(32),
+  input_br_id            VARCHAR2(32),
+  input_id               VARCHAR2(32),
+  cus_manager            VARCHAR2(32),
+  mng_br_id              VARCHAR2(32),
+  repayment_account      VARCHAR2(32),
+  repayment_acc_name     VARCHAR2(64),
+  enter_account          VARCHAR2(32),
+  enter_account_name     VARCHAR2(64),
+  loan_use_type          VARCHAR2(6),
+  assure_means_main      VARCHAR2(2),
+  assure_means2          VARCHAR2(2),
+  assure_means3          VARCHAR2(2),
+  cont_state             VARCHAR2(3),
+  sign_date              VARCHAR2(10),
+  pay_type               VARCHAR2(2),
+  creation_date          VARCHAR2(10),
+  repayment_mode         VARCHAR2(20),
+  repayment_interval     VARCHAR2(3),
+  repayment_date_confirm VARCHAR2(3),
+  return_date            VARCHAR2(3),
+  interest_acc_mode      VARCHAR2(3),
+  loan_mode              VARCHAR2(3),
+  ruling_ir              VARCHAR2(10),
+  int_rate_inc_opt       VARCHAR2(10),
+  int_rate_inc           VARCHAR2(10),
+  reality_ir_y           VARCHAR2(10),
+  ir_adjust_mode         VARCHAR2(10),
+  ir_exe_type            VARCHAR2(10),
+  e_account_no           VARCHAR2(30),
+  e_account_name         VARCHAR2(60),
+  account                VARCHAR2(32),
+  account_name           VARCHAR2(64),
+  bank_code              VARCHAR2(20),
+  bank_name              VARCHAR2(64),
+  account_end            VARCHAR2(32),
+  account_name_end       VARCHAR2(64),
+  bank_code_end          VARCHAR2(20),
+  bank_name_end          VARCHAR2(64),
+  cert_type              VARCHAR2(2),
+  cert_code              VARCHAR2(32),
+  yx_appr_result         VARCHAR2(5),
+  active_code            VARCHAR2(32),
+  mobile_phone           VARCHAR2(20),
+  file_path              VARCHAR2(100),
+  is_big_account         VARCHAR2(3),
+  cla_result             VARCHAR2(10),
+  accofopen_bank1        VARCHAR2(50),
+  accofopen_bank1_end    VARCHAR2(50),
+  float_rate_bp          NUMBER(14,10),
+  rate_type              VARCHAR2(2),
+  credit_incr_code       VARCHAR2(32),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT
+  is '助贷贷款合同';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cont_no
+  is '合同编号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.serno
+  is '业务流水号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.loan_code
+  is '提款编号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cus_id
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cus_name
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.help_comp_id
+  is '助贷公司编号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.help_comp_name
+  is '助贷公司名称';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cont_type
+  is '合同类型';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cn_cont_no
+  is '合同名称';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cur_type
+  is '币种';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cont_amt
+  is '合同金额';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.total_issue_amt
+  is '累计发放金额';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.total_recyle_amt
+  is '累计回收金额';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.avail_amt
+  is '合同可用金额';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.term_type
+  is '期限类型';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.term
+  is '贷款期限';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.loan_start_date
+  is '合同起始日期';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.loan_end_date
+  is '贷款终止日期';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.prd_code
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.prd_name
+  is '产品名称';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.prd_pk
+  is '产品主键';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.limit_ind
+  is '是否引用额度';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.lmt_serno
+  is '额度协议编号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.fina_br_id
+  is '账务机构';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.input_br_id
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.input_id
+  is '登记人';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cus_manager
+  is '客户经理';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.mng_br_id
+  is '主管客户经理';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.repayment_account
+  is '还款账号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.repayment_acc_name
+  is '还款账户名称';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.enter_account
+  is '入账账号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.enter_account_name
+  is '入账账户名称';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.loan_use_type
+  is '贷款用途';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.assure_means_main
+  is '主担保方式';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.assure_means2
+  is '担保方式2';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.assure_means3
+  is '担保方式3';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cont_state
+  is '合同状态';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.sign_date
+  is '合同签订日期';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.pay_type
+  is '支付方式';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.creation_date
+  is '合同生成时间';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.repayment_mode
+  is '还款方式';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.repayment_interval
+  is '还款间隔';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.repayment_date_confirm
+  is '还款日确定';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.return_date
+  is '还款日';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.interest_acc_mode
+  is '结息方式';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.loan_mode
+  is '贷款发放方式';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.ruling_ir
+  is '基准利率';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.int_rate_inc_opt
+  is '利率浮动方式';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.int_rate_inc
+  is '利率浮动比例';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.reality_ir_y
+  is '执行利率';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.ir_adjust_mode
+  is '利率调整方式';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.ir_exe_type
+  is '利率调整周期';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.e_account_no
+  is 'E账户';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.e_account_name
+  is 'E账户户名';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.account
+  is '绑定卡卡号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.account_name
+  is '绑定卡卡名';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.bank_code
+  is '实体卡对应的开户行';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.bank_name
+  is '实体卡对应的开户行名称';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.account_end
+  is '最终绑定卡卡号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.account_name_end
+  is '最终绑定卡卡名';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.bank_code_end
+  is '最终实体卡对应的开户行';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.bank_name_end
+  is '最终实体卡对应的开户行名称';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cert_type
+  is '证件类型';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cert_code
+  is '证件号码';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.yx_appr_result
+  is '影像审批结果';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.active_code
+  is '影像标识';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.mobile_phone
+  is '手机号';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.file_path
+  is '影像文件路径';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.is_big_account
+  is '是否大账户模式';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.cla_result
+  is '风险暴露分类结果';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.accofopen_bank1
+  is '收款方开户行清算行行号（最初）';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.accofopen_bank1_end
+  is '收款方开户行清算行行号（最终）';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.float_rate_bp
+  is '利率浮动点差BP';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.rate_type
+  is '利率类型 1 基准利率 2 LPR';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.credit_incr_code
+  is '增信模式标志';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_RCRS_NET_CTR_LOAN_CONT.id_mark
+  is '增删标志';
+

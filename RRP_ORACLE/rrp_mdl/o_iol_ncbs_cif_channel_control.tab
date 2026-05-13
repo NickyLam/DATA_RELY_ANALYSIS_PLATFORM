@@ -1,0 +1,99 @@
+﻿create table RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL
+(
+  control_seq_no      VARCHAR2(50),
+  control_type        VARCHAR2(3),
+  auth_user_id        VARCHAR2(8),
+  last_change_date    DATE,
+  last_change_user_id VARCHAR2(8),
+  client_no           VARCHAR2(16),
+  tran_branch         VARCHAR2(12),
+  control_status      VARCHAR2(1),
+  limit_level         VARCHAR2(5),
+  document_id         VARCHAR2(60),
+  start_date          DATE,
+  end_date            DATE,
+  company             VARCHAR2(20),
+  tran_timestamp      VARCHAR2(26),
+  narrative           VARCHAR2(400),
+  sign_user_id        VARCHAR2(8),
+  sign_channel        VARCHAR2(20),
+  out_sign_user_id    VARCHAR2(8),
+  unlost_time         VARCHAR2(26),
+  start_date_time     VARCHAR2(26),
+  end_date_time       VARCHAR2(26),
+  oper_narrative      VARCHAR2(400),
+  start_timestamp     VARCHAR2(26),
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  etl_timestamp       TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL
+  is '客户渠道限制表';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.control_seq_no
+  is '控制编号';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.control_type
+  is '控制类型';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.auth_user_id
+  is '授权柜员';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.last_change_date
+  is '最后修改日期';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.last_change_user_id
+  is '最后修改柜员';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.tran_branch
+  is '核心交易机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.control_status
+  is '控制状态';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.limit_level
+  is '限制级别';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.document_id
+  is '证件号码';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.start_date
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.end_date
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.narrative
+  is '摘要';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.sign_user_id
+  is '签约柜员';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.sign_channel
+  is '签约渠道';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.out_sign_user_id
+  is '解约柜员';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.unlost_time
+  is '解挂时间';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.start_date_time
+  is '生效时间';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.end_date_time
+  is '失效时间';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.oper_narrative
+  is '操作备注';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.start_timestamp
+  is '加限的交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NCBS_CIF_CHANNEL_CONTROL.etl_timestamp
+  is 'ETL处理时间戳';
+

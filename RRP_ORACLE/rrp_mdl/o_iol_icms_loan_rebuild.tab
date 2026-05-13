@@ -1,0 +1,60 @@
+﻿create table RRP_MDL.O_IOL_ICMS_LOAN_REBUILD
+(
+  serialno      VARCHAR2(64),
+  approvestatus VARCHAR2(64),
+  inputuserid   VARCHAR2(64),
+  inputorgid    VARCHAR2(64),
+  inputdate     DATE,
+  updateuserid  VARCHAR2(64),
+  updateorgid   VARCHAR2(64),
+  updatedate    DATE,
+  customerid    VARCHAR2(16),
+  customername  VARCHAR2(200),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6),
+  dealtype      VARCHAR2(10),
+  removereason  VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_LOAN_REBUILD
+  is '贷款重组';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.approvestatus
+  is '审批状态';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.customerid
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.customername
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.dealtype
+  is '处理类型(A-加入,D-解除)';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD.removereason
+  is '解除原因(1-观察期内正常还款,2-无效重组贷款认定)';
+

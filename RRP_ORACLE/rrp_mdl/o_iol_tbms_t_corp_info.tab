@@ -1,0 +1,126 @@
+﻿create table RRP_MDL.O_IOL_TBMS_T_CORP_INFO
+(
+  companyid     NUMBER(20),
+  orgcode       VARCHAR2(48),
+  cname         VARCHAR2(180),
+  legalid       NUMBER(20),
+  adminid       NUMBER(20),
+  phone         VARCHAR2(39),
+  email         VARCHAR2(150),
+  address       VARCHAR2(450),
+  status        NUMBER(4),
+  sys_ctime     DATE,
+  sys_utime     DATE,
+  sys_valid     NUMBER(4),
+  logourl       VARCHAR2(765),
+  cpytype       NUMBER(10),
+  summary       VARCHAR2(765),
+  website       VARCHAR2(765),
+  legal         VARCHAR2(90),
+  legalphone    VARCHAR2(36),
+  contactinfo   VARCHAR2(765),
+  provinces     NUMBER(20),
+  city          NUMBER(20),
+  industryid    NUMBER(20),
+  isfunc        NUMBER(4),
+  etype         NUMBER(10),
+  estdate       VARCHAR2(60),
+  regcaptial    NUMBER(20),
+  uscc          VARCHAR2(54),
+  companyno     VARCHAR2(96),
+  authorgid     NUMBER(20),
+  authtime      DATE,
+  authorgcode   VARCHAR2(60),
+  operusercode  VARCHAR2(60),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_TBMS_T_CORP_INFO
+  is '企业信息表';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.companyid
+  is '企业id';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.orgcode
+  is '企业组织机构代码';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.cname
+  is '企业名称';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.legalid
+  is '企业法人id';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.adminid
+  is '企业最高管理者id';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.phone
+  is '企业电话';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.email
+  is '企业邮箱';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.address
+  is '企业通讯地址';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.status
+  is '认证状态,1默认未认证,2认证中,3已认证';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.sys_ctime
+  is '系统-创建时间';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.sys_utime
+  is '系统-修改时间';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.sys_valid
+  is '系统-有效状态';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.logourl
+  is '企业logo';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.cpytype
+  is '企业所属类型';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.summary
+  is '企业简介';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.website
+  is '企业logo';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.legal
+  is '企业法人id';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.legalphone
+  is '企业法人手机号';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.contactinfo
+  is '企业所在省';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.provinces
+  is '企业所在市id';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.city
+  is '企业所属行业id';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.industryid
+  is '是否金额机构';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.isfunc
+  is '企业类型';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.etype
+  is '成立日期';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.estdate
+  is '注册资金';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.regcaptial
+  is '企业统一社会信用代码';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.uscc
+  is '企业客户号';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.companyno
+  is '企业联系人';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.authorgid
+  is '认证（签约）机构';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.authtime
+  is '认证（签约）时间';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.authorgcode
+  is '认证(签约)机构编号';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.operusercode
+  is '操作认证(签约)人员编号';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_TBMS_T_CORP_INFO.etl_timestamp
+  is 'etl处理时间戳';
+

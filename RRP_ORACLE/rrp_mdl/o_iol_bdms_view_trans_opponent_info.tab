@@ -1,0 +1,75 @@
+﻿create table RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO
+(
+  bsnssq           VARCHAR2(50),
+  transq           VARCHAR2(96),
+  serino           VARCHAR2(30),
+  cust_acct        VARCHAR2(150),
+  cust_name        VARCHAR2(675),
+  cust_bank_no     VARCHAR2(18),
+  cust_bank_name   VARCHAR2(450),
+  province_no      VARCHAR2(3),
+  province_name    VARCHAR2(450),
+  cert_id          VARCHAR2(75),
+  cert_type        VARCHAR2(30),
+  social_credit_no VARCHAR2(48),
+  txn_bank_type    VARCHAR2(21),
+  start_dt         DATE,
+  end_dt           DATE,
+  id_mark          VARCHAR2(10),
+  etl_timestamp    TIMESTAMP(6),
+  evetdn           VARCHAR2(80),
+  iscustacct       VARCHAR2(80)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO
+  is '票据交易对手信息视图';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.bsnssq
+  is '全局流水号';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.transq
+  is '交易流水号';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.serino
+  is '序列号';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.cust_acct
+  is '交易对手账号';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.cust_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.cust_bank_no
+  is '交易对手行号';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.cust_bank_name
+  is '交易对手行名';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.province_no
+  is '对手银行所在地行政区划';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.province_name
+  is '区域名称';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.cert_id
+  is '交易对手证件类型';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.cert_type
+  is '交易对手证件号码';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.social_credit_no
+  is '统一社会信用代码';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.txn_bank_type
+  is '交易对手行号类型';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.evetdn
+  is '借贷方向';
+comment on column RRP_MDL.O_IOL_BDMS_VIEW_TRANS_OPPONENT_INFO.iscustacct
+  is '是否客户账务标识';
+

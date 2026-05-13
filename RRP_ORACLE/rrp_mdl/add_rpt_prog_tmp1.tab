@@ -1,0 +1,21 @@
+﻿create table RRP_MDL.ADD_RPT_PROG_TMP1
+(
+  seq_num       VARCHAR2(3),
+  rpt_sys       VARCHAR2(25),
+  rpt_module    VARCHAR2(25),
+  rpt_batch     VARCHAR2(100),
+  rpt_dept      VARCHAR2(20),
+  tech_supt     VARCHAR2(10),
+  rpt_latest_tm VARCHAR2(50),
+  rpt_actl_tm   VARCHAR2(50),
+  rpt_cnt       VARCHAR2(3),
+  cmplted_cnt   VARCHAR2(3),
+  rpt_situ      VARCHAR2(100),
+  remark        VARCHAR2(300)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+

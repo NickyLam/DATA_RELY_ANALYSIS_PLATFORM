@@ -1,0 +1,63 @@
+﻿create table RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H
+(
+  party_id           VARCHAR2(60),
+  lp_id              VARCHAR2(60),
+  src_sys_cd         VARCHAR2(10),
+  elec_addr_type_cd  VARCHAR2(20),
+  seq_num            VARCHAR2(60),
+  elec_addr          VARCHAR2(500),
+  main_elec_addr_flg VARCHAR2(200),
+  dd_area_cd         VARCHAR2(60),
+  ext_num            VARCHAR2(60),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  src_table_name     VARCHAR2(100),
+  job_cd             VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H
+  is '当事人电子地址历史';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.src_sys_cd
+  is '源系统代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.elec_addr_type_cd
+  is '电子地址类型代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.seq_num
+  is '序号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.elec_addr
+  is '电子地址';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.main_elec_addr_flg
+  is '主电子地址标志';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.dd_area_cd
+  is '长途区号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.ext_num
+  is '分机号码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_ELEC_ADDR_H.etl_timestamp
+  is 'ETL处理时间戳';
+

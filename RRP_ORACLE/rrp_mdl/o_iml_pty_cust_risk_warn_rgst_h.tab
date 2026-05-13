@@ -1,0 +1,78 @@
+﻿create table RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H
+(
+  party_id            VARCHAR2(100),
+  src_table_name      VARCHAR2(100),
+  warn_init_way_cd    VARCHAR2(30),
+  cust_type_cd        VARCHAR2(30),
+  job_cd              VARCHAR2(10),
+  rgst_dt             DATE,
+  rela_flow_num       VARCHAR2(100),
+  cust_name           VARCHAR2(500),
+  cert_no             VARCHAR2(60),
+  id_mark             VARCHAR2(10),
+  warn_type_cd        VARCHAR2(30),
+  warn_proc_status_cd VARCHAR2(30),
+  start_dt            DATE,
+  org_id              VARCHAR2(100),
+  cert_type_cd        VARCHAR2(30),
+  cust_id             VARCHAR2(100),
+  end_dt              DATE,
+  lp_id               VARCHAR2(100),
+  flow_num            VARCHAR2(100),
+  effect_flg          VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H
+  is '客户风险预警登记历史';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.warn_init_way_cd
+  is '预警发起方式代码';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.rela_flow_num
+  is '关联流水号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.cert_no
+  is '证件号码';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.warn_type_cd
+  is '警示类型代码';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.warn_proc_status_cd
+  is '预警处理状态代码';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.cert_type_cd
+  is '证件类型代码';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.cust_id
+  is '客户号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.flow_num
+  is '流水号';
+comment on column RRP_MDL.O_IML_PTY_CUST_RISK_WARN_RGST_H.effect_flg
+  is '生效标志';
+

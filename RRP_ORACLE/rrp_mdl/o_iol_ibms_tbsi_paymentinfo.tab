@@ -1,0 +1,120 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO
+(
+  i_code                      VARCHAR2(150),
+  a_type                      VARCHAR2(30),
+  m_type                      VARCHAR2(30),
+  tg_code                     VARCHAR2(15),
+  pi_id                       VARCHAR2(15),
+  stream_id                   VARCHAR2(150),
+  pi_fixed                    NUMBER(38,6),
+  pi_calcenddate              VARCHAR2(15),
+  pi_paymentdate              VARCHAR2(15),
+  pi_amount                   NUMBER(38,6),
+  pi_discount                 NUMBER(38,6),
+  pi_notionalamount           NUMBER(38,6),
+  pi_notionalamount_forcasted NUMBER(38,6),
+  pi_interestamount           NUMBER(38,6),
+  pi_interestamount_forcasted NUMBER(38,6),
+  pi_prenotionalamount        NUMBER(38,6),
+  pi_nextnotionalamount       NUMBER(38,6),
+  pi_premium                  NUMBER(38,6),
+  pi_premium_forcasted        NUMBER(38,6),
+  pi_probability              NUMBER(38,6),
+  imp_time                    VARCHAR2(29),
+  real_i_code                 VARCHAR2(45),
+  pi_calcstartdate            VARCHAR2(15),
+  pi_currency                 VARCHAR2(5),
+  pi_settlecurrency           VARCHAR2(5),
+  pi_discounttime             NUMBER(38,6),
+  pe_code                     VARCHAR2(45),
+  beg_date                    VARCHAR2(15),
+  pi_cumudefaultrate          NUMBER(38,6),
+  i_code_rpt                  VARCHAR2(195),
+  start_dt                    DATE,
+  end_dt                      DATE,
+  id_mark                     VARCHAR2(10),
+  etl_timestamp               TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO
+  is '现金流明细表';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.tg_code
+  is '任务组代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_id
+  is '现金流ID';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.stream_id
+  is '利率流ID';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_fixed
+  is '是否是确定现金流';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_calcenddate
+  is '计息结束日期';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_paymentdate
+  is '支付日';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_amount
+  is '金额';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_discount
+  is '折现率';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_notionalamount
+  is '金额中的本金部分';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_notionalamount_forcasted
+  is '金额中的本金部分中的预测部分';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_interestamount
+  is '金额中的利息部分';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_interestamount_forcasted
+  is '金额中的利息部分中的预测部分';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_prenotionalamount
+  is '发生前本金';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_nextnotionalamount
+  is '发生后本金';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_premium
+  is '期权费';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_premium_forcasted
+  is '期权费中的预测部分';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_probability
+  is '概率';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.imp_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.real_i_code
+  is '真实的金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_calcstartdate
+  is '计息开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_settlecurrency
+  is '结算币种';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_discounttime
+  is '贴现年化时间';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pe_code
+  is '定价环境代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.beg_date
+  is '计算日期';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.pi_cumudefaultrate
+  is '累积违约概率';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.i_code_rpt
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TBSI_PAYMENTINFO.etl_timestamp
+  is 'ETL处理时间戳';
+

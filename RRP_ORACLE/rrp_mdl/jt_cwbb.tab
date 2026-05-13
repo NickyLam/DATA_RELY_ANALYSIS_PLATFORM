@@ -1,0 +1,35 @@
+﻿create table RRP_MDL.JT_CWBB
+(
+  cust_id     VARCHAR2(200),
+  fin_rpt_id  VARCHAR2(200),
+  fin_rpt_dt  VARCHAR2(10),
+  rpt_cyc     VARCHAR2(3),
+  rpt_clbr    VARCHAR2(3),
+  cur         VARCHAR2(3),
+  ast_tot_amt NUMBER(30,2),
+  lby_tot_amt NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.JT_CWBB
+  is '财务报表';
+comment on column RRP_MDL.JT_CWBB.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.JT_CWBB.fin_rpt_id
+  is '财务报表编号';
+comment on column RRP_MDL.JT_CWBB.fin_rpt_dt
+  is '财务报表日期';
+comment on column RRP_MDL.JT_CWBB.rpt_cyc
+  is '报表周期';
+comment on column RRP_MDL.JT_CWBB.rpt_clbr
+  is '报表口径';
+comment on column RRP_MDL.JT_CWBB.cur
+  is '账号币种';
+comment on column RRP_MDL.JT_CWBB.ast_tot_amt
+  is '资产总额';
+comment on column RRP_MDL.JT_CWBB.lby_tot_amt
+  is '负债总额';
+

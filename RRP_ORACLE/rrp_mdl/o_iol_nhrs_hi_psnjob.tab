@@ -1,0 +1,207 @@
+﻿create table RRP_MDL.O_IOL_NHRS_HI_PSNJOB
+(
+  assgid         NUMBER(38),
+  begindate      VARCHAR2(15),
+  clerkcode      VARCHAR2(75),
+  creationtime   VARCHAR2(29),
+  creator        VARCHAR2(30),
+  dataoriginflag NUMBER(38),
+  deposemode     VARCHAR2(30),
+  dr             NUMBER(10),
+  enddate        VARCHAR2(15),
+  endflag        VARCHAR2(2),
+  ismainjob      VARCHAR2(2),
+  jobmode        VARCHAR2(30),
+  lastflag       VARCHAR2(2),
+  memo           VARCHAR2(2304),
+  modifiedtime   VARCHAR2(29),
+  modifier       VARCHAR2(30),
+  occupation     VARCHAR2(30),
+  oribillpk      VARCHAR2(30),
+  oribilltype    VARCHAR2(30),
+  pk_dept        VARCHAR2(30),
+  pk_dept_v      VARCHAR2(30),
+  pk_group       VARCHAR2(30),
+  pk_hrgroup     VARCHAR2(30),
+  pk_hrorg       VARCHAR2(30),
+  pk_job         VARCHAR2(30),
+  pk_job_type    VARCHAR2(30),
+  pk_jobgrade    VARCHAR2(30),
+  pk_jobrank     VARCHAR2(30),
+  pk_org         VARCHAR2(30),
+  pk_org_v       VARCHAR2(30),
+  pk_post        VARCHAR2(30),
+  pk_postseries  VARCHAR2(30),
+  pk_psncl       VARCHAR2(30),
+  pk_psndoc      VARCHAR2(30),
+  pk_psnjob      VARCHAR2(30),
+  pk_psnorg      VARCHAR2(30),
+  poststat       VARCHAR2(2),
+  psntype        NUMBER(38),
+  recordnum      NUMBER(38),
+  series         VARCHAR2(30),
+  showorder      NUMBER(38),
+  trial_flag     VARCHAR2(2),
+  trial_type     NUMBER(38),
+  trnsevent      NUMBER(38),
+  trnsreason     VARCHAR2(30),
+  trnstype       VARCHAR2(30),
+  ts             VARCHAR2(29),
+  worktype       VARCHAR2(30),
+  jobglbdef1     VARCHAR2(192),
+  jobglbdef2     VARCHAR2(30),
+  jobglbdef3     VARCHAR2(30),
+  jobglbdef4     VARCHAR2(30),
+  jobglbdef5     VARCHAR2(30),
+  jobglbdef6     VARCHAR2(30),
+  jobglbdef9     VARCHAR2(192),
+  jobglbdef7     VARCHAR2(30),
+  jobglbdef8     VARCHAR2(192),
+  jobglbdef10    VARCHAR2(30),
+  jobglbdef11    VARCHAR2(15),
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NHRS_HI_PSNJOB
+  is '工作信息';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.assgid
+  is '人员任职ID';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.begindate
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.clerkcode
+  is '员工号';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.creationtime
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.creator
+  is '创建人';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.dataoriginflag
+  is '分布式';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.deposemode
+  is '免职方式';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.dr
+  is '备用DR';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.enddate
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.endflag
+  is '是否结束';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.ismainjob
+  is '是否主职';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobmode
+  is '任职方式';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.lastflag
+  is '最新记录';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.modifiedtime
+  is '修改时间';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.modifier
+  is '修改人';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.occupation
+  is '职业';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.oribillpk
+  is '来源单据主键';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.oribilltype
+  is '来源单据类型';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_dept
+  is '部门';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_dept_v
+  is '部门版本信息';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_group
+  is '集团';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_hrgroup
+  is '所属集团';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_hrorg
+  is '人力资源组织';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_job
+  is '职务';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_job_type
+  is '任职类型';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_jobgrade
+  is '职级';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_jobrank
+  is '职等';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_org
+  is '组织';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_org_v
+  is '组织版本信息';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_post
+  is '岗位';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_postseries
+  is '岗位序列';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_psncl
+  is '人员类别';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_psndoc
+  is '人员';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_psnjob
+  is '工作记录';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.pk_psnorg
+  is '组织关系主键';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.poststat
+  is '是否在岗';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.psntype
+  is '人员类型';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.recordnum
+  is '记录序号';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.series
+  is '职务类别';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.showorder
+  is '人员顺序号';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.trial_flag
+  is '是否试用';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.trial_type
+  is '试用类型';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.trnsevent
+  is '异动事件';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.trnsreason
+  is '异动原因';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.trnstype
+  is '异动类型';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.ts
+  is '时间戳';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.worktype
+  is '工种';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef1
+  is '办公地点及楼层';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef2
+  is '员工层级';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef3
+  is '是否本部办公';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef4
+  is '是否为市场人员';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef5
+  is '是否为管理人员';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef6
+  is '是否清交完成';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef9
+  is '费用核算部门';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef7
+  is '兼职费用核算部门';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef8
+  is '兼职费用核算部门';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef10
+  is '职务大类';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.jobglbdef11
+  is '清缴完成日期';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NHRS_HI_PSNJOB.etl_timestamp
+  is 'ETL处理时间戳';
+

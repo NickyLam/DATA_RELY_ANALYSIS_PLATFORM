@@ -1,0 +1,20 @@
+﻿create table RRP_MDL.ETL_STATE_BAK_20230501
+(
+  etl_date  CHAR(8),
+  proc_name VARCHAR2(100),
+  end_time  VARCHAR2(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ETL_STATE_BAK_20230501
+  is '过程跑批完成记录表';
+comment on column RRP_MDL.ETL_STATE_BAK_20230501.etl_date
+  is '数据日期';
+comment on column RRP_MDL.ETL_STATE_BAK_20230501.proc_name
+  is '过程名称';
+comment on column RRP_MDL.ETL_STATE_BAK_20230501.end_time
+  is '过程跑批结束时间';
+

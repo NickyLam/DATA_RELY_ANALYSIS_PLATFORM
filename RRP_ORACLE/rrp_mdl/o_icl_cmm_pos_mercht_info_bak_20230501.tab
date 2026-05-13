@@ -1,0 +1,135 @@
+﻿create table RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501
+(
+  etl_dt                   DATE,
+  lp_id                    VARCHAR2(60),
+  mercht_order_id          VARCHAR2(60),
+  mercht_id                VARCHAR2(60),
+  agency_id                VARCHAR2(60),
+  mercht_name              VARCHAR2(100),
+  mercht_fname             VARCHAR2(100),
+  work_addr                VARCHAR2(500),
+  open_acct_bank_name      VARCHAR2(100),
+  open_acct_bank_id        VARCHAR2(60),
+  acct_id                  VARCHAR2(60),
+  acct_name                VARCHAR2(100),
+  acct_type_cd             VARCHAR2(60),
+  cotas_type_cd            VARCHAR2(60),
+  cotas_name               VARCHAR2(100),
+  cont_num                 VARCHAR2(60),
+  cotas_e_mail             VARCHAR2(60),
+  fax_num                  VARCHAR2(60),
+  mercht_belong_rg_cd      VARCHAR2(60),
+  mercht_mcc_code          VARCHAR2(60),
+  mercht_mcc_descb         VARCHAR2(500),
+  oper_co_corp_name        VARCHAR2(100),
+  agency_abbr              VARCHAR2(100),
+  agency_belong_brch_id    VARCHAR2(100),
+  agency_bus_lics_id       VARCHAR2(60),
+  agency_cotas_name        VARCHAR2(100),
+  agency_cotas_addr        VARCHAR2(100),
+  agency_enter_acct_chn_cd VARCHAR2(30),
+  agency_status_cd         VARCHAR2(30),
+  recv_bill_bank_id        VARCHAR2(60),
+  mercht_status_cd         VARCHAR2(30),
+  belong_org_id            VARCHAR2(60),
+  cust_mgr_id              VARCHAR2(100),
+  cust_mgr_name            VARCHAR2(100),
+  flow_bank_apv_flow_id    VARCHAR2(60),
+  flow_bank_apv_rest_cd    VARCHAR2(30),
+  h5_flow_flg              VARCHAR2(30),
+  dic_conc_mercht_flg      VARCHAR2(10),
+  jh_mercht_flg            VARCHAR2(10),
+  mercht_start_use_dt      DATE,
+  job_cd                   VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501
+  is 'POS商户信息';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.mercht_order_id
+  is '商户序列编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.mercht_id
+  is '商户编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.agency_id
+  is '代理商编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.mercht_name
+  is '商户名称';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.mercht_fname
+  is '商户全称';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.work_addr
+  is '办公地址';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.open_acct_bank_name
+  is '开户银行名称';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.open_acct_bank_id
+  is '开户银行编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.acct_type_cd
+  is '账户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.cotas_type_cd
+  is '联系人类型代码';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.cotas_name
+  is '联系人名称';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.cont_num
+  is '联系号码';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.cotas_e_mail
+  is '联系人电子邮箱';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.fax_num
+  is '传真号码';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.mercht_belong_rg_cd
+  is '商户所属区域代码';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.mercht_mcc_code
+  is '商户MCC编码';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.mercht_mcc_descb
+  is '商户MCC描述';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.oper_co_corp_name
+  is '经办合作单位名称';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.agency_abbr
+  is '代理商简称';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.agency_belong_brch_id
+  is '代理商所属分行编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.agency_bus_lics_id
+  is '代理商营业执照编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.agency_cotas_name
+  is '代理商联系人名称';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.agency_cotas_addr
+  is '代理商联系人地址';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.agency_enter_acct_chn_cd
+  is '代理商入账渠道代码';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.agency_status_cd
+  is '代理商状态代码';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.recv_bill_bank_id
+  is '收单银行编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.mercht_status_cd
+  is '商户状态代码';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.cust_mgr_name
+  is '客户经理名称';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.flow_bank_apv_flow_id
+  is '流程银行审批流水编号';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.flow_bank_apv_rest_cd
+  is '流程银行审批结果代码';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.h5_flow_flg
+  is 'H5进件标志';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.dic_conc_mercht_flg
+  is '直连商户标志';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.jh_mercht_flg
+  is '聚合商户标志';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.mercht_start_use_dt
+  is '商户启用日期';
+comment on column RRP_MDL.O_ICL_CMM_POS_MERCHT_INFO_BAK_20230501.job_cd
+  is '任务代码';
+

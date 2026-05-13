@@ -1,0 +1,22 @@
+﻿create table RRP_MDL.CONS_MSG
+(
+  data_dt   VARCHAR2(8),
+  rpt_id    VARCHAR2(5),
+  jglbm     VARCHAR2(4),
+  dqmb      VARCHAR2(7),
+  sjsx      CHAR(1),
+  bz        VARCHAR2(7),
+  dw        CHAR(1),
+  ywsjbz    CHAR(1),
+  szxlx     CHAR(1),
+  jrjgdm    VARCHAR2(20),
+  gjzdm     VARCHAR2(10),
+  index_num VARCHAR2(5),
+  bal       NUMBER(22,6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

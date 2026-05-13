@@ -1,0 +1,35 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_VS_ISSUER_BAK_20230501
+(
+  issuer_id      CHAR(40),
+  status         CHAR(1),
+  issuer_name_zh VARCHAR2(64),
+  issuer_name_en VARCHAR2(64),
+  modify_date    DATE,
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_VS_ISSUER_BAK_20230501
+  is '债券发行人信息';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ISSUER_BAK_20230501.issuer_id
+  is '发行人ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ISSUER_BAK_20230501.status
+  is '状态';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ISSUER_BAK_20230501.issuer_name_zh
+  is '中文名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ISSUER_BAK_20230501.issuer_name_en
+  is '英文名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ISSUER_BAK_20230501.modify_date
+  is '修改日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ISSUER_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ISSUER_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ISSUER_BAK_20230501.id_mark
+  is '增删标志';
+

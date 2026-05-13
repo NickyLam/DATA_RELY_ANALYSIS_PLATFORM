@@ -1,0 +1,84 @@
+﻿create table RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK
+(
+  serialno         VARCHAR2(32) not null,
+  customerid       VARCHAR2(32),
+  relativeserialno VARCHAR2(32),
+  alerttype        VARCHAR2(32),
+  orgid            VARCHAR2(32),
+  inputuserid      VARCHAR2(32),
+  inputorgid       VARCHAR2(32),
+  customername     VARCHAR2(80),
+  customertype     VARCHAR2(32),
+  accountmonth     VARCHAR2(10),
+  updatedate       VARCHAR2(10),
+  confirmstatus    VARCHAR2(18),
+  inputdate        VARCHAR2(18),
+  endstatus        VARCHAR2(32),
+  effectflag       VARCHAR2(32),
+  certid           VARCHAR2(32),
+  certtype         VARCHAR2(32),
+  delstatus        VARCHAR2(10),
+  balance          VARCHAR2(64),
+  start_dt         DATE,
+  end_dt           DATE,
+  id_mark          VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK
+  is '预警信息表';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.customerid
+  is '客户号';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.relativeserialno
+  is '关联流水号';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.alerttype
+  is '警示类型';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.orgid
+  is '机构号';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.customername
+  is '客户名';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.customertype
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.accountmonth
+  is '会计月份';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.confirmstatus
+  is '确认状态';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.endstatus
+  is '结束状态';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.effectflag
+  is '生效标志';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.certid
+  is '股东证件号码';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.certtype
+  is '证件类型';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.delstatus
+  is '处理状态';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.balance
+  is '借据余额';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_WASTEBOOK.id_mark
+  is '增删标志';
+

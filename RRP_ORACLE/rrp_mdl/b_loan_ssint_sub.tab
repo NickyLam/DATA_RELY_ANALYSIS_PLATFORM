@@ -1,0 +1,51 @@
+﻿create table RRP_MDL.B_LOAN_SSINT_SUB
+(
+  data_dt               CHAR(8),
+  lgl_rep_id            VARCHAR2(200),
+  rcpt_id               VARCHAR2(200) not null,
+  cur                   CHAR(3),
+  recv_disc_int_amt     NUMBER(30,2),
+  paid_in_disc_int_amt  NUMBER(30,2),
+  disc_int_loan_typ     VARCHAR2(10),
+  disc_int_loan_biz_typ VARCHAR2(10),
+  dept_line             VARCHAR2(500),
+  data_src              VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_LOAN_SSINT_SUB
+  is '贴息贷款子表';
+comment on column RRP_MDL.B_LOAN_SSINT_SUB.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_LOAN_SSINT_SUB.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_LOAN_SSINT_SUB.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.B_LOAN_SSINT_SUB.cur
+  is '币种';
+comment on column RRP_MDL.B_LOAN_SSINT_SUB.recv_disc_int_amt
+  is '应收贴息金额';
+comment on column RRP_MDL.B_LOAN_SSINT_SUB.paid_in_disc_int_amt
+  is '实收贴息金额';
+comment on column RRP_MDL.B_LOAN_SSINT_SUB.disc_int_loan_typ
+  is '贴息贷款类型';
+comment on column RRP_MDL.B_LOAN_SSINT_SUB.disc_int_loan_biz_typ
+  is '贴息贷款业务类型';
+comment on column RRP_MDL.B_LOAN_SSINT_SUB.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_LOAN_SSINT_SUB.data_src
+  is '数据来源';
+alter table RRP_MDL.B_LOAN_SSINT_SUB
+  add constraint PK_B_LOAN_SSINT_SUB primary key (RCPT_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

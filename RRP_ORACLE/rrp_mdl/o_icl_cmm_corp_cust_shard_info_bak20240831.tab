@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.O_ICL_CMM_CORP_CUST_SHARD_INFO_BAK20240831
+(
+  etl_dt                       DATE,
+  lp_id                        VARCHAR2(60),
+  cust_id                      VARCHAR2(60),
+  shard_cust_id                VARCHAR2(100),
+  shard_name                   VARCHAR2(750),
+  shard_type_cd                VARCHAR2(60),
+  shard_orgnz_type_cd          VARCHAR2(60),
+  shard_local_nation_cd        VARCHAR2(10),
+  shard_orgnz_cd               VARCHAR2(60),
+  shard_bus_lics_id            VARCHAR2(60),
+  contrior_econ_compnt_cd      VARCHAR2(60),
+  nature_ps_shard_cert_type_cd VARCHAR2(20),
+  nature_ps_shard_cert_no      VARCHAR2(90),
+  ghb_shard_flg                VARCHAR2(10),
+  unify_soci_crdt_cd           VARCHAR2(60),
+  share_ratio                  NUMBER(18,6),
+  contri_way_cd                VARCHAR2(10),
+  contri_curr_cd               VARCHAR2(10),
+  contri_amt                   NUMBER(30,2),
+  hold_dt                      DATE,
+  shard_valid_flg              VARCHAR2(10),
+  actl_ctrler_flg              VARCHAR2(10),
+  rela_ps_id                   VARCHAR2(100),
+  contrior_type_cd             VARCHAR2(30),
+  contrior_idti_cate_cd        VARCHAR2(30),
+  job_cd                       VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

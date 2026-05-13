@@ -1,0 +1,123 @@
+﻿create table RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL
+(
+  mqinseq            VARCHAR2(24),
+  cleartype          VARCHAR2(15),
+  cleardate          VARCHAR2(12),
+  seqno              VARCHAR2(15),
+  origcd             VARCHAR2(17),
+  commitdate         VARCHAR2(12),
+  origcdseqno        VARCHAR2(24),
+  openbankno         VARCHAR2(21),
+  sapbankno          VARCHAR2(21),
+  trantype           VARCHAR2(3),
+  payeracctno        VARCHAR2(53),
+  taxiname           VARCHAR2(450),
+  txpycd             VARCHAR2(30),
+  txpyna             VARCHAR2(180),
+  detailno           VARCHAR2(5),
+  itemcd             VARCHAR2(18),
+  itemnm             VARCHAR2(270),
+  recvbankno         VARCHAR2(21),
+  innerpayeracctno   VARCHAR2(53),
+  innerpayeracctname VARCHAR2(450),
+  payeeacctno        VARCHAR2(53),
+  payeeacctname      VARCHAR2(450),
+  amount             NUMBER(18,2),
+  taxname            VARCHAR2(180),
+  pinmuna            VARCHAR2(270),
+  taxdate            VARCHAR2(26),
+  addinfo            VARCHAR2(300),
+  hostnbr            VARCHAR2(60),
+  globalseqno        VARCHAR2(105),
+  inserttime         VARCHAR2(21),
+  magebrn            VARCHAR2(9),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL
+  is '社保费明细表';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.mqinseq
+  is '中台流水号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.cleartype
+  is '清算模式：BXT201 实时，PETS02批量';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.cleardate
+  is 'ETS资金对数日期';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.seqno
+  is '序号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.origcd
+  is '征收机关代码';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.commitdate
+  is '提交日期';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.origcdseqno
+  is '征收机关流水号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.openbankno
+  is '经收处商业银行号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.sapbankno
+  is '经收处清算支付行号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.trantype
+  is '交易类型';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.payeracctno
+  is '付款账号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.taxiname
+  is '纳税人名称';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.txpycd
+  is '纳税人识别号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.txpyna
+  is '附加信息';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.detailno
+  is '扣款明细顺序号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.itemcd
+  is '预算外科目';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.itemnm
+  is '预算外科目名称';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.recvbankno
+  is '代理财政专户银行的支付行号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.innerpayeracctno
+  is '内部付款账号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.innerpayeracctname
+  is '内部付款户名';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.payeeacctno
+  is '财政专户账号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.payeeacctname
+  is '财政专户户名';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.amount
+  is '明细金额';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.taxname
+  is '税种名称';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.pinmuna
+  is '品目名称';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.taxdate
+  is '所属时期';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.addinfo
+  is '密押/附言';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.hostnbr
+  is '核心流水号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.globalseqno
+  is '全局流水号';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.inserttime
+  is '登记时间';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.magebrn
+  is '管理机构';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_MPCS_A49TETSTRANDETAIL.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,41 @@
+﻿create table RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501
+(
+  portfolio_id VARCHAR2(32),
+  acct_no      VARCHAR2(50),
+  ccy          VARCHAR2(50),
+  acct_type    VARCHAR2(50),
+  create_user  VARCHAR2(20),
+  create_dept  VARCHAR2(32),
+  create_time  TIMESTAMP(6),
+  update_user  VARCHAR2(20),
+  update_time  TIMESTAMP(6),
+  etl_dt       DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501
+  is '资金账户';
+comment on column RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501.portfolio_id
+  is '账套代码';
+comment on column RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501.acct_no
+  is '账户账号，存网点账号';
+comment on column RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501.ccy
+  is '币种';
+comment on column RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501.acct_type
+  is '资金账户类型';
+comment on column RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501.create_user
+  is '创建人';
+comment on column RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501.create_dept
+  is '创建部门';
+comment on column RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501.update_user
+  is '更新人';
+comment on column RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_FAMS_PTL_CAPACCT_INFO_BAK_20230501.etl_dt
+  is '数据日期';
+

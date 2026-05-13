@@ -1,0 +1,88 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST
+(
+  i_code        VARCHAR2(45),
+  a_type        VARCHAR2(30),
+  m_type        VARCHAR2(30),
+  beg_date      VARCHAR2(15),
+  end_date      VARCHAR2(15),
+  netprice      NUMBER(10,4),
+  ai            NUMBER(38,4),
+  yield         NUMBER(10,6),
+  term          NUMBER(10,6),
+  modified_d    NUMBER(10,6),
+  convexity     NUMBER(10,6),
+  dvbp          NUMBER(10,6),
+  rd_modified   NUMBER(10,6),
+  rd_convexity  NUMBER(10,6),
+  r_modified    NUMBER(10,6),
+  r_convexity   NUMBER(10,6),
+  fullprice     NUMBER(10,4),
+  is_onedate    NUMBER,
+  imp_date      VARCHAR2(15),
+  pipe_id       NUMBER,
+  rd_yield      NUMBER(12,6),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6),
+  netprice2     NUMBER(10,4)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.beg_date
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.end_date
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.netprice
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.ai
+  is '应计利息';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.yield
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.term
+  is '期限';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.modified_d
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.convexity
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.dvbp
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.rd_modified
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.rd_convexity
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.r_modified
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.r_convexity
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.fullprice
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.is_onedate
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.imp_date
+  is '导入日期';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.pipe_id
+  is '导入管道';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.rd_yield
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.etl_timestamp
+  is 'etl处理时间';
+comment on column RRP_MDL.O_IOL_IBMS_TCB_BOND_EVAL_TEST.netprice2
+  is '起始估值';
+

@@ -1,0 +1,28 @@
+﻿create table RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP04
+(
+  cust_id    VARCHAR2(60),
+  cert_no    VARCHAR2(60),
+  tpzt       VARCHAR2(75),
+  acct_duran VARCHAR2(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP04.cust_id
+  is '客户号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP04.cert_no
+  is '证件号码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP04.tpzt
+  is '脱贫状态';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP04.acct_duran
+  is '扶贫名录期间';
+

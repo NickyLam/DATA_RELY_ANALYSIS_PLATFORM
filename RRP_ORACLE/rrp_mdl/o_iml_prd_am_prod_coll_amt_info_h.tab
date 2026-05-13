@@ -1,0 +1,69 @@
+﻿create table RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H
+(
+  prod_id          VARCHAR2(100),
+  lp_id            VARCHAR2(100),
+  finc_prod_id     VARCHAR2(100),
+  calc_start_dt    DATE,
+  begin_dt         DATE,
+  coll_amt         NUMBER(38,8),
+  td_coll_amt      NUMBER(38,8),
+  prft_type_cd     VARCHAR2(60),
+  creator_name     VARCHAR2(500),
+  create_dept      VARCHAR2(500),
+  init_create_dt   DATE,
+  updater_name     VARCHAR2(500),
+  latest_update_dt DATE,
+  etl_dt           DATE,
+  src_table_name   VARCHAR2(100),
+  job_cd           VARCHAR2(10),
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H
+  is '资管产品募集金额信息历史';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.finc_prod_id
+  is '理财产品编号';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.calc_start_dt
+  is '计算开始日期';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.begin_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.coll_amt
+  is '募集金额';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.td_coll_amt
+  is '当日募集金额';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.prft_type_cd
+  is '收益类型代码';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.creator_name
+  is '创建人名称';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.create_dept
+  is '创建部门';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.init_create_dt
+  is '最初创建日期';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.updater_name
+  is '更新人名称';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.latest_update_dt
+  is '最新更新日期';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_PRD_AM_PROD_COLL_AMT_INFO_H.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,99 @@
+﻿create table RRP_MDL.TMP_A_PHB_G0901_HZF_1
+(
+  bgrq         VARCHAR2(12),
+  hzfs         VARCHAR2(45),
+  hzfwym       VARCHAR2(150),
+  hzjgmc       VARCHAR2(1000),
+  shxydm       VARCHAR2(90),
+  hzjglb       VARCHAR2(45),
+  tgfwlx       VARCHAR2(128),
+  bhczbl       NUMBER(20,4),
+  hzfczbl      NUMBER(20,4),
+  hlwdkytlb    VARCHAR2(128),
+  tjye         NUMBER(20,4),
+  hzffkye      NUMBER(20,4),
+  hlwdkfkye    NUMBER(20,4),
+  bldkye       NUMBER(20,4),
+  bldkl        NUMBER(20,6),
+  yq30tysdkje  NUMBER(20,4),
+  gtczffdkyql  NUMBER(20,6),
+  dkpjll       NUMBER(20,6),
+  zxlb         VARCHAR2(45),
+  zfhzffy      NUMBER(20,4),
+  zfdbzxfy     NUMBER(20,4),
+  bnlxsy       NUMBER(20,4),
+  tjdbfs       VARCHAR2(45),
+  tjye_act     NUMBER(20,6),
+  zwjgbh       VARCHAR2(12),
+  tgfwlx_g0902 VARCHAR2(128),
+  tgfwlx_g0903 VARCHAR2(128)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.TMP_A_PHB_G0901_HZF_1
+  is '互联网合作方小基表临时表1';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.bgrq
+  is '报告日期';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.hzfs
+  is '合作方式';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.hzfwym
+  is '合作方唯一码';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.hzjgmc
+  is '合作机构名称';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.shxydm
+  is '社会信用代码';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.hzjglb
+  is '合作机构类别';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.tgfwlx
+  is '提供服务类型';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.bhczbl
+  is '本行出资比例';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.hzfczbl
+  is '合作方出资比例';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.hlwdkytlb
+  is '互联网贷款用途类别';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.tjye
+  is '统计余额（元）';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.hzffkye
+  is '合作方放款余额（元）';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.hlwdkfkye
+  is '互联网贷款放款余额（元）';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.bldkye
+  is '不良贷款余额（元）';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.bldkl
+  is '不良贷款率（%）';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.yq30tysdkje
+  is '逾期30天以上贷款金额';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.gtczffdkyql
+  is '共同出资发放贷款逾期率（逾期30天以上）（%）';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.dkpjll
+  is '贷款平均利率（%）';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.zxlb
+  is '增信类别';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.zfhzffy
+  is '支付合作方费用（元）';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.zfdbzxfy
+  is '支付担保增信费用（元）';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.bnlxsy
+  is '本年利息收益（元）';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.tjdbfs
+  is '统计担保方式';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.tjye_act
+  is '实际贷款利率收入';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.zwjgbh
+  is '账务机构编号';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.tgfwlx_g0902
+  is '提供服务类型_G0902';
+comment on column RRP_MDL.TMP_A_PHB_G0901_HZF_1.tgfwlx_g0903
+  is '提供服务类型_G0903';
+

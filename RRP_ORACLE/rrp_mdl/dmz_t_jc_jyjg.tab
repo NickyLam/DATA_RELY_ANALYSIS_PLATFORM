@@ -1,0 +1,21 @@
+﻿create table RRP_MDL.DMZ_T_JC_JYJG
+(
+  dmz_res VARCHAR2(2000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.DMZ_T_JC_JYJG
+  is 'DMZ推送文件结果表';
+comment on column RRP_MDL.DMZ_T_JC_JYJG.dmz_res
+  is '校验结果';
+

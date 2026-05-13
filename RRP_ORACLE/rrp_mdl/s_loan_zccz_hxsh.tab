@@ -1,0 +1,33 @@
+﻿create table RRP_MDL.S_LOAN_ZCCZ_HXSH
+(
+  data_dt       VARCHAR2(12),
+  rcpt_id       VARCHAR2(256),
+  year_hxsh_bal NUMBER(38,6),
+  mon_hxsh_bal  NUMBER(38,6),
+  hxsh_dt       VARCHAR2(12)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.S_LOAN_ZCCZ_HXSH
+  is '资产处置核销收回表';
+comment on column RRP_MDL.S_LOAN_ZCCZ_HXSH.data_dt
+  is '数据日期';
+comment on column RRP_MDL.S_LOAN_ZCCZ_HXSH.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.S_LOAN_ZCCZ_HXSH.year_hxsh_bal
+  is '年累计核销收回金额';
+comment on column RRP_MDL.S_LOAN_ZCCZ_HXSH.mon_hxsh_bal
+  is '月累计核销收回金额';
+comment on column RRP_MDL.S_LOAN_ZCCZ_HXSH.hxsh_dt
+  is '核销收回日期';
+

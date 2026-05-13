@@ -1,0 +1,70 @@
+﻿create table RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK
+(
+  sccode              VARCHAR2(48),
+  financingamount     NUMBER(16,2),
+  repaymenttime       VARCHAR2(15),
+  closingamount       NUMBER(16,2),
+  closingtime         VARCHAR2(15),
+  closingstock        VARCHAR2(2),
+  closingprice        NUMBER(16,2),
+  credno              VARCHAR2(60),
+  reportperiod        VARCHAR2(9),
+  reportperiodyear    VARCHAR2(30),
+  reportperiodclosing VARCHAR2(2),
+  enddyear            VARCHAR2(20),
+  guartype            VARCHAR2(14),
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  etl_timestamp       TIMESTAMP(6),
+  isdeal              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK
+  is '上市公司股权';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.sccode
+  is '押品号';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.financingamount
+  is '平仓融资金额';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.repaymenttime
+  is '还款时间';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.closingamount
+  is '平仓押品金额';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.closingtime
+  is '平仓时间';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.closingstock
+  is '是否在报告期内平仓股票        0 否、1 是';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.closingprice
+  is '每股平仓平均价格';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.credno
+  is '借据编号';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.reportperiod
+  is '财报周期';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.reportperiodyear
+  is '报告期起始年份';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.reportperiodclosing
+  is '报告期内是否发生平仓        0 否、1 是';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.guartype
+  is '担保方式 质押 3      信用 0      抵押 2      保证 1';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IOL_MIMS_SI_STOCKSTOCK.isdeal
+  is '是否场内交易';
+

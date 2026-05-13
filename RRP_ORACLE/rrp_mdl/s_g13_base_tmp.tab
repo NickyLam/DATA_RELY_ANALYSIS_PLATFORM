@@ -1,0 +1,54 @@
+﻿create table RRP_MDL.S_G13_BASE_TMP
+(
+  data_dt                 VARCHAR2(8),
+  sccode                  VARCHAR2(100),
+  credno                  VARCHAR2(100),
+  guartype                VARCHAR2(100),
+  loan_bal                NUMBER(20,2),
+  estim_val               NUMBER(20,2),
+  hxb_pa_cfm_val          NUMBER(20,2),
+  loan_net_val            NUMBER(20,2),
+  obank_set_sec_right_amt NUMBER(20,2),
+  distvalue_yp            NUMBER(20,2),
+  confmamt_yp             NUMBER(20,2),
+  firstconfmamt_yp        NUMBER(20,2),
+  distvalue               NUMBER(20,2),
+  confmamt                NUMBER(20,2),
+  firstconfmamt           NUMBER(20,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.S_G13_BASE_TMP.data_dt
+  is '数据日期';
+comment on column RRP_MDL.S_G13_BASE_TMP.sccode
+  is '押品编号';
+comment on column RRP_MDL.S_G13_BASE_TMP.credno
+  is '借据号';
+comment on column RRP_MDL.S_G13_BASE_TMP.guartype
+  is '押品类型';
+comment on column RRP_MDL.S_G13_BASE_TMP.loan_bal
+  is '借据余额';
+comment on column RRP_MDL.S_G13_BASE_TMP.estim_val
+  is '我行确认价值';
+comment on column RRP_MDL.S_G13_BASE_TMP.hxb_pa_cfm_val
+  is '初评我行确认价值';
+comment on column RRP_MDL.S_G13_BASE_TMP.loan_net_val
+  is '贷款净值';
+comment on column RRP_MDL.S_G13_BASE_TMP.obank_set_sec_right_amt
+  is '他行设定担保权金额';
+comment on column RRP_MDL.S_G13_BASE_TMP.distvalue_yp
+  is '贷款分配价值（押品系统）';
+comment on column RRP_MDL.S_G13_BASE_TMP.confmamt_yp
+  is '分配我行确认价值(押品系统)';
+comment on column RRP_MDL.S_G13_BASE_TMP.firstconfmamt_yp
+  is '分配初评我行确认价值(押品系统)';
+comment on column RRP_MDL.S_G13_BASE_TMP.distvalue
+  is '贷款分配价值';
+comment on column RRP_MDL.S_G13_BASE_TMP.confmamt
+  is '分配我行确认价值';
+comment on column RRP_MDL.S_G13_BASE_TMP.firstconfmamt
+  is '分配初评我行确认价值';
+

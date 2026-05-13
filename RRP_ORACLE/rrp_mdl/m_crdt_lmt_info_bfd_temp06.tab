@@ -1,0 +1,63 @@
+﻿create table RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06
+(
+  rcpt_id       VARCHAR2(200),
+  cont_id       VARCHAR2(200),
+  bill_no       VARCHAR2(200),
+  lmt_cont_id   VARCHAR2(200),
+  cust_id       VARCHAR2(200),
+  lmt_cust_id   VARCHAR2(200),
+  org_id        VARCHAR2(200),
+  loan_prod_id  VARCHAR2(200),
+  cur           VARCHAR2(3),
+  loan_amt      NUMBER(30,2),
+  loan_bal      NUMBER(30,2),
+  int_adj       NUMBER(18,4),
+  fair_val_chg  NUMBER(30,2),
+  data_src      VARCHAR2(500),
+  data_src_desc VARCHAR2(750)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06
+  is '授信额度子表-有余额的表内外借据';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.cont_id
+  is '合同号';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.bill_no
+  is '票据号';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.lmt_cont_id
+  is '授信合同号';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.cust_id
+  is '客户号';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.lmt_cust_id
+  is '授信客户号';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.org_id
+  is '机构号';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.loan_prod_id
+  is '产品号';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.cur
+  is '币种';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.loan_amt
+  is '放款金额';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.loan_bal
+  is '贷款余额';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.int_adj
+  is '利息调整';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.fair_val_chg
+  is '公允价值变动';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.data_src
+  is '数据来源';
+comment on column RRP_MDL.M_CRDT_LMT_INFO_BFD_TEMP06.data_src_desc
+  is '数据来源中文';
+

@@ -1,0 +1,171 @@
+﻿create table RRP_MDL.O_IML_AGT_CPES_BILL_INFO
+(
+  vouch_id                   VARCHAR2(60),
+  lp_id                      VARCHAR2(60),
+  bill_id                    VARCHAR2(60),
+  bill_num                   VARCHAR2(90),
+  bill_med_cd                VARCHAR2(10),
+  bill_type_cd               VARCHAR2(10),
+  draw_dt                    DATE,
+  exp_dt                     DATE,
+  fac_val_amt                NUMBER(30,2),
+  drawer_name                VARCHAR2(150),
+  drawer_acct_num            VARCHAR2(90),
+  drawer_soci_crdt_cd        VARCHAR2(60),
+  drawer_open_acct_org_cd    VARCHAR2(60),
+  drawer_open_bank_no        VARCHAR2(90),
+  drawer_open_bank_name      VARCHAR2(750),
+  accptor_name               VARCHAR2(150),
+  accptor_acct_num           VARCHAR2(90),
+  accptor_soci_crdt_cd       VARCHAR2(60),
+  accptor_open_acct_org_cd   VARCHAR2(60),
+  accptor_open_bank_no       VARCHAR2(90),
+  accptor_open_bank_name     VARCHAR2(500),
+  recver_name                VARCHAR2(150),
+  recver_acct_num            VARCHAR2(90),
+  recver_soci_crdt_cd        VARCHAR2(60),
+  recver_open_acct_org_cd    VARCHAR2(60),
+  recver_open_bank_no        VARCHAR2(90),
+  recver_open_bank_name      VARCHAR2(750),
+  pay_bank_org_cd            VARCHAR2(60),
+  pay_bank_no                VARCHAR2(90),
+  pay_cfm_org_cd             VARCHAR2(60),
+  discnt_bk_org_cd           VARCHAR2(60),
+  discnt_guar_org_cd         VARCHAR2(60),
+  invtry_org_cd              VARCHAR2(60),
+  bill_ccution_status_cd     VARCHAR2(10),
+  risk_bill_status_cd        VARCHAR2(10),
+  bill_invtry_status_cd      VARCHAR2(10),
+  bill_status_cd             VARCHAR2(10),
+  init_ccution_status_cd     VARCHAR2(10),
+  init_risk_bill_status_cd   VARCHAR2(10),
+  init_bill_status_cd        VARCHAR2(10),
+  init_bill_invtry_status_cd VARCHAR2(10),
+  discnt_dt                  DATE,
+  bill_sub_intrv_id          VARCHAR2(60),
+  bill_intrv_std_amt         NUMBER(30,2),
+  start_dt                   DATE,
+  end_dt                     DATE,
+  id_mark                    VARCHAR2(10),
+  src_table_name             VARCHAR2(100),
+  job_cd                     VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6),
+  payoff_dt                  DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_CPES_BILL_INFO
+  is '票交所票据信息';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.vouch_id
+  is '凭证编号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.bill_id
+  is '票据编号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.bill_num
+  is '票据号码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.bill_med_cd
+  is '票据介质代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.bill_type_cd
+  is '票据类型代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.draw_dt
+  is '出票日期';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.fac_val_amt
+  is '票面金额';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.drawer_name
+  is '出票人名称';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.drawer_acct_num
+  is '出票人账号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.drawer_soci_crdt_cd
+  is '出票人社会信用代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.drawer_open_acct_org_cd
+  is '出票人开户机构代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.drawer_open_bank_no
+  is '出票人开户行行号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.drawer_open_bank_name
+  is '出票人开户行名称';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.accptor_name
+  is '承兑人名称';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.accptor_acct_num
+  is '承兑人账号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.accptor_soci_crdt_cd
+  is '承兑人社会信用代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.accptor_open_acct_org_cd
+  is '承兑人开户机构代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.accptor_open_bank_no
+  is '承兑人开户行行号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.accptor_open_bank_name
+  is '承兑人开户行名称';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.recver_name
+  is '收款人名称';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.recver_acct_num
+  is '收款人账号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.recver_soci_crdt_cd
+  is '收款人社会信用代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.recver_open_acct_org_cd
+  is '收款人开户机构代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.recver_open_bank_no
+  is '收款人开户行行号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.recver_open_bank_name
+  is '收款人开户行名称';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.pay_bank_org_cd
+  is '付款行机构代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.pay_bank_no
+  is '付款行行号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.pay_cfm_org_cd
+  is '付款确认机构代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.discnt_bk_org_cd
+  is '贴现行机构代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.discnt_guar_org_cd
+  is '贴现保证机构代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.invtry_org_cd
+  is '库存机构代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.bill_ccution_status_cd
+  is '票据流转状态代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.risk_bill_status_cd
+  is '风险票据状态代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.bill_invtry_status_cd
+  is '票据库存状态代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.bill_status_cd
+  is '票据状态代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.init_ccution_status_cd
+  is '原流转状态代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.init_risk_bill_status_cd
+  is '原风险票据状态代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.init_bill_status_cd
+  is '原票据状态代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.init_bill_invtry_status_cd
+  is '原票据库存状态代码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.discnt_dt
+  is '贴现日期';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.bill_sub_intrv_id
+  is '票据子区间编号';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.bill_intrv_std_amt
+  is '票据区间标准金额';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IML_AGT_CPES_BILL_INFO.payoff_dt
+  is '结清日期';
+

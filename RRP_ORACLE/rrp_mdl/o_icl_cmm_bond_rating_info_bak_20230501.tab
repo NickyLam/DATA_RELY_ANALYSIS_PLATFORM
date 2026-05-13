@@ -1,0 +1,66 @@
+﻿create table RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501
+(
+  etl_dt              DATE,
+  lp_id               VARCHAR2(60),
+  bond_id             VARCHAR2(60),
+  asset_type_id       VARCHAR2(60),
+  bond_market_type_cd VARCHAR2(10),
+  rating_corp_id      VARCHAR2(60),
+  rating_corp_cn_name VARCHAR2(500),
+  rating_corp_en_name VARCHAR2(250),
+  bond_name           VARCHAR2(500),
+  bond_abbr           VARCHAR2(250),
+  bond_type_cd        VARCHAR2(10),
+  bond_cls_name       VARCHAR2(100),
+  issuer_name         VARCHAR2(250),
+  rating_rest_cd      VARCHAR2(10),
+  rating_type_cd      VARCHAR2(10),
+  rating_dt           DATE,
+  job_cd              VARCHAR2(10),
+  etl_timestamp       TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501
+  is '债券评级信息';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.bond_id
+  is '债券编号';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.asset_type_id
+  is '资产类型编号';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.bond_market_type_cd
+  is '债券市场类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.rating_corp_id
+  is '评级公司编号';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.rating_corp_cn_name
+  is '评级公司中文名称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.rating_corp_en_name
+  is '评级公司英文名称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.bond_name
+  is '债券名称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.bond_abbr
+  is '债券简称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.bond_type_cd
+  is '债券类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.bond_cls_name
+  is '债券分类名称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.issuer_name
+  is '发行人名称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.rating_rest_cd
+  is '评级结果代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.rating_type_cd
+  is '评级类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.rating_dt
+  is '评级日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_RATING_INFO_BAK_20230501.etl_timestamp
+  is '数据处理时间';
+

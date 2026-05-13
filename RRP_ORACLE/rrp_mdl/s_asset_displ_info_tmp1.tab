@@ -1,0 +1,24 @@
+﻿create table RRP_MDL.S_ASSET_DISPL_INFO_TMP1
+(
+  dubil_id VARCHAR2(200),
+  adj_dt   CHAR(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.S_ASSET_DISPL_INFO_TMP1
+  is '资产清收处置-加工首次下调至不良时间';
+comment on column RRP_MDL.S_ASSET_DISPL_INFO_TMP1.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.S_ASSET_DISPL_INFO_TMP1.adj_dt
+  is '调整日期';
+

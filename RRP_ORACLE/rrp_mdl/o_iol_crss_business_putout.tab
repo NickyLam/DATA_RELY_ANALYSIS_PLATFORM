@@ -1,0 +1,993 @@
+﻿create table RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT
+(
+  serialno                VARCHAR2(32),
+  customerid              VARCHAR2(32),
+  customername            VARCHAR2(80),
+  businesstype            VARCHAR2(18),
+  businesscurrency        VARCHAR2(18),
+  businesssum             NUMBER(24,6),
+  termyear                NUMBER,
+  termmonth               NUMBER,
+  termday                 NUMBER,
+  putoutdate              VARCHAR2(10),
+  maturity                VARCHAR2(10),
+  businessrate            NUMBER(10,6),
+  ictype                  VARCHAR2(18),
+  iccyc                   VARCHAR2(18),
+  paycyc                  VARCHAR2(18),
+  corpuspaymethod         VARCHAR2(18),
+  subjectno               VARCHAR2(20),
+  dealbegintime           VARCHAR2(20),
+  dealendtime             VARCHAR2(20),
+  dealflag                VARCHAR2(1),
+  operateorgid            VARCHAR2(32),
+  operateuserid           VARCHAR2(32),
+  operatedate             VARCHAR2(10),
+  inputorgid              VARCHAR2(32),
+  inputuserid             VARCHAR2(32),
+  inputdate               VARCHAR2(10),
+  updatedate              VARCHAR2(10),
+  pigeonholedate          VARCHAR2(10),
+  remark                  VARCHAR2(200),
+  occurdate               VARCHAR2(10),
+  baseratetype            VARCHAR2(18),
+  baserate                NUMBER(24,6),
+  ratefloattype           VARCHAR2(18),
+  ratefloat               NUMBER(24,6),
+  contractserialno        VARCHAR2(32),
+  duebillserialno         VARCHAR2(40),
+  artificialno            VARCHAR2(64),
+  relativeaccountno       VARCHAR2(32),
+  accountno               VARCHAR2(40),
+  loanaccountno           VARCHAR2(32),
+  loantype                VARCHAR2(18),
+  creditlineflag          VARCHAR2(18),
+  creditaggreement        VARCHAR2(32),
+  contractsum             NUMBER(24,6),
+  purpose                 VARCHAR2(200),
+  adjustratetype          VARCHAR2(18),
+  fixcyc                  NUMBER,
+  backrate                NUMBER(10,6),
+  acceptinttype           VARCHAR2(18),
+  preinttype              VARCHAR2(18),
+  resumeinttype           VARCHAR2(18),
+  secondpayaccount        VARCHAR2(32),
+  overinttype             VARCHAR2(18),
+  rateadjustcyc           VARCHAR2(18),
+  guarantyno              VARCHAR2(32),
+  riskrate                NUMBER(24,6),
+  consignaccountno        VARCHAR2(32),
+  mostlyduebillno         VARCHAR2(32),
+  negotiateno             VARCHAR2(32),
+  creditkind              VARCHAR2(18),
+  pdgsum                  NUMBER(24,6),
+  pdgaccountno            VARCHAR2(32),
+  pdgpaymethod            VARCHAR2(18),
+  businesssubtype         VARCHAR2(18),
+  businesssubtype1        VARCHAR2(18),
+  exchangetype            VARCHAR2(18),
+  exchangestate           VARCHAR2(18),
+  exchangeserialno        VARCHAR2(32),
+  adjustrateterm          VARCHAR2(18),
+  projectno               VARCHAR2(32),
+  fzaccountno             VARCHAR2(32),
+  fzanbalance             NUMBER(24,6),
+  ccode                   VARCHAR2(32),
+  cdate                   VARCHAR2(10),
+  fzguabalance            NUMBER(24,6),
+  pztype                  VARCHAR2(18),
+  billno                  VARCHAR2(32),
+  gatheringname           VARCHAR2(80),
+  aboutbankname           VARCHAR2(80),
+  interserialno           VARCHAR2(32),
+  billresource            VARCHAR2(18),
+  bailaccount             VARCHAR2(40),
+  aboutbankid             VARCHAR2(32),
+  billsum                 NUMBER(24,6),
+  ratetype                VARCHAR2(18),
+  billrisk                NUMBER,
+  openbankname            VARCHAR2(80),
+  openbankadd             VARCHAR2(80),
+  openbankzip             VARCHAR2(18),
+  type1                   VARCHAR2(18),
+  type2                   VARCHAR2(18),
+  type3                   VARCHAR2(18),
+  type4                   VARCHAR2(18),
+  type5                   VARCHAR2(18),
+  type6                   VARCHAR2(18),
+  type7                   VARCHAR2(18),
+  aboutbankid2            VARCHAR2(32),
+  aboutbankname2          VARCHAR2(80),
+  aboutbankid3            VARCHAR2(32),
+  name1                   VARCHAR2(80),
+  address1                VARCHAR2(80),
+  name2                   VARCHAR2(80),
+  address2                VARCHAR2(80),
+  zip2                    VARCHAR2(32),
+  address3                VARCHAR2(80),
+  term1                   VARCHAR2(18),
+  term2                   VARCHAR2(18),
+  term3                   VARCHAR2(18),
+  vouchtype               VARCHAR2(18),
+  bailcurrency            VARCHAR2(18),
+  bailratio               NUMBER(24,6),
+  mfeepaymethod           VARCHAR2(18),
+  securitiestype          VARCHAR2(18),
+  type8                   VARCHAR2(200),
+  type9                   VARCHAR2(200),
+  thirdpartyaccounts      VARCHAR2(32),
+  thirdpartyid1           VARCHAR2(32),
+  ccyc                    VARCHAR2(18),
+  loanterm                VARCHAR2(18),
+  relativeputoutno        VARCHAR2(32),
+  printtimes              NUMBER,
+  tempsaveflag            VARCHAR2(18),
+  paymentmode             VARCHAR2(20),
+  greenchannelflag        VARCHAR2(1),
+  lowrisk                 VARCHAR2(18),
+  iswritecont             VARCHAR2(1),
+  putoutorgid             VARCHAR2(32),
+  principalaccountno      VARCHAR2(40),
+  clientaccountno         VARCHAR2(40),
+  lendingorgid            VARCHAR2(80),
+  capitalreturnflag       VARCHAR2(1),
+  interestreturnflag      VARCHAR2(1),
+  rategenre               VARCHAR2(5),
+  installmentsmenthod     VARCHAR2(5),
+  overduefloat            NUMBER(6,2),
+  overduerate             NUMBER(11,7),
+  period                  NUMBER(10),
+  commitmentflag          VARCHAR2(1),
+  commitmenttype          VARCHAR2(1),
+  principalsubaccountno   VARCHAR2(5),
+  paymenttype             VARCHAR2(1),
+  compoundintflag         VARCHAR2(1),
+  termtype                VARCHAR2(5),
+  pdgpaypercent           NUMBER(6,2),
+  corpuspaydate           VARCHAR2(10),
+  purposetype             VARCHAR2(2),
+  repaymentplanflag       VARCHAR2(1),
+  stopintflag             VARCHAR2(1),
+  commissionpaysum        NUMBER(18,2),
+  loancommitmentno        VARCHAR2(30),
+  approveorgid            VARCHAR2(32),
+  approveuserid           VARCHAR2(32),
+  approvedate             VARCHAR2(10),
+  corpuspaymenthod        VARCHAR2(18),
+  receiversubaccountno    VARCHAR2(5),
+  receiveraccountno       VARCHAR2(40),
+  dischargesflag          VARCHAR2(1),
+  dischargesaccountno     VARCHAR2(40),
+  dischargespercent       NUMBER(10,2),
+  dischargesdate          VARCHAR2(10),
+  exchangetime            VARCHAR2(20),
+  bailsubaccount          VARCHAR2(5),
+  bailsum                 NUMBER(18,2),
+  assureorgid             VARCHAR2(6),
+  direction               VARCHAR2(18),
+  bailterm                VARCHAR2(3),
+  bailexchangestate       VARCHAR2(2),
+  repayexchangestate      VARCHAR2(2),
+  queryabnormitything     VARCHAR2(2),
+  abnormitything          VARCHAR2(1000),
+  loantermthing           VARCHAR2(2),
+  fbsnumber               VARCHAR2(40),
+  invoicenumber           VARCHAR2(40),
+  sfgksx                  VARCHAR2(2),
+  gksxpz                  VARCHAR2(2),
+  sfzfsx                  VARCHAR2(2),
+  zfsxlx                  VARCHAR2(2),
+  sfgjxzhy                VARCHAR2(2),
+  gshy                    VARCHAR2(2),
+  dktx                    VARCHAR2(2),
+  commercetype            VARCHAR2(3),
+  paymode                 VARCHAR2(10),
+  zfsxfs                  VARCHAR2(2),
+  paymodedesc             VARCHAR2(2000),
+  isfinanceguarantee      VARCHAR2(1),
+  accountnoorgname        VARCHAR2(80),
+  accountnocustomer       VARCHAR2(80),
+  loanaccountnocustomer   VARCHAR2(80),
+  loanaccountnoorgname    VARCHAR2(80),
+  operationtype           VARCHAR2(2),
+  paysum                  NUMBER(24,6),
+  manualpay               NUMBER(24,6),
+  keyno                   VARCHAR2(40),
+  billclass               VARCHAR2(16),
+  billtype                VARCHAR2(16),
+  careflag                VARCHAR2(1),
+  repurchaseflag          VARCHAR2(1),
+  discountsum             NUMBER(24,6),
+  billbusinesstype        VARCHAR2(10),
+  putoutno                VARCHAR2(40),
+  batchno                 VARCHAR2(40),
+  addcertificateflag      VARCHAR2(1),
+  waitecertificateflag    VARCHAR2(1),
+  otherdraweracctno       VARCHAR2(40),
+  othertxbalance          NUMBER(24,6),
+  czflag                  VARCHAR2(1),
+  lcsum                   NUMBER(24,6),
+  carbrand                VARCHAR2(100),
+  cartype                 VARCHAR2(100),
+  carnumber               VARCHAR2(100),
+  chariotnumber           VARCHAR2(100),
+  motornumber             VARCHAR2(100),
+  acptdate                VARCHAR2(10),
+  interestmethod          VARCHAR2(10),
+  interestrate            NUMBER(24,6),
+  bailmaturity            VARCHAR2(10),
+  receivername            VARCHAR2(80),
+  isfromebank             VARCHAR2(1),
+  orginalduebill          VARCHAR2(40),
+  loankind                VARCHAR2(1),
+  tradeserialno1          VARCHAR2(40),
+  tradeserialno2          VARCHAR2(40),
+  tradecurrecy1           VARCHAR2(18),
+  tradecurrecy2           VARCHAR2(18),
+  tradecurrecy3           VARCHAR2(18),
+  tradesum1               NUMBER(24,6),
+  tradesum2               NUMBER(24,6),
+  tradesum3               NUMBER(24,6),
+  tradedate1              VARCHAR2(20),
+  tradedate2              VARCHAR2(20),
+  tradetermmonth1         NUMBER,
+  tradetermmonth2         NUMBER,
+  tradetermmonth3         NUMBER,
+  traderate1              NUMBER(10,6),
+  traderate2              NUMBER(10,6),
+  tradetype1              VARCHAR2(18),
+  bfintg                  VARCHAR2(1),
+  paybankname             VARCHAR2(100),
+  isinuse                 VARCHAR2(1),
+  bailtransaccount        VARCHAR2(40),
+  daynum                  NUMBER,
+  lncmam                  NUMBER(24,6),
+  ovdrmi                  NUMBER(24,6),
+  loanam                  NUMBER(24,6),
+  accountno1              VARCHAR2(40),
+  oblopt                  VARCHAR2(1),
+  bengdt                  VARCHAR2(1),
+  lontyp                  VARCHAR2(1),
+  odrputoutdate           VARCHAR2(10),
+  odrmaturity             VARCHAR2(10),
+  whitelist               VARCHAR2(3000),
+  putoutcontrol           VARCHAR2(1),
+  txregister              VARCHAR2(2),
+  loantermcontrolflag     VARCHAR2(1),
+  acceptor                VARCHAR2(180),
+  acceptorbankno          VARCHAR2(12),
+  acceptorbankname        VARCHAR2(180),
+  fxfltp                  VARCHAR2(1),
+  pdrifd                  VARCHAR2(3),
+  pdrifm                  VARCHAR2(1),
+  pdrifv                  NUMBER(11,7),
+  jxhjduebillno           VARCHAR2(40),
+  odrnextmonth            VARCHAR2(1),
+  odrfreeinterest         NUMBER,
+  amorfg                  VARCHAR2(1),
+  trantp                  VARCHAR2(2),
+  amorsq                  VARCHAR2(40),
+  exchangedate            VARCHAR2(10),
+  exchangeno              VARCHAR2(32),
+  isrz                    VARCHAR2(2),
+  financier               VARCHAR2(32),
+  hxtycapitalsource       VARCHAR2(4),
+  adjustratedate          NUMBER(10),
+  countbasis              VARCHAR2(20),
+  bigcreditbankid         VARCHAR2(100),
+  principalaccountname    VARCHAR2(40),
+  principalbankname       VARCHAR2(40),
+  accountindir            VARCHAR2(180),
+  ret_msg                 VARCHAR2(2000),
+  clearingtype            VARCHAR2(10),
+  ishxbank                VARCHAR2(2),
+  hxtypurpose             VARCHAR2(2000),
+  remart                  VARCHAR2(100),
+  isonline                VARCHAR2(10),
+  lnbal                   NUMBER(18,2),
+  instrt                  NUMBER(11,7),
+  unpaidbankname          VARCHAR2(200),
+  acceptancebank          VARCHAR2(200),
+  confirmingbank          VARCHAR2(200),
+  accountorgid            VARCHAR2(32),
+  sealsealno              VARCHAR2(4000),
+  isbelongterm            VARCHAR2(3),
+  poolfinancingflag       VARCHAR2(1),
+  adrist                  VARCHAR2(1),
+  directionrs             VARCHAR2(18),
+  directionnew            VARCHAR2(18),
+  billdiscounttype        VARCHAR2(1),
+  draweracctno            VARCHAR2(40),
+  drawerbankno            VARCHAR2(40),
+  draweracctname          VARCHAR2(40),
+  lprtype                 VARCHAR2(10),
+  zfserialno              VARCHAR2(40),
+  zfdate                  VARCHAR2(10),
+  zfjyserialno            VARCHAR2(40),
+  chargename              VARCHAR2(40),
+  chargepost              VARCHAR2(100),
+  chaggeaddress           VARCHAR2(200),
+  chargephone             VARCHAR2(40),
+  chargefax               VARCHAR2(40),
+  linkname                VARCHAR2(10),
+  linkphone               VARCHAR2(40),
+  linkemail               VARCHAR2(40),
+  textno                  VARCHAR2(40),
+  oaflowno                VARCHAR2(30),
+  oaflowstate             VARCHAR2(30),
+  isdiscountflag          VARCHAR2(10),
+  isfarming               VARCHAR2(2),
+  farmingloantype         VARCHAR2(18),
+  farmingloanuse          VARCHAR2(18),
+  platformpaycashsource   VARCHAR2(18),
+  iscareerguaranteeloan   VARCHAR2(2),
+  careerguaranteeloantype VARCHAR2(18),
+  start_dt                DATE,
+  end_dt                  DATE,
+  id_mark                 VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT
+  is '业务出帐通知单';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.serialno
+  is '额度编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.customerid
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.customername
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.businesstype
+  is '转出业务类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.businesscurrency
+  is '币种(代码：Currency)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.businesssum
+  is '借据金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.termyear
+  is '期限年';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.termmonth
+  is '期限月';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.termday
+  is '贷款期限（天）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.putoutdate
+  is '发放日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.maturity
+  is '到期日期(格式：YYYY/MM/DD)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.businessrate
+  is '贷款利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.ictype
+  is '收费方式(代码：CHARGETYPE)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.iccyc
+  is '计息周期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.paycyc
+  is '付费币种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.corpuspaymethod
+  is '本金还款方式(代码：CorpusPayMeth)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.subjectno
+  is '科目号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.dealbegintime
+  is '删除开始时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.dealendtime
+  is '删除结束时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.dealflag
+  is '(DEL)处理标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.operateorgid
+  is '账务机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.operateuserid
+  is '操作人用户编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.operatedate
+  is '经办时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.inputuserid
+  is '登记人ID';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.updatedate
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.pigeonholedate
+  is '归案日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.remark
+  is '描述';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.occurdate
+  is '发生日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.baseratetype
+  is '基准利率种类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.baserate
+  is '(Del)基准利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.ratefloattype
+  is '利率浮动类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.ratefloat
+  is '浮动幅度';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.contractserialno
+  is '关联合同编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.duebillserialno
+  is '借据流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.artificialno
+  is '中文合同编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.relativeaccountno
+  is '原帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.accountno
+  is '账户';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.loanaccountno
+  is '贷款入帐帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.loantype
+  is '贷款类型（STD_KD_LOAN_TYPE）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.creditlineflag
+  is '额度条线标识';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.creditaggreement
+  is '额度合同号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.contractsum
+  is '合同金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.purpose
+  is '用途： Y 银行端 W 网银端';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.adjustratetype
+  is '利率调整方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.fixcyc
+  is '固定周期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.backrate
+  is '违约年利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.acceptinttype
+  is '贴现利息承担方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.preinttype
+  is '预收息标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.resumeinttype
+  is '计复息标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.secondpayaccount
+  is '第二还款账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.overinttype
+  is '逾期计息方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.rateadjustcyc
+  is '利率调整周期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.guarantyno
+  is '关联担保号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.riskrate
+  is '综合风险度';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.consignaccountno
+  is '委托单位帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.mostlyduebillno
+  is '最相关借据号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.negotiateno
+  is '协商协议编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.creditkind
+  is '贷款形式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.pdgsum
+  is '手续费金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.pdgaccountno
+  is '手续费支出帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.pdgpaymethod
+  is '手续费收取方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.businesssubtype
+  is '业务品种子类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.businesssubtype1
+  is '保函类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.exchangetype
+  is '出帐交易代码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.exchangestate
+  is '交易状态代码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.exchangeserialno
+  is '交易流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.adjustrateterm
+  is '利率调整日月数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.projectno
+  is '项目';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.fzaccountno
+  is '发展商帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.fzanbalance
+  is '保证费年费率(‰)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.ccode
+  is 'C编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.cdate
+  is '估值日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.fzguabalance
+  is '发展商保证金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.pztype
+  is '凭证种类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.billno
+  is '填单批次号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.gatheringname
+  is '贷款类型名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.aboutbankname
+  is '收款行行名';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.interserialno
+  is '承兑汇票组内序号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.billresource
+  is '票据来源';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bailaccount
+  is '保证金账户编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.aboutbankid
+  is '收款账户账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.billsum
+  is '贴现票据金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.ratetype
+  is '评级类型（1.外部机构评级、2.监管评级/分类 评级）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.billrisk
+  is '买方付息比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.openbankname
+  is '开证行行名/信用证下出口押汇出口信用证开证行';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.openbankadd
+  is '开证行地址';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.openbankzip
+  is '开证行邮编';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.type1
+  is '通知行类别';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.type2
+  is '受益行类别';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.type3
+  is '议付行类别';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.type4
+  is '分批装运';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.type5
+  is '转运';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.type6
+  is '发送方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.type7
+  is '费用承担人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.aboutbankid2
+  is '受益行行号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.aboutbankname2
+  is '保函受益人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.aboutbankid3
+  is '议付行行号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.name1
+  is '备用字段1';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.address1
+  is '开证申请人地址';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.name2
+  is '科目名称2';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.address2
+  is '联系地址2';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.zip2
+  is '受益人邮编';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.address3
+  is '信用证有效地';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.term1
+  is '最晚装运期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.term2
+  is '交单期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.term3
+  is '期限3';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.vouchtype
+  is '担保种类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bailcurrency
+  is '保证金币种(代码：Currency)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bailratio
+  is '保证金比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.mfeepaymethod
+  is '管理费支付方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.securitiestype
+  is '(NEW)有价证券类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.type8
+  is '装运地';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.type9
+  is '货物运输目的地';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.thirdpartyaccounts
+  is '提单号码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.thirdpartyid1
+  is '(NEW)第三方法人代码1';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.ccyc
+  is 'C币种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.loanterm
+  is '总期数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.relativeputoutno
+  is '承兑父记录流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.printtimes
+  is '打印时间戳';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tempsaveflag
+  is '暂存标识(0-保存,1-暂存)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.paymentmode
+  is '支付方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.greenchannelflag
+  is '绿色标识';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.lowrisk
+  is '是否低风险业务(1：有2：无)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.iswritecont
+  is '是否签署授信合同';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.putoutorgid
+  is '出账日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.principalaccountno
+  is '委托存款账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.clientaccountno
+  is '委托人存款账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.lendingorgid
+  is '贷款机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.capitalreturnflag
+  is '本金自动归还标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.interestreturnflag
+  is '利息自动归还标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.rategenre
+  is '利率重定价';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.installmentsmenthod
+  is '分期贷款还款方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.overduefloat
+  is '逾期贷款利率浮动比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.overduerate
+  is '逾期贷款执行利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.period
+  is '分期贷款总期数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.commitmentflag
+  is '贷款承诺标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.commitmenttype
+  is '承诺类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.principalsubaccountno
+  is '委托存款子户号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.paymenttype
+  is '款项使用类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.compoundintflag
+  is '是否收复息标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.termtype
+  is '期限';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.pdgpaypercent
+  is '委托贷款手续费收取比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.corpuspaydate
+  is '按揭还款日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.purposetype
+  is '用途';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.repaymentplanflag
+  is '信贷发放还款计划标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.stopintflag
+  is '是否停息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.commissionpaysum
+  is '委托支付金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.loancommitmentno
+  is '贷款承诺协议号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.approveorgid
+  is '复核机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.approveuserid
+  is '复核人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.approvedate
+  is '复核日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.corpuspaymenthod
+  is '还款方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.receiversubaccountno
+  is '收款人子户号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.receiveraccountno
+  is '收款人账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.dischargesflag
+  is '贴息标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.dischargesaccountno
+  is '贴息人存款账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.dischargespercent
+  is '贴息比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.dischargesdate
+  is '贴息到期日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.exchangetime
+  is '交易时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bailsubaccount
+  is '保证金子户号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bailsum
+  is '保证金金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.assureorgid
+  is '担保机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.direction
+  is '投向(代码：ndustryType)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bailterm
+  is '保证金存期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bailexchangestate
+  is '保证金交易状态';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.repayexchangestate
+  is '还款计划交易状态';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.queryabnormitything
+  is '贷款卡当日查询是否有异常情况';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.abnormitything
+  is '贷款卡异常情况说明';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.loantermthing
+  is '放款条件是否落实';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.fbsnumber
+  is '国结系统编号（BP/AD/OC…)//进口押汇信用证号、进口代收押汇进口代收业务编号、信用证下出口押汇信用证通知号、打包放款信用证通知号、出口托收押汇出口托收业务编号、福费廷出口信用证通知号、短期出口信用保险项下押汇业务出口业务编号、国际贸易融资项下同业代付代付业务编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.invoicenumber
+  is '发票号码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.sfgksx
+  is '是否国开行授信';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.gksxpz
+  is '国开授信品种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.sfzfsx
+  is '是否政府授信';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.zfsxlx
+  is '政府授信类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.sfgjxzhy
+  is '是否国家限制行业';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.gshy
+  is '过剩行业';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.dktx
+  is '重点贷款投向';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.commercetype
+  is '贸易融资类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.paymode
+  is '保函支付方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.zfsxfs
+  is '政府授信支持方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.paymodedesc
+  is '支付方式说明';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.isfinanceguarantee
+  is '是否融资性保函';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.accountnoorgname
+  is '账号开户行名';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.accountnocustomer
+  is '账号客户名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.loanaccountnocustomer
+  is '贷款帐号客户名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.loanaccountnoorgname
+  is '贷款帐号开户行名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.operationtype
+  is '数据操作类型:01-新增02-编辑';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.paysum
+  is '手续费';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.manualpay
+  is '工本费';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.keyno
+  is '单笔票据唯一标示';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.billclass
+  is '票据性质';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.billtype
+  is '票据类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.careflag
+  is '是否代保管';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.repurchaseflag
+  is '是否回购（赎回）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.discountsum
+  is '贴现利息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.billbusinesstype
+  is '业务种类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.putoutno
+  is '出账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.batchno
+  is '批量新增借据合同关键字段';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.addcertificateflag
+  is '后补房产抵押权证';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.waitecertificateflag
+  is '是否等待抵质押物补齐标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.otherdraweracctno
+  is '第三方付息账户';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.othertxbalance
+  is '第三方付息金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.czflag
+  is '冲账标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.lcsum
+  is '信用证金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.carbrand
+  is '所购汽车品牌';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.cartype
+  is '所购汽车型号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.carnumber
+  is '车牌号码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.chariotnumber
+  is '车架号码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.motornumber
+  is '发动机号码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.acptdate
+  is '出票日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.interestmethod
+  is '计息方法';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.interestrate
+  is '协议利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bailmaturity
+  is '保证金到期日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.receivername
+  is '收款人名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.isfromebank
+  is '是否网银放款（1为是2等其他为否）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.orginalduebill
+  is '续贷业务对应的原借据';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.loankind
+  is '贷款种类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradeserialno1
+  is '国际贸易融资业务相关编号(信用证项下出口押汇出口信用证号（开证行信用证编号）、打包放款信用证号、进口T/T融资进口T/T业务编号、出口T/T融资出口T/T业务编号、福费廷出口信用证号)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradeserialno2
+  is '国际贸易融资业务相关编号(进口押汇来单号、信用证下出口押汇出口信用证寄单号、打包放款出口信用证寄单号、福费廷出口寄单编号、)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradecurrecy1
+  is '国际贸易融资业务相关币种（进口押汇来单币种、进口代收押汇来单币种、进口T/T押汇汇款币种、信用证下出口押汇索汇币种、打包放款信用证币种、出口托收押汇托收币种、福费廷索汇币种、）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradecurrecy2
+  is '国际贸易融资业务相关币种（进口代收押汇押汇币种、进口T/T押汇融资币种、出口T/T押汇融资币种、信用证下出口押汇押汇币种、打包放款融资币种、出口托收押汇押汇币种、福费廷承兑币种、出口退税帐户托管融资业务融资币种、国际贸易融资项下同业代付代付币种）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradecurrecy3
+  is '国际贸易融资业务相关币种（出口T/T押汇发票币种、福费廷贴现币种、出口退税帐户托管融资业务应退未退金额币种、国际贸易融资项下同业代付汇票币种（来单或发票币种））';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradesum1
+  is '国际贸易融资业务相关金额（进口押汇来单金额（待付款金额、汇票金额）、进口代收押汇单据金额（待付款金额）、进口T/T押汇汇款金额、信用证下出口押汇索汇金额、打包放款信用证金额、出口托收押汇托收金额、福费廷索汇金额、短期出口信用保险项下押汇业务押汇金额、）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradesum2
+  is '国际贸易融资业务相关金额（进口代收押汇押汇金额、进口T/T押汇融资金额、出口T/T押汇融资金额、信用证下出口押汇押汇金额、打包放款融资金额、出口托收押汇押汇金额、福费廷承兑金额、出口退税帐户托管融资业务融资金额、短期出口信用保险项下押汇业务出运货物申报金额、国际贸易融资项下同业代付代付金额、）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradesum3
+  is '国际贸易融资业务相关金额（出口T/T押汇发票金额、福费廷贴现金额、出口退税帐户托管融资业务应退未退金额、短期出口信用保险项下押汇业务信用限额余额、国际贸易融资项下同业代付汇票金额（来单或发票金额））';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradedate1
+  is '国际贸易融资业务相关日期（进口押汇来单付款日、信用证下出口押汇信用证付款日、出口托收押汇D/A到期付款日（如果托收类型选择D/A）、福费廷信用证到期付款日、国际贸易融资项下同业代付代付起息日、）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradedate2
+  is '国际贸易融资业务相关日期（信用证下出口押汇远期信用证到期付款日、福费廷远期信用证到期付款日、）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradetermmonth1
+  is '国际贸易融资业务相关期限（进口押汇信用证付款期限、进口代收押汇D/A代收期限（如果托收类型选择D/A）、进口T/T押汇融资期限、出口T/T押汇融资期限、打包放款信用证期限、福费廷贴现天数、短期出口信用保险项下押汇业务押汇期限、）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradetermmonth2
+  is '国际贸易融资业务相关期限（进口押汇押汇期限、进口代收押汇押汇期限、出口T/T押汇出口合同付款期限、信用证下出口押汇押汇期限、打包放款融资期限、出口托收押汇押汇期限、福费廷融资期限、出口退税帐户托管融资业务融资期限、）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradetermmonth3
+  is '国际贸易融资业务相关期限（国际贸易融资项下同业代付代付期限）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.traderate1
+  is '福费廷年贴现率、出口退税帐户托管融资业务退税比例、短期出口信用保险项下押汇业务押汇利率、国际贸易融资项下同业代付代付利率（代付行价格）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.traderate2
+  is '出口退税帐户托管融资业务融资比例、短期出口信用保险项下押汇业务赔偿比例、';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.tradetype1
+  is '进口代收押汇代收类型（D/A或D/P）、出口托收押汇托收类型（D/A或D/P）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bfintg
+  is '先付利息摊销标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.paybankname
+  is '国际贸易融资项下同业代付代付行';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.isinuse
+  is '添加维护标志1正常2不维护';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bailtransaccount
+  is '保证金转出帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.daynum
+  is '单笔透支有效天数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.lncmam
+  is '透支承诺费';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.ovdrmi
+  is '起透金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.loanam
+  is '透支额度';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.accountno1
+  is '透支账户账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.oblopt
+  is '使用余额选择';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bengdt
+  is '业务提醒短信发送时机';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.lontyp
+  is '透支贷款方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.odrputoutdate
+  is '法透额度起始日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.odrmaturity
+  is '法透额度到期日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.whitelist
+  is '法人透支白名单';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.putoutcontrol
+  is '到日期超批复半年设置，1允许，0禁止';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.txregister
+  is '纸票贴现登记状态：0 未登记，1 已登记';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.loantermcontrolflag
+  is '出账详情页面贷款类型和期限是否进行系统校验标识,1进行校验,0或者空值不进行校验';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.acceptor
+  is '承兑人名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.acceptorbankno
+  is '承兑人开户行号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.acceptorbankname
+  is '承兑人开户行名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.fxfltp
+  is '利率类型（核心xdfrzf、cdjzjk加）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.pdrifd
+  is '利率浮动类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.pdrifm
+  is '利率浮动方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.pdrifv
+  is '浮动值';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.jxhjduebillno
+  is '借新还旧的某笔旧借据';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.odrnextmonth
+  is '法透不跨月 1-是';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.odrfreeinterest
+  is '法透不跨月免息天数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.amorfg
+  is '手续费是否摊销';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.trantp
+  is '手续费收费方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.amorsq
+  is '摊销流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.exchangedate
+  is '承兑记账交易日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.exchangeno
+  is '承兑记账交易流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.isrz
+  is '是否融资系统出账 1是0否';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.financier
+  is '实际融资人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.hxtycapitalsource
+  is '同业资金来源';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.adjustratedate
+  is '利率调整日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.countbasis
+  is '计息基础';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.bigcreditbankid
+  is '大额支付行号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.principalaccountname
+  is '放款账户名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.principalbankname
+  is '放款账户开户行名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.accountindir
+  is '开户行地址号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.ret_msg
+  is '开户行地址名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.clearingtype
+  is '开户行类别';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.ishxbank
+  is '是否本行';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.hxtypurpose
+  is '用途(手工输入,非标标准出账业务)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.remart
+  is '计量标记';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.isonline
+  is '是否线上清算';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.lnbal
+  is '同业代付本金';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.instrt
+  is '同业代付计提利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.unpaidbankname
+  is '代付行名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.acceptancebank
+  is '承兑行';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.confirmingbank
+  is '保兑行';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.accountorgid
+  is '结算账户开户机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.sealsealno
+  is '验印编号（用|分割）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.isbelongterm
+  is '是否靠档计息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.poolfinancingflag
+  is '是否已签订池融资协议';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.adrist
+  is '提前还本计息方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.directionrs
+  is '行业投向（征信）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.directionnew
+  is '行业投向17年版（最新）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.billdiscounttype
+  is '是否跨行贴现标识（1是，2否）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.draweracctno
+  is '跨行贴现收款人账户';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.drawerbankno
+  is '跨行贴现收款人开户行行号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.draweracctname
+  is '跨行贴现收款人户名';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.lprtype
+  is '基准利率选择LPR的取值方式（1最新LPR2首笔LPR）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.zfserialno
+  is '止付流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.zfdate
+  is '止付交易日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.zfjyserialno
+  is '止付交易流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.chargename
+  is '负责人(福费廷用)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.chargepost
+  is '职务(福费廷用)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.chaggeaddress
+  is '地址(福费廷用)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.chargephone
+  is '电话(福费廷用)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.chargefax
+  is '传真(福费廷用)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.linkname
+  is '联系人(福费廷用)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.linkphone
+  is '联系人手机号(福费廷用)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.linkemail
+  is '联系人电子邮箱(福费廷用)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.textno
+  is '总合同文本编号(福费廷用)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.oaflowno
+  is 'OA流程编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.oaflowstate
+  is 'OA流程状态';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.isdiscountflag
+  is '是否当前借款人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.isfarming
+  is '是否涉农';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.farmingloantype
+  is '涉农贷款主体类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.farmingloanuse
+  is '涉农贷款投向';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.platformpaycashsource
+  is '地方融资平台偿债资金来源分类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.iscareerguaranteeloan
+  is '是否创业担保贷款';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.careerguaranteeloantype
+  is '创业担保贷款类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_PUTOUT.id_mark
+  is '增删标志';
+

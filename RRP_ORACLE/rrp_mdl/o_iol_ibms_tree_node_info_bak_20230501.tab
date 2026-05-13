@@ -1,0 +1,62 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501
+(
+  tree_code       VARCHAR2(50),
+  node_id         NUMBER(22),
+  parent_id       NUMBER(22),
+  node_name       VARCHAR2(100),
+  node_type       VARCHAR2(8),
+  node_value      VARCHAR2(100),
+  sort_id         NUMBER(22),
+  py_code         VARCHAR2(100),
+  update_time     VARCHAR2(19),
+  seat_no         VARCHAR2(19),
+  seat_name       VARCHAR2(100),
+  p_node_name     VARCHAR2(100),
+  ext_info        VARCHAR2(1000),
+  ext_description VARCHAR2(200),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501
+  is '树状数据表';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.tree_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.node_id
+  is '数据库节点id';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.parent_id
+  is '父节点ID';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.node_name
+  is '节点名称';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.node_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.node_value
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.sort_id
+  is '排序编号';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.py_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.seat_no
+  is '通道号';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.seat_name
+  is '通道名称';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.p_node_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.ext_info
+  is '扩展信息';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.ext_description
+  is '扩展字段描述';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TREE_NODE_INFO_BAK_20230501.id_mark
+  is '增删标志';
+

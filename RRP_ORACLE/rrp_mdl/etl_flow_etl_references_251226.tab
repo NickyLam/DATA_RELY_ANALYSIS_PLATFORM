@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.ETL_FLOW_ETL_REFERENCES_251226
+(
+  sys_id          VARCHAR2(20) not null,
+  proc_name       VARCHAR2(50) not null,
+  reference_table VARCHAR2(200) not null,
+  reference_proc  VARCHAR2(200) not null
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ETL_FLOW_ETL_REFERENCES_251226
+  is '作业依赖配置表';
+comment on column RRP_MDL.ETL_FLOW_ETL_REFERENCES_251226.sys_id
+  is '系统标识';
+comment on column RRP_MDL.ETL_FLOW_ETL_REFERENCES_251226.proc_name
+  is '程序名称';
+comment on column RRP_MDL.ETL_FLOW_ETL_REFERENCES_251226.reference_table
+  is '依赖表名';
+comment on column RRP_MDL.ETL_FLOW_ETL_REFERENCES_251226.reference_proc
+  is '依赖过程名';
+

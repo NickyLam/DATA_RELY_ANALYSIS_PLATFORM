@@ -1,0 +1,33 @@
+﻿create table RRP_MDL.ADD_SENIOR_BAK20230327
+(
+  cust_id      VARCHAR2(255),
+  cust_name    VARCHAR2(255),
+  job          VARCHAR2(255),
+  gender       VARCHAR2(255),
+  open_acc_flg VARCHAR2(255),
+  data_dt      VARCHAR2(255),
+  id_card      VARCHAR2(255),
+  id_card2     VARCHAR2(255)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.ADD_SENIOR_BAK20230327.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.ADD_SENIOR_BAK20230327.cust_name
+  is '客户名称';
+comment on column RRP_MDL.ADD_SENIOR_BAK20230327.job
+  is '职业';
+comment on column RRP_MDL.ADD_SENIOR_BAK20230327.gender
+  is '性别1：男2：女0：NONE（空）';
+comment on column RRP_MDL.ADD_SENIOR_BAK20230327.open_acc_flg
+  is '是否开户';
+comment on column RRP_MDL.ADD_SENIOR_BAK20230327.data_dt
+  is '数据日期';
+comment on column RRP_MDL.ADD_SENIOR_BAK20230327.id_card
+  is '持卡人证件号码.';
+comment on column RRP_MDL.ADD_SENIOR_BAK20230327.id_card2
+  is '证件号码2';
+

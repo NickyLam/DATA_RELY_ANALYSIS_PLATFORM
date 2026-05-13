@@ -1,0 +1,84 @@
+﻿create table RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF
+(
+  contractno     VARCHAR2(64),
+  settledate     VARCHAR2(64),
+  extendcode     VARCHAR2(64),
+  seqno          VARCHAR2(64),
+  termno         VARCHAR2(64),
+  startdate      VARCHAR2(64),
+  enddate        VARCHAR2(64),
+  prinamt        NUMBER(24,6),
+  ovdprinamt     NUMBER(24,6),
+  intamt         NUMBER(24,6),
+  ovdintamt      NUMBER(24,6),
+  ovdprinpnltamt NUMBER(24,6),
+  ovdintpnltamt  NUMBER(24,6),
+  status         VARCHAR2(64),
+  accruedstatus  VARCHAR2(64),
+  writeoff       VARCHAR2(64),
+  bsntype        VARCHAR2(64),
+  subiproleid    VARCHAR2(64),
+  contracttype   VARCHAR2(64),
+  batchdate      VARCHAR2(64),
+  etl_dt         DATE,
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF
+  is '还款计划调整明细文件汇总表';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.contractno
+  is '融资平台贷款合约号';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.settledate
+  is '会计日期，格式：yyyy-MM-dd hh:mm:ss';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.extendcode
+  is '0-调整转出，1-调整转入';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.seqno
+  is '调整流水号';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.termno
+  is '期次号';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.startdate
+  is '分期开始日期，格式：yyyy-MM-dd hh:mm:ss';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.enddate
+  is '分期结束日期，格式：yyyy-MM-dd hh:mm:ss';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.prinamt
+  is '正常本金金额';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.ovdprinamt
+  is '逾期本金金额';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.intamt
+  is '正常利息金额';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.ovdintamt
+  is '逾期利息金额';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.ovdprinpnltamt
+  is '本金罚息金额';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.ovdintpnltamt
+  is '利息罚息金额';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.status
+  is '分期状态，正常NORMAL,逾期OVD,结清CLEAR';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.accruedstatus
+  is '应计非应计标识，应计0，非应计1';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.writeoff
+  is '核销标识，已核销为Y，否则为N';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.bsntype
+  is '产品业务类型，具体值合作产品上线后才给出';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.subiproleid
+  is '代表业务实际记账机构的iproleid，如不涉及多主体经营，该字段为空';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.contracttype
+  is '借据类型';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.batchdate
+  is '批次日期';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_ICMS_MYBK_EXTEND_DETAIL_TOTAL_EF.etl_timestamp
+  is 'ETL处理时间戳';
+

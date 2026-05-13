@@ -1,0 +1,210 @@
+﻿create table RRP_MDL.O_ICL_CMM_CLERK_INFO
+(
+  etl_dt                 DATE,
+  lp_id                  VARCHAR2(60),
+  clerk_id               VARCHAR2(60),
+  clerk_name             VARCHAR2(750),
+  teller_flg             VARCHAR2(60),
+  teller_id              VARCHAR2(60),
+  region_acct_num        VARCHAR2(90),
+  emply_type_cd          VARCHAR2(30),
+  cert_type_cd           VARCHAR2(30),
+  cert_no                VARCHAR2(90),
+  gender_cd              VARCHAR2(30),
+  birth_dt               DATE,
+  nationty_cd            VARCHAR2(30),
+  politic_status_cd      VARCHAR2(30),
+  marriage_situ_cd       VARCHAR2(30),
+  edu_cd                 VARCHAR2(30),
+  post_cd                VARCHAR2(30),
+  title_cd               VARCHAR2(30),
+  fir_work_dt            DATE,
+  empyt_dt               DATE,
+  local_dept_id          VARCHAR2(100),
+  dimission_dt           DATE,
+  emply_status_cd        VARCHAR2(60),
+  emply_sys_status_cd    VARCHAR2(60),
+  belong_org_id          VARCHAR2(100),
+  work_tel_inter_area_cd VARCHAR2(90),
+  work_tel_area_cd       VARCHAR2(90),
+  work_tel_num           VARCHAR2(250),
+  fax_area_cd            VARCHAR2(90),
+  fax_num                VARCHAR2(90),
+  mobile_phone_num       VARCHAR2(90),
+  cty_cd                 VARCHAR2(100),
+  dtl_addr               VARCHAR2(750),
+  e_mail_addr            VARCHAR2(150),
+  ding_talk_user_id      VARCHAR2(100),
+  jobs_cd                VARCHAR2(100),
+  jobs_cate              VARCHAR2(10),
+  jobs_name              VARCHAR2(500),
+  cust_mgr_flg           VARCHAR2(10),
+  cust_mgr_lev           VARCHAR2(100),
+  teller_lev_cd          VARCHAR2(30),
+  teller_director_id     VARCHAR2(100),
+  vtual_accti_org_id     VARCHAR2(100),
+  work_tel_ext_num       VARCHAR2(100),
+  fax_inter_area_cd      VARCHAR2(100),
+  fax_ext_num            VARCHAR2(100),
+  resd_tel_inter_area_cd VARCHAR2(100),
+  resd_tel_dom_area_cd   VARCHAR2(100),
+  resd_tel               VARCHAR2(100),
+  resd_tel_ext_num       VARCHAR2(100),
+  mobile_phone_num_1     VARCHAR2(100),
+  mobile_phone_num_2     VARCHAR2(100),
+  mobile_phone_num_3     VARCHAR2(100),
+  zip_cd                 VARCHAR2(100),
+  local_prov             VARCHAR2(100),
+  site                   VARCHAR2(100),
+  postn_cd               VARCHAR2(30),
+  post_cate_id           VARCHAR2(60),
+  post_name              VARCHAR2(150),
+  job_cd                 VARCHAR2(10),
+  dimission_status_cd    VARCHAR2(60),
+  jobs_id                VARCHAR2(100),
+  jobs_descb             VARCHAR2(500),
+  jobs_descb2            VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_CLERK_INFO
+  is '行员信息表';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.clerk_id
+  is '行员编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.clerk_name
+  is '行员名称';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.teller_flg
+  is '柜员标志';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.teller_id
+  is '柜员编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.region_acct_num
+  is '域账号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.emply_type_cd
+  is '员工类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.cert_type_cd
+  is '证件类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.cert_no
+  is '证件号码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.gender_cd
+  is '性别代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.birth_dt
+  is '出生日期';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.nationty_cd
+  is '民族代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.politic_status_cd
+  is '政治面貌代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.marriage_situ_cd
+  is '婚姻状况代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.edu_cd
+  is '学历代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.post_cd
+  is '职务代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.title_cd
+  is '职称代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.fir_work_dt
+  is '首次工作日期';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.empyt_dt
+  is '员工入职日期';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.local_dept_id
+  is '所属部门编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.dimission_dt
+  is '离职日期';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.emply_status_cd
+  is '员工状态代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.emply_sys_status_cd
+  is '员工系统状态代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.work_tel_inter_area_cd
+  is '单位电话国际区号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.work_tel_area_cd
+  is '单位电话区号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.work_tel_num
+  is '单位电话号码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.fax_area_cd
+  is '传真区号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.fax_num
+  is '传真号码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.mobile_phone_num
+  is '移动电话号码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.cty_cd
+  is '员工国籍代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.dtl_addr
+  is '详细地址';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.e_mail_addr
+  is '电子邮箱地址';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.ding_talk_user_id
+  is '钉钉用户编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.jobs_cd
+  is '岗位编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.jobs_cate
+  is '岗位类别';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.jobs_name
+  is '岗位名称';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.cust_mgr_flg
+  is '客户经理标志';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.cust_mgr_lev
+  is '客户经理级别';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.teller_lev_cd
+  is '柜员级别代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.teller_director_id
+  is '柜员主管编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.vtual_accti_org_id
+  is '虚拟核算机构编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.work_tel_ext_num
+  is '单位电话分机号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.fax_inter_area_cd
+  is '传真国际区号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.fax_ext_num
+  is '传真分机号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.resd_tel_inter_area_cd
+  is '住宅电话国际区号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.resd_tel_dom_area_cd
+  is '住宅电话国内区号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.resd_tel
+  is '住宅电话';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.resd_tel_ext_num
+  is '住宅电话分机号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.mobile_phone_num_1
+  is '移动电话号码1';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.mobile_phone_num_2
+  is '移动电话号码2';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.mobile_phone_num_3
+  is '移动电话号码3';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.zip_cd
+  is '邮政编码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.local_prov
+  is '所在省份';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.site
+  is '所在地区';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.postn_cd
+  is '职位代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.post_cate_id
+  is '职务类别编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.post_name
+  is '职务名称';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.dimission_status_cd
+  is '离职状态代码';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.jobs_id
+  is '岗位编号';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.jobs_descb
+  is '岗位描述';
+comment on column RRP_MDL.O_ICL_CMM_CLERK_INFO.jobs_descb2
+  is '岗位描述2';
+

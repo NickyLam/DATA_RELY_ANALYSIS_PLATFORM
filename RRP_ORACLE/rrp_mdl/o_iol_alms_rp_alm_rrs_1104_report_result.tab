@@ -1,0 +1,96 @@
+﻿create table RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT
+(
+  data_rpt_date  VARCHAR2(8),
+  data_rpt_no    VARCHAR2(64),
+  data_rpt_desc  VARCHAR2(640),
+  data_line_no   VARCHAR2(64),
+  data_line_desc VARCHAR2(640),
+  data_val1      VARCHAR2(64),
+  data_val2      VARCHAR2(64),
+  data_val3      VARCHAR2(64),
+  data_val4      VARCHAR2(64),
+  data_val5      VARCHAR2(64),
+  data_val6      VARCHAR2(64),
+  data_val7      VARCHAR2(64),
+  data_val8      VARCHAR2(64),
+  data_val9      VARCHAR2(64),
+  data_val10     VARCHAR2(64),
+  data_val11     VARCHAR2(64),
+  data_val12     VARCHAR2(64),
+  data_val13     VARCHAR2(64),
+  data_val14     VARCHAR2(64),
+  data_val15     VARCHAR2(64),
+  data_val16     VARCHAR2(64),
+  data_val17     VARCHAR2(64),
+  data_val18     VARCHAR2(64),
+  data_val19     VARCHAR2(64),
+  data_val20     VARCHAR2(64),
+  etl_dt         DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT
+  is '资债系统1104法人报表';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_rpt_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_rpt_no
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_rpt_desc
+  is '报表数据描述';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_line_no
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_line_desc
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val1
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val2
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val3
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val4
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val5
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val6
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val7
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val8
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val9
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val10
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val11
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val12
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val13
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val14
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val15
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val16
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val17
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val18
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val19
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.data_val20
+  is '指标值';
+comment on column RRP_MDL.O_IOL_ALMS_RP_ALM_RRS_1104_REPORT_RESULT.etl_dt
+  is '数据日期';
+

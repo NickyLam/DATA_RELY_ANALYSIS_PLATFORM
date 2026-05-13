@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.ADD_AGRE_SUBJECT_INFO
+(
+  data_date      VARCHAR2(8) not null,
+  org_num        VARCHAR2(12),
+  cust_id        VARCHAR2(64),
+  cust_name      VARCHAR2(100),
+  manager_id     VARCHAR2(64),
+  manager_org    VARCHAR2(100),
+  subj_no        VARCHAR2(64),
+  issu_fina_code VARCHAR2(6),
+  int_rate_type  VARCHAR2(1)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_AGRE_SUBJECT_INFO
+  is '补录表-标的物补充信息表';
+comment on column RRP_MDL.ADD_AGRE_SUBJECT_INFO.data_date
+  is '数据日期';
+comment on column RRP_MDL.ADD_AGRE_SUBJECT_INFO.org_num
+  is '账务机构号';
+comment on column RRP_MDL.ADD_AGRE_SUBJECT_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.ADD_AGRE_SUBJECT_INFO.cust_name
+  is '客户名称';
+comment on column RRP_MDL.ADD_AGRE_SUBJECT_INFO.manager_id
+  is '经办人';
+comment on column RRP_MDL.ADD_AGRE_SUBJECT_INFO.manager_org
+  is '经办行';
+comment on column RRP_MDL.ADD_AGRE_SUBJECT_INFO.subj_no
+  is '标的产品编号（债券编号、基金产品编号等）';
+comment on column RRP_MDL.ADD_AGRE_SUBJECT_INFO.issu_fina_code
+  is '发行方金融机构类型代码';
+comment on column RRP_MDL.ADD_AGRE_SUBJECT_INFO.int_rate_type
+  is '浮动利率类型（仅债券）';
+

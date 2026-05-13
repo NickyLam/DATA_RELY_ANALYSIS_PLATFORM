@@ -1,0 +1,77 @@
+﻿create table RRP_MDL.B_LOAN_CHG_INFO
+(
+  data_dt                        CHAR(8) not null,
+  lgl_rep_id                     VARCHAR2(200),
+  subj_blng_org_nm               VARCHAR2(500),
+  cont_id                        VARCHAR2(200) not null,
+  rcpt_id                        VARCHAR2(200) not null,
+  cust_id                        VARCHAR2(200),
+  org_id                         VARCHAR2(200),
+  cur                            CHAR(3),
+  gds_for_dbt_ast_cash_retrv_amt NUMBER(30,2),
+  gds_for_dbt_orig_val           NUMBER(30,2),
+  gds_for_dbt_cncl_amt           NUMBER(30,2),
+  gua_comp_amt                   NUMBER(30,2),
+  plcy_subst_amt                 NUMBER(30,2),
+  lcl_govt_bond_subst_loan_amt   NUMBER(30,2),
+  bad_loan_retrv_cash_amt        NUMBER(30,2),
+  dept_line                      VARCHAR2(500),
+  data_src                       VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_LOAN_CHG_INFO
+  is '贷款变动信息';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.subj_blng_org_nm
+  is '科目归属机构';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.cont_id
+  is '合同编号';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.cur
+  is '币种';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.gds_for_dbt_ast_cash_retrv_amt
+  is '以物抵债资产变现收回金额';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.gds_for_dbt_orig_val
+  is '以物抵债原值';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.gds_for_dbt_cncl_amt
+  is '以物抵债核销金额';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.gua_comp_amt
+  is '担保代偿金额';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.plcy_subst_amt
+  is '政策性置换金额';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.lcl_govt_bond_subst_loan_amt
+  is '地方政府债券置换贷款金额';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.bad_loan_retrv_cash_amt
+  is '不良贷款处置直接收回现金金额';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_LOAN_CHG_INFO.data_src
+  is '数据来源';
+alter table RRP_MDL.B_LOAN_CHG_INFO
+  add constraint PK_B_LOAN_CHG_INFO primary key (DATA_DT, CONT_ID, RCPT_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

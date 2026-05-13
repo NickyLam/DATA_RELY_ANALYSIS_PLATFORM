@@ -1,0 +1,83 @@
+﻿create table RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512
+(
+  etl_dt               DATE,
+  lp_id                VARCHAR2(60),
+  acct_id              VARCHAR2(60),
+  dubil_id             VARCHAR2(60),
+  cont_id              VARCHAR2(60),
+  cust_id              VARCHAR2(60),
+  repay_acct_id        VARCHAR2(60),
+  repay_flow_id        VARCHAR2(60),
+  repay_dt             DATE,
+  repay_perds          NUMBER(10),
+  adv_repay_flg        VARCHAR2(10),
+  ovdue_repay_flg      VARCHAR2(10),
+  repay_chn_cd         VARCHAR2(10),
+  curr_cd              VARCHAR2(10),
+  curr_nomal_pric_bal  NUMBER(30,2),
+  currt_adv_repay_pric NUMBER(30,2),
+  currt_repay_pric     NUMBER(30,2),
+  currt_repay_int      NUMBER(30,2),
+  currt_repay_pnlt     NUMBER(30,2),
+  currt_repay_comp_int NUMBER(30,2),
+  currt_repay_fee      NUMBER(30,2),
+  debit_crdt_flg       VARCHAR2(10),
+  strk_bal_flg         VARCHAR2(10),
+  job_cd               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512
+  is '对公贷款还款明细';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.repay_acct_id
+  is '还款账户编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.repay_flow_id
+  is '还款流水编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.repay_dt
+  is '还款日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.repay_perds
+  is '还款期数';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.adv_repay_flg
+  is '提前还款标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.ovdue_repay_flg
+  is '逾期还款标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.repay_chn_cd
+  is '还款渠道代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.curr_nomal_pric_bal
+  is '当前正常本金余额';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.currt_adv_repay_pric
+  is '当期提前还款本金';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.currt_repay_pric
+  is '当期还款本金';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.currt_repay_int
+  is '当期还款利息';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.currt_repay_pnlt
+  is '当期还款罚息';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.currt_repay_comp_int
+  is '当期还款复利';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.currt_repay_fee
+  is '当期还款费用';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.debit_crdt_flg
+  is '借贷标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.strk_bal_flg
+  is '冲账标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_DTL_BAK_20230512.job_cd
+  is '任务代码';
+

@@ -1,0 +1,56 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501
+(
+  security_code       CHAR(16),
+  allow_netting       CHAR(1),
+  depository_trust    CHAR(20),
+  asset_type          CHAR(20),
+  cb_stock_id         CHAR(10),
+  cb_stock_name       CHAR(40),
+  payment_back_mode   NUMBER(1),
+  breach_contract     CHAR(1),
+  perpetual           VARCHAR2(1),
+  n_bsns_day          NUMBER,
+  issuer_country_name VARCHAR2(50),
+  issuer_location     VARCHAR2(128),
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501
+  is '债券扩展信息';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.security_code
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.allow_netting
+  is '是否净额交割';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.depository_trust
+  is '托管机构';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.asset_type
+  is '资产类别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.cb_stock_id
+  is '股票代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.cb_stock_name
+  is '股票名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.payment_back_mode
+  is '还本处理方式';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.breach_contract
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.perpetual
+  is '永续债标识';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.n_bsns_day
+  is 'N工作日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.issuer_country_name
+  is '发行主体所属国家/地区';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.issuer_location
+  is '发行地';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_BAK_20230501.id_mark
+  is '增删标志';
+

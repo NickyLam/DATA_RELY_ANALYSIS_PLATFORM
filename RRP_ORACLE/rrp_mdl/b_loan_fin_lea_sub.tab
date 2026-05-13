@@ -1,0 +1,65 @@
+﻿create table RRP_MDL.B_LOAN_FIN_LEA_SUB
+(
+  data_dt           CHAR(8) not null,
+  lgl_rep_id        VARCHAR2(200),
+  rcpt_id           VARCHAR2(200) not null,
+  fin_lease_typ     VARCHAR2(10),
+  fin_lease_mode    VARCHAR2(10),
+  lease_ulyg        VARCHAR2(500),
+  lease_co_nm       VARCHAR2(500),
+  lease_co_crdl_typ VARCHAR2(10),
+  lease_co_crdl_no  VARCHAR2(100),
+  comm_cur          CHAR(3),
+  comm_amt          NUMBER(30,2),
+  dept_line         VARCHAR2(500),
+  data_src          VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_LOAN_FIN_LEA_SUB
+  is '融资租赁子表';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.fin_lease_typ
+  is '融资租赁类型';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.fin_lease_mode
+  is '融资租赁方式';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.lease_ulyg
+  is '租赁标的物';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.lease_co_nm
+  is '租赁公司名称';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.lease_co_crdl_typ
+  is '租赁公司证件类别';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.lease_co_crdl_no
+  is '租赁公司证件号码';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.comm_cur
+  is '手续费币种';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.comm_amt
+  is '手续费金额';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_LOAN_FIN_LEA_SUB.data_src
+  is '数据来源';
+alter table RRP_MDL.B_LOAN_FIN_LEA_SUB
+  add constraint PK_B_LOAN_FIN_LEA_SUB primary key (DATA_DT, RCPT_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

@@ -1,0 +1,28 @@
+# Python 依赖清单
+# 数据血缘分析系统 v2.0
+
+# Python 版本要求
+# =================
+# 推荐版本: Python 3.11 或 3.12
+# 
+# Python 版本状态 (截至 2026年5月):
+#   - 3.9  : ❌ 已停止维护 (EOL: 2025-10-31)
+#   - 3.10 : ⚠️ 仅剩5个月 (EOL: 2026-10-31)
+#   - 3.11 : ✅ 推荐 LTS (EOL: 2027-10-31)
+#   - 3.12 : ✅ 更长期支持 (EOL: 2028-10-31)
+#
+# 参考: https://devguide.python.org/versions/
+
+# Web 框架
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+python-multipart>=0.0.6
+
+# 数据验证
+pydantic>=2.0.0
+
+# 打包工具（仅在 Windows 打包时需要）
+pyinstaller>=6.0.0
+
+# 可选依赖（已有项目使用）
+# D3.js 通过 CDN 加载，无需安装

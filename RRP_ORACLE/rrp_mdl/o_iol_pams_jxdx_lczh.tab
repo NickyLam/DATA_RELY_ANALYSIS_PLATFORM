@@ -1,0 +1,129 @@
+﻿create table RRP_MDL.O_IOL_PAMS_JXDX_LCZH
+(
+  jxdxdh        NUMBER(22),
+  zhdh          VARCHAR2(75),
+  zhhm          VARCHAR2(750),
+  bz            VARCHAR2(5),
+  jgdh          VARCHAR2(15),
+  kmh           VARCHAR2(30),
+  khrq          NUMBER(22),
+  xhrq          NUMBER(22),
+  cpdm          VARCHAR2(30),
+  cplb          VARCHAR2(3),
+  cpmc          VARCHAR2(150),
+  mjksr         NUMBER(22),
+  mjjsr         NUMBER(22),
+  nll           NUMBER(15,7),
+  zhye          NUMBER(25,4),
+  zhbs          VARCHAR2(2),
+  zhzt          VARCHAR2(27),
+  gxhslx        VARCHAR2(2),
+  khdxdh        NUMBER(22),
+  khh           VARCHAR2(45),
+  hydh          VARCHAR2(23),
+  tjrq          NUMBER(22),
+  qxrq          NUMBER(22),
+  zxrq          NUMBER(22),
+  yqnhsyl       NUMBER(25,4),
+  cpyzsj        NUMBER(22),
+  mrjehz        NUMBER(25,4),
+  cyfe          NUMBER(25,4),
+  mjje          NUMBER(25,4),
+  zjjszh        VARCHAR2(90),
+  xssdm         VARCHAR2(45),
+  yhbh          VARCHAR2(90),
+  zhbh          VARCHAR2(90),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_PAMS_JXDX_LCZH
+  is '绩效对象-理财账户';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.jxdxdh
+  is '绩效对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.zhdh
+  is '账号';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.zhhm
+  is '账户户名';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.bz
+  is '币种';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.jgdh
+  is '机构代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.kmh
+  is '科目号';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.khrq
+  is '开户日期';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.xhrq
+  is '销户日期';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.cpdm
+  is '产品代码';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.cplb
+  is '产品类别';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.cpmc
+  is '产品名称';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.mjksr
+  is '募集开始日';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.mjjsr
+  is '募集结束日';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.nll
+  is '年利率';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.zhye
+  is '账户余额';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.zhbs
+  is '账户标识';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.zhzt
+  is '账户状态';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.gxhslx
+  is '关系函数类型';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.khdxdh
+  is '考核对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.khh
+  is '客户号';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.hydh
+  is '行员代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.tjrq
+  is '统计日期';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.qxrq
+  is '起息日期';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.zxrq
+  is '注销日期';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.yqnhsyl
+  is '年化收益率';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.cpyzsj
+  is '产品运作时间';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.mrjehz
+  is '买入金额汇总';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.cyfe
+  is '持有份额';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.mjje
+  is '募集金额';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.zjjszh
+  is '资金结算账户';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.xssdm
+  is '销售商代码';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.yhbh
+  is '银行编号';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.zhbh
+  is '账户编号';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_PAMS_JXDX_LCZH.etl_timestamp
+  is 'ETL处理时间戳';
+

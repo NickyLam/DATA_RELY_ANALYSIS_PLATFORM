@@ -1,0 +1,60 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN
+(
+  id            NUMBER(22),
+  i_code        VARCHAR2(75),
+  a_type        VARCHAR2(30),
+  m_type        VARCHAR2(30),
+  asset_code    VARCHAR2(75),
+  asset_name    VARCHAR2(750),
+  asset_type    VARCHAR2(5),
+  asset_net_per NUMBER(8,4),
+  map_weight    NUMBER(34,2),
+  g4b_field_no  VARCHAR2(150),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN
+  is '底层基础资产清单（前10大）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.id
+  is '主键';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.i_code
+  is '产品代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.a_type
+  is '资产大类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.asset_code
+  is '资产代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.asset_name
+  is '资产名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.asset_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.asset_net_per
+  is '占资产净值比例（%）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.map_weight
+  is '映射权重';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.g4b_field_no
+  is 'G4B栏位号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_UNDER_ASSET_TOP_TEN.etl_timestamp
+  is 'ETL处理时间戳';
+

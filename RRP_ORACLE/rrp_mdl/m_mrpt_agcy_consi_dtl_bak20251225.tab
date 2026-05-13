@@ -1,0 +1,40 @@
+﻿create table RRP_MDL.M_MRPT_AGCY_CONSI_DTL_BAK20251225
+(
+  data_dt                  VARCHAR2(10),
+  source_type              VARCHAR2(50),
+  prod_id                  VARCHAR2(15),
+  prod_attr_cd             VARCHAR2(30),
+  tran_cd                  VARCHAR2(30),
+  hx_prdtype               VARCHAR2(45),
+  hx_typedetail            VARCHAR2(45),
+  cfm_amt                  NUMBER(30,2),
+  tran_status_cd           VARCHAR2(30),
+  flow_num                 VARCHAR2(150),
+  bus_cd                   VARCHAR2(30),
+  tran_org_id              VARCHAR2(60),
+  prod_name                VARCHAR2(1000),
+  cfm_dt                   DATE,
+  risk_level_cd            VARCHAR2(10),
+  agency_fee               NUMBER(18,2),
+  nv                       NUMBER(18,8),
+  tot_lot                  NUMBER(30,2),
+  end_dt                   DATE,
+  ctrl_flg_info            VARCHAR2(375),
+  insure_prod_proj_type_cd VARCHAR2(10),
+  comm_fee                 NUMBER(30,2),
+  tran_chn_cd              VARCHAR2(10),
+  ta_cd                    VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

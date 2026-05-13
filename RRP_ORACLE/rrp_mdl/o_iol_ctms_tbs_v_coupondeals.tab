@@ -1,0 +1,69 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS
+(
+  deal_id         NUMBER,
+  deal_name       VARCHAR2(17),
+  aspclient_id    NUMBER,
+  balance_id      NUMBER,
+  paydate         NUMBER,
+  keepfolder_id   NUMBER,
+  assettype       VARCHAR2(30),
+  bondscode       VARCHAR2(30),
+  coupontype      VARCHAR2(2),
+  principalamount NUMBER,
+  interestamount  NUMBER,
+  lastmodified    TIMESTAMP(6),
+  act_paydate     NUMBER,
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10),
+  etl_timestamp   TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS
+  is '还本付息交易';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.deal_id
+  is '引用表ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.deal_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.aspclient_id
+  is '部门代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.balance_id
+  is '资产余额ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.paydate
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.keepfolder_id
+  is '后台账户代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.assettype
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.bondscode
+  is '质押券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.coupontype
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.principalamount
+  is '本金金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.interestamount
+  is '应收利息金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.lastmodified
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.act_paydate
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_COUPONDEALS.etl_timestamp
+  is 'etl处理时间';
+

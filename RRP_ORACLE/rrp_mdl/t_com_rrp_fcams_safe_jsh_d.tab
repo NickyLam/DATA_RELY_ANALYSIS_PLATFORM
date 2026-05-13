@@ -1,0 +1,37 @@
+﻿create table RRP_MDL.T_COM_RRP_FCAMS_SAFE_JSH_D
+(
+  rid                    VARCHAR2(100) not null,
+  actiontype             VARCHAR2(1),
+  actiondesc             VARCHAR2(128),
+  rptno                  VARCHAR2(44),
+  buscode                VARCHAR2(44),
+  custype                VARCHAR2(1),
+  custcod                VARCHAR2(36),
+  idcode                 VARCHAR2(64),
+  custnm                 VARCHAR2(128),
+  fcyacc                 VARCHAR2(64),
+  lcyacc                 VARCHAR2(64),
+  oppuser                VARCHAR2(128),
+  oppbank                VARCHAR2(256),
+  fcyamt                 NUMBER(22),
+  fcyccy                 VARCHAR2(12),
+  exrate                 NUMBER(13,8),
+  data_dt                VARCHAR2(40),
+  org_no                 VARCHAR2(40),
+  xf_status              VARCHAR2(1),
+  data_status            VARCHAR2(1),
+  task_id                VARCHAR2(100),
+  report_type            VARCHAR2(200),
+  bw_status              VARCHAR2(1),
+  approval_status        VARCHAR2(1),
+  approval_refuse_reason VARCHAR2(128),
+  child_data_status      VARCHAR2(1),
+  intact                 VARCHAR2(400),
+  custno                 VARCHAR2(22)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

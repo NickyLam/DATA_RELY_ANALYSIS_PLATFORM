@@ -1,0 +1,93 @@
+﻿create table RRP_MDL.ADD_SDIS_T_7_8_INFO
+(
+  g080001 VARCHAR2(100),
+  g080002 VARCHAR2(24),
+  g080003 VARCHAR2(60),
+  g080004 VARCHAR2(60),
+  g080005 VARCHAR2(60),
+  g080006 VARCHAR2(2),
+  g080007 VARCHAR2(2),
+  g080024 VARCHAR2(5),
+  g080008 VARCHAR2(10),
+  g080009 NUMBER(20,2),
+  g080010 NUMBER(20,2),
+  g080011 NUMBER(20,2),
+  g080013 NUMBER(20,2),
+  g080014 NUMBER(20,2),
+  g080015 NUMBER(20,2),
+  g080016 VARCHAR2(4000),
+  g080017 VARCHAR2(60),
+  g080018 VARCHAR2(2),
+  g080019 VARCHAR2(32),
+  g080025 VARCHAR2(32),
+  g080020 VARCHAR2(10),
+  g080021 VARCHAR2(2),
+  g080022 VARCHAR2(3),
+  org_no  VARCHAR2(30),
+  data_dt VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_SDIS_T_7_8_INFO
+  is '表7.8不良资产处置补录表';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080001
+  is '交易ID';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080002
+  is '机构ID';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080003
+  is '细分资产ID';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080004
+  is '协议ID';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080005
+  is '客户ID';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080006
+  is '资产类型';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080007
+  is '处置类型';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080024
+  is '行业类型';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080008
+  is '处置日期';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080009
+  is '处置本金金额';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080010
+  is '处置表内利息金额';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080011
+  is '处置表外利息金额';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080013
+  is '收回资产金额';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080014
+  is '收回表内利息金额';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080015
+  is '收回表外利息金额';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080016
+  is '转让资产名称';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080017
+  is '转让资产协议ID';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080018
+  is '收回标识';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080019
+  is '收回员工ID';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080025
+  is '处置员工ID';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080020
+  is '处置收回日期';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080021
+  is '处置状态';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.g080022
+  is '币种';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.org_no
+  is '填报机构';
+comment on column RRP_MDL.ADD_SDIS_T_7_8_INFO.data_dt
+  is '数据日期';
+

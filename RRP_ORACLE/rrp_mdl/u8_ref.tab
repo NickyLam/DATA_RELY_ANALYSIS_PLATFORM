@@ -1,0 +1,22 @@
+﻿create table RRP_MDL.U8_REF
+(
+  owner            VARCHAR2(128),
+  name             VARCHAR2(128),
+  type             VARCHAR2(18),
+  referenced_owner VARCHAR2(128),
+  referenced_name  VARCHAR2(128),
+  referenced_type  VARCHAR2(18)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

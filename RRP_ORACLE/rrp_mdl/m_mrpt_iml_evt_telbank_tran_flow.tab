@@ -1,0 +1,96 @@
+﻿create table RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW
+(
+  data_dt          VARCHAR2(8),
+  evt_id           VARCHAR2(250),
+  lp_id            VARCHAR2(60),
+  tran_flow_num    VARCHAR2(100),
+  serv_flow_num    VARCHAR2(100),
+  chn_flow_num     VARCHAR2(100),
+  call_flow_num    VARCHAR2(100),
+  tran_cd          VARCHAR2(100),
+  return_code      VARCHAR2(100),
+  return_info      VARCHAR2(3000),
+  cert_no          VARCHAR2(100),
+  cert_type_cd     VARCHAR2(30),
+  acct_id          VARCHAR2(60),
+  curr_cd          VARCHAR2(100),
+  in_call_num      VARCHAR2(60),
+  operr_id         VARCHAR2(60),
+  cust_name        VARCHAR2(375),
+  aud_sys_cd       VARCHAR2(30),
+  tran_tm          TIMESTAMP(6),
+  host_return_code VARCHAR2(60),
+  host_return_info VARCHAR2(3000),
+  bus_cate_cd      VARCHAR2(30),
+  remark_info      VARCHAR2(750),
+  etl_dt           DATE,
+  src_table_name   VARCHAR2(150),
+  job_cd           VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW
+  is '手工报表前置';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.evt_id
+  is '事件编号';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.lp_id
+  is '法人编号';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.serv_flow_num
+  is '服务流水号';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.chn_flow_num
+  is '渠道流水号';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.call_flow_num
+  is '呼叫流水号';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.tran_cd
+  is '交易代码';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.return_code
+  is '返回值';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.return_info
+  is '返回信息';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.cert_no
+  is '证件号码';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.cert_type_cd
+  is '证件类型代码';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.acct_id
+  is '账户编号';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.curr_cd
+  is '币种代码CD1728';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.in_call_num
+  is '呼入电话号码';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.operr_id
+  is '操作员编号';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.cust_name
+  is '客户名称';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.aud_sys_cd
+  is '语音系统代码';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.host_return_code
+  is '主机返回码';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.host_return_info
+  is '主机返回信息';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.bus_cate_cd
+  is '业务类别代码';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.remark_info
+  is '备注信息';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.M_MRPT_IML_EVT_TELBANK_TRAN_FLOW.job_cd
+  is '任务代码';
+

@@ -1,0 +1,129 @@
+﻿create table RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H
+(
+  agt_id               VARCHAR2(250),
+  lp_id                VARCHAR2(100),
+  risk_cls_id          VARCHAR2(100),
+  init_cls_id          VARCHAR2(100),
+  obj_id               VARCHAR2(100),
+  obj_type_name        VARCHAR2(500),
+  cust_id              VARCHAR2(100),
+  cust_name            VARCHAR2(500),
+  prod_id              VARCHAR2(100),
+  cls_pd               NUMBER(10),
+  adj_way_cd           VARCHAR2(60),
+  curr_cls_way_cd      VARCHAR2(60),
+  curr_cls_rest_cd     VARCHAR2(100),
+  cls_adj_rs_descb     VARCHAR2(1000),
+  adj_cls_rest_cd      VARCHAR2(60),
+  adj_appl_teller_id   VARCHAR2(100),
+  adj_appl_org_id      VARCHAR2(100),
+  adj_appl_dt          DATE,
+  apv_status_cd        VARCHAR2(60),
+  belong_strip_line_cd VARCHAR2(60),
+  oper_teller_id       VARCHAR2(100),
+  oper_org_id          VARCHAR2(100),
+  oper_dt              DATE,
+  rgst_teller_id       VARCHAR2(100),
+  rgst_org_id          VARCHAR2(100),
+  rgst_dt              DATE,
+  update_teller_id     VARCHAR2(100),
+  update_org_id        VARCHAR2(100),
+  modif_dt             DATE,
+  move_flg             VARCHAR2(10),
+  idtfy_cmplt_dt       DATE,
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10),
+  src_table_name       VARCHAR2(100),
+  job_cd               VARCHAR2(10),
+  etl_timestamp        TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H
+  is '贷款风险分类调整历史';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.risk_cls_id
+  is '风险分类编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.init_cls_id
+  is '原分类编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.obj_id
+  is '对象编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.obj_type_name
+  is '对象类型名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.cls_pd
+  is '分类期次';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.adj_way_cd
+  is '调整方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.curr_cls_way_cd
+  is '当前分类方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.curr_cls_rest_cd
+  is '当前分类结果代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.cls_adj_rs_descb
+  is '分类调整原因描述';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.adj_cls_rest_cd
+  is '调整分类结果代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.adj_appl_teller_id
+  is '调整申请柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.adj_appl_org_id
+  is '调整申请机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.adj_appl_dt
+  is '调整申请日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.apv_status_cd
+  is '审批状态代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.belong_strip_line_cd
+  is '所属条线代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.oper_teller_id
+  is '业务经办人编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.oper_org_id
+  is '经办机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.oper_dt
+  is '经办日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.rgst_org_id
+  is '登记机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.update_teller_id
+  is '更新柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.update_org_id
+  is '更新机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.modif_dt
+  is '变更日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.move_flg
+  is '迁移标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.idtfy_cmplt_dt
+  is '认定完成日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RISK_CLS_ADJ_H.etl_timestamp
+  is 'ETL处理时间戳';
+

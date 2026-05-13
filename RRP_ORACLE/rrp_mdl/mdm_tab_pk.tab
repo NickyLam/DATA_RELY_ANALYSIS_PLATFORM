@@ -1,0 +1,29 @@
+﻿create table RRP_MDL.MDM_TAB_PK
+(
+  tab_name   VARCHAR2(200),
+  tab_name_c VARCHAR2(200),
+  pk_1       VARCHAR2(200),
+  pk_2       VARCHAR2(200),
+  pk_3       VARCHAR2(200),
+  pk_4       VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.MDM_TAB_PK
+  is '过程临时表';
+comment on column RRP_MDL.MDM_TAB_PK.tab_name
+  is '表名';
+comment on column RRP_MDL.MDM_TAB_PK.tab_name_c
+  is '表中文名';
+comment on column RRP_MDL.MDM_TAB_PK.pk_1
+  is '主键1';
+comment on column RRP_MDL.MDM_TAB_PK.pk_2
+  is '主键2';
+comment on column RRP_MDL.MDM_TAB_PK.pk_3
+  is '主键3';
+comment on column RRP_MDL.MDM_TAB_PK.pk_4
+  is '主键4';
+

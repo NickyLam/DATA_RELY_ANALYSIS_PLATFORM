@@ -1,0 +1,144 @@
+﻿create table RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H
+(
+  evt_id                VARCHAR2(250),
+  lp_id                 VARCHAR2(100),
+  transf_id             VARCHAR2(100),
+  tran_ref_no           VARCHAR2(100),
+  sub_acct_num          VARCHAR2(60),
+  cust_acct_num         VARCHAR2(60),
+  cust_name             VARCHAR2(500),
+  cust_id               VARCHAR2(100),
+  acct_id               VARCHAR2(100),
+  core_teller_id        VARCHAR2(100),
+  lmt_id                VARCHAR2(100),
+  pd_cd                 VARCHAR2(30),
+  tran_tm               TIMESTAMP(6),
+  dep_days              NUMBER(10),
+  int_accr_surp_days    NUMBER(10),
+  transf_tot_cosdetn    NUMBER(30,2),
+  transf_exp_dt         DATE,
+  dir_transf_flg        VARCHAR2(10),
+  order_begin_dt        DATE,
+  tran_in_fee           NUMBER(30,2),
+  order_end_dt          DATE,
+  transf_pric           NUMBER(30,2),
+  transf_int_rat        NUMBER(18,8),
+  cds_transf_type_cd    VARCHAR2(30),
+  transf_status_cd      VARCHAR2(30),
+  benefc_cust_id        VARCHAR2(100),
+  transf_dt             DATE,
+  asign_yld_rat         NUMBER(18,8),
+  tran_out_fee          NUMBER(30,2),
+  final_modif_dt        DATE,
+  tran_in_cust_acct_num VARCHAR2(100),
+  stl_acct_sub_acct_num VARCHAR2(60),
+  stl_cust_acct_num     VARCHAR2(60),
+  tran_dt               DATE,
+  prod_id               VARCHAR2(60),
+  appl_dt               DATE,
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10),
+  src_table_name        VARCHAR2(100),
+  job_cd                VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H
+  is '大额存单转让申请历史';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.evt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.transf_id
+  is '转让编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.tran_ref_no
+  is '交易参考号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.sub_acct_num
+  is '子账号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.cust_acct_num
+  is '客户账号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.core_teller_id
+  is '核心柜员编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.lmt_id
+  is '限制编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.pd_cd
+  is '期次编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.dep_days
+  is '存款天数';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.int_accr_surp_days
+  is '计息剩余天数';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.transf_tot_cosdetn
+  is '转让总对价';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.transf_exp_dt
+  is '转让到期日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.dir_transf_flg
+  is '定向转让标志';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.order_begin_dt
+  is '挂单起始日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.tran_in_fee
+  is '转入费用';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.order_end_dt
+  is '挂单结束日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.transf_pric
+  is '转让本金';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.transf_int_rat
+  is '转让利率';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.cds_transf_type_cd
+  is '大额存单转让类型代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.transf_status_cd
+  is '转让状态代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.benefc_cust_id
+  is '受益人客户编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.transf_dt
+  is '转让日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.asign_yld_rat
+  is '受让人收益率';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.tran_out_fee
+  is '转出费用';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.final_modif_dt
+  is '最后修改日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.tran_in_cust_acct_num
+  is '转入客户账号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.stl_acct_sub_acct_num
+  is '结算账户子账号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.stl_cust_acct_num
+  is '结算客户账号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.appl_dt
+  is '申请日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_CDS_TRANSF_APPL_H.etl_timestamp
+  is 'ETL处理时间戳';
+

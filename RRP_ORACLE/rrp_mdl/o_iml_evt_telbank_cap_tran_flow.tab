@@ -1,0 +1,117 @@
+﻿create table RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW
+(
+  evt_id           VARCHAR2(250),
+  lp_id            VARCHAR2(60),
+  tran_flow_num    VARCHAR2(100),
+  call_flow_num    VARCHAR2(100),
+  in_call_num      VARCHAR2(60),
+  aud_sys_cd       VARCHAR2(30),
+  tran_cd          VARCHAR2(100),
+  tran_tm          TIMESTAMP(6),
+  return_code      VARCHAR2(100),
+  return_info      VARCHAR2(2000),
+  cust_name        VARCHAR2(200),
+  pay_acct_id      VARCHAR2(60),
+  pay_bank_no      VARCHAR2(60),
+  pay_bank_name    VARCHAR2(500),
+  recvbl_acct_id   VARCHAR2(60),
+  recvbl_acct_name VARCHAR2(100),
+  recv_bank_no     VARCHAR2(60),
+  recv_bank_name   VARCHAR2(500),
+  avl_aging_cd     VARCHAR2(30),
+  tran_amt         NUMBER(30,8),
+  comm_fee         NUMBER(30,8),
+  curr_cd          VARCHAR2(60),
+  chn_cd           VARCHAR2(60),
+  dep_term         VARCHAR2(60),
+  redt_flg         VARCHAR2(60),
+  operr_id         VARCHAR2(60),
+  sign_org_name    VARCHAR2(500),
+  dep_term_cd      VARCHAR2(60),
+  sav_type_cd      VARCHAR2(60),
+  etl_dt           DATE,
+  src_table_name   VARCHAR2(100),
+  job_cd           VARCHAR2(10),
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW
+  is '电话银行资金交易流水';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.call_flow_num
+  is '呼叫流水号';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.in_call_num
+  is '呼入电话号码';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.aud_sys_cd
+  is '语音系统代码';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.tran_cd
+  is '交易代码';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.return_code
+  is '返回码';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.return_info
+  is '返回信息';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.pay_acct_id
+  is '付款账户编号';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.pay_bank_no
+  is '付款行行号';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.pay_bank_name
+  is '付款行名称';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.recvbl_acct_id
+  is '收款账户编号';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.recvbl_acct_name
+  is '收款账户名称';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.recv_bank_no
+  is '收款行行号';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.recv_bank_name
+  is '收款行名称';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.avl_aging_cd
+  is '到账时效代码';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.comm_fee
+  is '手续费';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.chn_cd
+  is '渠道代码';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.dep_term
+  is '存期';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.redt_flg
+  is '转存标志';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.operr_id
+  is '操作员编号';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.sign_org_name
+  is '签约机构名称';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.dep_term_cd
+  is '存期代码';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.sav_type_cd
+  is '储种代码';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_TELBANK_CAP_TRAN_FLOW.etl_timestamp
+  is 'etl处理时间戳';
+

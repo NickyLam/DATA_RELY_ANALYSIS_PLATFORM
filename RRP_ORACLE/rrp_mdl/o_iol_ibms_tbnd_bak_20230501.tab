@@ -1,0 +1,380 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501
+(
+  i_code                     VARCHAR2(30),
+  a_type                     VARCHAR2(20),
+  m_type                     VARCHAR2(20),
+  sh_code                    VARCHAR2(30),
+  sz_code                    VARCHAR2(30),
+  yh_code                    VARCHAR2(30),
+  currency                   CHAR(3),
+  country                    CHAR(2),
+  q_type                     CHAR(2),
+  b_name                     VARCHAR2(200),
+  p_type                     VARCHAR2(30),
+  p_class                    VARCHAR2(60),
+  b_par_value                NUMBER(31,8),
+  b_issue_price              NUMBER(12,4),
+  b_issue_date               CHAR(10),
+  b_list_date                CHAR(10),
+  b_start_date               CHAR(10),
+  b_mtr_date                 CHAR(10),
+  b_term                     VARCHAR2(6),
+  b_daycount                 VARCHAR2(120),
+  i_code_bench               VARCHAR2(100),
+  a_type_bench               VARCHAR2(20),
+  m_type_bench               VARCHAR2(20),
+  b_issue_mode               CHAR(1),
+  b_coupon_type              CHAR(1),
+  b_cash_times               NUMBER,
+  b_embopt_type              VARCHAR2(10),
+  b_amortizing               CHAR(1),
+  b_as_type                  VARCHAR2(30),
+  b_issuer                   VARCHAR2(200),
+  b_warrantor                VARCHAR2(1000),
+  b_seniority                VARCHAR2(20),
+  b_fpml                     CLOB,
+  b_coupon                   NUMBER(12,6),
+  b_name_full                VARCHAR2(500),
+  b_actual_mtr_date          CHAR(10),
+  d_code                     VARCHAR2(40),
+  b_p_class                  VARCHAR2(60),
+  b_actual_issue_amount      NUMBER(38,8),
+  chinesespell               VARCHAR2(50),
+  b_coupon_prec              NUMBER,
+  host_market                VARCHAR2(20),
+  bj_market                  VARCHAR2(20),
+  issuer_id                  NUMBER,
+  warrantor_id               NUMBER,
+  is_delete                  NUMBER,
+  usable_flag                NUMBER,
+  memo                       VARCHAR2(2000),
+  update_user                VARCHAR2(30),
+  account_user               VARCHAR2(30),
+  update_time                VARCHAR2(20),
+  account_time               VARCHAR2(20),
+  imp_date                   CHAR(10),
+  imp_time                   VARCHAR2(19),
+  pipe_id                    NUMBER,
+  b_fst_pay_date             CHAR(10),
+  b_fst_reg_calc_start_date  CHAR(10),
+  b_initial_fixing_date      CHAR(10),
+  b_pay_freq                 VARCHAR2(6),
+  b_pay_bizday_convertion    VARCHAR2(30),
+  b_calc_freq                VARCHAR2(6),
+  b_calc_bizday_convertion   VARCHAR2(30),
+  b_reset_freq               VARCHAR2(6),
+  b_reset_bizday_convertion  VARCHAR2(30),
+  b_fixing_dates_offset      VARCHAR2(6),
+  b_fixing_bizday_convertion VARCHAR2(30),
+  b_fixing_precision         NUMBER,
+  b_initial_rate             NUMBER(12,6),
+  b_multiplier               NUMBER(6,4),
+  b_cap_rate                 NUMBER(12,6),
+  b_floor_rate               NUMBER(12,6),
+  b_exercise_style           CHAR(1),
+  b_exercise_date            CHAR(10),
+  b_strike_price             NUMBER(12,4),
+  b_compensation_rate        NUMBER(12,6),
+  p_class_act                VARCHAR2(60),
+  b_issuer_code              VARCHAR2(100),
+  special_desc               VARCHAR2(4000),
+  b_actual_amount_rate       NUMBER(38,4),
+  trustenhancing_type        VARCHAR2(50),
+  b_issue_list_date          CHAR(10),
+  issue_feerate              NUMBER(20,4),
+  underwriting_type          VARCHAR2(100),
+  b_extend_type              VARCHAR2(100),
+  s_type                     VARCHAR2(30),
+  p_class_dv                 VARCHAR2(60),
+  p_class_ccdc               VARCHAR2(60),
+  q_par_value                NUMBER(20,6),
+  confirm_term               CHAR(1),
+  sec_code                   VARCHAR2(100),
+  public_issue               CHAR(1),
+  b_user_mtr_date            CHAR(10),
+  ai_daycount                VARCHAR2(30),
+  ytm_daycount               VARCHAR2(30),
+  b_early_mtr_date           CHAR(10),
+  manage_mode                VARCHAR2(10),
+  bond_nature                VARCHAR2(10),
+  is_city_investment         CHAR(1),
+  perpetual                  CHAR(1),
+  legal_mtr_date             CHAR(10),
+  b_plan_issue_amount        NUMBER(31,8),
+  is_default                 CHAR(1),
+  cf_daycount                VARCHAR2(30),
+  ai_daycount_back           VARCHAR2(30),
+  ytm_daycount_back          VARCHAR2(30),
+  cf_daycount_back           VARCHAR2(30),
+  is_temp                    NUMBER(1),
+  b_ext_rating               VARCHAR2(10),
+  b_ext_rating_institution   VARCHAR2(100),
+  b_issuer_ext_rating        VARCHAR2(10),
+  b_issuer_ext_r_institution VARCHAR2(100),
+  b_fst_ext_rating           VARCHAR2(10),
+  b_fst_ext_rating_inst      VARCHAR2(100),
+  b_fst_issuer_ext_rating    VARCHAR2(10),
+  b_fst_issuer_ext_r_inst    VARCHAR2(100),
+  b_as_asset_type_name       VARCHAR2(100),
+  ref_yield                  NUMBER(12,6),
+  warrantor_responsibility   CHAR(1),
+  debts_registration_date    VARCHAR2(10),
+  guarantor_rating           NUMBER(10,2),
+  start_dt                   DATE,
+  end_dt                     DATE,
+  id_mark                    VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501
+  is '债券基本信息表';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.sh_code
+  is '上交所代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.sz_code
+  is '深交所代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.yh_code
+  is '银行间代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.country
+  is '国家';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.q_type
+  is '报价方式';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_name
+  is '债券名称';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.p_type
+  is '产品类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.p_class
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_par_value
+  is '面额';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_issue_price
+  is '发行价格';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_issue_date
+  is '发行日期';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_list_date
+  is '上市时间';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_start_date
+  is '起息日';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_mtr_date
+  is '到期日';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_term
+  is '期限';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_daycount
+  is '计息基准';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.i_code_bench
+  is '基准利率代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.a_type_bench
+  is '基准利率资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.m_type_bench
+  is '基准利率市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_issue_mode
+  is '发行方式';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_coupon_type
+  is '票息类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_cash_times
+  is '付息次数';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_embopt_type
+  is '含权类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_amortizing
+  is '本金偿还类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_as_type
+  is '资产化类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_issuer
+  is '发行机构';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_warrantor
+  is '担保机构';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_seniority
+  is '清偿等级';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_fpml
+  is '条款FPML';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_coupon
+  is '利率/利差';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_name_full
+  is '债券全称';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_actual_mtr_date
+  is '实际到期日';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.d_code
+  is '债券内部代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_p_class
+  is '债券产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_actual_issue_amount
+  is '实际发行量';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.chinesespell
+  is '中文拼写';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_coupon_prec
+  is '利率精度';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.host_market
+  is '托管市场';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.bj_market
+  is '薄记市场';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.issuer_id
+  is '发行人ID';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.warrantor_id
+  is '担保人ID';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.is_delete
+  is '是否删除';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.usable_flag
+  is '是否已生效：1正常 2新增';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.update_user
+  is '更新人员';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.account_user
+  is '复核人员';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.account_time
+  is '复核时间';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.imp_date
+  is '导入日期';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.imp_time
+  is '导入时间';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.pipe_id
+  is '导入管道';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_fst_pay_date
+  is '首个付息日';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_fst_reg_calc_start_date
+  is '首个规则计息区间开始日';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_initial_fixing_date
+  is '首周期定息日';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_pay_freq
+  is '支付频率';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_pay_bizday_convertion
+  is '支付调整规则';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_calc_freq
+  is '计息频率';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_calc_bizday_convertion
+  is '计息调整规则';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_reset_freq
+  is '重置频率';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_reset_bizday_convertion
+  is '重置调整规则';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_fixing_dates_offset
+  is '定息日偏移';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_fixing_bizday_convertion
+  is '定息日调整规则';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_fixing_precision
+  is '定息精度，普通债券为4，少量债券为6';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_initial_rate
+  is '首周期定息利率';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_multiplier
+  is '初始利率倍数';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_cap_rate
+  is '初始利率上限';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_floor_rate
+  is '初始利率下限';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_exercise_style
+  is '行权类型，A：美式 B：百慕大 E：欧式';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_exercise_date
+  is '首个行权日，含权债有效';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_strike_price
+  is '首个执行价格，含权债有效';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_compensation_rate
+  is '首个补偿利率，含权债有效';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.p_class_act
+  is '会计产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_issuer_code
+  is '发行人代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.special_desc
+  is '特殊条款说明';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_actual_amount_rate
+  is '发行额度占比（%）';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.trustenhancing_type
+  is '增信方式';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_issue_list_date
+  is '上市公告日期';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.issue_feerate
+  is '发行费率';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.underwriting_type
+  is '承销方式';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_extend_type
+  is '债券扩展字段 第1位：是否可转股；第2位：是否可赎回；第3位：是否可回售；第4位：是否可转为相关债券（固息转浮息、浮息转固息)；第5位: 是否公开发行；第6位：是否永续；第7位：是否自贸区；第8位：是否权益类标识；第9位：利率债/信用债；第10位：减记条款；第11位：违约标记；第12位：临时债券标记';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.s_type
+  is '标准类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.p_class_dv
+  is '数据厂商债券分类';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.p_class_ccdc
+  is '中债债券分类';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.q_par_value
+  is '报价面值，0：报价以债券面值报价；其它值为报价面值';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.confirm_term
+  is '是否完整条款，1：不完整条款；0或空值：完整条款';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.sec_code
+  is '证券唯一编码';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.public_issue
+  is '是否公开发行，0：否；1：是';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_user_mtr_date
+  is '用户指定到期日';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.ai_daycount
+  is '应计利息计息基准';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.ytm_daycount
+  is '到期收益率计息基准';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_early_mtr_date
+  is '提前到期日';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.manage_mode
+  is '管理模式,1:自主管理；2:委托管理,默认1';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.bond_nature
+  is '债券性质';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.is_city_investment
+  is '是否城投债';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.perpetual
+  is '是否永续债';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.legal_mtr_date
+  is '法定到期日';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_plan_issue_amount
+  is '计划发行量';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.is_default
+  is '是否违约';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.cf_daycount
+  is '前台现金流计息基准';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.ai_daycount_back
+  is '后台应计利息计息基准';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.ytm_daycount_back
+  is '后台到期收益率计息基准';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.cf_daycount_back
+  is '后台现金流计息基准';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.is_temp
+  is '是否临时代码，0：否；1：是';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_ext_rating
+  is '最新债项评级';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_ext_rating_institution
+  is '最新债项评级机构';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_issuer_ext_rating
+  is '最新发行人评级';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_issuer_ext_r_institution
+  is '最新发行人评级机构';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_fst_ext_rating
+  is '债项首次评级';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_fst_ext_rating_inst
+  is '债项首次评级机构';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_fst_issuer_ext_rating
+  is '发行人首次评级';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_fst_issuer_ext_r_inst
+  is '发行人首次评级机构';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.b_as_asset_type_name
+  is '基础资产类型名称(仅对ABS债券有效)';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.ref_yield
+  is '参考收益率';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.warrantor_responsibility
+  is '担保人是否有连带责任,0-否,1-是';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.debts_registration_date
+  is '债权债务登记日';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.guarantor_rating
+  is '担保人评级';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_BAK_20230501.id_mark
+  is '增删标志';
+

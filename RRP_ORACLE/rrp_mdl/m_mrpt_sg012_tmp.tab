@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.M_MRPT_SG012_TMP
+(
+  data_dt    VARCHAR2(10),
+  org_id     VARCHAR2(60),
+  index_no   VARCHAR2(60),
+  index_desc VARCHAR2(375),
+  cnt        NUMBER,
+  amt        NUMBER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_MRPT_SG012_TMP
+  is '手工报表SG012临时表';
+comment on column RRP_MDL.M_MRPT_SG012_TMP.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_SG012_TMP.org_id
+  is '机构号';
+comment on column RRP_MDL.M_MRPT_SG012_TMP.index_no
+  is '指标号';
+comment on column RRP_MDL.M_MRPT_SG012_TMP.index_desc
+  is '指标描述';
+comment on column RRP_MDL.M_MRPT_SG012_TMP.cnt
+  is '数量';
+comment on column RRP_MDL.M_MRPT_SG012_TMP.amt
+  is '金额';
+

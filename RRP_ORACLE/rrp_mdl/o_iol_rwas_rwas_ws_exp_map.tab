@@ -1,0 +1,423 @@
+﻿create table RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP
+(
+  scenarioid                    NUMBER(9),
+  timeid                        NUMBER(9),
+  reportid                      NUMBER(9),
+  jurisdictionid                NUMBER(9),
+  nettingpoolid                 NUMBER(9),
+  collgua                       NUMBER(9),
+  crmid                         NUMBER(9),
+  exposureid                    NUMBER(9),
+  exposuretypeid                NUMBER(9),
+  inflowoutflowflag             NUMBER(1),
+  exp_portfoliotypeid           NUMBER(9),
+  crm_portfoliotypeid           NUMBER(9),
+  portfoliotypeid               NUMBER(9),
+  exp_rwbandid                  NUMBER(9),
+  crm_rwbandid                  NUMBER(9),
+  rwbandid                      NUMBER(9),
+  pastdueflag                   NUMBER(1),
+  unratedflag                   NUMBER(1),
+  ccfbandid                     NUMBER(9),
+  legalentityid                 NUMBER(9),
+  internallegalentityid         NUMBER(9),
+  exp_obligorgradeid            NUMBER(9),
+  crm_obligorgradeid            NUMBER(9),
+  obligorgradeid                NUMBER(9),
+  slottingid                    NUMBER(9),
+  crmgroupid                    NUMBER(9),
+  jur_currencyid                NUMBER(9),
+  equity_obligorid              NUMBER(9),
+  equityflag                    NUMBER(1),
+  orgexposureamount             NUMBER(22,4),
+  valueadjprov                  NUMBER(22,4),
+  fccmvoladjtoexp               NUMBER(22,4),
+  fccmcoladjvalcvam             NUMBER(22,4),
+  fccmvolandmatadj              NUMBER(22,4),
+  allocatedcrm                  NUMBER(22,4),
+  orgexposurefromccr            NUMBER(22,4),
+  exposureamtaftcrm             NUMBER(22,4),
+  dilutionrisk_rwa              NUMBER(22,4),
+  pdobliggradeorpool            NUMBER(22,4),
+  expwtdlgd                     NUMBER(22,4),
+  expwtdmaturity                NUMBER(22,4),
+  exposurevalueamount           NUMBER(22,4),
+  rwaamount                     NUMBER(22,4),
+  elamount                      NUMBER(22,4),
+  capreqamount                  NUMBER(22,4),
+  altirb_exptypeid              NUMBER(22,4),
+  doubledefaultflag             NUMBER(22,4),
+  exposureaftercrmoffbalance    NUMBER(22,4),
+  exposurevalueamountoffbalance NUMBER(22,4),
+  expnetprov                    NUMBER(22,4),
+  unfeedcpddt                   NUMBER(22,4),
+  settlementprice               NUMBER(22,4),
+  pricediffexp                  NUMBER(22,4),
+  com_pref_flag                 NUMBER(1),
+  obligorid                     NUMBER(9),
+  cvaratingid                   NUMBER(9),
+  exp_effectivematurityuncapped NUMBER(10,6),
+  notionalprincipal             NUMBER(22,4),
+  tradingbookapproachid         NUMBER(9),
+  assettypeid                   NUMBER(9),
+  cva_ead                       NUMBER(22,4),
+  realestateflag                NUMBER(1),
+  mi_tiertypeid                 NUMBER(9),
+  regionid                      NVARCHAR2(90),
+  batchgroupid                  NUMBER(9),
+  ccp_flag                      NUMBER(1),
+  centralgov_rw_flag            NUMBER(1),
+  defaultfund_flag              NUMBER(1),
+  exposurevaluefromccr          NUMBER(22,4),
+  largefininst_flag             NUMBER(1),
+  lgd_own_est_flag              NUMBER(1),
+  valueadjustments              NUMBER(22,4),
+  countryid                     NUMBER(9),
+  approachtypeid                NUMBER(9),
+  exposurevaluepreccf           NUMBER(22,4),
+  exposurevaluepreccfoffbal     NUMBER(22,4),
+  newdefaultflag                NUMBER(1),
+  smeflag                       NUMBER(1),
+  defaultflag                   NUMBER(1),
+  accountrefcd                  NVARCHAR2(750),
+  crmrefcd                      NVARCHAR2(750),
+  obligorname                   NVARCHAR2(750),
+  cvarisk_flag                  NUMBER(1),
+  std_implementationtypeid      NUMBER(9),
+  approachid                    NUMBER(9),
+  rwa_post_adjustmentfactor     NUMBER(22,4),
+  capreq_post_adjustmentfactor  NUMBER(22,4),
+  reportingassettypeid          NUMBER(9),
+  lgdbandid                     NUMBER(9),
+  rwa_stdapproach               NUMBER(22,4),
+  orig_portfoliotypeid          NUMBER(9),
+  obl_countryid                 NUMBER(9),
+  crm_countryid                 NUMBER(9),
+  loancategorygroupid           NUMBER(9),
+  dta_flag                      NUMBER(1),
+  msr_flag                      NUMBER(1),
+  obligor_pd                    NUMBER(10,8),
+  cbrc_otc_notionalprincipal    NUMBER(22,4),
+  generalprovision              NUMBER(22,4),
+  writeoff_amount               NUMBER(22,4),
+  arrearsstatusid               NUMBER(9),
+  largeexp_maturitybandid       NUMBER(9),
+  regulatedflag                 NUMBER(1),
+  financialinstitutionflag      NUMBER(1),
+  connectedentityid             NUMBER(9),
+  collateraltypeid              NUMBER(9),
+  guaranteetypeid               NUMBER(9),
+  marketparticipanttypeid       NUMBER(9),
+  exp_standardised_rwbandid     NUMBER(9),
+  crm_marketparticipanttypeid   NUMBER(9),
+  crm_standardised_rwbandid     NUMBER(9),
+  orig_predeflt_portfoliotypeid NUMBER(9),
+  largeexp_fin_inst_flag        NUMBER(1),
+  largeexp_unreg_finentity_flag NUMBER(1),
+  orig_obligortypeid            NUMBER(9),
+  orig_crm_issuertypeid         NUMBER(9),
+  largeexp_parentsignifent_flag NUMBER(9),
+  largeexp_valueadjprov         NUMBER(22,4),
+  largeexp_org_amount           NUMBER(22,4),
+  largeexp_expnetprov           NUMBER(22,4),
+  largeexp_allocatedcrm         NUMBER(22,4),
+  largeexp_fccmcoladjvalcvam    NUMBER(22,4),
+  largeexp_approachid           NUMBER(9),
+  obl_internalmptypeid          NUMBER(9),
+  obligortypeid                 NUMBER(9),
+  sourceid                      NUMBER(9),
+  productid                     NVARCHAR2(90),
+  orgstrucid                    NUMBER(9),
+  accounting_subjectid          NUMBER(22),
+  principalamount               NUMBER(22,4),
+  interestamount                NUMBER(22,4),
+  industrygroupid               NVARCHAR2(90),
+  corp_size_cd                  NVARCHAR2(9),
+  grade_model_cd                NVARCHAR2(30),
+  remmaturity_bandid            NUMBER(9),
+  loan_ref_no                   VARCHAR2(100),
+  five_class_cd                 VARCHAR2(10),
+  etl_dt                        DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP
+  is '信用风险暴露关系表';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.scenarioid
+  is '场景标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.timeid
+  is '时间标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.reportid
+  is '报表编号标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.jurisdictionid
+  is '监管规则标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.nettingpoolid
+  is '净额结算池标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.collgua
+  is '抵制押保证标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.crmid
+  is '信用风险缓释标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exposureid
+  is '暴露标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exposuretypeid
+  is '暴露类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.inflowoutflowflag
+  is '流进流出标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exp_portfoliotypeid
+  is '暴露_暴露分类标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.crm_portfoliotypeid
+  is '缓释_暴露分类标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.portfoliotypeid
+  is '暴露分类标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exp_rwbandid
+  is '暴露_权重档次标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.crm_rwbandid
+  is '缓释_权重档次标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.rwbandid
+  is '风险权重区间标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.pastdueflag
+  is '逾期标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.unratedflag
+  is '未评级标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.ccfbandid
+  is '信用转换因子等级标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.legalentityid
+  is '法律实体标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.internallegalentityid
+  is '内部法律实体标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exp_obligorgradeid
+  is '暴露_债务人等级标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.crm_obligorgradeid
+  is '缓释_债务人等级标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.obligorgradeid
+  is '债务人等级标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.slottingid
+  is '专业贷款标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.crmgroupid
+  is '信用风险缓释组标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.jur_currencyid
+  is '监管_货币标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.equity_obligorid
+  is '股权_债务人等级标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.equityflag
+  is '股权标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.orgexposureamount
+  is '原始暴露金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.valueadjprov
+  is '拨备金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.fccmvoladjtoexp
+  is '暴露的波动调整';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.fccmcoladjvalcvam
+  is '综合法下金融抵置押品调整后价值';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.fccmvolandmatadj
+  is '波动期限调整';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.allocatedcrm
+  is '分配的缓释金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.orgexposurefromccr
+  is '交易对手原始暴露金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exposureamtaftcrm
+  is '风险缓释后的暴露金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.dilutionrisk_rwa
+  is '稀释风险';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.pdobliggradeorpool
+  is '第一风险人等级或池违约概率';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.expwtdlgd
+  is '暴露加权的违约损失率';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.expwtdmaturity
+  is '暴露加权的违约期限';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exposurevalueamount
+  is '暴露价值金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.rwaamount
+  is 'rwa（风险加权资产）金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.elamount
+  is '预期损失金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.capreqamount
+  is '资本需求额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.altirb_exptypeid
+  is '内评法_暴露类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.doubledefaultflag
+  is '双重违约标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exposureaftercrmoffbalance
+  is '缓释后表外风险暴露余额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exposurevalueamountoffbalance
+  is '缓释后表外风险暴露';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.expnetprov
+  is '暴露净拨备';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.unfeedcpddt
+  is '未收费分配缓释品保证的双重标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.settlementprice
+  is '结算价格';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.pricediffexp
+  is '价格差异暴露';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.com_pref_flag
+  is '商业实体_优惠_标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.obligorid
+  is '第一风险人标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.cvaratingid
+  is '信用估值调整评级标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exp_effectivematurityuncapped
+  is '暴露_有效期限';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.notionalprincipal
+  is '名义本金';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.tradingbookapproachid
+  is '交易账户方法标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.assettypeid
+  is '资产类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.cva_ead
+  is '信用估值调整_风险暴露';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.realestateflag
+  is '房地产标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.mi_tiertypeid
+  is '少数股东_层级类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.regionid
+  is '地区标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.batchgroupid
+  is '批处理组标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.ccp_flag
+  is '中央交易对手_标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.centralgov_rw_flag
+  is '中央交易权重_标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.defaultfund_flag
+  is '违约基金_标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exposurevaluefromccr
+  is '交易对手风险暴露';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largefininst_flag
+  is '大型金融机融_标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.lgd_own_est_flag
+  is '违约损失率_所有_标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.valueadjustments
+  is '价值调整';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.countryid
+  is '国家标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.approachtypeid
+  is '方法类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exposurevaluepreccf
+  is 'ccf（信用转换系数）之前暴露';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exposurevaluepreccfoffbal
+  is 'ccf（信用转换系数）之前表外';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.newdefaultflag
+  is '新违约标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.smeflag
+  is '小微标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.defaultflag
+  is '违约标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.accountrefcd
+  is '账户参考代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.crmrefcd
+  is '信用风险缓释参考代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.obligorname
+  is '市场参与者名字';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.cvarisk_flag
+  is '信用估值调整风险标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.std_implementationtypeid
+  is '标准法实施类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.approachid
+  is '方法标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.rwa_post_adjustmentfactor
+  is '风险加权资产_后续_调整因子';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.capreq_post_adjustmentfactor
+  is '资本要求_后续_调整因子';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.reportingassettypeid
+  is '报告资产类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.lgdbandid
+  is '违约损失率等级标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.rwa_stdapproach
+  is '风险加权资产_标准法';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.orig_portfoliotypeid
+  is '原始暴露分类标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.obl_countryid
+  is '债务人国家标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.crm_countryid
+  is '缓释国家标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.loancategorygroupid
+  is '五级分类组标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.dta_flag
+  is '递延所得税资产_标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.msr_flag
+  is '抵押服务权利_标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.obligor_pd
+  is '债务人_违约概率';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.cbrc_otc_notionalprincipal
+  is '银监会_场外衍生_名义本金';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.generalprovision
+  is '银监会_场外衍生_名义本金';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.writeoff_amount
+  is '结清_金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.arrearsstatusid
+  is '欠款状态标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largeexp_maturitybandid
+  is '巨额风险暴露_期限档次标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.regulatedflag
+  is '监管标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.financialinstitutionflag
+  is '金融机构标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.connectedentityid
+  is '关联企业标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.collateraltypeid
+  is '抵押品类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.guaranteetypeid
+  is '保证类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.marketparticipanttypeid
+  is '市场参与者类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.exp_standardised_rwbandid
+  is '暴露_标准法_风险权重';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.crm_marketparticipanttypeid
+  is '缓释品_市场参与者类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.crm_standardised_rwbandid
+  is '缓释品_标准法_风险权重';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.orig_predeflt_portfoliotypeid
+  is '原始_违约前_暴露分类标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largeexp_fin_inst_flag
+  is '大额暴露_金融机构_标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largeexp_unreg_finentity_flag
+  is '大额暴露_未监管_金融实体_标';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.orig_obligortypeid
+  is '原始_债务人标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.orig_crm_issuertypeid
+  is '原始_缓释_发行人类型';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largeexp_parentsignifent_flag
+  is '大额暴露_亲本意义_标志';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largeexp_valueadjprov
+  is '大额暴露_拨备金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largeexp_org_amount
+  is '大额暴露_余额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largeexp_expnetprov
+  is '大额暴露_净拨备金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largeexp_allocatedcrm
+  is '大额暴露_分配风险缓释';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largeexp_fccmcoladjvalcvam
+  is '大额暴露_综合法下金融抵置押品';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.largeexp_approachid
+  is '大额暴露_方法标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.obl_internalmptypeid
+  is '债务人_内部市场参与者标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.obligortypeid
+  is '第一风险人类型标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.sourceid
+  is '业务条线';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.productid
+  is '产品';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.orgstrucid
+  is '组织机构标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.accounting_subjectid
+  is '会计科目';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.principalamount
+  is '本金金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.interestamount
+  is '应收利息金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.industrygroupid
+  is '行业组标识';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.corp_size_cd
+  is '企业规模代码国标';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.grade_model_cd
+  is '客户评级的模型代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.loan_ref_no
+  is '债项编号';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.five_class_cd
+  is '五级分类';
+comment on column RRP_MDL.O_IOL_RWAS_RWAS_WS_EXP_MAP.etl_dt
+  is 'ETL处理日期';
+

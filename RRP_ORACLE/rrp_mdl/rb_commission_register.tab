@@ -1,0 +1,55 @@
+﻿create table RRP_MDL.RB_COMMISSION_REGISTER
+(
+  acct_name                       VARCHAR2(200),
+  acct_seq_no                     VARCHAR2(5),
+  base_acct_no                    VARCHAR2(50),
+  client_no                       VARCHAR2(16),
+  country                         VARCHAR2(3),
+  doc_type                        VARCHAR2(10),
+  internal_key                    NUMBER(15),
+  prod_type                       VARCHAR2(12),
+  reference                       VARCHAR2(50),
+  tran_type                       VARCHAR2(10),
+  voucher_no                      VARCHAR2(50),
+  channel_seq_no                  VARCHAR2(33),
+  commission_client_tel           VARCHAR2(20),
+  commission_reason               VARCHAR2(200),
+  commission_relation             VARCHAR2(50),
+  company                         VARCHAR2(20),
+  event_type                      VARCHAR2(20),
+  is_commission                   VARCHAR2(1),
+  prefix                          VARCHAR2(10),
+  program_id                      VARCHAR2(20),
+  commission_expire_date          DATE,
+  commission_start_date           DATE,
+  tran_date                       DATE,
+  tran_timestamp                  VARCHAR2(26),
+  acct_ccy                        VARCHAR2(3),
+  commission_client_name          VARCHAR2(200),
+  commission_client_no            VARCHAR2(16),
+  commission_document_id          VARCHAR2(60),
+  commission_document_type        VARCHAR2(4),
+  tran_amt                        NUMBER(17,2),
+  tran_branch                     VARCHAR2(12),
+  commission_confirm_result       VARCHAR2(20),
+  commission_confirm_tel          VARCHAR2(20),
+  commission_confirm_time         VARCHAR2(10),
+  commission_confirm_user_id_key1 VARCHAR2(30),
+  commission_confirm_user_id_key2 VARCHAR2(30),
+  commission_flag                 VARCHAR2(1),
+  etl_dt                          DATE,
+  etl_timestamp                   TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

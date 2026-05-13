@@ -1,0 +1,56 @@
+﻿create table RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022
+(
+  tran_dt                  VARCHAR2(20),
+  dep_prod_sub_acct_id     VARCHAR2(10),
+  open_acct_org_id         VARCHAR2(60),
+  prod_id                  VARCHAR2(60),
+  rec_bal                  NUMBER(18,2),
+  int_paybl                NUMBER(18,2),
+  exec_int_rat             NUMBER(18,7),
+  tran_status_cd           VARCHAR2(20),
+  dep_acct_id              VARCHAR2(60),
+  inserest_flag            VARCHAR2(1),
+  current_accruing_amount  NUMBER(18,2),
+  previous_accruing_amount NUMBER(18,2),
+  current_accruing_int     NUMBER(18,2),
+  previous_accruing_int    NUMBER(18,2),
+  etl_dt                   DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022
+  is '分户活期计提登记簿';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.tran_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.dep_prod_sub_acct_id
+  is '存款产品分户编号';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.open_acct_org_id
+  is '机构号';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.rec_bal
+  is '存款余额';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.int_paybl
+  is '当日应付利息';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.dep_acct_id
+  is '存款账户编号';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.inserest_flag
+  is '是否结息 0-否 1-是';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.current_accruing_amount
+  is '当前累计积数';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.previous_accruing_amount
+  is '上日累计积数';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.current_accruing_int
+  is '当前累计利息';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.previous_accruing_int
+  is '上日累计利息';
+comment on column RRP_MDL.O_IOL_IFCS_DEP_CURRENT_PROVI_RGST_B_202404022.etl_dt
+  is '数据日期';
+

@@ -1,0 +1,110 @@
+﻿create table RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501
+(
+  etl_dt           DATE,
+  lp_id            VARCHAR2(60),
+  bal_id           VARCHAR2(60),
+  entry_org_id     VARCHAR2(60),
+  tran_acct_b_id   VARCHAR2(60),
+  asset_type_name  VARCHAR2(250),
+  bus_cate_name    VARCHAR2(250),
+  asset_thd_cls_cd VARCHAR2(30),
+  main_asset_id    VARCHAR2(100),
+  minor_asset_id   VARCHAR2(100),
+  std_prod_id      VARCHAR2(60),
+  subj_id          VARCHAR2(60),
+  stl_dt           DATE,
+  hold_pos         NUMBER(30,2),
+  hold_fac_val     NUMBER(30,2),
+  net_price_cost   NUMBER(30,2),
+  int_adj_amt      NUMBER(30,2),
+  evha_val_chag    NUMBER(30,2),
+  int_cost         NUMBER(30,2),
+  full_price_cost  NUMBER(30,2),
+  impam_prep       NUMBER(30,2),
+  spd_prft         NUMBER(30,2),
+  amort_prft       NUMBER(30,2),
+  int_prft         NUMBER(30,2),
+  evha_val_chag_pl NUMBER(30,2),
+  impam_loss       NUMBER(30,2),
+  tran_fee         NUMBER(30,2),
+  actl_int_rat     NUMBER(18,8),
+  value_dt         DATE,
+  exp_dt           DATE,
+  currt_bal        NUMBER(30,2),
+  happ_amt         NUMBER(30,2),
+  job_cd           VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501
+  is '外汇资金持仓';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.bal_id
+  is '余额编号';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.entry_org_id
+  is '记账机构编号';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.tran_acct_b_id
+  is '交易账簿编号';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.asset_type_name
+  is '资产类型名称';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.bus_cate_name
+  is '业务类别名称';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.asset_thd_cls_cd
+  is '资产三分类代码';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.main_asset_id
+  is '主资产编号';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.minor_asset_id
+  is '次资产编号';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.stl_dt
+  is '结算日期';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.hold_pos
+  is '持有仓位';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.hold_fac_val
+  is '持有面值';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.net_price_cost
+  is '净价成本';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.int_adj_amt
+  is '利息调整金额';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.evha_val_chag
+  is '公允价值变动';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.int_cost
+  is '利息成本';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.full_price_cost
+  is '全价成本';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.impam_prep
+  is '减值准备';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.spd_prft
+  is '价差收益';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.amort_prft
+  is '摊销收益';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.int_prft
+  is '利息收益';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.evha_val_chag_pl
+  is '公允价值变动损益';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.impam_loss
+  is '减值损失';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.tran_fee
+  is '交易费用';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.actl_int_rat
+  is '实际利率';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.happ_amt
+  is '发生金额';
+comment on column RRP_MDL.O_ICL_CMM_FX_CAP_POST_BAK_20230501.job_cd
+  is '任务代码';
+

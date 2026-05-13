@@ -1,0 +1,213 @@
+﻿create table RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS
+(
+  acct_seq_no            VARCHAR2(5),
+  base_acct_no           VARCHAR2(64),
+  ccy                    VARCHAR2(3),
+  client_type            VARCHAR2(3),
+  doc_type               VARCHAR2(10),
+  gl_code                VARCHAR2(20),
+  prod_type              VARCHAR2(12),
+  reference              VARCHAR2(50),
+  tran_type              VARCHAR2(10),
+  user_id                VARCHAR2(8),
+  voucher_no             VARCHAR2(50),
+  acct_desc              VARCHAR2(200),
+  batch_no               VARCHAR2(50),
+  batch_status           VARCHAR2(1),
+  channel_seq_no         VARCHAR2(33),
+  company                VARCHAR2(20),
+  error_code             VARCHAR2(50),
+  error_desc             VARCHAR2(3000),
+  fh_seq_no              VARCHAR2(50),
+  job_run_id             VARCHAR2(50),
+  narrative              VARCHAR2(400),
+  oth_acct_desc          VARCHAR2(600),
+  oth_gl_code            VARCHAR2(20),
+  oth_seq_no             VARCHAR2(50),
+  oth_tran_type          VARCHAR2(10),
+  prefix                 VARCHAR2(10),
+  ret_msg                VARCHAR2(3000),
+  seq_no                 VARCHAR2(50),
+  serv_charge            VARCHAR2(1),
+  source_type            VARCHAR2(6),
+  tran_desc              VARCHAR2(200),
+  tran_note              VARCHAR2(200),
+  channel                VARCHAR2(10),
+  settlement_date        DATE,
+  tran_date              DATE,
+  tran_timestamp         VARCHAR2(26),
+  acct_branch            VARCHAR2(12),
+  acct_ccy               VARCHAR2(3),
+  oth_acct_ccy           VARCHAR2(3),
+  oth_acct_seq_no        VARCHAR2(5),
+  oth_bank_code          VARCHAR2(20),
+  oth_bank_name          VARCHAR2(100),
+  oth_base_acct_no       VARCHAR2(64),
+  oth_branch             VARCHAR2(20),
+  oth_prod_type          VARCHAR2(12),
+  oth_reference          VARCHAR2(50),
+  oth_tran_name          VARCHAR2(200),
+  remark1                VARCHAR2(200),
+  remark2                VARCHAR2(200),
+  remark3                VARCHAR2(200),
+  remark4                VARCHAR2(200),
+  remark5                VARCHAR2(200),
+  tran_amt               NUMBER(17,2),
+  tran_branch            VARCHAR2(12),
+  narrative_code         VARCHAR2(30),
+  etl_dt                 DATE,
+  etl_timestamp          TIMESTAMP(6),
+  oth_real_bank_code     VARCHAR2(30),
+  oth_real_bank_name     VARCHAR2(200),
+  oth_real_base_acct_no  VARCHAR2(64),
+  oth_real_document_id   VARCHAR2(60),
+  oth_real_document_type VARCHAR2(4),
+  oth_real_prod_type     VARCHAR2(12),
+  oth_real_tran_addr     VARCHAR2(400),
+  oth_real_tran_name     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS
+  is '批量转账信息登记薄';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.acct_seq_no
+  is '账户子账号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.base_acct_no
+  is '交易账号/卡号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.ccy
+  is '币种';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.client_type
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.doc_type
+  is '凭证类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.gl_code
+  is '科目代码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.prod_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.reference
+  is '交易参考号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.tran_type
+  is '交易类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.user_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.voucher_no
+  is '凭证号码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.acct_desc
+  is '账户描述';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.batch_no
+  is '批次号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.batch_status
+  is '批次处理状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.channel_seq_no
+  is '全局流水号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.error_code
+  is '错误码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.error_desc
+  is '错误描述';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.fh_seq_no
+  is '资金冻结流水号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.job_run_id
+  is '批处理任务id';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.narrative
+  is '摘要';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_acct_desc
+  is '对方账户描述';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_gl_code
+  is '对方科目代码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_seq_no
+  is '对方交易流水号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_tran_type
+  is '对方交易类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.prefix
+  is '前缀';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.ret_msg
+  is '服务状态描述';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.seq_no
+  is '序号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.serv_charge
+  is '服务费标识';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.source_type
+  is '渠道编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.tran_desc
+  is '交易描述';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.tran_note
+  is '交易附言';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.channel
+  is '渠道';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.settlement_date
+  is '清算日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.tran_date
+  is '交易日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.acct_branch
+  is '开户机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.acct_ccy
+  is '账户币种';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_acct_ccy
+  is '对方账户币种';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_acct_seq_no
+  is '对方账户序列号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_bank_code
+  is '对方银行代码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_bank_name
+  is '对方银行名称';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_base_acct_no
+  is '对方账号/卡号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_branch
+  is '对方账户开户机构';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_prod_type
+  is '对方账户产品类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_reference
+  is '对方交易参考号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_tran_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.remark1
+  is '备注1';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.remark2
+  is '备注2';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.remark3
+  is '备注3';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.remark4
+  is '备注5';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.remark5
+  is '备注6';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.tran_branch
+  is '核心交易机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.narrative_code
+  is '摘要码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_real_bank_code
+  is '真实对方金融机构代码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_real_bank_name
+  is '真实对方金融机构名称';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_real_base_acct_no
+  is '真实交易对手账号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_real_document_id
+  is '真实交易对手证件号码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_real_document_type
+  is '真实交易对手证件类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_real_prod_type
+  is '真实交易对手账户产品类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_real_tran_addr
+  is '真实交易发生地';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BATCH_TRAN_DETAILS.oth_real_tran_name
+  is '真实交易对手名称';
+

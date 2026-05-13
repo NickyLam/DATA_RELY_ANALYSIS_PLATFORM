@@ -1,0 +1,24 @@
+﻿create table RRP_EAST.EAST5_MX_JYDS
+(
+  tra_seq_no  VARCHAR2(500),
+  src_seq_num VARCHAR2(200),
+  dfzh        VARCHAR2(200),
+  dfhm        VARCHAR2(4000),
+  dfxh        VARCHAR2(200),
+  dfxm        VARCHAR2(500),
+  dfhm_oth    VARCHAR2(3),
+  dfhm_orig   VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

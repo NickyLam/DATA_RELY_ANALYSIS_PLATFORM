@@ -1,0 +1,1678 @@
+﻿create table RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO
+(
+  etl_dt                   DATE,
+  lp_id                    VARCHAR2(60),
+  dubil_id                 VARCHAR2(100),
+  std_prod_id              VARCHAR2(60),
+  prod_id                  VARCHAR2(100),
+  cust_id                  VARCHAR2(60),
+  subj_id                  VARCHAR2(60),
+  acctnt_cate_cd           VARCHAR2(10),
+  enter_acct_acct_num      VARCHAR2(100),
+  repay_num                VARCHAR2(100),
+  rela_agt_id              VARCHAR2(100),
+  rela_appl_flow_num       VARCHAR2(150),
+  curr_cd                  VARCHAR2(10),
+  bus_breed_id             VARCHAR2(60),
+  loan_type_cd             VARCHAR2(10),
+  asset_thd_cls_cd         VARCHAR2(30),
+  dubil_status_cd          VARCHAR2(10),
+  loan_usage_cd            VARCHAR2(10),
+  dir_indus_cd             VARCHAR2(10),
+  cont_status_cd           VARCHAR2(10),
+  loan_level4_cls_cd       VARCHAR2(10),
+  loan_level5_cls_cd       VARCHAR2(10),
+  loan_level10_cls_cd      VARCHAR2(10),
+  loan_level12_cls_cd      VARCHAR2(10),
+  acru_non_acru_cd         VARCHAR2(10),
+  repay_way_cd             VARCHAR2(10),
+  int_set_way_cd           VARCHAR2(10),
+  int_accr_way_cd          VARCHAR2(10),
+  int_rat_adj_way_cd       VARCHAR2(10),
+  int_rat_adj_ped_corp_cd  VARCHAR2(10),
+  int_rat_adj_ped_freq     NUMBER(10),
+  int_rat_base_type_cd     VARCHAR2(10),
+  int_rat_float_way_cd     VARCHAR2(10),
+  int_rat_float_dir_cd     VARCHAR2(10),
+  int_rat_flo_val          NUMBER(38,8),
+  pric_repay_freq_cd       VARCHAR2(10),
+  int_repay_freq_cd        VARCHAR2(10),
+  guar_way_cd              VARCHAR2(10),
+  cust_char_cd             VARCHAR2(30),
+  enter_acct_acct_num_type VARCHAR2(30),
+  repay_num_type           VARCHAR2(30),
+  intnal_carr_flg          VARCHAR2(10),
+  dom_overs_flg            VARCHAR2(10),
+  white_list_cust_flg      VARCHAR2(10),
+  farm_flg                 VARCHAR2(10),
+  agclt_flg                VARCHAR2(10),
+  int_accr_flg             VARCHAR2(10),
+  comp_int_flg             VARCHAR2(10),
+  ovdue_flg                VARCHAR2(10),
+  wrt_off_flg              VARCHAR2(10),
+  open_acct_dt             DATE,
+  distr_dt                 DATE,
+  value_dt                 DATE,
+  exp_dt                   DATE,
+  payoff_dt                DATE,
+  last_repay_dt            DATE,
+  next_repay_dt            DATE,
+  curr_int_rat_effect_dt   DATE,
+  next_int_rat_adj_dt      DATE,
+  cust_mgr_id              VARCHAR2(60),
+  open_acct_org_id         VARCHAR2(60),
+  mgmt_org_id              VARCHAR2(60),
+  acct_instit_id           VARCHAR2(60),
+  init_tot_perds           NUMBER(10),
+  tot_perds                NUMBER(10),
+  curr_issue_perds         NUMBER(10),
+  surp_perds               NUMBER(10),
+  ovdue_perds              NUMBER(10),
+  pric_ovdue_flg           VARCHAR2(10),
+  int_ovdue_flg            VARCHAR2(10),
+  pric_ovdue_days          NUMBER(22),
+  int_ovdue_days           NUMBER(22),
+  grace_period_days        NUMBER(10),
+  inst_comm_fee_rat        NUMBER(18,6),
+  base_rat                 NUMBER(38,8),
+  exec_int_rat             NUMBER(38,8),
+  ovdue_int_rat            NUMBER(38,8),
+  daily_exec_int_rat       NUMBER(38,8),
+  cont_amt                 NUMBER(30,2),
+  dubil_amt                NUMBER(30,2),
+  distr_amt                NUMBER(30,2),
+  bank_contri_ratio        NUMBER(18,8),
+  td_acru_int              NUMBER(38,8),
+  currt_acru_int           NUMBER(30,2),
+  nomal_pric               NUMBER(30,2),
+  ovdue_pric               NUMBER(30,2),
+  idle_pric                NUMBER(30,2),
+  bad_debt_pric            NUMBER(30,2),
+  wrt_off_pric             NUMBER(30,2),
+  nomal_int                NUMBER(30,2),
+  ovdue_int                NUMBER(30,2),
+  wrt_off_int              NUMBER(30,2),
+  ovdue_pric_pnlt          NUMBER(30,2),
+  ovdue_int_pnlt           NUMBER(30,2),
+  recvbl_over_int          NUMBER(30,2),
+  recvbl_acru_pnlt         NUMBER(30,2),
+  recvbl_pnlt              NUMBER(30,2),
+  recvbl_fee               NUMBER(30,2),
+  in_bs_over_int_bal       NUMBER(30,2),
+  off_bs_over_int_bal      NUMBER(30,2),
+  in_bs_int                NUMBER(30,2),
+  off_bs_int               NUMBER(30,2),
+  acm_recvbl_uncol_int_amt NUMBER(30,2),
+  repaid_nomal_pric        NUMBER(30,2),
+  repaid_ovdue_pric        NUMBER(30,2),
+  repaid_nomal_int         NUMBER(30,2),
+  repaid_ovdue_int         NUMBER(30,2),
+  repaid_ovdue_pric_pnlt   NUMBER(30,2),
+  repaid_ovdue_int_pnlt    NUMBER(30,2),
+  repaid_fee               NUMBER(30,2),
+  pric_bal                 NUMBER(30,2),
+  currt_bal                NUMBER(30,2),
+  cl_curr_currt_bal        NUMBER(30,2),
+  ear_d_bal                NUMBER(30,2),
+  ear_m_bal                NUMBER(30,2),
+  ear_s_bal                NUMBER(30,2),
+  ear_y_bal                NUMBER(30,2),
+  y_acm_bal                NUMBER(30,2),
+  s_acm_bal                NUMBER(30,2),
+  m_acm_bal                NUMBER(30,2),
+  cl_curr_ear_d_bal        NUMBER(30,2),
+  cl_curr_ear_m_bal        NUMBER(30,2),
+  cl_curr_ear_s_bal        NUMBER(30,2),
+  cl_curr_ear_y_bal        NUMBER(30,2),
+  cl_curr_y_acm_bal        NUMBER(30,2),
+  cl_curr_ear_d_y_acm_bal  NUMBER(30,2),
+  cl_curr_ear_m_y_acm_bal  NUMBER(30,2),
+  cl_curr_ear_s_y_acm_bal  NUMBER(30,2),
+  cl_curr_ear_y_y_acm_bal  NUMBER(30,2),
+  cl_curr_s_acm_bal        NUMBER(30,2),
+  cl_curr_ear_d_s_acm_bal  NUMBER(30,2),
+  cl_curr_ear_s_s_acm_bal  NUMBER(30,2),
+  cl_curr_ear_y_s_acm_bal  NUMBER(30,2),
+  cl_curr_m_acm_bal        NUMBER(30,2),
+  cl_curr_ear_d_m_acm_bal  NUMBER(30,2),
+  cl_curr_ear_m_m_acm_bal  NUMBER(30,2),
+  cl_curr_ear_y_m_acm_bal  NUMBER(30,2),
+  y_avg_bal                NUMBER(30,2),
+  q_avg_bal                NUMBER(30,2),
+  m_avg_bal                NUMBER(30,2),
+  cl_curr_y_avg_bal        NUMBER(30,2),
+  cl_curr_q_avg_bal        NUMBER(30,2),
+  cl_curr_m_avg_bal        NUMBER(30,2),
+  job_cd                   VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6),
+  cred_rht_turn_flg        VARCHAR2(10),
+  init_distr_dt            DATE,
+  init_distr_amt           NUMBER(30,2),
+  cont_id                  VARCHAR2(100),
+  acp_distr_amt            NUMBER(30,2),
+  regroup_flg              VARCHAR2(10),
+  regroup_loan_type_cd     VARCHAR2(10),
+  regroup_dt               DATE,
+  init_exp_dt              DATE,
+  enter_acct_bank_name     VARCHAR2(500),
+  repay_open_acct_bank_id  VARCHAR2(100),
+  repay_open_acct_org_name VARCHAR2(500),
+  core_dubil_id            VARCHAR2(100),
+  intnal_loan_type_cd      VARCHAR2(30)
+)
+partition by range (ETL_DT)
+(
+  partition PARTITION_19000101 values less than (TO_DATE(' 1900-01-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230430 values less than (TO_DATE(' 2023-05-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230531 values less than (TO_DATE(' 2023-06-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230601 values less than (TO_DATE(' 2023-06-02 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230602 values less than (TO_DATE(' 2023-06-03 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230603 values less than (TO_DATE(' 2023-06-04 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230604 values less than (TO_DATE(' 2023-06-05 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230605 values less than (TO_DATE(' 2023-06-06 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230606 values less than (TO_DATE(' 2023-06-07 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230607 values less than (TO_DATE(' 2023-06-08 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230608 values less than (TO_DATE(' 2023-06-09 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230609 values less than (TO_DATE(' 2023-06-10 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230610 values less than (TO_DATE(' 2023-06-11 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230611 values less than (TO_DATE(' 2023-06-12 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230612 values less than (TO_DATE(' 2023-06-13 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230613 values less than (TO_DATE(' 2023-06-14 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230614 values less than (TO_DATE(' 2023-06-15 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230701 values less than (TO_DATE(' 2023-07-02 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20230922 values less than (TO_DATE(' 2023-09-23 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20230923 values less than (TO_DATE(' 2023-09-24 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20231020 values less than (TO_DATE(' 2023-10-21 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20231201 values less than (TO_DATE(' 2023-12-02 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20231231 values less than (TO_DATE(' 2024-01-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240101 values less than (TO_DATE(' 2024-01-02 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240102 values less than (TO_DATE(' 2024-01-03 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240103 values less than (TO_DATE(' 2024-01-04 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240104 values less than (TO_DATE(' 2024-01-05 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240105 values less than (TO_DATE(' 2024-01-06 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240106 values less than (TO_DATE(' 2024-01-07 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240107 values less than (TO_DATE(' 2024-01-08 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240108 values less than (TO_DATE(' 2024-01-09 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240109 values less than (TO_DATE(' 2024-01-10 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240110 values less than (TO_DATE(' 2024-01-11 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240111 values less than (TO_DATE(' 2024-01-12 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240112 values less than (TO_DATE(' 2024-01-13 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240113 values less than (TO_DATE(' 2024-01-14 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240114 values less than (TO_DATE(' 2024-01-15 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240115 values less than (TO_DATE(' 2024-01-16 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240116 values less than (TO_DATE(' 2024-01-17 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240117 values less than (TO_DATE(' 2024-01-18 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240118 values less than (TO_DATE(' 2024-01-19 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240119 values less than (TO_DATE(' 2024-01-20 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240120 values less than (TO_DATE(' 2024-01-21 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240121 values less than (TO_DATE(' 2024-01-22 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240122 values less than (TO_DATE(' 2024-01-23 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240123 values less than (TO_DATE(' 2024-01-24 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240124 values less than (TO_DATE(' 2024-01-25 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240125 values less than (TO_DATE(' 2024-01-26 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240126 values less than (TO_DATE(' 2024-01-27 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240127 values less than (TO_DATE(' 2024-01-28 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240128 values less than (TO_DATE(' 2024-01-29 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240129 values less than (TO_DATE(' 2024-01-30 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240130 values less than (TO_DATE(' 2024-01-31 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240131 values less than (TO_DATE(' 2024-02-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240201 values less than (TO_DATE(' 2024-02-02 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240202 values less than (TO_DATE(' 2024-02-03 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240203 values less than (TO_DATE(' 2024-02-04 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240204 values less than (TO_DATE(' 2024-02-05 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240205 values less than (TO_DATE(' 2024-02-06 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240206 values less than (TO_DATE(' 2024-02-07 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240207 values less than (TO_DATE(' 2024-02-08 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240208 values less than (TO_DATE(' 2024-02-09 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240209 values less than (TO_DATE(' 2024-02-10 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240210 values less than (TO_DATE(' 2024-02-11 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240211 values less than (TO_DATE(' 2024-02-12 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240212 values less than (TO_DATE(' 2024-02-13 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240213 values less than (TO_DATE(' 2024-02-14 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240214 values less than (TO_DATE(' 2024-02-15 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240215 values less than (TO_DATE(' 2024-02-16 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240216 values less than (TO_DATE(' 2024-02-17 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240217 values less than (TO_DATE(' 2024-02-18 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240218 values less than (TO_DATE(' 2024-02-19 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240219 values less than (TO_DATE(' 2024-02-20 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240220 values less than (TO_DATE(' 2024-02-21 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240221 values less than (TO_DATE(' 2024-02-22 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240222 values less than (TO_DATE(' 2024-02-23 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240223 values less than (TO_DATE(' 2024-02-24 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240224 values less than (TO_DATE(' 2024-02-25 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240225 values less than (TO_DATE(' 2024-02-26 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240226 values less than (TO_DATE(' 2024-02-27 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240227 values less than (TO_DATE(' 2024-02-28 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240228 values less than (TO_DATE(' 2024-02-29 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240229 values less than (TO_DATE(' 2024-03-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240301 values less than (TO_DATE(' 2024-03-02 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240302 values less than (TO_DATE(' 2024-03-03 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240303 values less than (TO_DATE(' 2024-03-04 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240304 values less than (TO_DATE(' 2024-03-05 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240305 values less than (TO_DATE(' 2024-03-06 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240306 values less than (TO_DATE(' 2024-03-07 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240307 values less than (TO_DATE(' 2024-03-08 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240308 values less than (TO_DATE(' 2024-03-09 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240309 values less than (TO_DATE(' 2024-03-10 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240310 values less than (TO_DATE(' 2024-03-11 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240311 values less than (TO_DATE(' 2024-03-12 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240312 values less than (TO_DATE(' 2024-03-13 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240313 values less than (TO_DATE(' 2024-03-14 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240314 values less than (TO_DATE(' 2024-03-15 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240315 values less than (TO_DATE(' 2024-03-16 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240316 values less than (TO_DATE(' 2024-03-17 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240317 values less than (TO_DATE(' 2024-03-18 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240318 values less than (TO_DATE(' 2024-03-19 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240319 values less than (TO_DATE(' 2024-03-20 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240320 values less than (TO_DATE(' 2024-03-21 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240321 values less than (TO_DATE(' 2024-03-22 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240322 values less than (TO_DATE(' 2024-03-23 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240323 values less than (TO_DATE(' 2024-03-24 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240324 values less than (TO_DATE(' 2024-03-25 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240325 values less than (TO_DATE(' 2024-03-26 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240326 values less than (TO_DATE(' 2024-03-27 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240327 values less than (TO_DATE(' 2024-03-28 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240328 values less than (TO_DATE(' 2024-03-29 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240329 values less than (TO_DATE(' 2024-03-30 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240330 values less than (TO_DATE(' 2024-03-31 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240331 values less than (TO_DATE(' 2024-04-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240401 values less than (TO_DATE(' 2024-04-02 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240402 values less than (TO_DATE(' 2024-04-03 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240403 values less than (TO_DATE(' 2024-04-04 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240404 values less than (TO_DATE(' 2024-04-05 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240405 values less than (TO_DATE(' 2024-04-06 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240406 values less than (TO_DATE(' 2024-04-07 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240407 values less than (TO_DATE(' 2024-04-08 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240408 values less than (TO_DATE(' 2024-04-09 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240409 values less than (TO_DATE(' 2024-04-10 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240410 values less than (TO_DATE(' 2024-04-11 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240411 values less than (TO_DATE(' 2024-04-12 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240412 values less than (TO_DATE(' 2024-04-13 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240413 values less than (TO_DATE(' 2024-04-14 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240414 values less than (TO_DATE(' 2024-04-15 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240415 values less than (TO_DATE(' 2024-04-16 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240416 values less than (TO_DATE(' 2024-04-17 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240417 values less than (TO_DATE(' 2024-04-18 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240418 values less than (TO_DATE(' 2024-04-19 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240419 values less than (TO_DATE(' 2024-04-20 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240420 values less than (TO_DATE(' 2024-04-21 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240421 values less than (TO_DATE(' 2024-04-22 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240422 values less than (TO_DATE(' 2024-04-23 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240423 values less than (TO_DATE(' 2024-04-24 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240424 values less than (TO_DATE(' 2024-04-25 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240425 values less than (TO_DATE(' 2024-04-26 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240426 values less than (TO_DATE(' 2024-04-27 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240427 values less than (TO_DATE(' 2024-04-28 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240428 values less than (TO_DATE(' 2024-04-29 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240429 values less than (TO_DATE(' 2024-04-30 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240430 values less than (TO_DATE(' 2024-05-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240501 values less than (TO_DATE(' 2024-05-02 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240502 values less than (TO_DATE(' 2024-05-03 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240503 values less than (TO_DATE(' 2024-05-04 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240504 values less than (TO_DATE(' 2024-05-05 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240505 values less than (TO_DATE(' 2024-05-06 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240506 values less than (TO_DATE(' 2024-05-07 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240507 values less than (TO_DATE(' 2024-05-08 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240508 values less than (TO_DATE(' 2024-05-09 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240509 values less than (TO_DATE(' 2024-05-10 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240510 values less than (TO_DATE(' 2024-05-11 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240511 values less than (TO_DATE(' 2024-05-12 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240512 values less than (TO_DATE(' 2024-05-13 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240513 values less than (TO_DATE(' 2024-05-14 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240514 values less than (TO_DATE(' 2024-05-15 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240515 values less than (TO_DATE(' 2024-05-16 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240516 values less than (TO_DATE(' 2024-05-17 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240517 values less than (TO_DATE(' 2024-05-18 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240518 values less than (TO_DATE(' 2024-05-19 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240531 values less than (TO_DATE(' 2024-06-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240630 values less than (TO_DATE(' 2024-07-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240831 values less than (TO_DATE(' 2024-09-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20241231 values less than (TO_DATE(' 2025-01-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250111 values less than (TO_DATE(' 2025-01-12 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250222 values less than (TO_DATE(' 2025-02-23 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250223 values less than (TO_DATE(' 2025-02-24 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250331 values less than (TO_DATE(' 2025-04-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250605 values less than (TO_DATE(' 2025-06-06 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250630 values less than (TO_DATE(' 2025-06-30 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250711 values less than (TO_DATE(' 2025-07-12 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250730 values less than (TO_DATE(' 2025-07-31 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250808 values less than (TO_DATE(' 2025-08-09 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250830 values less than (TO_DATE(' 2025-08-31 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250920 values less than (TO_DATE(' 2025-09-21 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250930 values less than (TO_DATE(' 2025-10-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20251010 values less than (TO_DATE(' 2025-10-11 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20251029 values less than (TO_DATE(' 2025-10-30 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20251116 values less than (TO_DATE(' 2025-11-17 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20270202 values less than (TO_DATE(' 2027-02-03 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20270203 values less than (TO_DATE(' 2027-02-04 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20281220 values less than (TO_DATE(' 2028-12-21 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20290921 values less than (TO_DATE(' 2029-09-22 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20290922 values less than (TO_DATE(' 2029-09-23 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20300922 values less than (TO_DATE(' 2030-09-23 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20310102 values less than (TO_DATE(' 2031-01-03 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20310622 values less than (TO_DATE(' 2031-06-23 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20311008 values less than (TO_DATE(' 2031-10-09 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20311009 values less than (TO_DATE(' 2031-10-10 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20311010 values less than (TO_DATE(' 2031-10-11 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20311101 values less than (TO_DATE(' 2031-11-02 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20630413 values less than (TO_DATE(' 2063-04-14 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20630414 values less than (TO_DATE(' 2063-04-15 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    )
+);
+comment on table RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO
+  is '联合网贷借据信息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.acctnt_cate_cd
+  is '会计类别代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.enter_acct_acct_num
+  is '入账账号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repay_num
+  is '还款账号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.rela_agt_id
+  is '关联协议编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.rela_appl_flow_num
+  is '关联申请流水号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.bus_breed_id
+  is '业务品种编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.loan_type_cd
+  is '贷款类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.asset_thd_cls_cd
+  is '资产三分类代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.dubil_status_cd
+  is '借据状态代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.loan_usage_cd
+  is '贷款用途代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.dir_indus_cd
+  is '贷款投向行业代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cont_status_cd
+  is '合同状态代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.loan_level4_cls_cd
+  is '贷款四级分类代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.loan_level5_cls_cd
+  is '贷款五级分类代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.loan_level10_cls_cd
+  is '贷款十级分类代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.loan_level12_cls_cd
+  is '贷款十二级分类代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.acru_non_acru_cd
+  is '应计非应计代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repay_way_cd
+  is '还款方式代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_set_way_cd
+  is '结息方式代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_accr_way_cd
+  is '计息方式代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_rat_adj_way_cd
+  is '利率调整方式代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_rat_adj_ped_corp_cd
+  is '利率调整周期单位代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_rat_adj_ped_freq
+  is '利率调整周期频率';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_rat_base_type_cd
+  is '利率基准类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_rat_float_way_cd
+  is '利率浮动方式代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_rat_float_dir_cd
+  is '利率浮动方向代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_rat_flo_val
+  is '利率浮动值';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.pric_repay_freq_cd
+  is '本金还款频率代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_repay_freq_cd
+  is '利息还款频率代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.guar_way_cd
+  is '担保方式代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cust_char_cd
+  is '客户性质代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.enter_acct_acct_num_type
+  is '入账账号类型';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repay_num_type
+  is '还款账号类型';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.intnal_carr_flg
+  is '内部结转标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.dom_overs_flg
+  is '境内外标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.white_list_cust_flg
+  is '白户标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.farm_flg
+  is '农户标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.agclt_flg
+  is '涉农贷款标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_accr_flg
+  is '计息标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.comp_int_flg
+  is '复息标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ovdue_flg
+  is '逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.wrt_off_flg
+  is '核销标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.open_acct_dt
+  is '开户日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.distr_dt
+  is '放款日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.payoff_dt
+  is '结清日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.last_repay_dt
+  is '上次还款日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.next_repay_dt
+  is '下次还款日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.curr_int_rat_effect_dt
+  is '当前利率生效日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.next_int_rat_adj_dt
+  is '下次利率调整日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.open_acct_org_id
+  is '开户机构编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.mgmt_org_id
+  is '管理机构编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.acct_instit_id
+  is '账务机构编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.init_tot_perds
+  is '贷款期数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.tot_perds
+  is '贷款期数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.curr_issue_perds
+  is '当前期数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.surp_perds
+  is '剩余期数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ovdue_perds
+  is '逾期期数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.pric_ovdue_flg
+  is '本金逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_ovdue_flg
+  is '利息逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.pric_ovdue_days
+  is '本金逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.int_ovdue_days
+  is '利息逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.grace_period_days
+  is '宽限期天数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.inst_comm_fee_rat
+  is '分期手续费费率';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.base_rat
+  is '基准利率';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ovdue_int_rat
+  is '逾期利率';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.daily_exec_int_rat
+  is '每日执行利率';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cont_amt
+  is '合同金额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.dubil_amt
+  is '借据金额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.distr_amt
+  is '放款金额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.bank_contri_ratio
+  is '银行出资比例';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.td_acru_int
+  is '当日应计利息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.currt_acru_int
+  is '当期应计利息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.nomal_pric
+  is '正常本金';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ovdue_pric
+  is '逾期本金';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.idle_pric
+  is '呆滞本金';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.bad_debt_pric
+  is '呆账本金';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.wrt_off_pric
+  is '核销本金';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.nomal_int
+  is '正常利息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ovdue_int
+  is '逾期利息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.wrt_off_int
+  is '核销利息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ovdue_pric_pnlt
+  is '逾期本金罚息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ovdue_int_pnlt
+  is '逾期利息罚息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.recvbl_over_int
+  is '应收欠息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.recvbl_acru_pnlt
+  is '应收应计罚息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.recvbl_pnlt
+  is '应收罚息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.recvbl_fee
+  is '应收费用';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.in_bs_over_int_bal
+  is '表内欠息余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.off_bs_over_int_bal
+  is '表外欠息余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.in_bs_int
+  is '表内利息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.off_bs_int
+  is '表外利息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.acm_recvbl_uncol_int_amt
+  is '累计应收未收利息金额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repaid_nomal_pric
+  is '已偿还正常本金';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repaid_ovdue_pric
+  is '已偿还逾期本金';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repaid_nomal_int
+  is '已偿还正常利息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repaid_ovdue_int
+  is '已偿还逾期利息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repaid_ovdue_pric_pnlt
+  is '已偿还逾期本金罚息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repaid_ovdue_int_pnlt
+  is '已偿还逾期利息罚息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repaid_fee
+  is '已偿还费用';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.pric_bal
+  is '本金余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_currt_bal
+  is '折本币当期余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ear_d_bal
+  is '日初余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ear_m_bal
+  is '月初余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ear_s_bal
+  is '季初余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.ear_y_bal
+  is '年初余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.y_acm_bal
+  is '年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.s_acm_bal
+  is '季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.m_acm_bal
+  is '月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_d_bal
+  is '折本币日初余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_m_bal
+  is '折本币月初余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_s_bal
+  is '折本币季初余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_y_bal
+  is '折本币年初余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_y_acm_bal
+  is '折本币年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_d_y_acm_bal
+  is '折本币日初年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_m_y_acm_bal
+  is '折本币月初年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_s_y_acm_bal
+  is '折本币季初年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_y_y_acm_bal
+  is '折本币年初年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_s_acm_bal
+  is '折本币季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_d_s_acm_bal
+  is '折本币日初季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_s_s_acm_bal
+  is '折本币季初季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_y_s_acm_bal
+  is '折本币年初季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_m_acm_bal
+  is '折本币月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_d_m_acm_bal
+  is '折本币日初月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_m_m_acm_bal
+  is '折本币月初月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_ear_y_m_acm_bal
+  is '折本币年初月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.y_avg_bal
+  is '年日均余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.q_avg_bal
+  is '季日均余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.m_avg_bal
+  is '月日均余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_y_avg_bal
+  is '折本币年日均余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_q_avg_bal
+  is '折本币季日均余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cl_curr_m_avg_bal
+  is '折本币月日均余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.etl_timestamp
+  is '数据处理时间';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cred_rht_turn_flg
+  is '债权直转标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.init_distr_dt
+  is '原始放款日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.init_distr_amt
+  is '原始放款金额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.acp_distr_amt
+  is '花呗放款金额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.regroup_flg
+  is '重组标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.regroup_loan_type_cd
+  is '重组贷款类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.regroup_dt
+  is '重组日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.init_exp_dt
+  is '原始到期日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.enter_acct_bank_name
+  is '入账账户开户银行名称';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repay_open_acct_bank_id
+  is '还款账户开户银行编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.repay_open_acct_org_name
+  is '还款账户开户机构名称';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.core_dubil_id
+  is '核心借据编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DUBIL_INFO.intnal_loan_type_cd
+  is '行内贷款类型代码';
+

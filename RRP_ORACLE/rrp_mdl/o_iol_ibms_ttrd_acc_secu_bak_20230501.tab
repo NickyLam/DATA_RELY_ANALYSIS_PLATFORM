@@ -1,0 +1,89 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501
+(
+  accid           VARCHAR2(30),
+  accname         VARCHAR2(120),
+  cash_accid      VARCHAR2(30),
+  owner           VARCHAR2(30),
+  trdkind         VARCHAR2(30),
+  trdgrpid        VARCHAR2(30),
+  ps1             VARCHAR2(30),
+  ps2             VARCHAR2(30),
+  ps3             VARCHAR2(30),
+  ps4             VARCHAR2(30),
+  status          NUMBER,
+  trdgrp_auto     CHAR(1),
+  is_lock         NUMBER,
+  lockstatus      NUMBER,
+  accfiscasubject VARCHAR2(50),
+  ps5             VARCHAR2(30),
+  ps6             VARCHAR2(30),
+  ps7             VARCHAR2(30),
+  ps8             VARCHAR2(30),
+  invest_type     NUMBER,
+  acting_type     VARCHAR2(30),
+  i_id            NUMBER,
+  unit_id         VARCHAR2(30),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501
+  is '二级证券账户表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.accid
+  is '账户代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.accname
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.cash_accid
+  is '二级资金账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.owner
+  is '所有者';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.trdkind
+  is '交易目的';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.trdgrpid
+  is '交易组';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.ps1
+  is '证券账户属性1  理财销售账户对应理财产品I_CODE,其他账户则该字段为0';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.ps2
+  is '证券账户属性2 对应的会计账号ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.ps3
+  is '证券账户属性3 理财产品账号对应的理财产品的外部资金账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.ps4
+  is '证券账户属性4';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.status
+  is '账户状态 0新建 11 正常 3已停用';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.trdgrp_auto
+  is '是否自动创建交易组';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.is_lock
+  is '是否锁定';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.lockstatus
+  is '锁定状态';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.accfiscasubject
+  is '等待补充';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.ps5
+  is '等待补充';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.ps6
+  is '等待补充';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.ps7
+  is '等待补充';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.ps8
+  is '等待补充';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.invest_type
+  is '0自有资产（自营业务）、1客户资产（代客、理财）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.acting_type
+  is '会计分类:1:交易类;2:可供出售类;3:持有到期类;4:应收款项类;5:理财销售类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.i_id
+  is '机构号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.unit_id
+  is '投组单元';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU_BAK_20230501.id_mark
+  is '增删标志';
+

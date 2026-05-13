@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.S_LOAN_AMT_S71_20241231
+(
+  data_dt                 VARCHAR2(8),
+  org_no                  VARCHAR2(200),
+  cust_no                 VARCHAR2(200),
+  rcpt_id                 VARCHAR2(200),
+  cont_id                 VARCHAR2(200),
+  rcpt_stat               VARCHAR2(10),
+  curr_cd                 VARCHAR2(3),
+  loan_biz_typ            VARCHAR2(20),
+  loan_act_dstr_dt        VARCHAR2(8),
+  loan_orig_exp_dt        VARCHAR2(8),
+  lvl5_cl                 VARCHAR2(15),
+  loan_amt                NUMBER(30,2),
+  loan_bal                NUMBER(30,2),
+  loan_net_val            NUMBER(30,2),
+  std_prod_id             VARCHAR2(200),
+  loan_useage             VARCHAR2(3000),
+  income_annual           NUMBER(20,4),
+  ff_crdt_total_lmt       NUMBER(30,2),
+  ff_opr_crdt_tot_amt     NUMBER(30,2),
+  ff_con_crdt_tot_amt     NUMBER(30,2),
+  cbrc_flg                CHAR(1),
+  dsbr_farm_flg           CHAR(1),
+  opr_cust_typ            VARCHAR2(10),
+  non_repy_prin_renew_flg CHAR(1),
+  loan_term               VARCHAR2(15),
+  tjdbfs                  VARCHAR2(15),
+  ent_scale               VARCHAR2(15),
+  corp_cust_typ           VARCHAR2(10),
+  is_cbrc_ent             VARCHAR2(15),
+  loan_dir_bio_flg        CHAR(1),
+  tech_inno_ent_flg       CHAR(1),
+  cust_lrg_cl             VARCHAR2(15),
+  data_src                VARCHAR2(500),
+  qtgrfnh                 VARCHAR2(15),
+  ovd_loan_term           VARCHAR2(15),
+  tech_ent_flg            VARCHAR2(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+

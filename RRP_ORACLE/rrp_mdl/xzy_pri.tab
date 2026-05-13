@@ -1,0 +1,11 @@
+﻿create table RRP_MDL.XZY_PRI
+(
+  a INTEGER,
+  b INTEGER
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+

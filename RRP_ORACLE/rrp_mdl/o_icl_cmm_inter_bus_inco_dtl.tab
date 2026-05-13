@@ -1,0 +1,120 @@
+﻿create table RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL
+(
+  etl_dt              DATE,
+  lp_id               VARCHAR2(60),
+  acct_bill_flow_num  VARCHAR2(60),
+  tran_flow_num       VARCHAR2(60),
+  tran_dt             DATE,
+  acct_dt             DATE,
+  amort_flow_num      VARCHAR2(60),
+  subj_id             VARCHAR2(60),
+  std_prod_id         VARCHAR2(60),
+  cust_id             VARCHAR2(60),
+  bus_acct_id         VARCHAR2(60),
+  intnal_acct_id      VARCHAR2(60),
+  intnal_acct_name    VARCHAR2(100),
+  intnal_main_acct_id VARCHAR2(60),
+  tran_main_acct_id   VARCHAR2(60),
+  tran_sub_acct_id    VARCHAR2(60),
+  tran_chn_cd         VARCHAR2(10),
+  bal_dir_cd          VARCHAR2(10),
+  sorc_sys_cd         VARCHAR2(30),
+  cust_mgr_id         VARCHAR2(60),
+  charge_cd           VARCHAR2(60),
+  charge_name         VARCHAR2(100),
+  charge_cate_cd      VARCHAR2(10),
+  amort_flg           VARCHAR2(10),
+  debit_crdt_flg      VARCHAR2(10),
+  erase_acct_flg      VARCHAR2(10),
+  revs_flg            VARCHAR2(10),
+  tran_org_id         VARCHAR2(60),
+  acct_instit_id      VARCHAR2(60),
+  curr_cd             VARCHAR2(10),
+  tran_amt            NUMBER(30,2),
+  recvbl_comm_fee_amt NUMBER(18,2),
+  tran_remark_info    VARCHAR2(100),
+  job_cd              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL
+  is '中间业务收入明细';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.acct_bill_flow_num
+  is '账单流水号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.acct_dt
+  is '账务日期';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.amort_flow_num
+  is '摊销流水号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.bus_acct_id
+  is '业务账户编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.intnal_acct_id
+  is '内部账户编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.intnal_acct_name
+  is '内部账户名称';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.intnal_main_acct_id
+  is '内部主账户编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.tran_main_acct_id
+  is '交易主账户编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.tran_sub_acct_id
+  is '交易子账户编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.tran_chn_cd
+  is '交易渠道编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.bal_dir_cd
+  is '余额方向代码';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.sorc_sys_cd
+  is '来源系统编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.charge_cd
+  is '收费代码';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.charge_name
+  is '收费名称';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.charge_cate_cd
+  is '收费类别代码';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.amort_flg
+  is '摊销标志';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.debit_crdt_flg
+  is '借贷标志';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.erase_acct_flg
+  is '抹账标志';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.revs_flg
+  is '冲正标志';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.acct_instit_id
+  is '账务机构编号';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.recvbl_comm_fee_amt
+  is '应收手续费金额';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.tran_remark_info
+  is '交易备注信息';
+comment on column RRP_MDL.O_ICL_CMM_INTER_BUS_INCO_DTL.job_cd
+  is '任务代码';
+

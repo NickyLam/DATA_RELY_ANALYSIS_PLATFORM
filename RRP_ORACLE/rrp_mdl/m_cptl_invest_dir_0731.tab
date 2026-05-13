@@ -1,0 +1,56 @@
+﻿create table RRP_MDL.M_CPTL_INVEST_DIR_0731
+(
+  data_dt                  CHAR(8) not null,
+  lgl_rep_id               VARCHAR2(200),
+  org_id                   VARCHAR2(200),
+  pk                       VARCHAR2(200) not null,
+  acc_id                   VARCHAR2(200) not null,
+  fnl_dir_typ              VARCHAR2(100),
+  fnl_dir_idy              VARCHAR2(10),
+  thro_after_bal           NUMBER(30,2),
+  cur                      CHAR(3),
+  ast_sprt_scr_sum_cl      VARCHAR2(10),
+  cred_rts_fin_prod_sum_cl VARCHAR2(10),
+  dept_line                VARCHAR2(500),
+  data_src                 VARCHAR2(500),
+  underlying_base_ast_id   VARCHAR2(200),
+  ast_sprt_scr_sub_cl      VARCHAR2(10),
+  cred_rts_fin_prod_sub_cl VARCHAR2(10),
+  tra_pltf                 VARCHAR2(10),
+  unstd_trf_ast_flg        CHAR(1),
+  basic_asset_name         VARCHAR2(200),
+  basic_asset_rating       VARCHAR2(200),
+  acru_int                 NUMBER(20,8),
+  int_recvbl               NUMBER(20,8),
+  recvbl_uncol_int         NUMBER(20,8),
+  final_dir_indus_gen      VARCHAR2(200),
+  final_dir_indus_subclass VARCHAR2(200),
+  dir_ind_fund_part        VARCHAR2(200),
+  dir_debt_eqty_part       VARCHAR2(200),
+  dir_pam_prod_part        VARCHAR2(200),
+  rid                      VARCHAR2(200),
+  prod_type_cd             VARCHAR2(60),
+  asset_type_name          VARCHAR2(200),
+  evha_val_chag_pl         NUMBER(30,8),
+  spd_pl                   NUMBER(30,8),
+  int_income               NUMBER(30,8),
+  std_prod_id              VARCHAR2(100),
+  asset_thd_cls_cd         VARCHAR2(100),
+  fnl_dir_ratio            NUMBER(20,6),
+  pro_pk                   VARCHAR2(100),
+  ovdue_flg                VARCHAR2(10),
+  nv_bal                   NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

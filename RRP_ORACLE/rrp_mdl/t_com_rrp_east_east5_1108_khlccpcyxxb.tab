@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.T_COM_RRP_EAST_EAST5_1108_KHLCCPCYXXB
+(
+  yhjgdm        VARCHAR2(30),
+  jrxkzh        VARCHAR2(30),
+  yhjgmc        VARCHAR2(450),
+  bz            VARCHAR2(3),
+  khmc_orig     VARCHAR2(150),
+  khmc          VARCHAR2(150),
+  khzjlb        VARCHAR2(60),
+  khzjhm_orig   VARCHAR2(70),
+  khzjhm        VARCHAR2(70),
+  lccpmc        VARCHAR2(300),
+  cpdjbm        VARCHAR2(30),
+  khcyrq        VARCHAR2(8),
+  khcylcye      NUMBER(20,2),
+  khcylczsrmbye NUMBER(20,2),
+  khcylcfe      NUMBER(20,6),
+  cjrq          VARCHAR2(8),
+  issued_no     VARCHAR2(50),
+  org_no        VARCHAR2(20),
+  dept_no       VARCHAR2(10),
+  address       VARCHAR2(500),
+  rid           VARCHAR2(50) not null
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

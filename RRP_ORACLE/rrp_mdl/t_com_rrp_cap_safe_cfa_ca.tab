@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.T_COM_RRP_CAP_SAFE_CFA_CA
+(
+  rid                    VARCHAR2(100) not null,
+  actiontype             VARCHAR2(1),
+  actiondesc             VARCHAR2(128),
+  dofoexlocode           VARCHAR2(56),
+  creditorcode           VARCHAR2(24),
+  debtorcode             VARCHAR2(36),
+  debtorname             VARCHAR2(128),
+  dofoexlotype           VARCHAR2(16),
+  lenproname             VARCHAR2(128),
+  lenagree               VARCHAR2(128),
+  valuedate              VARCHAR2(32),
+  maturity               VARCHAR2(32),
+  currence               VARCHAR2(12),
+  contractamount         NUMBER(22,2),
+  anninrate              NUMBER(13,8),
+  remark                 VARCHAR2(256),
+  data_dt                VARCHAR2(40),
+  org_no                 VARCHAR2(40),
+  xf_status              VARCHAR2(1),
+  data_status            VARCHAR2(1),
+  task_id                VARCHAR2(100),
+  report_type            VARCHAR2(200),
+  bw_status              VARCHAR2(1),
+  approval_status        VARCHAR2(1),
+  approval_refuse_reason VARCHAR2(128),
+  child_data_status      VARCHAR2(1),
+  serialno               VARCHAR2(50)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

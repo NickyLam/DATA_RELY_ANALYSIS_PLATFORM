@@ -1,0 +1,105 @@
+﻿create table RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO
+(
+  etl_dt                       DATE,
+  lp_id                        VARCHAR2(60),
+  acct_id                      VARCHAR2(60),
+  cust_acct_id                 VARCHAR2(60),
+  cust_sub_acct_num            VARCHAR2(60),
+  open_bank_no                 VARCHAR2(60),
+  open_bank_name               VARCHAR2(250),
+  cont_id                      VARCHAR2(60),
+  int_set_way_cd               VARCHAR2(10),
+  int_accr_way_cd              VARCHAR2(10),
+  acct_status_cd               VARCHAR2(10),
+  sav_type_cd                  VARCHAR2(60),
+  std_prod_id                  VARCHAR2(60),
+  dep_term                     VARCHAR2(10),
+  dep_term_tenor_type_cd       VARCHAR2(10),
+  dep_term_days                NUMBER(10),
+  seg_int_accr_flg             VARCHAR2(10),
+  onl_bus_flg                  VARCHAR2(10),
+  last_int_set_dt              DATE,
+  next_int_set_dt              DATE,
+  exec_int_rat                 NUMBER(18,8),
+  nomal_int_rat                NUMBER(18,8),
+  ovdue_int_rat                NUMBER(18,8),
+  part_unexp_draw_int_rat      NUMBER(18,8),
+  part_unexp_draw_surp_int_rat NUMBER(18,8),
+  advd_wdraw_flg               VARCHAR2(10),
+  earliest_advd_wdraw_dt       DATE,
+  job_cd                       VARCHAR2(10),
+  etl_timestamp                TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO
+  is '同业存放账户信息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.cust_acct_id
+  is '客户账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.cust_sub_acct_num
+  is '客户账户子户号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.open_bank_no
+  is '开户行行号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.open_bank_name
+  is '开户行名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.cont_id
+  is '合约编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.int_set_way_cd
+  is '结息方式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.int_accr_way_cd
+  is '计息方式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.acct_status_cd
+  is '账户状态代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.sav_type_cd
+  is '储种代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.dep_term
+  is '存期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.dep_term_tenor_type_cd
+  is '存期期限类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.dep_term_days
+  is '存期天数';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.seg_int_accr_flg
+  is '分段计息标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.onl_bus_flg
+  is '线上业务标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.last_int_set_dt
+  is '上次结息日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.next_int_set_dt
+  is '下次结息日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.nomal_int_rat
+  is '正常利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.ovdue_int_rat
+  is '逾期利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.part_unexp_draw_int_rat
+  is '部分提前支取利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.part_unexp_draw_surp_int_rat
+  is '部分提前支取剩余部分利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.advd_wdraw_flg
+  is '可提前支取标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.earliest_advd_wdraw_dt
+  is '最早可提前支取日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_DEP_ACCT_INFO.etl_timestamp
+  is '数据处理时间';
+

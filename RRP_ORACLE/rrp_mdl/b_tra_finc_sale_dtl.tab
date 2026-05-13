@@ -1,0 +1,122 @@
+﻿create table RRP_MDL.B_TRA_FINC_SALE_DTL
+(
+  data_dt                   CHAR(8) not null,
+  lgl_rep_id                VARCHAR2(200),
+  sale_cont_id              VARCHAR2(200),
+  tra_seq_no                VARCHAR2(200) not null,
+  org_id                    VARCHAR2(200),
+  subj_id                   VARCHAR2(200),
+  finc_acc                  VARCHAR2(200),
+  cust_id                   VARCHAR2(200),
+  cust_nm                   VARCHAR2(500),
+  rel_dmd_dep_acc           VARCHAR2(200),
+  rel_acc_open_area_cd      VARCHAR2(10),
+  consi_flg                 CHAR(1),
+  consi_org_nm              VARCHAR2(500),
+  consi_org_id              VARCHAR2(200),
+  consi_org_blng_reg_org_nm VARCHAR2(500),
+  prod_regd_id              VARCHAR2(200),
+  prod_id                   VARCHAR2(200),
+  prod_nm                   VARCHAR2(500),
+  biz_typ                   VARCHAR2(10),
+  cur                       CHAR(3),
+  biz_cfm_dt                CHAR(8),
+  biz_cfm_tm                TIMESTAMP(6),
+  amt                       NUMBER(30,2),
+  cfm_net_val               NUMBER(30,2),
+  cnv_cny_amt               NUMBER(30,2),
+  tra_shr                   INTEGER,
+  tra_cost                  NUMBER(30,2),
+  tra_chan                  VARCHAR2(10),
+  tra_tlr_no                VARCHAR2(30),
+  remarks                   VARCHAR2(2000),
+  dept_line                 VARCHAR2(500),
+  data_src                  VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_TRA_FINC_SALE_DTL
+  is '理财产品销售流水';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.sale_cont_id
+  is '销售合同号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.tra_seq_no
+  is '交易流水号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.subj_id
+  is '科目编号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.finc_acc
+  is '理财账号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.cust_id
+  is '客户编号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.cust_nm
+  is '客户名称';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.rel_dmd_dep_acc
+  is '关联活期存款账号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.rel_acc_open_area_cd
+  is '关联账号开户所在地';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.consi_flg
+  is '代销标志';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.consi_org_nm
+  is '代销机构名称';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.consi_org_id
+  is '代销机构编号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.consi_org_blng_reg_org_nm
+  is '代销机构所属监管机构';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.prod_regd_id
+  is '产品登记编号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.prod_id
+  is '产品编号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.prod_nm
+  is '产品名称';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.biz_typ
+  is '业务类型';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.cur
+  is '币种';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.biz_cfm_dt
+  is '业务确认日期';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.biz_cfm_tm
+  is '业务确认时间';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.amt
+  is '金额';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.cfm_net_val
+  is '确认净值';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.cnv_cny_amt
+  is '折算人民币金额';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.tra_shr
+  is '交易份额';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.tra_cost
+  is '交易费用';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.tra_chan
+  is '交易渠道';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.tra_tlr_no
+  is '交易柜员号';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.remarks
+  is '备注';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_TRA_FINC_SALE_DTL.data_src
+  is '数据来源';
+alter table RRP_MDL.B_TRA_FINC_SALE_DTL
+  add constraint PK_B_TRA_FINC_SALE_DTL primary key (DATA_DT, TRA_SEQ_NO)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

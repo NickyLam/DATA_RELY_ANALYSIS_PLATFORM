@@ -1,0 +1,255 @@
+﻿create table RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501
+(
+  etl_dt                   DATE,
+  lp_id                    VARCHAR2(60),
+  bal_id                   VARCHAR2(60),
+  bond_id                  VARCHAR2(60),
+  custm_bond_id            VARCHAR2(60),
+  tran_acct_b_id           VARCHAR2(60),
+  tran_acct_b_name         VARCHAR2(250),
+  std_prod_id              VARCHAR2(60),
+  dept_id                  VARCHAR2(60),
+  entry_org_id             VARCHAR2(60),
+  acct_attr_cd             VARCHAR2(10),
+  asset_four_cls_cd        VARCHAR2(10),
+  asset_thd_cls_cd         VARCHAR2(30),
+  asset_type_name          VARCHAR2(100),
+  bus_cate_name            VARCHAR2(100),
+  subj_id                  VARCHAR2(60),
+  int_recvbl_subj_id       VARCHAR2(60),
+  acru_int_subj_id         VARCHAR2(60),
+  int_adj_subj_id          VARCHAR2(60),
+  evha_val_chag_subj_id    VARCHAR2(60),
+  stl_dt                   DATE,
+  bond_name                VARCHAR2(250),
+  issuer_cust_id           VARCHAR2(100),
+  issuer_name              VARCHAR2(250),
+  guartor_name             VARCHAR2(250),
+  bond_type_cd             VARCHAR2(10),
+  init_bond_type_cd        VARCHAR2(10),
+  convbl_bond_id           VARCHAR2(60),
+  discnt_debt_flg          VARCHAR2(10),
+  convbl_bond_flg          VARCHAR2(10),
+  abs_flg                  VARCHAR2(10),
+  strk_bal_flg             VARCHAR2(10),
+  curr_cd                  VARCHAR2(10),
+  hold_pos                 NUMBER(30,2),
+  hold_fac_val             NUMBER(30,2),
+  net_price_cost           NUMBER(30,2),
+  currt_bal                NUMBER(30,2),
+  int_adj_amt              NUMBER(30,2),
+  evha_val_chag            NUMBER(30,2),
+  int_cost                 NUMBER(30,2),
+  full_price_cost          NUMBER(30,2),
+  impam_prep               NUMBER(30,2),
+  spd_prft                 NUMBER(30,2),
+  amort_prft               NUMBER(30,2),
+  int_prft                 NUMBER(30,2),
+  evha_val_chag_pl         NUMBER(30,2),
+  impam_loss               NUMBER(30,2),
+  tran_fee                 NUMBER(30,2),
+  issue_dt                 DATE,
+  value_dt                 DATE,
+  exp_dt                   DATE,
+  list_tran_dt             DATE,
+  stop_circlt_dt           DATE,
+  tenor                    NUMBER(18),
+  tenor_type_cd            VARCHAR2(10),
+  actl_int_rat             NUMBER(18,8),
+  fac_val_int_rat          NUMBER(30,2),
+  base_rat_id              VARCHAR2(60),
+  int_rat_float_dir_cd     VARCHAR2(10),
+  int_rat_float_point      NUMBER(18,6),
+  int_accr_base_cd         VARCHAR2(10),
+  int_rat_adj_way_cd       VARCHAR2(10),
+  int_rat_reset_ped_cd     VARCHAR2(10),
+  fir_int_rat_reset_dt     DATE,
+  int_accr_ped_cd          VARCHAR2(10),
+  fir_pay_int_dt           DATE,
+  pay_int_ped_cd           VARCHAR2(10),
+  td_acru_int              NUMBER(30,2),
+  open_dt                  DATE,
+  recnt_tran_dt            DATE,
+  acru_int                 NUMBER(30,2),
+  int_recvbl               NUMBER(30,2),
+  cbond_full_price_evltion NUMBER(30,8),
+  cbond_net_price_evltion  NUMBER(30,8),
+  estim_coret_duran        NUMBER(30,8),
+  bp_val                   NUMBER(30,8),
+  estim_cvty               NUMBER(30,8),
+  estim_yld_rat            NUMBER(30,8),
+  book_bal                 NUMBER(30,8),
+  job_cd                   VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501
+  is '资金债券投资';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.bal_id
+  is '余额编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.bond_id
+  is '债券编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.custm_bond_id
+  is '自定义债券编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.tran_acct_b_id
+  is '交易账簿编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.tran_acct_b_name
+  is '交易账簿名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.dept_id
+  is '部门编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.entry_org_id
+  is '记账机构编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.acct_attr_cd
+  is '账户属性代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.asset_four_cls_cd
+  is '资产四分类代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.asset_thd_cls_cd
+  is '资产三分类代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.asset_type_name
+  is '资产类型名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.bus_cate_name
+  is '业务类别名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_recvbl_subj_id
+  is '应收利息科目编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.acru_int_subj_id
+  is '应计利息科目编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_adj_subj_id
+  is '利息调整科目编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.evha_val_chag_subj_id
+  is '公允价值变动科目编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.stl_dt
+  is '结算日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.bond_name
+  is '债券名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.issuer_cust_id
+  is '发行人客户编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.issuer_name
+  is '发行人名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.guartor_name
+  is '担保人名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.bond_type_cd
+  is '债券类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.init_bond_type_cd
+  is '原债券类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.convbl_bond_id
+  is '可转债编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.discnt_debt_flg
+  is '贴现债标志';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.convbl_bond_flg
+  is '可转债标志';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.abs_flg
+  is 'ABS标志';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.strk_bal_flg
+  is '冲账标志';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.hold_pos
+  is '持有仓位';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.hold_fac_val
+  is '持有面值';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.net_price_cost
+  is '净价成本';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_adj_amt
+  is '利息调整金额';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.evha_val_chag
+  is '公允价值变动';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_cost
+  is '利息成本';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.full_price_cost
+  is '全价成本';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.impam_prep
+  is '减值准备';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.spd_prft
+  is '价差收益';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.amort_prft
+  is '摊销收益';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_prft
+  is '利息收益';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.evha_val_chag_pl
+  is '公允价值变动损益';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.impam_loss
+  is '减值损失';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.tran_fee
+  is '交易费用';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.issue_dt
+  is '发行日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.list_tran_dt
+  is '上市交易日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.stop_circlt_dt
+  is '停止流通日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.tenor
+  is '期限';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.tenor_type_cd
+  is '期限类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.actl_int_rat
+  is '实际利率';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.fac_val_int_rat
+  is '票面利率';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.base_rat_id
+  is '基准利率编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_rat_float_dir_cd
+  is '利率浮动方向代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_rat_float_point
+  is '利率浮动点数';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_accr_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_rat_adj_way_cd
+  is '利率调整方式代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_rat_reset_ped_cd
+  is '利率重置周期代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.fir_int_rat_reset_dt
+  is '首次利率重置日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_accr_ped_cd
+  is '计息周期代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.fir_pay_int_dt
+  is '首次付息日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.pay_int_ped_cd
+  is '付息周期代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.td_acru_int
+  is '当日应计利息';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.open_dt
+  is '开仓日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.recnt_tran_dt
+  is '最近交易日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.acru_int
+  is '应计利息';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.int_recvbl
+  is '应收利息';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.cbond_full_price_evltion
+  is '中债全价估值';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.cbond_net_price_evltion
+  is '中债净价估值';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.estim_coret_duran
+  is '估价修正久期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.bp_val
+  is '基点价值';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.estim_cvty
+  is '估价凸性';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.estim_yld_rat
+  is '估价收益率';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.book_bal
+  is '账面余额';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_BOND_INVEST_BAK_20230501.etl_timestamp
+  is '数据处理时间';
+

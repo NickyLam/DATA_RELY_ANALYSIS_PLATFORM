@@ -1,0 +1,47 @@
+﻿create table RRP_MDL.S_S7103_BASE_DATA
+(
+  ssfhmc     VARCHAR2(64),
+  dkjjh      VARCHAR2(64),
+  dkffje     NUMBER(24,6),
+  dkye       NUMBER(24,6),
+  dkyewy     NUMBER(24,6),
+  dkll       NUMBER(20,6),
+  dnlfdknhsy VARCHAR2(64),
+  dkffrq     VARCHAR2(8),
+  dkhtdqrq   VARCHAR2(8),
+  fxpjwj     VARCHAR2(64),
+  xfxsxedqj  VARCHAR2(64),
+  sffpgb     VARCHAR2(32)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.S_S7103_BASE_DATA
+  is 'S7103基础明细表';
+comment on column RRP_MDL.S_S7103_BASE_DATA.ssfhmc
+  is '所属分行名称';
+comment on column RRP_MDL.S_S7103_BASE_DATA.dkjjh
+  is '贷款借据编号';
+comment on column RRP_MDL.S_S7103_BASE_DATA.dkffje
+  is '贷款发放金额';
+comment on column RRP_MDL.S_S7103_BASE_DATA.dkye
+  is '贷款余额';
+comment on column RRP_MDL.S_S7103_BASE_DATA.dkyewy
+  is '贷款余额(万元)';
+comment on column RRP_MDL.S_S7103_BASE_DATA.dkll
+  is '贷款利率';
+comment on column RRP_MDL.S_S7103_BASE_DATA.dnlfdknhsy
+  is '当年累放贷款年化收益';
+comment on column RRP_MDL.S_S7103_BASE_DATA.dkffrq
+  is '贷款发放日';
+comment on column RRP_MDL.S_S7103_BASE_DATA.dkhtdqrq
+  is '贷款合同到期日';
+comment on column RRP_MDL.S_S7103_BASE_DATA.fxpjwj
+  is '风险评级五级';
+comment on column RRP_MDL.S_S7103_BASE_DATA.xfxsxedqj
+  is '消费性授信额度区间';
+comment on column RRP_MDL.S_S7103_BASE_DATA.sffpgb
+  is '是否扶贫(国标)';
+

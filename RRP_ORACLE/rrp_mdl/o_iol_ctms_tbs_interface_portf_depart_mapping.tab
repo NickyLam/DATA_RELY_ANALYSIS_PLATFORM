@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING
+(
+  keepfolder_id   VARCHAR2(30),
+  keepfolder_name VARCHAR2(300),
+  departmentname  VARCHAR2(300),
+  departmentid    VARCHAR2(30),
+  currency        VARCHAR2(90),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10),
+  etl_timestamp   TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING
+  is '账户部门编号映射表';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING.keepfolder_id
+  is '后台账户代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING.keepfolder_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING.departmentname
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING.departmentid
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING.etl_timestamp
+  is 'etl处理时间';
+

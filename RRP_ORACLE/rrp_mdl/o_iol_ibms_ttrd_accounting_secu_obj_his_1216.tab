@@ -1,0 +1,386 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216
+(
+  obj_id              VARCHAR2(45),
+  tsk_id              VARCHAR2(45),
+  beg_date            VARCHAR2(15),
+  end_date            VARCHAR2(15),
+  ext_secu_acct_id    VARCHAR2(30),
+  secu_acct_id        VARCHAR2(45),
+  trade_grp_id        VARCHAR2(30),
+  i_code              VARCHAR2(120),
+  a_type              VARCHAR2(30),
+  m_type              VARCHAR2(30),
+  trade_id            VARCHAR2(45),
+  extra_dim           VARCHAR2(15),
+  real_volume         NUMBER(31,8),
+  real_amount         NUMBER(31,8),
+  real_cp             NUMBER(31,8),
+  ai                  NUMBER(31,8),
+  ai_cost             NUMBER(31,8),
+  chg_fv              NUMBER(31,8),
+  due_amount          NUMBER(31,8),
+  due_cp              NUMBER(31,8),
+  due_ai              NUMBER(31,8),
+  amrt_count          NUMBER(8),
+  amrt_date           VARCHAR2(15),
+  amrt_ir             NUMBER(31,8),
+  prft_fv             NUMBER(31,8),
+  prft_trd            NUMBER(31,8),
+  prft_ir             NUMBER(31,8),
+  prft_ir_ai          NUMBER(31,8),
+  prft_ir_amrt        NUMBER(31,8),
+  prft_ir_ai_hld      NUMBER(31,8),
+  prft_ir_amrt_hld    NUMBER(31,8),
+  reclass_prft_fv     NUMBER(31,8),
+  impair              NUMBER(31,8),
+  prft_impair         NUMBER(31,8),
+  real_margin         NUMBER(31,8),
+  open_time           VARCHAR2(29),
+  update_time         VARCHAR2(29),
+  prft_fee            NUMBER(31,4),
+  due_fee             NUMBER(31,4),
+  fee                 NUMBER(31,8),
+  amrt_cost_cp        NUMBER(31,15),
+  amrt_cost_ai        NUMBER(31,15),
+  amrt_ir_hp          NUMBER(31,15),
+  amrt_ytm            NUMBER(31,15),
+  invest_ytm          NUMBER(31,15),
+  open_ytm            NUMBER(31,15),
+  future_ai           NUMBER(31,8),
+  real_cp_noamrt      NUMBER(31,8),
+  chg_fv_noamrt       NUMBER(31,8),
+  prft_fv_noamrt      NUMBER(31,8),
+  prft_trd_noamrt     NUMBER(31,8),
+  amrt_method         NUMBER,
+  real_volume_termcur NUMBER(31,8),
+  real_amount_termcur NUMBER(31,8),
+  due_amount_termcur  NUMBER(31,8),
+  real_cp_termcur     NUMBER(31,8),
+  due_cp_termcur      NUMBER(31,8),
+  prft_ir_amrt_rc     NUMBER(31,8),
+  prft_ir_amrt_hld_rc NUMBER(31,8),
+  amrt_cost_cp_rc     NUMBER(31,15),
+  amrt_ytm_rc         NUMBER(31,15),
+  amrt_ir_hp_rc       NUMBER(31,15),
+  calc_date           VARCHAR2(15),
+  ipr_state           NUMBER(4),
+  ipr_prft_cp         NUMBER(31,8),
+  ipr_prft_ai         NUMBER(31,8),
+  ipr_cp              NUMBER(31,8),
+  ipr_hx_cp           NUMBER(31,8),
+  ipr_hx_ai           NUMBER(31,8),
+  ipr_hx_due_ai       NUMBER(31,8),
+  ipr_bw_ai           NUMBER(31,8),
+  ipr_bw_due_ai       NUMBER(31,8),
+  amrt_date_rc        VARCHAR2(15),
+  amrt_cost_ai_rc     NUMBER(31,15),
+  open_date_rc        VARCHAR2(15),
+  prft_ir_ai_calc_tax NUMBER(31,8),
+  tax_ai              NUMBER(31,8),
+  tax_due_ai          NUMBER(31,8),
+  tax_fee             NUMBER(31,8),
+  fv_currency         VARCHAR2(5),
+  set_date            VARCHAR2(15),
+  prft_fv_cash        NUMBER(31,8),
+  tax_ai_hld          NUMBER(31,8),
+  open_ai             NUMBER(31,8),
+  open_ytm_opt        NUMBER(31,15),
+  prft_ir_ai_fut      NUMBER(31,8),
+  prft_ir_ai_cur      NUMBER(31,8),
+  prft_ir_ai_due      NUMBER(31,8),
+  prft_ir_ai_cash     NUMBER(31,8),
+  tax_fut_ai          NUMBER(31,8),
+  tax_due_amrt        NUMBER(31,8),
+  tax_due_amrt_rc     NUMBER(31,8),
+  tax_due_trd         NUMBER(31,8),
+  tax_due_fv          NUMBER(31,8),
+  tax_due_fv_reclass  NUMBER(31,8),
+  tax_due_fv_cash     NUMBER(31,8),
+  tax_due_fee         NUMBER(31,8),
+  due_chg_fv          NUMBER(31,8),
+  due_volume          NUMBER(31,8),
+  amrt_verify_code    VARCHAR2(450),
+  amrt_verify_date    VARCHAR2(15),
+  prft_reclass        NUMBER(31,8),
+  close_set_date      VARCHAR2(15),
+  trade_inst_id       NUMBER(16),
+  custom_dim1         VARCHAR2(300),
+  ipr_period          NUMBER,
+  ipr_cp1             NUMBER(31,8),
+  ipr_cp2             NUMBER(31,8),
+  ipr_cp3             NUMBER(31,8),
+  ipr_prft_cp1        NUMBER(31,8),
+  ipr_prft_cp2        NUMBER(31,8),
+  ipr_prft_cp3        NUMBER(31,8),
+  amrt_start_ir_hp    NUMBER(31,15),
+  tax_amrt            NUMBER(31,8),
+  calc_tax_amrt_cur   NUMBER(31,8),
+  calc_tax_amrt_due   NUMBER(31,8),
+  calc_tax_amrt_cash  NUMBER(31,8),
+  tax_fv              NUMBER(31,8),
+  tax_ir              NUMBER(31,8),
+  tax_due_ir          NUMBER(31,8),
+  prft_id             VARCHAR2(45),
+  deviation           NUMBER(31,8),
+  prft_ir_fut_ai      NUMBER(31,8),
+  etl_dt              DATE,
+  etl_timestamp       TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216
+  is '券核算余额表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.obj_id
+  is '对象Id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tsk_id
+  is '任务号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.beg_date
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.end_date
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ext_secu_acct_id
+  is '外部券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.secu_acct_id
+  is '内部券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.trade_grp_id
+  is '组合交易号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.i_code
+  is '交易代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.m_type
+  is '市场';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.trade_id
+  is '交易编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.extra_dim
+  is '额外维度';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.real_volume
+  is '数量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.real_amount
+  is '余额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.real_cp
+  is '实际净价金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ai
+  is '偿还利息(元)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ai_cost
+  is '已预付利息(元)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.chg_fv
+  is '当前公允价值变动损益';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.due_amount
+  is '应收未收余额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.due_cp
+  is '应收未收净价成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.due_ai
+  is '应收未收利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_count
+  is '当天摊销业务次数';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_date
+  is '摊销日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_ir
+  is '利息调整';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_fv
+  is '公允价值损益';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_trd
+  is '买卖损益';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir
+  is '累积利息收入(元)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_ai
+  is '应计利息利息收入';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_amrt
+  is '已摊销利息(元)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_ai_hld
+  is '当前持仓应计利息利息收入';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_amrt_hld
+  is '当前持仓摊销利息收入';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.reclass_prft_fv
+  is '重分类公允价值损益';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.impair
+  is '减值准备';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_impair
+  is '减值损失';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.real_margin
+  is '期货保证金';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.open_time
+  is '开仓时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_fee
+  is '损益费用';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.due_fee
+  is '应付费用';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.fee
+  is '费用';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_cost_cp
+  is '摊余净价成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_cost_ai
+  is '摊余利息成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_ir_hp
+  is '利息调整(高精度)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_ytm
+  is '实际利率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.invest_ytm
+  is '投资收益率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.open_ytm
+  is '开仓收益率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.future_ai
+  is '预收息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.real_cp_noamrt
+  is '不摊销净价成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.chg_fv_noamrt
+  is '不摊销公允价值变动';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_fv_noamrt
+  is '不摊销公允价值损益';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_trd_noamrt
+  is '不摊销买卖损益';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_method
+  is '摊销算法';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.real_volume_termcur
+  is '货币对反向实际数量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.real_amount_termcur
+  is '货币对反向实际面值';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.due_amount_termcur
+  is '货币对反向结转面值';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.real_cp_termcur
+  is '货币对反向实际成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.due_cp_termcur
+  is '货币对反向结转成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_amrt_rc
+  is '重分类利息收入（摊销部分）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_amrt_hld_rc
+  is '重分类利息收入（当前持仓摊销部分）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_cost_cp_rc
+  is '重分类摊余净价成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_ytm_rc
+  is '重分类实际利率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_ir_hp_rc
+  is '重分类利息调整（高精度）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.calc_date
+  is '重置后计提摊销截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_state
+  is '减值状态：0-未减值，1-减值，2-核销';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_prft_cp
+  is '成本减值损失';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_prft_ai
+  is '利息减值损失';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_cp
+  is '成本减值准备';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_hx_cp
+  is '已核销成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_hx_ai
+  is '已核销应计利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_hx_due_ai
+  is '已核销应收未收利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_bw_ai
+  is '表外应计利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_bw_due_ai
+  is '表外应收未收利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_date_rc
+  is '重置后重分类摊销开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_cost_ai_rc
+  is '重分类摊销开始日期利息成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.open_date_rc
+  is '重置后重分类开仓日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_ai_calc_tax
+  is '应计利息收入增量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_ai
+  is '应计增值税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_due_ai
+  is '应付增值税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_fee
+  is '税费';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.fv_currency
+  is '估值币种';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.set_date
+  is '缴款日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_fv_cash
+  is '已实现公允价值变动损益';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_ai_hld
+  is '当前持仓利息收入税/支出税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.open_ai
+  is '开仓利息成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.open_ytm_opt
+  is '开仓行权收益率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_ai_fut
+  is '预收利息收入';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_ai_cur
+  is '计提利息收入';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_ai_due
+  is '应收利息收入';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_ai_cash
+  is '实收利息收入';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_fut_ai
+  is '计提利息收入预收税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_due_amrt
+  is '摊销利息收入增值税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_due_amrt_rc
+  is '重分类后资本公积摊销收入应付增值税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_due_trd
+  is '买卖损益增值税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_due_fv
+  is '公允价值损益应付增值税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_due_fv_reclass
+  is '重分类公允价值损益应付增值税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_due_fv_cash
+  is '已实现公允价值损益应付增值税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_due_fee
+  is '费用损益应付增值税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.due_chg_fv
+  is '结转公允价值变动';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.due_volume
+  is '结转数量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_verify_code
+  is '重置后摊销验证码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_verify_date
+  is '摊销验证日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_reclass
+  is '重分类损益';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.close_set_date
+  is '平仓交割日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.trade_inst_id
+  is '交易指令号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.custom_dim1
+  is '扩展维度1';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_period
+  is '减值阶段';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_cp1
+  is '阶段一减值准备';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_cp2
+  is '阶段二减值准备';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_cp3
+  is '阶段三减值准备';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_prft_cp1
+  is '阶段一减值损失';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_prft_cp2
+  is '阶段二减值损失';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.ipr_prft_cp3
+  is '阶段三减值损失';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.amrt_start_ir_hp
+  is '摊销开始日期初利息调整余额(高精度)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_amrt
+  is '摊销利息收入暂估税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.calc_tax_amrt_cur
+  is '计提摊销利息收入';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.calc_tax_amrt_due
+  is '应收摊销利息收入';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.calc_tax_amrt_cash
+  is '实收摊销利息收入税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_fv
+  is '未实现损益暂估税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_ir
+  is '利息收入暂估税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.tax_due_ir
+  is '利息收入应付增值税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_id
+  is '损益对象id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.deviation
+  is '偏离金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.prft_ir_fut_ai
+  is '预收息利息收入';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_SECU_OBJ_HIS_1216.etl_timestamp
+  is 'ETL处理时间戳';
+

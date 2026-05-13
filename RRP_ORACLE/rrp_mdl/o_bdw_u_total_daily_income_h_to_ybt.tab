@@ -1,0 +1,113 @@
+﻿create table RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT
+(
+  u_uuid            VARCHAR2(100),
+  cust_no           VARCHAR2(20),
+  tst_ycml_income   NUMBER(20,2),
+  tst_qcml_income   NUMBER(20,2),
+  tst_mcml_income   NUMBER(20,2),
+  tst_day_income    NUMBER(20,2),
+  tst_ahcml_income  NUMBER(20,2),
+  load_date         VARCHAR2(10),
+  ifm_ycml_income   NUMBER(20,2),
+  ifm_qcml_income   NUMBER(20,2),
+  ifm_mcml_income   NUMBER(20,2),
+  ifm_day_income    NUMBER(20,2),
+  ifm_ahcml_income  NUMBER(20,2),
+  fud_ycml_income   NUMBER(20,2),
+  fud_qcml_income   NUMBER(20,2),
+  fud_mcml_income   NUMBER(20,2),
+  fud_day_income    NUMBER(20,2),
+  fud_ahcml_income  NUMBER(20,2),
+  dep_ycml_income   NUMBER(20,2),
+  dep_qcml_income   NUMBER(20,2),
+  dep_mcml_income   NUMBER(20,2),
+  dep_day_income    NUMBER(20,2),
+  dep_ahcml_income  NUMBER(20,2),
+  cfm_dt_year       VARCHAR2(5),
+  cfm_dt_month      VARCHAR2(5),
+  cfm_dt_day        VARCHAR2(10),
+  cfm_dt            VARCHAR2(10),
+  acct_no           VARCHAR2(50),
+  cust_acct_card_no VARCHAR2(50),
+  grp_day_income    NUMBER(20,2),
+  grp_mcml_income   NUMBER(20,2),
+  grp_qcml_income   NUMBER(20,2),
+  grp_ycml_income   NUMBER(20,2),
+  grp_ahcml_income  NUMBER(20,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT
+  is '手机收益(旧接口)';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.u_uuid
+  is '主键';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.cust_no
+  is '客户号';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.tst_ycml_income
+  is '信托年累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.tst_qcml_income
+  is '信托季累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.tst_mcml_income
+  is '信托月累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.tst_day_income
+  is '信托日收益金额(元)';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.tst_ahcml_income
+  is '信托历史累计收益';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.load_date
+  is '跑批日期';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.ifm_ycml_income
+  is '理财年累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.ifm_qcml_income
+  is '理财季累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.ifm_mcml_income
+  is '理财月累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.ifm_day_income
+  is '理财日收益金额(元)';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.ifm_ahcml_income
+  is '理财历史累计收益';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.fud_ycml_income
+  is '基金年累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.fud_qcml_income
+  is '基金季累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.fud_mcml_income
+  is '基金月累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.fud_day_income
+  is '基金日收益金额(元)';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.fud_ahcml_income
+  is '基金历史累计收益';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.dep_ycml_income
+  is '存款年累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.dep_qcml_income
+  is '存款季累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.dep_mcml_income
+  is '存款月累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.dep_day_income
+  is '存款日收益金额(元)';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.dep_ahcml_income
+  is '存款历史累计收益';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.cfm_dt_year
+  is '年份';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.cfm_dt_month
+  is '月份';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.cfm_dt_day
+  is '日';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.cfm_dt
+  is '数据日期';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.acct_no
+  is '账号';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.cust_acct_card_no
+  is '客户账户卡号';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.grp_day_income
+  is '组合宝日收益金额(元)';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.grp_mcml_income
+  is '组合宝月累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.grp_qcml_income
+  is '组合宝季累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.grp_ycml_income
+  is '组合宝年累计收益数';
+comment on column RRP_MDL.O_BDW_U_TOTAL_DAILY_INCOME_H_TO_YBT.grp_ahcml_income
+  is '组合宝历史累计收益';
+

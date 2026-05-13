@@ -1,0 +1,60 @@
+﻿create table RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC
+(
+  jxdxdh        NUMBER(22),
+  khdxdh        NUMBER(22),
+  fpjs          VARCHAR2(3),
+  qsrq          NUMBER(22),
+  jsrq          NUMBER(22),
+  gxhslx        VARCHAR2(2),
+  yz            NUMBER(25,4),
+  clbl          NUMBER(19,5),
+  zlbl          NUMBER(19,5),
+  gxly          VARCHAR2(3),
+  yylsh         NUMBER(20),
+  gxzt          VARCHAR2(2),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC
+  is '对象关系-行员业绩关系_理财';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.jxdxdh
+  is '绩效对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.khdxdh
+  is '考核对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.fpjs
+  is '分配角色';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.qsrq
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.jsrq
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.gxhslx
+  is '关系函数类型';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.yz
+  is '阈值';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.clbl
+  is '存量比例';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.zlbl
+  is '增量比例';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.gxly
+  is '关系来源';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.yylsh
+  is '预约流水号';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.gxzt
+  is '关系状态';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_PAMS_DXGX_HYYJGX_LC.etl_timestamp
+  is 'ETL处理时间戳';
+

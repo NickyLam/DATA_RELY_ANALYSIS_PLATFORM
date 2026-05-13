@@ -1,0 +1,47 @@
+﻿create table RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501
+(
+  deal_sqno    VARCHAR2(18),
+  self_pay     NUMBER(8),
+  self_receive NUMBER(8),
+  cp_receive   NUMBER(8),
+  cp_pay       NUMBER(8),
+  system_name  VARCHAR2(10),
+  is_from_pack VARCHAR2(1),
+  deal_type    VARCHAR2(50),
+  memo         VARCHAR2(500),
+  start_dt     DATE,
+  end_dt       DATE,
+  id_mark      VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501
+  is '交易清算路径视图';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.deal_sqno
+  is '交易编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.self_pay
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.self_receive
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.cp_receive
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.cp_pay
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.system_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.is_from_pack
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.deal_type
+  is '处理类型';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_DEAL_SETTLE_PATH_BAK_20230501.id_mark
+  is '增删标志';
+

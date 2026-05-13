@@ -1,0 +1,57 @@
+﻿create table RRP_EAST.CAP_REPORT_INFO
+(
+  simengname   VARCHAR2(2),
+  allengname   VARCHAR2(5),
+  tabname      VARCHAR2(20),
+  pkname       VARCHAR2(50),
+  groupname    VARCHAR2(50),
+  chnname      VARCHAR2(100),
+  pkchnname    VARCHAR2(50),
+  busstype     VARCHAR2(2),
+  currentdate  VARCHAR2(10),
+  currentseq   NUMBER,
+  current4date VARCHAR2(10),
+  current4seq  NUMBER,
+  currentname  VARCHAR2(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_EAST.CAP_REPORT_INFO
+  is '报文信息表';
+comment on column RRP_EAST.CAP_REPORT_INFO.simengname
+  is '报文类型英文简称';
+comment on column RRP_EAST.CAP_REPORT_INFO.allengname
+  is '报文类型英文全称';
+comment on column RRP_EAST.CAP_REPORT_INFO.tabname
+  is '报文对应表';
+comment on column RRP_EAST.CAP_REPORT_INFO.pkname
+  is '报文逻辑主键（唯一标识）英文字段';
+comment on column RRP_EAST.CAP_REPORT_INFO.groupname
+  is '报文所属类型组';
+comment on column RRP_EAST.CAP_REPORT_INFO.chnname
+  is '报文类型中文名称';
+comment on column RRP_EAST.CAP_REPORT_INFO.pkchnname
+  is '报文逻辑主键（唯一标识）中文描述';
+comment on column RRP_EAST.CAP_REPORT_INFO.busstype
+  is '业务类型';
+comment on column RRP_EAST.CAP_REPORT_INFO.currentdate
+  is '最后用到6位流水号的日期';
+comment on column RRP_EAST.CAP_REPORT_INFO.currentseq
+  is '最后用到的6位流水号编号(000000-999999)';
+comment on column RRP_EAST.CAP_REPORT_INFO.current4date
+  is '最后用到4位流水号的日期';
+comment on column RRP_EAST.CAP_REPORT_INFO.current4seq
+  is '最后用到的4位流水号编号(0000-9999)';
+comment on column RRP_EAST.CAP_REPORT_INFO.currentname
+  is '报文对应变动编号字段名称';
+

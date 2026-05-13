@@ -1,0 +1,18 @@
+﻿create table RRP_MDL.GTXW_DJZ_1028
+(
+  rcpt_id VARCHAR2(64),
+  cust_id VARCHAR2(64)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

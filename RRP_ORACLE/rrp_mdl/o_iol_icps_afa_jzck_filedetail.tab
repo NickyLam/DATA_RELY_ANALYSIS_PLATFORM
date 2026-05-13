@@ -1,0 +1,483 @@
+﻿create table RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL
+(
+  productcode                 VARCHAR2(10),
+  workdate                    VARCHAR2(8),
+  agentserialno               VARCHAR2(25),
+  worktime                    VARCHAR2(6),
+  reqid                       VARCHAR2(53),
+  reqbatno                    VARCHAR2(67),
+  reqtype                     VARCHAR2(10),
+  opttype                     VARCHAR2(2),
+  applyseq                    VARCHAR2(10),
+  applytype                   VARCHAR2(10),
+  applyorgcode                VARCHAR2(20),
+  targetorgcode               VARCHAR2(20),
+  subjecttype                 VARCHAR2(10),
+  casetype                    VARCHAR2(200),
+  caseno                      VARCHAR2(100),
+  emergencylevel              VARCHAR2(2),
+  sendtime                    VARCHAR2(20),
+  taskid                      VARCHAR2(200),
+  origtaskid                  VARCHAR2(50),
+  username                    VARCHAR2(300),
+  idtype                      VARCHAR2(15),
+  idno                        VARCHAR2(120),
+  accountno                   VARCHAR2(50),
+  accountnumber               VARCHAR2(50),
+  accounttype                 VARCHAR2(30),
+  accountopenbankname         VARCHAR2(100),
+  accountopenbankcode         VARCHAR2(20),
+  controlcontent              VARCHAR2(2),
+  timetype                    VARCHAR2(2),
+  starttime                   VARCHAR2(20),
+  endtime                     VARCHAR2(20),
+  frozentype                  VARCHAR2(10),
+  amount                      VARCHAR2(20),
+  currency                    VARCHAR2(20),
+  frozedbalance               VARCHAR2(20),
+  accountbalance              VARCHAR2(20),
+  accountavaiablebalance      VARCHAR2(20),
+  hostfreezeserial            VARCHAR2(40),
+  hostdate                    VARCHAR2(14),
+  formerapplicationdepartment VARCHAR2(2000),
+  formerfrozenbalance         VARCHAR2(20),
+  formerfrozenexpiretime      VARCHAR2(14),
+  unfrozedbalance             VARCHAR2(20),
+  execunitname                VARCHAR2(100),
+  execunitno                  VARCHAR2(50),
+  handler                     VARCHAR2(100),
+  telephone                   VARCHAR2(30),
+  handleraddress              VARCHAR2(200),
+  handleridtype               VARCHAR2(100),
+  handleridno                 VARCHAR2(50),
+  handlerworkidno             VARCHAR2(80),
+  handlerofficeidno           VARCHAR2(80),
+  helper                      VARCHAR2(100),
+  helpertelephone             VARCHAR2(30),
+  helperidtype                VARCHAR2(100),
+  helperidno                  VARCHAR2(113),
+  documentname                VARCHAR2(450),
+  documentno                  VARCHAR2(225),
+  origcaseno                  VARCHAR2(113),
+  assetsname                  VARCHAR2(90),
+  assetstype                  VARCHAR2(45),
+  units                       VARCHAR2(45),
+  ischange                    VARCHAR2(23),
+  execaccountname             VARCHAR2(225),
+  execaccountbankname         VARCHAR2(225),
+  execaccountbankcode         VARCHAR2(70),
+  execaccount                 VARCHAR2(113),
+  execaccounttype             VARCHAR2(135),
+  tradebusistep               VARCHAR2(5),
+  tradestatus                 VARCHAR2(5),
+  dealcode                    VARCHAR2(35),
+  dealmsg                     VARCHAR2(1125),
+  remark                      VARCHAR2(2250),
+  remark1                     VARCHAR2(900),
+  remark2                     VARCHAR2(450),
+  remark3                     VARCHAR2(450),
+  tradesystem                 VARCHAR2(3),
+  tradetype                   VARCHAR2(5),
+  procemode                   VARCHAR2(3),
+  telphone                    VARCHAR2(45),
+  cxzl                        VARCHAR2(8),
+  applicationorgname          VARCHAR2(450),
+  glbl_seq_no                 VARCHAR2(225),
+  applicationtype             VARCHAR2(23),
+  fileid                      VARCHAR2(5),
+  formerccy                   VARCHAR2(45),
+  transserialnumber           VARCHAR2(120),
+  transferamount              VARCHAR2(45),
+  transfertime                VARCHAR2(32),
+  applicationtime             VARCHAR2(68),
+  result                      VARCHAR2(9),
+  withdrawaltime              VARCHAR2(32),
+  tellerno                    VARCHAR2(113),
+  brno                        VARCHAR2(113),
+  author                      VARCHAR2(225),
+  manager                     VARCHAR2(225),
+  helpermobilephone           VARCHAR2(45),
+  upddate                     VARCHAR2(18),
+  updtime                     VARCHAR2(14),
+  ckwh                        VARCHAR2(113),
+  cpxszl                      VARCHAR2(23),
+  feedbackorgname             VARCHAR2(450),
+  fksjhm                      VARCHAR2(26),
+  feedbackremark              VARCHAR2(450),
+  buslicense                  VARCHAR2(113),
+  dqh                         VARCHAR2(225),
+  hclx                        VARCHAR2(18),
+  hcsxje                      VARCHAR2(45),
+  thawmode                    VARCHAR2(23),
+  deltellerno                 VARCHAR2(113),
+  delbrno                     VARCHAR2(113),
+  jrcpbh                      VARCHAR2(113),
+  cardno                      VARCHAR2(113),
+  kzzt                        VARCHAR2(23),
+  lczh                        VARCHAR2(113),
+  pztxlx                      VARCHAR2(23),
+  pztxmc                      VARCHAR2(135),
+  requesttxcode               VARCHAR2(23),
+  responsetxcode              VARCHAR2(23),
+  qqrbgdh                     VARCHAR2(68),
+  busiserno                   VARCHAR2(225),
+  threeinone                  VARCHAR2(45),
+  se                          VARCHAR2(45),
+  skse                        VARCHAR2(45),
+  sfdysxje                    VARCHAR2(23),
+  sfxd                        VARCHAR2(5),
+  unfrozedtype                VARCHAR2(5),
+  xcrbgdh                     VARCHAR2(68),
+  ydjah                       VARCHAR2(113),
+  zffs                        VARCHAR2(23),
+  location                    VARCHAR2(450),
+  transferoutaccountnumber    VARCHAR2(113),
+  transferoutaccountname      VARCHAR2(405),
+  transferoutbankid           VARCHAR2(27),
+  transferoutbankname         VARCHAR2(507),
+  zjhkzh                      VARCHAR2(113),
+  orgcode                     VARCHAR2(113),
+  froflag                     VARCHAR2(23),
+  exchangetype                VARCHAR2(45),
+  querycontent                VARCHAR2(5),
+  fhbz                        VARCHAR2(3),
+  fklx                        VARCHAR2(3),
+  isfrozed                    VARCHAR2(3),
+  orighelperidtype            VARCHAR2(225),
+  orighandleridtype           VARCHAR2(225),
+  origidtype                  VARCHAR2(225),
+  newaccountno                VARCHAR2(90),
+  querydata                   VARCHAR2(45),
+  uploadflag                  VARCHAR2(3),
+  bankcode                    VARCHAR2(113),
+  bankname                    VARCHAR2(225),
+  istransee                   VARCHAR2(3),
+  prtsendflag                 VARCHAR2(5),
+  etl_dt                      DATE,
+  etl_timestamp               TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL
+  is '文件明细表';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.productcode
+  is '产品代码详见产品代码数据字典';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.workdate
+  is '平台日期';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.agentserialno
+  is '平台流水号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.worktime
+  is '平台时间';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.reqid
+  is '请求单号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.reqbatno
+  is '请求批次号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.reqtype
+  is '措施类别yh：商业银行,rh：人民银行';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.opttype
+  is '请求类型:00-常规查询 10-动态查询 20-账户冻结 21-子户冻结 22-金额续冻 40-解冻 50-账户止付 51-子户止付 52-金额止付 60-止付延期 70-解止 80-凭证调阅 90-直接扣划 91-续冻扣划 92-解冻扣划';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.applyseq
+  is '申请序号申请序号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.applytype
+  is '申请控制类型根据该项拍判断资产的类型，1-存款，2-非存款类金融资产。（此判断项主要区别资产类型，目前分为存款和金融资产）';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.applyorgcode
+  is '申请机构代码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.targetorgcode
+  is '目标机构代码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.subjecttype
+  is '查控主体类别01代表查询个人主体；02代表查询对公（单位）主体；';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.casetype
+  is '案件类型:(法院：01冻结，02继续冻结，04解除冻结，06扣划)';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.caseno
+  is '执行案号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.emergencylevel
+  is '紧急程度01代表正常；02代表加急。';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.sendtime
+  is '发送时间发送请求给目标机构时的系统日期时间，采用格式yyyymmddhhmmss，24小时制格式，例如：20150410082210';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.taskid
+  is '任务流水号查询任务的流水号，唯一标识查询的任务；编码为：请求单标识+序号（00001-99999）；';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.origtaskid
+  is '原任务流水号原动态查询任务流水号识；措施类型为03和04时使用；';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.username
+  is '姓名';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.idtype
+  is '证件类型';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.idno
+  is '证件号码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.accountno
+  is '账卡号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.accountnumber
+  is '账户序号冻结序号（子账号 ）';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.accounttype
+  is '账户类别';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.accountopenbankname
+  is '开户网点';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.accountopenbankcode
+  is '开户网点代码人行统一的网点代码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.controlcontent
+  is '控制类容根据该项判断控制内容,1-账户下的资金,2-账户（在先对控制类型判断结束后再针对控制内容进行判断）';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.timetype
+  is '时段类型01表示开户至今；02表示当年数据；03自定义时间段；';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.starttime
+  is '起始时间';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.endtime
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.frozentype
+  is '冻结方式01-限额内冻结；02-只收不付';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.amount
+  is '金额申请冻结限额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.frozedbalance
+  is '执行冻结金额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.accountbalance
+  is '账户余额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.accountavaiablebalance
+  is '账户可用余额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.hostfreezeserial
+  is '核心日期';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.hostdate
+  is '核心日期';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.formerapplicationdepartment
+  is '在先冻结机关';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.formerfrozenbalance
+  is '在先冻结金额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.formerfrozenexpiretime
+  is '在先冻结到期日';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.unfrozedbalance
+  is '未冻结金额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.execunitname
+  is '执行单位名称';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.execunitno
+  is '执行单位代码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.handler
+  is '承办人员姓名';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.telephone
+  is '承办人员联系电话';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.handleraddress
+  is '承办人员联系地址';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.handleridtype
+  is '承办人员证件类型';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.handleridno
+  is '承办人员证件号码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.handlerworkidno
+  is '承办人员工作证编号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.handlerofficeidno
+  is '承办人员公务证编号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.helper
+  is '协查人姓名';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.helpertelephone
+  is '协查人联系电话';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.helperidtype
+  is '协查人证件类型';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.helperidno
+  is '协查人证件号码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.documentname
+  is '法律文书名称';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.documentno
+  is '法律文书编号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.origcaseno
+  is '原执行案号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.assetsname
+  is '金融资产名称kzlx=2时提供该项';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.assetstype
+  is '金融资产类型kzlx=2时提供该项';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.units
+  is '计量单位kzlx=2时提供该项';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.ischange
+  is '是否结汇';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.execaccountname
+  is '执行款专户户名划扣存款时提供该项';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.execaccountbankname
+  is '执行款专户开户行划扣存款时提供该项';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.execaccountbankcode
+  is '执行款专户开户行行号人行提供行号代码(供跨行划拨时提供)';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.execaccount
+  is '执行款专户账号划扣存款时提供该项';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.execaccounttype
+  is '执行款专户类型划扣存款时提供该项，如本币、外币';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.tradebusistep
+  is '业务处理步骤0-数据入库,1-平台处理,2-文件传输';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.tradestatus
+  is '业务处理状态0-失败,1-成功,2-未知,3-处理中';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.dealcode
+  is '处理状态码 1-未处理 2-已处理';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.dealmsg
+  is '处理状态信息';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.remark1
+  is '备用1';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.remark2
+  is '备用2';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.remark3
+  is '备用3';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.tradesystem
+  is '0-法院查控1-公安查控 2-监委查控 3-电信反欺诈';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.tradetype
+  is '请求类型:00-常规查询 10-动态查询 20-账户冻结 21-子户冻结 22-金额续冻 40-解冻 50-账户止付 51-子户止付 52-金额止付 60-止付延期 70-解止 80-凭证调阅';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.procemode
+  is '处理方式';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.telphone
+  is '被核查人手机号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.cxzl
+  is '查询种类';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.applicationorgname
+  is '申请机构名称';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.glbl_seq_no
+  is '全局流水号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.applicationtype
+  is '是否补流程';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.fileid
+  is '文件序号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.formerccy
+  is '在先冻结币种';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.transserialnumber
+  is '传输报文流水号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.transferamount
+  is '转出金额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.transfertime
+  is '转出时间';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.applicationtime
+  is '申请时间';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.result
+  is '处理结果';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.withdrawaltime
+  is '解除生效时间';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.tellerno
+  is '柜员';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.brno
+  is '机构';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.author
+  is '授权人';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.manager
+  is '金融机构主管';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.helpermobilephone
+  is '协查人手机号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.upddate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.updtime
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.ckwh
+  is '裁定书文号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.cpxszl
+  is '产品销售种类';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.feedbackorgname
+  is '反馈机构名称';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.fksjhm
+  is '反馈手机号码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.feedbackremark
+  is '反馈说明';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.buslicense
+  is '工商营业执照';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.dqh
+  is '国家/地区';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.hclx
+  is '核查类型';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.hcsxje
+  is '核查上限金额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.thawmode
+  is '解除方式';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.deltellerno
+  is '解除柜员';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.delbrno
+  is '解除机构';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.jrcpbh
+  is '金融产品编号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.cardno
+  is '卡号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.kzzt
+  is '控制结果';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.lczh
+  is '理财账号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.pztxlx
+  is '凭证图像类型';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.pztxmc
+  is '凭证图像名称';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.requesttxcode
+  is '请求交易类型编码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.responsetxcode
+  is '返回交易类型编码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.qqrbgdh
+  is '请求人办公电话';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.busiserno
+  is '业务流水号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.threeinone
+  is '三证合一号码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.se
+  is '申请控制数量/份额/金额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.skse
+  is '实控数量/份额/金额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.sfdysxje
+  is '是否超过核查上限金额';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.sfxd
+  is '是否修订';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.unfrozedtype
+  is '系统解冻类型';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.xcrbgdh
+  is '协查人办公电话';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.ydjah
+  is '原冻结案号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.zffs
+  is '止付处理方式';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.location
+  is '注册地名称';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.transferoutaccountnumber
+  is '转出帐卡号';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.transferoutaccountname
+  is '转出账户名';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.transferoutbankid
+  is '转出账户所属银行机构编码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.transferoutbankname
+  is '转出账户银行名称';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.zjhkzh
+  is '资金回款账户';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.orgcode
+  is '组织机构代码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.froflag
+  is '冻结标志';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.exchangetype
+  is '钞汇类型';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.querycontent
+  is '查询内容标识代码：01 账户信息；02 账户交易明细信息；03 账户和账户的交易明细信息；此处值默认为01；';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.fhbz
+  is '复核标志';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.fklx
+  is '反馈标志';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.isfrozed
+  is '是否已解冻:0-否；1-是';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.orighelperidtype
+  is '原始渠道协查人证件类型编码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.orighandleridtype
+  is '原始渠道承办人员证件类型编码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.origidtype
+  is '原始渠道证件类型编码';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.newaccountno
+  is '换卡卡号（未换卡默认为空）';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.querydata
+  is '查询内容';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.uploadflag
+  is '是否已上传回执:1:已上传;0:未上传';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.bankcode
+  is '开户行代码-默认:313586000006';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.bankname
+  is '开户行名称-默认:广东华兴银行股份有限公司';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.istransee
+  is '是否调取电子证据';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.prtsendflag
+  is '外屏推送标识 0-初始录入;1-需要后续处理;2-不需要后续处理';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IOL_ICPS_AFA_JZCK_FILEDETAIL.etl_timestamp
+  is 'etl处理时间戳';
+

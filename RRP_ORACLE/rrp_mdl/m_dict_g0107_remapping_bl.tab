@@ -1,0 +1,69 @@
+﻿create table RRP_MDL.M_DICT_G0107_REMAPPING_BL
+(
+  type_code   VARCHAR2(20),
+  type_name   VARCHAR2(300),
+  cyml        VARCHAR2(450),
+  mls         VARCHAR2(300),
+  l_core      VARCHAR2(20),
+  l_name      VARCHAR2(300),
+  m_core      VARCHAR2(30),
+  m_name      VARCHAR2(450),
+  s_core      VARCHAR2(20),
+  s_name      VARCHAR2(300),
+  ori_core    VARCHAR2(20),
+  ori_name    VARCHAR2(300),
+  code        VARCHAR2(30),
+  name        VARCHAR2(450),
+  sts         VARCHAR2(2),
+  sfdx        VARCHAR2(3),
+  update_time VARCHAR2(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_DICT_G0107_REMAPPING_BL
+  is 'G0107行业映射关系表';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.type_code
+  is '码值类型';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.type_name
+  is '码值类型名称';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.cyml
+  is '产业门类';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.mls
+  is '目录树';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.l_core
+  is '行业大类';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.l_name
+  is '行业大类名称';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.m_core
+  is '行业中类';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.m_name
+  is '行业中类名称';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.s_core
+  is '行业小类';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.s_name
+  is '行业小类名称';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.ori_core
+  is '原码值';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.ori_name
+  is '原码值名称';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.code
+  is '码值';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.name
+  is '码值名称';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.sts
+  is '有效状态';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.sfdx
+  is '是否带*';
+comment on column RRP_MDL.M_DICT_G0107_REMAPPING_BL.update_time
+  is '更新时间';
+

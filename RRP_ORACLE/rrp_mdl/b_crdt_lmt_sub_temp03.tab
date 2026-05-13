@@ -1,0 +1,21 @@
+﻿create table RRP_MDL.B_CRDT_LMT_SUB_TEMP03
+(
+  rcpt_id      VARCHAR2(200),
+  init_rcpt_id VARCHAR2(200),
+  cont_id      VARCHAR2(200),
+  crdt_cont_id VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.B_CRDT_LMT_SUB_TEMP03.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.B_CRDT_LMT_SUB_TEMP03.init_rcpt_id
+  is '最原始的借据号';
+comment on column RRP_MDL.B_CRDT_LMT_SUB_TEMP03.cont_id
+  is '合同号（最初）';
+comment on column RRP_MDL.B_CRDT_LMT_SUB_TEMP03.crdt_cont_id
+  is '授信合同编号（最初）';
+

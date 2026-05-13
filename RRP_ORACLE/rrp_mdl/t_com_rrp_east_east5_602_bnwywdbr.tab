@@ -1,0 +1,32 @@
+﻿create table RRP_MDL.T_COM_RRP_EAST_EAST5_602_BNWYWDBR
+(
+  rid          VARCHAR2(50) not null,
+  jrxkzh       VARCHAR2(30),
+  nbjgh        VARCHAR2(30),
+  dbhth        VARCHAR2(100),
+  bzrlb        VARCHAR2(6),
+  bzrmc        VARCHAR2(450),
+  dbrzjlb      VARCHAR2(60),
+  dbrzjhm      VARCHAR2(70),
+  dbrjzcbz     VARCHAR2(3),
+  dbrjzc       NUMBER(20,2),
+  dbhtzt       VARCHAR2(6),
+  bbz          VARCHAR2(600),
+  cjrq         VARCHAR2(8),
+  dept_no      VARCHAR2(10),
+  src_sys_id   VARCHAR2(10),
+  issued_no    VARCHAR2(50),
+  org_no       VARCHAR2(20),
+  bzrmc_orig   VARCHAR2(450),
+  dbrzjhm_orig VARCHAR2(70),
+  address      VARCHAR2(500),
+  bzrmc_oth    VARCHAR2(5),
+  gsfzjg       VARCHAR2(200),
+  bdbrsfgr     VARCHAR2(5)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

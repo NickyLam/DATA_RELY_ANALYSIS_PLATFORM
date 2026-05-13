@@ -1,0 +1,90 @@
+﻿create table RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H
+(
+  agt_id                    VARCHAR2(250),
+  lp_id                     VARCHAR2(100),
+  status_id                 VARCHAR2(100),
+  edit_id                   VARCHAR2(100),
+  temp_decl_flow_num        VARCHAR2(100),
+  init_enty_id              VARCHAR2(100),
+  tran_flow_num             VARCHAR2(100),
+  rela_table_name           VARCHAR2(750),
+  rela_decl_id              VARCHAR2(100),
+  decl_num                  VARCHAR2(60),
+  trade_gen_cd              VARCHAR2(30),
+  money_idf_cd              VARCHAR2(30),
+  base_info_status_cd       VARCHAR2(30),
+  decl_info_status_cd       VARCHAR2(30),
+  wrt_off_info_status_cd    VARCHAR2(30),
+  yga_e_acct_info_status_cd VARCHAR2(30),
+  bus_oper_teller_id        VARCHAR2(100),
+  auth_dt                   DATE,
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10),
+  src_table_name            VARCHAR2(100),
+  job_cd                    VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H
+  is '申报信息状态历史';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.status_id
+  is '状态编号';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.edit_id
+  is '版本编号';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.temp_decl_flow_num
+  is '临时申报流水号';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.init_enty_id
+  is '原始实体编号';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.rela_table_name
+  is '关联表名称';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.rela_decl_id
+  is '关联申报编号';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.decl_num
+  is '申报号码';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.trade_gen_cd
+  is '贸易大类代码';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.money_idf_cd
+  is '款项标识代码';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.base_info_status_cd
+  is '基础信息状态代码';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.decl_info_status_cd
+  is '申报信息状态代码';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.wrt_off_info_status_cd
+  is '核销信息状态代码';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.yga_e_acct_info_status_cd
+  is '粤港电子账户信息状态代码';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.bus_oper_teller_id
+  is '业务经办人编号';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.auth_dt
+  is '授权日期';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_DECL_INFO_STATUS_H.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,96 @@
+﻿create table RRP_MDL.O_IOL_PAMS_KHDX_HY
+(
+  khdxdh        NUMBER(22),
+  hydh          VARCHAR2(18),
+  hymc          VARCHAR2(150),
+  xl            VARCHAR2(3),
+  lxdh          VARCHAR2(45),
+  sfz           VARCHAR2(38),
+  yxrybz        VARCHAR2(2),
+  xnhybz        VARCHAR2(2),
+  dlmc          VARCHAR2(18),
+  dlmm          VARCHAR2(150),
+  aqjb          VARCHAR2(2),
+  zxzt          VARCHAR2(2),
+  scdl          VARCHAR2(2),
+  zpxx          VARCHAR2(150),
+  czybh         VARCHAR2(18),
+  zxrq          NUMBER(22),
+  csrq          NUMBER(22),
+  gzrq          NUMBER(22),
+  rhrq          NUMBER(22),
+  fgbz          VARCHAR2(2),
+  pxbz          NUMBER(22),
+  xgmmrq        VARCHAR2(30),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_PAMS_KHDX_HY
+  is '考核对象-行员';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.khdxdh
+  is '考核对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.hydh
+  is '行员代号';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.hymc
+  is '行员名称';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.xl
+  is '学历';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.lxdh
+  is '联系电话';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.sfz
+  is '身份证号码';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.yxrybz
+  is '营销人员标志';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.xnhybz
+  is '虚拟行员标志';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.dlmc
+  is '登录名称';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.dlmm
+  is '登录密码';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.aqjb
+  is '安全级别';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.zxzt
+  is '注销状态';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.scdl
+  is '首次登陆';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.zpxx
+  is '照片信息';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.czybh
+  is '操作员编号';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.zxrq
+  is '注销日期';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.csrq
+  is '出生日期';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.gzrq
+  is '工作日期';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.rhrq
+  is '入行日期';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.fgbz
+  is '风格标志';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.pxbz
+  is '排序标志';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.xgmmrq
+  is '修改密码日期';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_PAMS_KHDX_HY.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,23 @@
+﻿create table RRP_MDL.ADD_POVERTY_RELIF_1
+(
+  cert_no    VARCHAR2(60),
+  tpzt       VARCHAR2(50),
+  acct_duran VARCHAR2(20),
+  qg_flag    VARCHAR2(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_POVERTY_RELIF_1
+  is '精准扶贫名单业务20211231填报数据基表';
+comment on column RRP_MDL.ADD_POVERTY_RELIF_1.cert_no
+  is '证件号';
+comment on column RRP_MDL.ADD_POVERTY_RELIF_1.tpzt
+  is '脱贫状态';
+comment on column RRP_MDL.ADD_POVERTY_RELIF_1.acct_duran
+  is '扶贫名录期间';
+comment on column RRP_MDL.ADD_POVERTY_RELIF_1.qg_flag
+  is '贫困标志';
+

@@ -1,0 +1,155 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501
+(
+  i_code                VARCHAR2(30),
+  a_type                VARCHAR2(20),
+  m_type                VARCHAR2(20),
+  currency              VARCHAR2(3),
+  q_type                VARCHAR2(2),
+  b_name                VARCHAR2(100),
+  p_type                VARCHAR2(30),
+  p_class               VARCHAR2(60),
+  b_coupon              NUMBER(12,6),
+  ncdcount              NUMBER(31,4),
+  b_issue_price         NUMBER(12,4),
+  min_issue_price       NUMBER(12,4),
+  max_issue_price       NUMBER(12,4),
+  b_start_date          VARCHAR2(10),
+  b_mtr_date            VARCHAR2(10),
+  b_term                VARCHAR2(6),
+  first_date            VARCHAR2(10),
+  b_pay_freq            VARCHAR2(6),
+  b_issue_mode          VARCHAR2(1),
+  b_coupon_type         VARCHAR2(1),
+  i_code_bench          VARCHAR2(30),
+  a_type_bench          VARCHAR2(20),
+  m_type_bench          VARCHAR2(20),
+  settle_status         NUMBER,
+  set_date              VARCHAR2(10),
+  honour_date           VARCHAR2(10),
+  b_issue_date          VARCHAR2(10),
+  annual_rate           NUMBER(12,6),
+  b_daycount            VARCHAR2(120),
+  b_fst_pay_date        VARCHAR2(10),
+  tender_type           NUMBER,
+  min_rate              NUMBER(12,6),
+  max_rate              NUMBER(12,6),
+  b_actual_issue_amount NUMBER(31,4),
+  intordid              VARCHAR2(30),
+  issuer                VARCHAR2(255),
+  issuerange            VARCHAR2(100),
+  gradeinst             VARCHAR2(255),
+  grade                 VARCHAR2(10),
+  parvalue              NUMBER(12,6),
+  issue_start_date      VARCHAR2(10),
+  issue_mtr_date        VARCHAR2(10),
+  max_bid_amount        NUMBER(31,4),
+  min_bid_amount        NUMBER(31,4),
+  singe_max_bid_amount  NUMBER(31,4),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501
+  is '同业存单表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.i_code
+  is '存单代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.q_type
+  is '报价方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_name
+  is '存单名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.p_type
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.p_class
+  is '产品分类名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_coupon
+  is '利率%、利差BP';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.ncdcount
+  is '发行量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_issue_price
+  is '发行价格';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.min_issue_price
+  is '最低发行价格';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.max_issue_price
+  is '最高发行价格';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_start_date
+  is '起息日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_mtr_date
+  is '到期日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_term
+  is '期限';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.first_date
+  is '首次利率确定日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_pay_freq
+  is '付息频率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_issue_mode
+  is '发行方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_coupon_type
+  is '息票类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.i_code_bench
+  is '利率基准';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.a_type_bench
+  is '利率基准';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.m_type_bench
+  is '利率基准';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.settle_status
+  is '结算状态：0-未结算， 1-部分已结算， 2—已结算';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.set_date
+  is '缴款日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.honour_date
+  is '兑付日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_issue_date
+  is '发行日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.annual_rate
+  is '年化利率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_daycount
+  is '计息基准';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_fst_pay_date
+  is '首次付息日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.tender_type
+  is '招标方式 ，0为单一价格招标，1为数量招标';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.min_rate
+  is '最低收益率，最低标位参考收益率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.max_rate
+  is '最高收益率，最高标位参考收益率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.b_actual_issue_amount
+  is '实际发行量(亿元)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.intordid
+  is '内部交易号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.issuer
+  is '发行人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.issuerange
+  is '范围';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.gradeinst
+  is '评级机构';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.grade
+  is '评级';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.parvalue
+  is '票面';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.issue_start_date
+  is '开始发行日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.issue_mtr_date
+  is '结束发行日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.max_bid_amount
+  is '最大认购量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.min_bid_amount
+  is '最小认购量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.singe_max_bid_amount
+  is '单笔最大认购量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_NCD_BAK_20230501.id_mark
+  is '增删标志';
+

@@ -1,0 +1,57 @@
+﻿create table RRP_MDL.M_CRDT_LMT_SUB_TEST
+(
+  data_dt                     CHAR(8) not null,
+  lgl_rep_id                  VARCHAR2(200),
+  prim_crdt_cont_id           VARCHAR2(200),
+  crdt_cont_id                VARCHAR2(200) not null,
+  crdt_cont_nm                VARCHAR2(500),
+  cust_id                     VARCHAR2(200) not null,
+  org_id                      VARCHAR2(200),
+  crdt_lmt                    NUMBER(30,2),
+  aldy_use_lmt                NUMBER(30,2),
+  sur_crdt_lmt                NUMBER(30,2),
+  exp_crdt_lmt                NUMBER(30,2),
+  exp_aldy_use_lmt            NUMBER(30,2),
+  exp_sur_lmt                 NUMBER(30,2),
+  cur                         CHAR(3),
+  crdt_subj_typ               VARCHAR2(10),
+  eff_dt                      CHAR(8),
+  crdt_stat                   VARCHAR2(10),
+  crdt_app_dt                 CHAR(8),
+  crdt_start_dt               CHAR(8),
+  crdt_exp_dt                 CHAR(8),
+  crdt_biz_typ                VARCHAR2(60),
+  cir_lmt_flg                 CHAR(1),
+  temp_lmt_flg                CHAR(1),
+  crdt_subj_cl                VARCHAR2(10),
+  bank_tax_coop_loan_crdt_flg CHAR(1),
+  dsn_sht_opn                 VARCHAR2(2000),
+  aprv_psn_no                 VARCHAR2(30),
+  crdt_emp_no                 VARCHAR2(200),
+  dept_line                   VARCHAR2(500),
+  data_src                    VARCHAR2(500),
+  lmt_type_cd                 VARCHAR2(100),
+  loan_happ_type_cd           VARCHAR2(8),
+  rela_cont_id                VARCHAR2(60),
+  org_id_ori                  VARCHAR2(200),
+  group_crdt_flg              VARCHAR2(10),
+  std_prod_id                 VARCHAR2(100),
+  appl_way_cd                 VARCHAR2(100),
+  approve_serial_flow_num     VARCHAR2(100),
+  apv_flow_num                VARCHAR2(100),
+  lmt_under_sellbl_prod_id    VARCHAR2(100),
+  apv_amt                     NUMBER(20,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

@@ -1,0 +1,40 @@
+﻿create table RRP_MDL.T_COM_RRP_BFD_BFD_101_JGFRZF
+(
+  rid              VARCHAR2(50) not null,
+  idx_20201003     VARCHAR2(20),
+  idx_20202001     NUMBER(20,2),
+  idx_20202002     NUMBER(20,2),
+  idx_20202003     NUMBER(20,2),
+  idx_20202004     NUMBER(20,2),
+  idx_20202005     NUMBER(20,2),
+  idx_20202006     NUMBER(20,2),
+  idx_20202007     NUMBER(20,2),
+  idx_20202008     NUMBER(20,2),
+  idx_20202009     NUMBER(20,2),
+  idx_20202010     NUMBER(20,2),
+  idx_20202011     NUMBER(20,2),
+  idx_20202012     NUMBER(20,2),
+  idx_20202013     NUMBER(20,2),
+  idx_20202014     NUMBER(20,2),
+  idx_20202015     NUMBER(20,2),
+  idx_20202016     NUMBER(20,2),
+  idx_20202017     NUMBER(20,2),
+  curr_cd          VARCHAR2(3),
+  org_no           VARCHAR2(20),
+  data_dt          VARCHAR2(10),
+  dept_no          VARCHAR2(20),
+  issued_no        VARCHAR2(20),
+  rpt_org_no       VARCHAR2(30),
+  data_ources      VARCHAR2(2),
+  data_modify      VARCHAR2(2),
+  force_sub_sts    VARCHAR2(1),
+  force_sub_reason VARCHAR2(200),
+  rule_name        VARCHAR2(2000),
+  rule_id          VARCHAR2(1000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

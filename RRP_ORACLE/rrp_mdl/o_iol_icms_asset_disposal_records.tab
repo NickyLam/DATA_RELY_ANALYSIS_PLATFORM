@@ -1,0 +1,108 @@
+﻿create table RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS
+(
+  serialno              VARCHAR2(64),
+  relativeserialno      VARCHAR2(64),
+  debtrepayassetid      VARCHAR2(64),
+  debtrepayassetname    VARCHAR2(200),
+  accountno             VARCHAR2(100),
+  accountname           VARCHAR2(200),
+  subacctnum            VARCHAR2(60),
+  accountcurrency       VARCHAR2(10),
+  transactionamt        NUMBER(24,6),
+  accountrodtype        VARCHAR2(64),
+  handletype            VARCHAR2(48),
+  handledate            DATE,
+  handlebalance         NUMBER(24,6),
+  handledesc            VARCHAR2(3000),
+  handlenum             VARCHAR2(32),
+  approvestatus         VARCHAR2(64),
+  inputuserid           VARCHAR2(64),
+  inputorgid            VARCHAR2(64),
+  inputdate             DATE,
+  operateuserid         VARCHAR2(64),
+  operateorgid          VARCHAR2(64),
+  operatedate           DATE,
+  updateuserid          VARCHAR2(64),
+  updateorgid           VARCHAR2(64),
+  updatedate            DATE,
+  relativeapplyserialno VARCHAR2(64),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS
+  is '抵债资产处置申请记录表';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.relativeserialno
+  is '关联流水号';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.debtrepayassetid
+  is '抵债资产编号';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.debtrepayassetname
+  is '抵债资产名称';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.accountno
+  is '账户';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.accountname
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.subacctnum
+  is '子账户';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.accountcurrency
+  is '账户币种';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.transactionamt
+  is '交易价格';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.accountrodtype
+  is '账户产品类型';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.handletype
+  is '处置方式';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.handledate
+  is '处置日期';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.handlebalance
+  is '回收金额';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.handledesc
+  is '处置说明';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.handlenum
+  is '处置数量';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.approvestatus
+  is '审批状态';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.operateuserid
+  is '经办客户经理';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.operateorgid
+  is '经办客户经理所属机构';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.operatedate
+  is '经办时间';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.relativeapplyserialno
+  is '关联申请流水号';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_RECORDS.etl_timestamp
+  is 'ETL处理时间戳';
+

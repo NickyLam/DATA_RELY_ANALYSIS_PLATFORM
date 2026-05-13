@@ -1,0 +1,150 @@
+﻿create table RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION
+(
+  serialno                  VARCHAR2(64),
+  occurtime                 VARCHAR2(10),
+  transactionflag           VARCHAR2(12),
+  voucherno                 VARCHAR2(64),
+  overduefloat              NUMBER(6,2),
+  extendflag                VARCHAR2(2),
+  rategenre                 VARCHAR2(5),
+  occurdate                 DATE,
+  extendtermday             NUMBER(22),
+  orgid                     VARCHAR2(64),
+  ratefloat                 NUMBER(24,6),
+  lastmaturity              DATE,
+  putoutno                  VARCHAR2(32),
+  relativeduebillno         VARCHAR2(64),
+  extendtermmonth           NUMBER(22),
+  extendrate                NUMBER(15,8),
+  lastrate                  NUMBER(15,8),
+  extensionsum              NUMBER(24,6),
+  overduerate               NUMBER(11,7),
+  contractno                VARCHAR2(32),
+  extendtermyear            NUMBER(22),
+  baserate                  NUMBER(24,6),
+  lastputoutdate            DATE,
+  migtflag                  VARCHAR2(80),
+  businessrate              NUMBER(15,8),
+  userid                    VARCHAR2(64),
+  extendputoutdate          DATE,
+  baseratetype              VARCHAR2(18),
+  lastsum                   NUMBER(24,6),
+  extendmaturity            DATE,
+  remark                    VARCHAR2(2000),
+  rateadjustfrequency       VARCHAR2(72),
+  rateadjusttype            VARCHAR2(18),
+  orderno                   VARCHAR2(50),
+  nextsettlementdate        VARCHAR2(10),
+  extendeffectdate          DATE,
+  extendrateeffectdate      DATE,
+  extendrepayplaneffectdate DATE,
+  newrepaytype              VARCHAR2(10),
+  finalmerger               VARCHAR2(10),
+  repaydate                 VARCHAR2(10),
+  repaycycle                VARCHAR2(36),
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION
+  is '展期信息表展期信息表';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.serialno
+  is '信息流水号';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.occurtime
+  is '发生时间';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.transactionflag
+  is '交易标志';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.voucherno
+  is '凭证号码';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.overduefloat
+  is '逾期贷款利率浮动比例';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.extendflag
+  is '更新标志';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.rategenre
+  is '利率重定价';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.occurdate
+  is '发生日期';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.extendtermday
+  is '展期期限日';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.orgid
+  is '创建机构';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.ratefloat
+  is '(Del)浮动利率';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.lastmaturity
+  is '原到期日';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.putoutno
+  is '出帐号';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.relativeduebillno
+  is '关联借据号';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.extendtermmonth
+  is '展期期限月';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.extendrate
+  is '展期利率';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.lastrate
+  is '原利率';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.extensionsum
+  is '展期金额';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.overduerate
+  is '逾期贷款执行利率';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.contractno
+  is '展期合同号';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.extendtermyear
+  is '展期期限年';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.baserate
+  is '(Del)基准利率';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.lastputoutdate
+  is '展期前起始日';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.migtflag
+  is '迁移标志：crsrcrilcupl';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.businessrate
+  is '利率';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.userid
+  is '操作员';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.extendputoutdate
+  is '受托支付序号';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.baseratetype
+  is '(Del)基准利率类型';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.lastsum
+  is '展期前金额';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.extendmaturity
+  is '展期后到期日';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.rateadjustfrequency
+  is '利率调整周期';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.rateadjusttype
+  is '利率调整方式利率调整方式(1立即2次年初3次年对月对日4按月调5下一个还款日调整)';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.orderno
+  is '预约编号';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.nextsettlementdate
+  is '下一结息日';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.newrepaytype
+  is '还款方式';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.finalmerger
+  is '末期合并';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.repaydate
+  is '还款日期';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.repaycycle
+  is '还款周期;还款周期(1月；2季；3一次；4半年；5年；6双月)';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_BUSINESS_EXTENSION.etl_timestamp
+  is 'ETL处理时间戳';
+

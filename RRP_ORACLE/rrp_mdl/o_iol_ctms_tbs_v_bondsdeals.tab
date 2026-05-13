@@ -1,0 +1,165 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS
+(
+  deal_id              NUMBER(22),
+  deal_tablename       VARCHAR2(15),
+  aspclient_id         NUMBER(22),
+  bondscode            VARCHAR2(45),
+  bondsname            VARCHAR2(75),
+  bondstype            VARCHAR2(30),
+  serial_number        VARCHAR2(23),
+  tradedate            NUMBER(22),
+  settledate           NUMBER(8),
+  buyorsell            VARCHAR2(2),
+  cleanprice           NUMBER(38,12),
+  dirtyprice           NUMBER(38,12),
+  yieldtomaturity      NUMBER(38,12),
+  settleamount         NUMBER(30,2),
+  portfolio_id         NUMBER(22),
+  portfolio_name       VARCHAR2(120),
+  keepfolder_id        NUMBER(22),
+  keepfolder_shortname VARCHAR2(75),
+  folderatts           VARCHAR2(12),
+  classfyname          VARCHAR2(30),
+  cptys_shortname      VARCHAR2(192),
+  cptys_id             NUMBER(22),
+  settletype           VARCHAR2(15),
+  dealer_id            NUMBER(4),
+  dealer_name          VARCHAR2(30),
+  ref_number           VARCHAR2(48),
+  feeamount            NUMBER(22),
+  taxamount            NUMBER(22),
+  brokeramount         NUMBER(22),
+  note                 VARCHAR2(4000),
+  nominal              NUMBER(22),
+  accruedamount        NUMBER(22),
+  cfets_from           VARCHAR2(2),
+  source               VARCHAR2(2),
+  lastmodified         TIMESTAMP(6),
+  datasymbol_id        NUMBER(22),
+  assettype_id         NUMBER(22),
+  bondsdeals_id_grand  NUMBER(22),
+  stock_id             VARCHAR2(15),
+  convert_price        NUMBER(10,4),
+  stock_price          NUMBER(10,4),
+  convert_quantity     NUMBER(27,12),
+  dn_dealer            VARCHAR2(900),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10),
+  etl_timestamp        TIMESTAMP(6),
+  currency             VARCHAR2(5),
+  tradetime            VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS
+  is '现券交易';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.deal_id
+  is '引用表ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.deal_tablename
+  is '引用表名';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.aspclient_id
+  is '部门代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.bondscode
+  is '质押券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.bondsname
+  is '债券名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.bondstype
+  is '债券类型';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.serial_number
+  is '交易号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.tradedate
+  is '交易日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.settledate
+  is '交割日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.buyorsell
+  is '交易方向';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.cleanprice
+  is '交易净价';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.dirtyprice
+  is '交易全价';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.yieldtomaturity
+  is '到期收益率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.settleamount
+  is '结算金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.portfolio_id
+  is '交易组别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.portfolio_name
+  is '交易组别名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.keepfolder_id
+  is '后台账户代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.keepfolder_shortname
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.folderatts
+  is '账户属性';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.classfyname
+  is '四分类名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.cptys_shortname
+  is '交易对手名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.cptys_id
+  is '交易对手序号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.settletype
+  is '结算方式';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.dealer_id
+  is '交易员编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.dealer_name
+  is '交易员名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.ref_number
+  is '成交编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.feeamount
+  is '手续费';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.taxamount
+  is '税金';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.brokeramount
+  is '佣金';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.note
+  is '备注';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.nominal
+  is '券面总额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.accruedamount
+  is '应计利息总额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.cfets_from
+  is '是否是CFETS交易';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.source
+  is '数据来源';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.lastmodified
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.datasymbol_id
+  is '数据源ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.assettype_id
+  is '资产类型ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.bondsdeals_id_grand
+  is '原始交易ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.stock_id
+  is '股票代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.convert_price
+  is '转股价格';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.stock_price
+  is '正股价格';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.convert_quantity
+  is '转股数量';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.dn_dealer
+  is '引用表ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.etl_timestamp
+  is 'etl处理时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BONDSDEALS.tradetime
+  is '交易时间';
+

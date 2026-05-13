@@ -1,0 +1,17 @@
+﻿create table RRP_MDL.T_REFERENCED
+(
+  referenced_owner VARCHAR2(128),
+  referenced_name  VARCHAR2(128)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.T_REFERENCED
+  is '过程临时表';
+comment on column RRP_MDL.T_REFERENCED.referenced_owner
+  is '依赖模式';
+comment on column RRP_MDL.T_REFERENCED.referenced_name
+  is '依赖表名';
+

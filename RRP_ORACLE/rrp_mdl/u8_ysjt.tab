@@ -1,0 +1,18 @@
+﻿create table RRP_MDL.U8_YSJT
+(
+  owner      VARCHAR2(128),
+  table_name VARCHAR2(128)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

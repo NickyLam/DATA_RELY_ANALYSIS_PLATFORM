@@ -1,0 +1,23 @@
+﻿create table RRP_MDL.TMP_D05_2_TRADE
+(
+  ntlycd         VARCHAR2(4),
+  originalperiod VARCHAR2(1),
+  curr_code      VARCHAR2(3),
+  dp_bal         NUMBER(20,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.TMP_D05_2_TRADE
+  is '临时表';
+comment on column RRP_MDL.TMP_D05_2_TRADE.ntlycd
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_2_TRADE.originalperiod
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_2_TRADE.curr_code
+  is '报表币种';
+comment on column RRP_MDL.TMP_D05_2_TRADE.dp_bal
+  is '临时表字段';
+

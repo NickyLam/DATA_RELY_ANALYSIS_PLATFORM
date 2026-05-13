@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.VIEW_LIST_FROM_HDW_BAK_20230422
+(
+  id            VARCHAR2(100),
+  sch_name      VARCHAR2(100),
+  table_name    VARCHAR2(100),
+  table_name_cn VARCHAR2(1000),
+  view_name     VARCHAR2(100),
+  jud_condition VARCHAR2(200),
+  valid_flg     CHAR(1),
+  update_dt     CHAR(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.VIEW_LIST_FROM_HDW_BAK_20230422
+  is '数据仓库视图接口清单';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW_BAK_20230422.id
+  is '序号';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW_BAK_20230422.sch_name
+  is '库名';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW_BAK_20230422.table_name
+  is '表名';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW_BAK_20230422.table_name_cn
+  is '表中文名';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW_BAK_20230422.view_name
+  is '视图名称';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW_BAK_20230422.jud_condition
+  is '抽数条件';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW_BAK_20230422.valid_flg
+  is '有效标志';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW_BAK_20230422.update_dt
+  is '更新日期';
+

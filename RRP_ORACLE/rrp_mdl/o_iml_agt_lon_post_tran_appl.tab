@@ -1,0 +1,120 @@
+﻿create table RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL
+(
+  appl_id                 VARCHAR2(100),
+  lp_id                   VARCHAR2(100),
+  tran_flow_num           VARCHAR2(100),
+  rela_tran_flow_num      VARCHAR2(100),
+  tran_cd                 VARCHAR2(30),
+  tran_dt                 DATE,
+  tran_amt                NUMBER(30,8),
+  tran_status_cd          VARCHAR2(30),
+  realtm_tran_flg         VARCHAR2(10),
+  rolbk_flow_num          VARCHAR2(100),
+  core_tran_ref_no        VARCHAR2(100),
+  core_entry_flow_num     VARCHAR2(100),
+  ova_flow_num            VARCHAR2(100),
+  fft_tran_type_cd        VARCHAR2(30),
+  grace_int_flg           VARCHAR2(10),
+  grace_pric_flg          VARCHAR2(10),
+  adv_repay_rs_cd         VARCHAR2(30),
+  adv_repay_comnt         VARCHAR2(500),
+  adv_repay_cap_src_comnt VARCHAR2(500),
+  regroup_loan_flg        VARCHAR2(10),
+  rela_obj_name           VARCHAR2(500),
+  obj_id                  VARCHAR2(100),
+  doc_type_name           VARCHAR2(500),
+  doc_flow_num            VARCHAR2(100),
+  rgst_org_id             VARCHAR2(100),
+  rgst_teller_id          VARCHAR2(100),
+  remark                  VARCHAR2(4000),
+  other_comnt             VARCHAR2(4000),
+  start_dt                DATE,
+  end_dt                  DATE,
+  id_mark                 VARCHAR2(10),
+  src_table_name          VARCHAR2(100),
+  job_cd                  VARCHAR2(10),
+  etl_timestamp           TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL
+  is '贷后交易申请';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.appl_id
+  is '申请编号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.rela_tran_flow_num
+  is '关联交易流水号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.tran_cd
+  is '交易代码';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.realtm_tran_flg
+  is '实时交易标志';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.rolbk_flow_num
+  is '回退流水号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.core_tran_ref_no
+  is '核心交易参考号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.core_entry_flow_num
+  is '核心记账流水号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.ova_flow_num
+  is '全局流水号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.fft_tran_type_cd
+  is '福费廷转让类型代码';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.grace_int_flg
+  is '宽限利息标志';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.grace_pric_flg
+  is '宽限本金标志';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.adv_repay_rs_cd
+  is '提前还款原因代码';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.adv_repay_comnt
+  is '提前还款说明';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.adv_repay_cap_src_comnt
+  is '提前还款资金来源说明';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.regroup_loan_flg
+  is '重组贷款标志';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.rela_obj_name
+  is '关联对象名称';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.obj_id
+  is '对象编号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.doc_type_name
+  is '单据类型名称';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.doc_flow_num
+  is '单据流水号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.rgst_org_id
+  is '登记机构编号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.remark
+  is '备注';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.other_comnt
+  is '其他说明';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_LON_POST_TRAN_APPL.etl_timestamp
+  is 'ETL处理时间戳';
+

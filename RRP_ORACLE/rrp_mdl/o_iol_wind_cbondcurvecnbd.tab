@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.O_IOL_WIND_CBONDCURVECNBD
+(
+  trade_dt           VARCHAR2(12),
+  b_anal_curvenumber NUMBER(10),
+  b_anal_curvename   VARCHAR2(300),
+  b_anal_curvetype   VARCHAR2(120),
+  b_anal_curveterm   NUMBER(20,4),
+  b_anal_yield       NUMBER(20,6),
+  b_anal_base_yield  NUMBER(20,4),
+  b_anal_yield_total NUMBER(20,4),
+  etl_dt             DATE,
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_WIND_CBONDCURVECNBD
+  is '中债登债券收益率曲线';
+comment on column RRP_MDL.O_IOL_WIND_CBONDCURVECNBD.trade_dt
+  is '发生日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDCURVECNBD.b_anal_curvenumber
+  is '中债登收益率曲线ID';
+comment on column RRP_MDL.O_IOL_WIND_CBONDCURVECNBD.b_anal_curvename
+  is '曲线名称';
+comment on column RRP_MDL.O_IOL_WIND_CBONDCURVECNBD.b_anal_curvetype
+  is '曲线类型';
+comment on column RRP_MDL.O_IOL_WIND_CBONDCURVECNBD.b_anal_curveterm
+  is '标准期限(年)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDCURVECNBD.b_anal_yield
+  is '收益率(%)';
+comment on column RRP_MDL.O_IOL_WIND_CBONDCURVECNBD.b_anal_base_yield
+  is '估值日基础利率';
+comment on column RRP_MDL.O_IOL_WIND_CBONDCURVECNBD.b_anal_yield_total
+  is '收益率曲线数值';
+comment on column RRP_MDL.O_IOL_WIND_CBONDCURVECNBD.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDCURVECNBD.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,126 @@
+﻿create table RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE
+(
+  serialno                  VARCHAR2(64),
+  objecttype                VARCHAR2(18),
+  objectno                  VARCHAR2(64),
+  guarantorid               VARCHAR2(16),
+  relativedate              DATE,
+  inputdate                 DATE,
+  limitelement              VARCHAR2(10),
+  updateorgid               VARCHAR2(64),
+  remark                    VARCHAR2(40),
+  adjustreason              VARCHAR2(1000),
+  inputuserid               VARCHAR2(64),
+  vouchtype                 VARCHAR2(10),
+  interestbalance           NUMBER(25,6),
+  status                    VARCHAR2(4),
+  evaluateresult            VARCHAR2(10),
+  guarantysum               NUMBER(24,6),
+  updateuserid              VARCHAR2(64),
+  businessdescribe          VARCHAR2(1000),
+  signid                    VARCHAR2(64),
+  migtflag                  VARCHAR2(80),
+  coveragearea              VARCHAR2(10),
+  equitysituation           VARCHAR2(10),
+  businessanalyze           VARCHAR2(1000),
+  signlevel                 VARCHAR2(18),
+  adjust                    VARCHAR2(10),
+  guarantorname             VARCHAR2(200),
+  channel                   VARCHAR2(10),
+  inputorgid                VARCHAR2(64),
+  balance                   NUMBER(25,6),
+  updatedate                DATE,
+  afterclassifyresulteleven VARCHAR2(20),
+  lastclassifyresulteleven  VARCHAR2(20),
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE
+  is '风险分类关联表';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.serialno
+  is '关联流水号';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.objecttype
+  is '关联类型';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.objectno
+  is '关联编号';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.guarantorid
+  is '保证人';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.relativedate
+  is '关联日期';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.inputdate
+  is '登记时间';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.limitelement
+  is '限定因素';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.adjustreason
+  is '调整理由';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.vouchtype
+  is '担保类型';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.interestbalance
+  is '关注余额';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.status
+  is '状态';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.evaluateresult
+  is '业务评级结果';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.guarantysum
+  is '保证总金额';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.businessdescribe
+  is '业务模式说明/保证措施说明/预警信号描述';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.signid
+  is '预警信号编号';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.migtflag
+  is '迁移标志：CRSRCRILCUPL';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.coveragearea
+  is '覆盖率';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.equitysituation
+  is '股权情况';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.businessanalyze
+  is '押品价格稳定性、变现能力和法律保障分析/担保能力、担保意愿和法律保障分析/我行债券保障能力分析';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.signlevel
+  is '预警信号级别';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.adjust
+  is '调整';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.guarantorname
+  is '保证人';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.channel
+  is '渠道';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.balance
+  is '借据余额';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.updatedate
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.afterclassifyresulteleven
+  is '调整后11级分类';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.lastclassifyresulteleven
+  is '调整前11级分类';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_RELATIVE.etl_timestamp
+  is 'ETL处理时间戳';
+

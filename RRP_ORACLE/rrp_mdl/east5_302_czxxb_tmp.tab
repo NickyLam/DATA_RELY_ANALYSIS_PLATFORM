@@ -1,0 +1,90 @@
+﻿create table RRP_MDL.EAST5_302_CZXXB_TMP
+(
+  rid        VARCHAR2(50) not null,
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  khtybh     VARCHAR2(70),
+  khmc       VARCHAR2(450),
+  zjlb       VARCHAR2(60),
+  zjhm       VARCHAR2(70),
+  czh        VARCHAR2(60),
+  hqckzh     VARCHAR2(60),
+  czlx       VARCHAR2(30),
+  ygbz       VARCHAR2(3),
+  qyrq       VARCHAR2(8),
+  qygyh      VARCHAR2(30),
+  czzt       VARCHAR2(30),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8),
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  address    VARCHAR2(200),
+  khxm       VARCHAR2(200),
+  yhjgdm     VARCHAR2(30),
+  khmc_orig  VARCHAR2(450),
+  zjhm_orig  VARCHAR2(70),
+  khmc_oth   VARCHAR2(5),
+  gsfzjg     VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.khtybh
+  is '客户统一编号';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.khmc
+  is '客户名称';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.zjlb
+  is '证件类别';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.zjhm
+  is '证件号码';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.czh
+  is '存折号';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.hqckzh
+  is '存款账号';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.czlx
+  is '存折类型';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.ygbz
+  is '员工标志';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.qyrq
+  is '签约日期';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.qygyh
+  is '启用柜员号';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.czzt
+  is '存折状态';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.khxm
+  is '客户姓名';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.yhjgdm
+  is '银行机构代码';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.khmc_orig
+  is '客户名称（脱敏前）';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.zjhm_orig
+  is '证件号码（脱敏前）';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.khmc_oth
+  is '客户是否个人客户';
+comment on column RRP_MDL.EAST5_302_CZXXB_TMP.gsfzjg
+  is '归属分支机构';
+

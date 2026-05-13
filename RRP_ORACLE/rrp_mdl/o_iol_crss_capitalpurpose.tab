@@ -1,0 +1,76 @@
+﻿create table RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE
+(
+  serialno             VARCHAR2(40),
+  objectno             VARCHAR2(32),
+  paymethod            VARCHAR2(200),
+  payee                VARCHAR2(200),
+  transsum             NUMBER(24,6),
+  paymenttime          VARCHAR2(20),
+  actualpurpose        VARCHAR2(200),
+  remark               VARCHAR2(200),
+  isok                 VARCHAR2(32),
+  inputuserid          VARCHAR2(32),
+  inputorgid           VARCHAR2(32),
+  inputdate            VARCHAR2(10),
+  updatedate           VARCHAR2(10),
+  paymentno            VARCHAR2(40),
+  overseeapplyserialno VARCHAR2(40),
+  overseeobjecttype    VARCHAR2(32),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10)
+)
+partition by list (END_DT)
+(
+  partition P_19000101 values (TO_DATE(' 1900-01-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition P_20991231 values (TO_DATE(' 2099-12-31 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE
+  is '资金用途';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.objectno
+  is '对象号';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.paymethod
+  is '支付方式';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.payee
+  is '收款人';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.transsum
+  is '转款金额';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.paymenttime
+  is '支付时间';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.actualpurpose
+  is '实际用途';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.isok
+  is '是否符合合同约定';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.paymentno
+  is '支付流水号';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.overseeapplyserialno
+  is '监测申请流水号';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.overseeobjecttype
+  is '监测对象类型';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CRSS_CAPITALPURPOSE.id_mark
+  is '增删标志';
+

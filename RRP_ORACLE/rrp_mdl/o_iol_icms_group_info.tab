@@ -1,0 +1,210 @@
+﻿create table RRP_MDL.O_IOL_ICMS_GROUP_INFO
+(
+  groupid                 VARCHAR2(30),
+  businessscope           VARCHAR2(4000),
+  mgtorgid                VARCHAR2(32),
+  currentversionseq       VARCHAR2(32),
+  countrycode             VARCHAR2(18),
+  firstloandate           DATE,
+  groupmembercount        NUMBER(22),
+  registerregioncode      VARCHAR2(18),
+  creditlevel             VARCHAR2(80),
+  groupcredittype         VARCHAR2(18),
+  customertype            VARCHAR2(18),
+  newregioncode           VARCHAR2(18),
+  industrytypeproportion  NUMBER(16,2),
+  city                    VARCHAR2(18),
+  officeaddupdatedate     DATE,
+  isretiveeconmics        VARCHAR2(1),
+  groupname               VARCHAR2(200),
+  familymapstatus         VARCHAR2(6),
+  approveorgid            VARCHAR2(32),
+  isrelatedparty          VARCHAR2(10),
+  parentcompanyofficeadd  VARCHAR2(200),
+  industrytypeproportion2 NUMBER(16,2),
+  corpidetitytype         VARCHAR2(18),
+  refversionseq           VARCHAR2(32),
+  oldfinancefocus         VARCHAR2(18),
+  oldheadofficemanage     VARCHAR2(6),
+  industrytype            VARCHAR2(18),
+  subjectbusiness         VARCHAR2(800),
+  groupstatus             VARCHAR2(6),
+  groupabbname            VARCHAR2(500),
+  updateuserid            VARCHAR2(32),
+  updatedate              DATE,
+  corporgid               VARCHAR2(32),
+  groupcustomertype       VARCHAR2(18),
+  oldgroupcredittype      VARCHAR2(18),
+  industrytypeproportion1 NUMBER(16,2),
+  migtflag                VARCHAR2(80),
+  mgtuserid               VARCHAR2(32),
+  inputorgid              VARCHAR2(32),
+  inputuserid             VARCHAR2(32),
+  oldgroupabbname         VARCHAR2(500),
+  isrelativetrade         VARCHAR2(1),
+  actualcontrollercounts  NUMBER(15),
+  remark                  VARCHAR2(500),
+  updateorgid             VARCHAR2(32),
+  industrytype1           VARCHAR2(18),
+  industrytype2           VARCHAR2(18),
+  inputdate               DATE,
+  financialgroupscope     VARCHAR2(200),
+  financialgroupposition  VARCHAR2(200),
+  grouptype               VARCHAR2(32),
+  approvedate             DATE,
+  oldgroupname            VARCHAR2(500),
+  headofficemanage        VARCHAR2(6),
+  approveuserid           VARCHAR2(32),
+  investmencounts         NUMBER(15),
+  keymembercustomerid     VARCHAR2(32),
+  financefocus            VARCHAR2(18),
+  migtoldvalue            VARCHAR2(250),
+  actualcontroller        VARCHAR2(200),
+  start_dt                DATE,
+  end_dt                  DATE,
+  id_mark                 VARCHAR2(10),
+  etl_timestamp           TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_GROUP_INFO
+  is '集群客户概况信息集群客户概况信息';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.groupid
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.businessscope
+  is '经营范围(文本描述)';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.mgtorgid
+  is '主办机构';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.currentversionseq
+  is '当前正在使用的家谱版本号';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.countrycode
+  is '所在国家(地区)';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.firstloandate
+  is '首贷日期';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.groupmembercount
+  is '集群成员数量';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.registerregioncode
+  is '登记地行政区划代码';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.creditlevel
+  is '内部信用评级级别';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.groupcredittype
+  is '集团类型';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.customertype
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.newregioncode
+  is '行政区域（风险预警）';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.industrytypeproportion
+  is '第一大主营业务占比';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.city
+  is '省直辖市/县';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.officeaddupdatedate
+  is '更新办公地址日期';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.isretiveeconmics
+  is '是否经济依存';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.groupname
+  is '集群名称';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.familymapstatus
+  is '家谱版本状态';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.approveorgid
+  is '复核机构';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.isrelatedparty
+  is '是否我行关联方标志';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.parentcompanyofficeadd
+  is '集团客户母公司国内办公地址';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.industrytypeproportion2
+  is '第三大主营业务占比';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.corpidetitytype
+  is '征信报送企业身份标识类型';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.refversionseq
+  is '当前正在维护的家谱版本号';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.oldfinancefocus
+  is '过往财务集中情况';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.oldheadofficemanage
+  is '过往总行集中管理情况';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.industrytype
+  is '所属行业类型';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.subjectbusiness
+  is '主营业务(文本描述)';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.groupstatus
+  is '集群状态';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.groupabbname
+  is '集团简称';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.corporgid
+  is '法人机构编号';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.groupcustomertype
+  is '集群客户类型';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.oldgroupcredittype
+  is '过往集团类型';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.industrytypeproportion1
+  is '第二大主营业务占比';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.migtflag
+  is '迁移标志：CRS RCR ILC UPL';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.mgtuserid
+  is '主办客户经理';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.inputorgid
+  is '登记单位';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.oldgroupabbname
+  is '集群曾用简称';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.isrelativetrade
+  is '是否我行关联交易';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.actualcontrollercounts
+  is '实际控制人个数';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.industrytype1
+  is '第二大主营业务编号(行业代码)';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.industrytype2
+  is '第三大主营业务编号(行业代码)';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.financialgroupscope
+  is '规模(文本描述)';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.financialgroupposition
+  is '行业地位(文本描述)';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.grouptype
+  is '集群类型';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.approvedate
+  is '复核日期';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.oldgroupname
+  is '集团曾用名';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.headofficemanage
+  is '总行集中管理';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.approveuserid
+  is '复核人';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.investmencounts
+  is '主要出资人个数';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.keymembercustomerid
+  is '集团核心企业';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.financefocus
+  is '财务是否集中';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.migtoldvalue
+  is '迁移数据-参数转换前字段值';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.actualcontroller
+  is '实际控制人';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_GROUP_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

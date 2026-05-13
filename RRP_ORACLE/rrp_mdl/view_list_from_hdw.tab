@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.VIEW_LIST_FROM_HDW
+(
+  id            VARCHAR2(150),
+  sch_name      VARCHAR2(150),
+  table_name    VARCHAR2(150),
+  table_name_cn VARCHAR2(1500),
+  view_name     VARCHAR2(150),
+  jud_condition VARCHAR2(300),
+  valid_flg     CHAR(1),
+  update_dt     CHAR(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.VIEW_LIST_FROM_HDW
+  is '数据仓库视图接口清单';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW.id
+  is '序号';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW.sch_name
+  is '库名';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW.table_name
+  is '表名';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW.table_name_cn
+  is '表中文名';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW.view_name
+  is '视图名称';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW.jud_condition
+  is '抽数条件';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW.valid_flg
+  is '有效标志';
+comment on column RRP_MDL.VIEW_LIST_FROM_HDW.update_dt
+  is '更新日期';
+

@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.TMP_ADD_DG_002_CREDIT
+(
+  data_date    VARCHAR2(10),
+  acct_org_num VARCHAR2(20),
+  khwym        VARCHAR2(45),
+  khmc         VARCHAR2(150),
+  cnye         NUMBER(20,6),
+  sys_source   VARCHAR2(150),
+  zsxed        NUMBER(20,6),
+  yyed         NUMBER(20,6),
+  cont_id      VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.TMP_ADD_DG_002_CREDIT
+  is '补录表-对公-授信基表';
+comment on column RRP_MDL.TMP_ADD_DG_002_CREDIT.data_date
+  is '数据日期';
+comment on column RRP_MDL.TMP_ADD_DG_002_CREDIT.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.TMP_ADD_DG_002_CREDIT.khwym
+  is '客户唯一码';
+comment on column RRP_MDL.TMP_ADD_DG_002_CREDIT.khmc
+  is '客户名称';
+comment on column RRP_MDL.TMP_ADD_DG_002_CREDIT.cnye
+  is '承诺余额（元）';
+comment on column RRP_MDL.TMP_ADD_DG_002_CREDIT.sys_source
+  is '来源系统';
+comment on column RRP_MDL.TMP_ADD_DG_002_CREDIT.zsxed
+  is '总授信额度';
+comment on column RRP_MDL.TMP_ADD_DG_002_CREDIT.yyed
+  is '已用额度';
+comment on column RRP_MDL.TMP_ADD_DG_002_CREDIT.cont_id
+  is '合同号';
+

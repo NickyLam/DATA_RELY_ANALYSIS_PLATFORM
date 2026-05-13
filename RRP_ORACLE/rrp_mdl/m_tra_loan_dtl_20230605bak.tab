@@ -1,0 +1,171 @@
+﻿create table RRP_MDL.M_TRA_LOAN_DTL_20230605BAK
+(
+  data_dt              CHAR(8) not null,
+  lgl_rep_id           VARCHAR2(200),
+  tra_org_id           VARCHAR2(200),
+  tra_seq_no           VARCHAR2(200),
+  acc_id               VARCHAR2(200),
+  cust_id              VARCHAR2(200),
+  cont_id              VARCHAR2(200),
+  corp_ind_flg         CHAR(2),
+  org_id               VARCHAR2(200),
+  subj_id              VARCHAR2(200),
+  rcpt_id              VARCHAR2(200),
+  cust_nm              VARCHAR2(500),
+  tra_typ              VARCHAR2(10),
+  tra_dr_cr_flg        CHAR(1),
+  tra_amt              NUMBER(30,2),
+  acc_bal              NUMBER(30,2),
+  opp_acc              VARCHAR2(200),
+  opp_acc_nm           VARCHAR2(500),
+  opp_pbc_no           VARCHAR2(200),
+  opp_bank_nm          VARCHAR2(500),
+  tra_chan             VARCHAR2(10),
+  cur                  CHAR(3),
+  abstr                VARCHAR2(2000),
+  flush_patch_flg      CHAR(1),
+  tra_tlr_no           VARCHAR2(30),
+  grant_tlr_no         VARCHAR2(30),
+  cash_trf_flg         CHAR(1),
+  agt_nm               VARCHAR2(500),
+  agt_crdl_typ         VARCHAR2(10),
+  agt_crdl_no          VARCHAR2(100),
+  batch_trf_flg        CHAR(1),
+  norm_retrv_amt       NUMBER(30,2),
+  adv_repy_amt         NUMBER(30,2),
+  dstr_retrv_typ       VARCHAR2(10),
+  prin_tra_flg         CHAR(1),
+  tra_tm               TIMESTAMP(6),
+  loan_chg_typ         VARCHAR2(10),
+  dept_line            VARCHAR2(500),
+  data_src             VARCHAR2(500),
+  tra_dt               CHAR(8),
+  crn_prd_accrd_int    NUMBER(30,6),
+  crn_prd_repy_pny_int NUMBER(30,6),
+  crn_prd_repy_cp_int  NUMBER(30,6),
+  repay_perds          VARCHAR2(30),
+  dtl_seq_num          VARCHAR2(100),
+  amt_type             VARCHAR2(100),
+  repay_type           VARCHAR2(100),
+  std_prod_id          VARCHAR2(100),
+  bill_num             VARCHAR2(200),
+  rel_id               VARCHAR2(200),
+  sys_in_flg           VARCHAR2(10),
+  discnt_int_rat       NUMBER(20,8),
+  ctr_nt_id            VARCHAR2(100),
+  callbk_rs            VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.tra_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.tra_seq_no
+  is '交易流水号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.acc_id
+  is '账户编号:EF05AI01';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.cont_id
+  is '合同编号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.corp_ind_flg
+  is '对公对私标志';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.org_id
+  is '银行编号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.subj_id
+  is '科目编号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.cust_nm
+  is '客户名称';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.tra_typ
+  is '交易类型';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.tra_dr_cr_flg
+  is '交易借贷标志';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.tra_amt
+  is '交易金额';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.acc_bal
+  is '累计余额';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.opp_acc
+  is '对方账号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.opp_acc_nm
+  is '交易对手户名';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.opp_pbc_no
+  is '对方行号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.opp_bank_nm
+  is '交易对手行名';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.tra_chan
+  is '交易渠道';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.cur
+  is '账号币种';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.abstr
+  is '摘要';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.flush_patch_flg
+  is '冲补抹标志';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.tra_tlr_no
+  is '交易柜员号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.grant_tlr_no
+  is '授权柜员号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.cash_trf_flg
+  is '现转标志';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.agt_nm
+  is '代办人姓名';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.agt_crdl_typ
+  is '代办人证件类型';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.agt_crdl_no
+  is '代办人证件号码';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.batch_trf_flg
+  is '批量转让标志';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.norm_retrv_amt
+  is '正常回收金额';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.adv_repy_amt
+  is '提前还款金额';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.dstr_retrv_typ
+  is '发放收回类型';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.prin_tra_flg
+  is '本金交易标志';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.tra_tm
+  is '交易时间';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.loan_chg_typ
+  is '贷款变动类型';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.data_src
+  is '数据来源（参见[字典:AML0045]）';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.tra_dt
+  is '成交日期';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.crn_prd_accrd_int
+  is '当期应计利息';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.crn_prd_repy_pny_int
+  is '当期还款罚息';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.crn_prd_repy_cp_int
+  is '当期还款复息';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.repay_perds
+  is '期数';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.dtl_seq_num
+  is '交易序号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.amt_type
+  is '金额类型|金额类型|bal-余额,dda-发放金额,intp-逾期利息,lim-额度金额,od-透支金额,odip-逾期复利,odpp-逾期罚息,osl-未到期本金,prd-逾期本金,pri-本金';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.repay_type
+  is '还款方式';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.std_prod_id
+  is '行内标准产品编号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.bill_num
+  is '票据号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.rel_id
+  is '关联编号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.sys_in_flg
+  is '系统内标志';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.discnt_int_rat
+  is '贴现利率';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.ctr_nt_id
+  is '成交单编号';
+comment on column RRP_MDL.M_TRA_LOAN_DTL_20230605BAK.callbk_rs
+  is '回收原因';
+

@@ -1,0 +1,78 @@
+﻿create table RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT
+(
+  etl_dt                DATE,
+  lp_id                 VARCHAR2(60),
+  cust_acct_card_no     VARCHAR2(60),
+  cust_acct_sub_acct_id VARCHAR2(60),
+  acct_name             VARCHAR2(100),
+  cust_id               VARCHAR2(60),
+  std_prod_id           VARCHAR2(60),
+  subj_id               VARCHAR2(60),
+  acct_status_cd        VARCHAR2(10),
+  curr_cd               VARCHAR2(10),
+  open_acct_dt          DATE,
+  open_acct_org_id      VARCHAR2(60),
+  clos_acct_dt          DATE,
+  clos_acct_flow_num    VARCHAR2(60),
+  acct_bal_uplmi        NUMBER(30,2),
+  sig_tran_lmt          NUMBER(30,2),
+  acm_load_amt          NUMBER(30,2),
+  currt_bal             NUMBER(30,2),
+  job_cd                VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT
+  is '电子现金账户信息';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.cust_acct_card_no
+  is '客户账户卡号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.cust_acct_sub_acct_id
+  is '账户子账号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.acct_status_cd
+  is '账户状态代码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.open_acct_dt
+  is '开户日期';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.open_acct_org_id
+  is '开户机构编号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.clos_acct_dt
+  is '销户日期';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.clos_acct_flow_num
+  is '销户流水号';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.acct_bal_uplmi
+  is '账户余额上限';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.sig_tran_lmt
+  is '单笔交易限额';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.acm_load_amt
+  is '累计圈存金额';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_ELEC_CASH_ACCT.etl_timestamp
+  is '数据处理时间';
+

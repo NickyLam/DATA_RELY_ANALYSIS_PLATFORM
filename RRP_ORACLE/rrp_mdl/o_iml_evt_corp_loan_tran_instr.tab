@@ -1,0 +1,74 @@
+﻿create table RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR
+(
+  evt_id             VARCHAR2(100),
+  lp_id              VARCHAR2(60),
+  tran_dt            DATE,
+  instr_flow_num     VARCHAR2(60),
+  tran_flow_num      VARCHAR2(60),
+  tran_org_id        VARCHAR2(60),
+  tran_kind_cd       VARCHAR2(10),
+  acct_id            VARCHAR2(60),
+  accting_code       VARCHAR2(60),
+  bal_compnt_type_cd VARCHAR2(10),
+  bal_seq_num        VARCHAR2(60),
+  tran_code          VARCHAR2(10),
+  debit_crdt_dir_cd  VARCHAR2(10),
+  curr_cd            VARCHAR2(10),
+  tran_amt           NUMBER(30,2),
+  erase_acct_flg     VARCHAR2(10),
+  gl_post_flg        VARCHAR2(10),
+  etl_dt             DATE,
+  src_table_name     VARCHAR2(100),
+  job_cd             VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR
+  is '对公贷款交易指令';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.instr_flow_num
+  is '指令流水号';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.tran_kind_cd
+  is '交易种类代码';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.accting_code
+  is '会计核算码';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.bal_compnt_type_cd
+  is '余额组件类型代码';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.bal_seq_num
+  is '余额序号';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.tran_code
+  is '交易码';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.debit_crdt_dir_cd
+  is '借贷方向代码';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.erase_acct_flg
+  is '抹账标志';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.gl_post_flg
+  is '总账过账标志';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_CORP_LOAN_TRAN_INSTR.etl_timestamp
+  is 'etl处理时间戳';
+

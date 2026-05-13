@@ -1,0 +1,27 @@
+﻿create table RRP_MDL.ADD_BOND_TYPE_CD
+(
+  product_type_code VARCHAR2(8),
+  product_type_name VARCHAR2(300),
+  date_sourcesd     VARCHAR2(16)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_BOND_TYPE_CD
+  is '债券类型代码表';
+comment on column RRP_MDL.ADD_BOND_TYPE_CD.product_type_code
+  is '产品类型代码';
+comment on column RRP_MDL.ADD_BOND_TYPE_CD.product_type_name
+  is '产品类型名称';
+comment on column RRP_MDL.ADD_BOND_TYPE_CD.date_sourcesd
+  is '债券投资-资金';
+

@@ -1,0 +1,65 @@
+﻿create table RRP_MDL.B_LOAN_POV_ALLE_SUB
+(
+  data_dt                CHAR(8) not null,
+  lgl_rep_id             VARCHAR2(200),
+  org_id                 VARCHAR2(200),
+  rcpt_id                VARCHAR2(200) not null,
+  pov_alle_loan_flg      CHAR(1),
+  pov_alle_loan_biz_vrty VARCHAR2(10),
+  pov_alle_drv_num       INTEGER,
+  pov_alle_drv_shk_num   INTEGER,
+  pov_alle_sml_loan_flg  CHAR(1),
+  pov_alle_loan_idnt_typ VARCHAR2(10),
+  spcl_fin_debt_loan_flg CHAR(1),
+  dept_line              VARCHAR2(500),
+  data_src               VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_LOAN_POV_ALLE_SUB
+  is '精准扶贫贷款子表';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.pov_alle_loan_flg
+  is '精准扶贫贴息贷款标志';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.pov_alle_loan_biz_vrty
+  is '扶贫贷款业务品种';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.pov_alle_drv_num
+  is '扶贫带动人数';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.pov_alle_drv_shk_num
+  is '扶贫带动已脱贫人数';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.pov_alle_sml_loan_flg
+  is '扶贫小额信贷标志';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.pov_alle_loan_idnt_typ
+  is '扶贫贷款认定类型';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.spcl_fin_debt_loan_flg
+  is '专项金融债贷款标志';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_LOAN_POV_ALLE_SUB.data_src
+  is '数据来源';
+alter table RRP_MDL.B_LOAN_POV_ALLE_SUB
+  add constraint PK_B_LOAN_POV_ALLE_SUB primary key (DATA_DT, RCPT_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

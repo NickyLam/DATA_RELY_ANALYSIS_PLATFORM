@@ -1,0 +1,81 @@
+﻿create table RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM
+(
+  data_date                       VARCHAR2(8),
+  cust_id                         VARCHAR2(60),
+  cust_name                       VARCHAR2(100),
+  facility_amt                    NUMBER(30,2),
+  used_facility_amt               NUMBER(30,2),
+  business_facility_amt           NUMBER(30,2),
+  business_used_facility_amt      NUMBER(30,2),
+  house_facility_amt              NUMBER(30,2),
+  house_used_facility_amt         NUMBER(30,2),
+  auto_facility_amt               NUMBER(30,2),
+  auto_used_facility_amt          NUMBER(30,2),
+  student_facility_amt            NUMBER(30,2),
+  student_used_facility_amt       NUMBER(30,2),
+  other_consume_facility_amt      NUMBER(30,2),
+  other_consume_used_facility_amt NUMBER(30,2),
+  cust_mgr_id                     VARCHAR2(60),
+  cust_mgr_org                    VARCHAR2(60),
+  curr_cd                         VARCHAR2(3),
+  id_no                           VARCHAR2(30)
+)
+partition by list (DATA_DATE)
+(
+  partition P19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition P20220930 values ('20220930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220901 values ('20220901')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM
+  is '零售系统授信信息表';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.data_date
+  is '数据日期';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.cust_id
+  is '客户号';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.cust_name
+  is '客户名称';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.facility_amt
+  is '总授信额度';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.used_facility_amt
+  is '总已用额度';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.business_facility_amt
+  is '授信总额（经营类贷款）';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.business_used_facility_amt
+  is '已用额度（经营类贷款）';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.house_facility_amt
+  is '授信总额（消费类贷款-住房贷款）';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.house_used_facility_amt
+  is '已用总额（消费类贷款-住房贷款）';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.auto_facility_amt
+  is '授信总额（消费类贷款-汽车贷款）';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.auto_used_facility_amt
+  is '已用额度（消费类贷款-汽车贷款）';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.student_facility_amt
+  is '授信总额（消费类贷款-助学贷款）';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.student_used_facility_amt
+  is '已用额度（消费类贷款-助学贷款）';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.other_consume_facility_amt
+  is '授信总额（消费类贷款-其他贷款）';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.other_consume_used_facility_amt
+  is '已用额度（消费类贷款-其他贷款）';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.cust_mgr_id
+  is '管户客户经理';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.cust_mgr_org
+  is '管户机构';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.curr_cd
+  is '币种';
+comment on column RRP_MDL.L_AGRE_CREDITLINE_GRSXXX_SUM.id_no
+  is '身份证号';
+

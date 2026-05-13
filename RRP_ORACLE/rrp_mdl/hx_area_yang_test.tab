@@ -1,0 +1,26 @@
+﻿create table RRP_MDL.HX_AREA_YANG_TEST
+(
+  标准编号 VARCHAR2(100 CHAR),
+  标准名称 VARCHAR2(100 CHAR),
+  编码取值 VARCHAR2(100 CHAR),
+  父级   VARCHAR2(100 CHAR),
+  编码说明 VARCHAR2(100 CHAR)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.HX_AREA_YANG_TEST
+  is '地区标志';
+comment on column RRP_MDL.HX_AREA_YANG_TEST.标准编号
+  is '标准编号';
+comment on column RRP_MDL.HX_AREA_YANG_TEST.标准名称
+  is '标准名称';
+comment on column RRP_MDL.HX_AREA_YANG_TEST.编码取值
+  is '编码取值';
+comment on column RRP_MDL.HX_AREA_YANG_TEST.父级
+  is '父级';
+comment on column RRP_MDL.HX_AREA_YANG_TEST.编码说明
+  is '编码说明';
+

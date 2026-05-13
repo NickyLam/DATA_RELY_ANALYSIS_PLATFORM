@@ -1,0 +1,41 @@
+﻿create table RRP_EAST.EAST5_206_GLGXB_20240831_BAK1
+(
+  rid          VARCHAR2(50) not null,
+  jrxkzh       VARCHAR2(30),
+  nbjgh        VARCHAR2(30),
+  khtybh       VARCHAR2(70) not null,
+  khmc         VARCHAR2(450),
+  khzjlb       VARCHAR2(60),
+  khzjhm       VARCHAR2(70),
+  gxlx         VARCHAR2(300) not null,
+  glrkhtybh    VARCHAR2(70) not null,
+  glrmc        VARCHAR2(450),
+  glrlb        VARCHAR2(30),
+  glrzjlb      VARCHAR2(60),
+  glrzjhm      VARCHAR2(70),
+  gxzt         VARCHAR2(6),
+  bbz          VARCHAR2(600),
+  cjrq         VARCHAR2(8) not null,
+  dept_no      VARCHAR2(10),
+  src_sys_id   VARCHAR2(10),
+  issued_no    VARCHAR2(50),
+  org_no       VARCHAR2(20),
+  address      VARCHAR2(500),
+  glrmc_orig   VARCHAR2(400),
+  glrzjhm_orig VARCHAR2(70),
+  khzjhm_orig  VARCHAR2(70),
+  gsfzjg       VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

@@ -1,0 +1,27 @@
+﻿create table RRP_MDL.S_LOAN_ZCCZ_LV5
+(
+  rcpt_id VARCHAR2(256),
+  lvl5_cl VARCHAR2(8),
+  czfs_dt VARCHAR2(12)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.S_LOAN_ZCCZ_LV5
+  is '资产处置五级分类表';
+comment on column RRP_MDL.S_LOAN_ZCCZ_LV5.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.S_LOAN_ZCCZ_LV5.lvl5_cl
+  is '处置时点五级分类代码';
+comment on column RRP_MDL.S_LOAN_ZCCZ_LV5.czfs_dt
+  is '处置时间';
+

@@ -1,0 +1,261 @@
+﻿create table RRP_MDL.O_IOL_UUSS_UUS_ORGAN
+(
+  organcodekey       VARCHAR2(18),
+  organcode          VARCHAR2(18),
+  zoneno             VARCHAR2(5),
+  pbocfinancialcode  VARCHAR2(90),
+  financialcode      VARCHAR2(18),
+  swiftcode          VARCHAR2(45),
+  bankcode           VARCHAR2(18),
+  legal              VARCHAR2(6),
+  businesslicense    VARCHAR2(27),
+  organizationcode   VARCHAR2(14),
+  taxid              VARCHAR2(23),
+  organcnfullname    VARCHAR2(300),
+  organcnshortname   VARCHAR2(150),
+  organenfullname    VARCHAR2(150),
+  organenshortname   VARCHAR2(150),
+  organstatecode     VARCHAR2(2),
+  organstatus        VARCHAR2(2),
+  organfoundingdate  VARCHAR2(12),
+  organclosedate     VARCHAR2(12),
+  organtype          VARCHAR2(3),
+  isst               VARCHAR2(2),
+  ishs               VARCHAR2(2),
+  isyy               VARCHAR2(2),
+  isxz               VARCHAR2(2),
+  iszw               VARCHAR2(2),
+  organlevel         VARCHAR2(3),
+  leafnoteflag       VARCHAR2(2),
+  xzuporgancode      VARCHAR2(18),
+  zwuporgancode      VARCHAR2(18),
+  hsuporgancode      VARCHAR2(18),
+  seque              VARCHAR2(5),
+  postcode           VARCHAR2(9),
+  country            VARCHAR2(5),
+  province           VARCHAR2(9),
+  city               VARCHAR2(9),
+  county             VARCHAR2(9),
+  address            VARCHAR2(600),
+  email              VARCHAR2(75),
+  url                VARCHAR2(75),
+  countrycode        VARCHAR2(6),
+  areacode           VARCHAR2(6),
+  phone              VARCHAR2(45),
+  subphone           VARCHAR2(9),
+  servicephone       VARCHAR2(45),
+  funorgan           VARCHAR2(18),
+  fundep             VARCHAR2(18),
+  orderno            VARCHAR2(18),
+  financiallicnum    VARCHAR2(45),
+  organsystem        VARCHAR2(383),
+  cbrcfininsttid     VARCHAR2(90),
+  unionfinancialcode VARCHAR2(21),
+  workstarttm        VARCHAR2(9),
+  workendtm          VARCHAR2(9),
+  updatedate         VARCHAR2(12),
+  heademplyid        VARCHAR2(12),
+  isxnhs             VARCHAR2(2),
+  rhregcode          VARCHAR2(15),
+  blng_city_pbc      VARCHAR2(300),
+  bankcodeperson     VARCHAR2(18),
+  note1              VARCHAR2(300),
+  note2              VARCHAR2(300),
+  note3              VARCHAR2(300),
+  note4              VARCHAR2(150),
+  note5              VARCHAR2(150),
+  note6              VARCHAR2(150),
+  note7              VARCHAR2(150),
+  note8              VARCHAR2(75),
+  note9              VARCHAR2(75),
+  note10             VARCHAR2(75),
+  bbuporgancode      VARCHAR2(18),
+  countyflag         VARCHAR2(3),
+  technologyflag     VARCHAR2(3),
+  specialflag        VARCHAR2(3),
+  financeflag        VARCHAR2(3),
+  freetradeflag      VARCHAR2(3),
+  busitimedesc       VARCHAR2(4000),
+  busiscopdesc       VARCHAR2(4000),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_UUSS_UUS_ORGAN
+  is '机构信息表';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organcodekey
+  is '统一组织机构编码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organcode
+  is '组织机构编号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.zoneno
+  is '分行号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.pbocfinancialcode
+  is '人民银行金融机构编号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.financialcode
+  is '金融机构标识码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.swiftcode
+  is 'SWIFT号码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.bankcode
+  is '支付系统银行行号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.legal
+  is '法人号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.businesslicense
+  is '营业执照号码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organizationcode
+  is '组织机构代码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.taxid
+  is '税务登记证号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organcnfullname
+  is '组织机构名称';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organcnshortname
+  is '组织机构简称';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organenfullname
+  is '组织机构英文全称';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organenshortname
+  is '组织机构英文简称';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organstatecode
+  is '机构营业状态';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organstatus
+  is '机构状态';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organfoundingdate
+  is '机构成立日期';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organclosedate
+  is '机构关闭日期';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organtype
+  is '组织机构类型';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.isst
+  is '是否为实体机构';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.ishs
+  is '是否为核算机构';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.isyy
+  is '是否为营业机构';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.isxz
+  is '是否为行政机构';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.iszw
+  is '是否为账务机构';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organlevel
+  is '组织机构级别代码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.leafnoteflag
+  is '叶节点标志';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.xzuporgancode
+  is '行政上级组织机构编码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.zwuporgancode
+  is '账务上级组织机构编码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.hsuporgancode
+  is '核算上级组织机构编码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.seque
+  is '机构顺序号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.postcode
+  is '邮政编码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.country
+  is '所在国家';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.province
+  is '所在省/州';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.city
+  is '所在城市';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.county
+  is '所在县/区';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.address
+  is '详细地址';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.email
+  is '电子邮箱';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.url
+  is '网址';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.countrycode
+  is '国际长途区号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.areacode
+  is '国内长途区号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.phone
+  is '电话号码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.subphone
+  is '分机号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.servicephone
+  is '服务电话';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.funorgan
+  is '职能机构';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.fundep
+  is '职能部门';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.orderno
+  is '显示顺序号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.financiallicnum
+  is '金融许可证号码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.organsystem
+  is '机构关联系统';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.cbrcfininsttid
+  is '银监会金融机构编号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.unionfinancialcode
+  is '银联金融机构编号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.workstarttm
+  is '工作开始时间';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.workendtm
+  is '工作结束时间';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.heademplyid
+  is '负责人员工编号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.isxnhs
+  is '是否为虚拟核算机构';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.rhregcode
+  is '人行地区码';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.blng_city_pbc
+  is '所属城市(人行)';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.bankcodeperson
+  is '支付系统银行行号（用于个人结算账户报送）';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.note1
+  is '备用1';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.note2
+  is '备用2';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.note3
+  is '备用3';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.note4
+  is '备用4';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.note5
+  is '备用5';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.note6
+  is '备用6';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.note7
+  is '备用7';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.note8
+  is '备用8';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.note9
+  is '备用9';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.note10
+  is '备用10';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.bbuporgancode
+  is '报表上级机构编号';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.countyflag
+  is '县域机构标识';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.technologyflag
+  is '科技支行标识';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.specialflag
+  is '科技特色支行标识';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.financeflag
+  is '科技金融专营机构标识';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.freetradeflag
+  is '自贸区网点标识';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.busitimedesc
+  is '网点营业时间说明';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.busiscopdesc
+  is '主要业务范围说明';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_UUSS_UUS_ORGAN.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,105 @@
+﻿create table RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO
+(
+  evt_id                     VARCHAR2(250),
+  tran_flow_num              VARCHAR2(100),
+  lp_id                      VARCHAR2(100),
+  cust_id                    VARCHAR2(100),
+  decl_type_cd               VARCHAR2(30),
+  decl_cust_type_cd          VARCHAR2(30),
+  subm_num                   VARCHAR2(60),
+  inco_tran_code             VARCHAR2(60),
+  expns_tran_code            VARCHAR2(60),
+  wrt_guat_type_cd           VARCHAR2(30),
+  wrt_guat_proj_code         VARCHAR2(60),
+  wrt_guat_tran_status_cd    VARCHAR2(30),
+  wrt_guat_usage             VARCHAR2(500),
+  wrt_guat_dtl_usage         VARCHAR2(1000),
+  cust_single_acct_prefr_val NUMBER(10),
+  int_rat_apv_form_id        VARCHAR2(100),
+  cash_from_cd               VARCHAR2(30),
+  cash_usage_cd              VARCHAR2(30),
+  cash_from_cty_rg_cd        VARCHAR2(30),
+  cash_to_cty_rg_cd          VARCHAR2(30),
+  src_module_type_cd         VARCHAR2(30),
+  check_teller_id            VARCHAR2(100),
+  check_dt                   DATE,
+  tran_dt                    DATE,
+  tran_tm                    TIMESTAMP(6),
+  etl_dt                     DATE,
+  src_table_name             VARCHAR2(100),
+  job_cd                     VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO
+  is '结售汇交易流水附加信息';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.decl_type_cd
+  is '申报类型代码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.decl_cust_type_cd
+  is '申报客户类型代码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.subm_num
+  is '报送号码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.inco_tran_code
+  is '收入方交易编码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.expns_tran_code
+  is '支出方交易编码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.wrt_guat_type_cd
+  is '结售汇类型代码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.wrt_guat_proj_code
+  is '结售汇项目编码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.wrt_guat_tran_status_cd
+  is '结售汇交易状态代码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.wrt_guat_usage
+  is '结售汇用途';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.wrt_guat_dtl_usage
+  is '结汇详细用途';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.cust_single_acct_prefr_val
+  is '客户单户优惠值';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.int_rat_apv_form_id
+  is '利率审批单编号';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.cash_from_cd
+  is '现钞来源代码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.cash_usage_cd
+  is '现钞提取用途代码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.cash_from_cty_rg_cd
+  is '现钞来源国家地区代码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.cash_to_cty_rg_cd
+  is '现钞去向国家地区代码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.src_module_type_cd
+  is '源模块类型代码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.check_teller_id
+  is '复核柜员编号';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.check_dt
+  is '复核日期';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_WRT_GUAT_TRAN_FLOW_ADDIT_INFO.etl_timestamp
+  is 'etl处理时间戳';
+

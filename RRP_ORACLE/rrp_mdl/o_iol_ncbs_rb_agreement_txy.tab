@@ -1,0 +1,90 @@
+﻿create table RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY
+(
+  agreement_id         VARCHAR2(50),
+  main_agreement_id    VARCHAR2(50),
+  base_acct_no         VARCHAR2(50),
+  prod_type            VARCHAR2(12),
+  acct_ccy             VARCHAR2(3),
+  acct_seq_no          VARCHAR2(5),
+  client_no            VARCHAR2(16),
+  agree_int_rate       NUMBER(15,8),
+  over_grade_rate      NUMBER(15,8),
+  past_fad_rate        NUMBER(15,8),
+  cycle_freq           VARCHAR2(5),
+  agre_prod_type       VARCHAR2(12),
+  main_flag            VARCHAR2(1),
+  sign_id              VARCHAR2(50),
+  internal_key         NUMBER(15),
+  tran_timestamp       VARCHAR2(26),
+  user_id              VARCHAR2(8),
+  branch               VARCHAR2(12),
+  channel              VARCHAR2(10),
+  company              VARCHAR2(20),
+  agg                  NUMBER(38,2),
+  int_accrued_calc_ctd NUMBER(25,10),
+  etl_dt               DATE,
+  etl_timestamp        TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY
+  is '同兴赢协议表';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.agreement_id
+  is '协议编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.main_agreement_id
+  is '主协议协议号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.base_acct_no
+  is '交易账号/卡号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.prod_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.acct_ccy
+  is '账户币种';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.acct_seq_no
+  is '账户子账号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.agree_int_rate
+  is '协议利率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.over_grade_rate
+  is '超档利率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.past_fad_rate
+  is '违约利率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.cycle_freq
+  is '结息频率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.agre_prod_type
+  is '签约主产品类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.main_flag
+  is '主、分账户类型标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.sign_id
+  is '外围系统协议编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.internal_key
+  is '账户内部键值';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.user_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.branch
+  is '交易机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.channel
+  is '渠道';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.agg
+  is '积数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.int_accrued_calc_ctd
+  is '累计计提';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT_TXY.etl_timestamp
+  is 'ETL处理时间戳';
+

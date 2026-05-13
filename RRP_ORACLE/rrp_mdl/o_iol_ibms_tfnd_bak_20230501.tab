@@ -1,0 +1,187 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501
+(
+  i_code                VARCHAR2(30),
+  a_type                VARCHAR2(20),
+  m_type                VARCHAR2(20),
+  l_code                VARCHAR2(30),
+  currency              CHAR(3),
+  country               CHAR(2),
+  q_type                CHAR(2),
+  f_name                VARCHAR2(150),
+  p_class               VARCHAR2(60),
+  f_date                CHAR(10),
+  f_opendate            CHAR(10),
+  f_manager             VARCHAR2(200),
+  f_trustee             VARCHAR2(50),
+  imp_date              CHAR(10),
+  pipe_id               NUMBER,
+  p_type                VARCHAR2(30),
+  chinesespell          VARCHAR2(200),
+  state                 CHAR(1),
+  user_id               NUMBER(19),
+  user_name             VARCHAR2(32),
+  update_time           CHAR(23),
+  f_manager_code        VARCHAR2(100),
+  f_trustee_code        VARCHAR2(100),
+  issuer_id             NUMBER(16),
+  f_invest_type         VARCHAR2(40),
+  f_setupdate           CHAR(10),
+  f_manager_name        VARCHAR2(10),
+  i_id                  NUMBER(19),
+  is_idx                CHAR(1),
+  huge_redemption_ratio NUMBER(31,4),
+  compounding_method    NUMBER,
+  s_type                VARCHAR2(30),
+  f_mtrdate             CHAR(10),
+  carry_forword_type    VARCHAR2(2),
+  inv_order_id          VARCHAR2(50),
+  par_value             NUMBER(20,6),
+  pay_freq              VARCHAR2(6),
+  f_grade_type          NUMBER,
+  f_fullname            VARCHAR2(200),
+  sales_channel         CHAR(1),
+  open_type             VARCHAR2(20),
+  start_open_date       VARCHAR2(20),
+  end_open_date         VARCHAR2(20),
+  management_model      VARCHAR2(10),
+  mitigation_freq       VARCHAR2(10),
+  manager_value         VARCHAR2(200),
+  main_code             VARCHAR2(30),
+  f_name_full           VARCHAR2(200),
+  pay_month             VARCHAR2(6),
+  pay_day               VARCHAR2(6),
+  run_term              VARCHAR2(5),
+  p_i_code              VARCHAR2(30),
+  p_a_type              VARCHAR2(20),
+  p_m_type              VARCHAR2(20),
+  manager_id            NUMBER(16),
+  redemption_date       CHAR(10),
+  is_pub_offer          VARCHAR2(10),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501
+  is '基金表';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.l_code
+  is '交易所本地代码';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.country
+  is '国家';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.q_type
+  is '报价方式';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_name
+  is '基金名称';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.p_class
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_date
+  is '上市日期';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_opendate
+  is '开放日期';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_manager
+  is '管理者';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_trustee
+  is '托管方';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.imp_date
+  is '导入日期';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.pipe_id
+  is '导入管道';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.p_type
+  is '产品类型';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.chinesespell
+  is '拼音';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.state
+  is '产品状态';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.user_id
+  is '操作人ID';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.user_name
+  is '操作人';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.update_time
+  is '操作时间';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_manager_code
+  is '管理者代码';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_trustee_code
+  is '托管方代码';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.issuer_id
+  is '管理人ID';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_invest_type
+  is '投资类型';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_setupdate
+  is '成立日期';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_manager_name
+  is '基金经理';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.i_id
+  is '机构ID';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.is_idx
+  is '是否指数型基金(0:否 1:是)';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.huge_redemption_ratio
+  is '巨额赎回认定比例';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.compounding_method
+  is '结转复利方式，0：单利；2：连续复利；仅对货币基金有效';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.s_type
+  is '标准类型';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_mtrdate
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.carry_forword_type
+  is '结转方式：1：按日结转，2：按月结转，3：按季结转';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.inv_order_id
+  is '投金审批单号';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.par_value
+  is '基金面值';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.pay_freq
+  is '结转频率，仅对货币基金有效';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_grade_type
+  is '分级基金类型，0：非分级基金；1：分级母基金；2：分级子基金A类；3：分级子基金B类；';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_fullname
+  is '资产全称';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.sales_channel
+  is '销售通道0-直销,1-代销';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.open_type
+  is '每日开放：0,每周开放：1';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.start_open_date
+  is '开放周期开始日';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.end_open_date
+  is '开放周期结束日';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.management_model
+  is '管理模式';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.mitigation_freq
+  is '缓释频率';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.manager_value
+  is '实际管理人';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.main_code
+  is '基金主代码(分级基金相同)';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.f_name_full
+  is '管理者';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.pay_month
+  is '支付月份';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.pay_day
+  is '支付日期';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.run_term
+  is '运行区间';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.p_i_code
+  is '结转方式：1：按日结转，2：按月结转，3：按季结转';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.p_a_type
+  is '托管方代码';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.p_m_type
+  is 'xshg: 上交所 xshe:深交所 x_cnffex;中金所 x_cnbd;银行间';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.manager_id
+  is '客户经理ID';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_BAK_20230501.id_mark
+  is '增删标志';
+

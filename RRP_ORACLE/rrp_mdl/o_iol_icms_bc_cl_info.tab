@@ -1,0 +1,307 @@
+﻿create table RRP_MDL.O_IOL_ICMS_BC_CL_INFO
+(
+  serialno               VARCHAR2(64),
+  lineclass              VARCHAR2(36),
+  currencyrange          VARCHAR2(400),
+  lngotimes              NUMBER(22),
+  occupynominalsum       NUMBER(24,6),
+  afterloanuserid        VARCHAR2(32),
+  creditflowtype         VARCHAR2(20),
+  creditarea             VARCHAR2(2),
+  approvalsuggestion     VARCHAR2(32),
+  useterm                DATE,
+  freezeflag             VARCHAR2(1),
+  bizlongestterm         NUMBER(22),
+  occupyexposuresum      NUMBER(24,6),
+  limitusecondition      VARCHAR2(4000),
+  classifytype2          VARCHAR2(100),
+  bizextendedterm        NUMBER(22),
+  outclassifydate        VARCHAR2(10),
+  termtype               VARCHAR2(36),
+  availablenominalsum    NUMBER(24,6),
+  afterloanorgid         VARCHAR2(32),
+  outclassifyorg         VARCHAR2(200),
+  investway              VARCHAR2(2),
+  bizlowestfloatrate     NUMBER(24,8),
+  guarantybailsubaccount VARCHAR2(5),
+  isrz                   VARCHAR2(2),
+  isgovernfinance        VARCHAR2(2),
+  isgreenfinance         VARCHAR2(2),
+  maxnominalamount       NUMBER(24,6),
+  usewithoutcondition    VARCHAR2(2),
+  businesstype2          VARCHAR2(32),
+  fundsource             VARCHAR2(18),
+  playtype               VARCHAR2(2),
+  bizmostmortgagerate    NUMBER(15,8),
+  bizbailinitialrate     NUMBER(24,8),
+  availableexposuresum   NUMBER(24,6),
+  syndicatetotalsum      NUMBER(24,6),
+  isbeltroadfinance      VARCHAR2(2),
+  migtflag               VARCHAR2(80),
+  istrans                VARCHAR2(1),
+  linecontrolmode        VARCHAR2(36),
+  otherlimitflag         VARCHAR2(1),
+  singlebizmostamount    NUMBER(24,6),
+  exposuresum            NUMBER(24,6),
+  putoutorgid            VARCHAR2(32),
+  riskexposuresum        NUMBER(24,6),
+  isquerycreditreport    VARCHAR2(10),
+  onlineamount           NUMBER(24,6),
+  isconsumerfinance      VARCHAR2(2),
+  maxexposureamount      NUMBER(24,6),
+  ispubliccredit         VARCHAR2(2),
+  creditauthno           VARCHAR2(200),
+  islikeloan             VARCHAR2(2),
+  lowriskexposuresum     NUMBER(24,6),
+  drtimes                NUMBER(22),
+  guarantybailaccount    VARCHAR2(32),
+  nominalsum             NUMBER(24,6),
+  latestusedate          DATE,
+  outclassifylevel       VARCHAR2(18),
+  isestatefinance        VARCHAR2(2),
+  noeffectreason         VARCHAR2(4),
+  changetype             VARCHAR2(4),
+  hxtyoperateorg         VARCHAR2(2),
+  classifyresulteleven   VARCHAR2(18),
+  iscreditincrement      VARCHAR2(4),
+  hxtymainratelevel      VARCHAR2(4),
+  mainlevelorg           VARCHAR2(400),
+  mainleveldate          VARCHAR2(20),
+  purpose                VARCHAR2(1000),
+  investtarget           VARCHAR2(500),
+  publicorg              VARCHAR2(2),
+  approvepubsum          NUMBER(24,6),
+  publishsum             NUMBER(24,6),
+  issuername             VARCHAR2(120),
+  issuerid               VARCHAR2(16),
+  originalname           VARCHAR2(200),
+  originalid             VARCHAR2(16),
+  channelname            VARCHAR2(32),
+  channelid              VARCHAR2(32),
+  managename             VARCHAR2(200),
+  manageid               VARCHAR2(16),
+  ispenetrate            VARCHAR2(2),
+  moneyindustryt         VARCHAR2(32),
+  supplychain            VARCHAR2(1),
+  islikelowrisk          VARCHAR2(2),
+  focuslendtype          VARCHAR2(2),
+  isinnovate             VARCHAR2(2),
+  issupplychainfinance   VARCHAR2(2),
+  lmttyp                 VARCHAR2(30),
+  sqdkze                 NUMBER(18,2),
+  isjoinlimits           VARCHAR2(2),
+  otherlimitamount       NUMBER(24,6),
+  iscollectionagency     VARCHAR2(2),
+  islimit                VARCHAR2(2),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_BC_CL_INFO
+  is '业务合同额度属性表';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.lineclass
+  is '额度种类综合/专项/其他)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.currencyrange
+  is '项下业务币种范围';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.lngotimes
+  is '借新还旧次数';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.occupynominalsum
+  is '已用名义金额自动计算)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.afterloanuserid
+  is '贷后管理人员';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.creditflowtype
+  is '授信业务流程类型';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.creditarea
+  is '授信区域';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.approvalsuggestion
+  is '建议审批等级';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.useterm
+  is '额度项下业务最迟到期日期';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.freezeflag
+  is '冻结标志';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.bizlongestterm
+  is '额度下业务最长期限月)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.occupyexposuresum
+  is '已用敞口金额自动计算)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.limitusecondition
+  is '额度使用条件';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.classifytype2
+  is '风险暴露分类';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.bizextendedterm
+  is '额度下业务延展期限月)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.outclassifydate
+  is '外部评级日期';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.termtype
+  is '期限申请类型额度)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.availablenominalsum
+  is '可用名义金额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.afterloanorgid
+  is '贷后管理机构';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.outclassifyorg
+  is '外部评级机构';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.investway
+  is '投资方式';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.bizlowestfloatrate
+  is '额度下业务利率最低浮动';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.guarantybailsubaccount
+  is '押品转保证金子户号';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.isrz
+  is '是否融资合同';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.isgovernfinance
+  is '是否涉及政府类融资';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.isgreenfinance
+  is '是否为绿色信贷融资';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.maxnominalamount
+  is '单一最高授信额度名义金额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.usewithoutcondition
+  is '能否直接使用额度)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.businesstype2
+  is '专业贷款分类';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.fundsource
+  is '资金来源';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.playtype
+  is '参与方式';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.bizmostmortgagerate
+  is '额度下业务最高抵质押率';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.bizbailinitialrate
+  is '额度下业务初始保证金比例';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.availableexposuresum
+  is '可用敞口金额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.syndicatetotalsum
+  is '银团贷款总金额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.isbeltroadfinance
+  is '是否为一带一路建设投融资';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.migtflag
+  is '迁移标志：CRS RCR ILC UPL';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.istrans
+  is '是否转授信';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.linecontrolmode
+  is '集团额度管控模式超额分配/全额分配)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.otherlimitflag
+  is '是否占用他用额度';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.singlebizmostamount
+  is '额度下业务单笔最大金额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.exposuresum
+  is '额度敞口金额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.putoutorgid
+  is '放贷机构';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.riskexposuresum
+  is '其中，一般风险敞口金额(元)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.isquerycreditreport
+  is '是否自动查询贷后报告';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.onlineamount
+  is '线上额度(元)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.isconsumerfinance
+  is '是否为消费服务类融资';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.maxexposureamount
+  is '单一最高授信额度敞口金额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.ispubliccredit
+  is '是否公开授信额度)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.creditauthno
+  is '征信授权影像流水号';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.islikeloan
+  is '是否类信贷';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.lowriskexposuresum
+  is '其中，类低风险敞口金额(元)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.drtimes
+  is '债务重组次数';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.guarantybailaccount
+  is '押品转保证金账号';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.nominalsum
+  is '额度名义金额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.latestusedate
+  is '额度最迟使用日期';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.outclassifylevel
+  is '外部债项评级';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.isestatefinance
+  is '是否涉及房地产融资';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.noeffectreason
+  is '失效原因';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.changetype
+  is '变更原因';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.hxtyoperateorg
+  is '归口管理部门';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.classifyresulteleven
+  is '债项分类';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.iscreditincrement
+  is '是否有增信';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.hxtymainratelevel
+  is '外部主体评级';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.mainlevelorg
+  is '主体评级机构';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.mainleveldate
+  is '主体评级日期';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.purpose
+  is '资金用途';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.investtarget
+  is '投资标的';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.publicorg
+  is '发行场所';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.approvepubsum
+  is '批准发行总额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.publishsum
+  is '本次发行金额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.issuername
+  is '发行人名称';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.issuerid
+  is '发行人编号';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.originalname
+  is '原始权益人名称';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.originalid
+  is '原始权益人编号';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.channelname
+  is '通道方名称';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.channelid
+  is '通道方编号';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.managename
+  is '管理人名称';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.manageid
+  is '管理人客户号';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.ispenetrate
+  is '是否可穿透';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.moneyindustryt
+  is '资金投向行业';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.supplychain
+  is '供应链业务单占核心企业额度';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.islikelowrisk
+  is '是否类低风险';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.focuslendtype
+  is '集中放款业务类型';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.isinnovate
+  is '是否创新业务';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.issupplychainfinance
+  is '是否供应链金融业务';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.lmttyp
+  is '同业额度合同-额度类型';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.sqdkze
+  is '申请银团贷款总额(元)';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.isjoinlimits
+  is '是否纳入单一客户或集团的限额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.otherlimitamount
+  is '他用额度占用金额';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.islimit
+  is '是否占用集团额度';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_BC_CL_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

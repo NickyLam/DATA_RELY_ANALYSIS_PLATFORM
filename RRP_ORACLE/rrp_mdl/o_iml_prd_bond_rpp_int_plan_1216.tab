@@ -1,0 +1,65 @@
+﻿create table RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216
+(
+  bond_id            VARCHAR2(60),
+  lp_id              VARCHAR2(60),
+  seq_num            NUMBER(10),
+  pay_dt             DATE,
+  issuer_redem_dt    DATE,
+  invtor_put_dt      DATE,
+  int_amt            NUMBER(30,2),
+  pric_amt           NUMBER(30,2),
+  surp_pric_amt      NUMBER(30,2),
+  issuer_redem_price NUMBER(30,2),
+  invtor_put_price   NUMBER(30,2),
+  create_dt          DATE,
+  update_dt          DATE,
+  etl_dt             DATE,
+  id_mark            VARCHAR2(10),
+  src_table_name     VARCHAR2(100),
+  job_cd             VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216
+  is '债券产品';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.bond_id
+  is '债券id';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.seq_num
+  is '顺序号';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.pay_dt
+  is '缴款日期';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.issuer_redem_dt
+  is '发行人赎回日期';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.invtor_put_dt
+  is '投资人回售日期';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.int_amt
+  is '计划支付利息，还本计息区间对应的利息';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.pric_amt
+  is '本金发生额';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.surp_pric_amt
+  is '剩余本金金额';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.issuer_redem_price
+  is '发行人赎回价格';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.invtor_put_price
+  is '投资人回售价格';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.create_dt
+  is '任务生成日期';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.update_dt
+  is '待跟进日期';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_PRD_BOND_RPP_INT_PLAN_1216.etl_timestamp
+  is 'ETL处理时间戳';
+

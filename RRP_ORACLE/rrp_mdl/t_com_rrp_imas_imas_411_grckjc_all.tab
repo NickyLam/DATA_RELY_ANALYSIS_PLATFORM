@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.T_COM_RRP_IMAS_IMAS_411_GRCKJC_ALL
+(
+  rid                    VARCHAR2(50) not null,
+  data_dt                VARCHAR2(10),
+  acct_no                VARCHAR2(100),
+  acct_id                VARCHAR2(100),
+  org_no                 VARCHAR2(30),
+  cust_no                VARCHAR2(30),
+  dpst_prd_type          VARCHAR2(5),
+  start_dt               VARCHAR2(10),
+  due_dt                 VARCHAR2(10),
+  act_due_dt             VARCHAR2(10),
+  dpst_term_type         VARCHAR2(2),
+  price_base_type        VARCHAR2(4),
+  int_type               VARCHAR2(4),
+  act_int_rate           NUMBER(15,5),
+  base_int_rate          NUMBER(15,5),
+  int_rate_flct_freq     VARCHAR2(2),
+  guar_rate_ret          NUMBER(15,5),
+  high_rate_ret          NUMBER(15,5),
+  acct_ch                VARCHAR2(2),
+  off_site_dep_sign      VARCHAR2(1),
+  size_mark              VARCHAR2(1),
+  cur                    CHAR(3),
+  bal                    NUMBER(22,2),
+  sav_type_cd            VARCHAR2(1000),
+  webank_flg             VARCHAR2(30),
+  prod_name              VARCHAR2(4000),
+  dep_prod_cd            VARCHAR2(200),
+  subj_id                VARCHAR2(200),
+  indv_indu_com_acct_flg VARCHAR2(30),
+  data_src               VARCHAR2(500),
+  dept_no                VARCHAR2(30),
+  issued_no              VARCHAR2(20),
+  rpt_org_no             VARCHAR2(20),
+  data_ources            VARCHAR2(20),
+  data_modify            VARCHAR2(2),
+  zdll                   NUMBER(15,5)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

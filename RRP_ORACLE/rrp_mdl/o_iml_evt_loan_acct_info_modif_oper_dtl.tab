@@ -1,0 +1,137 @@
+﻿create table RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL
+(
+  evt_id                VARCHAR2(250),
+  lp_id                 VARCHAR2(100),
+  bus_flow_num          VARCHAR2(100),
+  seq_num               VARCHAR2(60),
+  loan_num              VARCHAR2(60),
+  modif_bus_cls_cd      VARCHAR2(30),
+  modif_content_key_val VARCHAR2(60),
+  acct_modif_cate_cd    VARCHAR2(30),
+  modif_item            VARCHAR2(500),
+  modif_dt              DATE,
+  modif_bf_val          VARCHAR2(3000),
+  modif_post_val        VARCHAR2(3000),
+  tran_org_id           VARCHAR2(100),
+  acct_aldy_check_flg   VARCHAR2(10),
+  check_dt              DATE,
+  tran_descb            VARCHAR2(500),
+  prod_id               VARCHAR2(100),
+  curr_cd               VARCHAR2(30),
+  distr_flow_num        VARCHAR2(100),
+  cust_id               VARCHAR2(100),
+  tran_ref_no           VARCHAR2(60),
+  modif_batch_no        VARCHAR2(60),
+  check_teller_id       VARCHAR2(100),
+  tran_teller_id        VARCHAR2(100),
+  tran_tm               TIMESTAMP(6),
+  etl_dt                DATE,
+  src_table_name        VARCHAR2(100),
+  job_cd                VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+partition by range (ETL_DT)
+(
+  partition PARTITION_19000101 values less than (TO_DATE(' 1900-01-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240531 values less than (TO_DATE(' 2024-06-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250930 values less than (TO_DATE(' 2025-10-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20270821 values less than (TO_DATE(' 2027-08-22 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    )
+);
+comment on table RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL
+  is '贷款账户信息变更操作明细';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.bus_flow_num
+  is '业务流水号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.seq_num
+  is '序号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.loan_num
+  is '贷款号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.modif_bus_cls_cd
+  is '变更业务分类代码';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.modif_content_key_val
+  is '变更内容关键值';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.acct_modif_cate_cd
+  is '账户变更类别代码';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.modif_item
+  is '修改项';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.modif_dt
+  is '变更日期';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.modif_bf_val
+  is '变更前值';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.modif_post_val
+  is '变更后值';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.acct_aldy_check_flg
+  is '账户已复核标志';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.check_dt
+  is '复核日期';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.tran_descb
+  is '交易描述';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.distr_flow_num
+  is '放款流水号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.tran_ref_no
+  is '交易参考号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.modif_batch_no
+  is '变更批次号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.check_teller_id
+  is '复核柜员编号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_LOAN_ACCT_INFO_MODIF_OPER_DTL.etl_timestamp
+  is 'ETL处理时间戳';
+

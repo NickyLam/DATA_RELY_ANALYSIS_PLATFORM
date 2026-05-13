@@ -1,0 +1,175 @@
+﻿create table RRP_MDL.B_GUA_COLL_INFO_YZI
+(
+  data_dt                 CHAR(8) not null,
+  lgl_rep_id              VARCHAR2(200),
+  coll_id                 VARCHAR2(200) not null,
+  cust_id                 VARCHAR2(200),
+  org_id                  VARCHAR2(200) not null,
+  coll_typ                VARCHAR2(10),
+  coll_nm                 VARCHAR2(500),
+  cur                     CHAR(3),
+  coll_orig_val           NUMBER(30,2),
+  init_valt               NUMBER(30,2),
+  bank_idnt_prc_val       NUMBER(30,2),
+  aldy_mtg_val            NUMBER(30,2),
+  ases_val                NUMBER(30,2),
+  ases_dt                 CHAR(8),
+  ases_org_nm             VARCHAR2(500),
+  first_valt_dt           CHAR(8),
+  valt_exp_dt             CHAR(8),
+  regd_org_id             VARCHAR2(200),
+  opr_org_id              VARCHAR2(200),
+  coll_eff_dt             CHAR(8),
+  coll_exp_dt             CHAR(8),
+  plg_tkt_acc             VARCHAR2(200),
+  plg_tkt_typ             VARCHAR2(10),
+  plg_tkt_no              VARCHAR2(200),
+  plg_tkt_amt             NUMBER(30,2),
+  plg_tkt_isu_org_id      VARCHAR2(200),
+  plg_tkt_estb_dt         CHAR(8),
+  wrnt_regd_no            VARCHAR2(200),
+  wrnt_nm                 VARCHAR2(500),
+  wrnt_valid_exp_dt       CHAR(8),
+  regd_valid_end_dt       CHAR(8),
+  coll_cust_rsk_rtg_cl    VARCHAR2(10),
+  dir_acq_flg             CHAR(1),
+  qual_mtgn_flg           CHAR(1),
+  re_mtg_plg_fin_coll_flg CHAR(1),
+  regd_dt                 CHAR(8),
+  mtrl_obj_coll_dt        CHAR(8),
+  ases_mode               VARCHAR2(10),
+  ases_method             VARCHAR2(10),
+  valt_cyc                VARCHAR2(10),
+  wrnt_regd_area          NUMBER(30,2),
+  coll_owner_nm           VARCHAR2(500),
+  coll_owner_crdl_typ     VARCHAR2(10),
+  coll_owner_crdl_no      VARCHAR2(100),
+  trd_coll_owner_flg      CHAR(1),
+  coll_stat               VARCHAR2(10),
+  dept_line               VARCHAR2(500),
+  data_src                VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220228 values ('20220228')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_GUA_COLL_INFO_YZI
+  is '抵质押物详细信息';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_id
+  is '押品编号';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.cust_id
+  is '客户编号';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_typ
+  is '押品类型';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_nm
+  is '押品名称';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.cur
+  is '币种';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_orig_val
+  is '押品原始价值';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.init_valt
+  is '起始估值';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.bank_idnt_prc_val
+  is '银行认定价值';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.aldy_mtg_val
+  is '已抵押价值';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.ases_val
+  is '评估价值';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.ases_dt
+  is '评估日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.ases_org_nm
+  is '评估机构名称';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.first_valt_dt
+  is '首次估值日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.valt_exp_dt
+  is '估值到期日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.regd_org_id
+  is '登记机构';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.opr_org_id
+  is '操作机构编号';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_eff_dt
+  is '押品生效日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_exp_dt
+  is '押品到期日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.plg_tkt_acc
+  is '质押票证账号';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.plg_tkt_typ
+  is '质押票证类型';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.plg_tkt_no
+  is '质押票证号码';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.plg_tkt_amt
+  is '质押票证金额';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.plg_tkt_isu_org_id
+  is '质押票证签发机构';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.plg_tkt_estb_dt
+  is '质押票证开立日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.wrnt_regd_no
+  is '权证登记号码';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.wrnt_nm
+  is '权证名称';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.wrnt_valid_exp_dt
+  is '权证有效到期日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.regd_valid_end_dt
+  is '登记有效终止日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_cust_rsk_rtg_cl
+  is '担保品客户风险评级分类';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.dir_acq_flg
+  is '定向收购标志';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.qual_mtgn_flg
+  is '合格缓释品标志';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.re_mtg_plg_fin_coll_flg
+  is '可再抵质押融资押品标志';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.regd_dt
+  is '登记日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.mtrl_obj_coll_dt
+  is '实物收取日期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.ases_mode
+  is '评估方式';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.ases_method
+  is '评估方法';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.valt_cyc
+  is '估值周期';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.wrnt_regd_area
+  is '权证登记面积';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_owner_nm
+  is '押品所有人名称';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_owner_crdl_typ
+  is '押品所有人证件类别';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_owner_crdl_no
+  is '押品所有人证件号码';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.trd_coll_owner_flg
+  is '第三方押品权属人标志';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.coll_stat
+  is '押品状态';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_GUA_COLL_INFO_YZI.data_src
+  is '数据来源';
+alter table RRP_MDL.B_GUA_COLL_INFO_YZI
+  add constraint PK_B_GUA_COLL_INFO_YZI primary key (DATA_DT, COLL_ID, ORG_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

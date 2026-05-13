@@ -1,0 +1,44 @@
+﻿create table RRP_MDL.M_DEP_ACC_MEDM_INFO
+(
+  data_dt       CHAR(8) not null,
+  lgl_rep_id    VARCHAR2(200),
+  org_id        VARCHAR2(200),
+  med_id        VARCHAR2(200) not null,
+  cust_id       VARCHAR2(200),
+  acc_med       VARCHAR2(10),
+  med_stat      VARCHAR2(10),
+  enable_dt     CHAR(8),
+  enable_tlr_no VARCHAR2(30),
+  dept_line     VARCHAR2(500),
+  data_src      VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.M_DEP_ACC_MEDM_INFO
+  is '存款介质信息';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.med_id
+  is '介质编号';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.acc_med
+  is '账户介质';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.med_stat
+  is '介质状态';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.enable_dt
+  is '启用日期';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.enable_tlr_no
+  is '启用柜员号';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_DEP_ACC_MEDM_INFO.data_src
+  is '数据来源';
+

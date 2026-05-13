@@ -1,0 +1,77 @@
+﻿create table RRP_MDL.B_LOAN_REFAC_SUB
+(
+  data_dt                        CHAR(8),
+  lgl_rep_id                     VARCHAR2(200),
+  org_id                         VARCHAR2(200),
+  org_nm                         VARCHAR2(200),
+  cust_id                        VARCHAR2(200),
+  dubil_id                       VARCHAR2(60),
+  belong_land_pbc_name           VARCHAR2(200),
+  belong_land_pbc_fin_inst_code  VARCHAR2(250),
+  pym_acc                        VARCHAR2(100),
+  pbc_cred_rht_typ               VARCHAR2(100),
+  recvbl_acct_id                 VARCHAR2(100),
+  corp_phone_num                 VARCHAR2(60),
+  corp_addr                      VARCHAR2(250),
+  pmo_typ                        VARCHAR2(30),
+  pmo_cont_id                    VARCHAR2(60),
+  pmo_amt_evltion                NUMBER(30,2),
+  cred_rht_bal                   NUMBER(30,2),
+  pbl_int                        NUMBER(30,2),
+  dept_line                      VARCHAR2(30),
+  data_src                       VARCHAR2(30),
+  belong_land_pbc_corp_princ_nam VARCHAR2(200),
+  refac_cont_id                  VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.B_LOAN_REFAC_SUB
+  is '支小贷款子表';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.org_nm
+  is '机构名称';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.cust_id
+  is '客户编号';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.belong_land_pbc_name
+  is '所属地人民银行名称';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.belong_land_pbc_fin_inst_code
+  is '所属地人民银行金融机构编码';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.pym_acc
+  is '资金划出账户';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.pbc_cred_rht_typ
+  is '人民银行债权类型';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.recvbl_acct_id
+  is '资金划入账户';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.corp_phone_num
+  is '单位联系电话';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.corp_addr
+  is '单位地址';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.pmo_typ
+  is '抵质押物类型';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.pmo_cont_id
+  is '抵质押物合同编号';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.pmo_amt_evltion
+  is '抵质押物金额（估值）';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.cred_rht_bal
+  is '再贷款金额';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.pbl_int
+  is '再贷款应付利息';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.data_src
+  is '数据来源';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.belong_land_pbc_corp_princ_nam
+  is '所属地人民银行机构负责人姓名';
+comment on column RRP_MDL.B_LOAN_REFAC_SUB.refac_cont_id
+  is '再贷款合同编号';
+

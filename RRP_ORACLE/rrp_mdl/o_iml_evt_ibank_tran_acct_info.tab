@@ -1,0 +1,51 @@
+﻿create table RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO
+(
+  evt_id                VARCHAR2(100),
+  lp_id                 VARCHAR2(60),
+  apv_odd_no            VARCHAR2(90),
+  cust_acct_id          VARCHAR2(60),
+  cust_acct_sub_acct_id VARCHAR2(90),
+  cust_id               VARCHAR2(60),
+  sav_type_cd           VARCHAR2(10),
+  etl_dt                DATE,
+  src_table_name        VARCHAR2(100),
+  job_cd                VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO
+  is '同业交易账户信息';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.apv_odd_no
+  is '审批单号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.cust_acct_id
+  is '客户账户编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.cust_acct_sub_acct_id
+  is '客户账户子户号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.cust_id
+  is '交易客户编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.sav_type_cd
+  is '储种代码';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_ACCT_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

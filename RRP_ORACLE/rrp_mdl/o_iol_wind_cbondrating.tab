@@ -1,0 +1,54 @@
+﻿create table RRP_MDL.O_IOL_WIND_CBONDRATING
+(
+  object_id                  VARCHAR2(150),
+  s_info_windcode            VARCHAR2(60),
+  ann_dt                     VARCHAR2(12),
+  b_rate_style               VARCHAR2(150),
+  b_info_creditrating        VARCHAR2(60),
+  b_info_creditratingagency  VARCHAR2(15),
+  b_info_creditratingexplain VARCHAR2(1500),
+  b_info_precreditrating     VARCHAR2(60),
+  b_creditrating_change      VARCHAR2(15),
+  ann_dt2                    VARCHAR2(12),
+  etl_dt                     DATE,
+  etl_timestamp              TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_WIND_CBONDRATING
+  is '中国债券信用评级表';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.object_id
+  is '对象ID';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.s_info_windcode
+  is 'Wind代码';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.ann_dt
+  is '公告日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.b_rate_style
+  is '品种类别代码';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.b_info_creditrating
+  is '信用评级';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.b_info_creditratingagency
+  is '评估机构代码';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.b_info_creditratingexplain
+  is '信用评级说明';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.b_info_precreditrating
+  is '前次信用评级';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.b_creditrating_change
+  is '评级变动方向';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.ann_dt2
+  is '公告日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_WIND_CBONDRATING.etl_timestamp
+  is 'etl处理时间';
+

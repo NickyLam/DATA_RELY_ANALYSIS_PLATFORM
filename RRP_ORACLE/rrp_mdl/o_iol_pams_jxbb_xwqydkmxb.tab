@@ -1,0 +1,150 @@
+﻿create table RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB
+(
+  tjrq       NUMBER(22),
+  jxdxdh     NUMBER(22),
+  jgkhdxdh   NUMBER(22),
+  jgdh       VARCHAR2(15),
+  jgmc       VARCHAR2(150),
+  jjh        VARCHAR2(150),
+  khh        VARCHAR2(45),
+  khmc       VARCHAR2(750),
+  dklx       VARCHAR2(2),
+  sfxw       VARCHAR2(300),
+  ywpz       VARCHAR2(150),
+  kmh        VARCHAR2(30),
+  kmmc       VARCHAR2(150),
+  ffrq       NUMBER(22),
+  dqrq       NUMBER(22),
+  bzzwmc     VARCHAR2(750),
+  dkje       NUMBER(25,4),
+  zcye       NUMBER(25,4),
+  zcyrj      NUMBER(25,4),
+  zcjrj      NUMBER(25,4),
+  zcnrj      NUMBER(25,4),
+  yqye       NUMBER(25,4),
+  yqyrj      NUMBER(25,4),
+  yqjrj      NUMBER(25,4),
+  yqnrj      NUMBER(25,4),
+  nll        NUMBER(15,7),
+  jzll       NUMBER(25,4),
+  khdxdh     NUMBER(22),
+  hydh       VARCHAR2(18),
+  hymc       VARCHAR2(150),
+  ssjgkhdxdh NUMBER(22),
+  ssjgdh     VARCHAR2(15),
+  ssjgmc     VARCHAR2(150),
+  fpje       NUMBER(25,4),
+  zlbl       NUMBER(19,5),
+  fphzcye    NUMBER(19,5),
+  fphzcyrj   NUMBER(19,5),
+  fphzcjrj   NUMBER(19,5),
+  fphzcnrj   NUMBER(19,5),
+  fphyqye    NUMBER(19,5),
+  fphyqyrj   NUMBER(19,5),
+  fphyqjrj   NUMBER(19,5),
+  fphyqnrj   NUMBER(19,5),
+  etl_dt     DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB
+  is '小微企业贷款明细表';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.tjrq
+  is '统计日期';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.jxdxdh
+  is '绩效对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.jgkhdxdh
+  is '机构考核对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.jgdh
+  is '机构代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.jgmc
+  is '机构名称';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.jjh
+  is '借据号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.khh
+  is '客户号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.khmc
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.dklx
+  is '贷款类型';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.sfxw
+  is '是否小微标识';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.ywpz
+  is '业务配置';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.kmh
+  is '科目号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.kmmc
+  is '科目名称';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.ffrq
+  is '发放日期';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.dqrq
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.bzzwmc
+  is '币种';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.dkje
+  is '贷款金额';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.zcye
+  is '正常余额';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.zcyrj
+  is '正常月日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.zcjrj
+  is '正常季日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.zcnrj
+  is '正常年日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.yqye
+  is '逾期余额';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.yqyrj
+  is '逾期月日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.yqjrj
+  is '逾期季日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.yqnrj
+  is '逾期年日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.nll
+  is '年利率';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.jzll
+  is '基准利率';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.khdxdh
+  is '考核对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.hydh
+  is '客户经理工号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.hymc
+  is '客户经理名称';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.ssjgkhdxdh
+  is '所属机构考核对象代号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.ssjgdh
+  is '所属机构号';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.ssjgmc
+  is '所属机构名称';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.fpje
+  is '分配总金额';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.zlbl
+  is '分配比例';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.fphzcye
+  is '分配后正常余额';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.fphzcyrj
+  is '分配后正常月日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.fphzcjrj
+  is '分配后正常季日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.fphzcnrj
+  is '分配后正常年日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.fphyqye
+  is '分配后逾期余额';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.fphyqyrj
+  is '分配后逾期月日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.fphyqjrj
+  is '分配后逾期季日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.fphyqnrj
+  is '分配后逾期年日均';
+comment on column RRP_MDL.O_IOL_PAMS_JXBB_XWQYDKMXB.etl_dt
+  is 'ETL处理日期';
+

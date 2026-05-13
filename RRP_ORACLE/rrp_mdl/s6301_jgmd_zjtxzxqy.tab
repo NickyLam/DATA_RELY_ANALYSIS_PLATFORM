@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.S6301_JGMD_ZJTXZXQY
+(
+  nf   VARCHAR2(60),
+  ds   VARCHAR2(100),
+  qymc VARCHAR2(500),
+  bz   VARCHAR2(300)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.S6301_JGMD_ZJTXZXQY
+  is 'S6301专精特新中小企业监管名单';
+comment on column RRP_MDL.S6301_JGMD_ZJTXZXQY.nf
+  is '年份';
+comment on column RRP_MDL.S6301_JGMD_ZJTXZXQY.ds
+  is '地市';
+comment on column RRP_MDL.S6301_JGMD_ZJTXZXQY.qymc
+  is '企业名称';
+comment on column RRP_MDL.S6301_JGMD_ZJTXZXQY.bz
+  is '备注';
+

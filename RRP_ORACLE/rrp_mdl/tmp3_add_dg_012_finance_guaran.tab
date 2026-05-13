@@ -1,0 +1,23 @@
+﻿create table RRP_MDL.TMP3_ADD_DG_012_FINANCE_GUARAN
+(
+  party_id     VARCHAR2(60),
+  cert_type_cd VARCHAR2(30),
+  cert_num     VARCHAR2(500),
+  rn           NUMBER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.TMP3_ADD_DG_012_FINANCE_GUARAN
+  is '过程临时表';
+comment on column RRP_MDL.TMP3_ADD_DG_012_FINANCE_GUARAN.party_id
+  is '当事人编号';
+comment on column RRP_MDL.TMP3_ADD_DG_012_FINANCE_GUARAN.cert_type_cd
+  is '数仓证件类型';
+comment on column RRP_MDL.TMP3_ADD_DG_012_FINANCE_GUARAN.cert_num
+  is '证件号';
+comment on column RRP_MDL.TMP3_ADD_DG_012_FINANCE_GUARAN.rn
+  is '排序';
+

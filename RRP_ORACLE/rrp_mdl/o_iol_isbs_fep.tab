@@ -1,0 +1,147 @@
+﻿create table RRP_MDL.O_IOL_ISBS_FEP
+(
+  inr           VARCHAR2(12),
+  feecod        VARCHAR2(9),
+  objtyp        VARCHAR2(9),
+  objinr        VARCHAR2(12),
+  relobjtyp     VARCHAR2(9),
+  relobjinr     VARCHAR2(12),
+  extkey        VARCHAR2(30),
+  nam           VARCHAR2(90),
+  relcur        VARCHAR2(5),
+  relamt        NUMBER(18,3),
+  dat1          DATE,
+  dat2          DATE,
+  modflg        VARCHAR2(2),
+  unt           NUMBER(5),
+  untamt        NUMBER(18,3),
+  ratcal        NUMBER(14,6),
+  rat           NUMBER(14,6),
+  minmaxflg     VARCHAR2(2),
+  cur           VARCHAR2(5),
+  amt           NUMBER(18,3),
+  xrfcur        VARCHAR2(5),
+  xrfamt        NUMBER(18,3),
+  feeacc        VARCHAR2(51),
+  infdetstm     VARCHAR2(2430),
+  ptyinr        VARCHAR2(12),
+  srctrninr     VARCHAR2(12),
+  srcdat        DATE,
+  rpltrninr     VARCHAR2(12),
+  rpldat        DATE,
+  dontrninr     VARCHAR2(12),
+  dondat        DATE,
+  advtrninr     VARCHAR2(12),
+  advdat        DATE,
+  acrinr        VARCHAR2(12),
+  sepinr        VARCHAR2(12),
+  rol           VARCHAR2(5),
+  ogiamt        NUMBER(18,3),
+  dctamt        NUMBER(18,3),
+  amoflg        VARCHAR2(2),
+  amoref        VARCHAR2(60),
+  amosta        VARCHAR2(2),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_FEP
+  is '费用明细';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.inr
+  is '内部唯一ID';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.feecod
+  is '费用代码';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.objtyp
+  is '对象表名称';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.objinr
+  is '对象表INR';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.relobjtyp
+  is '相关对象类型';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.relobjinr
+  is '相关对象的INR';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.extkey
+  is '外部可见名';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.nam
+  is '费用文本信息';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.relcur
+  is '相关币种';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.relamt
+  is '相关金额';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.dat1
+  is '费用收取起始日';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.dat2
+  is '费用收取截止日';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.modflg
+  is '修改标志（费用变化状态）';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.unt
+  is '费用收取的份数';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.untamt
+  is '每份费用的金额';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.ratcal
+  is '计算使用的费率';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.rat
+  is '费率';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.minmaxflg
+  is '最低最高费率使用标示';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.cur
+  is '费用币种';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.amt
+  is '费用金额';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.xrfcur
+  is '费用折算后的币种';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.xrfamt
+  is '费用折算后的金额';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.feeacc
+  is '费用入账的账号';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.infdetstm
+  is '费用计算细节';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.ptyinr
+  is '支付实体的INR';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.srctrninr
+  is '创建或者修改该费用的交易的TRN表INR';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.srcdat
+  is '创建日期';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.rpltrninr
+  is '取代交易的TRNINR';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.rpldat
+  is '取代日期';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.dontrninr
+  is '结算费用交易的TRN表INR';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.dondat
+  is '结算日期';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.advtrninr
+  is '通知费用交易的TRN表INR';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.advdat
+  is '通知日期';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.acrinr
+  is '循环计算的INR';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.sepinr
+  is '对应的临时结算的INR';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.rol
+  is '角色';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.ogiamt
+  is '应收金额';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.dctamt
+  is '优惠金额';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ISBS_FEP.etl_timestamp
+  is 'ETL处理时间戳';
+

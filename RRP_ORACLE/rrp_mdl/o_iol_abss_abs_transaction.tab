@@ -1,0 +1,93 @@
+﻿create table RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION
+(
+  serialno              VARCHAR2(60),
+  parenttransserialno   VARCHAR2(60),
+  transcode             VARCHAR2(15),
+  relativeobjecttype    VARCHAR2(60),
+  relativeobjectno      VARCHAR2(60),
+  documenttype          VARCHAR2(60),
+  documentno            VARCHAR2(60),
+  channelid             VARCHAR2(30),
+  occurdate             VARCHAR2(15),
+  occurtime             VARCHAR2(30),
+  transdate             VARCHAR2(15),
+  transstatus           VARCHAR2(15),
+  inputorgid            VARCHAR2(60),
+  inputuserid           VARCHAR2(60),
+  inputtime             VARCHAR2(30),
+  remark                VARCHAR2(600),
+  log                   VARCHAR2(600),
+  fallbacktransserialno VARCHAR2(60),
+  sceneid               VARCHAR2(60),
+  trancherate1          VARCHAR2(60),
+  trancherate2          VARCHAR2(60),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION
+  is '交易表';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.serialno
+  is '交易流水号';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.parenttransserialno
+  is '关联交易流水号';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.transcode
+  is '交易代码(Transaction-abs-Config.xml';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.relativeobjecttype
+  is '关联对象类型';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.relativeobjectno
+  is '关联对象编号';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.documenttype
+  is '单据类型';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.documentno
+  is '单据流水号';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.channelid
+  is '交易渠道';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.occurdate
+  is '交易操作日期';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.occurtime
+  is '交易时间';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.transdate
+  is '交易日期';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.transstatus
+  is '交易状态';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.inputorgid
+  is '录入机构';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.inputuserid
+  is '录入人';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.inputtime
+  is '录入时间';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.remark
+  is '描述';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.log
+  is '其他日志';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.fallbacktransserialno
+  is '回退交易流水号';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.sceneid
+  is '情景编号';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.trancherate1
+  is '分档利率A';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.trancherate2
+  is '分档利率B';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ABSS_ABS_TRANSACTION.etl_timestamp
+  is 'ETL处理时间戳';
+

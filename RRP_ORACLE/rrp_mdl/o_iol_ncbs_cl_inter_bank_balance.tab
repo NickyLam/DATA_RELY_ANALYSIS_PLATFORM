@@ -1,0 +1,81 @@
+﻿create table RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE
+(
+  sum_pay_agent_pri    NUMBER(17,2),
+  sum_pay_agent_odp    NUMBER(17,2),
+  client_no            VARCHAR2(32),
+  cmisloan_no          VARCHAR2(64),
+  cr_int               NUMBER(17,2),
+  pre_cr_int           NUMBER(17,2),
+  sum_int_accrued      NUMBER(17,2),
+  sum_pay_agent_int    NUMBER(17,2),
+  pay_agent_pri        NUMBER(17,2),
+  cr_odp               NUMBER(17,2),
+  sum_odp              NUMBER(17,2),
+  sum_odp_adj_amt      NUMBER(17,2),
+  sum_interest_adj_amt NUMBER(17,2),
+  pre_cr_odp           NUMBER(17,2),
+  inter_bank_busi_no   VARCHAR2(400),
+  is_last_pay_agent    VARCHAR2(2),
+  timestamp            VARCHAR2(52),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10),
+  etl_timestamp        TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE
+  is '同业代付登记簿余额表';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.sum_pay_agent_pri
+  is 'sum_pay_agent_pri';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.sum_pay_agent_odp
+  is '累计已代付罚息';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.cmisloan_no
+  is '借据号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.cr_int
+  is '当日计提利息';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.pre_cr_int
+  is 'pre_cr_int';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.sum_int_accrued
+  is '累计计提利息';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.sum_pay_agent_int
+  is '累计已代付利息';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.pay_agent_pri
+  is '代付本金';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.cr_odp
+  is '当日计提罚息';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.sum_odp
+  is '累计计提罚息';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.sum_odp_adj_amt
+  is '累计罚息调整金额';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.sum_interest_adj_amt
+  is '累计利息调整金额';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.pre_cr_odp
+  is 'pre_cr_odp';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.inter_bank_busi_no
+  is '同业代付业务编号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.is_last_pay_agent
+  is '是否最后一次代付';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.timestamp
+  is '时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NCBS_CL_INTER_BANK_BALANCE.etl_timestamp
+  is 'etl处理时间戳';
+

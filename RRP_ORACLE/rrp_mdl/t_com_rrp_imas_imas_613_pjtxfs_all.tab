@@ -1,0 +1,29 @@
+﻿create table RRP_MDL.T_COM_RRP_IMAS_IMAS_613_PJTXFS_ALL
+(
+  rid           VARCHAR2(50) not null,
+  data_dt       VARCHAR2(10),
+  org_no        VARCHAR2(30),
+  cust_no       VARCHAR2(30),
+  bus_no        VARCHAR2(100),
+  tr_no         VARCHAR2(60),
+  curr_cd       VARCHAR2(3),
+  tr_dt         VARCHAR2(10),
+  amt           NUMBER(22,2),
+  disc_int_rate NUMBER(15,5),
+  tr_dir        VARCHAR2(1),
+  bill_no       VARCHAR2(200),
+  std_prod_id   VARCHAR2(200),
+  subj_id       VARCHAR2(200),
+  data_src      VARCHAR2(500),
+  dept_no       VARCHAR2(30),
+  issued_no     VARCHAR2(20),
+  rpt_org_no    VARCHAR2(20),
+  data_ources   VARCHAR2(20),
+  data_modify   VARCHAR2(2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

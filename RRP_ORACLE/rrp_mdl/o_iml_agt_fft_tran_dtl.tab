@@ -1,0 +1,75 @@
+﻿create table RRP_MDL.O_IML_AGT_FFT_TRAN_DTL
+(
+  agt_id                  VARCHAR2(250),
+  lp_id                   VARCHAR2(100),
+  flow_num                VARCHAR2(100),
+  tot_flow_num            VARCHAR2(100),
+  dubil_id                VARCHAR2(100),
+  sell_int_rat            NUMBER(18,8),
+  tran_sell_recvbl_amt    NUMBER(30,8),
+  abmt_comm_fee_amt       NUMBER(30,8),
+  tran_sell_exp_dt        DATE,
+  amorted_amt             NUMBER(30,8),
+  inter_bus_inco_amt      NUMBER(30,8),
+  issue_bank_bank_no      VARCHAR2(60),
+  acpt_bank_bank_no       VARCHAR2(60),
+  lc_benefc_indus_type_cd VARCHAR2(30),
+  start_dt                DATE,
+  end_dt                  DATE,
+  id_mark                 VARCHAR2(10),
+  src_table_name          VARCHAR2(100),
+  job_cd                  VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_FFT_TRAN_DTL
+  is '福费廷转让明细';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.flow_num
+  is '流水号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.tot_flow_num
+  is '汇总流水号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.sell_int_rat
+  is '卖出利率';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.tran_sell_recvbl_amt
+  is '转卖收款金额';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.abmt_comm_fee_amt
+  is '汇入手续费金额';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.tran_sell_exp_dt
+  is '转卖到期日期';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.amorted_amt
+  is '待摊金额';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.inter_bus_inco_amt
+  is '中间业务收入金额';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.issue_bank_bank_no
+  is '开证行行号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.acpt_bank_bank_no
+  is '承兑行行号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.lc_benefc_indus_type_cd
+  is '信用证受益人行业类型代码';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_DTL.job_cd
+  is '任务代码';
+

@@ -1,0 +1,96 @@
+﻿create table RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO
+(
+  etl_dt                      DATE,
+  lp_id                       VARCHAR2(60),
+  cust_id                     VARCHAR2(60),
+  cust_type_cd                VARCHAR2(20),
+  cust_name                   VARCHAR2(250),
+  move_num                    VARCHAR2(100),
+  family_farm_flg             VARCHAR2(10),
+  mls_acct_flg                VARCHAR2(10),
+  disb_ps_flg                 VARCHAR2(10),
+  sm_bus_owner_cert_type      VARCHAR2(100),
+  sm_bus_owner_cert_no        VARCHAR2(100),
+  indv_bus_cert_type          VARCHAR2(100),
+  indv_bus_cert_no            VARCHAR2(100),
+  inco_curr                   VARCHAR2(30),
+  crdt_cust_flg_cd            VARCHAR2(10),
+  cross_bor_cust_flg          VARCHAR2(10),
+  mang_enty_bl_induty_type_cd VARCHAR2(30),
+  latest_update_teller_id     VARCHAR2(60),
+  latest_update_org_id        VARCHAR2(60),
+  latest_update_chn_cd        VARCHAR2(30),
+  latest_update_tm            TIMESTAMP(6),
+  job_cd                      VARCHAR2(10),
+  etl_timestamp               TIMESTAMP(6),
+  ex_servsm_flg               VARCHAR2(10),
+  no_buslics_prc_flg          VARCHAR2(10),
+  crdt_cust_type_cd           VARCHAR2(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO
+  is '个人客户补充信息';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.move_num
+  is '电话号码';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.family_farm_flg
+  is '家庭农场标志';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.mls_acct_flg
+  is '低保户标志';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.disb_ps_flg
+  is '残疾人标志';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.sm_bus_owner_cert_type
+  is '小微企业主证件类型';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.sm_bus_owner_cert_no
+  is '小微企业主证件号码';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.indv_bus_cert_type
+  is '个体工商户证件类型';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.indv_bus_cert_no
+  is '个体工商户证件号码';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.inco_curr
+  is '收入币种';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.crdt_cust_flg_cd
+  is '信贷客户标识代码';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.cross_bor_cust_flg
+  is '跨境电商客户标志';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.mang_enty_bl_induty_type_cd
+  is '经营实体所属行业类型代码';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.latest_update_teller_id
+  is '最新更新柜员编号';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.latest_update_org_id
+  is '最新更新机构编号';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.latest_update_chn_cd
+  is '最新更新渠道代码';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.latest_update_tm
+  is '最新更新时间';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.etl_timestamp
+  is '数据处理时间';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.ex_servsm_flg
+  is '退役军人标志';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.no_buslics_prc_flg
+  is '无营业执照负责人标志';
+comment on column RRP_MDL.O_ICL_CMM_INDV_CUST_ATTACH_INFO.crdt_cust_type_cd
+  is '信贷客户类型代码';
+

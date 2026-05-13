@@ -1,0 +1,33 @@
+﻿create table RRP_EAST.TMP_M_PUM_ORG_INFO
+(
+  data_dt           CHAR(8) not null,
+  lgl_rep_id        VARCHAR2(200),
+  org_id            VARCHAR2(200) not null,
+  pbc_no            VARCHAR2(200),
+  fin_permit_no     VARCHAR2(100),
+  uscc              VARCHAR2(200),
+  org_nm            VARCHAR2(500),
+  org_typ           VARCHAR2(10),
+  opr_stat          VARCHAR2(10),
+  estb_dt           CHAR(8),
+  org_addr          VARCHAR2(500),
+  pic_nm            VARCHAR2(500),
+  pic_job           VARCHAR2(500),
+  pic_tel           VARCHAR2(30),
+  up_org_id         VARCHAR2(200),
+  regd_land_area_cd VARCHAR2(10),
+  org_lvl           VARCHAR2(10),
+  fin_org_id        VARCHAR2(200),
+  opr_stat_end_dt   CHAR(8),
+  org_tel           VARCHAR2(30),
+  bsn_lcns_regd_no  VARCHAR2(200),
+  org_cd            CHAR(1),
+  dept_line         VARCHAR2(500),
+  data_src          VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

@@ -1,0 +1,82 @@
+﻿create table RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP
+(
+  data_dt            VARCHAR2(8),
+  tra_dt             VARCHAR2(8),
+  tra_seq_no         VARCHAR2(500),
+  tran_flow_num      VARCHAR2(200),
+  acct_bill_flow_num VARCHAR2(200),
+  core_tran_flow_num VARCHAR2(300),
+  src_seq_num        VARCHAR2(200),
+  src_tra_seq_no     VARCHAR2(200),
+  tra_dr_cr_flg      VARCHAR2(10),
+  opp_acc            VARCHAR2(300),
+  opp_acc_nm         VARCHAR2(750),
+  opp_pbc_no         VARCHAR2(200),
+  opp_bank_nm        VARCHAR2(750),
+  opp_subj_id        VARCHAR2(200),
+  opp_subj_nm        VARCHAR2(750),
+  src_flg            VARCHAR2(100),
+  opp_corp_acct_flg  VARCHAR2(10),
+  numb               NUMBER(20),
+  tran_kind_cd       VARCHAR2(2000),
+  memo_cd            VARCHAR2(2000),
+  memo_cd_descb      VARCHAR2(2000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress
+nologging;
+comment on table RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP
+  is '交易对手信息中间表';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.tra_dt
+  is '交易日期';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.tra_seq_no
+  is '交易流水号（唯一，用于关联）';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.tran_flow_num
+  is '核心交易流水号';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.acct_bill_flow_num
+  is '核心账单流水号';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.core_tran_flow_num
+  is '全局流水号';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.src_seq_num
+  is '源系统流水号';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.src_tra_seq_no
+  is '源系统交易序号';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.tra_dr_cr_flg
+  is '交易借贷标志';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.opp_acc
+  is '对方账号';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.opp_acc_nm
+  is '对方户名';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.opp_pbc_no
+  is '对方行号';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.opp_bank_nm
+  is '对方行名';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.opp_subj_id
+  is '对方科目编号';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.opp_subj_nm
+  is '对方科目名称';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.src_flg
+  is '源系统标志';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.opp_corp_acct_flg
+  is '对方对公账户标志';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.numb
+  is '序号';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.tran_kind_cd
+  is '交易种类代码';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.memo_cd
+  is '摘要代码';
+comment on column RRP_MDL.M_MID_TRA_CNTPTY_INFO_TMP.memo_cd_descb
+  is '摘要代码描述';
+

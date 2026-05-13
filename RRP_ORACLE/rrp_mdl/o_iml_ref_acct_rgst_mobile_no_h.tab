@@ -1,0 +1,66 @@
+﻿create table RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H
+(
+  mobile_no                 VARCHAR2(90),
+  cert_type_cd              VARCHAR2(10),
+  cert_no                   VARCHAR2(150),
+  acct_num                  VARCHAR2(150),
+  acct_name                 VARCHAR2(300),
+  acct_num_rgst_attr_cd     VARCHAR2(10),
+  onl_bank_sys_open_bank_no VARCHAR2(90),
+  acct_open_bank_no         VARCHAR2(90),
+  acct_clear_bank_no        VARCHAR2(90),
+  rgst_tm                   TIMESTAMP(6),
+  mobile_no_status_cd       VARCHAR2(10),
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10),
+  src_table_name            VARCHAR2(100),
+  job_cd                    VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H
+  is '客户账户注册手机号历史';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.mobile_no
+  is '手机号码';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.cert_type_cd
+  is '证件类型代码';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.cert_no
+  is '证件号码';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.acct_num
+  is '账号';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.acct_num_rgst_attr_cd
+  is '账号注册属性代码';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.onl_bank_sys_open_bank_no
+  is '网银系统开户行行号';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.acct_open_bank_no
+  is '账户开户行行号';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.acct_clear_bank_no
+  is '账户清算行行号';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.rgst_tm
+  is '登记时间';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.mobile_no_status_cd
+  is '手机号状态代码';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_REF_ACCT_RGST_MOBILE_NO_H.job_cd
+  is '任务代码';
+

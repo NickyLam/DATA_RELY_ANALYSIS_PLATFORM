@@ -1,0 +1,330 @@
+﻿create table RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H
+(
+  appl_id                       VARCHAR2(100),
+  lp_id                         VARCHAR2(100),
+  appl_flow_num                 VARCHAR2(100),
+  cust_id                       VARCHAR2(4000),
+  cust_name                     VARCHAR2(4000),
+  ths_tm_asset_cls_cd           VARCHAR2(60),
+  appl_rs_descb                 VARCHAR2(4000),
+  derate_bf_pric_sum            NUMBER(30,8),
+  derate_bf_adv_fee_sum         NUMBER(30,8),
+  derate_bf_comp_int_sum        NUMBER(30,8),
+  derate_bf_pnlt_sum            NUMBER(30,8),
+  derate_bf_int_sum             NUMBER(30,8),
+  apv_status_cd                 VARCHAR2(100),
+  cntpty_id                     VARCHAR2(250),
+  cntpty_name                   VARCHAR2(500),
+  dubil_qtty                    NUMBER(30),
+  brwer_resv_recs_flg           VARCHAR2(60),
+  guartor_resv_recs_flg         VARCHAR2(60),
+  exist_propty_flg              VARCHAR2(60),
+  asset_descb                   VARCHAR2(2000),
+  obj_type_cd                   VARCHAR2(100),
+  tran_type_cd                  VARCHAR2(60),
+  ths_tm_tran_pric_sum          NUMBER(30,8),
+  ths_tm_tran_int_sum           NUMBER(30,8),
+  ths_tm_comp_int_sum           NUMBER(30,8),
+  ths_tm_pnlt_sum               NUMBER(30,8),
+  ths_tm_tran_adv_fee_sum       NUMBER(30,8),
+  oper_dt                       DATE,
+  oper_belong_org_id            VARCHAR2(100),
+  oper_teller_id                VARCHAR2(100),
+  rela_flow_num                 VARCHAR2(100),
+  ths_return_post_acct_recl_amt NUMBER(30,8),
+  ths_return_bf_acct_recv_amt   NUMBER(30,8),
+  ths_tm_return_amt             NUMBER(30,8),
+  last_acm_return_amt           NUMBER(30,8),
+  acm_return_amt                NUMBER(30,8),
+  fst_return_amt                NUMBER(30,8),
+  rtn_suit_fee_cosdetn          NUMBER(30,8),
+  wrt_off_type_cd               VARCHAR2(60),
+  acct_recvbl_acct_id           VARCHAR2(250),
+  acct_recvbl_acct_name         VARCHAR2(500),
+  acct_recvbl_amt               NUMBER(30,8),
+  tran_plat_cd                  VARCHAR2(60),
+  tran_cont_id                  VARCHAR2(500),
+  tran_way_cd                   VARCHAR2(60),
+  tran_price                    NUMBER(30,8),
+  real_tran_cosdetn             NUMBER(30,8),
+  tran_return_acct_id           VARCHAR2(250),
+  tran_return_acct_name         VARCHAR2(500),
+  inside_acct_open_org_id       VARCHAR2(250),
+  rgst_dt                       DATE,
+  rgst_belong_org_id            VARCHAR2(100),
+  rgst_teller_id                VARCHAR2(100),
+  update_teller_id              VARCHAR2(100),
+  update_org_id                 VARCHAR2(100),
+  remark                        VARCHAR2(4000),
+  start_dt                      DATE,
+  end_dt                        DATE,
+  id_mark                       VARCHAR2(10),
+  src_table_name                VARCHAR2(100),
+  job_cd                        VARCHAR2(10),
+  etl_timestamp                 TIMESTAMP(6),
+  debt_asset_id                 VARCHAR2(100),
+  debt_asset_name               VARCHAR2(500),
+  debt_amt                      NUMBER(30,8),
+  recv_dt                       DATE,
+  debt_asset_type_cd            VARCHAR2(60),
+  debt_type_cd                  VARCHAR2(60),
+  disp_way_cd                   VARCHAR2(60),
+  disp_amt                      NUMBER(30,8),
+  disp_comnt                    VARCHAR2(4000),
+  create_mon                    VARCHAR2(500),
+  crdt_bal                      NUMBER(30,8),
+  loss_amt                      NUMBER(30,8),
+  cust_type_cd                  VARCHAR2(30),
+  guar_way_cd                   VARCHAR2(30),
+  guartor                       VARCHAR2(4000),
+  mtg_descb                     VARCHAR2(4000),
+  suit_prog                     VARCHAR2(4000),
+  liqd_disp_prop                VARCHAR2(4000),
+  latest_disp_prog              VARCHAR2(4000),
+  next_work_plan                VARCHAR2(4000),
+  exist_prob                    VARCHAR2(4000),
+  deduct_stl_acct_id            VARCHAR2(250),
+  deduct_stl_acct_bal           NUMBER(30,8),
+  deduct_amt                    NUMBER(30,8),
+  deduct_reason                 VARCHAR2(4000),
+  on_acct_id                    VARCHAR2(100),
+  trane_cert_type_cd            VARCHAR2(30),
+  trane_cert_no                 VARCHAR2(100),
+  trane_acct_id                 VARCHAR2(100),
+  trane_bank_no                 VARCHAR2(100),
+  trane_tran_acct_dt            DATE,
+  prop_id                       VARCHAR2(100),
+  sign_dt                       DATE,
+  effect_dt                     DATE,
+  agt_curr_cd                   VARCHAR2(30),
+  agt_amt                       NUMBER(30,8),
+  margin_amt                    NUMBER(30,8),
+  margin_ratio                  NUMBER(30,8),
+  margin_curr_cd                VARCHAR2(30),
+  court_judge_id                VARCHAR2(250),
+  inst_pay_flg                  VARCHAR2(10),
+  int_full_amt_derate_flg       VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H
+  is '资产保全申请信息历史';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.appl_id
+  is '申请编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.appl_flow_num
+  is '申请流水号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.ths_tm_asset_cls_cd
+  is '本次资产分类代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.appl_rs_descb
+  is '申请原因描述';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.derate_bf_pric_sum
+  is '减免前本金合计';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.derate_bf_adv_fee_sum
+  is '减免前代垫费用合计';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.derate_bf_comp_int_sum
+  is '减免前复利合计';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.derate_bf_pnlt_sum
+  is '减免前罚息合计';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.derate_bf_int_sum
+  is '减免前利息合计';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.apv_status_cd
+  is '审批状态代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.cntpty_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.dubil_qtty
+  is '借据数量';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.brwer_resv_recs_flg
+  is '对借款人保留追索权标志';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.guartor_resv_recs_flg
+  is '对保证人保留追索权标志';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.exist_propty_flg
+  is '存在财产线索标志';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.asset_descb
+  is '资产线索描述';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.obj_type_cd
+  is '对象类型代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.tran_type_cd
+  is '交易类型代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.ths_tm_tran_pric_sum
+  is '本次交易本金合计';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.ths_tm_tran_int_sum
+  is '本次交易利息合计';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.ths_tm_comp_int_sum
+  is '本次复利合计';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.ths_tm_pnlt_sum
+  is '本次罚息合计';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.ths_tm_tran_adv_fee_sum
+  is '本次交易代垫费用合计';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.oper_dt
+  is '经办日期';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.oper_belong_org_id
+  is '经办所属机构编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.oper_teller_id
+  is '经办柜员编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.rela_flow_num
+  is '关联流水号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.ths_return_post_acct_recl_amt
+  is '本次回款后应收款金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.ths_return_bf_acct_recv_amt
+  is '本次回款前应收款金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.ths_tm_return_amt
+  is '本次回款金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.last_acm_return_amt
+  is '上一累计回款金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.acm_return_amt
+  is '累计回款金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.fst_return_amt
+  is '首期回款金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.rtn_suit_fee_cosdetn
+  is '用于归还诉讼费的对价';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.wrt_off_type_cd
+  is '核销类型代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.acct_recvbl_acct_id
+  is '应收款账户编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.acct_recvbl_acct_name
+  is '应收款账户名称';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.acct_recvbl_amt
+  is '应收款金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.tran_plat_cd
+  is '交易平台代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.tran_cont_id
+  is '转让合同编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.tran_way_cd
+  is '转让方式代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.tran_price
+  is '转让价格';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.real_tran_cosdetn
+  is '真实转让对价';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.tran_return_acct_id
+  is '转让回款账户编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.tran_return_acct_name
+  is '转让回款账户名称';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.inside_acct_open_org_id
+  is '内部户开立机构编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.rgst_belong_org_id
+  is '登记所属机构编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.update_teller_id
+  is '更新柜员编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.update_org_id
+  is '更新机构编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.remark
+  is '备注';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.debt_asset_id
+  is '抵债资产编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.debt_asset_name
+  is '抵债资产名称';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.debt_amt
+  is '抵债金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.recv_dt
+  is '接收日期';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.debt_asset_type_cd
+  is '抵债资产类型代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.debt_type_cd
+  is '抵债类型代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.disp_way_cd
+  is '处置方式代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.disp_amt
+  is '处置金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.disp_comnt
+  is '处置说明';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.create_mon
+  is '生成月份';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.crdt_bal
+  is '授信余额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.loss_amt
+  is '损失金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.guar_way_cd
+  is '担保方式代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.guartor
+  is '保证人';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.mtg_descb
+  is '抵押物描述';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.suit_prog
+  is '诉讼进展';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.liqd_disp_prop
+  is '清收处置方案';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.latest_disp_prog
+  is '最新处置进展';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.next_work_plan
+  is '下一步工作计划';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.exist_prob
+  is '存在问题描述';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.deduct_stl_acct_id
+  is '扣款结算账户编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.deduct_stl_acct_bal
+  is '扣款结算账户余额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.deduct_amt
+  is '扣划金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.deduct_reason
+  is '扣划理由';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.on_acct_id
+  is '挂账编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.trane_cert_type_cd
+  is '受让方证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.trane_cert_no
+  is '受让方证件号码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.trane_acct_id
+  is '受让方账户编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.trane_bank_no
+  is '受让方行号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.trane_tran_acct_dt
+  is '受让方转账日期';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.prop_id
+  is '方案编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.sign_dt
+  is '签约日期';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.effect_dt
+  is '生效日期';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.agt_curr_cd
+  is '协议币种代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.agt_amt
+  is '协议金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.margin_amt
+  is '保证金金额';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.margin_ratio
+  is '保证金比例';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.margin_curr_cd
+  is '保证金币种代码';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.court_judge_id
+  is '法院裁定书编号';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.inst_pay_flg
+  is '分期付款标志';
+comment on column RRP_MDL.O_IML_AGT_ASTCONSV_APPL_INFO_H.int_full_amt_derate_flg
+  is '利息全额减免标志';
+

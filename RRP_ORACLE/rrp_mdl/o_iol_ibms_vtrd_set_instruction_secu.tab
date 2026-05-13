@@ -1,0 +1,255 @@
+﻿create table RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU
+(
+  secu_inst_id          NUMBER(16),
+  secu_inst_grp_id      NUMBER(16),
+  inst_id               NUMBER(16),
+  biz_type              VARCHAR2(45),
+  direction             VARCHAR2(15),
+  trade_grp_id          VARCHAR2(45),
+  secu_acct_id          VARCHAR2(45),
+  ext_secu_acct_id      VARCHAR2(45),
+  i_code                VARCHAR2(75),
+  a_type                VARCHAR2(30),
+  m_type                VARCHAR2(30),
+  currency              VARCHAR2(15),
+  real_fee              NUMBER(31,4),
+  estd_ai               NUMBER(31,4),
+  received_ai           NUMBER(31,4),
+  estd_cp               NUMBER(31,4),
+  real_ai               NUMBER(31,4),
+  real_cp               NUMBER(31,4),
+  due_ai                NUMBER(38,4),
+  due_cp                NUMBER(38,4),
+  prft_fee              NUMBER(38,4),
+  is_remain_due_ai      NUMBER(4),
+  is_remain_due_cp      NUMBER(4),
+  volume                NUMBER(38,4),
+  freeze_volume         NUMBER(38,4),
+  is_fixed              NUMBER,
+  cal_date              VARCHAR2(15),
+  set_date              VARCHAR2(15),
+  set_finish_date       VARCHAR2(15),
+  i_name                VARCHAR2(300),
+  p_class               VARCHAR2(150),
+  cost                  NUMBER(31,4),
+  cost_ai_his_real      NUMBER(31,4),
+  zzd_acct_code         VARCHAR2(150),
+  party_zzd_acct_code   VARCHAR2(150),
+  create_time           VARCHAR2(29),
+  update_time           VARCHAR2(35),
+  update_user           VARCHAR2(150),
+  confirm_time          VARCHAR2(29),
+  confirm_user          VARCHAR2(30),
+  account_time          VARCHAR2(29),
+  account_user          VARCHAR2(30),
+  memo                  VARCHAR2(750),
+  amount                NUMBER(31,4),
+  close_trade_id        VARCHAR2(45),
+  blc_state             NUMBER,
+  acctg_state           NUMBER,
+  estd_fee              NUMBER(31,4),
+  fee                   NUMBER(31,4),
+  opr_state             NUMBER,
+  secu_inst_setgrp_id   NUMBER(16),
+  his_flag              NUMBER,
+  his_secu_inst_id      NUMBER(16),
+  his_set_finish_date   VARCHAR2(15),
+  acctg_inst_id         NUMBER(16),
+  cancel_flag           VARCHAR2(2),
+  volume_termcur        NUMBER(31,4),
+  amount_termcur        NUMBER(31,4),
+  estd_cp_termcur       NUMBER(31,4),
+  real_cp_termcur       NUMBER(31,4),
+  amrt_method           NUMBER,
+  real_margin           NUMBER(31,8),
+  fpml                  VARCHAR2(4000),
+  is_impair             VARCHAR2(2),
+  is_theory_acct        VARCHAR2(2),
+  is_theory_blc         VARCHAR2(2),
+  cl_status             NUMBER(3),
+  party_pset            VARCHAR2(33),
+  party_pset_country    VARCHAR2(15),
+  party_agent_code_type VARCHAR2(2),
+  party_agent_code_dss  VARCHAR2(270),
+  party_agent_code      VARCHAR2(420),
+  party_agent_account   VARCHAR2(150),
+  party_code_type       VARCHAR2(2),
+  party_code_dss        VARCHAR2(270),
+  party_code            VARCHAR2(420),
+  party_account         VARCHAR2(150),
+  etl_dt                DATE,
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU
+  is '主指令表(视图)';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.secu_inst_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.secu_inst_grp_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.inst_id
+  is '指令id';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.biz_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.direction
+  is '投向';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.trade_grp_id
+  is '组合交易号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.secu_acct_id
+  is '证券账户编号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.ext_secu_acct_id
+  is '外部证券账户编号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.real_fee
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.estd_ai
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.received_ai
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.estd_cp
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.real_ai
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.real_cp
+  is '净价成本';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.due_ai
+  is '应收/付未收/付利息';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.due_cp
+  is '应收/付未收/付本金';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.prft_fee
+  is '费用';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.is_remain_due_ai
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.is_remain_due_cp
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.volume
+  is '发行量';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.freeze_volume
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.is_fixed
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.cal_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.set_date
+  is '缴款日';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.set_finish_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.i_name
+  is '金融工具名称';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.p_class
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.cost
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.cost_ai_his_real
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.zzd_acct_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_zzd_acct_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.update_user
+  is '更新人员';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.confirm_time
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.confirm_user
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.account_time
+  is '复核时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.account_user
+  is '复核人员';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.amount
+  is '金额';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.close_trade_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.blc_state
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.acctg_state
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.estd_fee
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.fee
+  is '手续费';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.opr_state
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.secu_inst_setgrp_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.his_flag
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.his_secu_inst_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.his_set_finish_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.acctg_inst_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.cancel_flag
+  is '取消标志';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.volume_termcur
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.amount_termcur
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.estd_cp_termcur
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.real_cp_termcur
+  is '货币对反向实际成本';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.amrt_method
+  is '摊销算法';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.real_margin
+  is '期货保证金';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.fpml
+  is 'fpml';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.is_impair
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.is_theory_acct
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.is_theory_blc
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.cl_status
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_pset
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_pset_country
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_agent_code_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_agent_code_dss
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_agent_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_agent_account
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_code_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_code_dss
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.party_account
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_SECU.etl_timestamp
+  is 'etl处理时间';
+

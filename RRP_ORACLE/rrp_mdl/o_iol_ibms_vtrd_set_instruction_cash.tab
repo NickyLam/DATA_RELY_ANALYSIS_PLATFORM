@@ -1,0 +1,165 @@
+﻿create table RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH
+(
+  cash_inst_id             NUMBER(16),
+  inst_id                  NUMBER(16),
+  cash_inst_grp_id         NUMBER(16),
+  biz_type                 VARCHAR2(45),
+  direction                VARCHAR2(15),
+  cash_acct_id             VARCHAR2(45),
+  ext_cash_acct_id         VARCHAR2(30),
+  currency                 VARCHAR2(15),
+  amount                   NUMBER(31,4),
+  freeze_amount            NUMBER(31,4),
+  set_date                 VARCHAR2(15),
+  set_finish_date          VARCHAR2(15),
+  transfer_type            NUMBER(22),
+  acct_code                VARCHAR2(150),
+  acct_name                VARCHAR2(150),
+  bank_code                VARCHAR2(150),
+  bank_name                VARCHAR2(150),
+  party_acct_code          VARCHAR2(150),
+  party_acct_name          VARCHAR2(150),
+  party_bank_code          VARCHAR2(150),
+  party_bank_name          VARCHAR2(300),
+  create_time              VARCHAR2(29),
+  update_time              VARCHAR2(35),
+  update_user              VARCHAR2(150),
+  account_time             VARCHAR2(29),
+  account_user             VARCHAR2(30),
+  memo                     VARCHAR2(750),
+  blc_state                NUMBER(22),
+  acctg_state              NUMBER(22),
+  opr_state                NUMBER(22),
+  cash_inst_setgrp_id      NUMBER(16),
+  acctg_inst_id            NUMBER(16),
+  cancel_flag              VARCHAR2(2),
+  is_theory_blc            VARCHAR2(2),
+  nostro_ref_cash_inst_id  NUMBER(16),
+  pending_flow_no          VARCHAR2(45),
+  pending_date             VARCHAR2(15),
+  is_theory_acct           VARCHAR2(2),
+  mid_bank_acct_code       VARCHAR2(75),
+  mid_bank_name            VARCHAR2(75),
+  mid_swift_code           VARCHAR2(75),
+  swift_code               VARCHAR2(75),
+  party_swift_code         VARCHAR2(75),
+  party_mid_bank_acct_code VARCHAR2(75),
+  party_mid_bank_name      VARCHAR2(75),
+  party_mid_swift_code     VARCHAR2(75),
+  cl_status                NUMBER(31),
+  etl_dt                   DATE,
+  etl_timestamp            TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH
+  is '主指令表(视图)';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.cash_inst_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.inst_id
+  is '指令id';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.cash_inst_grp_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.biz_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.direction
+  is '投向';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.cash_acct_id
+  is '内部资金账户';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.ext_cash_acct_id
+  is '外部资金账户';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.amount
+  is '金额';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.freeze_amount
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.set_date
+  is '缴款日';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.set_finish_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.transfer_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.acct_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.bank_code
+  is '支付系统银行行号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.bank_name
+  is '银行名称';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.party_acct_code
+  is '收款账号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.party_acct_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.party_bank_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.party_bank_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.update_user
+  is '更新人员';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.account_time
+  is '复核时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.account_user
+  is '复核人员';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.blc_state
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.acctg_state
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.opr_state
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.cash_inst_setgrp_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.acctg_inst_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.cancel_flag
+  is '取消标志';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.is_theory_blc
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.nostro_ref_cash_inst_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.pending_flow_no
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.pending_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.is_theory_acct
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.mid_bank_acct_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.mid_bank_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.mid_swift_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.swift_code
+  is 'swift电文代号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.party_swift_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.party_mid_bank_acct_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.party_mid_bank_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.party_mid_swift_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.cl_status
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_SET_INSTRUCTION_CASH.etl_timestamp
+  is 'etl处理时间';
+

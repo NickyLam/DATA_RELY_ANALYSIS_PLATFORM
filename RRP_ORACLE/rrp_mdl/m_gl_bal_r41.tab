@@ -1,0 +1,19 @@
+﻿create table RRP_MDL.M_GL_BAL_R41
+(
+  data_dt     VARCHAR2(30),
+  org_no      VARCHAR2(30),
+  pro_typ     VARCHAR2(30),
+  ave_dai_bal NUMBER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.M_GL_BAL_R41
+  is '总账会计科目余额表';
+comment on column RRP_MDL.M_GL_BAL_R41.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_GL_BAL_R41.org_no
+  is '所属机构';
+

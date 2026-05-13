@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.WHBXD_20260302
+(
+  rcpt_id VARCHAR2(500),
+  cont_id VARCHAR2(500),
+  cust_id VARCHAR2(500),
+  cust_nm VARCHAR2(2000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.WHBXD_20260302
+  is '无还本续贷参数维护';
+comment on column RRP_MDL.WHBXD_20260302.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.WHBXD_20260302.cont_id
+  is '合同编号';
+comment on column RRP_MDL.WHBXD_20260302.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.WHBXD_20260302.cust_nm
+  is '客户名称';
+

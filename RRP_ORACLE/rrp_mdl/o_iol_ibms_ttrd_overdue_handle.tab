@@ -1,0 +1,81 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE
+(
+  i_code              VARCHAR2(45),
+  a_type              VARCHAR2(30),
+  m_type              VARCHAR2(30),
+  i_name              VARCHAR2(300),
+  is_ai_overdue       VARCHAR2(2),
+  amount_ai_overdue   NUMBER(32,4),
+  beg_date_ai_overdue VARCHAR2(17),
+  is_cp_overdue       VARCHAR2(2),
+  amount_cp_overdue   NUMBER(32,4),
+  beg_date_cp_overdue VARCHAR2(17),
+  transfer_table_type VARCHAR2(2),
+  statu               VARCHAR2(2),
+  check_name          VARCHAR2(75),
+  check_time          DATE,
+  review_user         VARCHAR2(75),
+  review_time         DATE,
+  change_date         VARCHAR2(17),
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  etl_timestamp       TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE
+  is '非标业务逾期处理表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.i_name
+  is '金融工具名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.is_ai_overdue
+  is '利息是否逾期：1是0否';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.amount_ai_overdue
+  is '利息逾期金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.beg_date_ai_overdue
+  is '利息逾期开始日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.is_cp_overdue
+  is '本金是否逾期：1是0否';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.amount_cp_overdue
+  is '本金逾期金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.beg_date_cp_overdue
+  is '本金逾期开始日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.transfer_table_type
+  is '1:转表内,2:转表外,0:默认值,未进行过转表操作';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.statu
+  is '状态 1:待复核,2:已生效';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.check_name
+  is '提交人/修改人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.check_time
+  is '提交时间/修改时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.review_user
+  is '复核人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.review_time
+  is '复核时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.change_date
+  is '变更日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OVERDUE_HANDLE.etl_timestamp
+  is 'ETL处理时间戳';
+

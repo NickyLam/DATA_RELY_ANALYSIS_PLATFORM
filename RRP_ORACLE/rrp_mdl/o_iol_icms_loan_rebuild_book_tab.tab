@@ -1,0 +1,66 @@
+﻿create table RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB
+(
+  duebillserialno        VARCHAR2(64),
+  loanrebuildtype        VARCHAR2(20),
+  inbusinesssum          NUMBER(24,6),
+  infiveclass            VARCHAR2(10),
+  restructuretheloandate VARCHAR2(10),
+  exbusinesssum          NUMBER(24,6),
+  exfiveclass            VARCHAR2(10),
+  exstructuretheloandate VARCHAR2(10),
+  exreason               VARCHAR2(1000),
+  inputorgid             VARCHAR2(64),
+  inputdate              DATE,
+  updatedate             DATE,
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB
+  is '贷款重组新台账';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.duebillserialno
+  is '借据号(主键)';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.loanrebuildtype
+  is '重组贷款类型';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.inbusinesssum
+  is '加入重组时借据余额';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.infiveclass
+  is '加入重组时五级分类';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.restructuretheloandate
+  is '实施重组日期（年月日）';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.exbusinesssum
+  is '退出重组时借据余额';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.exfiveclass
+  is '退出重组时五级分类';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.exstructuretheloandate
+  is '退出重组日期（年月日）';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.exreason
+  is '退出重组原因';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.inputdate
+  is '登记时间';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.updatedate
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_LOAN_REBUILD_BOOK_TAB.etl_timestamp
+  is 'ETL处理时间戳';
+

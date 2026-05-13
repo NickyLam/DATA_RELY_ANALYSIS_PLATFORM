@@ -1,0 +1,38 @@
+﻿create table RRP_MDL.O_IOL_NFSS_TCS_TBDICT
+(
+  hs_key      VARCHAR2(16),
+  key_name    VARCHAR2(32),
+  val         VARCHAR2(256),
+  prompt      VARCHAR2(60),
+  kernal_flag VARCHAR2(8),
+  belong_type VARCHAR2(16),
+  start_dt    DATE,
+  end_dt      DATE,
+  id_mark     VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_NFSS_TCS_TBDICT
+  is '数据字典';
+comment on column RRP_MDL.O_IOL_NFSS_TCS_TBDICT.hs_key
+  is '未知';
+comment on column RRP_MDL.O_IOL_NFSS_TCS_TBDICT.key_name
+  is '密钥名称';
+comment on column RRP_MDL.O_IOL_NFSS_TCS_TBDICT.val
+  is '未知';
+comment on column RRP_MDL.O_IOL_NFSS_TCS_TBDICT.prompt
+  is '提示信息';
+comment on column RRP_MDL.O_IOL_NFSS_TCS_TBDICT.kernal_flag
+  is '未知';
+comment on column RRP_MDL.O_IOL_NFSS_TCS_TBDICT.belong_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_NFSS_TCS_TBDICT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NFSS_TCS_TBDICT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NFSS_TCS_TBDICT.id_mark
+  is '增删标志';
+

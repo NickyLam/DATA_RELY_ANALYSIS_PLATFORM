@@ -1,0 +1,129 @@
+﻿create table RRP_MDL.O_IML_EVT_BILL_ENTRY
+(
+  evt_id                   VARCHAR2(60),
+  lp_id                    VARCHAR2(60),
+  entry_bill_id            VARCHAR2(60),
+  hq_org_id                VARCHAR2(60),
+  tran_org_id              VARCHAR2(60),
+  entry_tran_num           VARCHAR2(90),
+  prod_id                  VARCHAR2(60),
+  cont_id                  VARCHAR2(60),
+  agt_id                   VARCHAR2(60),
+  bus_id                   VARCHAR2(60),
+  bill_id                  VARCHAR2(60),
+  bill_num                 VARCHAR2(90),
+  int_accr_exp_dt          DATE,
+  int_accr_days            NUMBER(10),
+  interest                 NUMBER(30,2),
+  fac_val_amt              NUMBER(30,2),
+  buyer_pay_int_amt        NUMBER(30,2),
+  actl_recv_amt            NUMBER(30,2),
+  actl_amt                 NUMBER(30,2),
+  comm_fee                 NUMBER(30,2),
+  todos                    NUMBER(30,2),
+  tran_flow_num            VARCHAR2(150),
+  intfc_return_code        VARCHAR2(90),
+  intfc_return_type_cd     VARCHAR2(60),
+  entry_status_cd          VARCHAR2(10),
+  entry_tm                 TIMESTAMP(6),
+  update_tm                TIMESTAMP(6),
+  final_modif_operr_id     VARCHAR2(60),
+  rgst_cter_ccution_id     VARCHAR2(60),
+  bank_core_entry_flow_num VARCHAR2(150),
+  fin_org_id               VARCHAR2(60),
+  bill_sub_intrv_id        VARCHAR2(90),
+  h_data_flg               VARCHAR2(100),
+  etl_dt                   DATE,
+  src_table_name           VARCHAR2(100),
+  job_cd                   VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_BILL_ENTRY
+  is '票据记账事件';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.entry_bill_id
+  is '记账票据编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.hq_org_id
+  is '总行机构编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.entry_tran_num
+  is '记账交易号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.bill_id
+  is '票据编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.bill_num
+  is '票据号码';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.int_accr_exp_dt
+  is '计息到期日期';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.int_accr_days
+  is '计息天数';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.interest
+  is '利息';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.fac_val_amt
+  is '票面金额';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.buyer_pay_int_amt
+  is '买方付息金额';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.actl_recv_amt
+  is '实收金额';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.actl_amt
+  is '贴现金额';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.comm_fee
+  is '手续费';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.todos
+  is '工本费';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.intfc_return_code
+  is '接口返回码';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.intfc_return_type_cd
+  is '接口返回类型代码';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.entry_status_cd
+  is '记账状态代码';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.entry_tm
+  is '记账时间';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.update_tm
+  is '更新时间';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.final_modif_operr_id
+  is '最后修改操作员编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.rgst_cter_ccution_id
+  is '登记中心流转编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.bank_core_entry_flow_num
+  is '银行核心记账流水号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.fin_org_id
+  is '财务机构编号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.bill_sub_intrv_id
+  is '票据子区间号';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.h_data_flg
+  is '历史数据标志';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_BILL_ENTRY.etl_timestamp
+  is 'etl处理时间戳';
+

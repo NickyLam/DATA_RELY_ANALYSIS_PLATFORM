@@ -1,0 +1,15 @@
+﻿create table RRP_MDL.B_DEP_ACC_CXLX_TMP
+(
+  dpact_no VARCHAR2(32),
+  cainbl   NUMBER(20,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.B_DEP_ACC_CXLX_TMP.dpact_no
+  is '负债账号';
+comment on column RRP_MDL.B_DEP_ACC_CXLX_TMP.cainbl
+  is '累计计提金额(当日)';
+

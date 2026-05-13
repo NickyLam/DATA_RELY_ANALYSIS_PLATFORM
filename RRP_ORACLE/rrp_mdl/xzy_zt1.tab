@@ -1,0 +1,29 @@
+﻿create table RRP_MDL.XZY_ZT1
+(
+  sjmx          VARCHAR2(2000),
+  zt            VARCHAR2(2000),
+  yjzt          VARCHAR2(2000),
+  zdmc          VARCHAR2(2000),
+  zdfl          VARCHAR2(2000),
+  zdlx          VARCHAR2(2000),
+  zdsm          VARCHAR2(4000),
+  owner         VARCHAR2(128),
+  table_name    VARCHAR2(128),
+  table_type    VARCHAR2(13),
+  comments      VARCHAR2(4000),
+  origin_con_id NUMBER,
+  cmo           VARCHAR2(4000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

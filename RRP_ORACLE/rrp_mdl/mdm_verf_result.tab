@@ -1,0 +1,62 @@
+﻿create table RRP_MDL.MDM_VERF_RESULT
+(
+  verf_dt   TIMESTAMP(6),
+  data_dt   CHAR(8),
+  verf_typ  VARCHAR2(60),
+  tar_tab   VARCHAR2(60),
+  tar_tab_c VARCHAR2(200),
+  tar_col   VARCHAR2(60),
+  tar_col_c VARCHAR2(200),
+  src_tab   VARCHAR2(60),
+  src_tab_c VARCHAR2(200),
+  is_wro    CHAR(1),
+  dsc       VARCHAR2(200),
+  code_id   VARCHAR2(200),
+  count_val INTEGER,
+  expc_val  INTEGER,
+  act_val   INTEGER,
+  dif_idx   NUMBER(20,2),
+  remarks   VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.MDM_VERF_RESULT
+  is '模型表数据校验结果';
+comment on column RRP_MDL.MDM_VERF_RESULT.verf_dt
+  is '校验日期';
+comment on column RRP_MDL.MDM_VERF_RESULT.data_dt
+  is '数据日期';
+comment on column RRP_MDL.MDM_VERF_RESULT.verf_typ
+  is '校验类型';
+comment on column RRP_MDL.MDM_VERF_RESULT.tar_tab
+  is '目标表英文名';
+comment on column RRP_MDL.MDM_VERF_RESULT.tar_tab_c
+  is '目标表中文名';
+comment on column RRP_MDL.MDM_VERF_RESULT.tar_col
+  is '目标字段英文名';
+comment on column RRP_MDL.MDM_VERF_RESULT.tar_col_c
+  is '目标字段中文名';
+comment on column RRP_MDL.MDM_VERF_RESULT.src_tab
+  is '源表英文名';
+comment on column RRP_MDL.MDM_VERF_RESULT.src_tab_c
+  is '源表中文名';
+comment on column RRP_MDL.MDM_VERF_RESULT.is_wro
+  is '是否存在问题';
+comment on column RRP_MDL.MDM_VERF_RESULT.dsc
+  is '问题描述';
+comment on column RRP_MDL.MDM_VERF_RESULT.code_id
+  is '字段码值编号';
+comment on column RRP_MDL.MDM_VERF_RESULT.count_val
+  is '目标记录数';
+comment on column RRP_MDL.MDM_VERF_RESULT.expc_val
+  is '预期值';
+comment on column RRP_MDL.MDM_VERF_RESULT.act_val
+  is '结果值';
+comment on column RRP_MDL.MDM_VERF_RESULT.dif_idx
+  is '差异率';
+comment on column RRP_MDL.MDM_VERF_RESULT.remarks
+  is '备注';
+

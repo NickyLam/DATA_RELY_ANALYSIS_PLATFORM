@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.TMP_M_ADD_LS_003_MONEY
+(
+  data_date    VARCHAR2(10),
+  acct_org_num VARCHAR2(20),
+  jywym        VARCHAR2(90),
+  zhwym        VARCHAR2(90),
+  khwym        VARCHAR2(90),
+  khmc         VARCHAR2(150),
+  dkywpzmc     VARCHAR2(150),
+  tjye         NUMBER(20,4),
+  ssgmjjhyxldm VARCHAR2(12),
+  txgmjjxyxldm VARCHAR2(12)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.TMP_M_ADD_LS_003_MONEY
+  is '零售-账务基表-补录表                 ';
+comment on column RRP_MDL.TMP_M_ADD_LS_003_MONEY.data_date
+  is '数据日期                  ';
+comment on column RRP_MDL.TMP_M_ADD_LS_003_MONEY.acct_org_num
+  is '账务机构编号              ';
+comment on column RRP_MDL.TMP_M_ADD_LS_003_MONEY.jywym
+  is '交易唯一码                ';
+comment on column RRP_MDL.TMP_M_ADD_LS_003_MONEY.zhwym
+  is '账户唯一码                ';
+comment on column RRP_MDL.TMP_M_ADD_LS_003_MONEY.khwym
+  is '客户唯一码                ';
+comment on column RRP_MDL.TMP_M_ADD_LS_003_MONEY.khmc
+  is '客户名称                  ';
+comment on column RRP_MDL.TMP_M_ADD_LS_003_MONEY.dkywpzmc
+  is '贷款业务品种名称          ';
+comment on column RRP_MDL.TMP_M_ADD_LS_003_MONEY.tjye
+  is '统计余额（元）            ';
+comment on column RRP_MDL.TMP_M_ADD_LS_003_MONEY.ssgmjjhyxldm
+  is '所属国民经济行业小类代码  ';
+comment on column RRP_MDL.TMP_M_ADD_LS_003_MONEY.txgmjjxyxldm
+  is '投向国民经济行业小类代码  ';
+

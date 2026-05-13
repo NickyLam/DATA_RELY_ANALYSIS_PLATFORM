@@ -1,0 +1,23 @@
+﻿create table RRP_MDL.XZY_STORED
+(
+  sto_id      RAW(16),
+  gcb         VARCHAR2(800),
+  mk          VARCHAR2(120),
+  mbbm        VARCHAR2(800),
+  tab_cmt     VARCHAR2(4000),
+  column_name VARCHAR2(512),
+  col_cmt     VARCHAR2(4000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

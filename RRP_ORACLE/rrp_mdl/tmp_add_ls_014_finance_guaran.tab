@@ -1,0 +1,114 @@
+﻿create table RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN
+(
+  data_date       VARCHAR2(10),
+  acct_org_num    VARCHAR2(20),
+  zwjgmc          VARCHAR2(300),
+  jgszsjxzq       VARCHAR2(9),
+  zhwym           VARCHAR2(100),
+  jywym           VARCHAR2(100),
+  khwym           VARCHAR2(90),
+  khmc            VARCHAR2(300),
+  tjxwqylb        VARCHAR2(150),
+  sfphxwqy        VARCHAR2(15),
+  sxed            NUMBER(20,6),
+  fkrq            VARCHAR2(15),
+  fkje            NUMBER(20,6),
+  tjye            NUMBER(20,6),
+  dkdqrq          VARCHAR2(15),
+  bgrdkyqts       NUMBER,
+  tjyqts          NUMBER,
+  tjyqbjje        NUMBER(20,6),
+  wjfl            VARCHAR2(15),
+  dbjgbh          VARCHAR2(150),
+  dbjgmc          VARCHAR2(500),
+  dbfs            VARCHAR2(150),
+  sfrzdbgsbz      VARCHAR2(15),
+  zfxrzdbjgbj     VARCHAR2(150),
+  sfzfxrzdbgsbz   VARCHAR2(15),
+  sfnhjxxnyjyztdk VARCHAR2(15),
+  bndljsjhddcje   NUMBER(20,6),
+  bgrswlxdczrje   NUMBER(20,6),
+  bz              VARCHAR2(1500),
+  sys_source      VARCHAR2(150),
+  sfsc            VARCHAR2(15),
+  jyxkzbh         VARCHAR2(105)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN
+  is '临时表-对公-融资担保机构代偿模型-G5305';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.data_date
+  is '数据日期';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.zwjgmc
+  is '账务机构名称';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.jgszsjxzq
+  is '机构所在省级行政区';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.zhwym
+  is '账户唯一码';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.jywym
+  is '交易唯一码';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.khwym
+  is '客户唯一码';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.khmc
+  is '客户名称';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.tjxwqylb
+  is '统计小微企业类别';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.sfphxwqy
+  is '是否普惠小微企业';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.sxed
+  is '授信额度';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.fkrq
+  is '放款日期';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.fkje
+  is '放款金额';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.tjye
+  is '统计余额（元）';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.dkdqrq
+  is '贷款到期日期';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.bgrdkyqts
+  is '报告日贷款逾期天数';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.tjyqts
+  is '统计逾期天数（天）';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.tjyqbjje
+  is '统计逾期本金金额（元）';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.wjfl
+  is '五级分类';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.dbjgbh
+  is '担保机构编号';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.dbjgmc
+  is '担保机构名称';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.dbfs
+  is '担保方式';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.sfrzdbgsbz
+  is '是否融资担保公司保证';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.zfxrzdbjgbj
+  is '政府性融资担保机构标记';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.sfzfxrzdbgsbz
+  is '是否政府性融资担保公司保证';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.sfnhjxxnyjyztdk
+  is '是否农户及新型农业经营主体贷款';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.bndljsjhddcje
+  is '本年度累计实际获得代偿金额（元）';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.bgrswlxdczrje
+  is '报告日尚未履行代偿责任金额（元）';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.bz
+  is '备注';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.sys_source
+  is '来源系统';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.sfsc
+  is '是否删除';
+comment on column RRP_MDL.TMP_ADD_LS_014_FINANCE_GUARAN.jyxkzbh
+  is '经营许可证编号';
+

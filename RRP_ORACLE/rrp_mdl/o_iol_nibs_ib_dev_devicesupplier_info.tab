@@ -1,0 +1,102 @@
+﻿create table RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO
+(
+  serviceprovnum         VARCHAR2(640),
+  serviceprovname        VARCHAR2(240),
+  cont                   VARCHAR2(600),
+  contactnum             VARCHAR2(88),
+  cellnum                VARCHAR2(88),
+  contactaddr            VARCHAR2(800),
+  creator                VARCHAR2(10),
+  creatorbrno            VARCHAR2(10),
+  startdate              VARCHAR2(10),
+  starttime              VARCHAR2(10),
+  modifyuser             VARCHAR2(10),
+  modifyuserbrno         VARCHAR2(10),
+  modifdate              VARCHAR2(10),
+  modiftime              VARCHAR2(10),
+  defectsliabilityperiod VARCHAR2(3),
+  web                    VARCHAR2(50),
+  mailbox                VARCHAR2(256),
+  wechat                 VARCHAR2(256),
+  note1                  VARCHAR2(512),
+  note2                  VARCHAR2(512),
+  note3                  VARCHAR2(512),
+  note4                  VARCHAR2(512),
+  note5                  VARCHAR2(512),
+  simpvendorname         VARCHAR2(50),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO
+  is '设备服务商信息表';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.serviceprovnum
+  is '服务商编号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.serviceprovname
+  is '服务商名称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.cont
+  is '联系人';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.contactnum
+  is '联系电话';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.cellnum
+  is '手机号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.contactaddr
+  is '联系地址';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.creator
+  is '创建人';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.creatorbrno
+  is '创建人所属机构';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.startdate
+  is '创建日期';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.starttime
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.modifyuser
+  is '最后修改人';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.modifyuserbrno
+  is '最后修改人所属机构';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.modifdate
+  is '最后修改日期';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.modiftime
+  is '最后修改时间';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.defectsliabilityperiod
+  is '保修期(月)';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.web
+  is '公司主页';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.mailbox
+  is '邮箱';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.wechat
+  is '微信';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.note1
+  is '备注1';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.note2
+  is '备注2';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.note3
+  is '备注3';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.note4
+  is '备注4';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.note5
+  is '备注5';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.simpvendorname
+  is '厂商名称简称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NIBS_IB_DEV_DEVICESUPPLIER_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

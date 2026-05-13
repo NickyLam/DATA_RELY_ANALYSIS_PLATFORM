@@ -1,0 +1,114 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT
+(
+  i_code                     VARCHAR2(45),
+  a_type                     VARCHAR2(30),
+  m_type                     VARCHAR2(30),
+  p_class_ext                VARCHAR2(90),
+  hx_businessmiddle          VARCHAR2(150),
+  hx_businesssmall           VARCHAR2(150),
+  hx_investcategory          VARCHAR2(750),
+  hx_investbroheading        VARCHAR2(750),
+  hx_islocfinanc             VARCHAR2(150),
+  hx_isdistbus               VARCHAR2(150),
+  hx_isgover_fund            VARCHAR2(150),
+  hx_isvc_fund               VARCHAR2(150),
+  hx_incredit_type           VARCHAR2(150),
+  hx_cremainname             VARCHAR2(450),
+  hxabs_invest1_type         VARCHAR2(150),
+  hxabs_invest2_type         VARCHAR2(150),
+  hxabs_investamount         NUMBER(31,2),
+  hxabs_investinfeamount     NUMBER(31,2),
+  hxabs_creditassecu         VARCHAR2(150),
+  hxabs_csrcalloassecu       VARCHAR2(150),
+  hx_creditpartyid           NUMBER,
+  hx_basictrader             VARCHAR2(1500),
+  hx_undatype                VARCHAR2(300),
+  hxabs_penetration_type     VARCHAR2(8),
+  hxabs_isdebt_for_equity    VARCHAR2(2),
+  hxabs_isconsumer_financing VARCHAR2(2),
+  hxabs_againabs             VARCHAR2(150),
+  start_dt                   DATE,
+  end_dt                     DATE,
+  id_mark                    VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6),
+  hx_is_green_finance        VARCHAR2(3),
+  hx_first_option_type       VARCHAR2(6),
+  hx_second_option_type      VARCHAR2(15)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT
+  is '债券补录信息表';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.p_class_ext
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_businessmiddle
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_businesssmall
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_investcategory
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_investbroheading
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_islocfinanc
+  is '是否地方政府融资平台';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_isdistbus
+  is '是否异地业务';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_isgover_fund
+  is '是否政府投资基金';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_isvc_fund
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_incredit_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_cremainname
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hxabs_invest1_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hxabs_invest2_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hxabs_investamount
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hxabs_investinfeamount
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hxabs_creditassecu
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hxabs_csrcalloassecu
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_creditpartyid
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_basictrader
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hx_undatype
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hxabs_penetration_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hxabs_isdebt_for_equity
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hxabs_isconsumer_financing
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.hxabs_againabs
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT.etl_timestamp
+  is 'etl处理时间';
+

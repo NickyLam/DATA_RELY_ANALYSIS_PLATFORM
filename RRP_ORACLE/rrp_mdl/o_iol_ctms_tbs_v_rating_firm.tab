@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM
+(
+  firm_id       VARCHAR2(24),
+  status        VARCHAR2(2),
+  firm_name_zh  VARCHAR2(96),
+  firm_name_en  VARCHAR2(96),
+  modify_date   DATE,
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM
+  is '评级公司视图';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM.firm_id
+  is '评级公司id';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM.status
+  is '状态;1草稿2审核中3审核完成4退回';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM.firm_name_zh
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM.firm_name_en
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM.modify_date
+  is '修改日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_RATING_FIRM.etl_timestamp
+  is 'etl处理时间';
+

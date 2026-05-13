@@ -1,0 +1,92 @@
+﻿create table RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE
+(
+  requestid             NUMBER(38),
+  workflowid            NUMBER(38),
+  lastnodeid            NUMBER(38),
+  lastnodetype          VARCHAR2(300),
+  currentnodeid         NUMBER(38),
+  currentnodetype       VARCHAR2(300),
+  status                VARCHAR2(4000),
+  passedgroups          NUMBER(38),
+  totalgroups           NUMBER(38),
+  requestname           VARCHAR2(4000),
+  creater               NUMBER(38),
+  createdate            VARCHAR2(500),
+  createtime            VARCHAR2(500),
+  lastoperator          NUMBER(38),
+  lastoperatedate       VARCHAR2(500),
+  lastoperatetime       VARCHAR2(500),
+  deleted               NUMBER(38),
+  creatertype           NUMBER(38),
+  lastoperatortype      NUMBER(38),
+  nodepasstime          NUMBER(38,12),
+  nodelefttime          NUMBER(38,12),
+  docids                VARCHAR2(4000),
+  crmids                VARCHAR2(4000),
+  hrmids_temp           VARCHAR2(4000),
+  prjids                VARCHAR2(4000),
+  cptids                VARCHAR2(4000),
+  requestlevel          NUMBER(38),
+  requestmark           VARCHAR2(4000),
+  messagetype           NUMBER(38),
+  mainrequestid         NUMBER(38),
+  currentstatus         NUMBER(38),
+  laststatus            VARCHAR2(4000),
+  ismultiprint          NUMBER(38),
+  chatstype             NUMBER(38),
+  ecology_pinyin_search VARCHAR2(4000),
+  hrmids                VARCHAR2(4000),
+  requestnamenew        VARCHAR2(4000),
+  formsignaturemd5      VARCHAR2(4000),
+  dataaggregated        VARCHAR2(300),
+  seclevel              VARCHAR2(300),
+  secdocid              VARCHAR2(4000),
+  remindtypes           VARCHAR2(4000),
+  lastfeedbackdate      VARCHAR2(500),
+  lastfeedbacktime      VARCHAR2(500),
+  lastfeedbackoperator  NUMBER(38),
+  requestnamehtmlnew    VARCHAR2(4000),
+  secvalidity           VARCHAR2(4000),
+  secenckey             VARCHAR2(4000),
+  seccrc                VARCHAR2(4000),
+  fwbh                  VARCHAR2(4000),
+  draftpeople           VARCHAR2(4000),
+  draftorg              VARCHAR2(4000),
+  etl_dt                DATE,
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE
+  is '工作流请求';
+comment on column RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE.requestid
+  is '初审幂等ID';
+comment on column RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE.status
+  is '状态;1草稿2审核中3审核完成4退回';
+comment on column RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE.creater
+  is '创建者';
+comment on column RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE.createdate
+  is '建立时间';
+comment on column RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE.createtime
+  is '创建日期';
+comment on column RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE.deleted
+  is '是否删除,1：删除，0未删除';
+comment on column RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE.messagetype
+  is '消息小类';
+comment on column RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE.currentstatus
+  is '当前状态';
+comment on column RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_IOPS_WORKFLOW_REQUESTBASE.etl_timestamp
+  is 'ETL处理时间戳';
+

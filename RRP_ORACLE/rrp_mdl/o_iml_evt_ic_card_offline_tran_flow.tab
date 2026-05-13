@@ -1,0 +1,111 @@
+﻿create table RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW
+(
+  evt_id               VARCHAR2(250),
+  lp_id                VARCHAR2(100),
+  offline_flow_num     VARCHAR2(100),
+  offline_batch_no     VARCHAR2(60),
+  acct_id              VARCHAR2(100),
+  card_no              VARCHAR2(60),
+  card_ser_num         VARCHAR2(30),
+  app_idf              VARCHAR2(60),
+  offline_tran_type_cd VARCHAR2(30),
+  tran_amt             NUMBER(30,2),
+  plat_tran_dt         DATE,
+  plat_tran_tm         TIMESTAMP(6),
+  unionpay_curr_cd     VARCHAR2(30),
+  unionpay_clear_dt    DATE,
+  mercht_id            VARCHAR2(100),
+  mercht_type_cd       VARCHAR2(30),
+  tran_status_cd       VARCHAR2(30),
+  serv_status_descb    VARCHAR2(500),
+  tran_addr_desc       VARCHAR2(500),
+  elec_cash_acct_bal   NUMBER(30,2),
+  other_amt            NUMBER(30,2),
+  adj_entry_flg        VARCHAR2(10),
+  entry_flg            VARCHAR2(10),
+  enter_acct_dt        DATE,
+  tran_termn_id        VARCHAR2(100),
+  termn_flow_num       VARCHAR2(100),
+  termn_cty_cd         VARCHAR2(30),
+  etl_dt               DATE,
+  src_table_name       VARCHAR2(100),
+  job_cd               VARCHAR2(10),
+  etl_timestamp        TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW
+  is 'IC卡脱机交易流水';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.offline_flow_num
+  is '脱机流水号';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.offline_batch_no
+  is '脱机批次号';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.card_no
+  is '卡号';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.card_ser_num
+  is '卡序列号';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.app_idf
+  is '应用标识符';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.offline_tran_type_cd
+  is '脱机交易类型代码';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.plat_tran_dt
+  is '平台交易日期';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.plat_tran_tm
+  is '平台交易时间';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.unionpay_curr_cd
+  is '银联币种代码';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.unionpay_clear_dt
+  is '银联清算日期';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.mercht_id
+  is '商户编号';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.mercht_type_cd
+  is '商户类型代码';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.serv_status_descb
+  is '服务状态描述';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.tran_addr_desc
+  is '交易地址描述';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.elec_cash_acct_bal
+  is '电子现金账户余额';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.other_amt
+  is '其他金额';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.adj_entry_flg
+  is '调账标志';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.entry_flg
+  is '记账标志';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.enter_acct_dt
+  is '入账日期';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.tran_termn_id
+  is '交易终端编号';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.termn_flow_num
+  is '终端流水号';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.termn_cty_cd
+  is '终端国家代码';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_IC_CARD_OFFLINE_TRAN_FLOW.etl_timestamp
+  is 'etl处理时间戳';
+

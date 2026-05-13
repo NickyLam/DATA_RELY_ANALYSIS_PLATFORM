@@ -1,0 +1,49 @@
+﻿create table RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX
+(
+  jybh     VARCHAR2(60),
+  jydsmc   VARCHAR2(450),
+  rank_rn  NUMBER,
+  zs       NUMBER,
+  jyrq     DATE,
+  tran_amt NUMBER(20,2),
+  jydszh   VARCHAR2(100),
+  jydskhhh VARCHAR2(60),
+  jydskhhm VARCHAR2(250),
+  rank_rnn NUMBER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress
+nologging;
+comment on table RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX
+  is '自营资金交易信息表同业对手方信息';
+comment on column RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX.jybh
+  is '交易编号';
+comment on column RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX.jydsmc
+  is '交易对手名称';
+comment on column RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX.rank_rn
+  is '排序';
+comment on column RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX.zs
+  is '总数';
+comment on column RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX.jyrq
+  is '交易日期';
+comment on column RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX.tran_amt
+  is '交易金额';
+comment on column RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX.jydszh
+  is '交易对手账号';
+comment on column RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX.jydskhhh
+  is '交易对手开户行号';
+comment on column RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX.jydskhhm
+  is '交易对手开户行名';
+comment on column RRP_EAST.EAST5_1003_ZYZJJYXXB_TY_DFXX.rank_rnn
+  is '排序';
+

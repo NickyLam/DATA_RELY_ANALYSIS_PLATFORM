@@ -1,0 +1,204 @@
+﻿create table RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H
+(
+  agt_id                   VARCHAR2(250),
+  lp_id                    VARCHAR2(60),
+  base_asset_id            VARCHAR2(60),
+  asset_src_cd             VARCHAR2(60),
+  dubil_id                 VARCHAR2(60),
+  loan_cont_id             VARCHAR2(60),
+  src_cont_id              VARCHAR2(60),
+  asset_type_cd            VARCHAR2(60),
+  distr_dt                 DATE,
+  dubil_exp_dt             DATE,
+  loan_tot_perds           NUMBER(10),
+  surp_perds               NUMBER(10),
+  eh_issue_repay_day       NUMBER(10),
+  loan_amt                 NUMBER(30,2),
+  bad_debt_amt             NUMBER(30,2),
+  ovdue_amt                NUMBER(30,2),
+  loan_bal                 NUMBER(30,2),
+  idle_amt                 NUMBER(30,2),
+  ovdue_dt                 DATE,
+  ovdue_days               NUMBER(22),
+  max_expe_days            NUMBER(10),
+  provi_int                NUMBER(30,2),
+  rpbl_int                 NUMBER(30,2),
+  pric_pnlt                NUMBER(30,2),
+  int_pnlt                 NUMBER(30,2),
+  curr_cd                  VARCHAR2(30),
+  loan_level5_cls_cd       VARCHAR2(30),
+  exec_int_rat             NUMBER(18,8),
+  loan_status_cd           VARCHAR2(30),
+  base_rat_type_cd         VARCHAR2(30),
+  base_rat                 NUMBER(18,8),
+  int_rat_float_way_cd     VARCHAR2(30),
+  flo_val                  NUMBER(18,8),
+  cust_id                  VARCHAR2(60),
+  src_cust_id              VARCHAR2(60),
+  asset_status_cd          VARCHAR2(30),
+  pkg_dt                   DATE,
+  issue_dt                 DATE,
+  tran_cosdetn             NUMBER(30,2),
+  ovdue_int_rat            NUMBER(18,8),
+  pkg_belong_hxb_int       NUMBER(30,2),
+  pkg_pric_bal             NUMBER(30,8),
+  pkg_asset_bal            NUMBER(30,8),
+  pkg_belong_hxb_int_rat   NUMBER(30,8),
+  redem_belong_hxb_int     NUMBER(30,8),
+  redem_belong_trust_int   NUMBER(30,8),
+  redem_cosdetn            NUMBER(30,8),
+  redem_belong_trust_pric  NUMBER(30,8),
+  redem_cosdetn_pric       NUMBER(30,8),
+  redem_cosdetn_int        NUMBER(30,8),
+  bf_pkg_int_recvbl_bal    NUMBER(30,2),
+  after_pkg_int_recvbl_tot NUMBER(30,2),
+  after_pkg_int_recvbl_bal NUMBER(30,2),
+  after_rtn_pkg_int_recvbl NUMBER(30,2),
+  tran_loan_int_tot        NUMBER(30,2),
+  org_id                   VARCHAR2(60),
+  start_dt                 DATE,
+  end_dt                   DATE,
+  id_mark                  VARCHAR2(10),
+  src_table_name           VARCHAR2(100),
+  job_cd                   VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H
+  is '证券基础资产历史';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.base_asset_id
+  is '基础资产编号';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.asset_src_cd
+  is '资产来源代码';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.loan_cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.src_cont_id
+  is '源合同编号';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.asset_type_cd
+  is '资产类型代码';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.distr_dt
+  is '放款日期';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.dubil_exp_dt
+  is '借据到期日期';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.loan_tot_perds
+  is '贷款总期数';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.surp_perds
+  is '剩余期数';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.eh_issue_repay_day
+  is '每期还款日';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.loan_amt
+  is '贷款金额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.bad_debt_amt
+  is '坏账金额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.ovdue_amt
+  is '逾期金额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.loan_bal
+  is '贷款余额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.idle_amt
+  is '呆滞金额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.ovdue_dt
+  is '逾期日期';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.ovdue_days
+  is '贷款逾期天数';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.max_expe_days
+  is '最大预期天数';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.provi_int
+  is '计提利息';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.rpbl_int
+  is '应还利息';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.pric_pnlt
+  is '本金罚息';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.int_pnlt
+  is '利息罚息';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.loan_level5_cls_cd
+  is '贷款五级分类代码';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.loan_status_cd
+  is '贷款状态代码';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.base_rat_type_cd
+  is '基准利率类型代码';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.base_rat
+  is '基准利率';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.int_rat_float_way_cd
+  is '利率浮动方式代码';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.flo_val
+  is '浮动值';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.src_cust_id
+  is '源客户编号';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.asset_status_cd
+  is '资产状态代码';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.pkg_dt
+  is '封包日期';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.issue_dt
+  is '发行日期';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.tran_cosdetn
+  is '转让对价';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.ovdue_int_rat
+  is '逾期利率';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.pkg_belong_hxb_int
+  is '封包时归属我行利息';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.pkg_pric_bal
+  is '封包时本金余额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.pkg_asset_bal
+  is '封包时资产余额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.pkg_belong_hxb_int_rat
+  is '封包时归属我行利率';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.redem_belong_hxb_int
+  is '赎回时归属我行利息';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.redem_belong_trust_int
+  is '赎回时归属信托利息';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.redem_cosdetn
+  is '赎回对价';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.redem_belong_trust_pric
+  is '赎回时归属信托本金';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.redem_cosdetn_pric
+  is '赎回对价本金';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.redem_cosdetn_int
+  is '赎回对价利息';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.bf_pkg_int_recvbl_bal
+  is '封包前应收利息余额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.after_pkg_int_recvbl_tot
+  is '封包后应收利息总额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.after_pkg_int_recvbl_bal
+  is '封包后应收利息余额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.after_rtn_pkg_int_recvbl
+  is '已归还封包后应收利息';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.tran_loan_int_tot
+  is '转让贷款利息总额';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_SECU_BASE_ASSET_H.etl_timestamp
+  is 'ETL处理时间戳';
+

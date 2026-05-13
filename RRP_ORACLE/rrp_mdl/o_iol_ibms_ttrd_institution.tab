@@ -1,0 +1,168 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION
+(
+  i_id                   NUMBER,
+  org_id                 VARCHAR2(45),
+  i_name                 VARCHAR2(383),
+  i_fullname             VARCHAR2(383),
+  i_alias                VARCHAR2(383),
+  py_code                VARCHAR2(383),
+  status                 VARCHAR2(12),
+  t_code                 NUMBER,
+  p_type                 NUMBER,
+  online_date            VARCHAR2(15),
+  i_business_license     VARCHAR2(75),
+  i_lr_inst_code         VARCHAR2(75),
+  i_financial_license    VARCHAR2(75),
+  cnaps_code             VARCHAR2(75),
+  swift_code             VARCHAR2(150),
+  update_user            VARCHAR2(150),
+  update_date            VARCHAR2(15),
+  update_time            VARCHAR2(15),
+  belong_to_area         VARCHAR2(150),
+  pipe_id                NUMBER,
+  imp_date               VARCHAR2(15),
+  core_sys_customer_code VARCHAR2(75),
+  t_path                 VARCHAR2(300),
+  i_level                VARCHAR2(2),
+  edit_iid               NUMBER,
+  edit_iname             VARCHAR2(383),
+  issuer_code            VARCHAR2(90),
+  cfets_member_id        VARCHAR2(75),
+  inst_class             VARCHAR2(45),
+  member_id              VARCHAR2(75),
+  is_market_maker        VARCHAR2(2),
+  rev_state              VARCHAR2(2),
+  en_name                VARCHAR2(383),
+  en_fullname            VARCHAR2(383),
+  cfets_org_code         VARCHAR2(45),
+  create_user            VARCHAR2(150),
+  acctg_i_id             VARCHAR2(75),
+  is_spv                 VARCHAR2(2),
+  rwa_code               NUMBER,
+  rwa_name               VARCHAR2(300),
+  spv_manager            VARCHAR2(383),
+  address                VARCHAR2(300),
+  legal_representative   VARCHAR2(150),
+  is_ticketinfo          VARCHAR2(2),
+  main_protocol_code     VARCHAR2(150),
+  i_level_m              VARCHAR2(15),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION
+  is '客户信息及机构表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.i_id
+  is '机构ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.i_name
+  is '金融工具名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.i_fullname
+  is '公司全称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.i_alias
+  is '公司别名';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.py_code
+  is '拼音码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.status
+  is '状态;1草稿2审核中3审核完成4退回';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.t_code
+  is '分类代码(对机构进行多级分类)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.p_type
+  is '产品类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.online_date
+  is '成立日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.i_business_license
+  is '营业执照';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.i_lr_inst_code
+  is '机构代码证';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.i_financial_license
+  is '金融许可证';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.cnaps_code
+  is '现代支付系统行号(本币)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.swift_code
+  is 'swift电文代号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.update_user
+  is '更新人员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.update_date
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.belong_to_area
+  is '总行或总公司注册地';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.pipe_id
+  is '导入管道';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.imp_date
+  is '导入日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.core_sys_customer_code
+  is '核心客户号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.t_path
+  is '交易对手客户分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.i_level
+  is '机构层级';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.edit_iid
+  is '维护机构';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.edit_iname
+  is '维护机构名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.issuer_code
+  is '发行代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.cfets_member_id
+  is '外汇交易中心会员号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.inst_class
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.member_id
+  is '中心会员id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.is_market_maker
+  is '1:做市商 0:非做市商';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.rev_state
+  is '是否生效';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.en_name
+  is '英文名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.en_fullname
+  is '英文全称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.cfets_org_code
+  is '下行机构代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.create_user
+  is '创建人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.acctg_i_id
+  is '记账机构';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.is_spv
+  is '是否是spv  0：非spv（默认） 1: spv';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.rwa_code
+  is 'rwa客户分类代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.rwa_name
+  is 'rwa客户分类名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.spv_manager
+  is 'spv管理人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.address
+  is '住址';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.legal_representative
+  is '0';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.is_ticketinfo
+  is '0';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.main_protocol_code
+  is '0';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.i_level_m
+  is '机构级别,数据标准落标,触发器添加';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION.etl_timestamp
+  is 'etl处理时间';
+

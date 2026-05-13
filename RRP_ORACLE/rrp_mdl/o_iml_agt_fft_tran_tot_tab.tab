@@ -1,0 +1,79 @@
+﻿create table RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB
+(
+  agt_id                   VARCHAR2(250),
+  lp_id                    VARCHAR2(100),
+  flow_num                 VARCHAR2(100),
+  cntpty_id                VARCHAR2(100),
+  cntpty_name              VARCHAR2(500),
+  dubil_cnt                NUMBER(10),
+  tran_sell_recvbl_amt_tot NUMBER(30,8),
+  tran_sell_dubil_amt_tot  NUMBER(30,8),
+  recvbl_acct_id           VARCHAR2(100),
+  ts_flg                   VARCHAR2(10),
+  tran_comnt               VARCHAR2(500),
+  cap_src_acct_id          VARCHAR2(100),
+  cap_src_acct_name        VARCHAR2(500),
+  cap_src_bank_no          VARCHAR2(100),
+  start_dt                 DATE,
+  end_dt                   DATE,
+  id_mark                  VARCHAR2(10),
+  src_table_name           VARCHAR2(100),
+  job_cd                   VARCHAR2(10),
+  cap_src_bank_name        VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB
+  is '福费廷转让汇总表';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.flow_num
+  is '流水号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.cntpty_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.dubil_cnt
+  is '借据笔数';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.tran_sell_recvbl_amt_tot
+  is '转卖收款金额汇总';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.tran_sell_dubil_amt_tot
+  is '转卖借据金额汇总';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.recvbl_acct_id
+  is '收款账户编号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.ts_flg
+  is '暂存标志';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.tran_comnt
+  is '转让说明';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.cap_src_acct_id
+  is '资金来源账户编号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.cap_src_acct_name
+  is '资金来源账户名称';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.cap_src_bank_no
+  is '资金来源行号';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_AGT_FFT_TRAN_TOT_TAB.cap_src_bank_name
+  is '资金来源行名称
+';
+

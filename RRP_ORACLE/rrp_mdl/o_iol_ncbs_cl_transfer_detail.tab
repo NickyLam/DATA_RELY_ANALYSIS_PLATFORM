@@ -1,0 +1,132 @@
+﻿create table RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL
+(
+  asset_acct_status     VARCHAR2(10),
+  balance               NUMBER(17,2),
+  ccy                   VARCHAR2(3),
+  client_no             VARCHAR2(16),
+  dd_no                 NUMBER(5),
+  internal_key          NUMBER(15),
+  prod_type             VARCHAR2(12),
+  cmisloan_no           VARCHAR2(64),
+  company               VARCHAR2(20),
+  narrative             VARCHAR2(400),
+  sale_batch_no         VARCHAR2(50),
+  accounting_status     VARCHAR2(3),
+  last_change_date      DATE,
+  tran_timestamp        VARCHAR2(26),
+  loan_no               VARCHAR2(50),
+  pack_reference        VARCHAR2(50),
+  sale_reference        VARCHAR2(50),
+  sale_cancel_batch_no  VARCHAR2(50),
+  amortized_int         NUMBER(20,2),
+  circle_buy_flag       VARCHAR2(1),
+  circle_buy_reference  VARCHAR2(50),
+  pack_cancel_batch_no  VARCHAR2(50),
+  circle_buy_date       DATE,
+  sale_float_amount     NUMBER(20,2),
+  circle_buy_batch_no   VARCHAR2(50),
+  sale_cancel_reference VARCHAR2(50),
+  redeem_reference      VARCHAR2(50),
+  pack_batch_no         VARCHAR2(50),
+  pack_cancel_reference VARCHAR2(50),
+  asset_detail_seq_no   VARCHAR2(50),
+  redeem_date           DATE,
+  redeem_batch_no       VARCHAR2(50),
+  pack_tran_date        DATE,
+  asset_contract_seq_no VARCHAR2(50),
+  redeem_float_amount   NUMBER(17,2),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL
+  is '资产转让合同明细表';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.asset_acct_status
+  is '资产账户状态';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.balance
+  is '余额';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.ccy
+  is '币种';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.dd_no
+  is '发放号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.internal_key
+  is '账户内部键值';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.prod_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.cmisloan_no
+  is '客户借据编号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.narrative
+  is '摘要';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.sale_batch_no
+  is '发行批次号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.accounting_status
+  is '核算状态';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.last_change_date
+  is '最后修改日期';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.loan_no
+  is '贷款号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.pack_reference
+  is '资产证券化封包流水号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.sale_reference
+  is '发行流水号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.sale_cancel_batch_no
+  is '发行撤销批次号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.amortized_int
+  is '已摊销利息';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.circle_buy_flag
+  is '循环购买标志';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.circle_buy_reference
+  is '循环购买流水号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.pack_cancel_batch_no
+  is '撤包批次号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.circle_buy_date
+  is '循环购买日期';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.sale_float_amount
+  is '发行折溢价';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.circle_buy_batch_no
+  is '循环购买批次号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.sale_cancel_reference
+  is '资产发行撤销交易参考号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.redeem_reference
+  is '赎回交易流水号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.pack_batch_no
+  is '封包批次号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.pack_cancel_reference
+  is '撤包交易流水号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.asset_detail_seq_no
+  is '资产包合同明细序号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.redeem_date
+  is '资产赎回日期';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.redeem_batch_no
+  is '赎回批次号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.pack_tran_date
+  is '封包交易日期';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.asset_contract_seq_no
+  is '资产包合同序号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.redeem_float_amount
+  is '赎回折溢价';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_CL_TRANSFER_DETAIL.id_mark
+  is '增删标志';
+

@@ -1,0 +1,216 @@
+﻿create table RRP_MDL.O_IOL_NCBS_FM_BRANCH
+(
+  area_code                    VARCHAR2(6),
+  branch                       VARCHAR2(12),
+  branch_name                  VARCHAR2(200),
+  country                      VARCHAR2(3),
+  profit_center                VARCHAR2(20),
+  abnormal_open_control        VARCHAR2(1),
+  auth_flag                    VARCHAR2(1),
+  branch_short                 VARCHAR2(30),
+  branch_status                VARCHAR2(1),
+  branch_type                  VARCHAR2(1),
+  cheque_issuing_branch_flag   VARCHAR2(1),
+  city                         VARCHAR2(6),
+  company                      VARCHAR2(20),
+  default_teller_login         VARCHAR2(1),
+  district                     VARCHAR2(10),
+  eod_flag                     VARCHAR2(1),
+  fta_code                     VARCHAR2(10),
+  fta_flag                     VARCHAR2(1),
+  fx_organ_code                VARCHAR2(12),
+  index_str                    VARCHAR2(200),
+  int_tax_levy                 VARCHAR2(1),
+  ip_addr                      VARCHAR2(200),
+  oper_max_level               VARCHAR2(5),
+  pboc_fund_check_flag         VARCHAR2(1),
+  postal_code                  VARCHAR2(10),
+  state                        VARCHAR2(6),
+  surtax_type                  VARCHAR2(30),
+  tailbox_detach_flag          VARCHAR2(1),
+  voucher_user_contral_flag    VARCHAR2(1),
+  accounting_branch            VARCHAR2(12),
+  libra_op_time                NUMBER(15),
+  create_date                  DATE,
+  end_date                     DATE,
+  start_date                   DATE,
+  tran_timestamp               VARCHAR2(26),
+  attached_to                  VARCHAR2(12),
+  base_ccy                     VARCHAR2(3),
+  ccy_ctrl_branch              VARCHAR2(12),
+  cny_business_unit            VARCHAR2(10),
+  hierarchy_code               VARCHAR2(2),
+  hkd_business_unit            VARCHAR2(10),
+  internal_client              VARCHAR2(16),
+  local_ccy                    VARCHAR2(3),
+  sub_branch_code              VARCHAR2(12),
+  tax_rpt_branch               VARCHAR2(12),
+  tran_br_ind                  VARCHAR2(1),
+  accounting_branch_flag       VARCHAR2(1),
+  normal_close_time            VARCHAR2(8),
+  normal_open_time             VARCHAR2(8),
+  pboc_financing_no            VARCHAR2(30),
+  branch_en_short              VARCHAR2(30),
+  branch_head_phone            VARCHAR2(30),
+  pboc_pay_branch_no           VARCHAR2(12),
+  is_auto_create_internal_acct VARCHAR2(1),
+  branch_en_name               VARCHAR2(200),
+  pboc_area_code               VARCHAR2(50),
+  branch_head_name             VARCHAR2(50),
+  branch_close_date            DATE,
+  branch_head_duty             VARCHAR2(50),
+  swift_no                     VARCHAR2(50),
+  cup_financing_no             VARCHAR2(50),
+  pboc_acct_manage_sys_no      VARCHAR2(50),
+  start_dt                     DATE,
+  end_dt                       DATE,
+  id_mark                      VARCHAR2(10),
+  etl_timestamp                TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_FM_BRANCH
+  is '机构信息表';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.area_code
+  is '地区码';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch
+  is '机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch_name
+  is '银行机构名称';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.country
+  is '国家';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.profit_center
+  is '利润中心';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.abnormal_open_control
+  is '非正常时间开门控制方式';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.auth_flag
+  is '授权标志';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch_short
+  is '机构简称';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch_status
+  is '机构开关门状态';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch_type
+  is '机构类型';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.cheque_issuing_branch_flag
+  is '是否签发支票';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.city
+  is '行政区划(城市)';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.default_teller_login
+  is '默认柜员登录认证方式';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.district
+  is '区号';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.eod_flag
+  is '日终标识';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.fta_code
+  is '自贸区代码';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.fta_flag
+  is '是否自贸区机构';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.fx_organ_code
+  is '外汇金融机构代码';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.index_str
+  is '索引字符串';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.int_tax_levy
+  is '利息税征收标志';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.ip_addr
+  is '机构ip地址';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.oper_max_level
+  is '操作最高级别';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.pboc_fund_check_flag
+  is '人行备付金检查标志';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.postal_code
+  is '邮政编码';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.state
+  is '行政区划(省、州)';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.surtax_type
+  is '附加税类型';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.tailbox_detach_flag
+  is '尾箱控制方式';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.voucher_user_contral_flag
+  is '是否限制凭证入库柜员';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.accounting_branch
+  is '核算机构';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.libra_op_time
+  is 'libra执行次数';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.create_date
+  is '创建日期';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.end_date
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.start_date
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.attached_to
+  is '所属上级';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.base_ccy
+  is '基础币种';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.ccy_ctrl_branch
+  is '结售汇平盘机构';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.cny_business_unit
+  is '账套(人民币)';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.hierarchy_code
+  is '机构级别';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.hkd_business_unit
+  is '账套(港币)';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.internal_client
+  is '内部客户号';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.local_ccy
+  is '当地币种';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.sub_branch_code
+  is '分行代码';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.tax_rpt_branch
+  is '税收机构（总账用）';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.tran_br_ind
+  is '是否交易机构';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.accounting_branch_flag
+  is '是否核算机构';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.normal_close_time
+  is '正常关门时间';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.normal_open_time
+  is '正常开门时间';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.pboc_financing_no
+  is '人行金融机构编码';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch_en_short
+  is '机构英文简称';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch_head_phone
+  is '机构负责人联系电话';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.pboc_pay_branch_no
+  is '人行支付行号';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.is_auto_create_internal_acct
+  is '是否自动开立内部户';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch_en_name
+  is '机构英文名称';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.pboc_area_code
+  is '人行地区代码';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch_head_name
+  is '机构负责人姓名';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch_close_date
+  is '关闭日期';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.branch_head_duty
+  is '机构负责人职务';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.swift_no
+  is 'swift号';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.cup_financing_no
+  is '银联金融机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.pboc_acct_manage_sys_no
+  is '人行账户管理系统行号';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NCBS_FM_BRANCH.etl_timestamp
+  is 'ETL处理时间戳';
+

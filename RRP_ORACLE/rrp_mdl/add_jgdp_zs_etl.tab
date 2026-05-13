@@ -1,0 +1,73 @@
+﻿create table RRP_MDL.ADD_JGDP_ZS_ETL
+(
+  datainput_id   VARCHAR2(32) not null,
+  rpt_sys        VARCHAR2(64),
+  rpt_batch      VARCHAR2(32),
+  rpt_date_zs    VARCHAR2(32),
+  rpt_num        VARCHAR2(16),
+  rpt_situate    VARCHAR2(64),
+  sys_data_date  VARCHAR2(20) not null,
+  sys_data_case  VARCHAR2(32) not null,
+  sys_operator   VARCHAR2(256),
+  sys_oper_org   VARCHAR2(32) not null,
+  sys_oper_date  VARCHAR2(20),
+  sys_data_state VARCHAR2(10),
+  sys_order_no   NUMBER(19),
+  error_mark     VARCHAR2(2),
+  flow_node_id   VARCHAR2(32),
+  comments       VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_JGDP_ZS_ETL
+  is '监管大屏展示补录表';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.datainput_id
+  is '数据录入时间';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.rpt_sys
+  is '报送系统/模块';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.rpt_batch
+  is '报送批次';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.rpt_date_zs
+  is '最晚报送时间';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.rpt_num
+  is '报表数';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.rpt_situate
+  is '报送情况';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.sys_data_date
+  is '数据日期';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.sys_data_case
+  is '任务实例ID';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.sys_operator
+  is '补录人员';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.sys_oper_org
+  is '补录机构';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.sys_oper_date
+  is '操作日期';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.sys_data_state
+  is '数据状态:save(已保存),submit(已提交),reject(驳回),sucess(审核通过),refuse(已回退)';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.sys_order_no
+  is '序号';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.error_mark
+  is '错误标记';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.flow_node_id
+  is '流程节点';
+comment on column RRP_MDL.ADD_JGDP_ZS_ETL.comments
+  is '取款虚拟柜员号';
+alter table RRP_MDL.ADD_JGDP_ZS_ETL
+  add constraint PK_ADD_JGDP_ZS_ETL primary key (DATAINPUT_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+

@@ -1,0 +1,22 @@
+﻿create table RRP_MDL.T_COM_RRP_IMAS_IMAS_811_LCXCTJ_ALL
+(
+  rid                        VARCHAR2(50) not null,
+  data_dt                    VARCHAR2(10),
+  fin_org_social_credit_code VARCHAR2(18),
+  int_rate_sprd              NUMBER(15,5),
+  int_bear_lblt              NUMBER(15,5),
+  int_bear_asst              NUMBER(15,5),
+  net_int_sprd               NUMBER(15,5),
+  nim                        NUMBER(12,2),
+  dept_no                    VARCHAR2(30),
+  issued_no                  VARCHAR2(20),
+  rpt_org_no                 VARCHAR2(20),
+  data_ources                VARCHAR2(20),
+  data_modify                VARCHAR2(2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

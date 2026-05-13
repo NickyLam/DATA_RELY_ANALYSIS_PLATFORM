@@ -1,0 +1,78 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS
+(
+  deal_id            NUMBER,
+  deal_name          VARCHAR2(23),
+  aspclient_id       NUMBER,
+  calcdate           NUMBER,
+  balance_id         NUMBER,
+  holdamount         NUMBER,
+  faceamountestimate NUMBER,
+  marketestimate     NUMBER,
+  fairvaluealter     NUMBER,
+  pricedate          NUMBER,
+  fairprice          NUMBER,
+  pricesrc           VARCHAR2(5),
+  keepfolder_id      NUMBER,
+  assettype          VARCHAR2(30),
+  majorassetcode     VARCHAR2(30),
+  lastmodified       TIMESTAMP(6),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS
+  is '估值';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.deal_id
+  is '引用表ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.deal_name
+  is '引用表名';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.aspclient_id
+  is '部门编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.calcdate
+  is '估值日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.balance_id
+  is '引用表2ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.holdamount
+  is '持仓量';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.faceamountestimate
+  is '账面估值';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.marketestimate
+  is '市场估值';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.fairvaluealter
+  is '公允价值变动';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.pricedate
+  is '公允价格日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.fairprice
+  is '公允价格';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.pricesrc
+  is '价格来源';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.keepfolder_id
+  is '账户ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.assettype
+  is '资产类别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.majorassetcode
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.lastmodified
+  is '最后修改时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ESTIMATIONDEALS.etl_timestamp
+  is 'ETL处理时间戳';
+

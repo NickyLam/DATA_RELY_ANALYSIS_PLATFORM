@@ -1,0 +1,27 @@
+﻿create table RRP_MDL.TMP_CBS_DECD_BAK_20230501
+(
+  data_dt    CHAR(8) not null,
+  lgl_rep_id VARCHAR2(200),
+  acc_id     VARCHAR2(200) not null,
+  med_id     VARCHAR2(200) not null,
+  dept_line  VARCHAR2(500),
+  data_src   VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.TMP_CBS_DECD_BAK_20230501.data_dt
+  is '数据日期';
+comment on column RRP_MDL.TMP_CBS_DECD_BAK_20230501.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.TMP_CBS_DECD_BAK_20230501.acc_id
+  is '账户编号:EF05AI01';
+comment on column RRP_MDL.TMP_CBS_DECD_BAK_20230501.med_id
+  is '介质编号';
+comment on column RRP_MDL.TMP_CBS_DECD_BAK_20230501.dept_line
+  is '部门条线';
+comment on column RRP_MDL.TMP_CBS_DECD_BAK_20230501.data_src
+  is '数据来源（参见[字典:AML0045]）';
+

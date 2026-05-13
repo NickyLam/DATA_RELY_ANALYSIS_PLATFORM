@@ -1,0 +1,57 @@
+﻿create table RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO
+(
+  thread_id      VARCHAR2(800),
+  service_id     VARCHAR2(120),
+  tran_date      DATE,
+  proc_status    VARCHAR2(40),
+  om_apply_no    VARCHAR2(120),
+  start_time     DATE,
+  end_time       DATE,
+  execution_time VARCHAR2(40),
+  ip_addr        VARCHAR2(72),
+  om_user_id     VARCHAR2(120),
+  tran_timestamp DATE,
+  increase_id    VARCHAR2(4000),
+  etl_dt         DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO
+  is '登录信息记录表';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.thread_id
+  is '线程id';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.service_id
+  is '服务id';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.tran_date
+  is '处理日期';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.proc_status
+  is '登录状态';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.om_apply_no
+  is 'om变更编号';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.start_time
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.end_time
+  is '终止时间';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.execution_time
+  is '时间间隔';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.ip_addr
+  is 'ip地址';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.om_user_id
+  is 'om用户id';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.increase_id
+  is '自增ID';
+comment on column RRP_MDL.O_IOL_NCBS_OM_TRAN_MSG_INFO.etl_dt
+  is 'etl处理日期';
+

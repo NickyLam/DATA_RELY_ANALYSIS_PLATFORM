@@ -1,0 +1,34 @@
+﻿create table RRP_MDL.T_COM_RRP_BFD_BFD_101_JRJGFZ
+(
+  rid                VARCHAR2(50) not null,
+  fin_org_name       VARCHAR2(200),
+  fin_org_no         VARCHAR2(18),
+  fin_org_code       VARCHAR2(14),
+  org_no             VARCHAR2(30),
+  lic_no             VARCHAR2(30),
+  pay_org_no         VARCHAR2(30),
+  org_lvl            VARCHAR2(2),
+  p_mgr_org_name     VARCHAR2(200),
+  p_mgr_fin_org_code VARCHAR2(14),
+  p_mgr_org_no       VARCHAR2(30),
+  reg_addr           VARCHAR2(400),
+  area_cd            VARCHAR2(9),
+  estb_dt            VARCHAR2(10),
+  mgt_sts            VARCHAR2(2),
+  data_dt            VARCHAR2(10),
+  dept_no            VARCHAR2(20),
+  issued_no          VARCHAR2(20),
+  rpt_org_no         VARCHAR2(30),
+  data_ources        VARCHAR2(2),
+  data_modify        VARCHAR2(2),
+  force_sub_sts      VARCHAR2(1),
+  force_sub_reason   VARCHAR2(200),
+  rule_name          VARCHAR2(2000),
+  rule_id            VARCHAR2(1000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

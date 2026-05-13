@@ -1,0 +1,128 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501
+(
+  baretrade_id    NUMBER,
+  baretradename   VARCHAR2(40),
+  balance_id      NUMBER,
+  alterbalance_id NUMBER,
+  aspclient_id    NUMBER,
+  keepfolder_id   NUMBER,
+  settledate      NUMBER(8),
+  assettype       VARCHAR2(20),
+  buztype         VARCHAR2(20),
+  majorassetcode  VARCHAR2(20),
+  minorassetcode  VARCHAR2(20),
+  holdposition    NUMBER,
+  holdfaceamount  NUMBER,
+  cleanpricecost  NUMBER,
+  interestadjust  NUMBER,
+  fairvaluealter  NUMBER,
+  interestcost    NUMBER,
+  dirtypricecost  NUMBER,
+  impairment      NUMBER,
+  priceearning    NUMBER,
+  amortizeearning NUMBER,
+  interestearning NUMBER,
+  fairvalueincome NUMBER,
+  impairmentlost  NUMBER,
+  tradeexpense    NUMBER,
+  realrate        NUMBER,
+  valuedate       NUMBER(8),
+  maturitydate    NUMBER(8),
+  lastmodified    TIMESTAMP(6),
+  occuramount     NUMBER,
+  balance_id_prev NUMBER,
+  rev_flag        CHAR(1),
+  reservevalue1   NUMBER,
+  reservevalue2   NUMBER,
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10),
+  chargeincome    NUMBER,
+  chargeexpense   NUMBER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501
+  is '资产-余额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.baretrade_id
+  is '引用表ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.baretradename
+  is '引用表名';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.balance_id
+  is '引用表2ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.alterbalance_id
+  is '引用表3ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.aspclient_id
+  is '部门ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.keepfolder_id
+  is '账户ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.settledate
+  is '结算日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.assettype
+  is '资产类别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.buztype
+  is '业务类别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.majorassetcode
+  is '主资产代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.minorassetcode
+  is '次资产代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.holdposition
+  is '持有仓位';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.holdfaceamount
+  is '持有面额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.cleanpricecost
+  is '净价成本';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.interestadjust
+  is '利息调整';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.fairvaluealter
+  is '公允价值变动';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.interestcost
+  is '利息成本';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.dirtypricecost
+  is '全价成本';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.impairment
+  is '减值准备';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.priceearning
+  is '价差收益';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.amortizeearning
+  is '摊销收益';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.interestearning
+  is '利息收益';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.fairvalueincome
+  is '公允价值变动损益';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.impairmentlost
+  is '减值损失';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.tradeexpense
+  is '交易费用';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.realrate
+  is '实际利率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.valuedate
+  is '起息日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.maturitydate
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.lastmodified
+  is '最后更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.occuramount
+  is '发生金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.balance_id_prev
+  is '上一笔的BALANCE_ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.rev_flag
+  is '冲账标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.reservevalue1
+  is '备选值1';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.reservevalue2
+  is '备选值2';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.chargeincome
+  is '手续费收入';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_BALANCE_BAK_20230501.chargeexpense
+  is '手续费支出';
+

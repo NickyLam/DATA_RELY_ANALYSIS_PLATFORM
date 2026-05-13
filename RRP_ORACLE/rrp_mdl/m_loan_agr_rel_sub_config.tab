@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.M_LOAN_AGR_REL_SUB_CONFIG
+(
+  rcpt_id     VARCHAR2(200),
+  zsbz        VARCHAR2(200),
+  update_time VARCHAR2(200),
+  snbz        VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_LOAN_AGR_REL_SUB_CONFIG
+  is '涉农贷款子表';
+comment on column RRP_MDL.M_LOAN_AGR_REL_SUB_CONFIG.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.M_LOAN_AGR_REL_SUB_CONFIG.zsbz
+  is '增删标志：D:删除，I:新增';
+comment on column RRP_MDL.M_LOAN_AGR_REL_SUB_CONFIG.update_time
+  is '更新时间';
+comment on column RRP_MDL.M_LOAN_AGR_REL_SUB_CONFIG.snbz
+  is '涉农标志';
+

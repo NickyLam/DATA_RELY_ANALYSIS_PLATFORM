@@ -1,0 +1,63 @@
+﻿create table RRP_MDL.M_MRPT_INVEST_BIZ
+(
+  data_dt                 VARCHAR2(10),
+  bus_no                  VARCHAR2(250),
+  ojb_no                  VARCHAR2(60),
+  uder_actl_finer_cust_id VARCHAR2(60),
+  uder_actl_finer_name    VARCHAR2(1000),
+  asset_type_name         VARCHAR2(250),
+  belong_org_no           VARCHAR2(60),
+  acct_name               VARCHAR2(500),
+  class_credit_ind        VARCHAR2(10),
+  ext_secu_acct_no        VARCHAR2(60),
+  intnal_secu_acct_no     VARCHAR2(60),
+  fin_instm_no            VARCHAR2(100),
+  asset_type_no           VARCHAR2(60),
+  market_type_no          VARCHAR2(60),
+  curr_cd                 VARCHAR2(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_MRPT_INVEST_BIZ
+  is '非标投资持仓明细-手工报表专用';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.bus_no
+  is '业务编号';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.ojb_no
+  is '对象编号';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.uder_actl_finer_cust_id
+  is '实际融资人编号';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.uder_actl_finer_name
+  is '实际融资人名称';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.asset_type_name
+  is '资产类型名称';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.belong_org_no
+  is '所属机构编号';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.acct_name
+  is '账户名称';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.class_credit_ind
+  is '类信贷业务标志';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.ext_secu_acct_no
+  is '外部证券账户编号';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.intnal_secu_acct_no
+  is '内部证券账户编号';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.fin_instm_no
+  is '金融工具编号';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.asset_type_no
+  is '资产类型编号';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.market_type_no
+  is '市场类型编号';
+comment on column RRP_MDL.M_MRPT_INVEST_BIZ.curr_cd
+  is '币种代码';
+

@@ -1,0 +1,132 @@
+﻿create table RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630
+(
+  rid        VARCHAR2(50) not null,
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  yhjgmc     VARCHAR2(450),
+  mxkmbh     VARCHAR2(60),
+  mxkmmc     VARCHAR2(300),
+  pjhm       VARCHAR2(60) not null,
+  pjlx       VARCHAR2(30),
+  bz         VARCHAR2(3),
+  pmje       NUMBER(20,2),
+  pjcprq     VARCHAR2(8),
+  pjdqrq     VARCHAR2(8),
+  cprbh      VARCHAR2(60),
+  cprmc      VARCHAR2(450),
+  cprzh      VARCHAR2(60),
+  cprkhhmc   VARCHAR2(450),
+  skrmc      VARCHAR2(450),
+  skrzh      VARCHAR2(60),
+  skrkhhmc   VARCHAR2(450),
+  sfzbhtx    VARCHAR2(3),
+  mybj       VARCHAR2(600),
+  sxfbz      VARCHAR2(3),
+  sxfje      NUMBER(20,2),
+  bzjbl      NUMBER(20,2),
+  bzjbz      VARCHAR2(3),
+  bzjje      NUMBER(20,2),
+  bzjzh      VARCHAR2(60),
+  pjzt       VARCHAR2(30),
+  jbygh      VARCHAR2(30),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8) not null,
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  address    VARCHAR2(500),
+  cprmc_orig VARCHAR2(400),
+  skrmc_orig VARCHAR2(400),
+  cprmc_oth  VARCHAR2(5),
+  skrmc_oth  VARCHAR2(5),
+  gsfzjg     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.yhjgmc
+  is '银行机构名称';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.mxkmbh
+  is '明细科目编号';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.mxkmmc
+  is '明细科目名称';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.pjhm
+  is '票据号码';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.pjlx
+  is '票据类型';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.bz
+  is '申请控制金额币种';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.pmje
+  is '票面金额';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.pjcprq
+  is '票据出票日期';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.pjdqrq
+  is '票据到期日期';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.cprbh
+  is '出票人编号';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.cprmc
+  is '出票人名称';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.cprzh
+  is '出票人账号';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.cprkhhmc
+  is '出票人开户行名称';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.skrmc
+  is '收款人名称';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.skrzh
+  is '收款人账号';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.skrkhhmc
+  is '收款人开户行名称';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.sfzbhtx
+  is '是否在本行贴现';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.mybj
+  is '贸易背景';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.sxfbz
+  is '手续费币种';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.sxfje
+  is '手续费金额';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.bzjbl
+  is '保证金比例';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.bzjbz
+  is '保证金标志';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.bzjje
+  is '保证金金额';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.bzjzh
+  is '保证金账号';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.pjzt
+  is '票据状态';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.jbygh
+  is '经办人工号';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.cprmc_orig
+  is '出票人名称（脱敏前）';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.skrmc_orig
+  is '收款人名称（脱敏前）';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.cprmc_oth
+  is '出票人是否个人';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.skrmc_oth
+  is '收款人是否个人';
+comment on column RRP_MDL.EAST5_901_PJCPXXB_BAK_20220630.gsfzjg
+  is '归属分支机构';
+

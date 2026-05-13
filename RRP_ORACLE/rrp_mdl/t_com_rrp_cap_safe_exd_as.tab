@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.T_COM_RRP_CAP_SAFE_EXD_AS
+(
+  rid                    VARCHAR2(100) not null,
+  actiontype             VARCHAR2(1),
+  actiondesc             VARCHAR2(128),
+  exdebtcode             VARCHAR2(56),
+  changeno               VARCHAR2(16),
+  buscode                VARCHAR2(64),
+  accoamount             NUMBER(22,2),
+  chdate                 VARCHAR2(32),
+  remark                 VARCHAR2(256),
+  data_dt                VARCHAR2(40),
+  org_no                 VARCHAR2(40),
+  xf_status              VARCHAR2(1),
+  data_status            VARCHAR2(1),
+  report_type            VARCHAR2(200),
+  task_id                VARCHAR2(100),
+  bw_status              VARCHAR2(1),
+  approval_status        VARCHAR2(1),
+  approval_refuse_reason VARCHAR2(128),
+  child_data_status      VARCHAR2(1),
+  buss                   VARCHAR2(10),
+  zh                     VARCHAR2(50)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

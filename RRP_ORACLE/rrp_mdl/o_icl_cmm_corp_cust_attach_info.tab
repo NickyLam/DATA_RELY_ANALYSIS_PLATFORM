@@ -1,0 +1,96 @@
+﻿create table RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO
+(
+  etl_dt                               DATE,
+  lp_id                                VARCHAR2(60),
+  cust_id                              VARCHAR2(60),
+  cust_type_cd                         VARCHAR2(20),
+  cust_name                            VARCHAR2(500),
+  adv_man_indu_flg                     VARCHAR2(10),
+  spe_soph_unq_new_med_side_enter_flg  VARCHAR2(10),
+  spe_soph_unq_new_lte_gnt_corp_flg    VARCHAR2(10),
+  high_new_tech_corp_flg               VARCHAR2(10),
+  agri_property_lead_enterp_flg        VARCHAR2(10),
+  farm_and_new_agri_mang_main_loan_flg VARCHAR2(10),
+  open_acct_lics_id                    VARCHAR2(60),
+  open_acct_lics_apprv_dt              DATE,
+  job_cd                               VARCHAR2(10),
+  etl_timestamp                        TIMESTAMP(6),
+  risk_dist_cd                         VARCHAR2(10),
+  lei_id                               VARCHAR2(100),
+  cty_tech_inovt_corp_flg              VARCHAR2(10),
+  item_corp_flg                        VARCHAR2(10),
+  inovt_med_side_enter_flg             VARCHAR2(10),
+  scen_tech_med_side_enter_flg         VARCHAR2(10),
+  cty_corp_tech_center_flg             VARCHAR2(10),
+  each_class_scen_tech_list_corp_flg   VARCHAR2(10),
+  invest_cust_flg                      VARCHAR2(10),
+  basic_open_bank_no                   VARCHAR2(100),
+  ex_servisman_corp_flg                VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO
+  is '对公客户补充信息';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.cust_type_cd
+  is '证件类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.adv_man_indu_flg
+  is '先进制造业标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.spe_soph_unq_new_med_side_enter_flg
+  is '专精特新中小企业标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.spe_soph_unq_new_lte_gnt_corp_flg
+  is '专精特新小巨人企业标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.high_new_tech_corp_flg
+  is '高新技术企业标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.agri_property_lead_enterp_flg
+  is '农业产业化龙头企业标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.farm_and_new_agri_mang_main_loan_flg
+  is '农户及新型农业经营主体贷款标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.open_acct_lics_id
+  is '开户许可证编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.open_acct_lics_apprv_dt
+  is '开户许可证核准日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.risk_dist_cd
+  is '风险预警行政区划代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.lei_id
+  is 'lei编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.cty_tech_inovt_corp_flg
+  is '国家技术创新示范企业标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.item_corp_flg
+  is '制造业单项冠军企业标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.inovt_med_side_enter_flg
+  is '创新型中小企业标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.scen_tech_med_side_enter_flg
+  is '科技型中小企业标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.cty_corp_tech_center_flg
+  is '国家企业技术中心标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.each_class_scen_tech_list_corp_flg
+  is '各类科技名单企业标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.invest_cust_flg
+  is '投资级客户标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.basic_open_bank_no
+  is '基本开户行行号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_ATTACH_INFO.ex_servisman_corp_flg
+  is '退役军人创办企业标志';
+

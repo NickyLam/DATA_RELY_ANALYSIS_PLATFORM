@@ -1,0 +1,27 @@
+﻿create table RRP_MDL.G1803_TMP
+(
+  book_bal      NUMBER(30,2),
+  invest_typ    VARCHAR2(50),
+  issu_org      VARCHAR2(50),
+  region_cd     VARCHAR2(50),
+  prod_cl       VARCHAR2(50),
+  bond_isu_mode VARCHAR2(50)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.G1803_TMP.book_bal
+  is '账面余额';
+comment on column RRP_MDL.G1803_TMP.invest_typ
+  is '投资类型';
+comment on column RRP_MDL.G1803_TMP.issu_org
+  is '发行机构';
+comment on column RRP_MDL.G1803_TMP.region_cd
+  is '国家代码';
+comment on column RRP_MDL.G1803_TMP.prod_cl
+  is '产品分类';
+comment on column RRP_MDL.G1803_TMP.bond_isu_mode
+  is '债券发行方式';
+

@@ -1,0 +1,18 @@
+﻿create table RRP_MDL.TMP_RELA_PARTY_BASIC_INFO
+(
+  party_id    VARCHAR2(60),
+  cert_no     VARCHAR2(60),
+  share_ratio VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.TMP_RELA_PARTY_BASIC_INFO.party_id
+  is '当事人编号';
+comment on column RRP_MDL.TMP_RELA_PARTY_BASIC_INFO.cert_no
+  is '证件号';
+comment on column RRP_MDL.TMP_RELA_PARTY_BASIC_INFO.share_ratio
+  is '持股比例';
+

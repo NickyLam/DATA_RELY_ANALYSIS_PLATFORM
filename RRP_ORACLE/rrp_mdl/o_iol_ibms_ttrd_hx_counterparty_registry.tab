@@ -1,0 +1,108 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY
+(
+  registry_id       NUMBER(16),
+  entry_id          VARCHAR2(45),
+  entry_date        VARCHAR2(15),
+  inst_id           NUMBER(16),
+  global_flow_no    VARCHAR2(75),
+  flow_no           VARCHAR2(75),
+  flow_inner_sn     VARCHAR2(15),
+  i_code            VARCHAR2(75),
+  a_type            VARCHAR2(30),
+  m_type            VARCHAR2(30),
+  p_type            VARCHAR2(30),
+  p_class           VARCHAR2(150),
+  i_name            VARCHAR2(383),
+  subj_code         VARCHAR2(30),
+  debit_credit_flag VARCHAR2(2),
+  red_blue_flag     VARCHAR2(2),
+  value             NUMBER(31,2),
+  currency          VARCHAR2(5),
+  prod_code         VARCHAR2(24),
+  prod_name         VARCHAR2(383),
+  party_acct_code   VARCHAR2(150),
+  party_acct_name   VARCHAR2(150),
+  party_bank_code   VARCHAR2(150),
+  party_bank_name   VARCHAR2(300),
+  state             VARCHAR2(2),
+  update_time       VARCHAR2(29),
+  start_dt          DATE,
+  end_dt            DATE,
+  id_mark           VARCHAR2(10),
+  etl_timestamp     TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY
+  is '华兴交易对手登记簿';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.registry_id
+  is '主键';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.entry_id
+  is '分录id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.entry_date
+  is '记账日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.inst_id
+  is '指令号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.global_flow_no
+  is '全局流水号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.flow_no
+  is '系统分录流水号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.flow_inner_sn
+  is '交易流水序号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.a_type
+  is '资产代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.p_type
+  is '产品类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.p_class
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.i_name
+  is '金融工具名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.subj_code
+  is '科目号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.debit_credit_flag
+  is '借贷标识,1：借；2：贷。';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.red_blue_flag
+  is '红蓝字标识,1：普通,2：红；3：蓝';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.value
+  is '金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.prod_code
+  is '标准产品编码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.prod_name
+  is '标准产品名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.party_acct_code
+  is '对手方账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.party_acct_name
+  is '对手方户名';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.party_bank_code
+  is '对手方开户行';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.party_bank_name
+  is '对手方开户行名';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.state
+  is '状态，0:交易对手信息未填充，1：交易对手信息已填充';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_HX_COUNTERPARTY_REGISTRY.etl_timestamp
+  is 'etl处理时间戳';
+

@@ -1,0 +1,24 @@
+﻿create table RRP_MDL.CONFIG_S67_MYQYKF
+(
+  jjh    VARCHAR2(300),
+  ssfqmc VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.CONFIG_S67_MYQYKF
+  is '民营房企开发项目配置表';
+comment on column RRP_MDL.CONFIG_S67_MYQYKF.jjh
+  is '借据号';
+comment on column RRP_MDL.CONFIG_S67_MYQYKF.ssfqmc
+  is '贷款所属房企名称';
+

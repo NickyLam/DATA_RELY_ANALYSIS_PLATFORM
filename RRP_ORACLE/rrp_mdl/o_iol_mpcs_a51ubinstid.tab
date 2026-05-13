@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.O_IOL_MPCS_A51UBINSTID
+(
+  instid        VARCHAR2(17),
+  instna        VARCHAR2(600),
+  addr          VARCHAR2(600),
+  remark1       VARCHAR2(150),
+  remark2       VARCHAR2(300),
+  remark3       VARCHAR2(600),
+  remark4       VARCHAR2(600),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6),
+  rm            NUMBER(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_MPCS_A51UBINSTID
+  is '中台的银联机构信息表';
+comment on column RRP_MDL.O_IOL_MPCS_A51UBINSTID.instid
+  is '银联机构号';
+comment on column RRP_MDL.O_IOL_MPCS_A51UBINSTID.instna
+  is '机构名称';
+comment on column RRP_MDL.O_IOL_MPCS_A51UBINSTID.addr
+  is '机构所属地';
+comment on column RRP_MDL.O_IOL_MPCS_A51UBINSTID.remark1
+  is '备用字段';
+comment on column RRP_MDL.O_IOL_MPCS_A51UBINSTID.remark2
+  is '备用字段';
+comment on column RRP_MDL.O_IOL_MPCS_A51UBINSTID.remark3
+  is '备用字段';
+comment on column RRP_MDL.O_IOL_MPCS_A51UBINSTID.remark4
+  is '备用字段';
+comment on column RRP_MDL.O_IOL_MPCS_A51UBINSTID.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_MPCS_A51UBINSTID.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IOL_MPCS_A51UBINSTID.rm
+  is '序号';
+

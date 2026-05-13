@@ -1,0 +1,28 @@
+﻿create table RRP_MDL.XZY_MB
+(
+  模块      VARCHAR2(800),
+  模块名称    VARCHAR2(800),
+  过程名     VARCHAR2(800),
+  目标表名    VARCHAR2(800),
+  前台指标编号  VARCHAR2(800),
+  后台指标编号  VARCHAR2(800),
+  依赖模块    VARCHAR2(800),
+  依赖模块名称  VARCHAR2(800),
+  依赖过程名   VARCHAR2(800),
+  依赖目标表名  VARCHAR2(800),
+  依赖目标表字段 VARCHAR2(800),
+  条件字段    VARCHAR2(800)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

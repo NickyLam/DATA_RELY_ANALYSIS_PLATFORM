@@ -1,0 +1,153 @@
+﻿create table RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS
+(
+  cust_id                      VARCHAR2(90),
+  cust_name                    VARCHAR2(375),
+  corp_size_cd                 VARCHAR2(15),
+  indus_type_cd                VARCHAR2(15),
+  belong_org                   VARCHAR2(90),
+  lmt_cont_id                  VARCHAR2(90),
+  lmt_prod_no                  VARCHAR2(375),
+  curr_cd                      VARCHAR2(45),
+  lmt_prod_oper_org            VARCHAR2(150),
+  lmt_prod_mgmt_org            VARCHAR2(150),
+  lmt_cont_amt                 NUMBER(30,8),
+  group_crdt_cont_id           VARCHAR2(150),
+  group_crdt_prod_no           VARCHAR2(90),
+  group_crdt_lmt_cont_status   VARCHAR2(15),
+  crdt_apv_id                  VARCHAR2(150),
+  lmt_cont_status              VARCHAR2(15),
+  lmt_cont_circl_flg           VARCHAR2(15),
+  lmt_cont_froz_flg            VARCHAR2(15),
+  cont_bal                     NUMBER(30,2),
+  lmt_cont_start_dt            DATE,
+  lmt_cont_exp_dt              DATE,
+  bus_cont_start_dt            DATE,
+  bus_cont_exp_dt              DATE,
+  loan_level10_cls_cd          VARCHAR2(15),
+  ovdue_days                   NUMBER(10),
+  dir_indus_cd                 VARCHAR2(15),
+  turn_crdt_flg                VARCHAR2(15),
+  text_cont_id                 VARCHAR2(750),
+  lmt_cont_nmal_aval_amt       NUMBER(30,8),
+  sign_lmt_cont_promis_bal     NUMBER(30,8),
+  not_sign_lmt_cont_promis_bal NUMBER(30,8),
+  bus_cont_id                  VARCHAR2(90),
+  bus_cont_prod_id             VARCHAR2(90),
+  bus_cont_rgst_org            VARCHAR2(90),
+  bus_cont_status              VARCHAR2(15),
+  bus_cont_froz_flg            VARCHAR2(15),
+  bus_cont_amt                 NUMBER(30,2),
+  bus_cont_distr_amt           NUMBER(30,2),
+  bus_cont_undistr_money_amt   NUMBER(30,2),
+  bus_cont_bal_cny             NUMBER(30,2),
+  etl_dt                       DATE,
+  group_no                     VARCHAR2(15),
+  fix_asset_loan_rtn_amt       NUMBER(30,8),
+  bus_cont_curr_cd             VARCHAR2(45),
+  fix_asset_loan_rtn_amt_cny   NUMBER(30,8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS
+  is '风险集市_R02_公司贷款承诺明细';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.corp_size_cd
+  is '企业规模代码';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.indus_type_cd
+  is '行业类型代码';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.belong_org
+  is '客户所属机构';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_cont_id
+  is '额度合同编号';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_prod_no
+  is '额度产品编号';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_prod_oper_org
+  is '额度产品经办机构';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_prod_mgmt_org
+  is '额度产品管理机构';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_cont_amt
+  is '额度合同金额';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.group_crdt_cont_id
+  is '集团授信合同编号';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.group_crdt_prod_no
+  is '集团授信产品号';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.group_crdt_lmt_cont_status
+  is '集团授信额度合同状态';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.crdt_apv_id
+  is '授信审批编号';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_cont_status
+  is '额度合同状态';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_cont_circl_flg
+  is '额度合同循环标志';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_cont_froz_flg
+  is '额度合同冻结标志';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.cont_bal
+  is '合同余额';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_cont_start_dt
+  is '额度合同开始日期';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_cont_exp_dt
+  is '额度合同到期日期';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_start_dt
+  is '业务合同开始日期';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_exp_dt
+  is '业务合同到期日期';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.loan_level10_cls_cd
+  is '贷款十级分类代码';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.ovdue_days
+  is '逾期天数';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.dir_indus_cd
+  is '贷款投向行业代码';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.turn_crdt_flg
+  is '转授信标志';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.text_cont_id
+  is '文本合同编号';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.lmt_cont_nmal_aval_amt
+  is '额度合同的名义可用金额';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.sign_lmt_cont_promis_bal
+  is '签署额度合同承诺余额（剩余额度）';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.not_sign_lmt_cont_promis_bal
+  is '未签署额度合同承诺余额（剩余额度）';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_id
+  is '业务合同编号';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_prod_id
+  is '业务合同产品编号';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_rgst_org
+  is '业务合同登记机构';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_status
+  is '业务合同状态';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_froz_flg
+  is '业务合同冻结标志';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_amt
+  is '业务合同金额';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_distr_amt
+  is '业务合同放款金额';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_undistr_money_amt
+  is '业务合同未放款金额';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_bal_cny
+  is '业务合同余额（折人民币）';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.group_no
+  is '组号';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.fix_asset_loan_rtn_amt
+  is '固定资产贷款归还金额';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.bus_cont_curr_cd
+  is '业务合同币种';
+comment on column RRP_MDL.O_RDW_RML_R02_CORP_LOAN_PROMIS.fix_asset_loan_rtn_amt_cny
+  is '固定资产贷款归还金额（折人民币）';
+

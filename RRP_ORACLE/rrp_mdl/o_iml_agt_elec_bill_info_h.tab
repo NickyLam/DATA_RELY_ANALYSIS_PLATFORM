@@ -1,0 +1,138 @@
+﻿create table RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H
+(
+  bill_id                VARCHAR2(100),
+  lp_id                  VARCHAR2(60),
+  bill_type_cd           VARCHAR2(30),
+  bill_num               VARCHAR2(150),
+  bill_amt               NUMBER(30,2),
+  tran_flow_num          VARCHAR2(100),
+  draw_dt                DATE,
+  exp_dt                 DATE,
+  tran_cd                VARCHAR2(30),
+  drawer_cate_cd         VARCHAR2(30),
+  drawer_orgnz_cd        VARCHAR2(30),
+  drawer_name            VARCHAR2(750),
+  drawer_acct_id         VARCHAR2(100),
+  drawer_open_bank_no    VARCHAR2(150),
+  recver_name            VARCHAR2(750),
+  recver_acct_id         VARCHAR2(100),
+  recver_open_bank_no    VARCHAR2(150),
+  accptor_cate_cd        VARCHAR2(30),
+  accptor_orgnz_cd       VARCHAR2(30),
+  accptor_name           VARCHAR2(1000),
+  accptor_acct_id        VARCHAR2(100),
+  accptor_open_bank_no   VARCHAR2(150),
+  bill_obg_cate_cd       VARCHAR2(30),
+  bill_obg_orgnz_cd      VARCHAR2(30),
+  bill_obg_name          VARCHAR2(750),
+  bill_obg_acct_id       VARCHAR2(100),
+  bill_obg_open_bank_no  VARCHAR2(150),
+  bill_last_status_cd    VARCHAR2(30),
+  bill_send_ps_status_cd VARCHAR2(30),
+  bill_recv_ps_status_cd VARCHAR2(30),
+  create_tm              TIMESTAMP(6),
+  lock_flg               VARCHAR2(30),
+  curr_status_cd         VARCHAR2(30),
+  recs_type_cd           VARCHAR2(30),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  src_table_name         VARCHAR2(100),
+  job_cd                 VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H
+  is '电子票据信息历史';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_id
+  is '票据编号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_type_cd
+  is '票据类型代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_num
+  is '票据号码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_amt
+  is '贴现票据金额';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.tran_flow_num
+  is '交易编号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.draw_dt
+  is '出票日期';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.tran_cd
+  is '转让代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.drawer_cate_cd
+  is '出票人类别代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.drawer_orgnz_cd
+  is '出票人组织机构代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.drawer_name
+  is '出票人名称';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.drawer_acct_id
+  is '出票人账户编号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.drawer_open_bank_no
+  is '出票人开户行行号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.recver_name
+  is '收款人名称';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.recver_acct_id
+  is '收款人账户编号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.recver_open_bank_no
+  is '收款人开户行行号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.accptor_cate_cd
+  is '承兑人类别代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.accptor_orgnz_cd
+  is '承兑人组织机构代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.accptor_name
+  is '承兑人名称';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.accptor_acct_id
+  is '承兑人账户编号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.accptor_open_bank_no
+  is '承兑人开户行行号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_obg_cate_cd
+  is '票据权利人类别代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_obg_orgnz_cd
+  is '票据权利人组织机构代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_obg_name
+  is '票据权利人名称';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_obg_acct_id
+  is '票据权利人账户编号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_obg_open_bank_no
+  is '票据权利人开户行行号';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_last_status_cd
+  is '票据上一状态代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_send_ps_status_cd
+  is '票据发送人状态代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.bill_recv_ps_status_cd
+  is '票据接收人状态代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.create_tm
+  is '创建时间';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.lock_flg
+  is '锁定标志';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.curr_status_cd
+  is '当前状态代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.recs_type_cd
+  is '追索类型代码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_ELEC_BILL_INFO_H.etl_timestamp
+  is 'etl处理时间戳';
+

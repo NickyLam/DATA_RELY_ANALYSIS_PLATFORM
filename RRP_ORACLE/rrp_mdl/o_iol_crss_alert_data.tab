@@ -1,0 +1,84 @@
+﻿create table RRP_MDL.O_IOL_CRSS_ALERT_DATA
+(
+  customerid    VARCHAR2(32) not null,
+  objecttype    VARCHAR2(32) not null,
+  objectno      VARCHAR2(32) not null,
+  alerttype     VARCHAR2(32),
+  status        VARCHAR2(32),
+  signid        VARCHAR2(32) not null,
+  itemvalue     CHAR(4),
+  signlevel     VARCHAR2(32),
+  signdescribe  VARCHAR2(100),
+  remark        VARCHAR2(200),
+  inputdate     VARCHAR2(10),
+  inputuserid   VARCHAR2(32),
+  inputorgid    VARCHAR2(32),
+  confirmstatus VARCHAR2(18),
+  urgentalarm   VARCHAR2(4),
+  updatedate    VARCHAR2(10),
+  updateuserid  VARCHAR2(32),
+  updateorgid   VARCHAR2(32),
+  endstatus     VARCHAR2(32),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CRSS_ALERT_DATA
+  is '警示数据';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.customerid
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.objecttype
+  is '对象类型';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.objectno
+  is '对象编号';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.alerttype
+  is '警示类型';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.status
+  is '状态;1草稿2审核中3审核完成4退回';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.signid
+  is '关联借据号';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.itemvalue
+  is '项目值';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.signlevel
+  is '警示层级';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.signdescribe
+  is '警示描述';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.remark
+  is '描述';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.inputuserid
+  is '登记人ID';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.confirmstatus
+  is '签约状态';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.urgentalarm
+  is '紧急预警';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.updatedate
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.updateuserid
+  is '最后更新人';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.updateorgid
+  is '修改人机构';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.endstatus
+  is '结束状态';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CRSS_ALERT_DATA.id_mark
+  is '增删标志';
+

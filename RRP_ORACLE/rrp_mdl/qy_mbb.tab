@@ -1,0 +1,19 @@
+﻿create table RRP_MDL.QY_MBB
+(
+  schm     VARCHAR2(20),
+  tab_name VARCHAR2(55),
+  tab_cn   VARCHAR2(300)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

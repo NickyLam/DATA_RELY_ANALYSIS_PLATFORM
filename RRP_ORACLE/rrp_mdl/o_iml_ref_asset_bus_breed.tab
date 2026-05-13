@@ -1,0 +1,135 @@
+﻿create table RRP_MDL.O_IML_REF_ASSET_BUS_BREED
+(
+  asset_bus_breed_id   VARCHAR2(60),
+  sort_id              VARCHAR2(60),
+  asset_bus_breed_name VARCHAR2(250),
+  type_sort_id         VARCHAR2(60),
+  sub_type             VARCHAR2(60),
+  attr1                VARCHAR2(250),
+  attr2                VARCHAR2(250),
+  attr3                VARCHAR2(250),
+  attr4                VARCHAR2(250),
+  attr5                VARCHAR2(250),
+  attr6                VARCHAR2(250),
+  attr7                VARCHAR2(250),
+  attr8                VARCHAR2(250),
+  attr9                VARCHAR2(250),
+  attr10               VARCHAR2(250),
+  attr11               VARCHAR2(250),
+  asset_thd_cls_cd     VARCHAR2(250),
+  attr13               VARCHAR2(250),
+  attr14               VARCHAR2(250),
+  attr15               VARCHAR2(250),
+  attr16               VARCHAR2(250),
+  attr17               VARCHAR2(250),
+  attr18               VARCHAR2(250),
+  attr19               VARCHAR2(250),
+  attr20               VARCHAR2(250),
+  attr21               VARCHAR2(250),
+  attr22               VARCHAR2(250),
+  attr23               VARCHAR2(250),
+  attr24               VARCHAR2(250),
+  attr25               VARCHAR2(250),
+  use_flg              VARCHAR2(10),
+  loan_size_ctrl_flg   VARCHAR2(10),
+  prod_catlg_id        VARCHAR2(60),
+  create_dt            DATE,
+  update_dt            DATE,
+  etl_dt               DATE,
+  id_mark              VARCHAR2(10),
+  src_table_name       VARCHAR2(100),
+  job_cd               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_REF_ASSET_BUS_BREED
+  is '资产业务品种表';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.asset_bus_breed_id
+  is '资产业务品种编号';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.sort_id
+  is '排序编号';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.asset_bus_breed_name
+  is '资产业务品种名称';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.type_sort_id
+  is '类型排序编号';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.sub_type
+  is '子类型';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr1
+  is '属性1';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr2
+  is '属性2';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr3
+  is '属性3';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr4
+  is '属性4';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr5
+  is '属性5';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr6
+  is '属性6';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr7
+  is '属性7';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr8
+  is '属性8';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr9
+  is '属性9';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr10
+  is '属性10';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr11
+  is '属性11';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.asset_thd_cls_cd
+  is '资产三分类代码';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr13
+  is '属性13';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr14
+  is '属性14';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr15
+  is '属性15';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr16
+  is '属性16';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr17
+  is '属性17';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr18
+  is '属性18';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr19
+  is '属性19';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr20
+  is '属性20';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr21
+  is '属性21';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr22
+  is '属性22';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr23
+  is '属性23';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr24
+  is '属性24';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.attr25
+  is '属性25';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.use_flg
+  is '使用标志';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.loan_size_ctrl_flg
+  is '贷款规模控制标志';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.prod_catlg_id
+  is '产品目录编号';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_REF_ASSET_BUS_BREED.job_cd
+  is '任务编码';
+

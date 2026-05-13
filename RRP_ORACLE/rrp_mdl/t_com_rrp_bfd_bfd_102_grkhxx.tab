@@ -1,0 +1,44 @@
+﻿create table RRP_MDL.T_COM_RRP_BFD_BFD_102_GRKHXX
+(
+  rid              VARCHAR2(50) not null,
+  fin_org_no       VARCHAR2(18),
+  name             VARCHAR2(200),
+  id_type          VARCHAR2(10),
+  orig_id_no       VARCHAR2(60),
+  id_no            VARCHAR2(60),
+  country          VARCHAR2(2),
+  nation           VARCHAR2(2),
+  gender           VARCHAR2(2),
+  max_edu          VARCHAR2(2),
+  birthday_dt      VARCHAR2(10),
+  area_cd          VARCHAR2(9),
+  indv_y_incm_amt  NUMBER(20,2),
+  home_y_incm_amt  NUMBER(20,2),
+  mrtl_sts         VARCHAR2(3),
+  rela_mark        VARCHAR2(1),
+  credit_amt       NUMBER(20,2),
+  use_credit_amt   NUMBER(20,2),
+  indv_cust_mark   VARCHAR2(10),
+  biz_lic_no       VARCHAR2(400),
+  ent_scc_no       VARCHAR2(400),
+  ccr_lvl_num      NUMBER(3),
+  ccr_lvl          NUMBER(3),
+  org_no           VARCHAR2(20),
+  data_dt          VARCHAR2(10),
+  dept_no          VARCHAR2(20),
+  issued_no        VARCHAR2(20),
+  rpt_org_no       VARCHAR2(30),
+  data_ources      VARCHAR2(2),
+  data_modify      VARCHAR2(2),
+  force_sub_sts    VARCHAR2(1),
+  force_sub_reason VARCHAR2(200),
+  rule_name        VARCHAR2(2000),
+  rule_id          VARCHAR2(1000),
+  cust_id          VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

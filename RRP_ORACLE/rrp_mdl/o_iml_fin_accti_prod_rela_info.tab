@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO
+(
+  intnal_prod_id VARCHAR2(100),
+  lp_id          VARCHAR2(100),
+  accti_id       VARCHAR2(100),
+  base_prod_id   VARCHAR2(100),
+  sob_id         VARCHAR2(100),
+  prod_attr_cd   VARCHAR2(30),
+  etl_dt         DATE,
+  src_table_name VARCHAR2(100),
+  job_cd         VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO
+  is '核算科目关系历史';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO.intnal_prod_id
+  is '内部产品编号';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO.accti_id
+  is '核算编号';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO.base_prod_id
+  is '基础产品编号';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO.sob_id
+  is '账套编号';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO.prod_attr_cd
+  is '产品属性代码';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_FIN_ACCTI_PROD_RELA_INFO.etl_timestamp
+  is 'etl处理时间戳';
+

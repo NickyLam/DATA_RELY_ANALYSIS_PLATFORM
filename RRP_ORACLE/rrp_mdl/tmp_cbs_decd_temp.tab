@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.TMP_CBS_DECD_TEMP
+(
+  data_dt    CHAR(8) not null,
+  lgl_rep_id VARCHAR2(200),
+  acc_id     VARCHAR2(200) not null,
+  med_id     VARCHAR2(200) not null,
+  dept_line  VARCHAR2(750),
+  data_src   VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.TMP_CBS_DECD_TEMP
+  is '临时表';
+comment on column RRP_MDL.TMP_CBS_DECD_TEMP.data_dt
+  is '数据时间';
+comment on column RRP_MDL.TMP_CBS_DECD_TEMP.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.TMP_CBS_DECD_TEMP.acc_id
+  is '账户编号';
+comment on column RRP_MDL.TMP_CBS_DECD_TEMP.med_id
+  is '介质编号';
+comment on column RRP_MDL.TMP_CBS_DECD_TEMP.dept_line
+  is '部门条线';
+comment on column RRP_MDL.TMP_CBS_DECD_TEMP.data_src
+  is '数据来源';
+

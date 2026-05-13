@@ -1,0 +1,75 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501
+(
+  i_code         VARCHAR2(30),
+  a_type         VARCHAR2(20),
+  m_type         VARCHAR2(20),
+  extend_type    CHAR(2),
+  beg_date       CHAR(10),
+  end_date       CHAR(10),
+  rate_multi     NUMBER(22),
+  volume         NUMBER(37,12),
+  oe_type        CHAR(2),
+  oe_option_type CHAR(2),
+  oe_finish_date CHAR(10),
+  update_user    VARCHAR2(100),
+  update_time    VARCHAR2(23),
+  account_user   VARCHAR2(30),
+  account_time   VARCHAR2(20),
+  strike_price   NUMBER(31,6),
+  pipe_id        NUMBER(22),
+  imp_date       CHAR(10),
+  start_date     CHAR(10),
+  mtr_date       CHAR(10),
+  mtr_date_conv  VARCHAR2(20),
+  etl_dt         DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.extend_type
+  is '扩展类型【01：本金序列；02：利率/利差序列；03：债券发行量；04：含权信息】';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.beg_date
+  is '生效日期【当扩展类型为04时，表示理论行权日期】';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.end_date
+  is '失效日期【当扩展类型为04时，表示理论行权结束日期，且只对美式有效】';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.rate_multi
+  is '利率乘数【当扩展类型为02时有效】';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.volume
+  is '发生额，根据EXTEND_TYPE类型不同，其含义不同【01：本金；02：利率/利差；03：债券发行量；04：补偿利率】';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.oe_type
+  is '含权类型【01：赎回；02：回售】';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.oe_option_type
+  is '选择权类型【01：欧式；02：美式；目前国内只有欧式】';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.oe_finish_date
+  is '实际行权日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.update_user
+  is '更新人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.account_user
+  is '复核人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.account_time
+  is '复核时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.strike_price
+  is '行权价格';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.pipe_id
+  is '管道ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.imp_date
+  is '导入日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.start_date
+  is '起息日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.mtr_date
+  is '到期日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.mtr_date_conv
+  is '到期日调整规则';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTRUMENT_EXTEND_BAK_20230501.etl_dt
+  is 'ETL处理日期';
+

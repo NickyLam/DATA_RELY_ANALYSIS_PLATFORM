@@ -1,0 +1,53 @@
+﻿create table RRP_MDL.XZY_VP_2024_XBN_INIT
+(
+  业务需求标号    VARCHAR2(200),
+  业务需求名称    VARCHAR2(600),
+  费用申请编号    VARCHAR2(120),
+  费用申请名称    VARCHAR2(600),
+  科技需求编号    VARCHAR2(120),
+  科技需求名称    VARCHAR2(600),
+  主办项目经理    VARCHAR2(300),
+  子项目编号     VARCHAR2(200),
+  子项目名称     VARCHAR2(600),
+  子项目负责人    VARCHAR2(600),
+  提出部门      VARCHAR2(200),
+  所属系统编号    VARCHAR2(120),
+  所属系统名称    VARCHAR2(320),
+  所属科室      VARCHAR2(320),
+  系统负责人     VARCHAR2(320),
+  所属平台      VARCHAR2(320),
+  供应商编号     VARCHAR2(120),
+  供应商名称     VARCHAR2(200),
+  合同编号      VARCHAR2(120),
+  合同名称      VARCHAR2(200),
+  预估工作量人天   VARCHAR2(120),
+  剩余工作量人天   VARCHAR2(120),
+  预估人工费     VARCHAR2(120),
+  剩余费用      VARCHAR2(120),
+  业务需求状态    VARCHAR2(400),
+  科技项目状态    VARCHAR2(160),
+  投产时间      VARCHAR2(20),
+  人月单价      VARCHAR2(120),
+  外包人时数     VARCHAR2(120),
+  外包人天数     VARCHAR2(120),
+  外包人月数     VARCHAR2(120),
+  行方人时数     VARCHAR2(120),
+  行方人天数     VARCHAR2(120),
+  行方人月数     VARCHAR2(120),
+  验收时间      VARCHAR2(120),
+  工作量流程完成时间 VARCHAR2(120),
+  付款单号      VARCHAR2(240)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

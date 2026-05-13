@@ -1,0 +1,116 @@
+﻿create table RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H
+(
+  party_id                    VARCHAR2(60),
+  lp_id                       VARCHAR2(60),
+  belong_group_id             VARCHAR2(60),
+  data_src_cd                 VARCHAR2(10),
+  belong_group_name           VARCHAR2(200),
+  belong_group_orgnz_cd       VARCHAR2(60),
+  belong_group_loan_card_no   VARCHAR2(60),
+  belong_group_rgst_cty_rg_cd VARCHAR2(30),
+  belong_group_site_cd        VARCHAR2(30),
+  belong_group_rgst_addr      VARCHAR2(500),
+  group_core_mem_flg          VARCHAR2(10),
+  belong_group_dom_work_addr  VARCHAR2(500),
+  mem_type_cd                 VARCHAR2(10),
+  parent_corp_flg             VARCHAR2(30),
+  mem_status_cd               VARCHAR2(30),
+  use_family_edit_num         VARCHAR2(60),
+  matn_family_edit_num        VARCHAR2(60),
+  start_dt                    DATE,
+  end_dt                      DATE,
+  id_mark                     VARCHAR2(10),
+  src_table_name              VARCHAR2(100),
+  job_cd                      VARCHAR2(10),
+  etl_timestamp               TIMESTAMP(6),
+  group_cust_type_cd          VARCHAR2(30),
+  mem_corp_name               VARCHAR2(500),
+  parent_mem_id               VARCHAR2(100),
+  parent_mem_rela_type_cd     VARCHAR2(30),
+  share_ratio                 NUMBER(38,8),
+  chg_type_cd                 VARCHAR2(30),
+  rgst_org_id                 VARCHAR2(100),
+  rgst_teller_id              VARCHAR2(100),
+  rgst_dt                     DATE,
+  update_org_id               VARCHAR2(100),
+  update_teller_id            VARCHAR2(100),
+  final_update_dt             DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H
+  is '对公客户集团信息历史';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.belong_group_id
+  is '所属集团编号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.data_src_cd
+  is '数据来源代码';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.belong_group_name
+  is '所属集团名称';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.belong_group_orgnz_cd
+  is '所属集团组织机构代码';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.belong_group_loan_card_no
+  is '所属集团贷款卡号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.belong_group_rgst_cty_rg_cd
+  is '所属集团注册国家地区代码';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.belong_group_site_cd
+  is '所属集团所在地代码';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.belong_group_rgst_addr
+  is '所属集团注册地址';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.group_core_mem_flg
+  is '集团核心成员标志';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.belong_group_dom_work_addr
+  is '所属集团国内办公地址';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.mem_type_cd
+  is '成员类型代码';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.parent_corp_flg
+  is '母公司标志';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.mem_status_cd
+  is '成员状态代码';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.use_family_edit_num
+  is '当前使用的家谱版本号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.matn_family_edit_num
+  is '当前维护的家谱版本号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.group_cust_type_cd
+  is '集团客户类型代码';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.mem_corp_name
+  is '成员单位名称';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.parent_mem_id
+  is '父成员编号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.parent_mem_rela_type_cd
+  is '父成员关系类型代码';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.share_ratio
+  is '持股比例';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.chg_type_cd
+  is '修订类型代码';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.rgst_org_id
+  is '登记机构编号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.update_org_id
+  is '更新机构编号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.update_teller_id
+  is '更新柜员编号';
+comment on column RRP_MDL.O_IML_PTY_CORP_CUST_GROUP_INFO_H.final_update_dt
+  is '最后更新日期';
+

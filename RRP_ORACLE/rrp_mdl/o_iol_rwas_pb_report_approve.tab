@@ -1,0 +1,75 @@
+﻿create table RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE
+(
+  item_cd           VARCHAR2(90),
+  item_name         VARCHAR2(150),
+  data_date         VARCHAR2(30),
+  solo_no           VARCHAR2(60),
+  org_cd            VARCHAR2(60),
+  ccy_cd            VARCHAR2(60),
+  version           VARCHAR2(150),
+  version_status    NUMBER(22),
+  operate_dt        VARCHAR2(75),
+  operate_id        VARCHAR2(75),
+  operate_name      VARCHAR2(383),
+  flow_starter_id   VARCHAR2(75),
+  flow_starter_name VARCHAR2(383),
+  approve_remark    VARCHAR2(750),
+  catalog_id        VARCHAR2(75),
+  start_dt          DATE,
+  end_dt            DATE,
+  id_mark           VARCHAR2(10),
+  etl_timestamp     TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE
+  is '报表管理-报表版本及流程状态表';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.item_cd
+  is '报表编码';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.item_name
+  is '报表名称';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.data_date
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.solo_no
+  is '法人编码';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.org_cd
+  is '机构编码';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.ccy_cd
+  is '币种编码';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.version
+  is '版本';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.version_status
+  is '版本状态，1-保存，2-审批中，3-归档版本， 4-历史版本';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.operate_dt
+  is '操作时间';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.operate_id
+  is '操作人ID';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.operate_name
+  is '操作人姓名';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.flow_starter_id
+  is '流程发起人ID';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.flow_starter_name
+  is '流程发起人姓名';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.approve_remark
+  is '审批意见';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.catalog_id
+  is '附件目录编号';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_RWAS_PB_REPORT_APPROVE.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,75 @@
+﻿create table RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H
+(
+  agt_id              VARCHAR2(250),
+  lp_id               VARCHAR2(100),
+  flow_num            VARCHAR2(100),
+  prop_id             VARCHAR2(100),
+  retl_prop_id        VARCHAR2(100),
+  pd_num              VARCHAR2(60),
+  cntpty_tran_acct_dt DATE,
+  pay_amt             NUMBER(30,8),
+  rgst_teller_id      VARCHAR2(100),
+  rgst_org_id         VARCHAR2(100),
+  rgst_dt             DATE,
+  update_teller_id    VARCHAR2(100),
+  update_org_id       VARCHAR2(100),
+  up_date             DATE,
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  src_table_name      VARCHAR2(100),
+  job_cd              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H
+  is '单户资产登记子信息历史';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.flow_num
+  is '流水号';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.prop_id
+  is '方案编号';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.retl_prop_id
+  is '零售方案编号';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.pd_num
+  is '期次号';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.cntpty_tran_acct_dt
+  is '交易对手转账日期';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.pay_amt
+  is '支付金额';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.rgst_org_id
+  is '登记机构编号';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.update_teller_id
+  is '更新柜员编号';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.update_org_id
+  is '更新机构编号';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.up_date
+  is '更新日期';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_AP_REGISTER_SUB_INFO_H.job_cd
+  is '任务编码';
+

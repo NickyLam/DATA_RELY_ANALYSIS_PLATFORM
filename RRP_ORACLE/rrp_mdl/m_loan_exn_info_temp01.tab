@@ -1,0 +1,63 @@
+﻿create table RRP_MDL.M_LOAN_EXN_INFO_TEMP01
+(
+  dubil_id         VARCHAR2(200),
+  renew_flow_num   VARCHAR2(200),
+  cont_id          VARCHAR2(200),
+  happ_dt          VARCHAR2(8),
+  start_dt         VARCHAR2(8),
+  renew_amt        NUMBER(30,2),
+  cont_amt         NUMBER(30,2),
+  init_int_rat     NUMBER(30,2),
+  a_renew_int_rat  NUMBER(18,8),
+  a_renew_exp_dt   VARCHAR2(8),
+  org_id           VARCHAR2(200),
+  oper_teller_id   VARCHAR2(200),
+  loan_usage_descb VARCHAR2(4000),
+  rnm              INTEGER,
+  now_cont_id      VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_LOAN_EXN_INFO_TEMP01
+  is '贷款展期信息表临时表';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.dubil_id
+  is '借据号';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.renew_flow_num
+  is '展期流水号';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.cont_id
+  is '展期合同号';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.happ_dt
+  is '展期流水发生日期';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.start_dt
+  is '展期合同号发生日期';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.renew_amt
+  is '展期金额';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.cont_amt
+  is '展期合同金额';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.init_int_rat
+  is '展期前贷款利率';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.a_renew_int_rat
+  is '展期后贷款利率';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.a_renew_exp_dt
+  is '展期后到期日';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.org_id
+  is '展期操作机构';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.oper_teller_id
+  is '展期操作员工';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.loan_usage_descb
+  is '展期合同的合同用途';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.rnm
+  is '序号';
+comment on column RRP_MDL.M_LOAN_EXN_INFO_TEMP01.now_cont_id
+  is '本次展期合同号';
+

@@ -1,0 +1,129 @@
+﻿create table RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY
+(
+  serialno      VARCHAR2(64),
+  duebillno     VARCHAR2(64),
+  accountdate   VARCHAR2(10),
+  transno       VARCHAR2(64),
+  transtype     VARCHAR2(10),
+  transamt      NUMBER(24,6),
+  noaccstatus   VARCHAR2(10),
+  prioccamt     NUMBER(24,6),
+  intoccamt     NUMBER(24,6),
+  defintoccamt  NUMBER(24,6),
+  czflag        VARCHAR2(10),
+  channel       VARCHAR2(20),
+  transdate     VARCHAR2(32),
+  transorgid    VARCHAR2(20),
+  migttype      VARCHAR2(10),
+  inputuserid   VARCHAR2(64),
+  inputorgid    VARCHAR2(64),
+  inputdate     DATE,
+  updateuserid  VARCHAR2(64),
+  updateorgid   VARCHAR2(64),
+  updatedate    DATE,
+  compintoccamt NUMBER(24,6),
+  hxduebillno   VARCHAR2(30),
+  normalintamt  NUMBER(24,6),
+  normalodpamt  NUMBER(24,6),
+  normalodiamt  NUMBER(24,6),
+  intpamt       NUMBER(24,6),
+  odppamt       NUMBER(24,6),
+  odipamt       NUMBER(24,6),
+  batchno       VARCHAR2(36),
+  sendflag      VARCHAR2(2),
+  compflag      VARCHAR2(2),
+  bizdate       VARCHAR2(10),
+  type          VARCHAR2(10),
+  globseqnum    VARCHAR2(200),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY
+  is '信贷供交易流水文件临时表历史表';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.duebillno
+  is '信贷借据号';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.accountdate
+  is '账务日期';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.transno
+  is '交易流水号';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.transtype
+  is '交易类型';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.transamt
+  is '交易金额';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.noaccstatus
+  is '非应计状态';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.prioccamt
+  is '本金发生额';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.intoccamt
+  is '利息发生额';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.defintoccamt
+  is '罚息发生额';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.czflag
+  is '冲正标识';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.channel
+  is '渠道';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.transdate
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.transorgid
+  is '交易机构';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.migttype
+  is '交易标志';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.compintoccamt
+  is '复利发生额';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.hxduebillno
+  is '核心借据号';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.normalintamt
+  is '正常利息';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.normalodpamt
+  is '正常罚息';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.normalodiamt
+  is '正常复利';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.intpamt
+  is '逾期利息';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.odppamt
+  is '逾期罚息';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.odipamt
+  is '逾期复利';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.batchno
+  is '批次号';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.sendflag
+  is '是否上送（1上送成功，null未上送，0上送失败）';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.compflag
+  is '是否代偿（1是，其他为否）';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.bizdate
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.type
+  is '类型';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.globseqnum
+  is '全局流水号';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_ICMS_LHD_TRANS_FLOW_INFO_HISTORY.etl_timestamp
+  is 'ETL处理时间戳';
+

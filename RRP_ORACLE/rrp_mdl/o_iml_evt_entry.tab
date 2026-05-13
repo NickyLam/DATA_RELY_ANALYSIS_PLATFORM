@@ -1,0 +1,153 @@
+﻿create table RRP_MDL.O_IML_EVT_ENTRY
+(
+  evt_id                     VARCHAR2(60),
+  lp_id                      VARCHAR2(60),
+  entry_id                   VARCHAR2(60),
+  belong_hq_bank_no          VARCHAR2(90),
+  tran_org_id                VARCHAR2(60),
+  entry_tran_id              VARCHAR2(60),
+  tran_attr_string           VARCHAR2(150),
+  prod_id                    VARCHAR2(60),
+  batch_id                   VARCHAR2(60),
+  cont_id                    VARCHAR2(60),
+  dtl_id                     VARCHAR2(100),
+  bill_id                    VARCHAR2(60),
+  bill_num                   VARCHAR2(90),
+  fac_val_amt                NUMBER(30,2),
+  entry_seq_num              NUMBER(10),
+  get_val_field              VARCHAR2(90),
+  debit_crdt_dir_cd          VARCHAR2(10),
+  prtcptr_role_cd            VARCHAR2(60),
+  prtcptr_amt                NUMBER(30,2),
+  entry_flg                  VARCHAR2(10),
+  subj_id                    VARCHAR2(60),
+  subj_name                  VARCHAR2(150),
+  cust_id                    VARCHAR2(100),
+  target_acct_num            VARCHAR2(150),
+  prtcptr_acct_type_cd       VARCHAR2(60),
+  org_id                     VARCHAR2(60),
+  prtcptr_type_cd            VARCHAR2(30),
+  prtcptr_ext                VARCHAR2(375),
+  ext_amt_1                  NUMBER(30,2),
+  ext_amt_2                  NUMBER(30,2),
+  ext_amt_3                  NUMBER(30,2),
+  batch_entry_flg            VARCHAR2(10),
+  dtl_status_flg             VARCHAR2(10),
+  create_tm                  TIMESTAMP(6),
+  update_tm                  TIMESTAMP(6),
+  final_modif_operr_id       VARCHAR2(60),
+  sys_id                     VARCHAR2(100),
+  acct_instit_id             VARCHAR2(60),
+  init_bill_sys_rgst_cter_id VARCHAR2(60),
+  h_data_flg                 VARCHAR2(100),
+  etl_dt                     DATE,
+  src_table_name             VARCHAR2(100),
+  job_cd                     VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6),
+  rn_rank                    NUMBER(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_ENTRY
+  is '记账分录事件';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.entry_id
+  is '记账分录编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.belong_hq_bank_no
+  is '所属总行行号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.entry_tran_id
+  is '记账交易编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.tran_attr_string
+  is '交易属性字符串';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.batch_id
+  is '批次编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.dtl_id
+  is '明细编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.bill_id
+  is '票据编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.bill_num
+  is '票据号码';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.fac_val_amt
+  is '票面金额';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.entry_seq_num
+  is '分录顺序号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.get_val_field
+  is '取值字段';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.debit_crdt_dir_cd
+  is '借贷方向代码';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.prtcptr_role_cd
+  is '参与方角色代码';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.prtcptr_amt
+  is '参与方金额';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.entry_flg
+  is '分录标志';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.subj_name
+  is '科目名称';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.target_acct_num
+  is '目标账户号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.prtcptr_acct_type_cd
+  is '参与方账户类型代码';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.prtcptr_type_cd
+  is '参与方类型代码';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.prtcptr_ext
+  is '参与方扩展';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.ext_amt_1
+  is '扩展金额1';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.ext_amt_2
+  is '扩展金额2';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.ext_amt_3
+  is '扩展金额3';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.batch_entry_flg
+  is '批次记账标志';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.dtl_status_flg
+  is '明细状态标志';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.create_tm
+  is '创建时间';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.update_tm
+  is '更新时间';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.final_modif_operr_id
+  is '最后修改操作员编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.sys_id
+  is '系统编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.acct_instit_id
+  is '账务机构编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.init_bill_sys_rgst_cter_id
+  is '原票据系统登记中心编号';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.h_data_flg
+  is '历史数据标志';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IML_EVT_ENTRY.rn_rank
+  is '序号';
+

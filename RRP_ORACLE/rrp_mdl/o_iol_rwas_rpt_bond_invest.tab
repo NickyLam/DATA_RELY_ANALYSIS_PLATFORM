@@ -1,0 +1,414 @@
+﻿create table RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST
+(
+  data_date                   DATE,
+  loan_ref_no                 VARCHAR2(150),
+  loan_ref_desc               VARCHAR2(600),
+  contract_no                 VARCHAR2(150),
+  src_system_id               VARCHAR2(30),
+  accorg_no                   VARCHAR2(30),
+  accorg_name                 VARCHAR2(383),
+  five_class_cd               VARCHAR2(30),
+  five_class_name             VARCHAR2(30),
+  product_cd                  VARCHAR2(60),
+  product_name                VARCHAR2(600),
+  bis_product_type_cd         VARCHAR2(120),
+  bis_product_type_name       VARCHAR2(300),
+  bis_product_btype_cd        VARCHAR2(60),
+  bis_product_btype_name      VARCHAR2(300),
+  buss_type_cd                VARCHAR2(75),
+  buss_type_name              VARCHAR2(300),
+  start_date                  DATE,
+  due_date                    DATE,
+  orig_maturity               NUMBER(18,2),
+  overdue_days                NUMBER(22),
+  std_default_flag            VARCHAR2(15),
+  book_type_id                VARCHAR2(15),
+  book_type_name              VARCHAR2(30),
+  on_off_id                   VARCHAR2(15),
+  bis_ccy_cd                  VARCHAR2(15),
+  bis_ccy_name                VARCHAR2(96),
+  exchange_rate               NUMBER(18,8),
+  subject_cd                  VARCHAR2(24),
+  subject_name                VARCHAR2(300),
+  pric_bal_origcurr           NUMBER(18,2),
+  pric_bal                    NUMBER(18,2),
+  asset_balance               NUMBER(18,2),
+  accrued_subject_cd          VARCHAR2(24),
+  accrued_subject_name        VARCHAR2(300),
+  accrued_int                 NUMBER(18,2),
+  receivable_subject_cd       VARCHAR2(24),
+  receivable_subject_name     VARCHAR2(300),
+  receivable_int              NUMBER(18,2),
+  accrued_receiv_subject_cd   VARCHAR2(24),
+  accrued_receiv_subject_name VARCHAR2(300),
+  accrued_receiv_int          NUMBER(18,2),
+  intadj_subject_cd           VARCHAR2(24),
+  intadj_subject_name         VARCHAR2(300),
+  int_adj                     NUMBER(18,2),
+  fairchange_subject_cd       VARCHAR2(24),
+  fairchange_subject_name     VARCHAR2(300),
+  fairvalue_changes           NUMBER(18,2),
+  depreamor_subject_cd        VARCHAR2(24),
+  depreamor_subject_name      VARCHAR2(300),
+  depre_amortizat             NUMBER(18,2),
+  other_subject_cd            VARCHAR2(24),
+  other_subject_name          VARCHAR2(300),
+  other_amt                   NUMBER(18,2),
+  provision_subject_cd        VARCHAR2(24),
+  provision_subject_name      VARCHAR2(300),
+  provision                   NUMBER(18,2),
+  provesion_ratio             NUMBER(18,6),
+  account_classification      VARCHAR2(15),
+  cust_no                     VARCHAR2(150),
+  cust_name                   VARCHAR2(384),
+  ccp_type_cd                 VARCHAR2(60),
+  ccp_type_name               VARCHAR2(300),
+  ccp_btype_cd                VARCHAR2(60),
+  ccp_btype_name              VARCHAR2(150),
+  spe_lending_flag            VARCHAR2(15),
+  spe_lending_type            VARCHAR2(150),
+  bis_country_name            VARCHAR2(300),
+  sov_sp_lt_rating_cd         VARCHAR2(30),
+  cust_sp_lt_rating_cd        VARCHAR2(30),
+  scra_rating                 VARCHAR2(15),
+  int_trade_flag              VARCHAR2(3),
+  solo_int_trade_flag         VARCHAR2(3),
+  investment_cust_flag        VARCHAR2(15),
+  ccy_mismatch_flag           VARCHAR2(3),
+  accept_credit_self_flag     VARCHAR2(3),
+  real_estate_type_cd         VARCHAR2(300),
+  ltv                         NUMBER(18,6),
+  accept_discount_self_flag   VARCHAR2(3),
+  operation_pf_flag           VARCHAR2(3),
+  cancel_flag                 VARCHAR2(3),
+  off_asset_unmeasured_flag   VARCHAR2(3),
+  unused_prl_tmeet_flag       VARCHAR2(3),
+  ead_orig                    NUMBER(18,2),
+  ccf                         NUMBER(18,6),
+  ead_afterccf                NUMBER(18,2),
+  ead_afterpro                NUMBER(18,2),
+  rw                          NUMBER(18,6),
+  crm_ccy_mis_flag            VARCHAR2(15),
+  crm_amt_rmb                 NUMBER(18,2),
+  crm_amt_split               NUMBER(18,2),
+  crm_ccy_mis_coeff           NUMBER(18,6),
+  crm_mat_mis_coeff           NUMBER(18,6),
+  crm_floor_mis_coeff         NUMBER(18,6),
+  crm_weighting_rw            NUMBER(18,6),
+  rwa_ucovered                NUMBER(18,6),
+  rwa_covered                 NUMBER(18,6),
+  rwa                         NUMBER(18,2),
+  c_item_e                    NUMBER(18,6),
+  c_item_f                    NUMBER(18,6),
+  c_item_g                    NUMBER(18,6),
+  c_item_h                    NUMBER(18,6),
+  c_item_i                    NUMBER(18,6),
+  c_item_j                    NUMBER(18,6),
+  c_item_k                    NUMBER(18,6),
+  c_item_l                    NUMBER(18,6),
+  c_item_m                    NUMBER(18,6),
+  c_item_n                    NUMBER(18,6),
+  c_item_o                    NUMBER(18,6),
+  c_item_p                    NUMBER(18,6),
+  c_item_q                    NUMBER(18,6),
+  c_item_r                    NUMBER(18,6),
+  c_item_s                    NUMBER(18,6),
+  c_item_t                    NUMBER(18,6),
+  c_item_u                    NUMBER(18,6),
+  c_item_v                    NUMBER(18,6),
+  c_item_w                    NUMBER(18,6),
+  c_item_x                    NUMBER(18,6),
+  c_item_y                    NUMBER(18,6),
+  c_item_z                    NUMBER(18,6),
+  report_no                   VARCHAR2(30),
+  report_line_no              VARCHAR2(60),
+  report_line_name            VARCHAR2(300),
+  investment_vaild_flag       VARCHAR2(15),
+  recognition_date            DATE,
+  sec_no                      VARCHAR2(90),
+  sec_name                    VARCHAR2(150),
+  load_date                   VARCHAR2(30),
+  final_weight                VARCHAR2(15),
+  nvestment_rema_maturity     NUMBER(18),
+  etl_dt                      DATE,
+  etl_timestamp               TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST
+  is '内部管理报表_债券投资';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.data_date
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.loan_ref_no
+  is '债项编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.loan_ref_desc
+  is '债项描述';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.contract_no
+  is '合同编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.src_system_id
+  is '来源系统标识';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.accorg_no
+  is '账务机构';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.accorg_name
+  is '账务机构名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.five_class_cd
+  is '五级分类代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.five_class_name
+  is '五级分类名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.product_cd
+  is '产品代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.product_name
+  is '产品名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.bis_product_type_cd
+  is '监管产品类型代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.bis_product_type_name
+  is '监管产品类型名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.bis_product_btype_cd
+  is '监管产品大类代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.bis_product_btype_name
+  is '监管产品大类名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.buss_type_cd
+  is '业务类型';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.buss_type_name
+  is '业务名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.start_date
+  is '起息日';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.due_date
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.orig_maturity
+  is '原始期限';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.overdue_days
+  is '逾期天数';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.std_default_flag
+  is '权重法违约标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.book_type_id
+  is '账簿类型';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.book_type_name
+  is '账簿名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.on_off_id
+  is '表内外资产标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.bis_ccy_cd
+  is '计量币种代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.bis_ccy_name
+  is '计量币种名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.exchange_rate
+  is '汇率';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.subject_cd
+  is '本金科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.subject_name
+  is '本金科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.pric_bal_origcurr
+  is '本金余额（原币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.pric_bal
+  is '本金余额（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.asset_balance
+  is '资产余额（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.accrued_subject_cd
+  is '应计利息科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.accrued_subject_name
+  is '应计利息科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.accrued_int
+  is '应计利息（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.receivable_subject_cd
+  is '应收利息科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.receivable_subject_name
+  is '应收利息科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.receivable_int
+  is '应收利息（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.accrued_receiv_subject_cd
+  is '应收未收利息科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.accrued_receiv_subject_name
+  is '应收未收利息名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.accrued_receiv_int
+  is '应收未收利息（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.intadj_subject_cd
+  is '利息调整科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.intadj_subject_name
+  is '利息调整科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.int_adj
+  is '利息调整（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.fairchange_subject_cd
+  is '公允价值变动科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.fairchange_subject_name
+  is '公允价值变动科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.fairvalue_changes
+  is '公允价值变动（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.depreamor_subject_cd
+  is '折旧科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.depreamor_subject_name
+  is '折旧科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.depre_amortizat
+  is '折旧金额（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.other_subject_cd
+  is '其他科目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.other_subject_name
+  is '其他科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.other_amt
+  is '其他金额（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.provision_subject_cd
+  is '准备金科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.provision_subject_name
+  is '准备金科目名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.provision
+  is '准备金（本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.provesion_ratio
+  is '准备金计提比例';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.account_classification
+  is '金融资产分类';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.cust_no
+  is '客户号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.ccp_type_cd
+  is '交易对手类型代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.ccp_type_name
+  is '交易对手类型名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.ccp_btype_cd
+  is '交易对手大类代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.ccp_btype_name
+  is '交易对手大类名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.spe_lending_flag
+  is '专业贷款标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.spe_lending_type
+  is '专业贷款分类';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.bis_country_name
+  is '注册国名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.sov_sp_lt_rating_cd
+  is '注册国标普评级代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.cust_sp_lt_rating_cd
+  is '客户标普评级';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.scra_rating
+  is 'SCRA评级';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.int_trade_flag
+  is '内部交易标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.solo_int_trade_flag
+  is '法人内部交易标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.investment_cust_flag
+  is '投资级客户标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.ccy_mismatch_flag
+  is '币种错配标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.accept_credit_self_flag
+  is '自开信用证标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.real_estate_type_cd
+  is '房地产风险暴露类型名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.ltv
+  is 'LTV规则';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.accept_discount_self_flag
+  is '自承自贴标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.operation_pf_flag
+  is '项目融资运营阶段标识';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.cancel_flag
+  is '随时可撤销标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.off_asset_unmeasured_flag
+  is '表外资产不计量标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.unused_prl_tmeet_flag
+  is '符合标准的未使用额度标志';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.ead_orig
+  is '原始风险暴露';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.ccf
+  is '表外信用风险转换系数';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.ead_afterccf
+  is '转换后的风险暴露';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.ead_afterpro
+  is '扣减准备金后的风险暴露';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.rw
+  is '权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.crm_ccy_mis_flag
+  is '是否存在缓释币种错配';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.crm_amt_rmb
+  is '缓释金额折本币';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.crm_amt_split
+  is '缓释金额拆分本币';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.crm_ccy_mis_coeff
+  is '缓释币种错配折扣系数';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.crm_mat_mis_coeff
+  is '缓释期限错配系数';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.crm_floor_mis_coeff
+  is '底线折扣系数';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.crm_weighting_rw
+  is '缓释加权权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.rwa_ucovered
+  is '缓释未覆盖部分的RWA';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.rwa_covered
+  is '缓释覆盖部分的RWA';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.rwa
+  is '风险加权资产';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_e
+  is '现金类资产';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_f
+  is '我国中央政府';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_g
+  is '中国人民银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_h
+  is '我国开发性金融机构和政策性银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_i
+  is '省级（自治区、直辖市）及计划单列市人民政府-一般债券';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_j
+  is '省级（自治区、直辖市）及计划单列市人民政府-专项债券';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_k
+  is '其他收入主要源于中央财政的公共部门实体';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_l
+  is '经金融监管总局认定的我国一般公共部门实体';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_m
+  is '金融资产管理公司为收购国有银行不良贷款而定向发行的债券';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_n
+  is '评级AA-以上（含）的国家和地区的中央政府和中央银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_o
+  is '评级AA-以下，A-（含）以上的国家和地区的中央政府和中央银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_p
+  is '评级A-以下，BBB-（含）以上的国家和地区的中央政府和中央银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_q
+  is '评级AA-（含）及以上国家和地区注册的公共部门实体';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_r
+  is '评级AA-以下，A-（含）以上国家和地区注册的公共部门实体';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_s
+  is 'A+级和A级境内外商业银行（短期）';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_t
+  is 'A+级境内外商业银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_u
+  is 'A级境内外商业银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_v
+  is '合格多边开发银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_w
+  is '评级AA-（含）以上的其他多边开发银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_x
+  is '对评级AA-以下，A-（含）以上的其他多边开发银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_y
+  is '评级A-以下，BBB-（含）以上的其他多边开发银行';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.c_item_z
+  is '国际清算银行、国际货币基金组织、欧洲中央银行、欧盟、欧洲稳定机制和欧洲金融稳定机制';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.report_no
+  is '报表编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.report_line_no
+  is '报表栏位号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.report_line_name
+  is 'G4B栏位名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.investment_vaild_flag
+  is '投资级认定是否在有效期内';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.recognition_date
+  is '认定日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.sec_no
+  is '债券编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.sec_name
+  is '债券名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.load_date
+  is '加载日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.final_weight
+  is '最终风险权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.nvestment_rema_maturity
+  is '投资级认定剩余有效期限天数';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_BOND_INVEST.etl_timestamp
+  is 'ETL处理时间戳';
+

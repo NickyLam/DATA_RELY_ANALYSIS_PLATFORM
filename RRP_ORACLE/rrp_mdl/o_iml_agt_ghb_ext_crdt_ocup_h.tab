@@ -1,0 +1,84 @@
+﻿create table RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H
+(
+  agt_id             VARCHAR2(250),
+  lp_id              VARCHAR2(60),
+  ser_num            VARCHAR2(100),
+  apv_form_num       VARCHAR2(100),
+  tran_odd_no        VARCHAR2(100),
+  fin_instm_id       VARCHAR2(100),
+  asset_type_id      VARCHAR2(100),
+  market_type_id     VARCHAR2(100),
+  intnal_vch_acct_id VARCHAR2(100),
+  acct_acctnt_cls_cd VARCHAR2(30),
+  acct_b_cate_cd     VARCHAR2(30),
+  crdt_side_cust_id  VARCHAR2(100),
+  crdt_side_name     VARCHAR2(375),
+  lmt_cont_id        VARCHAR2(100),
+  occu_lmt           NUMBER(30,8),
+  ocup_surp_lmt      NUMBER(30,8),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  src_table_name     VARCHAR2(100),
+  job_cd             VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H
+  is '华兴外部授信占用历史';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.ser_num
+  is '序列号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.apv_form_num
+  is '审批单号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.tran_odd_no
+  is '交易单号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.fin_instm_id
+  is '金融工具编号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.asset_type_id
+  is '资产类型编号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.market_type_id
+  is '市场类型编号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.intnal_vch_acct_id
+  is '内部券账户编号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.acct_acctnt_cls_cd
+  is '账户会计分类代码';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.acct_b_cate_cd
+  is '账簿类别代码';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.crdt_side_cust_id
+  is '授信方客户编号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.crdt_side_name
+  is '授信方名称';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.lmt_cont_id
+  is '额度合同编号';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.occu_lmt
+  is '已占用额度';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.ocup_surp_lmt
+  is '占用剩余额度';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_GHB_EXT_CRDT_OCUP_H.etl_timestamp
+  is 'ETL处理时间戳';
+

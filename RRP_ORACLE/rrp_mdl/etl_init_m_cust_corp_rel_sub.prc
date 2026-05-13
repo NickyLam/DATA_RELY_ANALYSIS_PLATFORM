@@ -1,0 +1,544 @@
+﻿CREATE OR REPLACE PROCEDURE RRP_MDL.ETL_INIT_M_CUST_CORP_REL_SUB(I_P_DATE IN INTEGER,
+                                                O_ERRCODE OUT VARCHAR2)
+  /**************************************************************************
+  *  程序名称：ETL_INIT_M_CUST_CORP_REL_SUB
+  *  功能描述：监管集市对公客户的关联方相关信息，包括但不仅限于股东、上下游关系、共同出资组建企业关系、亲属关系、担保关系、
+  *             实际控制人、共同受同一自然人控制、集团成员、法定代表人、董事长（理事长）、监事长、总经理、财务主管、个人股东等关联关系。
+  *  创建日期：20220608
+  *  开发人员：hulijuan
+  *  来源表：  ICL.CMM_CORP_CUST_BASIC_INFO    --对公客户信息表
+  *            ICL.CMM_CORP_CUST_RELA_PS_INFO  --对公关联人
+  *            ICL.CMM_GUAR_CONT               --担保合同
+  *            ICL.CMM_LOAN_GUAR_CONT_RELA     --贷款合同与担保合同关系
+  *            ICL.CMM_CORP_LOAN_CONT_INFO C   --对公贷款合同信息
+  *            ICL.CMM_CORP_CUST_BASIC_INFO    --对公客户基础信息
+  *            ICL.CMM_INTNAL_ORG_INFO         --内部机构信息表
+  *
+  *  目标表：  M_CUST_CORP_REL_SUB --对公客户关联人子表
+  *
+  *  配置表：  CODE_MAP --码值映射表
+  *  修改情况：序号  修改日期  修改人   修改原因
+  *             1    20220507  程序员   首次创建
+  *             2    20221022  hulj     调整关联人类型取值
+  *             3    20221107  hulj     增加数据重复校验
+  *             4    20221129  xucx     增加字段取数仓的关联人证件类型
+  *             5    20230116  hulj     新增字段ecif客户号
+  ***************************************************************************/
+ AS
+  -- 定义变量 --
+  V_STEP      INTEGER := 0; -- 处理步骤
+  V_PROC_NAME VARCHAR2(200) := 'ETL_INIT_M_CUST_CORP_REL_SUB'; -- 程序名称
+  V_STEP_DESC VARCHAR2(100);-- 处理步骤描述
+  V_P_DATE  VARCHAR2(8); -- 跑批数据日期
+  V_STARTTIME DATE; -- 处理开始时间
+  V_ENDTIME DATE;   -- 处理结束时间
+  V_SQLCOUNT  INTEGER := 0; -- 更新或删除影响的记录数
+  V_SQLMSG    VARCHAR2(300); -- SQL执行描述信息
+  V_SYSTEM    VARCHAR2(100); -- 来源系统
+  --V_LAST_DAT  VARCHAR2(8); -- 当月月末
+  --V_YESTADAY  VARCHAR2(8); -- 上日
+  V_DATE       DATE; --数据日期(判断输入参数日期格式是否准确)
+  V_PART_NAME  VARCHAR2(50);  --表分区名字
+  V_TAB_NAME   VARCHAR2(50); -- 表名
+ V_START_DT CHAR(8) ;       --月初日期
+  BEGIN
+
+  -- 处理参数及月末等判断逻辑 --
+  V_P_DATE :=TO_CHAR( I_P_DATE); -- 获取跑批日期
+  V_SYSTEM := '监管报送'; -- 默认写监管报送系统，有真实来源的按实际写
+  V_TAB_NAME := 'M_CUST_CORP_REL_SUB'; --表名
+  V_PART_NAME := 'PARTITION_'||V_P_DATE;
+  --V_YESTADAY := TO_CHAR(TO_DATE(V_P_DATE,'YYYYMMDD')-1,'YYYYMMDD'); -- 上日
+  --V_LAST_DAT := TO_CHAR(LAST_DAY(TO_DATE(V_P_DATE,'YYYY-MM-DD')),'YYYYMMDD'); --当月月底
+  --IF V_P_DATE <> V_LAST_DAT THEN
+  --  RETURN;
+  --END IF;
+  ----将参数转化为日期格式，判读输入参数是否符合日期要求
+  V_DATE    := TO_DATE(SUBSTR(I_P_DATE, 1, 4) || '-' ||
+                       SUBSTR(I_P_DATE, 5, 2) || '-' ||
+                       SUBSTR(I_P_DATE, 7, 2),
+                       'YYYY-MM-DD');
+
+  /*判断传入日期参数是否正确*/
+  /*IF I_P_DATE IS NOT NULL THEN
+    V_DATE := TO_DATE(I_P_DATE, 'yyyymmdd');
+  END IF; */
+
+ -- 支持重跑 --
+  V_STEP := 1;
+  V_STEP_DESC := '-- 程序跑批开始 --';
+  V_STARTTIME := SYSDATE;
+  V_SQLCOUNT := SQL%ROWCOUNT;
+  V_SQLMSG := '返回值：['||SQLCODE||'],执行信息：'||SQLERRM;
+  O_ERRCODE := '0';
+  V_ENDTIME := SYSDATE;
+  COMMIT;
+  ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,V_SQLMSG);
+
+  --判断跑批频度--
+
+
+  -- 分区表分区处理 --
+  V_STEP := V_STEP + 1;
+  V_STEP_DESC := '分区处理';
+  V_STARTTIME := SYSDATE;
+
+  --初始化表增加分区
+  V_STEP_DESC := '初始化表增加分区';
+  V_START_DT := SUBSTR(V_P_DATE,0,6)||'01';
+  WHILE TO_DATE(V_START_DT,'YYYYMMDD') <= TO_DATE(V_P_DATE,'YYYYMMDD')
+  LOOP
+  ETL_PARTITION_ADD(V_START_DT,V_TAB_NAME, '1', O_ERRCODE);
+  V_START_DT := TO_CHAR(TO_DATE(V_START_DT,'YYYYMMDD')  + 1 ,'YYYYMMDD');
+  END LOOP;
+
+  V_SQLCOUNT := SQL%ROWCOUNT;
+  V_SQLMSG := '返回值：['||SQLCODE||'],描述信息：'||SQLERRM;
+  V_ENDTIME := SYSDATE;
+  COMMIT;
+  ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,V_SQLMSG);
+  --删除当前分区数据
+
+  EXECUTE IMMEDIATE ('ALTER TABLE '|| V_TAB_NAME ||' TRUNCATE PARTITION '||V_PART_NAME);--分区表的重跑处理
+
+
+  -- 程序业务逻辑处理主体部分 --
+  V_STEP := V_STEP + 1; -- 小于10步骤直接写数字，大于10步用V_STEP := V_STEP + 1;描述每一步骤的作用，如加工处理核心系统个人客户信息。
+  V_STEP_DESC := '插入对公客户关联人子表:逻辑1-ECIF系统数据信息';
+  V_STARTTIME := SYSDATE;
+  INSERT INTO M_CUST_CORP_REL_SUB
+  (
+    DATA_DT               --数据日期
+    ,LGL_REP_ID            --法人编号
+    ,CUST_ID               --客户编号
+    ,REL_TYP               --关系类型
+    ,REL_PSN_TYP           --关联人类型
+    ,REL_PSN_CUST_NM       --关联人客户名称
+    ,REL_PSN_CUST_ID       --关联人客户编号
+    ,REL_PSN_CTRY_CD       --关联人国家代码
+    ,REL_PSN_CRDL_TYP      --关联人证件类型
+    ,REL_PSN_CRDL_NO       --关联人证件号码
+    ,PBC_NO                --人行支付行号
+    ,FIN_PERMIT_NO         --金融许可证号
+    ,ACT_CNTLR_FLG         --实际控制人标志
+    ,ACT_CNTLR_TYP         --实际控制人类型
+    ,REGD_CD_RSK           --登记注册代码（客户风险）
+    ,UPD_INFO_DT           --更新信息日期
+    ,SENIOR_IMPT_PSN_FLG   --高管及重要联系人标志
+    ,REL_STAT              --关联关系状态
+    ,PP1_NO                --护照1号码
+    ,PP1_ISU_DT            --护照1签发日期
+    ,PP1_EXP_DT            --护照1到期日期
+    ,PP2_NO                --护照2号码
+    ,PP2_ISU_DT            --护照2签发日期
+    ,PP2_EXP_DT            --护照2到期日期
+    ,PP3_NO                --护照3号码
+    ,PP3_ISU_DT            --护照3签发日期
+    ,PP3_EXP_DT            --护照3到期日期
+    ,OTH_CRDL_TYP1         --其他证件类型1
+    ,OTH_CRDL_NO1          --其他证件号码1
+    ,OTH_CRDL_TYP2         --其他证件类型2
+    ,OTH_CRDL_NO2          --其他证件号码2
+    ,DEPT_LINE             --部门条线
+    ,DATA_SRC              --数据来源
+    ,REL_PSN_TYP_ORIG      --原始关联人类型
+    ,HOLD_TYPE_CD          --持股类型代码
+    ,DEPOSITR_CATE_CD      --存款人类型代码
+    ,RELA_PS_CERT_TYPE_CD  --数仓关联人证件类型 ADD BY 20221129 XUCX
+    ,ECIF_CUST_ID          --ECIF客户号
+  )
+  SELECT
+     T.DATA_DT               --数据日期
+    ,T.LGL_REP_ID            --法人编号
+    ,T.CUST_ID               --客户编号
+    ,T.REL_TYP               --关系类型
+    ,T.REL_PSN_TYP           --关联人类型
+    ,T.REL_PSN_CUST_NM       --关联人客户名称
+    ,T.REL_PSN_CUST_ID       --关联人客户编号
+    ,T.REL_PSN_CTRY_CD       --关联人国家代码
+    ,T.REL_PSN_CRDL_TYP      --关联人证件类型
+    ,T.REL_PSN_CRDL_NO       --关联人证件号码
+    ,T.PBC_NO                --人行支付行号
+    ,T.FIN_PERMIT_NO         --金融许可证号
+    ,T.ACT_CNTLR_FLG         --实际控制人标志
+    ,T.ACT_CNTLR_TYP         --实际控制人类型
+    ,T.REGD_CD_RSK           --登记注册代码（客户风险）
+    ,T.UPD_INFO_DT           --更新信息日期
+    ,T.SENIOR_IMPT_PSN_FLG   --高管及重要联系人标志
+    ,T.REL_STAT              --关联关系状态
+    ,T.PP1_NO                --护照1号码
+    ,T.PP1_ISU_DT            --护照1签发日期
+    ,T.PP1_EXP_DT            --护照1到期日期
+    ,T.PP2_NO                --护照2号码
+    ,T.PP2_ISU_DT            --护照2签发日期
+    ,T.PP2_EXP_DT            --护照2到期日期
+    ,T.PP3_NO                --护照3号码
+    ,T.PP3_ISU_DT            --护照3签发日期
+    ,T.PP3_EXP_DT            --护照3到期日期
+    ,T.OTH_CRDL_TYP1         --其他证件类型1
+    ,T.OTH_CRDL_NO1          --其他证件号码1
+    ,T.OTH_CRDL_TYP2         --其他证件类型2
+    ,T.OTH_CRDL_NO2          --其他证件号码2
+    ,T.DEPT_LINE             --部门条线
+    ,T.DATA_SRC              --数据来源
+    ,T.REL_PSN_TYP_ORIG      --原始关联人类型代码
+    ,T.HOLD_TYPE_CD          --持股类型代码
+    ,T.DEPOSITR_CATE_CD      --存款人类型代码
+    ,T.RELA_PS_CERT_TYPE_CD  --数仓关联人证件类型 ADD BY 20221129 XUCX
+    ,T.ECIF_CUST_ID          --ECIF客户号
+  FROM
+  (
+  SELECT
+     TO_CHAR(A.ETL_DT,'YYYYMMDD')                          AS DATA_DT               --数据日期
+    ,A.LP_ID                                               AS LGL_REP_ID            --法人编号
+    ,A.CUST_ID                                             AS CUST_ID               --客户编号
+    ,NVL(B.TAR_VALUE_CODE,'99')                            AS REL_TYP               --关系类型 --modify by hulj20221022
+    ,CASE WHEN A.RELA_TYPE_CD = '30101' THEN '01'                 --法定代表人
+          WHEN A.RELA_TYPE_CD = '30102' THEN '02'                 --董事长
+          WHEN A.RELA_TYPE_CD = '30103' THEN '03'                 --监事长
+          WHEN A.RELA_TYPE_CD = '30104' THEN '04'                 --总经理
+          WHEN A.RELA_TYPE_CD = '30105' THEN '05'                 --财务主管
+          --WHEN A.RELA_TYPE_CD IN ('30111','40100') THEN '06'      --个人股东  --modify by tangan  at 20221101 40100股东不区分个人和对公，需要通过关联人证件类型区分对公和个人
+          WHEN A.RELA_TYPE_CD IN ('30111','40100') AND SUBSTR(A.RELA_PS_CERT_TYPE_CD,1,1) = '1' THEN '06'      --个人股东
+          WHEN A.RELA_TYPE_CD IN ('30200','30201','30202','30203','30204','30205')  THEN '011'             --公司法人代表的其他关系  --add by LHQ at 20220316 增加新的码值映射
+          /*30200公司法人代表亲属关系/30201公司法人代表的配偶/30202公司法人代表的父母/30203公司法人代表的子女/30204公司法人代表的其他血亲/30205公司法人代表的其他姻亲*/
+          WHEN A.RELA_TYPE_CD IN ('30100','30106','30107','30108','30109','30110','40301','40302','40303')  THEN '012'    --其他公司方自然人类型   --add by LHQ at 20220316 增加新的码值映射
+          WHEN C.HOLD_TYPE_CD like 'A01%' THEN '07'               --国有企业
+          WHEN C.HOLD_TYPE_CD like 'B01%' THEN '08'               --民营企业
+          WHEN C.NATNAL_ECON_DEPT_TYPE_CD LIKE 'A%' THEN '09'     --政府机关
+          WHEN C.DEPOSITR_CATE_CD IN ('04','05') THEN '10'        --事业单位
+          WHEN C.DEPOSITR_CATE_CD IN ('08') THEN '11'             --社会团体
+          WHEN C.NATNAL_ECON_DEPT_TYPE_CD LIKE 'E%' THEN '12'     --境外机构
+          ELSE '99'                                               --其他
+     END                                                   AS REL_PSN_TYP           --关联人类型
+    ,A.RELA_PS_NAME                                        AS REL_PSN_CUST_NM       --关联人客户名称
+    ,A.RELA_PS_CUST_ID                                     AS REL_PSN_CUST_ID       --关联人客户编号
+    ,A.RELA_PS_NATION_CD                                   AS REL_PSN_CTRY_CD       --关联人国家代码
+    ,A.RELA_PS_CERT_TYPE_CD                                AS REL_PSN_CRDL_TYP      --关联人证件类型
+    ,A.RELA_PS_CERT_NO                                     AS REL_PSN_CRDL_NO       --关联人证件号码
+    ,C.PBC_PAY_BANK_NO                                     AS PBC_NO                --人行支付行号
+    ,C.FIN_LICS_NUM                                        AS FIN_PERMIT_NO         --金融许可证号
+    ,CASE WHEN A.RELA_TYPE_CD IN ('30110' ,'30111') THEN 'Y'
+          ELSE 'N'
+     END                                                   AS ACT_CNTLR_FLG         --实际控制人标志
+    ,CASE WHEN A.RELA_TYPE_CD IN ('30110' ,'30111') THEN
+             CASE WHEN SUBSTR(A.RELA_PS_CERT_TYPE_CD,1,1) = '1' AND A.RELA_PS_NATION_CD IN ('CHN','XXX') THEN '01'     --自然人（中国公民）
+                  WHEN SUBSTR(A.RELA_PS_CERT_TYPE_CD,1,1) = '1' AND A.RELA_PS_NATION_CD NOT IN ('CHN','XXX') THEN '02' --自然人（非中国公民）
+                  WHEN C.NATNAL_ECON_DEPT_TYPE_CD LIKE 'C%' THEN '03'        --境内非金融机构
+                  WHEN C.NATNAL_ECON_DEPT_TYPE_CD IN ('B03','B04') THEN '04' --境内银行业金融机构
+                  WHEN C.NATNAL_ECON_DEPT_TYPE_CD LIKE 'B%' AND C.NATNAL_ECON_DEPT_TYPE_CD NOT IN ('B03','B04') THEN '05' --境内非银行金融机构
+                  WHEN C.NATNAL_ECON_DEPT_TYPE_CD = 'E03' THEN '06'   --境外银行
+                  WHEN SUBSTR(C.HOLD_TYPE_CD,1,2) = 'A01' THEN '09'   --国有控股企业
+                  WHEN SUBSTR(C.HOLD_TYPE_CD,1,2) = 'A02' THEN '10'   --国有参股企业
+                  WHEN SUBSTR(C.HOLD_TYPE_CD,1,2) = 'B01' THEN '11'   --民营企业
+                  WHEN C.NATNAL_ECON_DEPT_TYPE_CD LIKE 'A%' THEN '12' --政府机关
+                  WHEN C.DEPOSITR_CATE_CD IN ('04','05') THEN '13'    --事业单位
+                  WHEN C.DEPOSITR_CATE_CD IN ('08') THEN '14'         --社会团体
+                  WHEN SUBSTR(C.HOLD_TYPE_CD,1,2) = 'E02' THEN '15'   --中外合资企业
+                  WHEN SUBSTR(C.HOLD_TYPE_CD,1,2) = 'E01' THEN '16'   --外商独资企业
+                  WHEN C.NATNAL_ECON_DEPT_TYPE_CD = 'E04' THEN '17'   --境外机构
+                  ELSE '99'  --其他
+             END
+           ELSE NULL
+     END                                                   AS ACT_CNTLR_TYP         --实际控制人类型
+    ,C.RGSTION_CD                                          AS REGD_CD_RSK           --登记注册代码（客户风险）
+    ,NULL                                                  AS UPD_INFO_DT           --更新信息日期
+    ,CASE WHEN A.RELA_PS_SENIOR_MAN_FLG = '1' THEN 'Y'
+          ELSE 'N'
+     END                                                   AS SENIOR_IMPT_PSN_FLG   --高管及重要联系人标志
+    ,'Y'                                                   AS REL_STAT              --关联关系状态
+    ,NULL                                                  AS PP1_NO                --护照1号码
+    ,NULL                                                  AS PP1_ISU_DT            --护照1签发日期
+    ,NULL                                                  AS PP1_EXP_DT            --护照1到期日期
+    ,NULL                                                  AS PP2_NO                --护照2号码
+    ,NULL                                                  AS PP2_ISU_DT            --护照2签发日期
+    ,NULL                                                  AS PP2_EXP_DT            --护照2到期日期
+    ,NULL                                                  AS PP3_NO                --护照3号码
+    ,NULL                                                  AS PP3_ISU_DT            --护照3签发日期
+    ,NULL                                                  AS PP3_EXP_DT            --护照3到期日期
+    ,NULL                                                  AS OTH_CRDL_TYP1         --其他证件类型1
+    ,NULL                                                  AS OTH_CRDL_NO1          --其他证件号码1
+    ,NULL                                                  AS OTH_CRDL_TYP2         --其他证件类型2
+    ,NULL                                                  AS OTH_CRDL_NO2          --其他证件号码2
+    ,'800926'/*公司银行总部*/                              AS DEPT_LINE             --部门条线
+    ,SUBSTR(A.JOB_CD,0,4)                                  AS DATA_SRC              --数据来源
+    ,A.RELA_TYPE_CD                                        AS REL_PSN_TYP_ORIG      --原始关联人类型代码
+    ,C.HOLD_TYPE_CD                                        AS HOLD_TYPE_CD          --控股类型代码
+    ,C.DEPOSITR_CATE_CD                                    AS DEPOSITR_CATE_CD      --存款类型代码
+    ,ROW_NUMBER() OVER(PARTITION BY A.CUST_ID,B.TAR_VALUE_CODE,A.RELA_PS_CERT_NO ORDER BY A.JOB_CD DESC) AS NUM
+    ,A.RELA_PS_CERT_TYPE_CD                                AS RELA_PS_CERT_TYPE_CD  --数仓关联人证件类型 ADD BY 20221129 XUCX
+    ,C.CUST_ID                                             AS ECIF_CUST_ID          --ECIF客户号  add by hulj 20230116
+  FROM RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO A --对公关联人
+  LEFT JOIN RRP_MDL.CODE_MAP B
+         ON A.RELA_TYPE_CD = B.SRC_VALUE_CODE
+        AND B.SRC_CLASS_CODE = 'CD1280'   --当事人关系类型代码
+        AND B.TAR_CLASS_CODE IN ('C0017','C0058')    --对公关系类型
+        AND B.MOD_FLG = 'MDM'            --监管集市明细层
+  LEFT JOIN RRP_MDL.O_ICL_CMM_CORP_CUST_BASIC_INFO C  --对公客户信息表
+      /*   ON A.RELA_PS_CUST_ID = C.CUST_ID*/
+         ON A.RELA_PS_CERT_NO = CASE WHEN C.SOCI_CRDT_CD IS NOT NULL THEN C.SOCI_CRDT_CD
+                                     WHEN C.ORGNZ_CD IS NOT NULL THEN C.ORGNZ_CD
+                                     WHEN C.BUS_LICS_NUM IS NOT NULL THEN C.BUS_LICS_NUM
+                                     WHEN C.RGSTION_CD IS NOT NULL THEN C.RGSTION_CD
+                                     WHEN C.NATION_TAX_RGST_CERT_NUM IS NOT NULL THEN C.NATION_TAX_RGST_CERT_NUM
+                                     WHEN C.LOCAL_TAX_RGST_CERT_NUM IS  NOT NULL THEN C.LOCAL_TAX_RGST_CERT_NUM
+                                     WHEN C.FIN_LICS_NUM IS NOT NULL THEN C.FIN_LICS_NUM
+                                     WHEN C.PBC_PAY_BANK_NO IS  NOT NULL THEN C.PBC_PAY_BANK_NO
+                                     END
+        AND A.ETL_DT = C.ETL_DT
+  WHERE A.ETL_DT = TO_DATE(V_P_DATE,'YYYYMMDD')
+    AND TRIM(A.CUST_ID) IS NOT NULL
+    AND TRIM(A.RELA_PS_CERT_NO) IS NOT NULL
+    AND TRIM(A.RELA_PS_NAME) IS NOT NULL
+  ) T
+  WHERE T.NUM = 1
+  ;
+   V_SQLCOUNT := SQL%ROWCOUNT;
+   V_SQLMSG := '返回值：['||SQLCODE||'],描述信息：'||SQLERRM;
+   O_ERRCODE := '0';
+   V_ENDTIME := SYSDATE;
+   COMMIT;
+
+     -- 程序业务逻辑处理主体部分 --
+  V_STEP := V_STEP + 1; -- 小于10步骤直接写数字，大于10步用V_STEP := V_STEP + 1;描述每一步骤的作用，如加工处理核心系统个人客户信息。
+  V_STEP_DESC := '插入对公客户关联人子表:逻辑2-信贷系统-担保关系数据信息';
+  V_STARTTIME := SYSDATE;
+  INSERT INTO M_CUST_CORP_REL_SUB
+  (
+  DATA_DT,     --数据日期
+    LGL_REP_ID,     --法人编号
+    CUST_ID,      --客户编号
+    REL_TYP,      --关系类型
+    REL_PSN_TYP,    --关联人类型
+    REL_PSN_CUST_NM,  --关联人客户名称
+    REL_PSN_CUST_ID,  --关联人客户编号
+    REL_PSN_CTRY_CD,  --关联人国家代码
+    REL_PSN_CRDL_TYP, --关联人证件类型
+    REL_PSN_CRDL_NO,  --关联人证件号码
+    PBC_NO,       --人行支付行号
+    FIN_PERMIT_NO,    --金融许可证号
+    ACT_CNTLR_FLG,    --实际控制人标志
+    ACT_CNTLR_TYP,    --实际控制人类型
+    REGD_CD_RSK,    --登记注册代码（客户风险）
+    UPD_INFO_DT,    --更新信息日期
+    SENIOR_IMPT_PSN_FLG,  --高管及重要联系人标志
+    REL_STAT,     --关联关系状态
+    PP1_NO,       --护照1号码
+    PP1_ISU_DT,     --护照1签发日期
+    PP1_EXP_DT,     --护照1到期日期
+    PP2_NO,       --护照2号码
+    PP2_ISU_DT,     --护照2签发日期
+    PP2_EXP_DT,     --护照2到期日期
+    PP3_NO,       --护照3号码
+    PP3_ISU_DT,     --护照3签发日期
+    PP3_EXP_DT,     --护照3到期日期
+    OTH_CRDL_TYP1,    --其他证件类型1
+    OTH_CRDL_NO1,   --其他证件号码1
+    OTH_CRDL_TYP2,    --其他证件类型2
+    OTH_CRDL_NO2,   --其他证件号码2
+    DEPT_LINE,      --部门条线
+    DATA_SRC,      --数据来源
+    REL_PSN_TYP_ORIG,      --原始关联人类型
+    HOLD_TYPE_CD,          --持股类型代码
+   DEPOSITR_CATE_CD      --存款人类型代码
+    )
+  SELECT DISTINCT DATA_DT,      --数据日期
+      LGL_REP_ID,     --法人编号
+      CUST_ID,      --客户编号
+      REL_TYP,      --关系类型
+      REL_PSN_TYP,    --关联人类型
+       REL_PSN_CUST_NM,  --关联人客户名称
+      REL_PSN_CUST_ID,  --关联人客户编号
+      REL_PSN_CTRY_CD,  --关联人国家代码
+      REL_PSN_CRDL_TYP,  --关联人证件类型
+      REL_PSN_CRDL_NO,  --关联人证件号码
+      PBC_NO,        --人行支付行号
+      FIN_PERMIT_NO,    --金融许可证号
+      ACT_CNTLR_FLG,    --实际控制人标志
+      ACT_CNTLR_TYP,    --实际控制人类型
+      REGD_CD_RSK,    --登记注册代码（客户风险）
+      UPD_INFO_DT,    --更新信息日期
+      SENIOR_IMPT_PSN_FLG,  --高管及重要联系人标志
+      REL_STAT,      --关联关系状态
+      PP1_NO,        --护照1号码
+      PP1_ISU_DT,      --护照1签发日期
+      PP1_EXP_DT,      --护照1到期日期
+      PP2_NO,        --护照2号码
+      PP2_ISU_DT,      --护照2签发日期
+      PP2_EXP_DT,      --护照2到期日期
+      PP3_NO,        --护照3号码
+      PP3_ISU_DT,      --护照3签发日期
+      PP3_EXP_DT,      --护照3到期日期
+      OTH_CRDL_TYP1,    --其他证件类型1
+      OTH_CRDL_NO1,    --其他证件号码1
+      OTH_CRDL_TYP2,    --其他证件类型2
+      OTH_CRDL_NO2,    --其他证件号码2
+      DEPT_LINE,      --部门条线
+      DATA_SRC,      --数据来源
+      REL_PSN_TYP_ORIG,      --原始关联人类型
+      HOLD_TYPE_CD,          --持股类型代码
+      DEPOSITR_CATE_CD      --存款人类型代码
+
+  FROM (SELECT DISTINCT DATA_DT,      --数据日期
+      LGL_REP_ID,     --法人编号
+      CUST_ID,      --客户编号
+      REL_TYP,      --关系类型
+      REL_PSN_TYP,    --关联人类型
+      REL_PSN_CUST_NM,  --关联人客户名称
+      REL_PSN_CUST_ID,  --关联人客户编号
+      REL_PSN_CTRY_CD,  --关联人国家代码
+      REL_PSN_CRDL_TYP, --关联人证件类型
+      REL_PSN_CRDL_NO,  --关联人证件号码
+      PBC_NO,       --人行支付行号
+      FIN_PERMIT_NO,    --金融许可证号
+      ACT_CNTLR_FLG,    --实际控制人标志
+      ACT_CNTLR_TYP,    --实际控制人类型
+      REGD_CD_RSK,    --登记注册代码（客户风险）
+      UPD_INFO_DT,    --更新信息日期
+      SENIOR_IMPT_PSN_FLG,  --高管及重要联系人标志
+      REL_STAT,     --关联关系状态
+      PP1_NO,       --护照1号码
+      PP1_ISU_DT,     --护照1签发日期
+      PP1_EXP_DT,     --护照1到期日期
+      PP2_NO,       --护照2号码
+      PP2_ISU_DT,     --护照2签发日期
+      PP2_EXP_DT,     --护照2到期日期
+      PP3_NO,       --护照3号码
+      PP3_ISU_DT,     --护照3签发日期
+      PP3_EXP_DT,     --护照3到期日期
+      OTH_CRDL_TYP1,    --其他证件类型1
+      OTH_CRDL_NO1,   --其他证件号码1
+      OTH_CRDL_TYP2,    --其他证件类型2
+      OTH_CRDL_NO2,   --其他证件号码2
+      DEPT_LINE,      --部门条线
+      DATA_SRC,     --数据来源
+      REL_PSN_TYP_ORIG, --原始关联人类型
+      HOLD_TYPE_CD,     --控股类型
+      Depositr_Cate_Cd,  --存款人类型代码
+      ROW_NUMBER() OVER(PARTITION BY DATA_DT,CUST_ID,REL_TYP,REL_PSN_TYP,REL_PSN_CRDL_NO
+
+                ORDER BY LENGTH(REL_PSN_CUST_ID) ) AS ROWNUMBER
+
+  FROM
+  (SELECT TO_CHAR(A.ETL_DT,'YYYYMMDD') AS DATA_DT--数据日期
+       ,A.LP_ID AS LGL_REP_ID--法人编号
+       ,C.CUST_ID AS CUST_ID--客户编号
+       ,'10' AS REL_TYP--关系类型
+       ,CASE WHEN D.CUST_TYPE_CD = '37' THEN '06'
+   WHEN D.HOLD_TYPE_CD like 'A01%' THEN '07'
+   WHEN D.HOLD_TYPE_CD like 'B01%' THEN '08'
+   WHEN D.NATNAL_ECON_DEPT_TYPE_CD LIKE 'A%' THEN '09'
+   WHEN D.DEPOSITR_CATE_CD IN ('04','05') THEN '10'
+   WHEN D.DEPOSITR_CATE_CD IN ('08') THEN '11'
+   WHEN D.NATNAL_ECON_DEPT_TYPE_CD LIKE 'E%' THEN '12'
+   ELSE '99'
+   END AS REL_PSN_TYP--关联人类型
+       ,A.GUARTOR_NAME AS REL_PSN_CUST_NM--关联人客户名称
+       ,A.GUARTOR_ID AS REL_PSN_CUST_ID--关联人客户编号
+      ,NULL  AS REL_PSN_CTRY_CD--,A.GUARTOR_DIST_CD--关联人国家代码
+       ,A.GUARTOR_CERT_TYPE_CD  AS REL_PSN_CRDL_TYP--关联人证件类型  --不转码，取数仓原值
+       ,A.GUARTOR_CERT_NO AS REL_PSN_CRDL_NO--关联人证件号码
+       ,F.PBC_PAY_BANK_NO AS PBC_NO--人行支付行号
+       ,F.FIN_LICS_NUM AS FIN_PERMIT_NO--金融许可证号
+       ,NULL AS ACT_CNTLR_FLG--实际控制人标志
+       ,NULL AS ACT_CNTLR_TYP
+      --实际控制人类型
+       ,D.RGSTION_CD AS REGD_CD_RSK--登记注册代码（客户风险）
+       ,NULL AS UPD_INFO_DT--更新信息日期
+       ,NULL AS SENIOR_IMPT_PSN_FLG--高管及重要联系人标志
+       ,'Y'  AS REL_STAT--关联关系状态
+       ,NULL AS PP1_NO--护照1号码
+       ,NULL AS PP1_ISU_DT--护照1签发日期
+       ,NULL AS PP1_EXP_DT--护照1到期日期
+       ,NULL AS PP2_NO--护照2号码
+       ,NULL AS PP2_ISU_DT--护照2签发日期
+       ,NULL AS PP2_EXP_DT--护照2到期日期
+       ,NULL AS PP3_NO--护照3号码
+       ,NULL AS PP3_ISU_DT--护照3签发日期
+       ,NULL AS PP3_EXP_DT--护照3到期日期
+       ,NULL AS OTH_CRDL_TYP1--其他证件类型1
+       ,NULL AS OTH_CRDL_NO1--其他证件号码1
+       ,NULL AS OTH_CRDL_TYP2--其他证件类型2
+       ,NULL AS OTH_CRDL_NO2--其他证件号码2
+       ,'04' AS DEPT_LINE--部门条线
+       ,SUBSTR(A.JOB_CD,0,4) AS DATA_SRC--数据来源
+       ,D.DEPOSITR_CATE_CD   AS REL_PSN_TYP_ORIG  --原始关联人类型代码
+       ,D.HOLD_TYPE_CD       AS HOLD_TYPE_CD
+       ,D.DEPOSITR_CATE_CD   AS DEPOSITR_CATE_CD
+  FROM O_ICL_CMM_GUAR_CONT A  --担保合同
+  LEFT JOIN O_ICL_CMM_LOAN_GUAR_CONT_RELA B --贷款合同与担保合同关系
+    ON A.GUAR_CONT_ID = B.GUAR_CONT_ID
+   AND A.ETL_DT = B.ETL_DT
+  LEFT JOIN O_ICL_CMM_CORP_LOAN_CONT_INFO C  --对公贷款合同信息
+    ON B.LOAN_CONT_ID = C.CONT_ID
+   AND C.ETL_DT = V_DATE
+  LEFT JOIN O_ICL_CMM_CORP_CUST_BASIC_INFO D  --对公客户基础信息
+    ON A.GUARTOR_ID = D.CUST_ID
+   AND D.ETL_DT = V_DATE
+  LEFT JOIN O_ICL_CMM_CORP_CUST_BASIC_INFO E  --对公客户基础信息
+    ON C.CUST_ID = E.CUST_ID
+   AND D.ETL_DT = V_DATE
+  LEFT JOIN O_ICL_CMM_INTNAL_ORG_INFO F --内部机构信息表
+    ON E.BELONG_ORG_ID = F.ORG_ID
+   AND F.ETL_DT = V_DATE
+  /*LEFT JOIN CODE_MAP G
+   ON A.GUARTOR_CERT_TYPE_CD = G.SRC_VALUE_CODE
+   AND G.SRC_CLASS_CODE = 'CD1014'
+   AND G.MOD_FLG = 'MDM'            --监管集市明细层*/
+ WHERE A.ETL_DT = TO_DATE(V_P_DATE,'YYYYMMDD')
+   AND C.CUST_ID IS NOT NULL
+   AND A.GUARTOR_CERT_NO IS NOT NULL))
+ WHERE ROWNUMBER = 1
+   ;
+   V_SQLCOUNT := SQL%ROWCOUNT;
+   V_SQLMSG := '返回值：['||SQLCODE||'],描述信息：'||SQLERRM;
+   O_ERRCODE := '0';
+   V_ENDTIME := SYSDATE;
+   COMMIT;
+
+
+  -- 去掉表的主键，通过语句判断数据是否重复--
+  V_STEP := V_STEP + 1;
+  V_STEP_DESC := '查询数据是否重复';
+
+  WITH TMP1 AS (
+    SELECT DATA_DT, CUST_ID,REL_PSN_TYP,REL_PSN_CRDL_NO,REL_TYP,COUNT(1)
+      FROM M_CUST_CORP_REL_SUB T
+     WHERE DATA_DT = V_P_DATE
+    GROUP BY DATA_DT, CUST_ID,REL_PSN_TYP,REL_PSN_CRDL_NO,REL_TYP
+    HAVING COUNT(1) > 1)
+  SELECT NVL(COUNT(1),0) INTO V_SQLCOUNT FROM TMP1 ;
+
+  IF V_SQLCOUNT > 0 THEN
+     O_ERRCODE   := '1';
+     ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,V_SQLMSG);
+     RETURN;
+  END IF;
+
+
+  -- 如需要分析表，请用如下代码 --
+   -- DBMS_STATS.GATHER_TABLE_STATS(OWNNAME=>'写上数据库用户名',TABLENAME => '写上表名字',PARTNAME => 'P_'||V_P_DATE||'',DEGREE => 16,CASCATE => TRUE);
+   ETL_DBMS_STATS(V_P_DATE, V_TAB_NAME, V_PART_NAME, O_ERRCODE);
+
+   INSERT INTO RRP_MDL.ETL_STATE(ETL_DATE, PROC_NAME,END_TIME)
+   VALUES (V_P_DATE,V_PROC_NAME,TO_CHAR(SYSTIMESTAMP,'YYYYMMDD HH24:MI:SS'));
+   COMMIT;
+   ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,V_SQLMSG);
+
+   -- 程序跑批结束记录 --
+   V_STEP_DESC := '-- 程序跑批结束 --';
+   ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,'');
+
+   -- 程序异常处理部分 --
+   EXCEPTION
+     WHEN OTHERS THEN
+   V_SQLMSG := '返回值：['||SQLCODE||'],描述信息：'||SQLERRM;
+   ROLLBACK;
+     O_ERRCODE := '1';
+     V_ENDTIME := SYSDATE;
+
+   ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,V_SQLMSG);
+
+  END ETL_INIT_M_CUST_CORP_REL_SUB;
+/
+

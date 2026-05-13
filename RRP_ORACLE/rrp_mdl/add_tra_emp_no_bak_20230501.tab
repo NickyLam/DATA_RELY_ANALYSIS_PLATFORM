@@ -1,0 +1,20 @@
+﻿create table RRP_MDL.ADD_TRA_EMP_NO_BAK_20230501
+(
+  acct_id VARCHAR2(200),
+  emp_no  VARCHAR2(20),
+  emp_nm  VARCHAR2(50)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_TRA_EMP_NO_BAK_20230501
+  is '资金系统交易员工补录表';
+comment on column RRP_MDL.ADD_TRA_EMP_NO_BAK_20230501.acct_id
+  is '账号号';
+comment on column RRP_MDL.ADD_TRA_EMP_NO_BAK_20230501.emp_no
+  is '员工号';
+comment on column RRP_MDL.ADD_TRA_EMP_NO_BAK_20230501.emp_nm
+  is '员工姓名';
+

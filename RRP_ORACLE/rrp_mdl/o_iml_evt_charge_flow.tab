@@ -1,0 +1,222 @@
+﻿create table RRP_MDL.O_IML_EVT_CHARGE_FLOW
+(
+  etl_dt                          DATE,
+  evt_id                          VARCHAR2(250),
+  lp_id                           VARCHAR2(100),
+  charge_seq_num                  VARCHAR2(60),
+  tran_dt                         DATE,
+  flow_num                        VARCHAR2(100),
+  tran_seq_num                    VARCHAR2(60),
+  dep_agt_id                      VARCHAR2(100),
+  cust_acct_num                   VARCHAR2(60),
+  curr_cd                         VARCHAR2(30),
+  sub_acct_num                    VARCHAR2(60),
+  prod_id                         VARCHAR2(100),
+  dep_vouch_cate_cd               VARCHAR2(30),
+  vouch_begin_num                 VARCHAR2(60),
+  vouch_sum_qtty                  NUMBER(30),
+  cust_id                         VARCHAR2(100),
+  cust_type_cd                    VARCHAR2(30),
+  open_acct_org_id                VARCHAR2(100),
+  acct_flg_idf                    VARCHAR2(60),
+  acct_id                         VARCHAR2(100),
+  effect_dt                       DATE,
+  revs_org_id                     VARCHAR2(100),
+  tran_cd                         VARCHAR2(30),
+  tran_org_id                     VARCHAR2(100),
+  ova_flow_num                    VARCHAR2(100),
+  tran_ref_no                     VARCHAR2(60),
+  tran_bank_ratio                 NUMBER(18,6),
+  init_recvbl_fee_amt             NUMBER(30,2),
+  fee_charge_way_cd               VARCHAR2(30),
+  comm_fee_coll_way_cd            VARCHAR2(30),
+  fee_type_id                     VARCHAR2(100),
+  acct_dmic_charge_curr_cd        VARCHAR2(30),
+  acct_dmic_fee_amt               NUMBER(30,2),
+  fee_discnt_rat                  NUMBER(30,2),
+  fee_discnt_type_cd              VARCHAR2(30),
+  recvbl_fee_seq_num              VARCHAR2(60),
+  acct_bank_prft_cut_amt          NUMBER(30,2),
+  init_fee_amt                    NUMBER(30,2),
+  discnt_fee_amt                  NUMBER(30,2),
+  tran_bank_prft_cut_amt          NUMBER(30,2),
+  tax                             NUMBER(30,2),
+  fee_price                       NUMBER(30,2),
+  tax_rat                         NUMBER(18,6),
+  tax_category_cd                 VARCHAR2(30),
+  amort_tm_type_cd                VARCHAR2(30),
+  amort_tenor_type_cd             VARCHAR2(30),
+  amort_day                       VARCHAR2(10),
+  amort_mon                       VARCHAR2(10),
+  amort_flg                       VARCHAR2(10),
+  prft_cut_flg                    VARCHAR2(10),
+  post_flg                        VARCHAR2(10),
+  tran_revd_flg                   VARCHAR2(10),
+  tran_acct_serv_fee_revs_seq_num VARCHAR2(60),
+  revs_auth_teller                VARCHAR2(100),
+  revs_teller                     VARCHAR2(100),
+  org_tran_seq_num                VARCHAR2(60),
+  end_day_onl_cd                  VARCHAR2(30),
+  termnt_num                      VARCHAR2(60),
+  acct_bank_ratio                 NUMBER(18,6),
+  cntpty_cust_acct_num            VARCHAR2(100),
+  cntpty_name                     VARCHAR2(500),
+  core_flow_num                   VARCHAR2(100),
+  tran_tm                         TIMESTAMP(6),
+  tran_teller_id                  VARCHAR2(100),
+  amort_closing_dt                DATE,
+  bus_flow_num                    VARCHAR2(100),
+  amort_begin_dt                  DATE,
+  job_cd                          VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_CHARGE_FLOW
+  is '收费流水';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.charge_seq_num
+  is '收费序号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.flow_num
+  is '流水号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_seq_num
+  is '交易序号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.dep_agt_id
+  is '存款协议编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.cust_acct_num
+  is '客户账号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.sub_acct_num
+  is '子账号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.dep_vouch_cate_cd
+  is '存款凭证类别代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.vouch_begin_num
+  is '凭证起始号码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.vouch_sum_qtty
+  is '凭证合计数量';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.open_acct_org_id
+  is '开户机构编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.acct_flg_idf
+  is '账户标识符';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.effect_dt
+  is '生效日期';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.revs_org_id
+  is '冲正机构编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_cd
+  is '交易码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.ova_flow_num
+  is '全局流水号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_ref_no
+  is '交易参考号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_bank_ratio
+  is '交易行比例';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.init_recvbl_fee_amt
+  is '原应收费用金额';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.fee_charge_way_cd
+  is '费用收费方式代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.comm_fee_coll_way_cd
+  is '手续费收取方式代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.fee_type_id
+  is '费用类型编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.acct_dmic_charge_curr_cd
+  is '收费币种代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.acct_dmic_fee_amt
+  is '费用金额';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.fee_discnt_rat
+  is '费用折扣率';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.fee_discnt_type_cd
+  is '费用折扣类型代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.recvbl_fee_seq_num
+  is '应收费用序号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.acct_bank_prft_cut_amt
+  is '账户行分润金额';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.init_fee_amt
+  is '原始费用金额';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.discnt_fee_amt
+  is '折扣费用金额';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_bank_prft_cut_amt
+  is '交易行分润金额';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tax
+  is '税金';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.fee_price
+  is '费用单价';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tax_rat
+  is '税率';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tax_category_cd
+  is '税种代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.amort_tm_type_cd
+  is '摊销时间类型代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.amort_tenor_type_cd
+  is '摊销期限类型代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.amort_day
+  is '摊销日';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.amort_mon
+  is '摊销月';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.amort_flg
+  is '摊销标志';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.prft_cut_flg
+  is '分润标志';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.post_flg
+  is '过账标志';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_revd_flg
+  is '交易已冲正标志';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_acct_serv_fee_revs_seq_num
+  is '转账服务费冲正序号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.revs_auth_teller
+  is '冲正授权柜员编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.revs_teller
+  is '冲正柜员编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.org_tran_seq_num
+  is '机构交易序号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.end_day_onl_cd
+  is '日终联机代码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.termnt_num
+  is '终止号码';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.acct_bank_ratio
+  is '账户行比例';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.cntpty_cust_acct_num
+  is '对手业务编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.cntpty_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.core_flow_num
+  is '核心流水号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.amort_closing_dt
+  is '摊销截止日期';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.bus_flow_num
+  is '业务流水号';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.amort_begin_dt
+  is '摊销起始日期';
+comment on column RRP_MDL.O_IML_EVT_CHARGE_FLOW.job_cd
+  is '任务代码';
+

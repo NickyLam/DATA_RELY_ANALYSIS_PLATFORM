@@ -1,0 +1,126 @@
+﻿create table RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT
+(
+  evt_id                    VARCHAR2(100),
+  lp_id                     VARCHAR2(100),
+  appl_flow_num             VARCHAR2(90),
+  hq_org_id                 VARCHAR2(100),
+  org_id                    VARCHAR2(100),
+  prod_id                   VARCHAR2(100),
+  appl_tran_type_cd         VARCHAR2(30),
+  appl_dt                   DATE,
+  bill_type_cd              VARCHAR2(30),
+  bill_med_cd               VARCHAR2(30),
+  bill_id                   VARCHAR2(100),
+  fac_val_amt               NUMBER(30,2),
+  draw_dt                   DATE,
+  exp_dt                    DATE,
+  sugst_payer_cate_cd       VARCHAR2(30),
+  sugst_payer_soci_crdt_cd  VARCHAR2(30),
+  sugst_payer_name          VARCHAR2(750),
+  sugst_payer_open_bank_num VARCHAR2(90),
+  sugst_payer_org_cd        VARCHAR2(30),
+  pay_bank_no               VARCHAR2(90),
+  pay_bank_reply_cd         VARCHAR2(30),
+  pay_bank_refuse_rs_cd     VARCHAR2(30),
+  proc_status_cd            VARCHAR2(30),
+  bill_status_cd            VARCHAR2(30),
+  entry_status_cd           VARCHAR2(30),
+  clear_rest_cd             VARCHAR2(30),
+  cash_org_role_type_cd     VARCHAR2(30),
+  err_cd                    VARCHAR2(90),
+  modif_teller_id           VARCHAR2(100),
+  final_modif_tm            VARCHAR2(30),
+  final_modif_dt            DATE,
+  etl_dt                    DATE,
+  src_table_name            VARCHAR2(100),
+  job_cd                    VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6),
+  recver_acct_num           VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT
+  is '提示付款申请事件';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.appl_flow_num
+  is '申请流水号';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.hq_org_id
+  is '总行机构编号';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.appl_tran_type_cd
+  is '申请交易类型代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.appl_dt
+  is '申请日期';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.bill_type_cd
+  is '票据类型代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.bill_med_cd
+  is '票据介质代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.bill_id
+  is '票据编号';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.fac_val_amt
+  is '票面金额';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.draw_dt
+  is '出票日期';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.sugst_payer_cate_cd
+  is '提示付款人类别代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.sugst_payer_soci_crdt_cd
+  is '提示付款人社会信用代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.sugst_payer_name
+  is '提示付款人名称';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.sugst_payer_open_bank_num
+  is '提示付款人开户行号';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.sugst_payer_org_cd
+  is '提示付款人机构代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.pay_bank_no
+  is '付款行行号';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.pay_bank_reply_cd
+  is '付款行回复代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.pay_bank_refuse_rs_cd
+  is '付款行拒绝原因代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.proc_status_cd
+  is '处理状态代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.bill_status_cd
+  is '票据状态代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.entry_status_cd
+  is '记账状态代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.clear_rest_cd
+  is '清算结果代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.cash_org_role_type_cd
+  is '兑付机构角色类型代码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.err_cd
+  is '错误码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.modif_teller_id
+  is '修改柜员编号';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.final_modif_tm
+  is '最后修改时间';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.final_modif_dt
+  is '最后修改日期';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IML_EVT_SUGST_PAY_APPL_EVT.recver_acct_num
+  is '收款人账号';
+

@@ -1,0 +1,130 @@
+﻿create table RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL
+(
+  ledge_cod          VARCHAR2(4),
+  dpact_no           VARCHAR2(32),
+  ser_num            NUMBER(10),
+  int_group_no       NUMBER(10),
+  int_group_cnt      NUMBER(10),
+  int_cod            VARCHAR2(30),
+  int_opera_cod      VARCHAR2(30),
+  intc_start_date    VARCHAR2(8),
+  intc_due_date      VARCHAR2(8),
+  acc_bizcod         VARCHAR2(4),
+  man_acctno         VARCHAR2(32),
+  bckmk_rcal_ratecod VARCHAR2(10),
+  rate_level         NUMBER(13,2),
+  rate_seqno         VARCHAR2(10),
+  dep_term           VARCHAR2(6),
+  against_flg        VARCHAR2(1),
+  rate_float_kind    VARCHAR2(1),
+  rate_float_value   NUMBER(11,7),
+  stan_rate          NUMBER(11,7),
+  cur_execrate       NUMBER(11,7),
+  eff_date           VARCHAR2(8),
+  acru_trat          NUMBER(11,7),
+  benchmark_int      NUMBER(20,6),
+  int_occuramt       NUMBER(20,6),
+  inttax_amt         NUMBER(20,6),
+  int_adj            NUMBER(20,6),
+  inttax_adj         NUMBER(20,6),
+  int_day            NUMBER(20,6),
+  tax_eday           NUMBER(20,6),
+  level_intc_bal     NUMBER(17,2),
+  intc_bal           NUMBER(17,2),
+  intc_total_bal     NUMBER(21,2),
+  bed_mthd           VARCHAR2(1),
+  intc_rule          VARCHAR2(2),
+  int_dtl_flg        NUMBER(10),
+  int_adj_flg        NUMBER(10),
+  int_adj_mthd       NUMBER(10),
+  last_intdate       VARCHAR2(8),
+  brief_cod          VARCHAR2(6),
+  brief_desc         VARCHAR2(30),
+  in_txn_cod         VARCHAR2(7),
+  outside_txn_cod    VARCHAR2(7),
+  txn_date           VARCHAR2(8),
+  txn_ctime          NUMBER(10),
+  busi_inst          VARCHAR2(10),
+  tl_seqno           VARCHAR2(16),
+  mod_opr            VARCHAR2(8),
+  mod_unit           VARCHAR2(10),
+  mod_date           VARCHAR2(8),
+  mod_time           NUMBER(10),
+  time_sign          NUMBER(16),
+  rec_sts            VARCHAR2(1),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL
+  is '储蓄利息补充表';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.ledge_cod
+  is '法人代码';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.dpact_no
+  is '负债账号';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.ser_num
+  is '序列号';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.intc_start_date
+  is '起息日期';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.acc_bizcod
+  is '业务代号';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.bckmk_rcal_ratecod
+  is '负债利率编号';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.rate_level
+  is '评级';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.rate_seqno
+  is '利率编号';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.dep_term
+  is '账户存期';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.rate_float_kind
+  is '浮动类型';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.rate_float_value
+  is '浮动值';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.eff_date
+  is '生效日期（yyyymmdd）';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.int_occuramt
+  is '利息发生额';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.int_adj
+  is '利息调增金额';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.int_day
+  is '存贷结息日期';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.bed_mthd
+  is '分层方式';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.intc_rule
+  is '计息规则';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.last_intdate
+  is '上次计息日';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.in_txn_cod
+  is '交易码';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.txn_date
+  is '申请日期';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.txn_ctime
+  is '交易提交时间';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.busi_inst
+  is '营业机构';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.tl_seqno
+  is '柜员流水号';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.mod_opr
+  is '维护柜员';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.mod_unit
+  is '维护机构代码';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.mod_date
+  is '维护日期';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.mod_time
+  is '维护时间';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.time_sign
+  is '时间戳';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.rec_sts
+  is '记录状态';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_DPSS_DPR_ACTINTJNL.id_mark
+  is '增删标志';
+

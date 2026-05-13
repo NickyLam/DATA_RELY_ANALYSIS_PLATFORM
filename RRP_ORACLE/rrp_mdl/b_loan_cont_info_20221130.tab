@@ -1,0 +1,105 @@
+﻿create table RRP_MDL.B_LOAN_CONT_INFO_20221130
+(
+  data_dt            CHAR(8) not null,
+  lgl_rep_id         VARCHAR2(200),
+  cont_id            VARCHAR2(200) not null,
+  cont_nm            VARCHAR2(500),
+  prim_cont_id       VARCHAR2(200),
+  cust_id            VARCHAR2(200) not null,
+  org_id             VARCHAR2(200) not null,
+  app_id             VARCHAR2(200),
+  crdt_lmt_id        VARCHAR2(200),
+  loan_prod_typ      VARCHAR2(10),
+  loan_prod_nm       VARCHAR2(500),
+  cur                CHAR(3),
+  cont_amt           NUMBER(30,2),
+  cont_start_dt      CHAR(8),
+  cont_exp_dt        CHAR(8),
+  gua_mode1          VARCHAR2(10),
+  gua_mode2          VARCHAR2(10),
+  cust_mgr_no        VARCHAR2(30),
+  loan_useage        VARCHAR2(2000),
+  dir_rgn_area_cd    VARCHAR2(10),
+  dir_idy            VARCHAR2(10),
+  fin_loan_rel_lc_no VARCHAR2(200),
+  cont_sign_dt       CHAR(8),
+  coop_agrt_id       VARCHAR2(200),
+  cust_data_auth_id  VARCHAR2(200),
+  grant_eff_dt       CHAR(8),
+  grant_end_dt       CHAR(8),
+  pnr_resp_amt       NUMBER(30,2),
+  app_psn_tel        VARCHAR2(30),
+  cont_stat          VARCHAR2(10),
+  dept_line          VARCHAR2(500),
+  data_src           VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cont_id
+  is '合同编号';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cont_nm
+  is '合同名称';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.prim_cont_id
+  is '主合同号';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.org_id
+  is '银行编号';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.app_id
+  is '项目id';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.crdt_lmt_id
+  is '授信额度编号';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.loan_prod_typ
+  is '贷款产品类型';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.loan_prod_nm
+  is '贷款产品名称';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cur
+  is '账号币种';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cont_amt
+  is '展期合同金额';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cont_start_dt
+  is '合同起始日期';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cont_exp_dt
+  is '到期日期';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.gua_mode1
+  is '担保方式1';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.gua_mode2
+  is '担保方式2';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cust_mgr_no
+  is '客户经理编号';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.loan_useage
+  is '贷款用途';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.dir_rgn_area_cd
+  is '投向地区行政区划代码';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.dir_idy
+  is '投向行业';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.fin_loan_rel_lc_no
+  is '融资贷款关联信用证号';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cont_sign_dt
+  is '合同签定日期';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.coop_agrt_id
+  is '主合作协议编号';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cust_data_auth_id
+  is '客户数据授权书编号';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.grant_eff_dt
+  is '授权生效日期';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.grant_end_dt
+  is '授权终止日期';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.pnr_resp_amt
+  is '合作方责任金额';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.app_psn_tel
+  is '申请人联系电话';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.cont_stat
+  is '业务合同状态';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_LOAN_CONT_INFO_20221130.data_src
+  is '数据来源（参见[字典:AML0045]）';
+

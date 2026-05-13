@@ -1,0 +1,102 @@
+﻿create table RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H
+(
+  agt_id                   VARCHAR2(250),
+  lp_id                    VARCHAR2(60),
+  intnal_dubil_id          VARCHAR2(100),
+  repay_plan_id            VARCHAR2(100),
+  acct_id                  VARCHAR2(100),
+  acct_type_cd             VARCHAR2(30),
+  card_no                  VARCHAR2(90),
+  loan_tot_perds           NUMBER(10),
+  curr_perds               NUMBER(38),
+  loan_pric                NUMBER(30,2),
+  rpbl_pric                NUMBER(30,2),
+  rpbl_fee_amt             NUMBER(30,2),
+  rpbl_int                 NUMBER(30,2),
+  repaid_pric              NUMBER(30,2),
+  repaid_int               NUMBER(30,2),
+  repaid_pnlt              NUMBER(30,2),
+  repaid_comp_int          NUMBER(30,2),
+  repaid_fee               NUMBER(30,2),
+  reach_money_exp_repay_dt DATE,
+  grace_dt                 DATE,
+  modif_tm                 TIMESTAMP(6),
+  value_dt                 DATE,
+  repay_plan_oper_act_cd   VARCHAR2(30),
+  start_dt                 DATE,
+  end_dt                   DATE,
+  id_mark                  VARCHAR2(10),
+  src_table_name           VARCHAR2(100),
+  job_cd                   VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H
+  is '微粒贷还款计划历史';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.intnal_dubil_id
+  is '内部借据编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.repay_plan_id
+  is '还款计划编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.acct_type_cd
+  is '账户类型代码';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.card_no
+  is '卡号';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.loan_tot_perds
+  is '贷款总期数';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.curr_perds
+  is '当前期数';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.loan_pric
+  is '贷款本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.rpbl_pric
+  is '应还本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.rpbl_fee_amt
+  is '应还费用金额';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.rpbl_int
+  is '应还利息';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.repaid_pric
+  is '已偿还本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.repaid_int
+  is '已偿还利息';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.repaid_pnlt
+  is '已偿还罚息';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.repaid_comp_int
+  is '已偿还复利';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.repaid_fee
+  is '已偿还费用';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.reach_money_exp_repay_dt
+  is '到款到期还款日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.grace_dt
+  is '宽限日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.modif_tm
+  is '修改时间';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.repay_plan_oper_act_cd
+  is '还款计划操作动作代码';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_WLD_REPAY_PLAN_H.job_cd
+  is '任务代码';
+

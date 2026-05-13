@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据血缘分析系统 v2.2</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=2.4">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <h1 class="app-title">🔗 数据血缘分析系统</h1>
+                <span class="version-badge">v2.0</span>
+            </div>
+
+            <!-- 三TAB 切换 -->
+            <nav class="tab-navigation">
+                <button class="tab-btn" data-tab="parse" onclick="switchTab('parse')">
+                    <span class="tab-icon">📂</span>
+                    <span class="tab-text">解析层</span>
+                </button>
+                <button class="tab-btn active" data-tab="display" onclick="switchTab('display')">
+                    <span class="tab-icon">📊</span>
+                    <span class="tab-text">展示层</span>
+                </button>
+                <button class="tab-btn" data-tab="caliber" onclick="switchTab('caliber')">
+                    <span class="tab-icon">🎯</span>
+                    <span class="tab-text">指标口径</span>
+                </button>
+            </nav>
+
+            <div class="header-actions">
+                <button class="action-btn" onclick="showSystemStats()" title="系统统计">
+                    📈 统计
+                </button>
+                <a href="/docs" target="_blank" class="action-btn" title="API 文档">
+                    📚 API文档
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main class="main-container">
+
+        <!-- ========== 解析层 TAB ========== -->
+        <section id="parse-tab" class="tab-content">
+            <div class="parse-layout">
+
+                <!-- 左侧：文件上传区 -->
+                <div class="upload-panel">
+                    <div class="panel-header">
+                        <h2>📁 数据文件上传</h2>
+                        <p class="panel-desc">上传 .tab (表结构) 或 .prc (存储过程) 文件进行解析</p>
+                    </div>
+
+                    <!-- 拖拽上传区域 -->
+                    <div
+                        id="dropZone"
+                        class="drop-zone"
+                        ondragover="handleDragOver(event)"
+                        ondragleave="handleDragLeave(event)"
+                        ondrop="handleDrop(event)"
+                        onclick="document.getElementById('fileInput').click()"
+                    >
+                        <div class="drop-zone-content">
+                            <div class="upload-icon">�</div>
+                            <p class="upload-text">拖拽文件到此处，或点击选择</p>
+                            <p class="upload-hint">支持 .tab / .prc 文件，单次最多 100MB</p>
+                        </div>
+                        <input
+                            type="file"
+                            id="fileInput"
+                            multiple
+                            accept=".tab,.prc,.sql"
+                            style="display:none"
+                            onchange="handleFileSelect(event)"
+                        >
+                    </div>
+
+                    <!-- 已选文件列表 -->
+                    <div id="selectedFiles" class="selected-files" style="display:none;">
+                        <h3>已选择文件 (<span id="fileCount">0</span>)</h3>
+                        <ul id="fileList" class="file-list"></ul>
+                    </div>
+
+                    <!-- 解析选项 -->
+                    <div class="parse-options">
+                        <label>解析模式:</label>
+                        <select id="parseMode">
+                            <option value="incremental">增量模式 (合并到现有数据)</option>
+                            <option value="full">全量模式 (清空后重新解析)</option>
+                        </select>
+                    </div>
+
+                    <!-- 操作按钮 -->
+                    <div class="action-buttons">
+                        <button
+                            id="startParseBtn"
+                            class="btn btn-primary"
+                            onclick="startParsing()"
+                            disabled
+                        >
+                            ⚡ 开始解析
+                        </button>
+                        <button
+                            class="btn btn-secondary"
+                            onclick="clearSelectedFiles()"
+                        >
+                            🗑️ 清空列表
+                        </button>
+                    </div>
+
+                    <!-- 快捷操作 -->
+                    <div class="quick-actions">
+                        <button class="btn btn-outline" onclick="triggerFullParse()">
+                            🔄 解析现有目录
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 右侧：进度与结果 -->
+                <div class="progress-panel">
+                    <!-- 进度条区域 -->
+                    <div id="progressSection" class="progress-section" style="display:none;">
+                        <div class="panel-header">
+                            <h2>⏳ 解析进度</h2>
+                            <span id="taskStatus" class="status-badge processing">处理中...</span>
+                        </div>
+
+                        <!-- 详细进度条 -->
+                        <div class="progress-bar-container">
+                            <div class="progress-info">
+                                <span id="progressPercent" class="percent-text">0%</span>
+                                <span id="currentFile" class="current-file-text"></span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="progressBarFill" class="progress-bar-fill" style="width: 0%"></div>
+                            </div>
+                            <p id="progressMessage" class="progress-message">准备开始...</p>
+                        </div>
+
+                        <!-- 实时统计 -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" id="tablesParsed">0</div>
+                                <div class="stat-label">表数量</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="proceduresParsed">0</div>
+                                <div class="stat-label">存储过程</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="lineagesFound">0</div>
+                                <div class="stat-label">血缘关系</div>
+                            </div>
+                        </div>
+
+                        <!-- 日志输出 -->
+                        <div class="log-container">
+                            <h3>� 实时日志</h3>
+                            <div id="logOutput" class="log-output"></div>
+                        </div>
+                    </div>
+
+                    <!-- 结果展示区 -->
+                    <div id="resultSection" class="result-section" style="display:none;">
+                        <div class="panel-header">
+                            <h2>✅ 解析结果</h2>
+                            <span id="resultStatus" class="status-badge success">完成</span>
+                        </div>
+
+                        <div id="resultSummary" class="result-summary"></div>
+
+                        <!-- 已解析对象列表 -->
+                        <div class="parsed-objects-list">
+                            <div class="list-tabs">
+                                <button class="list-tab active" onclick="showParsedList('tables')">
+                                    表列表 (<span id="tableCount">0</span>)
+                                </button>
+                                <button class="list-tab" onclick="showParsedList('procedures')">
+                                    过程列表 (<span id="procCount">0</span>)
+                                </button>
+                            </div>
+                            <div id="parsedTablesList" class="objects-list"></div>
+                            <div id="parsedProcsList" class="objects-list" style="display:none;"></div>
+                        </div>
+
+                        <div class="result-actions">
+                            <button class="btn btn-primary" onclick="switchTab('display')">
+                                📊 查看血缘图谱
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 初始状态提示 -->
+                    <div id="initialState" class="initial-state">
+                        <div class="empty-icon">📥</div>
+                        <p>请上传文件或触发全量解析以开始</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 展示层 TAB ========== -->
+        <section id="display-tab" class="tab-content active">
+            <div class="display-layout">
+
+                <!-- 顶部：搜索与控制栏（横向布局） -->
+                <header class="query-header">
+                    <div class="query-inputs-row">
+                        <!-- 表名输入 -->
+                        <div class="input-group">
+                            <label class="input-label">📋 表名</label>
+                            <input
+                                type="text"
+                                id="tableInput"
+                                placeholder="如: EAST5_201_GRJCXXB"
+                                autocomplete="off"
+                                oninput="onTableInput()"
+                            >
+                            
+                            <!-- 搜索结果下拉 -->
+                            <div id="searchResults" class="search-results-dropdown" style="display:none;"></div>
+                        </div>
+
+                        <!-- 字段输入 -->
+                        <div class="input-group">
+                            <label class="input-label">✏️ 字段名</label>
+                            <input
+                                type="text"
+                                id="fieldInput"
+                                placeholder="请先选择表名"
+                                autocomplete="off"
+                                disabled
+                                oninput="onFieldInput()"
+                            >
+                            <!-- 字段下拉列表 -->
+                            <div id="fieldResults" class="field-results-dropdown" style="display:none;"></div>
+                        </div>
+
+                        <!-- 查询方向选择 -->
+                        <div class="input-group mode-group">
+                            <label class="input-label">🧭 方向</label>
+                            <div class="mode-buttons-inline">
+                                <button class="mode-btn active" data-mode="upstream" onclick="setMode('upstream')">↑ 上游追溯</button>
+                                <button class="mode-btn" data-mode="downstream" onclick="setMode('downstream')">↓ 下游去向</button>
+                            </div>
+                        </div>
+
+                        <!-- 查询按钮 -->
+                        <div class="input-group btn-group">
+                            <label class="input-label">&nbsp;</label>
+                            <button id="queryBtn" class="btn btn-primary query-btn" onclick="executeFieldQuery()" disabled>
+                                🔍 开始查询
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 提示信息 -->
+                    <p style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">
+                        💡 输入表名和字段名后点击查询，默认展示全部层级血缘关系
+                    </p>
+                </header>
+
+                <!-- 下方：详情和图谱区域 -->
+                <main class="content-area">
+                    <!-- 左侧：详情面板 -->
+                    <aside id="detailPanel" class="detail-panel-sidebar" style="display:none;">
+                        <h3>📊 查询详情</h3>
+                        <div id="detailContent" class="detail-content"></div>
+                    </aside>
+
+                    <!-- 右侧：主图谱展示区 -->
+                    <div class="graph-area">
+                        <svg id="graphSvg" class="graph-canvas"></svg>
+
+                        <!-- 空状态提示 -->
+                        <div id="emptyHint" class="empty-hint">
+                            <div class="empty-icon">🔍</div>
+                            <p>输入表名和字段名开始查询血缘关系</p>
+                        </div>
+
+                        <!-- 加载状态 -->
+                        <div id="loadingIndicator" class="loading-indicator" style="display:none;">
+                            <div class="spinner"></div>
+                            <p>正在查询渲染中...</p>
+                        </div>
+
+                    <!-- 图例 -->
+                    <div id="legend" class="legend" style="display:none;"></div>
+
+                    <!-- 缩放控制 -->
+                    <div class="zoom-controls" style="display:none;">
+                        <button onclick="resetView()">重置</button>
+                        <button onclick="zoomBy(1.4)">放大</button>
+                        <button onclick="zoomBy(0.7)">缩小</button>
+                        <button onclick="fitView()">适应</button>
+                    </div>
+
+                    <!-- 信息浮窗 -->
+                    <div id="infoPanel" class="info-panel" style="display:none;">
+                        <button class="close-btn" onclick="closeInfoPanel()">×</button>
+                        <h3 id="panelTitle"></h3>
+                        <div id="panelContent"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 指标口径 TAB ========== -->
+        <section id="caliber-tab" class="tab-content">
+            <div class="display-layout">
+                <!-- 顶部：搜索与控制栏 -->
+                <header class="query-header">
+                    <div class="query-inputs-row">
+                        <!-- 表名输入 -->
+                        <div class="input-group">
+                            <label class="input-label">📋 表名</label>
+                            <input
+                                type="text"
+                                id="caliberTableInput"
+                                placeholder="如: A_FGB_ACCT_LOAN"
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <!-- 字段输入 -->
+                        <div class="input-group">
+                            <label class="input-label">✏️ 字段名</label>
+                            <input
+                                type="text"
+                                id="caliberFieldInput"
+                                placeholder="如: LOAN_BAL"
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <!-- 查询方向 -->
+                        <div class="input-group mode-group">
+                            <label class="input-label">🧭 方向</label>
+                            <div class="mode-buttons-inline">
+                                <button class="mode-btn active" data-caliber-mode="upstream" onclick="setCaliberMode('upstream')">↑ 上游追溯</button>
+                                <button class="mode-btn" data-caliber-mode="downstream" onclick="setCaliberMode('downstream')">↓ 下游去向</button>
+                            </div>
+                        </div>
+
+                        <!-- 数据源筛选 -->
+                        <div class="input-group">
+                            <label class="input-label">🗄️ 数据源</label>
+                            <select id="caliberDataSource" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;min-width:100px;">
+                                <option value="">全部</option>
+                                <option value="oracle">Oracle</option>
+                                <option value="tdh">TDH星环</option>
+                                <option value="gbase">GBase</option>
+                            </select>
+                        </div>
+
+                        <!-- 查询按钮 -->
+                        <div class="input-group btn-group">
+                            <label class="input-label">&nbsp;</label>
+                            <button id="caliberQueryBtn" class="btn btn-primary query-btn" onclick="executeCaliberQuery()">
+                                🎯 查询口径
+                            </button>
+                        </div>
+                    </div>
+
+                    <p style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">
+                        💡 输入表名和字段名查询指标口径，查看完整的数据加工链路和筛选条件
+                    </p>
+                </header>
+
+                <!-- 口径结果区域 -->
+                <main class="content-area">
+                    <div id="caliberResults" class="caliber-results" style="display:none;">
+                        <!-- 查询统计 -->
+                        <div id="caliberStats" class="stats-grid" style="margin-bottom:16px;"></div>
+
+                        <!-- 口径链路列表 -->
+                        <div id="caliberChainList" class="caliber-chain-list"></div>
+
+                        <!-- 原始 SQL 展示 -->
+                        <div id="caliberRawSql" class="raw-sql-section" style="display:none;">
+                            <h3 style="margin-bottom:8px;color:#1e293b;">📝 原始 SQL</h3>
+                            <pre id="caliberRawSqlContent" class="raw-sql-content"></pre>
+                        </div>
+                    </div>
+
+                    <!-- 空状态 -->
+                    <div id="caliberEmptyHint" class="empty-hint">
+                        <div class="empty-icon">🎯</div>
+                        <p>输入表名和字段名查询指标口径</p>
+                    </div>
+
+                    <!-- 加载状态 -->
+                    <div id="caliberLoading" class="loading-indicator" style="display:none;">
+                        <div class="spinner"></div>
+                        <p>正在查询口径信息...</p>
+                    </div>
+                </main>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 底部状态栏 -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <span>© 2026 Data Lineage Analysis System v2.0</span>
+            <span class="footer-divider">|</span>
+            <span id="systemStatus">● 系统就绪</span>
+        </div>
+    </footer>
+
+    <!-- 脚本引入 -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="/static/js/app.js?v=2.5"></script>
+    <script src="/static/js/parse-tab.js?v=2.5"></script>
+    <script src="/static/js/caliber-tab.js?v=2.5"></script>
+    <!-- 展示层模块化拆分 -->
+    <script src="/static/js/detail-panel.js?v=2.5"></script>
+    <script src="/static/js/search-panel.js?v=2.5"></script>
+    <script src="/static/js/lineage-graph.js?v=2.5"></script>
+</body>
+</html>

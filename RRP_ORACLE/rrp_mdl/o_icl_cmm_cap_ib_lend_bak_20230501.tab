@@ -1,0 +1,150 @@
+﻿create table RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501
+(
+  etl_dt               DATE,
+  lp_id                VARCHAR2(60),
+  bus_id               VARCHAR2(60),
+  dept_id              VARCHAR2(60),
+  entry_org_id         VARCHAR2(60),
+  tran_acct_b_id       VARCHAR2(60),
+  tran_acct_b_name     VARCHAR2(250),
+  acct_b_attr_cd       VARCHAR2(10),
+  std_prod_id          VARCHAR2(60),
+  asset_thd_cls_cd     VARCHAR2(30),
+  cust_id              VARCHAR2(100),
+  cntpty_id            VARCHAR2(60),
+  cntpty_name          VARCHAR2(500),
+  cntpty_cls_id        VARCHAR2(60),
+  portf_id             VARCHAR2(60),
+  portf_name           VARCHAR2(250),
+  subj_id              VARCHAR2(60),
+  int_recvbl_subj_id   VARCHAR2(60),
+  int_income_subj_id   VARCHAR2(60),
+  tran_cate_cd         VARCHAR2(10),
+  tran_dir_cd          VARCHAR2(10),
+  tran_breed_id        VARCHAR2(10),
+  tran_dt              DATE,
+  value_dt             DATE,
+  exp_dt               DATE,
+  tenor                NUMBER(18),
+  exec_int_rat         NUMBER(18,8),
+  curr_cd              VARCHAR2(10),
+  tran_amt             NUMBER(30,2),
+  exp_amt              NUMBER(30,2),
+  acru_int             NUMBER(30,2),
+  tran_fee             NUMBER(30,2),
+  tran_tax             NUMBER(30,2),
+  tran_comm            NUMBER(30,2),
+  currt_bal            NUMBER(30,2),
+  td_acru_int          NUMBER(30,2),
+  currt_acru_int       NUMBER(30,2),
+  dealer_id            VARCHAR2(60),
+  dealer_name          VARCHAR2(250),
+  cfets_tran_flg       VARCHAR2(10),
+  bag_id               VARCHAR2(60),
+  tran_id              VARCHAR2(60),
+  tran_clear_acct_id   VARCHAR2(256),
+  tran_clear_bank_no   VARCHAR2(256),
+  tran_clear_bank_name VARCHAR2(500),
+  job_cd               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501
+  is '资金同业拆借';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.dept_id
+  is '部门编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.entry_org_id
+  is '记账机构编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_acct_b_id
+  is '交易账簿编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_acct_b_name
+  is '交易账簿名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.acct_b_attr_cd
+  is '账簿属性代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.asset_thd_cls_cd
+  is '资产三分类代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.cntpty_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.cntpty_cls_id
+  is '交易对手分类编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.portf_id
+  is '投组编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.portf_name
+  is '投组名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.int_recvbl_subj_id
+  is '应收利息科目编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.int_income_subj_id
+  is '利息收入科目编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_cate_cd
+  is '交易类别代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_dir_cd
+  is '交易方向代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_breed_id
+  is '交易品种编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tenor
+  is '期限';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.exp_amt
+  is '到期金额';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.acru_int
+  is '应计利息';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_fee
+  is '交易费用';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_tax
+  is '交易税金';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_comm
+  is '交易佣金';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.td_acru_int
+  is '当日应计利息';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.currt_acru_int
+  is '当期应计利息';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.dealer_id
+  is '交易员编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.dealer_name
+  is '交易员名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.cfets_tran_flg
+  is 'CFETS交易标志';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.bag_id
+  is '成交编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_id
+  is '交易编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_clear_acct_id
+  is '交易清算账户编号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_clear_bank_no
+  is '交易清算银行行号';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.tran_clear_bank_name
+  is '交易清算银行名称';
+comment on column RRP_MDL.O_ICL_CMM_CAP_IB_LEND_BAK_20230501.job_cd
+  is '任务代码';
+

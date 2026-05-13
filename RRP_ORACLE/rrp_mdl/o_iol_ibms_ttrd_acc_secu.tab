@@ -1,0 +1,99 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU
+(
+  accid           VARCHAR2(45),
+  accname         VARCHAR2(180),
+  cash_accid      VARCHAR2(45),
+  owner           VARCHAR2(45),
+  trdkind         VARCHAR2(45),
+  trdgrpid        VARCHAR2(45),
+  ps1             VARCHAR2(45),
+  ps2             VARCHAR2(45),
+  ps3             VARCHAR2(45),
+  ps4             VARCHAR2(45),
+  status          NUMBER,
+  trdgrp_auto     VARCHAR2(2),
+  is_lock         NUMBER,
+  lockstatus      NUMBER,
+  accfiscasubject VARCHAR2(75),
+  ps5             VARCHAR2(45),
+  ps6             VARCHAR2(45),
+  ps7             VARCHAR2(45),
+  ps8             VARCHAR2(45),
+  invest_type     NUMBER,
+  acting_type     VARCHAR2(45),
+  i_id            NUMBER,
+  unit_id         VARCHAR2(45),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10),
+  etl_timestamp   TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU
+  is '二级证券账户表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.accid
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.accname
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.cash_accid
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.owner
+  is '所属人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.trdkind
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.trdgrpid
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.ps1
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.ps2
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.ps3
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.ps4
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.status
+  is '状态;1草稿2审核中3审核完成4退回';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.trdgrp_auto
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.is_lock
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.lockstatus
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.accfiscasubject
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.ps5
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.ps6
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.ps7
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.ps8
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.invest_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.acting_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.i_id
+  is '机构ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.unit_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_SECU.etl_timestamp
+  is 'etl处理时间';
+

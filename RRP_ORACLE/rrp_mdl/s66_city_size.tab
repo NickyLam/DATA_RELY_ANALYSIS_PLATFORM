@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.S66_CITY_SIZE
+(
+  city_nm           VARCHAR2(200),
+  city_pop_num      NUMBER(22,4),
+  regd_land_area_cd VARCHAR2(200),
+  regd_land_area    VARCHAR2(200),
+  city_size_code    VARCHAR2(20),
+  city_size         VARCHAR2(900)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.S66_CITY_SIZE
+  is 'S66城市规模码值表';
+comment on column RRP_MDL.S66_CITY_SIZE.city_nm
+  is '城市';
+comment on column RRP_MDL.S66_CITY_SIZE.city_pop_num
+  is '城市人口数-万';
+comment on column RRP_MDL.S66_CITY_SIZE.regd_land_area_cd
+  is '行政区划代码';
+comment on column RRP_MDL.S66_CITY_SIZE.regd_land_area
+  is '行政区划';
+comment on column RRP_MDL.S66_CITY_SIZE.city_size_code
+  is '城市规模代码';
+comment on column RRP_MDL.S66_CITY_SIZE.city_size
+  is '城市规模';
+

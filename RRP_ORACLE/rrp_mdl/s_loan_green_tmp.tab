@@ -1,0 +1,81 @@
+﻿create table RRP_MDL.S_LOAN_GREEN_TMP
+(
+  data_dt                 CHAR(8),
+  lgl_rep_id              VARCHAR2(200),
+  org_id                  VARCHAR2(200),
+  cust_id                 VARCHAR2(200),
+  cust_blng_idy           VARCHAR2(10),
+  rcpt_id                 VARCHAR2(200),
+  grn_loan_useage_cl      VARCHAR2(10),
+  lvl5_cl                 VARCHAR2(10),
+  grn_loan_idy_cl         VARCHAR2(10),
+  mjr_rsk_ent_cl          VARCHAR2(10),
+  mjr_rsk_ent_flg         CHAR(1),
+  cur                     CHAR(3),
+  loan_bal                NUMBER(30,2),
+  grn_cnsmp_fin_useage_cl VARCHAR2(10),
+  cer_mtg_loan_flg        CHAR(1),
+  er_mtg_loan_flg         CHAR(1),
+  grn_loan_useage_cl_1104 VARCHAR2(10),
+  dept_line               VARCHAR2(500),
+  data_src                VARCHAR2(500),
+  cust_lrg_cl             VARCHAR2(10),
+  cust_typ                VARCHAR2(10),
+  zdhjaqfxqyfl            VARCHAR2(10),
+  fhlsdkytfldhylb         VARCHAR2(10),
+  acct_typ                VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.data_dt
+  is '数据日期';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.org_id
+  is '银行编号';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.cust_blng_idy
+  is '客户所属行业';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.grn_loan_useage_cl
+  is '绿色贷款用途分类';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.lvl5_cl
+  is '五级分类代码';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.grn_loan_idy_cl
+  is '绿色贷款有关行业分类';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.mjr_rsk_ent_cl
+  is '重大风险企业分类';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.mjr_rsk_ent_flg
+  is '重大风险企业标志';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.cur
+  is '账号币种';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.loan_bal
+  is '贷款余额';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.grn_cnsmp_fin_useage_cl
+  is '绿色消费融资用途分类';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.cer_mtg_loan_flg
+  is '以碳排放权为抵押的贷款标志';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.er_mtg_loan_flg
+  is '以环境权益为抵押的贷款标志';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.grn_loan_useage_cl_1104
+  is '绿色贷款用途分类1104';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.dept_line
+  is '部门条线';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.data_src
+  is '数据来源（参见[字典:AML0045]）';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.cust_lrg_cl
+  is '客户大类';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.cust_typ
+  is '客户类型';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.zdhjaqfxqyfl
+  is '重大环境安全风险企业分类';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.fhlsdkytfldhylb
+  is '符合绿色贷款用途分类的行业类别';
+comment on column RRP_MDL.S_LOAN_GREEN_TMP.acct_typ
+  is '业务细类';
+

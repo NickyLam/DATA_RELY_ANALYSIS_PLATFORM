@@ -1,0 +1,120 @@
+﻿create table RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST
+(
+  serialno             VARCHAR2(64),
+  objecttype           VARCHAR2(64),
+  productid            VARCHAR2(64),
+  adjustdate           DATE,
+  adjustapplyer        VARCHAR2(64),
+  customername         VARCHAR2(200),
+  adjustorgid          VARCHAR2(64),
+  approvestatus        VARCHAR2(64),
+  operatedate          DATE,
+  inputdate            DATE,
+  adjusttype           VARCHAR2(36),
+  belongdept           VARCHAR2(64),
+  inputuserid          VARCHAR2(64),
+  updatedate           DATE,
+  corporgid            VARCHAR2(64),
+  objectno             VARCHAR2(64),
+  operateorgid         VARCHAR2(64),
+  customerid           VARCHAR2(16),
+  adjustreason         VARCHAR2(1000),
+  updateorgid          VARCHAR2(64),
+  migtflag             VARCHAR2(80),
+  adjustclassifyresult VARCHAR2(36),
+  currclassifytype     VARCHAR2(36),
+  updateuserid         VARCHAR2(64),
+  adjustfinishdate     DATE,
+  accountmonth         VARCHAR2(64),
+  inputorgid           VARCHAR2(64),
+  relativeserialno     VARCHAR2(64),
+  operateuserid        VARCHAR2(64),
+  currclassifyresult   VARCHAR2(64),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10),
+  etl_timestamp        TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST
+  is '风险分类调整';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.objecttype
+  is '对象类型对象类型(合同/借据)';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.productid
+  is '业务品种';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.adjustdate
+  is '调整申请日期';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.adjustapplyer
+  is '调整申请人';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.customername
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.adjustorgid
+  is '调整申请机构';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.approvestatus
+  is '审批状态';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.operatedate
+  is '经办日期';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.adjusttype
+  is '调整类型调整类型(分类结果调整/分类方式调整)';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.belongdept
+  is '所属条线';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.corporgid
+  is '法人机构编号';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.objectno
+  is '对象编号借据编号（借据编号/合同编号）';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.operateorgid
+  is '经办机构';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.customerid
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.adjustreason
+  is '分类调整原因';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.migtflag
+  is '迁移标志：crsrcrilcupl';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.adjustclassifyresult
+  is '调整分类结果';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.currclassifytype
+  is '当前分类方式';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.adjustfinishdate
+  is '认定完成时间';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.accountmonth
+  is '期次';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.relativeserialno
+  is '原分类编号';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.operateuserid
+  is '经办人';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.currclassifyresult
+  is '当前分类结果';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_CLASSIFY_ADJUST.etl_timestamp
+  is 'ETL处理时间戳';
+

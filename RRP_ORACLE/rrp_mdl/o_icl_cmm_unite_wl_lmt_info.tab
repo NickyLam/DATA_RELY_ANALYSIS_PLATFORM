@@ -1,0 +1,99 @@
+﻿create table RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO
+(
+  etl_dt           DATE,
+  lp_id            VARCHAR2(60),
+  lmt_cont_id      VARCHAR2(100),
+  lmt_rela_appl_id VARCHAR2(100),
+  cust_id          VARCHAR2(60),
+  bus_breed_id     VARCHAR2(60),
+  actv_flg         VARCHAR2(30),
+  circl_flg        VARCHAR2(30),
+  low_risk_bus_flg VARCHAR2(30),
+  cust_type_cd     VARCHAR2(30),
+  curr_cd          VARCHAR2(60),
+  status_cd        VARCHAR2(30),
+  bus_breed_name   VARCHAR2(250),
+  tenor            VARCHAR2(60),
+  begin_dt         DATE,
+  modif_dt         DATE,
+  exp_dt           DATE,
+  belong_org_id    VARCHAR2(60),
+  belong_brch_id   VARCHAR2(60),
+  acct_instit_id   VARCHAR2(60),
+  mgmt_org_id      VARCHAR2(60),
+  crdt_lmt         NUMBER(30,2),
+  occu_crdt_lmt    NUMBER(30,2),
+  surp_crdt_lmt    NUMBER(30,2),
+  crdt_open_amt    NUMBER(30,2),
+  incr_lmt_lmt     NUMBER(30,2),
+  job_cd           VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO
+  is '联合网贷额度信息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.lmt_cont_id
+  is '额度合同编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.lmt_rela_appl_id
+  is '额度关联申请编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.bus_breed_id
+  is '业务品种编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.actv_flg
+  is '激活标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.circl_flg
+  is '循环标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.low_risk_bus_flg
+  is '低风险业务标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.status_cd
+  is '状态代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.bus_breed_name
+  is '业务品种名称';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.tenor
+  is '期限';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.begin_dt
+  is '起始日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.modif_dt
+  is '变更日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.belong_brch_id
+  is '所属分行编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.acct_instit_id
+  is '账务机构编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.mgmt_org_id
+  is '管理机构编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.crdt_lmt
+  is '授信额度';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.occu_crdt_lmt
+  is '已占用授信额度';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.surp_crdt_lmt
+  is '剩余授信额度';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.crdt_open_amt
+  is '授信敞口金额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.incr_lmt_lmt
+  is '提额额度';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_LMT_INFO.job_cd
+  is '任务代码';
+

@@ -1,0 +1,160 @@
+﻿create table RRP_MDL.O_IOL_IFMS_TBINSUREREQ
+(
+  trans_date        NUMBER,
+  serial_no         VARCHAR2(48),
+  bank_no           VARCHAR2(3),
+  asso_serial       VARCHAR2(48),
+  ta_code           VARCHAR2(14),
+  prd_code          VARCHAR2(30),
+  insure_no         VARCHAR2(45),
+  client_manager    VARCHAR2(48),
+  client_no         VARCHAR2(36),
+  client_type       VARCHAR2(2),
+  trans_code        VARCHAR2(9),
+  trans_name        VARCHAR2(90),
+  bank_acc          VARCHAR2(48),
+  acc_name          VARCHAR2(30),
+  voucher_type      VARCHAR2(15),
+  voucher_no        VARCHAR2(48),
+  voucher_pwd       VARCHAR2(45),
+  voucher_date      NUMBER,
+  voucher_note      VARCHAR2(90),
+  curr_type         VARCHAR2(5),
+  clear_status      VARCHAR2(2),
+  check_status      VARCHAR2(2),
+  liqu_status       VARCHAR2(2),
+  amt               NUMBER(18,2),
+  charge            NUMBER(18,2),
+  internal_branch   VARCHAR2(18),
+  branch_no         VARCHAR2(24),
+  oper_no           VARCHAR2(48),
+  auth_oper         VARCHAR2(48),
+  term              VARCHAR2(12),
+  channel           VARCHAR2(15),
+  err_code          VARCHAR2(15),
+  err_msg           VARCHAR2(900),
+  insure_date       NUMBER,
+  insure_cfm_no     VARCHAR2(45),
+  insure_trans_code VARCHAR2(15),
+  targ_err_code     VARCHAR2(15),
+  targ_err_msg      VARCHAR2(900),
+  host_date         NUMBER,
+  host_serial       VARCHAR2(48),
+  host_trans_code   VARCHAR2(15),
+  host_err_code     VARCHAR2(15),
+  host_err_msg      VARCHAR2(900),
+  status            VARCHAR2(2),
+  trans_time        NUMBER,
+  offer_charge      NUMBER(18,2),
+  insure_print      VARCHAR2(48),
+  amt1              NUMBER(18,2),
+  amt2              NUMBER(20,4),
+  reserve1          VARCHAR2(375),
+  reserve2          VARCHAR2(375),
+  reserve3          VARCHAR2(375),
+  start_dt          DATE,
+  end_dt            DATE,
+  id_mark           VARCHAR2(10),
+  etl_timestamp     TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IFMS_TBINSUREREQ
+  is '业务流水表';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.trans_date
+  is '申请日期';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.serial_no
+  is '评级流水号';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.bank_no
+  is '开户行行号';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.asso_serial
+  is '关联流水号';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.ta_code
+  is 'ta代码';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.prd_code
+  is '借款对应的产品编码';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.client_manager
+  is '客户经理';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.client_type
+  is 'CLIENT_TYPE';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.trans_code
+  is '交易代码';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.trans_name
+  is '交易名称';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.bank_acc
+  is '银行帐号';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.acc_name
+  is '账户名';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.voucher_type
+  is '商业发票种类';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.voucher_no
+  is '开户凭证';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.curr_type
+  is '币别[代码T003][参考CFG_T_CURRENCY_TYPE]';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.clear_status
+  is '清算状态 [枚举: 0-未清算,1-已清算]';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.check_status
+  is '核实状态';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.charge
+  is '手续费';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.internal_branch
+  is '机构内码';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.branch_no
+  is '票据所属机构号';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.oper_no
+  is '申请操作员';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.auth_oper
+  is '授权柜员';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.term
+  is '原始期限';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.channel
+  is '通道';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.err_code
+  is '错误码';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.err_msg
+  is '错误信息';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.insure_date
+  is '制卡日期';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.host_date
+  is '主机交易日期';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.host_serial
+  is '主机流水号';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.host_trans_code
+  is '主机交易码';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.status
+  is '状态;1草稿2审核中3审核完成4退回';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.trans_time
+  is '转账时间';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.offer_charge
+  is '出单费';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.amt1
+  is '金额1';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.amt2
+  is '保留金额2';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.reserve1
+  is '备用字段1';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.reserve2
+  is '备用字段2';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.reserve3
+  is '备注3';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IFMS_TBINSUREREQ.etl_timestamp
+  is 'ETL处理时间戳';
+

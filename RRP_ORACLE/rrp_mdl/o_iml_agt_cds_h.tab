@@ -1,0 +1,234 @@
+﻿create table RRP_MDL.O_IML_AGT_CDS_H
+(
+  agt_id                   VARCHAR2(250),
+  lp_id                    VARCHAR2(100),
+  precon_id                VARCHAR2(100),
+  precon_rgst_dt           DATE,
+  precon_open_acct_dt      DATE,
+  precon_rgst_acct_type    VARCHAR2(30),
+  precon_org               VARCHAR2(100),
+  precon_curr_cd           VARCHAR2(30),
+  precon_amt               NUMBER(30,2),
+  pd_prod_precon_status_cd VARCHAR2(30),
+  cust_id                  VARCHAR2(100),
+  acct_id                  VARCHAR2(100),
+  cust_acct_num            VARCHAR2(100),
+  curr_cd                  VARCHAR2(30),
+  sub_acct_num             VARCHAR2(60),
+  prod_id                  VARCHAR2(100),
+  comb_prod_id             VARCHAR2(250),
+  acct_name                VARCHAR2(500),
+  seq_num                  VARCHAR2(60),
+  on_acct_seq_num          VARCHAR2(60),
+  supp_on_acct_sub_seq_num VARCHAR2(60),
+  tran_amt                 NUMBER(30,2),
+  pd_cd                    VARCHAR2(30),
+  pd_prod_cate_cd          VARCHAR2(30),
+  pd_issue_amt             NUMBER(30,2),
+  issue_year               VARCHAR2(60),
+  issue_begin_dt           DATE,
+  issue_termnt_dt          DATE,
+  chn_id                   VARCHAR2(100),
+  cntpty_acct_id           VARCHAR2(100),
+  cntpty_cust_acct_num     VARCHAR2(100),
+  cntpty_acct_curr_cd      VARCHAR2(30),
+  cntpty_sub_acct_num      VARCHAR2(60),
+  cntpty_prod_id           VARCHAR2(100),
+  lmt_id                   VARCHAR2(100),
+  vouch_no                 VARCHAR2(60),
+  auto_payoff_flg          VARCHAR2(10),
+  bank_int_int_rat         NUMBER(18,8),
+  exec_int_rat             NUMBER(18,8),
+  float_int_rat            NUMBER(18,8),
+  int_rat_type_cd          VARCHAR2(30),
+  int_rat_adj_way_cd       VARCHAR2(30),
+  int_set_day              NUMBER(10),
+  int_set_freq_cd          VARCHAR2(30),
+  accrd_freq_pay_int_flg   VARCHAR2(10),
+  next_int_set_dt          DATE,
+  tran_ref_no              VARCHAR2(60),
+  teller_id                VARCHAR2(100),
+  acct_status_cd           VARCHAR2(30),
+  redem_dt                 DATE,
+  expect_redem_int         NUMBER(30,2),
+  inpwn_flg                VARCHAR2(10),
+  wdraw_way_cd             VARCHAR2(30),
+  acct_attr_cd             VARCHAR2(30),
+  cntpty_acct_name         VARCHAR2(500),
+  potd_acct_id             VARCHAR2(100),
+  cds_int_accr_way_cd      VARCHAR2(30),
+  subscr_acct_id           VARCHAR2(100),
+  col_int_acct_id          VARCHAR2(100),
+  start_dt                 DATE,
+  end_dt                   DATE,
+  id_mark                  VARCHAR2(10),
+  src_table_name           VARCHAR2(100),
+  job_cd                   VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6),
+  del_dt                   DATE,
+  fail_rs_descb            VARCHAR2(2000),
+  memo                     VARCHAR2(2000),
+  del_auth_teller_id       VARCHAR2(100),
+  del_teller_id            VARCHAR2(100),
+  revo_dt                  DATE,
+  dep_char_cd              VARCHAR2(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_CDS_H
+  is '大额存单历史';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.precon_id
+  is '预约编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.precon_rgst_dt
+  is '预约登记日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.precon_open_acct_dt
+  is '预约开户日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.precon_rgst_acct_type
+  is '预约登记账户类型代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.precon_org
+  is '预约机构编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.precon_curr_cd
+  is '预约币种代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.precon_amt
+  is '预约金额';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.pd_prod_precon_status_cd
+  is '期次产品预约状态代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.cust_acct_num
+  is '客户账号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.sub_acct_num
+  is '子账号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.comb_prod_id
+  is '组合产品编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.seq_num
+  is '序号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.on_acct_seq_num
+  is '挂账序号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.supp_on_acct_sub_seq_num
+  is '追加挂账子序号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.pd_cd
+  is '期次编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.pd_prod_cate_cd
+  is '期次产品类别代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.pd_issue_amt
+  is '期次发行金额';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.issue_year
+  is '发行年度';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.issue_begin_dt
+  is '发行起始日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.issue_termnt_dt
+  is '发行终止日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.chn_id
+  is '渠道编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.cntpty_acct_id
+  is '对手账户编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.cntpty_cust_acct_num
+  is '对手客户账号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.cntpty_acct_curr_cd
+  is '对手账户币种代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.cntpty_sub_acct_num
+  is '对手子账号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.cntpty_prod_id
+  is '对手产品编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.lmt_id
+  is '限制编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.vouch_no
+  is '凭证号码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.auto_payoff_flg
+  is '自动结清标志';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.bank_int_int_rat
+  is '行内利率';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.float_int_rat
+  is '浮动利率';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.int_rat_type_cd
+  is '利率类型代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.int_rat_adj_way_cd
+  is '利率调整方式代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.int_set_day
+  is '结息日';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.int_set_freq_cd
+  is '结息频率代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.accrd_freq_pay_int_flg
+  is '按频率付息标志';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.next_int_set_dt
+  is '下一结息日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.tran_ref_no
+  is '交易参考号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.teller_id
+  is '柜员编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.acct_status_cd
+  is '账户状态代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.redem_dt
+  is '赎回日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.expect_redem_int
+  is '预计赎回利息';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.inpwn_flg
+  is '质押标志';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.wdraw_way_cd
+  is '支取方式代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.acct_attr_cd
+  is '账户属性代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.cntpty_acct_name
+  is '对手账户名称';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.potd_acct_id
+  is '定期一本通账户编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.cds_int_accr_way_cd
+  is '大额存单计息方式代码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.subscr_acct_id
+  is '认购账户编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.col_int_acct_id
+  is '收息账户编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.del_dt
+  is '删除日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.fail_rs_descb
+  is '失败原因描述';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.memo
+  is '摘要';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.del_auth_teller_id
+  is '删除授权柜员编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.del_teller_id
+  is '删除柜员编号';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.revo_dt
+  is '撤单日期';
+comment on column RRP_MDL.O_IML_AGT_CDS_H.dep_char_cd
+  is '存款性质代码';
+

@@ -1,0 +1,120 @@
+﻿create table RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H
+(
+  fin_instm_id       VARCHAR2(60),
+  asset_type_id      VARCHAR2(60),
+  market_type_id     VARCHAR2(60),
+  lp_id              VARCHAR2(60),
+  task_group_id      VARCHAR2(60),
+  cashflow_id        VARCHAR2(60),
+  int_rat_flow_id    VARCHAR2(60),
+  pricing_envir_id   VARCHAR2(60),
+  cfm_cashflow_flg   NUMBER(38,6),
+  calc_dt            DATE,
+  int_accr_start_dt  DATE,
+  int_accr_end_dt    DATE,
+  pay_dt             DATE,
+  pay_amt            NUMBER(38,6),
+  disct_rat          NUMBER(38,6),
+  pric_amt           NUMBER(38,6),
+  pre_pric_amt       NUMBER(38,6),
+  int_amt            NUMBER(38,6),
+  pre_int_amt        NUMBER(38,6),
+  pay_bf_pric        NUMBER(38,6),
+  pay_post_pric      NUMBER(38,6),
+  option_premium     NUMBER(38,6),
+  pre_option_premium NUMBER(38,6),
+  curr_cd            VARCHAR2(30),
+  stl_curr_cd        VARCHAR2(30),
+  accu_pd            NUMBER(38,6),
+  real_fin_instm_id  VARCHAR2(60),
+  src_update_tm      DATE,
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  src_table_name     VARCHAR2(100),
+  job_cd             VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H
+  is '同业现金流明细历史';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.fin_instm_id
+  is '金融工具编号';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.asset_type_id
+  is '资产类型编号';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.market_type_id
+  is '市场类型编号';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.task_group_id
+  is '任务组编号';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.cashflow_id
+  is '现金流编号';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.int_rat_flow_id
+  is '利率流编号';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.pricing_envir_id
+  is '定价环境编号';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.cfm_cashflow_flg
+  is '确定现金流标志';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.calc_dt
+  is '计算日期';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.int_accr_start_dt
+  is '计息开始日期';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.int_accr_end_dt
+  is '计息结束日期';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.pay_dt
+  is '支付日期';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.pay_amt
+  is '支付金额';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.disct_rat
+  is '折现率';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.pric_amt
+  is '本金金额';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.pre_pric_amt
+  is '预测本金金额';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.int_amt
+  is '利息金额';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.pre_int_amt
+  is '预测利息金额';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.pay_bf_pric
+  is '支付前本金';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.pay_post_pric
+  is '支付后本金';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.option_premium
+  is '期权费';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.pre_option_premium
+  is '预测期权费';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.stl_curr_cd
+  is '结算币种代码';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.accu_pd
+  is '累积违约概率';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.real_fin_instm_id
+  is '真实金融工具编号';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.src_update_tm
+  is '源更新时间';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_PRD_IBANK_CASHFLOW_DTL_H.etl_timestamp
+  is 'ETL处理时间戳';
+

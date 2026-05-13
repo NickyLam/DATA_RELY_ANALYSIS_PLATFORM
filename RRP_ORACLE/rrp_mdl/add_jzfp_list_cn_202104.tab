@@ -1,0 +1,24 @@
+﻿create table RRP_MDL.ADD_JZFP_LIST_CN_202104
+(
+  pkhsfzh VARCHAR2(150),
+  tpzt    VARCHAR2(150)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_JZFP_LIST_CN_202104
+  is '精准扶贫补录表';
+comment on column RRP_MDL.ADD_JZFP_LIST_CN_202104.pkhsfzh
+  is '贫困户身份证号';
+comment on column RRP_MDL.ADD_JZFP_LIST_CN_202104.tpzt
+  is '脱贫状态';
+

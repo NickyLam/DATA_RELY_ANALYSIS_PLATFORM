@@ -1,0 +1,27 @@
+﻿create table RRP_MDL.CHG_ACCT_TMP
+(
+  acct_id            VARCHAR2(60),
+  cust_acct_id       VARCHAR2(100),
+  dep_acct_status_cd VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.CHG_ACCT_TMP
+  is '账户配置';
+comment on column RRP_MDL.CHG_ACCT_TMP.acct_id
+  is '账户编号';
+comment on column RRP_MDL.CHG_ACCT_TMP.cust_acct_id
+  is '账户编号';
+comment on column RRP_MDL.CHG_ACCT_TMP.dep_acct_status_cd
+  is '存款账户状态代码';
+

@@ -1,0 +1,138 @@
+﻿create table RRP_MDL.O_IML_AGT_INTSTL_ACCT
+(
+  agt_id                 VARCHAR2(250),
+  lp_id                  VARCHAR2(60),
+  acct_prior_level_cd    VARCHAR2(30),
+  acct_curr_cd           VARCHAR2(30),
+  bank_acct_id           VARCHAR2(100),
+  acct_bank_id           VARCHAR2(100),
+  acct_bank_name         VARCHAR2(375),
+  acct_bank_type_cd      VARCHAR2(30),
+  acct_bank_party_id     VARCHAR2(60),
+  open_org_acct_id       VARCHAR2(60),
+  open_org_acct_name     VARCHAR2(375),
+  open_org_acct_type_cd  VARCHAR2(30),
+  open_acct_org_party_id VARCHAR2(60),
+  pos_acct_flg           VARCHAR2(30),
+  pay_back_flg           VARCHAR2(30),
+  del_flg                VARCHAR2(30),
+  edit_id                VARCHAR2(30),
+  debit_crdt_dir_cd      VARCHAR2(30),
+  acct_bank_flg          VARCHAR2(30),
+  swift_acct_name        VARCHAR2(375),
+  hxb_acct_flg           VARCHAR2(30),
+  acct_bank_bic_code     VARCHAR2(45),
+  inter_bank_acct_id     VARCHAR2(100),
+  enty_group_id          VARCHAR2(30),
+  acct_num_name_comnt    VARCHAR2(375),
+  acct_usage_type_cd     VARCHAR2(30),
+  subj_cd                VARCHAR2(30),
+  acct_type_cd           VARCHAR2(30),
+  belong_org_id          VARCHAR2(30),
+  ec_idf_cd              VARCHAR2(30),
+  prod_name              VARCHAR2(375),
+  fori_exch_acct_char_cd VARCHAR2(60),
+  std_prod_id            VARCHAR2(100),
+  sub_acct_num           VARCHAR2(90),
+  create_dt              DATE,
+  update_dt              DATE,
+  etl_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  src_table_name         VARCHAR2(100),
+  job_cd                 VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_INTSTL_ACCT
+  is '国结账户';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.agt_id
+  is '交易账户编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_prior_level_cd
+  is '账户优先级代码';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_curr_cd
+  is '账户币种代码';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.bank_acct_id
+  is '银行账户编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_bank_id
+  is '账户行账户编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_bank_name
+  is '账户行账户名称';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_bank_type_cd
+  is 'VLOOKUP(E9318,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_bank_party_id
+  is '账户行当事人编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.open_org_acct_id
+  is '账号开户机构账户编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.open_org_acct_name
+  is 'VLOOKUP(E9303,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.open_org_acct_type_cd
+  is '账号开户机构账户类型代码';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.open_acct_org_party_id
+  is 'VLOOKUP(E9320,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.pos_acct_flg
+  is '头寸账户标志';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.pay_back_flg
+  is '偿付标志';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.del_flg
+  is '删除标志';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.edit_id
+  is '版本编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.debit_crdt_dir_cd
+  is '借贷方向代码';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_bank_flg
+  is '账户行账号标志';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.swift_acct_name
+  is 'SWIFT账户名称';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.hxb_acct_flg
+  is '我行账户标志';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_bank_bic_code
+  is 'VLOOKUP(E9285,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.inter_bank_acct_id
+  is '国际银行账户编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.enty_group_id
+  is '实体组编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_num_name_comnt
+  is '账号名称说明';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_usage_type_cd
+  is 'VLOOKUP(E9319,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.subj_cd
+  is '科目代码';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.acct_type_cd
+  is '账户类型代码';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.ec_idf_cd
+  is '钞汇标识代码';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.prod_name
+  is '产品名称';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.fori_exch_acct_char_cd
+  is '外汇账户性质代码';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.sub_acct_num
+  is '子户号';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_INTSTL_ACCT.job_cd
+  is '任务代码';
+

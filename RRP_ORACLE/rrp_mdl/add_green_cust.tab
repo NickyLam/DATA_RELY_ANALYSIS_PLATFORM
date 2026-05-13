@@ -1,0 +1,57 @@
+﻿create table RRP_MDL.ADD_GREEN_CUST
+(
+  data_date                VARCHAR2(8) not null,
+  cust_open_org_num        VARCHAR2(20),
+  acct_org_num             VARCHAR2(20),
+  cust_id                  VARCHAR2(50),
+  cust_name                VARCHAR2(100),
+  loan_num                 VARCHAR2(100) not null,
+  main_cust_manager_id     VARCHAR2(50),
+  main_cust_manager_name   VARCHAR2(100),
+  manage_org               VARCHAR2(100),
+  dubil_bal                NUMBER(30,2),
+  safety_risk_type         VARCHAR2(1),
+  green_loan_industry_type VARCHAR2(6),
+  green_loan_type          VARCHAR2(5)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_GREEN_CUST
+  is '补录表-绿色贷款客户名单';
+comment on column RRP_MDL.ADD_GREEN_CUST.data_date
+  is '数据日期';
+comment on column RRP_MDL.ADD_GREEN_CUST.cust_open_org_num
+  is '客户开户行编号';
+comment on column RRP_MDL.ADD_GREEN_CUST.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.ADD_GREEN_CUST.cust_id
+  is '客户编号';
+comment on column RRP_MDL.ADD_GREEN_CUST.cust_name
+  is '客户名称';
+comment on column RRP_MDL.ADD_GREEN_CUST.loan_num
+  is '贷款编号';
+comment on column RRP_MDL.ADD_GREEN_CUST.main_cust_manager_id
+  is '主办客户经理编号';
+comment on column RRP_MDL.ADD_GREEN_CUST.main_cust_manager_name
+  is '主办客户经理名称';
+comment on column RRP_MDL.ADD_GREEN_CUST.manage_org
+  is '经办行';
+comment on column RRP_MDL.ADD_GREEN_CUST.dubil_bal
+  is '借据余额';
+comment on column RRP_MDL.ADD_GREEN_CUST.safety_risk_type
+  is '企业环境安全风险类型';
+comment on column RRP_MDL.ADD_GREEN_CUST.green_loan_industry_type
+  is '符合绿色贷款用途分类的行业类别';
+comment on column RRP_MDL.ADD_GREEN_CUST.green_loan_type
+  is '绿色贷款用途分类';
+alter table RRP_MDL.ADD_GREEN_CUST
+  add constraint PK_ADD_GREEN_CUST primary key (DATA_DATE, LOAN_NUM)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

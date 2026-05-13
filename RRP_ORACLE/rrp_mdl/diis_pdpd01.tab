@@ -1,0 +1,135 @@
+﻿create table RRP_MDL.DIIS_PDPD01
+(
+  rid          VARCHAR2(100) not null,
+  cust_seq     NUMBER(15),
+  name         VARCHAR2(600),
+  cust_id      VARCHAR2(100),
+  sex          VARCHAR2(6),
+  nationality  VARCHAR2(9),
+  occupation   VARCHAR2(150),
+  dpst_tot_amt NUMBER(30,2),
+  acct_seq     NUMBER(15),
+  prod_type    VARCHAR2(4),
+  acct_no      VARCHAR2(64),
+  acct_type    VARCHAR2(40),
+  dpst_sts     VARCHAR2(6),
+  id_type      VARCHAR2(4),
+  id_no        VARCHAR2(60),
+  id_valid_dt  VARCHAR2(20),
+  tel_no       VARCHAR2(60),
+  addr         VARCHAR2(270),
+  prin_amt     NUMBER(30,2),
+  int_amt      NUMBER(30,2),
+  tot_amt      NUMBER(30,2),
+  note         VARCHAR2(900),
+  data_dt      VARCHAR2(20) not null,
+  org_no       VARCHAR2(40),
+  curr_cd      VARCHAR2(6) default 'CNY',
+  dept_no      VARCHAR2(60),
+  issued_no    VARCHAR2(40),
+  rpt_org_no   VARCHAR2(40),
+  data_ources  VARCHAR2(6),
+  data_modify  VARCHAR2(4),
+  b_tot_amt    NUMBER(30,2),
+  s_tot_amt    NUMBER(30,2),
+  is_seq       VARCHAR2(3) default 0,
+  subj_id      VARCHAR2(60),
+  indv_bus_flg VARCHAR2(2),
+  web_bus_flg  VARCHAR2(10),
+  dep_kind     VARCHAR2(300),
+  base_cur     CHAR(3),
+  dep_bal      NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.DIIS_PDPD01
+  is '个人存款-不含高管人员-境内';
+comment on column RRP_MDL.DIIS_PDPD01.rid
+  is '数据主键';
+comment on column RRP_MDL.DIIS_PDPD01.cust_seq
+  is '存款人序号';
+comment on column RRP_MDL.DIIS_PDPD01.name
+  is '存款人名称';
+comment on column RRP_MDL.DIIS_PDPD01.cust_id
+  is '识别码';
+comment on column RRP_MDL.DIIS_PDPD01.sex
+  is '性别';
+comment on column RRP_MDL.DIIS_PDPD01.nationality
+  is '国籍';
+comment on column RRP_MDL.DIIS_PDPD01.occupation
+  is '职业';
+comment on column RRP_MDL.DIIS_PDPD01.dpst_tot_amt
+  is '各存款账户本息合计';
+comment on column RRP_MDL.DIIS_PDPD01.acct_seq
+  is '存款账户序号';
+comment on column RRP_MDL.DIIS_PDPD01.prod_type
+  is '存款产品类别';
+comment on column RRP_MDL.DIIS_PDPD01.acct_no
+  is '存款账户号码';
+comment on column RRP_MDL.DIIS_PDPD01.acct_type
+  is '存款账户类型';
+comment on column RRP_MDL.DIIS_PDPD01.dpst_sts
+  is '存款状态';
+comment on column RRP_MDL.DIIS_PDPD01.id_type
+  is '开户证件类型';
+comment on column RRP_MDL.DIIS_PDPD01.id_no
+  is '开户证件号码';
+comment on column RRP_MDL.DIIS_PDPD01.id_valid_dt
+  is '开户证件有效期限';
+comment on column RRP_MDL.DIIS_PDPD01.tel_no
+  is '联系电话';
+comment on column RRP_MDL.DIIS_PDPD01.addr
+  is '联系地址';
+comment on column RRP_MDL.DIIS_PDPD01.prin_amt
+  is '存款本金';
+comment on column RRP_MDL.DIIS_PDPD01.int_amt
+  is '应付利息';
+comment on column RRP_MDL.DIIS_PDPD01.tot_amt
+  is '本息合计';
+comment on column RRP_MDL.DIIS_PDPD01.note
+  is '备注';
+comment on column RRP_MDL.DIIS_PDPD01.data_dt
+  is '数据日期';
+comment on column RRP_MDL.DIIS_PDPD01.org_no
+  is '机构编号';
+comment on column RRP_MDL.DIIS_PDPD01.curr_cd
+  is '币种';
+comment on column RRP_MDL.DIIS_PDPD01.dept_no
+  is '条线';
+comment on column RRP_MDL.DIIS_PDPD01.issued_no
+  is '填报机构';
+comment on column RRP_MDL.DIIS_PDPD01.rpt_org_no
+  is '报送机构号';
+comment on column RRP_MDL.DIIS_PDPD01.data_ources
+  is '数据来源';
+comment on column RRP_MDL.DIIS_PDPD01.data_modify
+  is '数据修改';
+comment on column RRP_MDL.DIIS_PDPD01.b_tot_amt
+  is '其中:被保险存款本息合计';
+comment on column RRP_MDL.DIIS_PDPD01.s_tot_amt
+  is '其中:受保存款本息合计';
+comment on column RRP_MDL.DIIS_PDPD01.is_seq
+  is '是否合计项';
+comment on column RRP_MDL.DIIS_PDPD01.subj_id
+  is '科目编号';
+comment on column RRP_MDL.DIIS_PDPD01.indv_bus_flg
+  is '是否个体工商户';
+comment on column RRP_MDL.DIIS_PDPD01.web_bus_flg
+  is '是否微众存款';
+comment on column RRP_MDL.DIIS_PDPD01.dep_kind
+  is '储种';
+comment on column RRP_MDL.DIIS_PDPD01.base_cur
+  is '来源币种';
+comment on column RRP_MDL.DIIS_PDPD01.dep_bal
+  is '折算前存款余额';
+

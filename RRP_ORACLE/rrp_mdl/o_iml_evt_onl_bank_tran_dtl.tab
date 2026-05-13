@@ -1,0 +1,186 @@
+﻿create table RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL
+(
+  evt_id                  VARCHAR2(250),
+  lp_id                   VARCHAR2(60),
+  tran_flow_num           VARCHAR2(100),
+  whole_unify_cust_id     VARCHAR2(60),
+  tran_dt                 DATE,
+  tran_tm                 VARCHAR2(20),
+  tran_code               VARCHAR2(100),
+  tran_oper_type_cd       VARCHAR2(10),
+  tran_return_code        VARCHAR2(100),
+  fail_rs                 VARCHAR2(2000),
+  tran_amt                NUMBER(30,2),
+  curr_cd                 VARCHAR2(10),
+  comm_fee                NUMBER(30,2),
+  pay_acct_num            VARCHAR2(60),
+  pay_acct_name           VARCHAR2(100),
+  pay_acct_type_cd        VARCHAR2(10),
+  recvbl_num              VARCHAR2(60),
+  recvbl_num_name         VARCHAR2(200),
+  recvbl_acct_type_cd     VARCHAR2(10),
+  recver_bank_no          VARCHAR2(60),
+  recver_bank_name        VARCHAR2(500),
+  recver_prov_cd          VARCHAR2(60),
+  recver_prov_name        VARCHAR2(100),
+  recver_city_cd          VARCHAR2(60),
+  recver_city_name        VARCHAR2(200),
+  plan_fomult_tm          VARCHAR2(20),
+  plan_type_cd            VARCHAR2(10),
+  tran_freq_cd            VARCHAR2(10),
+  next_exec_dt            DATE,
+  precon_plan_status_cd   VARCHAR2(10),
+  tm_or_ff_begin_dt       DATE,
+  tm_or_ff_closing_dt     DATE,
+  lmt_attr_cd             VARCHAR2(100),
+  save_cert_way_cd        VARCHAR2(10),
+  usage_comnt             VARCHAR2(200),
+  onl_bank_tran_flow_num  VARCHAR2(100),
+  recver_nickna           VARCHAR2(100),
+  atm_equip_id            VARCHAR2(60),
+  st_msg_advise_mobile_no VARCHAR2(60),
+  brac_id                 VARCHAR2(60),
+  brac_name               VARCHAR2(500),
+  dept_cd                 VARCHAR2(10),
+  tran_out_route_id       VARCHAR2(60),
+  remit_way_id            VARCHAR2(60),
+  remit_way_name          VARCHAR2(100),
+  next_day_tran_out_flg   VARCHAR2(10),
+  tran_mobile_no          VARCHAR2(60),
+  crdt_card_repay_flg     VARCHAR2(10),
+  user_seq_id             VARCHAR2(60),
+  remark                  VARCHAR2(250),
+  tran_order_no           VARCHAR2(60),
+  chain_way_track_no      VARCHAR2(100),
+  etl_dt                  DATE,
+  src_table_name          VARCHAR2(100),
+  job_cd                  VARCHAR2(10),
+  etl_timestamp           TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL
+  is '网上银行交易流水';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.whole_unify_cust_id
+  is '全行统一客户编号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_code
+  is '交易码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_oper_type_cd
+  is '交易操作类型代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_return_code
+  is '交易返回码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.fail_rs
+  is '失败原因';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.curr_cd
+  is '币种代码CD1728';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.comm_fee
+  is '手续费';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.pay_acct_num
+  is '付款账号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.pay_acct_name
+  is '付款账户名称';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.pay_acct_type_cd
+  is '付款账户类型代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.recvbl_num
+  is '收款账号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.recvbl_num_name
+  is '收款账号名称';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.recvbl_acct_type_cd
+  is '收款账户类型代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.recver_bank_no
+  is '收款方银行行号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.recver_bank_name
+  is '收款方银行名称';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.recver_prov_cd
+  is '收款人省份代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.recver_prov_name
+  is '收款人省份名称';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.recver_city_cd
+  is '收款人城市代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.recver_city_name
+  is '收款人城市名称';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.plan_fomult_tm
+  is '计划制定时间';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.plan_type_cd
+  is '计划类型代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_freq_cd
+  is '交易频率代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.next_exec_dt
+  is '下一次执行日期';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.precon_plan_status_cd
+  is '预约计划状态代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tm_or_ff_begin_dt
+  is '定时或定频起始日期';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tm_or_ff_closing_dt
+  is '定时或定频截止日期';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.lmt_attr_cd
+  is '限额属性代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.save_cert_way_cd
+  is '安全认证方式代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.usage_comnt
+  is '用途说明';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.onl_bank_tran_flow_num
+  is '网银交易流水号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.recver_nickna
+  is '收款人昵称';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.atm_equip_id
+  is 'ATM设备编号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.st_msg_advise_mobile_no
+  is '短信通知手机号码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.brac_id
+  is '网点编号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.brac_name
+  is '网点名称';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.dept_cd
+  is '部门代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_out_route_id
+  is '转出路由编号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.remit_way_id
+  is '汇路编号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.remit_way_name
+  is '汇路名称';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.next_day_tran_out_flg
+  is '次日转出标志';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_mobile_no
+  is '转账手机号码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.crdt_card_repay_flg
+  is '信用卡还款标志';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.user_seq_id
+  is '用户顺序编号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.remark
+  is '备注';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.tran_order_no
+  is '交易订单号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.chain_way_track_no
+  is '链路跟踪号';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_EVT_ONL_BANK_TRAN_DTL.etl_timestamp
+  is 'etl处理时间';
+

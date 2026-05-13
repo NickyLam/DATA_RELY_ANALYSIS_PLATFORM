@@ -1,0 +1,57 @@
+﻿create table RRP_MDL.ADD_SDIS_T_3_5_INFO
+(
+  rid        VARCHAR2(50),
+  gxid       VARCHAR2(64),
+  jtid       VARCHAR2(60),
+  jgid       VARCHAR2(24),
+  gljtid     VARCHAR2(60),
+  glgxlx     VARCHAR2(5),
+  gxzt       VARCHAR2(50),
+  address    VARCHAR2(4000),
+  cjrq       VARCHAR2(10),
+  dept_no    VARCHAR2(10),
+  org_no     VARCHAR2(30),
+  rpt_org_no VARCHAR2(30),
+  data_dt    VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_SDIS_T_3_5_INFO
+  is '关联集团信息';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.rid
+  is '数据主键';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.gxid
+  is '关系ID';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.jtid
+  is '集团ID';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.jgid
+  is '机构ID';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.gljtid
+  is '关联集团ID';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.glgxlx
+  is '关联关系类型';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.gxzt
+  is '关系状态';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.address
+  is '地区';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.cjrq
+  is '采集日期';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.dept_no
+  is '条线';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.org_no
+  is '填报机构';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.rpt_org_no
+  is '报送机构';
+comment on column RRP_MDL.ADD_SDIS_T_3_5_INFO.data_dt
+  is '数据日期';
+

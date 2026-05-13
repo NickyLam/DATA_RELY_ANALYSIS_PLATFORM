@@ -1,0 +1,201 @@
+﻿create table RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO
+(
+  asset_id                VARCHAR2(60),
+  lp_id                   VARCHAR2(60),
+  curt_house_flg          VARCHAR2(30),
+  presell_lics_id         VARCHAR2(60),
+  expect_dlvy_tm          DATE,
+  expect_rel_esat_wat_tm  DATE,
+  house_used_flg          VARCHAR2(30),
+  two_in_one_flg          VARCHAR2(30),
+  rel_esat_wat_id         VARCHAR2(1500),
+  all_mtg_flg             VARCHAR2(30),
+  bs_cont_id              VARCHAR2(250),
+  buy_dt                  DATE,
+  buy_amt                 NUMBER(30,2),
+  sell_recd_flg           VARCHAR2(30),
+  purch_estate_flg        VARCHAR2(30),
+  uniq_housing_flg        VARCHAR2(30),
+  arch_area               NUMBER(30,2),
+  usbl_area               NUMBER(30,2),
+  build_year              VARCHAR2(90),
+  prop_tenor              NUMBER(30,2),
+  build_age               NUMBER(30,2),
+  aptmt_cd                VARCHAR2(30),
+  orient_cd               VARCHAR2(30),
+  prop_surp_tenor         NUMBER(30,2),
+  stru_type_cd            VARCHAR2(60),
+  status_cd               VARCHAR2(60),
+  local_prov_cd           VARCHAR2(60),
+  local_city_cd           VARCHAR2(60),
+  local_rg_cd             VARCHAR2(60),
+  street_name             VARCHAR2(500),
+  street_id               VARCHAR2(250),
+  dplat_id                VARCHAR2(250),
+  rel_esat_wat_rgst_addr  VARCHAR2(500),
+  estat_name              VARCHAR2(150),
+  plot_ratio              NUMBER(30,2),
+  floor_cnt               VARCHAR2(90),
+  tot_floor_cnt           NUMBER(10),
+  land_use_right_id       VARCHAR2(250),
+  land_char_cd            VARCHAR2(30),
+  land_use_area           NUMBER(30,2),
+  land_get_way_cd         VARCHAR2(30),
+  land_use_right_begin_dt DATE,
+  land_use_right_exp_dt   DATE,
+  land_use_right_years    NUMBER(30,2),
+  land_usage_cd           VARCHAR2(30),
+  other_prop_cert_flg     VARCHAR2(30),
+  other_comnt             VARCHAR2(4000),
+  rent_flg                VARCHAR2(30),
+  tentry_name             VARCHAR2(500),
+  rent_begin_dt           DATE,
+  rent_exp_dt             DATE,
+  rent_situ_comnt         VARCHAR2(375),
+  curr_cd                 VARCHAR2(30),
+  monly_mgmt_fee          NUMBER(30,2),
+  create_dt               DATE,
+  update_dt               DATE,
+  etl_dt                  DATE,
+  id_mark                 VARCHAR2(10),
+  src_table_name          VARCHAR2(100),
+  job_cd                  VARCHAR2(10),
+  etl_timestamp           TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO
+  is '押品居住用房信息';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.asset_id
+  is '资产编号';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.curt_house_flg
+  is '有房产证标志';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.presell_lics_id
+  is '预售许可证编号';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.expect_dlvy_tm
+  is '预计交付时间';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.expect_rel_esat_wat_tm
+  is '预计取得不动产权证时间';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.house_used_flg
+  is '一手二手标志';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.two_in_one_flg
+  is '两证合一标志';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.rel_esat_wat_id
+  is '房产证号';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.all_mtg_flg
+  is '全部抵押标志';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.bs_cont_id
+  is '买卖合同编号';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.buy_dt
+  is '购房日期';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.buy_amt
+  is '购房金额';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.sell_recd_flg
+  is '销售备案标志';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.purch_estate_flg
+  is '本次申购房产标志';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.uniq_housing_flg
+  is '唯一住房标志';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.arch_area
+  is '建筑面积';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.usbl_area
+  is '实用面积';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.build_year
+  is '建成年份';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.prop_tenor
+  is '产权期限';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.build_age
+  is '楼龄';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.aptmt_cd
+  is '套型代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.orient_cd
+  is '朝向代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.prop_surp_tenor
+  is '产权剩余期限';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.stru_type_cd
+  is '结构类型代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.status_cd
+  is '状态代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.local_prov_cd
+  is '所在省代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.local_city_cd
+  is '所在市代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.local_rg_cd
+  is '所在区代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.street_name
+  is '街道名称';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.street_id
+  is '街道编号';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.dplat_id
+  is '门牌编号';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.rel_esat_wat_rgst_addr
+  is '不动产权证登记地址';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.estat_name
+  is '楼盘名称';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.plot_ratio
+  is '容积率';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.floor_cnt
+  is '楼层数';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.tot_floor_cnt
+  is '总楼层数';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.land_use_right_id
+  is '土地证号';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.land_char_cd
+  is '土地所有权性质代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.land_use_area
+  is '土地使用面积';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.land_get_way_cd
+  is '土地取得方式代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.land_use_right_begin_dt
+  is '土地使用权起始日期';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.land_use_right_exp_dt
+  is '土地使用权到期日期';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.land_use_right_years
+  is '土地使用权年限';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.land_usage_cd
+  is '土地用途代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.other_prop_cert_flg
+  is '已有他项权证标志';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.other_comnt
+  is '其他说明';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.rent_flg
+  is '出租标志';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.tentry_name
+  is '承租人名称';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.rent_begin_dt
+  is '出租起始日期';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.rent_exp_dt
+  is '出租到期日期';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.rent_situ_comnt
+  is '出租情况说明';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.monly_mgmt_fee
+  is '每月管理费';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AST_COL_RESD_BUILD_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

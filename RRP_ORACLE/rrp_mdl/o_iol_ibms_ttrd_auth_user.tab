@@ -1,0 +1,99 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER
+(
+  user_id               NUMBER(19),
+  user_name             VARCHAR2(150),
+  i_id                  NUMBER(19),
+  email                 VARCHAR2(192),
+  tel_num               VARCHAR2(48),
+  mobile_num            VARCHAR2(48),
+  employee_card_no      VARCHAR2(96),
+  full_chinese_spell    VARCHAR2(375),
+  password              VARCHAR2(768),
+  account               VARCHAR2(48),
+  birth_day             VARCHAR2(15),
+  flag                  NUMBER(5),
+  status                NUMBER(5),
+  head_chinese_spell    VARCHAR2(150),
+  create_time           VARCHAR2(35),
+  update_time           VARCHAR2(35),
+  is_first_login        VARCHAR2(2),
+  pwd_update_date       VARCHAR2(15),
+  input_pwd_error_times NUMBER(2),
+  password_history      VARCHAR2(768),
+  state                 VARCHAR2(2),
+  update_user           NUMBER(19),
+  qq_number             VARCHAR2(48),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER
+  is '用户表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.user_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.user_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.i_id
+  is '机构ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.email
+  is '电子邮箱';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.tel_num
+  is '电话号码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.mobile_num
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.employee_card_no
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.full_chinese_spell
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.password
+  is '密码（密文）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.account
+  is '收款账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.birth_day
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.flag
+  is '报送标志：1 只报分行数据  0 全表报送';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.status
+  is '状态;1草稿2审核中3审核完成4退回';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.head_chinese_spell
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.is_first_login
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.pwd_update_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.input_pwd_error_times
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.password_history
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.state
+  is '国家名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.update_user
+  is '更新人员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.qq_number
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER.etl_timestamp
+  is 'etl处理时间';
+

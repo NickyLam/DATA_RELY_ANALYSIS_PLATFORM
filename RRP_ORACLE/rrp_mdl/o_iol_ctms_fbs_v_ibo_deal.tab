@@ -1,0 +1,261 @@
+﻿create table RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL
+(
+  cus_number              NUMBER(5),
+  branch_number           NUMBER(5),
+  deal_sqno               NUMBER(18),
+  deal_date               DATE,
+  value_date              DATE,
+  maturity_date           DATE,
+  crncy_code              VARCHAR2(5),
+  rate                    NUMBER(30,2),
+  first_amnt              NUMBER(30,2),
+  maturity_amnt           NUMBER(30,2),
+  day_accrd_intrst_amnt   NUMBER(38,12),
+  rate_type               NUMBER(2),
+  interest_base           NUMBER(2),
+  current_rate            NUMBER(38,12),
+  accrued_amnt            NUMBER(38,12),
+  trade_purpose           NUMBER(2),
+  business_date           DATE,
+  counter_party_id        NUMBER(8),
+  counter_party_scname    VARCHAR2(384),
+  update_time             TIMESTAMP(6),
+  pdd_deal_sqno           NUMBER(18),
+  deal_status             VARCHAR2(3),
+  deal_dir                NUMBER,
+  client_deal_sqno        VARCHAR2(45),
+  trade_type              VARCHAR2(3),
+  deal_source             VARCHAR2(3),
+  deal_market             VARCHAR2(8),
+  settle_type             NUMBER(2),
+  deal_link_sqno          NUMBER,
+  modify_date             DATE,
+  portfolio_sqno          NUMBER(18),
+  portfolio_id            NUMBER(8),
+  portfolio_name          VARCHAR2(383),
+  portfolio_type          VARCHAR2(60),
+  portfolio_status        VARCHAR2(3),
+  portfolio_link_sqno     NUMBER(18),
+  ibo_type                NUMBER(2),
+  clear_dep               VARCHAR2(3),
+  rsdl_amnt               NUMBER(30,2),
+  float_direction         NUMBER(2),
+  intrst_bnchmrk_srno     NUMBER(8),
+  intrst_bnchmrk_name     VARCHAR2(75),
+  intrst_term             VARCHAR2(60),
+  spread_rate             NUMBER(38,12),
+  pmnt_freq               VARCHAR2(60),
+  pmnt_stub_rule          NUMBER(2),
+  unwind_cnfrm_rate       NUMBER(38,12),
+  fixing_freq             VARCHAR2(60),
+  fixing_day_count        NUMBER(4),
+  frst_pmnt_date          DATE,
+  day_count               NUMBER(4),
+  imps_rate               NUMBER(38,12),
+  usd_crncy_amnt          NUMBER(30,2),
+  event_mask              VARCHAR2(3),
+  event_type              VARCHAR2(3),
+  event_link_sqno         NUMBER,
+  event_date              DATE,
+  ro_roll_type            VARCHAR2(75),
+  ro_calc_amount          NUMBER(30,2),
+  ro_intrst_amount        NUMBER(30,2),
+  confirm_indc            VARCHAR2(8),
+  collateral_method       VARCHAR2(6),
+  delivery_type           VARCHAR2(12),
+  delivery_type2          VARCHAR2(12),
+  underlying_currency     VARCHAR2(750),
+  underlying_stip_value   VARCHAR2(750),
+  underlying_discountamt  VARCHAR2(750),
+  underlying_qty          VARCHAR2(750),
+  underlying_securityid   VARCHAR2(750),
+  underlying_dirty_price  VARCHAR2(750),
+  underlying_value        VARCHAR2(750),
+  face_value              VARCHAR2(750),
+  underlying_stip_rate    VARCHAR2(750),
+  underlying_discountamt2 VARCHAR2(750),
+  remark                  VARCHAR2(384),
+  start_dt                DATE,
+  end_dt                  DATE,
+  id_mark                 VARCHAR2(10),
+  etl_timestamp           TIMESTAMP(6),
+  dealer                  VARCHAR2(60),
+  deal_time               DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL
+  is '拆借视图';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.cus_number
+  is '机构的唯一标识号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.branch_number
+  is '分支机构号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.deal_sqno
+  is '投组交易流水号，交易的fms内部唯一编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.deal_date
+  is '交易日期和时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.value_date
+  is '首期结算日';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.maturity_date
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.crncy_code
+  is '币种编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.rate
+  is '利率';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.first_amnt
+  is '拆借金额，负数为拆出，正数为拆入';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.maturity_amnt
+  is '期末结算金额';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.day_accrd_intrst_amnt
+  is '每日应当计提的利息  固定利率：保持不变 浮动利率、变动利率：在利率重置日进行调整';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.rate_type
+  is '汇率类型';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.interest_base
+  is '计息基准 0：act/360 1: act/365  2: 30/360 3： act/365f  4: act/act 对应fms_crncy_base_dtls.cbd_intrst_basis_indc（2）';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.current_rate
+  is '当前计息周期的利率  固定利率：等于dma_deal_number(20,12) 浮动利率、变动利率：在利率重置日进行调整';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.accrued_amnt
+  is '应计利息总额';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.trade_purpose
+  is '交易目的 0：其他 1：自营交易 2：代客交易 3：内部交易 4：经纪交易';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.business_date
+  is '业务日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.counter_party_id
+  is '交易对手的srno';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.counter_party_scname
+  is '交易对手中文简称';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.pdd_deal_sqno
+  is '原始交易流水号，交易的fms内部唯一编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.deal_status
+  is '成交单状态';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.deal_dir
+  is '交易方向  拆借：1拆入 -1 拆出 同业：1同业存放 -1 存放同业';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.client_deal_sqno
+  is '业务成交编号，来源如下： 1. 手工可不输入。 2. 文件导入，必须包含业务成交编号，且必须唯一。 3. 外部接口导入交易中，必须包含成交编号，且必须唯一。 4. cstp下载交易中的成交编号。';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.trade_type
+  is '支付类型';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.deal_source
+  is '交易来源 c：cstp，cstp下载交易 e：external api，银行接口下载交易 f：file，文件导入交易 m：manual，手工录入交易';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.deal_market
+  is '交易场所： 其它 cfets r：（保留） e：（保留） b：银行 s：模拟交易 v：虚拟交易（多笔交易组合出来的）（2.0.0）';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.settle_type
+  is '首次结算方式';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.deal_link_sqno
+  is '交易修改删除的序列关系。 1. 交易修改时，通过本字段，r交易关联到u交易，a交易关联到r交易。 2. 交易删除时，通过本字段，r交易关联到d交易。 3. 无修改删除时，本字段为null';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.modify_date
+  is '修改日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.portfolio_sqno
+  is '投组交易编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.portfolio_id
+  is '交易组别';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.portfolio_name
+  is '交易组别名称';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.portfolio_type
+  is '投组类型： 交易 对冲  自营买卖 市场平盘';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.portfolio_status
+  is '投资组合状态： a：新交易 u：交易被修改 d：cstp下载交易或第三方接口下载交易根据规则自动分配入投组 r：反向交易，用来通知周边系统，自己的原交易被删除，并反向对冲原交易的头寸和损益 m：已到期交易，交易全部完成交割后，由a状态置为m状态 c：取消投组';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.portfolio_link_sqno
+  is '交易链接编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.ibo_type
+  is '拆借类型 0：拆借 1：同存';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.clear_dep
+  is '清算机构 zz：其它； aa：上清所';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.rsdl_amnt
+  is '剩余金额';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.float_direction
+  is '利率的浮动方向， 0：正浮动； 1：负浮动；';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.intrst_bnchmrk_srno
+  is '浮动利率指标';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.intrst_bnchmrk_name
+  is '浮动利率指标前台转换为指标名称';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.intrst_term
+  is '利率期限';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.spread_rate
+  is 'bp，带方向';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.pmnt_freq
+  is '付息频率';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.pmnt_stub_rule
+  is '付息残段处理方式，0：自成一期；1：并入前期；2：自成一期（超短期并入前期）；超短期：小于等于15天。';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.unwind_cnfrm_rate
+  is '约定提前支取利率。';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.fixing_freq
+  is '定息频率';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.fixing_day_count
+  is '定价日调整天数';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.frst_pmnt_date
+  is '首次付息日';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.day_count
+  is '日计息基准';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.imps_rate
+  is '约定罚息日利率(影响后台)。';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.usd_crncy_amnt
+  is '折usd货币金额';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.event_mask
+  is 'nm 正常。dv 交割衍生,可拆分。sp 注销衍生,可拆分。bk 违约衍生,可拆分。ro 展期衍生,可拆分。rb 提前交割衍,可拆分。ex 期权行';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.event_type
+  is '事件类型';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.event_link_sqno
+  is '事件(违约，展期，提前交割)关联交易编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.event_date
+  is '事件日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.ro_roll_type
+  is '展期方式';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.ro_calc_amount
+  is '展期本金';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.ro_intrst_amount
+  is '展期利息';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.confirm_indc
+  is '交易后确认标识';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.collateral_method
+  is '质押方式 1：买断 2：质押';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.delivery_type
+  is '首次结算方式 0：券款对付 4：见券付款 5：见款付券';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.delivery_type2
+  is '到期结算方式 0：券款对付 4：见券付款 5：见款付券';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.underlying_currency
+  is '债券币种';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.underlying_stip_value
+  is '折算比例';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.underlying_discountamt
+  is '折算金额1';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.underlying_qty
+  is '券面总额';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.underlying_securityid
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.underlying_dirty_price
+  is '债券全价';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.underlying_value
+  is '债券价值';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.face_value
+  is '面值';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.underlying_stip_rate
+  is '折算汇率2';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.underlying_discountamt2
+  is '折算金额2';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.remark
+  is '描述';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.etl_timestamp
+  is 'etl处理时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.dealer
+  is '交易员ID';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_IBO_DEAL.deal_time
+  is '交易时间';
+

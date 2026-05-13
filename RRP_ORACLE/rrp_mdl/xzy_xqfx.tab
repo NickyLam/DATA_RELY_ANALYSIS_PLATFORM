@@ -1,0 +1,23 @@
+﻿create table RRP_MDL.XZY_XQFX
+(
+  ztid VARCHAR2(200),
+  ly   VARCHAR2(200),
+  ylb  VARCHAR2(200),
+  ylgc VARCHAR2(200),
+  scb  VARCHAR2(200),
+  ztmc VARCHAR2(200),
+  ms   VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

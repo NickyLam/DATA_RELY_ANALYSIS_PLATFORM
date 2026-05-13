@@ -1,0 +1,20 @@
+﻿create table RRP_MDL.XZY_TMP_4K
+(
+  owner       VARCHAR2(512) not null,
+  table_name  VARCHAR2(512) not null,
+  column_name VARCHAR2(512) not null,
+  data_type   VARCHAR2(512)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

@@ -1,0 +1,29 @@
+﻿create table RRP_MDL.MDM_TAB_INFO
+(
+  tab_name   VARCHAR2(200),
+  tab_name_c VARCHAR2(200),
+  col_name   VARCHAR2(200),
+  col_name_c VARCHAR2(200),
+  code_id    VARCHAR2(30),
+  bz         VARCHAR2(1000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.MDM_TAB_INFO
+  is '过程临时表';
+comment on column RRP_MDL.MDM_TAB_INFO.tab_name
+  is '表名';
+comment on column RRP_MDL.MDM_TAB_INFO.tab_name_c
+  is '表中文名';
+comment on column RRP_MDL.MDM_TAB_INFO.col_name
+  is '字段名';
+comment on column RRP_MDL.MDM_TAB_INFO.col_name_c
+  is '字段中文名';
+comment on column RRP_MDL.MDM_TAB_INFO.code_id
+  is '码值ID';
+comment on column RRP_MDL.MDM_TAB_INFO.bz
+  is '备注';
+

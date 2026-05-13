@@ -1,0 +1,54 @@
+﻿create table RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501
+(
+  jobs_id            VARCHAR2(100),
+  lp_id              VARCHAR2(60),
+  jobs_name          VARCHAR2(500),
+  cors_moy_box_id    VARCHAR2(100),
+  belong_org_id      VARCHAR2(100),
+  on_guard_teller_id VARCHAR2(100),
+  jobs_cate_cd       VARCHAR2(30),
+  guard_teller_id    VARCHAR2(100),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  src_table_name     VARCHAR2(100),
+  job_cd             VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501
+  is '柜员岗位信息历史';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.jobs_id
+  is '岗位编号';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.jobs_name
+  is '岗位名称';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.cors_moy_box_id
+  is '对应钱箱编号';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.on_guard_teller_id
+  is '在岗柜员编号';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.jobs_cate_cd
+  is '岗位类别代码';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.guard_teller_id
+  is '待换岗柜员编号';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_REF_TELLER_JOBS_INFO_H_BAK_20230501.etl_timestamp
+  is 'ETL处理时间戳';
+

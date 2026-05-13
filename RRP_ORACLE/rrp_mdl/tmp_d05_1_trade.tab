@@ -1,0 +1,26 @@
+﻿create table RRP_MDL.TMP_D05_1_TRADE
+(
+  exdebtcode     VARCHAR2(28),
+  originalperiod VARCHAR2(2),
+  zh             VARCHAR2(50),
+  contractcurr   VARCHAR2(3),
+  dp_bal         NUMBER(20,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.TMP_D05_1_TRADE
+  is '临时表';
+comment on column RRP_MDL.TMP_D05_1_TRADE.exdebtcode
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_1_TRADE.originalperiod
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_1_TRADE.zh
+  is '账户';
+comment on column RRP_MDL.TMP_D05_1_TRADE.contractcurr
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_1_TRADE.dp_bal
+  is '临时表字段';
+

@@ -1,0 +1,324 @@
+﻿create table RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H
+(
+  agt_id                      VARCHAR2(250),
+  cont_id                     VARCHAR2(128),
+  buy_cont_id                 VARCHAR2(250),
+  house_form_cd               VARCHAR2(30),
+  house_level_cd              VARCHAR2(30),
+  fir_buy_flg                 VARCHAR2(10),
+  house_wat_num               VARCHAR2(250),
+  house_dtl_addr              VARCHAR2(2000),
+  house_cnt                   NUMBER(10),
+  house_tot_price             NUMBER(30,2),
+  arch_area                   NUMBER(30,2),
+  set_of_area                 NUMBER(30,2),
+  arch_area_price             VARCHAR2(500),
+  set_of_area_price           VARCHAR2(500),
+  first_pay_amt               NUMBER(30,2),
+  first_pay_ratio             NUMBER(18,6),
+  down_payment_src_descb      VARCHAR2(2000),
+  loan_ratio                  NUMBER(18,6),
+  estim_price                 NUMBER(30,2),
+  idtfy_price                 NUMBER(30,2),
+  estim_org_cert_no           VARCHAR2(60),
+  estim_org_name              VARCHAR2(500),
+  int_sub_flg                 VARCHAR2(10),
+  int_sub_ratio               NUMBER(18,6),
+  csner_cert_no               VARCHAR2(60),
+  csner_name                  VARCHAR2(1000),
+  cap_dir_cd                  VARCHAR2(30),
+  buy_insure_flg              VARCHAR2(10),
+  insure_breed_id             VARCHAR2(100),
+  insu_benef_lmt              NUMBER(30,2),
+  insure_tenor                NUMBER(10),
+  pay_obj_name                VARCHAR2(1000),
+  seller_corp_cd              VARCHAR2(30),
+  seller_bus_lics_num         VARCHAR2(60),
+  seller_corp_name            VARCHAR2(1000),
+  estat_name                  VARCHAR2(1000),
+  arti_mgmt_fee_price         NUMBER(30,2),
+  free_claim_rat              NUMBER(18,8),
+  guar_flg                    VARCHAR2(10),
+  guar_type_cd                VARCHAR2(30),
+  presell_lics_id             VARCHAR2(250),
+  seller_bear_repo_duty_flg   VARCHAR2(10),
+  rela_agt_id                 VARCHAR2(250),
+  insu_comp_name              VARCHAR2(1000),
+  insure_cont_id              VARCHAR2(250),
+  buy_estate_type_cd          VARCHAR2(30),
+  buy_estate_area             NUMBER(30,2),
+  fitmt_tot_price             NUMBER(30,2),
+  comm_fee_amt                NUMBER(30,2),
+  comm_fee_mode_pay_cd        VARCHAR2(30),
+  rela_agent_recd_id          VARCHAR2(250),
+  seller_ps_name              VARCHAR2(1000),
+  seller_ps_cert_no           VARCHAR2(60),
+  rel_esat_cert_id            VARCHAR2(250),
+  car_type                    VARCHAR2(100),
+  buy_car_cont_id             VARCHAR2(250),
+  buy_carp_dtl_addr           VARCHAR2(2000),
+  carp_area                   NUMBER(30,2),
+  car_tot_price               NUMBER(30,2),
+  carp_tot_price              NUMBER(30,2),
+  indv_opering_loan_cls_cd    VARCHAR2(30),
+  open_corp_stl_acct_flg      VARCHAR2(10),
+  loc_strate_new_indus_cd     VARCHAR2(30),
+  es_envi_prot_cls_cd         VARCHAR2(30),
+  entr_loan_risk_cls_cd       VARCHAR2(30),
+  entr_loan_dep_acct_id       VARCHAR2(250),
+  entr_dep_curr_cd            VARCHAR2(30),
+  entr_dep_amt                NUMBER(30,2),
+  cap_src_descb               VARCHAR2(2000),
+  entr_cond_descb             VARCHAR2(2000),
+  indv_loan_comm_fee_rat      NUMBER(18,6),
+  lp_id                       VARCHAR2(250),
+  estim_cert_type_cd          VARCHAR2(30),
+  arch_corp_name              VARCHAR2(1000),
+  csner_cust_id               VARCHAR2(500),
+  expt_lmt_flg                VARCHAR2(10),
+  repay_acct_id               VARCHAR2(100),
+  repay_acct_name             VARCHAR2(500),
+  deflt_repay_day             VARCHAR2(10),
+  bar_flg                     VARCHAR2(10),
+  hxb_open_supv_acct_flg      VARCHAR2(10),
+  onl_apv_flg                 VARCHAR2(10),
+  use_lmt_flg                 VARCHAR2(10),
+  hxb_rela_party_flg          VARCHAR2(10),
+  chn_id                      VARCHAR2(100),
+  repay_card_type_cd          VARCHAR2(30),
+  open_acct_bind_id_no        VARCHAR2(60),
+  open_acct_bind_mobile_no    VARCHAR2(60),
+  incre_crdt_mode_cd          VARCHAR2(60),
+  acm_callbk_amt              NUMBER(30,2),
+  final_enty_c_num            VARCHAR2(60),
+  final_enty_c_name           VARCHAR2(500),
+  final_enty_c_open_bank_num  VARCHAR2(60),
+  final_enty_c_open_bank_name VARCHAR2(500),
+  final_enter_clear_bk_no     VARCHAR2(60),
+  start_dt                    DATE,
+  end_dt                      DATE,
+  id_mark                     VARCHAR2(10),
+  src_table_name              VARCHAR2(100),
+  job_cd                      VARCHAR2(10),
+  etl_timestamp               TIMESTAMP(6),
+  green_consm_sub_type_cd     VARCHAR2(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H
+  is '贷款合同个人贷款附属信息历史';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.buy_cont_id
+  is '购房合同编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.house_form_cd
+  is '房屋形式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.house_level_cd
+  is '房屋等级代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.fir_buy_flg
+  is '首次购房标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.house_wat_num
+  is '房屋权证号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.house_dtl_addr
+  is '房屋详细地址';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.house_cnt
+  is '房屋套数';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.house_tot_price
+  is '房屋总价';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.arch_area
+  is '建筑面积';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.set_of_area
+  is '套内面积';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.arch_area_price
+  is '建筑面积单价';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.set_of_area_price
+  is '套内面积单价';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.first_pay_amt
+  is '首付金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.first_pay_ratio
+  is '首付比例';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.down_payment_src_descb
+  is '首付款来源描述';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.loan_ratio
+  is '贷款比例';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.estim_price
+  is '评估价格';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.idtfy_price
+  is '认定价格';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.estim_org_cert_no
+  is '评估机构证件号码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.estim_org_name
+  is '评估机构名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.int_sub_flg
+  is '贴息标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.int_sub_ratio
+  is '贴息比例';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.csner_cert_no
+  is '委托人证件号码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.csner_name
+  is '委托人名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.cap_dir_cd
+  is '资金投向代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.buy_insure_flg
+  is '购买保险标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.insure_breed_id
+  is '保险品种编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.insu_benef_lmt
+  is '保险金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.insure_tenor
+  is '保险期限';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.pay_obj_name
+  is '支付对象名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.seller_corp_cd
+  is '经销商企业代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.seller_bus_lics_num
+  is '经销商营业执照号码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.seller_corp_name
+  is '经销商企业名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.estat_name
+  is '楼盘名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.arti_mgmt_fee_price
+  is '物管费单价';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.free_claim_rat
+  is '免赔率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.guar_flg
+  is '担保标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.guar_type_cd
+  is '担保类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.presell_lics_id
+  is '预售许可证编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.seller_bear_repo_duty_flg
+  is '销售商承担回购责任标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.rela_agt_id
+  is '相关协议书编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.insu_comp_name
+  is '保险公司名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.insure_cont_id
+  is '保险合同编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.buy_estate_type_cd
+  is '所购房产类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.buy_estate_area
+  is '所购房产面积';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.fitmt_tot_price
+  is '装修总价';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.comm_fee_amt
+  is '手续费金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.comm_fee_mode_pay_cd
+  is '手续费支付方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.rela_agent_recd_id
+  is '关联中介备案编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.seller_ps_name
+  is '卖房人名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.seller_ps_cert_no
+  is '卖房人证件号码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.rel_esat_cert_id
+  is '不动产证件编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.car_type
+  is '车型';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.buy_car_cont_id
+  is '购车合同编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.buy_carp_dtl_addr
+  is '购车位详细地址';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.carp_area
+  is '车位面积';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.car_tot_price
+  is '汽车总价';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.carp_tot_price
+  is '车位总价';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.indv_opering_loan_cls_cd
+  is '个人经营性贷款分类代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.open_corp_stl_acct_flg
+  is '能开立单位结算账户标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.loc_strate_new_indus_cd
+  is '本地战略性新兴产业代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.es_envi_prot_cls_cd
+  is '节能环保分类代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.entr_loan_risk_cls_cd
+  is '委托贷款风险分类代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.entr_loan_dep_acct_id
+  is '委托贷款存款账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.entr_dep_curr_cd
+  is '委托存款币种代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.entr_dep_amt
+  is '委托金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.cap_src_descb
+  is '资金来源描述';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.entr_cond_descb
+  is '委托条件描述';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.indv_loan_comm_fee_rat
+  is '个人贷款手续费率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.estim_cert_type_cd
+  is '评估证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.arch_corp_name
+  is '建筑单位名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.csner_cust_id
+  is '委托人客户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.expt_lmt_flg
+  is '例外额度标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.repay_acct_id
+  is '还款账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.repay_acct_name
+  is '还款账户名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.deflt_repay_day
+  is '默认还款日代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.bar_flg
+  is '随借随还标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.hxb_open_supv_acct_flg
+  is '在我行开立监管账户标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.onl_apv_flg
+  is '线上审批标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.use_lmt_flg
+  is '使用额度标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.hxb_rela_party_flg
+  is '我行关联方标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.chn_id
+  is '渠道编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.repay_card_type_cd
+  is '还款卡类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.open_acct_bind_id_no
+  is '开户绑定身份证号码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.open_acct_bind_mobile_no
+  is '开户绑定手机号码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.incre_crdt_mode_cd
+  is '增信模式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.acm_callbk_amt
+  is '累计回收金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.final_enty_c_num
+  is '最终实体卡号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.final_enty_c_name
+  is '最终实体卡名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.final_enty_c_open_bank_num
+  is '最终实体卡开户行号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.final_enty_c_open_bank_name
+  is '最终实体卡开户行名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.final_enter_clear_bk_no
+  is '最终入账账户清算行行号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_INDV_LOAN_ATTACH_INFO_H.green_consm_sub_type_cd
+  is '绿色消费子类代码';
+

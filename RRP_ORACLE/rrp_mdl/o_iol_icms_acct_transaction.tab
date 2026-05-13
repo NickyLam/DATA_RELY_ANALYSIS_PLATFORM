@@ -1,0 +1,111 @@
+﻿create table RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION
+(
+  serialno              VARCHAR2(40),
+  parenttransserialno   VARCHAR2(40),
+  transcode             VARCHAR2(10),
+  relativeobjecttype    VARCHAR2(40),
+  relativeobjectno      VARCHAR2(40),
+  documenttype          VARCHAR2(40),
+  documentno            VARCHAR2(40),
+  channelid             VARCHAR2(40),
+  occurdate             VARCHAR2(10),
+  occurtime             VARCHAR2(20),
+  transdate             VARCHAR2(10),
+  transstatus           VARCHAR2(10),
+  inputorgid            VARCHAR2(40),
+  inputuserid           VARCHAR2(40),
+  inputtime             VARCHAR2(20),
+  remark                VARCHAR2(4000),
+  log                   VARCHAR2(4000),
+  fallbacktransserialno VARCHAR2(40),
+  tellerserialno        VARCHAR2(48),
+  transsum              NUMBER(24,6),
+  cnsmrsrlno            VARCHAR2(50),
+  accountingserialno    VARCHAR2(40),
+  transtype             VARCHAR2(8),
+  transoccurtype        VARCHAR2(10),
+  completeflag          VARCHAR2(1),
+  migtflag              VARCHAR2(80),
+  graceinterestflag     VARCHAR2(10),
+  graceprincipalflag    VARCHAR2(10),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION
+  is '帐务-交易信息';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.serialno
+  is '交易流水号';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.parenttransserialno
+  is '关联交易流水号';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.transcode
+  is '交易代码';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.relativeobjecttype
+  is '关联对象类型';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.relativeobjectno
+  is '关联对象编号';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.documenttype
+  is '单据类型';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.documentno
+  is '单据流水号';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.channelid
+  is '交易渠道';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.occurdate
+  is '交易操作日期';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.occurtime
+  is '交易时间';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.transdate
+  is '交易日期';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.transstatus
+  is '交易状态(CodeNo:TransStatus)';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.inputorgid
+  is '录入机构';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.inputuserid
+  is '录入用户';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.inputtime
+  is '录入日期';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.log
+  is '其他日志';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.fallbacktransserialno
+  is '回退交易流水';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.tellerserialno
+  is '柜员流水号';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.transsum
+  is '交易金额';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.cnsmrsrlno
+  is '消费方流水号(调用还款交易接口时的消费方流水号)';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.accountingserialno
+  is '唯一核心记账流水号';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.transtype
+  is '转让类型(福费廷转让使用)';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.transoccurtype
+  is '交易发生类型';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.completeflag
+  is '数据录入完整性标识';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.migtflag
+  is '迁移标志：CRS RCR ILC UPL';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.graceinterestflag
+  is '是否宽限利息';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.graceprincipalflag
+  is '是否宽限本金';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_ACCT_TRANSACTION.id_mark
+  is '增删标志';
+

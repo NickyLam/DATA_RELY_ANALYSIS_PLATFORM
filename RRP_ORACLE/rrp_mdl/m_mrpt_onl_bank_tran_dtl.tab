@@ -1,0 +1,33 @@
+﻿create table RRP_MDL.M_MRPT_ONL_BANK_TRAN_DTL
+(
+  data_dt        VARCHAR2(10),
+  flow_num       VARCHAR2(100),
+  tran_mobile_no VARCHAR2(60),
+  tran_dt        DATE,
+  tran_amt       NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_MRPT_ONL_BANK_TRAN_DTL
+  is '网上银行转账与交易明细表-手工报表专用';
+comment on column RRP_MDL.M_MRPT_ONL_BANK_TRAN_DTL.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_ONL_BANK_TRAN_DTL.flow_num
+  is '流水号';
+comment on column RRP_MDL.M_MRPT_ONL_BANK_TRAN_DTL.tran_mobile_no
+  is '转账手机号码';
+comment on column RRP_MDL.M_MRPT_ONL_BANK_TRAN_DTL.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.M_MRPT_ONL_BANK_TRAN_DTL.tran_amt
+  is '交易金额';
+

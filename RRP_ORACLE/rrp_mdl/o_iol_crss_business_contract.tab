@@ -1,0 +1,1806 @@
+﻿create table RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT
+(
+  serialno                     VARCHAR2(32),
+  relativeserialno             VARCHAR2(32),
+  artificialno                 VARCHAR2(200),
+  occurdate                    VARCHAR2(10),
+  customerid                   VARCHAR2(32),
+  customername                 VARCHAR2(80),
+  businesstype                 VARCHAR2(18),
+  oldbusinesstype              VARCHAR2(18),
+  businesssubtype              VARCHAR2(18),
+  occurtype                    VARCHAR2(18),
+  creditdigest                 VARCHAR2(18),
+  creditcycle                  VARCHAR2(18),
+  credittype                   VARCHAR2(18),
+  currenylist                  VARCHAR2(18),
+  currencymode                 VARCHAR2(18),
+  businesstypelist             VARCHAR2(18),
+  calculatemode                VARCHAR2(18),
+  useorglist                   VARCHAR2(18),
+  flowreduceflag               VARCHAR2(18),
+  contractflag                 VARCHAR2(18),
+  subcontractflag              VARCHAR2(18),
+  selfuseflag                  VARCHAR2(18),
+  creditindex                  NUMBER(10,6),
+  creditreducesum              NUMBER(24,6),
+  limitationterm               VARCHAR2(10),
+  useterm                      VARCHAR2(10),
+  creditaggreement             VARCHAR2(32),
+  relativeagreement            VARCHAR2(32),
+  loanflag                     VARCHAR2(18),
+  totalsum                     NUMBER(24,6),
+  ourrole                      VARCHAR2(18),
+  reversibility                VARCHAR2(18),
+  billnum                      NUMBER,
+  housetype                    VARCHAR2(18),
+  lctermtype                   VARCHAR2(18),
+  riskattribute                VARCHAR2(18),
+  suretype                     VARCHAR2(18),
+  safeguardtype                VARCHAR2(18),
+  creditbusiness               VARCHAR2(18),
+  businesscurrency             VARCHAR2(18),
+  businesssum                  NUMBER(24,6),
+  businessprop                 NUMBER(10,6),
+  termyear                     NUMBER,
+  termmonth                    NUMBER,
+  termday                      NUMBER,
+  lgterm                       NUMBER,
+  baseratetype                 VARCHAR2(18),
+  baserate                     NUMBER(10,6),
+  ratefloattype                VARCHAR2(18),
+  ratefloat                    NUMBER(10,6),
+  businessrate                 NUMBER(10,6),
+  ictype                       VARCHAR2(18),
+  iccyc                        VARCHAR2(18),
+  pdgratio                     NUMBER(10,6),
+  pdgsum                       NUMBER(24,6),
+  pdgpaymethod                 VARCHAR2(18),
+  pdgpayperiod                 VARCHAR2(18),
+  promisesfeeratio             NUMBER(10,6),
+  promisesfeesum               NUMBER(24,6),
+  promisesfeeperiod            NUMBER,
+  promisesfeebegin             VARCHAR2(10),
+  mfeeratio                    NUMBER(10,6),
+  mfeesum                      NUMBER(24,6),
+  mfeepaymethod                VARCHAR2(18),
+  agentfee                     NUMBER(24,6),
+  dealfee                      NUMBER(24,6),
+  totalcast                    NUMBER(24,6),
+  discountinterest             NUMBER(24,6),
+  purchaserinterest            NUMBER(24,6),
+  bargainorinterest            NUMBER(24,6),
+  discountsum                  NUMBER(24,6),
+  bailratio                    NUMBER(10,6),
+  bailcurrency                 VARCHAR2(18),
+  bailsum                      NUMBER(24,6),
+  bailaccount                  VARCHAR2(32),
+  fineratetype                 VARCHAR2(18),
+  finerate                     NUMBER(10,6),
+  drawingtype                  VARCHAR2(18),
+  firstdrawingdate             VARCHAR2(10),
+  drawingperiod                NUMBER,
+  paytimes                     NUMBER,
+  paycyc                       VARCHAR2(18),
+  graceperiod                  NUMBER,
+  overdraftperiod              NUMBER,
+  oldlcno                      VARCHAR2(32),
+  oldlctermtype                VARCHAR2(18),
+  oldlccurrency                VARCHAR2(18),
+  oldlcsum                     NUMBER(24,6),
+  oldlcloadingdate             VARCHAR2(10),
+  oldlcvaliddate               VARCHAR2(10),
+  direction                    VARCHAR2(18),
+  purpose                      VARCHAR2(2000),
+  planallocation               VARCHAR2(200),
+  immediacypaysource           VARCHAR2(200),
+  paysource                    VARCHAR2(200),
+  corpuspaymethod              VARCHAR2(18),
+  interestpaymethod            VARCHAR2(18),
+  putoutdate                   VARCHAR2(10),
+  maturity                     VARCHAR2(10),
+  thirdparty1                  VARCHAR2(200),
+  thirdpartyid1                VARCHAR2(32),
+  thirdparty2                  VARCHAR2(200),
+  thirdpartyid2                VARCHAR2(32),
+  thirdparty3                  VARCHAR2(200),
+  thirdpartyid3                VARCHAR2(32),
+  thirdpartyregion             VARCHAR2(18),
+  thirdpartyaccounts           VARCHAR2(32),
+  cargoinfo                    VARCHAR2(80),
+  projectname                  VARCHAR2(80),
+  operationinfo                VARCHAR2(400),
+  contextinfo                  VARCHAR2(200),
+  securitiestype               VARCHAR2(18),
+  securitiesregion             VARCHAR2(18),
+  constructionarea             NUMBER(24,6),
+  usearea                      NUMBER(24,6),
+  flag1                        VARCHAR2(18),
+  flag2                        VARCHAR2(18),
+  flag3                        VARCHAR2(18),
+  tradecontractno              VARCHAR2(32),
+  invoiceno                    VARCHAR2(32),
+  tradecurrency                VARCHAR2(18),
+  tradesum                     NUMBER(24,6),
+  lcno                         VARCHAR2(32),
+  paymentdate                  VARCHAR2(10),
+  operationmode                VARCHAR2(18),
+  begindate                    VARCHAR2(10),
+  enddate                      VARCHAR2(10),
+  vouchclass                   VARCHAR2(18),
+  vouchtype                    VARCHAR2(18),
+  vouchtype1                   VARCHAR2(18),
+  vouchtype2                   VARCHAR2(18),
+  vouchflag                    VARCHAR2(18),
+  warrantor                    VARCHAR2(80),
+  warrantorid                  VARCHAR2(32),
+  othercondition               VARCHAR2(4000),
+  guarantyvalue                NUMBER(24,6),
+  guarantyrate                 NUMBER(10,6),
+  baseevaluateresult           VARCHAR2(18),
+  riskrate                     NUMBER(24,6),
+  lowrisk                      VARCHAR2(18),
+  otherarealoan                VARCHAR2(18),
+  lowriskbailsum               NUMBER(24,6),
+  applytype                    VARCHAR2(30),
+  originalputoutdate           VARCHAR2(10),
+  extendtimes                  NUMBER,
+  lngotimes                    NUMBER,
+  golntimes                    NUMBER,
+  drtimes                      NUMBER,
+  guarantyno                   VARCHAR2(32),
+  putoutsum                    NUMBER(24,6),
+  actualputoutsum              NUMBER(24,6),
+  balance                      NUMBER(24,6),
+  normalbalance                NUMBER(24,6),
+  overduebalance               NUMBER(24,6),
+  dullbalance                  NUMBER(24,6),
+  badbalance                   NUMBER(24,6),
+  interestbalance1             NUMBER(24,6),
+  interestbalance2             NUMBER(24,6),
+  finebalance1                 NUMBER(24,6),
+  finebalance2                 NUMBER(24,6),
+  overduedays                  NUMBER,
+  oweinterestdays              NUMBER,
+  tabalance                    NUMBER(24,6),
+  tainterestbalance            NUMBER(24,6),
+  tatimes                      NUMBER,
+  lcatimes                     NUMBER(24,6),
+  pbinterestsum                NUMBER(24,6),
+  pbmfeesum                    NUMBER(24,6),
+  pbpdgsum                     NUMBER(24,6),
+  pblegalcostsum               NUMBER(24,6),
+  polegalcostsum               NUMBER(24,6),
+  originalbaddate              VARCHAR2(10),
+  baseclassifyresult           VARCHAR2(18),
+  classifyresult               VARCHAR2(80),
+  classifytype                 VARCHAR2(18),
+  classifydate                 VARCHAR2(10),
+  classifyorgid                VARCHAR2(32),
+  reservesum                   NUMBER(24,6),
+  expectlosssum                NUMBER(24,6),
+  bailrate                     NUMBER(24,6),
+  finishorg                    VARCHAR2(18),
+  finishtype                   VARCHAR2(18),
+  finishdate                   VARCHAR2(10),
+  describe1                    VARCHAR2(100),
+  reinforceflag                VARCHAR2(18),
+  manageorgid                  VARCHAR2(32),
+  manageuserid                 VARCHAR2(32),
+  recoveryorgid                VARCHAR2(32),
+  recoveryuserid               VARCHAR2(32),
+  statorgid                    VARCHAR2(32),
+  statuserid                   VARCHAR2(32),
+  operateorgid                 VARCHAR2(32),
+  operateuserid                VARCHAR2(32),
+  operatedate                  VARCHAR2(10),
+  inputorgid                   VARCHAR2(32),
+  inputuserid                  VARCHAR2(32),
+  inputdate                    VARCHAR2(10),
+  updatedate                   VARCHAR2(10),
+  pigeonholedate               VARCHAR2(10),
+  remark                       VARCHAR2(200),
+  flag4                        VARCHAR2(18),
+  paycurrency                  VARCHAR2(18),
+  paydate                      VARCHAR2(10),
+  flag5                        VARCHAR2(18),
+  classifysum1                 NUMBER(24,6),
+  classifysum2                 NUMBER(24,6),
+  classifysum3                 NUMBER(24,6),
+  classifysum4                 NUMBER(24,6),
+  classifysum5                 NUMBER(24,6),
+  shifttype                    VARCHAR2(18),
+  operatetype                  VARCHAR2(18),
+  fundsource                   VARCHAR2(18),
+  cycleflag                    VARCHAR2(18),
+  creditfreezeflag             VARCHAR2(18),
+  shiftbalance                 NUMBER(24,6),
+  classifyfrequency            NUMBER,
+  classifylevel                VARCHAR2(18),
+  vouchnewflag                 VARCHAR2(18),
+  actualartificialno           VARCHAR2(32),
+  deleteflag                   VARCHAR2(18),
+  accountno                    VARCHAR2(32),
+  loanaccountno                VARCHAR2(32),
+  secondpayaccount             VARCHAR2(32),
+  adjustratetype               VARCHAR2(18),
+  adjustrateterm               VARCHAR2(18),
+  overinttype                  VARCHAR2(18),
+  rateadjustcyc                VARCHAR2(18),
+  pdgaccountno                 VARCHAR2(32),
+  deductdate                   VARCHAR2(10),
+  fzanbalance                  NUMBER(24,6),
+  acceptinttype                VARCHAR2(18),
+  ratio                        NUMBER(24,6),
+  thirdpartyadd1               VARCHAR2(80),
+  thirdpartyzip1               VARCHAR2(32),
+  thirdpartyadd2               VARCHAR2(80),
+  thirdpartyzip2               VARCHAR2(32),
+  thirdpartyadd3               VARCHAR2(80),
+  thirdpartyzip3               VARCHAR2(32),
+  effectarea                   VARCHAR2(18),
+  termdate1                    VARCHAR2(10),
+  termdate2                    VARCHAR2(10),
+  termdate3                    VARCHAR2(10),
+  fixcyc                       NUMBER,
+  describe2                    VARCHAR2(100),
+  cancelsum                    NUMBER(24,6),
+  cancelinterest               NUMBER(24,6),
+  loanterm                     VARCHAR2(18),
+  putoutorgid                  VARCHAR2(32),
+  tempsaveflag                 VARCHAR2(18),
+  overduedate                  VARCHAR2(10),
+  oweinterestdate              VARCHAR2(10),
+  freezeflag                   VARCHAR2(1),
+  approvedate                  VARCHAR2(10),
+  shiftstatus                  VARCHAR2(18),
+  recoverycognorgid            VARCHAR2(32),
+  recoverycognuserid           VARCHAR2(32),
+  shiftdocdescribe             VARCHAR2(800),
+  guarantyflag                 VARCHAR2(18),
+  totalbalance                 NUMBER(24,6),
+  grouplineid                  VARCHAR2(40),
+  transformtimes               NUMBER,
+  transformflag                VARCHAR2(1),
+  fundbackaccount              VARCHAR2(20),
+  requitalaccount              VARCHAR2(20),
+  paymentmode                  VARCHAR2(20),
+  classifyresulteleven         VARCHAR2(12),
+  interestrateexplain          VARCHAR2(200),
+  guarantytype                 VARCHAR2(12),
+  creditmode                   VARCHAR2(2),
+  mainreturntype               VARCHAR2(18),
+  effectflag                   VARCHAR2(3),
+  creditattribute              VARCHAR2(3),
+  isnewcustomertime            VARCHAR2(18),
+  isnewcustomer                VARCHAR2(1),
+  hasbothflag                  VARCHAR2(1),
+  fundserialno                 VARCHAR2(36),
+  ctogetherborrower            VARCHAR2(3),
+  csinglnassure                VARCHAR2(3),
+  guarantyhouse                VARCHAR2(3),
+  formerserialno               VARCHAR2(32),
+  abysum                       VARCHAR2(32),
+  loadrelabarcode              VARCHAR2(80),
+  loanrelacontractno           VARCHAR2(32),
+  betterrateflag               VARCHAR2(16),
+  goldflag                     VARCHAR2(16),
+  applyinsuranceflag           VARCHAR2(1),
+  sendchitflag                 VARCHAR2(16),
+  introducerid                 VARCHAR2(32),
+  presignflag                  VARCHAR2(1),
+  signaddress                  VARCHAR2(80),
+  sealtype                     VARCHAR2(18),
+  oapproveflag                 VARCHAR2(1),
+  operateusermind              VARCHAR2(32),
+  preapproverid                VARCHAR2(32),
+  buyaddress                   VARCHAR2(80),
+  gracetermpay                 VARCHAR2(18),
+  graceterm                    VARCHAR2(36),
+  gracetermflag                VARCHAR2(1),
+  ratecode                     VARCHAR2(18),
+  gaincyc                      VARCHAR2(18),
+  gainamount                   VARCHAR2(18),
+  calcterm                     VARCHAR2(18),
+  returntype                   VARCHAR2(18),
+  holdbalance                  VARCHAR2(18),
+  returnperiod                 VARCHAR2(18),
+  loantermflag                 VARCHAR2(18),
+  schemeno                     VARCHAR2(18),
+  ltvvalue                     VARCHAR2(18),
+  ratemode                     VARCHAR2(18),
+  otherpurpose                 VARCHAR2(80),
+  cycleratio                   VARCHAR2(32),
+  cguarantypeople              VARCHAR2(32),
+  buyhousetype                 VARCHAR2(32),
+  buyhouseproperty             VARCHAR2(32),
+  houseareage                  VARCHAR2(32),
+  housecount                   VARCHAR2(18),
+  industrytype                 VARCHAR2(18),
+  isfinance                    VARCHAR2(36),
+  isimportantloan              VARCHAR2(8),
+  importantloan                VARCHAR2(8),
+  gshy                         VARCHAR2(8),
+  sfgjxzhy                     VARCHAR2(1),
+  zfsxfs                       VARCHAR2(8),
+  zfsxlx                       VARCHAR2(8),
+  sfzfsx                       VARCHAR2(1),
+  gksxpz                       VARCHAR2(8),
+  sfgksx                       VARCHAR2(1),
+  ifgudingcredit               VARCHAR2(1),
+  benefitarea                  VARCHAR2(2),
+  ifqueryflag                  VARCHAR2(2),
+  lastclassifyresult           VARCHAR2(10),
+  mainproduct                  VARCHAR2(32),
+  useproduct                   VARCHAR2(32),
+  penalizeratesign             VARCHAR2(2),
+  financesupportmode           VARCHAR2(32),
+  rategenre                    VARCHAR2(4),
+  ifagreementflag              VARCHAR2(2),
+  loanquality                  VARCHAR2(4),
+  yearratebase                 VARCHAR2(4),
+  penalizerateratio            NUMBER(10,6),
+  purchaserpaymentscale        NUMBER(10,6),
+  loanratio                    NUMBER(10,6),
+  bearratio                    NUMBER(10,6),
+  proposerpaymentscale         NUMBER(10,6),
+  compoundinterestratio        NUMBER(10,6),
+  tradeflag                    VARCHAR2(18),
+  paymentname                  VARCHAR2(80),
+  houseprice                   NUMBER(22),
+  pawnremitratio               NUMBER(10,6),
+  pawnremitdate                VARCHAR2(10),
+  pawnremitsum                 NUMBER(24,6),
+  loadingdate                  VARCHAR2(10),
+  chargetype                   VARCHAR2(2),
+  offerbilldate                VARCHAR2(10),
+  restbalancesum               NUMBER(10,6),
+  hasoutradio                  VARCHAR2(2),
+  outradio                     NUMBER(24,6),
+  terminateflag                VARCHAR2(10),
+  paystatus                    VARCHAR2(10),
+  executestatus                VARCHAR2(10),
+  otherexecutestatus           VARCHAR2(800),
+  terminatestatus              VARCHAR2(10),
+  terminatereason              VARCHAR2(800),
+  inputdate1                   VARCHAR2(10),
+  aggreementcontractputoutflag VARCHAR2(10),
+  oldcreditline                NUMBER(24,6),
+  relativeserialno2            VARCHAR2(36),
+  lcsum                        NUMBER(24,6),
+  carbrand                     VARCHAR2(100),
+  cartype                      VARCHAR2(100),
+  carnumber                    VARCHAR2(100),
+  chariotnumber                VARCHAR2(100),
+  motornumber                  VARCHAR2(100),
+  printeruserid                VARCHAR2(32),
+  relativeapplyserialno        VARCHAR2(32),
+  whetherhousemortgage         VARCHAR2(1),
+  housenum                     VARCHAR2(18),
+  houseadd                     VARCHAR2(200),
+  buyhousedetail               VARCHAR2(10),
+  thirdparty1type              VARCHAR2(10),
+  thirdorgname                 VARCHAR2(100),
+  loansource                   VARCHAR2(2),
+  invaliddate                  VARCHAR2(10),
+  oldeffectflag                VARCHAR2(3),
+  oldcreditaggreement          VARCHAR2(32),
+  contractname                 VARCHAR2(80),
+  contracttype                 VARCHAR2(10),
+  contractsum                  NUMBER(24,6),
+  contractitems                NUMBER,
+  consignor                    VARCHAR2(80),
+  bailee                       VARCHAR2(80),
+  trustee                      VARCHAR2(80),
+  partybname                   VARCHAR2(80),
+  entrustacc                   VARCHAR2(40),
+  beneficiaryacc               VARCHAR2(40),
+  entrustinterestrate          NUMBER(24,6),
+  entrustinterestratetype      VARCHAR2(18),
+  beneficiaryyieldrate         NUMBER(24,6),
+  entrustyieldtype             VARCHAR2(18),
+  custodian                    VARCHAR2(80),
+  manageratetype               VARCHAR2(18),
+  depositratetype              VARCHAR2(18),
+  expectyieldrate              NUMBER(24,6),
+  priequname                   VARCHAR2(80),
+  deadline                     NUMBER(24,6),
+  couponrate                   NUMBER(10,6),
+  issuescale                   VARCHAR2(200),
+  subtotalprices               NUMBER(24,6),
+  repayinteresttype            VARCHAR2(100),
+  raisefundpurpose             VARCHAR2(200),
+  issuer                       VARCHAR2(80),
+  subscriber                   VARCHAR2(80),
+  raisemoneyaccount            VARCHAR2(80),
+  isinuse                      VARCHAR2(1),
+  creditlineflag               VARCHAR2(8),
+  busirisktype                 VARCHAR2(20),
+  prhdate                      VARCHAR2(10),
+  playtype                     VARCHAR2(2),
+  ischengnuobank               VARCHAR2(1),
+  xmztz                        NUMBER(18,2),
+  zbj                          NUMBER(18,2),
+  pwwh                         VARCHAR2(100),
+  lxpw                         VARCHAR2(100),
+  ghxkzbh                      VARCHAR2(60),
+  jsydxkzbh                    VARCHAR2(60),
+  hpxkzbh                      VARCHAR2(60),
+  sgxkzbh                      VARCHAR2(60),
+  qtxkz                        VARCHAR2(60),
+  qtxkzbh                      VARCHAR2(60),
+  kgrq                         VARCHAR2(10),
+  businesstype2                VARCHAR2(32),
+  classifytype2                VARCHAR2(100),
+  approvalsuggestion           VARCHAR2(32),
+  yffdkje                      NUMBER(18,2),
+  precreditcycle               VARCHAR2(18),
+  tdstrenth                    VARCHAR2(20),
+  tdyears                      VARCHAR2(20),
+  tdtimes                      VARCHAR2(20),
+  bailsubaccount               VARCHAR2(5),
+  interestrate                 NUMBER(24,6),
+  isrz                         VARCHAR2(2),
+  financier                    VARCHAR2(32),
+  iscounterparty               VARCHAR2(1),
+  investway                    VARCHAR2(2),
+  managemodel                  VARCHAR2(2),
+  toindustryfund               VARCHAR2(1),
+  isdebttoequity               VARCHAR2(1),
+  isgovfinance                 VARCHAR2(1),
+  isconsumefinance             VARCHAR2(1),
+  isbalancedeposit             VARCHAR2(1),
+  canbacktosale                VARCHAR2(1),
+  canseparate                  VARCHAR2(1),
+  businessmarkettype           VARCHAR2(3),
+  businessmarket               VARCHAR2(80),
+  absabnname                   VARCHAR2(100),
+  isfillassetsinfo             VARCHAR2(1),
+  backtosaletype               VARCHAR2(3),
+  afterloanmanagerid           VARCHAR2(32),
+  afterloanmanagement          VARCHAR2(16),
+  creditincrementtype          VARCHAR2(2),
+  tradingassets                VARCHAR2(100),
+  depositno                    VARCHAR2(32),
+  depositname                  VARCHAR2(40),
+  issueprice                   NUMBER(24,6),
+  issueamount                  NUMBER(24,6),
+  issuesum                     NUMBER(24,6),
+  bondno                       VARCHAR2(150),
+  bondname                     VARCHAR2(200),
+  outerevaluate1               VARCHAR2(5),
+  outerevaluate2               VARCHAR2(5),
+  outerevaluate3               VARCHAR2(5),
+  investkind                   VARCHAR2(2),
+  transactionprice             NUMBER(24,6),
+  transactionrate              NUMBER(10,6),
+  transactoinamount            VARCHAR2(80),
+  transactiondate              VARCHAR2(10),
+  salebackbegindate            VARCHAR2(10),
+  salebackenddate              VARCHAR2(10),
+  financialtype                VARCHAR2(2),
+  financialclassify            VARCHAR2(100),
+  acceptcustomerid             VARCHAR2(32),
+  acceptbankid                 VARCHAR2(32),
+  acceptbankname               VARCHAR2(80),
+  iswhzt                       VARCHAR2(1),
+  stockcode                    VARCHAR2(32),
+  stockname                    VARCHAR2(80),
+  stockamount                  NUMBER(24,6),
+  circulatestockamount         NUMBER(24,6),
+  bdindustry                   VARCHAR2(18),
+  guranteerate                 NUMBER(10,6),
+  alarmline                    VARCHAR2(100),
+  pcline                       VARCHAR2(100),
+  billtype                     VARCHAR2(2),
+  billkind                     VARCHAR2(2),
+  billno                       VARCHAR2(32),
+  billcurrency                 VARCHAR2(2),
+  billsum                      NUMBER(24,6),
+  billacptdate                 VARCHAR2(10),
+  billmaturity                 VARCHAR2(10),
+  billwriter                   VARCHAR2(32),
+  operationtype                VARCHAR2(2),
+  reinforcechecker             VARCHAR2(10),
+  onlineamount                 NUMBER(24,6),
+  businesssumentpart           NUMBER(24,6),
+  totalsumentpart              NUMBER(24,6),
+  businesssumtypart            NUMBER(24,6),
+  totalsumtypart               NUMBER(24,6),
+  creditflowtype               VARCHAR2(20),
+  batchno                      VARCHAR2(40),
+  datatype                     VARCHAR2(10),
+  creditarea                   VARCHAR2(2),
+  isestatefinance              VARCHAR2(2),
+  isgovernfinance              VARCHAR2(2),
+  isconsumerfinance            VARCHAR2(2),
+  isbeltroadfinance            VARCHAR2(2),
+  isgreenfinance               VARCHAR2(2),
+  reinforcetype                VARCHAR2(2),
+  rivalid                      VARCHAR2(32),
+  rivalname                    VARCHAR2(80),
+  consigneeid                  VARCHAR2(32),
+  consigneename                VARCHAR2(80),
+  consigneecerttype            VARCHAR2(20),
+  consigneecertid              VARCHAR2(40),
+  outclassifylevel             VARCHAR2(18),
+  outclassifyorg               VARCHAR2(200),
+  outclassifydate              VARCHAR2(10),
+  isonlinebusiness             VARCHAR2(4),
+  keyno                        VARCHAR2(40),
+  actno                        VARCHAR2(40),
+  registerinotherbank          VARCHAR2(1),
+  issupplychainfinance         VARCHAR2(1),
+  supplychainfinancetype       VARCHAR2(8),
+  issjorcs                     VARCHAR2(2),
+  islikeloan                   VARCHAR2(2),
+  guarantybailaccount          VARCHAR2(32),
+  guarantybailsubaccount       VARCHAR2(5),
+  consignmentloandirect        VARCHAR2(5),
+  isclassflag                  VARCHAR2(5),
+  productlevel                 NUMBER(20),
+  productcollectmoney          NUMBER(20,4),
+  finalinvestdirecttype        VARCHAR2(5),
+  realestateloantype           VARCHAR2(10),
+  chuantoutype                 VARCHAR2(10),
+  corecompany                  VARCHAR2(200),
+  shorttermday                 NUMBER(24),
+  isbelongterm                 VARCHAR2(2),
+  syndicatetotalsum            NUMBER(24,6),
+  loanhandlechannel            VARCHAR2(20),
+  fxfltp                       VARCHAR2(64),
+  termcd                       VARCHAR2(64),
+  pdrifd                       VARCHAR2(64),
+  pdrifm                       VARCHAR2(64),
+  pdrifv                       VARCHAR2(64),
+  interestmethod               VARCHAR2(64),
+  onlinebalance                NUMBER(24,6),
+  loanpurposetype              VARCHAR2(3),
+  directionrs                  VARCHAR2(18),
+  ztrate                       NUMBER(24,6),
+  gylbailsubaccount            VARCHAR2(32),
+  isgyltx                      VARCHAR2(32),
+  gylbailaccount               VARCHAR2(32),
+  zfserialno                   VARCHAR2(32),
+  zfdate                       VARCHAR2(32),
+  bailtransaccount             VARCHAR2(40),
+  isfarming                    VARCHAR2(1),
+  preeffectflag                VARCHAR2(3),
+  ztacceptbankid               VARCHAR2(32),
+  ztacceptbankname             VARCHAR2(80),
+  relztacceptbankcustid        VARCHAR2(32),
+  businessinvoiceinfo          VARCHAR2(100),
+  businessinvoicecurrency      VARCHAR2(3),
+  businessinvoicesum           NUMBER(20,2),
+  businessinvoicetype          VARCHAR2(60),
+  tradeorgid                   VARCHAR2(40),
+  creditauthno                 VARCHAR2(200),
+  isquerycreditreport          VARCHAR2(10),
+  authostrdate                 VARCHAR2(20),
+  farmingloantype              VARCHAR2(18),
+  farmingloanuse               VARCHAR2(18),
+  platformpaycashsource        VARCHAR2(18),
+  iscareerguaranteeloan        VARCHAR2(2),
+  careerguaranteeloantype      VARCHAR2(18),
+  isforeign                    VARCHAR2(4),
+  accountcatagory              VARCHAR2(40),
+  investgroup                  VARCHAR2(40),
+  shortbondno                  VARCHAR2(150),
+  isoccupylimit                VARCHAR2(4),
+  start_dt                     DATE,
+  end_dt                       DATE,
+  id_mark                      VARCHAR2(10),
+  landuseno                    VARCHAR2(80),
+  landusedate                  VARCHAR2(20),
+  landplanpermitno             VARCHAR2(80),
+  landplanpermitdate           VARCHAR2(20),
+  projectplanpermitdate        VARCHAR2(20),
+  constructpermitdate          VARCHAR2(20),
+  buyername                    VARCHAR2(200),
+  sellername                   VARCHAR2(200),
+  tradetransactioncontent      VARCHAR2(3000),
+  statisticstotalbalance       NUMBER(24,6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT
+  is '业务合同信息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.relativeserialno
+  is '相关批准流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.artificialno
+  is '人工编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.occurdate
+  is '发生日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.customerid
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.customername
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businesstype
+  is '业务品种(关联表Business_Type中字段TypeNo)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oldbusinesstype
+  is '老业务品种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businesssubtype
+  is '业务子类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.occurtype
+  is '发生类型(代码：OccurType)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditdigest
+  is '额度是否融通';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditcycle
+  is '额度是否循环';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.credittype
+  is '额度品种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.currenylist
+  is '可融通币种表';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.currencymode
+  is '汇率计算模式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businesstypelist
+  is '可混用品种表';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.calculatemode
+  is '额度金额占用计算模式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.useorglist
+  is '额度可使用机构范围';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.flowreduceflag
+  is '额度是否简化审批流程';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.contractflag
+  is '额度是否需要签署协议(1：是2：否)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.subcontractflag
+  is '额度下业务是否需要签署合同';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.selfuseflag
+  is '额度自用或他用';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditindex
+  is '额度占用系数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditreducesum
+  is '额度扣减金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.limitationterm
+  is '额度使用最迟日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.useterm
+  is '额度项下业务最迟到期日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditaggreement
+  is '使用授信协议号(额度合同流水号)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.relativeagreement
+  is '其他相关协议号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loanflag
+  is '是否可以直接申请出帐(1：是 2：否)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.totalsum
+  is '银行融资总额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ourrole
+  is '我行参与角色';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.reversibility
+  is '有无追索权';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.billnum
+  is '票据数量（张）(跑批时候更新)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.housetype
+  is '房产类型(1：别墅2：商住两住、商用、写字楼3：普通住宅)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.lctermtype
+  is '信用证期限类型(01：即期02：<90天03：90-180天04：180-360天05：>360天)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.riskattribute
+  is '低风险类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.suretype
+  is '对外担保类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.safeguardtype
+  is '保函类型(01：融资性担保02：非融资性担保)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditbusiness
+  is '单项额度指定品种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businesscurrency
+  is '币种(代码：Currency)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businesssum
+  is '金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businessprop
+  is '贷款成数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.termyear
+  is '期限年';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.termmonth
+  is '期限月';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.termday
+  is '期限日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.lgterm
+  is '远期信用证付款期限';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.baseratetype
+  is '基准利率类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.baserate
+  is '基准利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ratefloattype
+  is '利率类型(0010：浮动0020：固定)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ratefloat
+  is '利率浮动';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businessrate
+  is '利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ictype
+  is '收费方式(代码：ChargeType)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.iccyc
+  is '计息周期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pdgratio
+  is '手续费比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pdgsum
+  is '手续费金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pdgpaymethod
+  is '手续费支付方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pdgpayperiod
+  is '收费周期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.promisesfeeratio
+  is '承诺费率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.promisesfeesum
+  is '承诺费金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.promisesfeeperiod
+  is '承诺费计收期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.promisesfeebegin
+  is '承诺费计收起始日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.mfeeratio
+  is '管理费比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.mfeesum
+  is '管理费金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.mfeepaymethod
+  is '管理费支付方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.agentfee
+  is '代理费';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.dealfee
+  is '安排费';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.totalcast
+  is '总成本';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.discountinterest
+  is '贴现利息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.purchaserinterest
+  is '买方应付贴现利息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bargainorinterest
+  is '卖方应付贴现利息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.discountsum
+  is '实付贴现金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bailratio
+  is '保证金比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bailcurrency
+  is '保证金币种(代码：Currency)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bailsum
+  is '保证金金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bailaccount
+  is '保证金帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.fineratetype
+  is '罚息利率类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.finerate
+  is '罚息利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.drawingtype
+  is '提款方式(01：一次提款02：分次提款)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.firstdrawingdate
+  is '首次提款日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.drawingperiod
+  is '提款期限';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.paytimes
+  is '还款期次';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.paycyc
+  is '还本付息方式(1：等额还款法2：等额本金还款3：一次还本付息4：分次付息一次还本)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.graceperiod
+  is '还款宽限期(月)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.overdraftperiod
+  is '连续透支期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oldlcno
+  is '原信用证编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oldlctermtype
+  is '原信用证期限类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oldlccurrency
+  is '原信用证币种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oldlcsum
+  is '原信用证金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oldlcloadingdate
+  is '原信用证装期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oldlcvaliddate
+  is '原信用证效期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.direction
+  is '投向(代码：ndustryType)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.purpose
+  is '用途';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.planallocation
+  is '用款计划';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.immediacypaysource
+  is '直接还款来源';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.paysource
+  is '还款来源';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.corpuspaymethod
+  is '本金还款方式(代码：CorpusPayMeth)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.interestpaymethod
+  is '利息支付方式(01：按季支付02：按月支付03：一次付清)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.putoutdate
+  is '约定发放日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.maturity
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdparty1
+  is '涉及第三方1';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyid1
+  is '第三方法人代码1';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdparty2
+  is '涉及第三方2';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyid2
+  is '第三方法人代码2';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdparty3
+  is '涉及第三方3';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyid3
+  is '第三方法人代码3';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyregion
+  is '涉及第三方所在地区和国家';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyaccounts
+  is '第三方帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.cargoinfo
+  is '货物名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.projectname
+  is '贷款项目名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.operationinfo
+  is '操作信息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.contextinfo
+  is '业务信息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.securitiestype
+  is '背景信息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.securitiesregion
+  is '有价证券类型(代码：InvoiceType)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.constructionarea
+  is '有价证券发行地';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.usearea
+  is '使用面积';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.flag1
+  is '是否1(1：是2：否)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.flag2
+  is '是否2(1：是2：否)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.flag3
+  is '是否3(1：是2：否)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tradecontractno
+  is '相关贸易合同号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.invoiceno
+  is '增值税发票';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tradecurrency
+  is '贸易合同币种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tradesum
+  is '贸易合同金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.lcno
+  is '信用证编号（或承兑汇票号码）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.paymentdate
+  is '最迟对外付汇日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.operationmode
+  is '业务模式(代码：OperationMode)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.begindate
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.enddate
+  is '到期日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.vouchclass
+  is '担保形式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.vouchtype
+  is '主要担保方式(代码：VouchType)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.vouchtype1
+  is '担保方式1';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.vouchtype2
+  is '担保方式2';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.vouchflag
+  is '有无其他担保方式(1：有2：无)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.warrantor
+  is '主要担保人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.warrantorid
+  is '主要担保人代码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.othercondition
+  is '其他条件和要求';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.guarantyvalue
+  is '担保总价值';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.guarantyrate
+  is '担保率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.baseevaluateresult
+  is '基期信用等级';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.riskrate
+  is '综合风险度';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.lowrisk
+  is '是否低风险业务(1：有2：无)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.otherarealoan
+  is '是否异地贷款(1：有2：无)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.lowriskbailsum
+  is '低风险担保金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.applytype
+  is '申请方式(代码：ApplyType)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.originalputoutdate
+  is '首次发放日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.extendtimes
+  is '展期次数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.lngotimes
+  is '借新还旧次数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.golntimes
+  is '还旧借新次数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.drtimes
+  is '债务重组次数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.guarantyno
+  is '抵质押编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.putoutsum
+  is '已出帐金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.actualputoutsum
+  is '已实际出帐金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.balance
+  is '当前余额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.normalbalance
+  is '正常余额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.overduebalance
+  is '逾期余额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.dullbalance
+  is '呆滞余额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.badbalance
+  is '呆帐余额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.interestbalance1
+  is '表内欠息余额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.interestbalance2
+  is '表外欠息余额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.finebalance1
+  is '本金罚息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.finebalance2
+  is '利息罚息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.overduedays
+  is '逾期天数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oweinterestdays
+  is '欠息天数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tabalance
+  is '分期业务欠本金';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tainterestbalance
+  is '分期业务欠利息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tatimes
+  is '累计欠款期数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.lcatimes
+  is '连续欠款期数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pbinterestsum
+  is '本累计收回利息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pbmfeesum
+  is '累计收回管理费';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pbpdgsum
+  is '累计收回手续费';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pblegalcostsum
+  is '累计收回诉讼费';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.polegalcostsum
+  is '累计付出诉讼费';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.originalbaddate
+  is '首次认定不良日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.baseclassifyresult
+  is '基期风险分类结果';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifyresult
+  is '五级分类结果';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifytype
+  is '最新风险分类方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifydate
+  is '最新风险分类时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifyorgid
+  is '最新分类认定机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.reservesum
+  is '计提准备金';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.expectlosssum
+  is '预测损失金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bailrate
+  is '保证金比率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.finishorg
+  is '终批机构级别';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.finishtype
+  is '终结类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.finishdate
+  is '终结日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.describe1
+  is '描述1';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.reinforceflag
+  is '补登标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.manageorgid
+  is '当前管户机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.manageuserid
+  is '当前管户人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.recoveryorgid
+  is '保全管理机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.recoveryuserid
+  is '保全管理人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.statorgid
+  is '当前统计机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.statuserid
+  is '当前统计人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.operateorgid
+  is '经办机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.operateuserid
+  is '经办人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.operatedate
+  is '经办日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.inputdate
+  is '登记日期人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pigeonholedate
+  is '归档日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.flag4
+  is '是否4';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.paycurrency
+  is '付款币种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.paydate
+  is '付款时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.flag5
+  is '转建行标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifysum1
+  is '最新分类正常金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifysum2
+  is '最新分类关注金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifysum3
+  is '最新分类次级金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifysum4
+  is '最新分类可疑金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifysum5
+  is '最新分类损失金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.shifttype
+  is '移交类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.operatetype
+  is '操作方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.fundsource
+  is '资金来源';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.cycleflag
+  is '循环标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditfreezeflag
+  is '额度是否冻结';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.shiftbalance
+  is '移交保全时余额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifyfrequency
+  is '分类频率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifylevel
+  is '认定级别';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.vouchnewflag
+  is '是否新增担保';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.actualartificialno
+  is '实际合同号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.deleteflag
+  is '合并标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.accountno
+  is '结算帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loanaccountno
+  is '贷款入账账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.secondpayaccount
+  is '第二还款帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.adjustratetype
+  is '利率调整方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.adjustrateterm
+  is '利率调整月数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.overinttype
+  is '逾期计息方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.rateadjustcyc
+  is '利率调整周期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pdgaccountno
+  is '手续费支出帐号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.deductdate
+  is '扣款日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.fzanbalance
+  is '发展商入帐净额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.acceptinttype
+  is '收息类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ratio
+  is '比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyadd1
+  is '涉及第三方地址1';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyzip1
+  is '第三方法人邮编1';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyadd2
+  is '涉及第三方地址2';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyzip2
+  is '第三方法人邮编2';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyadd3
+  is '涉及第三方地址3';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdpartyzip3
+  is '第三方法人邮编3';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.effectarea
+  is '信用证有效地';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.termdate1
+  is '最晚装运期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.termdate2
+  is '交单期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.termdate3
+  is '付款期限';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.fixcyc
+  is '固定周期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.describe2
+  is '描述2';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.cancelsum
+  is '核销金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.cancelinterest
+  is '核销利息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loanterm
+  is '期限';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.putoutorgid
+  is '放款机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tempsaveflag
+  is '暂存标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.overduedate
+  is '逾期日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oweinterestdate
+  is '欠息日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.freezeflag
+  is '冻结标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.approvedate
+  is '申请审批通过日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.shiftstatus
+  is '不良资产移交状态';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.recoverycognorgid
+  is '不良资产认定机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.recoverycognuserid
+  is '不良资产认定人员';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.shiftdocdescribe
+  is '不良资产移交文档清单';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.guarantyflag
+  is '征信担保标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.totalbalance
+  is '敞口余额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.grouplineid
+  is '集团关联编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.transformtimes
+  is '变更次数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.transformflag
+  is '转授信标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.fundbackaccount
+  is '还款准备金账户';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.requitalaccount
+  is '资金回笼账户';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.paymentmode
+  is '支付方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifyresulteleven
+  is '十一级分类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.interestrateexplain
+  is '利率解释';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.guarantytype
+  is '担保类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditmode
+  is '授信类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.mainreturntype
+  is '主还款方式(代码:MainReturnMethod)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.effectflag
+  is '有效标志位';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditattribute
+  is '合同类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isnewcustomertime
+  is '检查时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isnewcustomer
+  is '是否为黑名单';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.hasbothflag
+  is '转加按';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.fundserialno
+  is '公积金申请编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ctogetherborrower
+  is '共同借款人个数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.csinglnassure
+  is '保证人个数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.guarantyhouse
+  is '抵押房产套数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.formerserialno
+  is '重组合同号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.abysum
+  is '赎楼金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loadrelabarcode
+  is '关联贷款条码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loanrelacontractno
+  is '增值贷合同号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.betterrateflag
+  is '利率优惠';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.goldflag
+  is '存贷通';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.applyinsuranceflag
+  is '申请贷款保障保险';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.sendchitflag
+  is '短信提醒';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.introducerid
+  is '介绍人编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.presignflag
+  is '预签合同';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.signaddress
+  is '服务中心';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.sealtype
+  is '用印类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oapproveflag
+  is '例外审批';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.operateusermind
+  is '经办单位负责人<br>意见';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.preapproverid
+  is '初审人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.buyaddress
+  is '房屋用于购买';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.gracetermpay
+  is '宽限期固定还款额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.graceterm
+  is '还款宽限期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.gracetermflag
+  is '还款宽限期单位';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ratecode
+  is '利率类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.gaincyc
+  is '等比（等额）<br>递变周期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.gainamount
+  is '等比（等额）<br>递变幅度';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.calcterm
+  is '低供贷计算期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.returntype
+  is '期供方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.holdbalance
+  is '尾款金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.returnperiod
+  is '还款周期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loantermflag
+  is '期限类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.schemeno
+  is '贷款方案编码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ltvvalue
+  is '贷款成数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ratemode
+  is '利率执行方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.otherpurpose
+  is '其他用途';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.cycleratio
+  is '循环额度比';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.cguarantypeople
+  is '抵押共有权人人数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.buyhousetype
+  is '所购房屋性质';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.buyhouseproperty
+  is '所购房屋类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.houseareage
+  is '购房总面积';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.housecount
+  is '购房套数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.industrytype
+  is '客户行业属性';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isfinance
+  is '是否供应链金融模式业务';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isimportantloan
+  is '是否重点项目贷款';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.importantloan
+  is '重点贷款项目';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.gshy
+  is '过剩行业';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.sfgjxzhy
+  is '是否国家限制行业';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.zfsxfs
+  is '政府授信支持方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.zfsxlx
+  is '政府授信类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.sfzfsx
+  is '是否政府授信';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.gksxpz
+  is '国开授信品种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.sfgksx
+  is '是否国开行授信';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ifgudingcredit
+  is '是否固定资产授信';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.benefitarea
+  is '保函受益人地区';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ifqueryflag
+  is '是否先贴后查';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.lastclassifyresult
+  is '上次五级分类结果';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.mainproduct
+  is '经营商品';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.useproduct
+  is '使用产品';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.penalizeratesign
+  is '罚息标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.financesupportmode
+  is '贷款财政扶持方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.rategenre
+  is '利率类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ifagreementflag
+  is '是否协议付息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loanquality
+  is '贷款性质';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.yearratebase
+  is '年基数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.penalizerateratio
+  is '罚息率差值';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.purchaserpaymentscale
+  is '贴现利息买方承担比例(%)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loanratio
+  is '贷款费率(%)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bearratio
+  is '承担费率(%)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.proposerpaymentscale
+  is '贴现利息申请人支付比例(%)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.compoundinterestratio
+  is '复利罚息率(%)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tradeflag
+  is '是否走货押中心流程';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.paymentname
+  is '付息方';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.houseprice
+  is '购房总价';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pawnremitratio
+  is '押汇利率(%)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pawnremitdate
+  is '押汇期限';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pawnremitsum
+  is '押汇金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loadingdate
+  is '信用证装期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.chargetype
+  is '收费方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.offerbilldate
+  is '提供单据日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.restbalancesum
+  is '打包成数(%)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.hasoutradio
+  is '是否存在溢短装的条款';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.outradio
+  is '溢短装比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.terminateflag
+  is '合同终止标记';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.paystatus
+  is '贷款发放状态';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.executestatus
+  is '合同履行情况';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.otherexecutestatus
+  is '其他合同旅行情况';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.terminatestatus
+  is '终止情况';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.terminatereason
+  is '终止原因';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.inputdate1
+  is '终止合同原因登记日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.aggreementcontractputoutflag
+  is '额度合同出账标记';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oldcreditline
+  is '够划算冻结前授信额度';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.relativeserialno2
+  is '相关合同流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.lcsum
+  is '信用证金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.carbrand
+  is '所购汽车品牌';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.cartype
+  is '所购汽车型号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.carnumber
+  is '汽车编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.chariotnumber
+  is '车架号码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.motornumber
+  is '发动机号码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.printeruserid
+  is '合同审核和打印人用户号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.relativeapplyserialno
+  is '无批复额度申请流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.whetherhousemortgage
+  is '是否以住房进行抵押：1-是，2-否';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.housenum
+  is '购第几套住房：1-第一套，2-第二套，3-第三套（以上）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.houseadd
+  is '购买房产地址';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.buyhousedetail
+  is '购房细分：1-购一手房，2-购二手房，3-购其他类型住房，4-购商铺，5-购写字楼，6-购厂房，7-购其他商业用房';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdparty1type
+  is '代付类型：1-买方押汇，2-打包放款，3-卖方押汇，4-国内信用证项下贴现';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.thirdorgname
+  is '代付行,承兑行';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loansource
+  is '贷款来源';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.invaliddate
+  is '合同失效日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oldeffectflag
+  is '备份生效标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.oldcreditaggreement
+  is '使用授信协议号(备份额度合同流水号)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.contractname
+  is '合同名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.contracttype
+  is '合同类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.contractsum
+  is '合同资金';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.contractitems
+  is '合同期次';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.consignor
+  is '委托人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bailee
+  is '受托人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.trustee
+  is '托管人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.partybname
+  is '借款人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.entrustacc
+  is '信托专户';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.beneficiaryacc
+  is '受益人账户';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.entrustinterestrate
+  is '信托报酬率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.entrustinterestratetype
+  is '信托报酬率计提方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.beneficiaryyieldrate
+  is '受益人的预计年净收益率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.entrustyieldtype
+  is '信托收益计提方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.custodian
+  is '管理人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.manageratetype
+  is '管理费费率及计提方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.depositratetype
+  is '托管费费率及计提方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.expectyieldrate
+  is '预期收益率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.priequname
+  is '私募债名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.deadline
+  is '私募债期限';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.couponrate
+  is '票面利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.issuescale
+  is '发行规模';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.subtotalprices
+  is '认购总价';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.repayinteresttype
+  is '还本付息方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.raisefundpurpose
+  is '募集资金用途';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.issuer
+  is '发行人/融资者';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.subscriber
+  is '认购人/投资者';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.raisemoneyaccount
+  is '募集资金账户';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isinuse
+  is '添加维护标志1正常2不维护';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditlineflag
+  is '额度条线标识';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.busirisktype
+  is '风险类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.prhdate
+  is '按揭房产产权到期日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.playtype
+  is '参与方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ischengnuobank
+  is '是否承诺行:codeno=YesNo';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.xmztz
+  is '项目总投资';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.zbj
+  is '资本金';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pwwh
+  is '批文文号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.lxpw
+  is '立项批文';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ghxkzbh
+  is '规划许可证编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.jsydxkzbh
+  is '建设用地许可证编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.hpxkzbh
+  is '环评许可证编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.sgxkzbh
+  is '施工许可证编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.qtxkz
+  is '其他许可证';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.qtxkzbh
+  is '其他许可证编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.kgrq
+  is '开工日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businesstype2
+  is '专业贷款分类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.classifytype2
+  is '风险暴露分类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.approvalsuggestion
+  is '建议审批等级';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.yffdkje
+  is '金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.precreditcycle
+  is '变更前额度是否循环标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tdstrenth
+  is '交易对手实力';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tdyears
+  is '与交易对手合作年限';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tdtimes
+  is '与交易对手成功交易次数';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bailsubaccount
+  is '保证金子户';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.interestrate
+  is '保证金利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isrz
+  is '是否融资系统合同 1是0否';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.financier
+  is '实际融资人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.iscounterparty
+  is '是否合格中央交易对手';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.investway
+  is '投资方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.managemodel
+  is '管理模式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.toindustryfund
+  is '是否投向产业基金';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isdebttoequity
+  is '是否投向市场化债转股';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isgovfinance
+  is '是否涉及政府类融资';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isconsumefinance
+  is '是否为消费服务类融资';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isbalancedeposit
+  is '是否结算性存款';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.canbacktosale
+  is '是否含有回售选择权';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.canseparate
+  is '是否可分离';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businessmarkettype
+  is '交易市场类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businessmarket
+  is '交易市场';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.absabnname
+  is 'ABS/ABN名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isfillassetsinfo
+  is '是否已完整录入全部底层资产信息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.backtosaletype
+  is '回购类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.afterloanmanagerid
+  is '贷后管理人员';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.afterloanmanagement
+  is '贷后管理机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditincrementtype
+  is '主要增信方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tradingassets
+  is '交易资产';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.depositno
+  is '同业存单号码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.depositname
+  is '同业存单简称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.issueprice
+  is '发行价格';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.issueamount
+  is '发行量（元）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.issuesum
+  is '发行金额（元）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bondno
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bondname
+  is '债券名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.outerevaluate1
+  is '债券外部评级结果（发行时）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.outerevaluate2
+  is '债券外部评级结果（购买时）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.outerevaluate3
+  is '债券外部评级结果（当前）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.investkind
+  is '投资性质';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.transactionprice
+  is '成交净价';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.transactionrate
+  is '成交利率';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.transactoinamount
+  is '成交量';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.transactiondate
+  is '实际交割日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.salebackbegindate
+  is '回售申请起始日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.salebackenddate
+  is '回售申请截止日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.financialtype
+  is '理财产品类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.financialclassify
+  is '理财产品风险分类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.acceptcustomerid
+  is '承兑行我行客户编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.acceptbankid
+  is '承兑行行号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.acceptbankname
+  is '承兑行名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.iswhzt
+  is '是否我行直贴票据';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.stockcode
+  is '标的股票代码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.stockname
+  is '标的股票名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.stockamount
+  is '总股本（万股）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.circulatestockamount
+  is '流通股本（万股）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bdindustry
+  is '标的公司行业分类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.guranteerate
+  is '质押率/初始履约保障比例';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.alarmline
+  is '预警线';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pcline
+  is '平仓线';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.billtype
+  is '票据类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.billkind
+  is '票据种类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.billno
+  is '票据号码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.billcurrency
+  is '票据币种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.billsum
+  is '票面金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.billacptdate
+  is '出票日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.billmaturity
+  is '票据到期日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.billwriter
+  is '出票人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.operationtype
+  is '业务类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.reinforcechecker
+  is '补登复核人';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.onlineamount
+  is '线上额度';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businesssumentpart
+  is '集团授信额度公司部分';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.totalsumentpart
+  is '集团授信敞口公司部分';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businesssumtypart
+  is '集团授信额度同业部分';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.totalsumtypart
+  is '集团授信额度同业部分';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditflowtype
+  is '授信业务流程类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.batchno
+  is '批量新增借据合同关键字段';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.datatype
+  is '批量数据来源（PJ.票据系统供数 LC.理财资管系统供数 ZJ.资金系统供数 ZH.同业综合业务系统供数）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditarea
+  is '授信区域:01 本地 02 省内异地 03 省外异地';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isestatefinance
+  is '是否涉及房地产融资';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isgovernfinance
+  is '是否涉及政府类融资';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isconsumerfinance
+  is '是否为消费服务类融资';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isbeltroadfinance
+  is '是否为一带一路建设投融资';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isgreenfinance
+  is '是否为绿色信贷融资';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.reinforcetype
+  is '补登来源 dg-对公 空-同业';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.rivalid
+  is '同业交易对手';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.rivalname
+  is '同业交易对手名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.consigneeid
+  is '管理人/主承销商客户编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.consigneename
+  is '管理人/主承销商名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.consigneecerttype
+  is '管理人/主承销商证件类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.consigneecertid
+  is '管理人/主承销商证件号码';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.outclassifylevel
+  is '外部债项评级';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.outclassifyorg
+  is '评级机构';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.outclassifydate
+  is '评级日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isonlinebusiness
+  is '是否线上业务：yes-是 no/空-否';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.keyno
+  is '票据唯一标识';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.actno
+  is '成交单号--资金交易系统批量';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.registerinotherbank
+  is '是否他行代开';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.issupplychainfinance
+  is '是否为供应链金融业务';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.supplychainfinancetype
+  is '供应链金融业务产品分类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.issjorcs
+  is '是否三旧改造或城市更新项目';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.islikeloan
+  is '是否类信贷';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.guarantybailaccount
+  is '押品保证金账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.guarantybailsubaccount
+  is '押品保证金子户号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.consignmentloandirect
+  is '委托贷款特殊投向';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isclassflag
+  is '是否分级标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.productlevel
+  is '产品分级级别';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.productcollectmoney
+  is '产品募集金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.finalinvestdirecttype
+  is '最终投向类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.realestateloantype
+  is '房地产贷款类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.chuantoutype
+  is '穿透类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.corecompany
+  is '核心企业名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.shorttermday
+  is '期限（日）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isbelongterm
+  is '是否靠档计息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.syndicatetotalsum
+  is '银团贷款总金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loanhandlechannel
+  is '贷款办理渠道';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.fxfltp
+  is '保证金利率类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.termcd
+  is '保证金利率档次';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pdrifd
+  is '保证金利率浮动类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pdrifm
+  is '利率浮动方式';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.pdrifv
+  is '保证金浮动值';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.interestmethod
+  is '保证金计息方法';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.onlinebalance
+  is '线上额度余额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.loanpurposetype
+  is '保障性安居工程贷款类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.directionrs
+  is '行业投向（征信）';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ztrate
+  is '转贴现利率%';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.zfserialno
+  is '止付流水号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.zfdate
+  is '止付交易日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.bailtransaccount
+  is '保证金转出账号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isfarming
+  is '是否涉农';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.preeffectflag
+  is '集团批复生效子公司额度失效前状态';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ztacceptbankid
+  is '直贴行行号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.ztacceptbankname
+  is '直贴行行名';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.relztacceptbankcustid
+  is '直贴行总行信贷客户号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businessinvoiceinfo
+  is '商业发票信息';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businessinvoicecurrency
+  is '商业发票币种';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businessinvoicesum
+  is '商业发票金额';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.businessinvoicetype
+  is '商业发票种类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tradeorgid
+  is '交易机构(同业综合业务系统占额送)';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.creditauthno
+  is '征信查询授权书编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isquerycreditreport
+  is '是否自动查询贷后报告';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.authostrdate
+  is '授权起始日';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.farmingloantype
+  is '涉农贷款主体类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.farmingloanuse
+  is '涉农贷款投向';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.platformpaycashsource
+  is '地方融资平台偿债资金来源分类';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.iscareerguaranteeloan
+  is '是否创业担保贷款';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.careerguaranteeloantype
+  is '创业担保贷款类型';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.isforeign
+  is '是否境外贷款';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.accountcatagory
+  is '账户类别AccountCatagory';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.landuseno
+  is '土地使用证编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.landusedate
+  is '土地使用证日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.landplanpermitno
+  is '用地规划许可证编号';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.landplanpermitdate
+  is '用地规划许可证日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.projectplanpermitdate
+  is '工程规划许可证日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.constructpermitdate
+  is '施工许可证日期';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.buyername
+  is '购货方名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.sellername
+  is '卖房人名称';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.tradetransactioncontent
+  is '贸易交易内容';
+comment on column RRP_MDL.O_IOL_CRSS_BUSINESS_CONTRACT.statisticstotalbalance
+  is '统计用敞口余额';
+

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据血缘查询 - 字段溯源</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="query_data.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: #f8fafc; color: #1e293b; }
+
+        .header {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            padding: 18px 40px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
+        }
+        .header h1 { font-size: 24px; margin-bottom: 4px; }
+        .header p { opacity: 0.9; font-size: 13px; }
+
+        .main-container { display: flex; height: calc(100vh - 85px); }
+
+        .sidebar {
+            width: 360px;
+            background: #ffffff;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .search-section { padding: 18px; background: #f1f5f9; border-bottom: 1px solid #e2e8f0; position: relative; }
+        .search-label { font-size: 12px; color: #64748b; margin-bottom: 6px; display: block; }
+        .search-label .req { color: #ef4444; }
+        .search-row { margin-bottom: 12px; position: relative; }
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            color: #1e293b;
+            font-size: 14px;
+        }
+        .search-input:focus { outline: none; border-color: #6366f1; }
+        .search-input::placeholder { color: #94a3b8; }
+        .query-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .query-btn:hover { opacity: 0.9; }
+        .query-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .search-hint { font-size: 11px; color: #64748b; margin-top: 8px; }
+
+        #tableResults { max-height: 200px; overflow-y: auto; display: none; background: #f8fafc; position: absolute; top: 100%; left: 0; right: 0; z-index: 1000; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px; }
+        #fieldResults { max-height: 280px; overflow-y: auto; display: none; background: #f8fafc; position: absolute; top: 100%; left: 0; right: 0; z-index: 1000; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 8px 8px; }
+        .sr-item { padding: 10px 14px; border-bottom: 1px solid #ffffff; cursor: pointer; }
+        .sr-item:hover { background: #e2e8f0; }
+        .sr-item .sr-name { font-size: 13px; font-weight: 500; color: #1e293b; }
+        .sr-item .sr-meta { font-size: 10px; color: #64748b; margin-top: 2px; }
+
+        .result-stats {
+            padding: 12px 18px;
+            background: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+            display: none;
+        }
+        .result-stats.show { display: block; }
+        .stat-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 12px; }
+        .stat-label { color: #64748b; }
+        .stat-value { color: #6366f1; font-weight: 600; }
+
+        .detail-list { padding: 15px 18px; flex: 1; overflow-y: auto; }
+        .detail-section { margin-bottom: 18px; }
+        .detail-title { font-size: 12px; color: #64748b; margin-bottom: 8px; letter-spacing: 1px; }
+        .detail-item {
+            padding: 10px 12px;
+            background: #ffffff;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            font-size: 12px;
+        }
+        .detail-item:hover { background: #e2e8f0; border-left-color: #6366f1; }
+        .detail-item .d-name { color: #1e293b; font-weight: 500; word-break: break-all; }
+        .detail-item .d-meta { color: #64748b; font-size: 11px; margin-top: 2px; }
+        .detail-item.source { border-left-color: #22c55e; }
+        .detail-item.target { border-left-color: #f59e0b; }
+        .detail-item.proc { border-left-color: #a855f7; }
+
+        .graph-container {
+            flex: 1;
+            position: relative;
+            background: #f8fafc;
+        }
+        #graph-svg { width: 100%; height: 100%; }
+
+        .empty-state {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center; color: #64748b;
+        }
+        .empty-state .e-icon { font-size: 64px; opacity: 0.3; margin-bottom: 16px; }
+        .empty-state .e-text { font-size: 16px; }
+        .empty-state .e-hint { font-size: 12px; margin-top: 8px; opacity: 0.5; }
+
+        .loading {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: #6366f1; font-size: 14px; display: none;
+        }
+
+        .info-panel {
+            position: absolute; top: 16px; right: 16px;
+            width: 420px; max-height: calc(100vh - 140px);
+            background: #ffffff; border: 1px solid #e2e8f0;
+            border-radius: 10px; padding: 18px;
+            overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,0.08); display: none;
+        }
+        .info-panel.show { display: block; }
+        .info-panel h3 { font-size: 14px; margin-bottom: 12px; color: #6366f1; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px; word-break: break-all; }
+        .info-sec { margin-bottom: 14px; }
+        .info-sec .s-title { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+        .info-sec .s-content { font-size: 12px; color: #1e293b; }
+        .i-tag { display: inline-block; padding: 3px 8px; background: #e2e8f0; border-radius: 4px; margin: 2px; font-size: 10px; cursor: pointer; white-space: nowrap; }
+        .i-tag:hover { background: #6366f1; }
+        .close-btn { position: absolute; top: 12px; right: 12px; cursor: pointer; font-size: 18px; color: #64748b; }
+        .close-btn:hover { color: #1e293b; }
+
+        .legend {
+            position: absolute; bottom: 16px; left: 16px;
+            background: #ffffff; border: 1px solid #e2e8f0;
+            border-radius: 8px; padding: 10px 14px; display: none;
+        }
+        .legend.show { display: block; }
+        .legend-item { display: flex; align-items: center; margin-bottom: 5px; font-size: 10px; }
+        .legend-dot { width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; }
+
+        .controls { position: absolute; bottom: 16px; right: 16px; display: none; gap: 6px; }
+        .controls.show { display: flex; }
+        .ctrl-btn { padding: 6px 12px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; color: #1e293b; cursor: pointer; font-size: 11px; }
+        .ctrl-btn:hover { background: #e2e8f0; }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #f8fafc; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>数据血缘查询系统</h1>
+        <p>字段级溯源：输入表名+字段名，追踪上游加工链路</p>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="search-section">
+                <div class="search-row" id="tableRow">
+                    <label class="search-label">表名 <span class="req">*</span></label>
+                    <input type="text" class="search-input" id="tableInput" placeholder="输入表名搜索..." autocomplete="off">
+                    <div id="tableResults"></div>
+                </div>
+                <div class="search-row" id="fieldRow">
+                    <label class="search-label">字段名 <span class="req">*</span></label>
+                    <input type="text" class="search-input" id="fieldInput" placeholder="先选表，再搜字段..." autocomplete="off">
+                    <div id="fieldResults"></div>
+                </div>
+                <button class="query-btn" id="queryBtn" onclick="executeQuery()">查询血缘</button>
+                <div class="search-hint">仅展示该字段的上游加工链路（不追踪下游）</div>
+            </div>
+
+            <div class="result-stats" id="resultStats"></div>
+
+            <div class="detail-list" id="detailList"></div>
+        </div>
+
+        <div class="graph-container">
+            <svg id="graph-svg"></svg>
+
+            <div class="empty-state" id="emptyState">
+                <div class="e-icon">&#128269;</div>
+                <div class="e-text">输入表名和字段名开始查询</div>
+                <div class="e-hint">表名+字段名必填，仅展示上游链路</div>
+            </div>
+
+            <div class="loading" id="loading">查询渲染中...</div>
+
+            <div class="legend" id="legend"></div>
+
+            <div class="controls" id="controls">
+                <button class="ctrl-btn" onclick="resetZoom()">重置</button>
+                <button class="ctrl-btn" onclick="zoomIn()">放大</button>
+                <button class="ctrl-btn" onclick="zoomOut()">缩小</button>
+                <button class="ctrl-btn" onclick="fitView()">适应</button>
+            </div>
+
+            <div class="info-panel" id="infoPanel">
+                <span class="close-btn" onclick="closePanel()">&times;</span>
+                <h3 id="panelTitle"></h3>
+                <div id="panelContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const LAYER_ORDER = ['ods','diis','base','mdl','app','east'];
+        const LAYER_INFO = {LAYER_INFO};
+        const TABLE_INDEX = {TABLE_INDEX};
+        const TABLE_LAYER_MAP = {TABLE_LAYER_MAP};
+        const TABLE_COMMENT_MAP = {TABLE_COMMENT_MAP};
+        const TABLE_COLUMNS_MAP = {TABLE_COLUMNS_MAP};
+
+        var svg, g, zoom, wWidth, wHeight;
+        var currentQuery = null;
+        var selectedTable = '', selectedField = '';
+
+        // 延迟加载大数据（首次查询时触发）
+        function ensureQueryData(callback) {
+            if (window.QUERY_DATA && window.QUERY_DATA.lineageIdx) {
+                callback();
+                return;
+            }
+            var btn = document.getElementById('queryBtn');
+            if (btn) { btn.disabled = true; btn.textContent = '加载数据中...'; }
+            var scr = document.createElement('script');
+            scr.src = 'query_data.js';
+            scr.onload = function() {
+                if (btn) { btn.disabled = false; btn.textContent = '查询血缘'; }
+                if (window.QUERY_DATA && window.QUERY_DATA.lineageIdx) {
+                    callback();
+                } else {
+                    alert('数据加载失败，请刷新页面重试');
+                }
+            };
+            scr.onerror = function() {
+                if (btn) { btn.disabled = false; btn.textContent = '查询血缘'; }
+                alert('无法加载 query_data.js，请确保文件与HTML在同一目录');
+            };
+            document.head.appendChild(scr);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            var container = document.querySelector('.graph-container');
+            wWidth = container.clientWidth; wHeight = container.clientHeight;
+            svg = d3.select('#graph-svg').attr('width', wWidth).attr('height', wHeight);
+
+            svg.append('defs').append('marker')
+                .attr('id', 'arrow').attr('viewBox', '0 -5 10 10')
+                .attr('refX', 8).attr('refY', 0).attr('markerWidth', 5).attr('markerHeight', 5)
+                .append('path').attr('d', 'M0,-4L10,0L0,4').attr('fill', '#94a3b8');
+            svg.append('defs').append('marker')
+                .attr('id', 'arrow-hl').attr('viewBox', '0 -5 10 10')
+                .attr('refX', 8).attr('refY', 0).attr('markerWidth', 6).attr('markerHeight', 6)
+                .append('path').attr('d', 'M0,-4L10,0L0,4').attr('fill', '#6366f1');
+            svg.append('defs').append('marker')
+                .attr('id', 'arrow-target').attr('viewBox', '0 -5 10 10')
+                .attr('refX', 8).attr('refY', 0).attr('markerWidth', 7).attr('markerHeight', 7)
+                .append('path').attr('d', 'M0,-4L10,0L0,4').attr('fill', '#f59e0b');
+
+            g = svg.append('g');
+            zoom = d3.zoom().scaleExtent([0.05, 4]).on('zoom', function(e) { g.attr('transform', e.transform); });
+            svg.call(zoom);
+            setupSearch();
+        });
+
+        function setupSearch() {
+            var tInput = document.getElementById('tableInput');
+            var fInput = document.getElementById('fieldInput');
+            var tBox = document.getElementById('tableResults');
+            var fBox = document.getElementById('fieldResults');
+            var timer;
+
+            tInput.addEventListener('input', function(e) {
+                clearTimeout(timer);
+                var v = e.target.value.trim();
+                if (v.length < 1) { tBox.style.display = 'none'; return; }
+                timer = setTimeout(function() { searchTables(v); }, 200);
+            });
+            tInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') { var f = tBox.querySelector('.sr-item'); if (f) f.click(); }
+                if (e.key === 'Escape') tBox.style.display = 'none';
+            });
+
+            // 字段输入：focus时即显示该表所有字段，input时过滤
+            fInput.addEventListener('input', function(e) {
+                clearTimeout(timer);
+                var v = e.target.value.trim();
+                timer = setTimeout(function() { searchFields(v); }, 200);
+            });
+            fInput.addEventListener('focus', function() {
+                if (selectedTable) searchFields(document.getElementById('fieldInput').value.trim());
+            });
+            fInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') { var f = fBox.querySelector('.sr-item'); if (f) f.click(); }
+                if (e.key === 'Escape') fBox.style.display = 'none';
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!document.getElementById('tableRow').contains(e.target)) tBox.style.display = 'none';
+                if (!document.getElementById('fieldRow').contains(e.target)) fBox.style.display = 'none';
+            });
+        }
+
+        function searchTables(kw) {
+            var box = document.getElementById('tableResults');
+            var k = kw.toUpperCase();
+            var results = [];
+            for (var i = 0; i < TABLE_INDEX.length; i++) {
+                var t = TABLE_INDEX[i], fn = t.id.toUpperCase(), sn = t.short.toUpperCase();
+                if (fn.indexOf(k) !== -1 || sn.indexOf(k) !== -1) {
+                    results.push(t);
+                }
+            }
+            if (results.length === 0) { box.style.display = 'none'; return; }
+            box.style.display = 'block';
+            var html = '';
+            for (var i = 0; i < Math.min(results.length, 15); i++) {
+                var r = results[i];
+                html += '<div class="sr-item" data-val="' + r.id.replace(/"/g, '&quot;') + '" onclick="selectTable(this.dataset.val)">';
+                html += '<div class="sr-name">' + r.short + '</div>';
+                html += '<div class="sr-meta">' + r.id + (r.desc ? ' | ' + r.desc.substring(0,30) : '') + '</div></div>';
+            }
+            box.innerHTML = html;
+        }
+
+        function selectTable(tid) {
+            selectedTable = tid;
+            document.getElementById('tableInput').value = tid.split('.').pop();
+            document.getElementById('tableResults').style.display = 'none';
+            selectedField = '';
+            var fInput = document.getElementById('fieldInput');
+            fInput.value = '';
+            fInput.placeholder = '已选：' + tid.split('.').pop() + '，点击显示字段';
+            // 自动聚焦字段输入框并显示字段
+            setTimeout(function() { fInput.focus(); }, 50);
+        }
+
+        function searchFields(kw) {
+            var box = document.getElementById('fieldResults');
+            if (!selectedTable) {
+                box.innerHTML = '<div class="sr-item" style="color:#ef4444;cursor:default;">请先选择表名</div>';
+                box.style.display = 'block';
+                return;
+            }
+            var k = kw ? kw.toUpperCase() : '';
+            var cols = TABLE_COLUMNS_MAP[selectedTable] || [];
+            var results = [], seen = {};
+
+            for (var i = 0; i < cols.length; i++) {
+                var c = cols[i];
+                if (!k || c.toUpperCase().indexOf(k) !== -1) {
+                    var uc = c.toUpperCase();
+                    if (!seen[uc]) { seen[uc] = true; results.push(c); }
+                }
+            }
+
+            // 从 query_data 的 fieldIdx 补充字段（如果已加载）
+            if (window.QUERY_DATA && window.QUERY_DATA.fieldIdx) {
+                var fi = window.QUERY_DATA.fieldIdx[selectedTable];
+                if (fi) {
+                    for (var fn in fi) {
+                        if (!k || fn.toUpperCase().indexOf(k) !== -1) {
+                            var uc = fn.toUpperCase();
+                            if (!seen[uc]) { seen[uc] = true; results.push(fn); }
+                        }
+                    }
+                }
+            }
+
+            results.sort(function(a,b){return a.toUpperCase().localeCompare(b.toUpperCase());});
+
+            if (results.length === 0) {
+                box.innerHTML = '<div class="sr-item" style="color:#64748b;cursor:default;">无匹配字段</div>';
+                box.style.display = 'block';
+                return;
+            }
+            box.style.display = 'block';
+            var html = '';
+            var limit = k ? 25 : 30;
+            for (var i = 0; i < Math.min(results.length, limit); i++) {
+                html += '<div class="sr-item" data-val="' + results[i].replace(/"/g, '&quot;') + '" onclick="selectField(this.dataset.val)"><div class="sr-name">' + results[i] + '</div></div>';
+            }
+            if (results.length > limit) {
+                html += '<div class="sr-item" style="color:#64748b;cursor:default;"><div class="sr-name">...还有 ' + (results.length - limit) + ' 个字段</div></div>';
+            }
+            box.innerHTML = html;
+        }
+
+        function selectField(fname) {
+            selectedField = fname;
+            document.getElementById('fieldInput').value = fname;
+            document.getElementById('fieldResults').style.display = 'none';
+        }
+
+        function executeQuery() {
+            if (!selectedTable) { alert('请选择表名'); return; }
+            if (!selectedField) { alert('请选择字段名'); return; }
+
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+            currentQuery = { table: selectedTable, field: selectedField };
+
+            ensureQueryData(function() {
+                setTimeout(function() {
+                    try {
+                        var gd = buildUpstreamGraph(selectedTable, selectedField);
+                        renderGraph(gd);
+                        renderDetails(gd);
+                    } catch (e) { console.error(e); alert('查询出错: ' + e.message); }
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('legend').classList.add('show');
+                    document.getElementById('controls').classList.add('show');
+                }, 50);
+            });
+        }
+
+        // ========== 核心：用预构建索引做BFS上游追溯 ==========
+        function buildUpstreamGraph(targetTable, targetField) {
+            var lineageIdx = window.QUERY_DATA.lineageIdx;
+            var fieldIdx = window.QUERY_DATA.fieldIdx;
+
+            var nodes = [], nodeMap = {}, links = [];
+            var visited = {}, depths = {};
+
+            function addNode(tbl) {
+                if (nodeMap[tbl]) return;
+                var layer = TABLE_LAYER_MAP[tbl] || 'config';
+                if (LAYER_ORDER.indexOf(layer) === -1) layer = 'config';
+                nodeMap[tbl] = { id: tbl, layer: layer, isTarget: (tbl === targetTable) };
+                nodes.push(nodeMap[tbl]);
+            }
+
+            var queue = [targetTable];
+            depths[targetTable] = 0;
+            visited[targetTable] = true;
+            addNode(targetTable);
+
+            while (queue.length > 0) {
+                var cur = queue.shift();
+                var cd = depths[cur] || 0;
+                if (cd > 15) continue;
+                var ups = lineageIdx[cur] || [];
+                for (var i = 0; i < ups.length; i++) {
+                    var srcTbl = ups[i].s;
+                    if (visited[srcTbl]) continue;
+                    visited[srcTbl] = true;
+                    depths[srcTbl] = cd + 1;
+                    queue.push(srcTbl);
+                    addNode(srcTbl);
+                    links.push({ source: srcTbl, target: cur, procedure: ups[i].p || '', edgeFields: [] });
+                }
+            }
+
+            // 给边填充字段信息
+            for (var li = 0; li < links.length; li++) {
+                var link = links[li];
+                if (link.target === targetTable) {
+                    // 目标边：取 fieldIdx 中 target_table + target_field 的映射
+                    var tfMap = (fieldIdx[targetTable] || {})[targetField] || [];
+                    link.edgeFields = tfMap.map(function(f) {
+                        return {
+                            sourceAlias: f.sa || '(直接值)',
+                            sourceColumn: f.sc || '',
+                            targetColumn: targetField,
+                            transform: f.tf || ''
+                        };
+                    });
+                } else {
+                    // 中间边：取 target_table 在该 procedure 下的所有字段映射
+                    var allFields = fieldIdx[link.target] || {};
+                    var ef = [];
+                    for (var fn in allFields) {
+                        var mappings = allFields[fn];
+                        for (var mi = 0; mi < mappings.length; mi++) {
+                            var m = mappings[mi];
+                            // procedure 匹配：字段映射中的 procedure 可能为空，不过滤
+                            if (!link.procedure || m.pr === link.procedure || !m.pr) {
+                                ef.push({
+                                    sourceAlias: m.sa || '?',
+                                    sourceColumn: m.sc || '',
+                                    targetColumn: fn
+                                });
+                            }
+                        }
+                    }
+                    link.edgeFields = ef.slice(0, 5);
+                }
+            }
+
+            return buildSwimLaneLayout(nodes, links, nodeMap, targetTable, targetField);
+        }
+
+        function buildSwimLaneLayout(nodes, links, nodeMap, tgtT, tgtF) {
+            var eS = {}, eT = {};
+            for (var i = 0; i < links.length; i++) {
+                var lk = links[i];
+                if (!eS[lk.source]) eS[lk.source] = [];
+                eS[lk.source].push(lk.target);
+                if (!eT[lk.target]) eT[lk.target] = [];
+                eT[lk.target].push(lk.source);
+            }
+
+            var inD = {};
+            for (var i = 0; i < nodes.length; i++) inD[nodes[i].id] = 0;
+            for (var i = 0; i < links.length; i++) inD[links[i].target] = (inD[links[i].target] || 0) + 1;
+
+            var q = [];
+            for (var i = 0; i < nodes.length; i++) if (inD[nodes[i].id] === 0) q.push(nodes[i].id);
+            var topo = [];
+            while (q.length > 0) {
+                var n = q.shift(); topo.push(n);
+                var o = eS[n] || [];
+                for (var j = 0; j < o.length; j++) { inD[o[j]]--; if (inD[o[j]] === 0) q.push(o[j]); }
+            }
+            for (var i = 0; i < nodes.length; i++) if (inD[nodes[i].id] > 0) topo.push(nodes[i].id);
+
+            var sl = {};
+            for (var i = 0; i < nodes.length; i++) sl[nodes[i].id] = 0;
+            var mi = nodes.length + 2;
+            for (var it = 0; it < mi; it++) {
+                var ch = false;
+                for (var j = 0; j < topo.length; j++) {
+                    var nId = topo[j], mu = -1, us = eT[nId] || [];
+                    for (var k = 0; k < us.length; k++) if (sl[us[k]] > mu) mu = sl[us[k]];
+                    var nl = mu + 1; if (nl > sl[nId]) { sl[nId] = nl; ch = true; }
+                }
+                if (!ch) break;
+            }
+
+            var ln = {};
+            for (var i = 0; i < nodes.length; i++) {
+                var n = nodes[i], lane = sl[n.id] || 0; n.swimLane = lane;
+                if (!ln[lane]) ln[lane] = []; ln[lane].push(n);
+            }
+            var li = Object.keys(ln).map(Number).sort(function(a, b) { return a - b; });
+            for (var i = 0; i < li.length; i++) {
+                ln[li[i]].sort(function(a, b) {
+                    var ra = LAYER_ORDER.indexOf(a.layer); if (ra === -1) ra = 99;
+                    var rb = LAYER_ORDER.indexOf(b.layer); if (rb === -1) rb = 99;
+                    if (ra !== rb) return ra - rb;
+                    return a.id.localeCompare(b.id);
+                });
+            }
+
+            return { nodes: nodes, nodeMap: nodeMap, links: links, swimLane: sl, laneNodes: ln, laneIndices: li, targetTable: tgtT, targetField: tgtF };
+        }
+
+        function renderGraph(data) {
+            g.selectAll('*').remove();
+            var nm = data.nodeMap, ln = data.laneNodes, li = data.laneIndices, alks = data.links;
+            var nW = 180, nH = 40, lW = 210, rH = 54, lG = 24, llH = 36;
+            var mxN = 0;
+            for (var i = 0; i < li.length; i++) if (ln[li[i]].length > mxN) mxN = ln[li[i]].length;
+            var tW = li.length * lW + (li.length - 1) * lG + 60;
+            var tH = mxN * rH + llH + 30;
+            var gW = Math.max(tW, wWidth), gH = Math.max(tH, wHeight);
+            svg.attr('width', gW).attr('height', gH);
+            var lsX = 30, rsY = llH + 10;
+            var lc = ['#22c55e','#0ea5e9','#6366f1','#a855f7','#f97316','#ef4444','#64748b','#f59e0b','#10b981','#8b5cf6','#06b6d4','#d946ef'];
+
+            // 泳道背景
+            for (var ci = 0; ci < li.length; ci++) {
+                var lane = li[ci], cx = lsX + ci * (lW + lG), ch = mxN * rH, col = lc[ci % lc.length];
+                g.append('rect').attr('x', cx).attr('y', rsY).attr('width', lW).attr('height', ch).attr('fill', col).attr('opacity', 0.12).attr('rx', 8);
+                var cn = ln[lane] || [], isL = (lane === li[li.length - 1]), ht = '第' + (lane + 1) + '层';
+                if (isL) ht += ' (目标)';
+                g.append('text').attr('x', cx + lW / 2).attr('y', rsY - 8).attr('fill', col).attr('font-size', '12px').attr('font-weight', '600').attr('text-anchor', 'middle').text(ht);
+                g.append('text').attr('x', cx + lW - 4).attr('y', rsY - 8).attr('fill', col).attr('opacity', 0.4).attr('font-size', '10px').attr('text-anchor', 'end').text('(' + cn.length + ')');
+            }
+
+            // 节点
+            var np = {};
+            for (var ci = 0; ci < li.length; ci++) {
+                var lane = li[ci], cx = lsX + ci * (lW + lG), cn = ln[lane] || [];
+                for (var ri = 0; ri < cn.length; ri++) {
+                    var nd = cn[ri], nx = cx + (lW - nW) / 2, ny = rsY + ri * rH;
+                    nd._x = nx; nd._y = ny; np[nd.id] = { x: nx, y: ny };
+                    var isT = nd.isTarget, inf = LAYER_INFO[nd.layer] || LAYER_INFO['config'];
+                    var ng = g.append('g').attr('transform', 'translate(' + nx + ',' + ny + ')');
+                    ng.append('rect').attr('width', nW).attr('height', nH).attr('fill', isT ? '#f59e0b' : '#ffffff').attr('stroke', isT ? '#fff' : inf.color).attr('stroke-width', isT ? 2.5 : 1.5).attr('rx', 8).attr('ry', 8)
+                        .on('click', (function(n, d) { return function() { showInfo(n, d); }; })(nd, data));
+                    if (isT) ng.append('rect').attr('x', -4).attr('y', -4).attr('width', nW + 8).attr('height', nH + 8).attr('fill', 'none').attr('stroke', '#f59e0b').attr('stroke-width', 1.5).attr('rx', 10).attr('ry', 10).attr('opacity', 0.6);
+                    var sn = nd.id.split('.').pop(), fs = sn.length > 18 ? 9 : sn.length > 12 ? 10 : 11, dt = sn.length > 22 ? sn.substring(0, 22) + '..' : sn;
+                    ng.append('text').attr('x', nW / 2).attr('y', nH / 2 + 1).attr('fill', isT ? '#0f172a' : '#1e293b').attr('font-size', fs + 'px').attr('font-weight', isT ? '700' : '500').attr('text-anchor', 'middle').text(dt);
+                    if (isT) ng.append('text').attr('x', nW - 6).attr('y', 12).attr('fill', '#fff').attr('font-size', '8px').attr('text-anchor', 'end').text('.' + data.targetField);
+                }
+            }
+
+            // 连线
+            for (var i = 0; i < alks.length; i++) {
+                var lk = alks[i], sp = np[lk.source], tp = np[lk.target];
+                if (!sp || !tp) continue;
+                var snm = nm[lk.source], tnm = nm[lk.target];
+                if (!snm || !tnm) continue;
+                var isTT = tnm.isTarget;
+                var col = isTT ? '#f59e0b' : '#94a3b8';
+                var sw = isTT ? 2.5 : 1.5;
+                var op = isTT ? 0.9 : 0.45;
+                var ar = isTT ? 'url(#arrow-target)' : 'url(#arrow)';
+                var x1 = sp.x + nW, y1 = sp.y + nH / 2, x2 = tp.x, y2 = tp.y + nH / 2;
+                if (Math.abs(y1 - y2) < 5 && x2 > x1) {
+                    g.append('line').attr('x1', x1).attr('y1', y1).attr('x2', x2).attr('y2', y2).attr('stroke', col).attr('stroke-width', sw).attr('opacity', op).attr('marker-end', ar);
+                } else {
+                    var mx = (x1 + x2) / 2, path = 'M' + x1 + ',' + y1 + ' C' + mx + ',' + y1 + ' ' + mx + ',' + y2 + ' ' + x2 + ',' + y2;
+                    g.append('path').attr('d', path).attr('stroke', col).attr('stroke-width', sw).attr('opacity', op).attr('fill', 'none').attr('marker-end', ar);
+                }
+                // 目标边上标注字段来源
+                if (lk.edgeFields && lk.edgeFields.length > 0 && isTT) {
+                    var mxx = (x1 + x2) / 2, my = (y1 + y2) / 2 - 6, fl = '';
+                    for (var fi = 0; fi < Math.min(lk.edgeFields.length, 3); fi++) fl += (fi > 0 ? ', ' : '') + lk.edgeFields[fi].sourceColumn;
+                    if (lk.edgeFields.length > 3) fl += '+';
+                    g.append('text').attr('x', mxx).attr('y', my).attr('fill', '#f59e0b').attr('font-size', '8px').attr('text-anchor', 'middle').attr('opacity', 0.85).text(fl);
+                }
+            }
+
+            renderLegend(data);
+            setTimeout(function() { fitView(); }, 300);
+        }
+
+        function renderLegend(data) {
+            var ls = {};
+            for (var i = 0; i < data.nodes.length; i++) ls[data.nodes[i].layer] = true;
+            var el = document.getElementById('legend'), h = '';
+            for (var i = 0; i < LAYER_ORDER.length; i++) {
+                var l = LAYER_ORDER[i];
+                if (ls[l]) {
+                    var c = 0;
+                    for (var j = 0; j < data.nodes.length; j++) if (data.nodes[j].layer === l) c++;
+                    h += '<div class="legend-item"><div class="legend-dot" style="background:' + LAYER_INFO[l].color + '"></div>' + LAYER_INFO[l].label + ' (' + c + ')</div>';
+                }
+            }
+            h += '<div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>目标表·' + data.targetField + '</div>';
+            el.innerHTML = h;
+        }
+
+        function fitView() {
+            try {
+                var b = g.node().getBBox();
+                if (b.width === 0 || b.height === 0) return;
+                var c = document.querySelector('.graph-container'), cw = c.clientWidth, ch = c.clientHeight;
+                var pad = 60, s = Math.min(cw / (b.width + pad * 2), ch / (b.height + pad * 2), 1.2);
+                var tx = (cw - b.width * s) / 2 - b.x * s + pad * s / 2, ty = (ch - b.height * s) / 2 - b.y * s + pad * s / 2;
+                svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(s));
+            } catch (e) {}
+        }
+
+        function showInfo(node, data) {
+            var title = node.id.split('.').pop() + (node.isTarget ? '.' + data.targetField : '');
+            document.getElementById('panelTitle').textContent = title;
+            var cmt = TABLE_COMMENT_MAP[node.id] || '', layer = LAYER_INFO[node.layer] ? LAYER_INFO[node.layer].label : node.layer;
+            var lane = node.swimLane !== undefined ? node.swimLane : '?';
+            var h = '<div class="info-sec"><div class="s-title">数据层</div><div class="s-content"><span class="i-tag">' + layer + '</span></div></div>';
+            h += '<div class="info-sec"><div class="s-title">加工泳道</div><div class="s-content"><span class="i-tag">第' + (lane + 1) + '层</span></div></div>';
+            if (node.isTarget) h += '<div class="info-sec"><div class="s-title">查询目标</div><div class="s-content"><span class="i-tag" style="background:#f59e0b;color:#f8fafc">' + data.targetField + '</span></div></div>';
+            if (cmt) h += '<div class="info-sec"><div class="s-title">表说明</div><div class="s-content">' + cmt + '</div></div>';
+
+            var ups = {}, procs = {};
+            for (var i = 0; i < data.links.length; i++) {
+                var l = data.links[i];
+                if (l.target === node.id) ups[l.source] = true;
+                if (l.procedure) procs[l.procedure] = true;
+            }
+            var uk = Object.keys(ups), pk = Object.keys(procs);
+            if (uk.length > 0) {
+                var uh = '';
+                for (var i = 0; i < uk.length; i++) {
+                    uh += '<span class="i-tag" data-tbl="' + uk[i].replace(/"/g, '&quot;') + '" onclick="selectAndQueryTable(this.getAttribute(\'data-tbl\'))">' + uk[i].split('.').pop() + '</span>';
+                }
+                h += '<div class="info-sec"><div class="s-title">上游表(' + uk.length + ')</div><div class="s-content">' + uh + '</div></div>';
+            }
+            if (pk.length > 0) {
+                var ph = '';
+                for (var i = 0; i < pk.length; i++) ph += '<span class="i-tag">' + pk[i].split('.').pop() + '</span>';
+                h += '<div class="info-sec"><div class="s-title">存储过程</div><div class="s-content">' + ph + '</div></div>';
+            }
+
+            if (node.isTarget) {
+                for (var i = 0; i < data.links.length; i++) {
+                    var l = data.links[i];
+                    if (l.target === node.id && l.edgeFields && l.edgeFields.length > 0) {
+                        h += '<div class="info-sec"><div class="s-title">字段溯源(' + data.targetField + ' &larr; ' + l.edgeFields.length + '个来源)</div><div class="s-content">';
+                        for (var fi = 0; fi < l.edgeFields.length; fi++) {
+                            var ef = l.edgeFields[fi];
+                            h += '<div style="padding:3px 0;font-size:11px;"><span class="i-tag" style="background:#22c55e">' + ef.sourceAlias + '.' + ef.sourceColumn + '</span> &rarr; <span class="i-tag" style="background:#f59e0b;color:#f8fafc">' + ef.targetColumn + '</span></div>';
+                        }
+                        h += '</div></div>';
+                    }
+                }
+            }
+            document.getElementById('panelContent').innerHTML = h;
+            document.getElementById('infoPanel').classList.add('show');
+        }
+
+        function closePanel() { document.getElementById('infoPanel').classList.remove('show'); }
+
+        function selectAndQueryTable(tbl) {
+            selectedTable = tbl;
+            document.getElementById('tableInput').value = tbl.split('.').pop();
+            document.getElementById('fieldInput').focus();
+            closePanel();
+        }
+
+        function renderDetails(data) {
+            var bar = document.getElementById('resultStats');
+            bar.classList.add('show');
+            bar.innerHTML = '<div class="stat-row"><span class="stat-label">查询目标</span><span class="stat-value">' + data.targetTable.split('.').pop() + '.' + data.targetField + '</span></div>' +
+                '<div class="stat-row"><span class="stat-label">涉及表</span><span class="stat-value">' + data.nodes.length + '张</span></div>' +
+                '<div class="stat-row"><span class="stat-label">血缘关系</span><span class="stat-value">' + data.links.length + '条</span></div>' +
+                '<div class="stat-row"><span class="stat-label">泳道数</span><span class="stat-value">' + data.laneIndices.length + '层</span></div>';
+            var area = document.getElementById('detailList'), h = '';
+
+            for (var ci = 0; ci < data.laneIndices.length; ci++) {
+                var lane = data.laneIndices[ci], nds = data.laneNodes[lane] || [];
+                var isL = (lane === data.laneIndices[data.laneIndices.length - 1]);
+                var lbl = '第' + (lane + 1) + '层' + (isL ? ' (目标层)' : '');
+                h += '<div class="detail-section"><div class="detail-title">' + lbl + ' (' + nds.length + ')</div>';
+                for (var ri = 0; ri < Math.min(nds.length, 50); ri++) {
+                    var n = nds[ri], cls = n.isTarget ? 'target' : 'source';
+                    h += '<div class="detail-item ' + cls + '" data-tbl="' + n.id.replace(/"/g, '&quot;') + '" onclick="selectAndQueryTable(this.getAttribute(\'data-tbl\'))"><div class="d-name">' + n.id.split('.').pop() + (n.isTarget ? '.' + data.targetField : '') + '</div><div class="d-meta">' + (LAYER_INFO[n.layer] ? LAYER_INFO[n.layer].label : n.layer) + '</div></div>';
+                }
+                if (nds.length > 50) h += '<div class="detail-item"><div class="d-name">...还有' + (nds.length - 50) + '个</div></div>';
+                h += '</div>';
+            }
+
+            h += '<div class="detail-section"><div class="detail-title">字段溯源详情</div>';
+            var hasD = false;
+            for (var i = 0; i < data.links.length; i++) {
+                var l = data.links[i];
+                if (l.edgeFields && l.edgeFields.length > 0) {
+                    hasD = true;
+                    var ss = l.source.split('.').pop(), ts = l.target.split('.').pop();
+                    h += '<div class="detail-item proc"><div class="d-name">' + ss + ' &rarr; ' + ts + (l.target === data.targetTable ? ' (' + data.targetField + ')' : '') + '</div><div class="d-meta">';
+                    for (var fi = 0; fi < l.edgeFields.length; fi++) {
+                        var ef = l.edgeFields[fi];
+                        h += '<span style="color:#22c55e">' + ef.sourceAlias + '.' + ef.sourceColumn + '</span> &rarr; <span style="color:#f59e0b">' + ef.targetColumn + '</span>' + (fi < l.edgeFields.length - 1 ? ' | ' : '');
+                    }
+                    h += '</div></div>';
+                }
+            }
+            if (!hasD) h += '<div class="detail-item" style="color:#64748b"><div class="d-name">无字段映射详情</div><div class="d-meta">此表间未解析出字段映射</div></div>';
+            h += '</div>';
+            area.innerHTML = h;
+        }
+
+        function resetZoom() { svg.transition().duration(500).call(zoom.transform, d3.zoomIdentity); }
+        function zoomIn() { svg.transition().duration(300).call(zoom.scaleBy, 1.4); }
+        function zoomOut() { svg.transition().duration(300).call(zoom.scaleBy, 0.7); }
+    </script>
+</body>
+</html>

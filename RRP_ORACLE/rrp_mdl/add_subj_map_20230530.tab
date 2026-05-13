@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.ADD_SUBJ_MAP_20230530
+(
+  subj_id            VARCHAR2(200),
+  subj_nm            VARCHAR2(500),
+  up_subj_id         VARCHAR2(200),
+  up_subj_nm         VARCHAR2(500),
+  subj_lvl           INTEGER,
+  subj_char_cd       VARCHAR2(10),
+  in_out_tab_flg     VARCHAR2(10),
+  blng_biz_lrg_cl_cd VARCHAR2(200),
+  blng_biz_lrg_cl    VARCHAR2(200),
+  blng_biz_sub_cl_cd VARCHAR2(200),
+  blng_biz_sub_cl    VARCHAR2(200),
+  jg_biz_sub_cl_cd   VARCHAR2(200),
+  is_valid           VARCHAR2(1)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.subj_id
+  is '科目编号';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.subj_nm
+  is '核算科目名称';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.up_subj_id
+  is '上级科目编号';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.up_subj_nm
+  is '上级科目名称';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.subj_lvl
+  is '科目级次';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.subj_char_cd
+  is '科目余额方向代码';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.in_out_tab_flg
+  is '表内外标志';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.blng_biz_lrg_cl_cd
+  is '归属业务大类代码';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.blng_biz_lrg_cl
+  is '归属业务大类';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.blng_biz_sub_cl_cd
+  is '归属业务子类代码';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.blng_biz_sub_cl
+  is '归属业务子类';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.jg_biz_sub_cl_cd
+  is '监管归属业务子类代码';
+comment on column RRP_MDL.ADD_SUBJ_MAP_20230530.is_valid
+  is '是否通过验证：AML0042';
+

@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.O_IOL_NFSS_TBDICT
+(
+  end_dt      DATE,
+  id_mark     VARCHAR2(10),
+  kernal_flag VARCHAR2(12),
+  prompt      VARCHAR2(250),
+  start_dt    DATE,
+  belong_type VARCHAR2(24),
+  val         VARCHAR2(384),
+  key_name    VARCHAR2(250),
+  hs_key      VARCHAR2(24)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NFSS_TBDICT
+  is '基金数据字典';
+comment on column RRP_MDL.O_IOL_NFSS_TBDICT.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_NFSS_TBDICT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NFSS_TBDICT.kernal_flag
+  is '未知';
+comment on column RRP_MDL.O_IOL_NFSS_TBDICT.prompt
+  is '未知';
+comment on column RRP_MDL.O_IOL_NFSS_TBDICT.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_NFSS_TBDICT.belong_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_NFSS_TBDICT.val
+  is '未知';
+comment on column RRP_MDL.O_IOL_NFSS_TBDICT.key_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_NFSS_TBDICT.hs_key
+  is '未知';
+

@@ -1,0 +1,63 @@
+﻿create table RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501
+(
+  party_id       VARCHAR2(60),
+  lp_id          VARCHAR2(60),
+  cntpty_id      VARCHAR2(60),
+  dept_id        VARCHAR2(60),
+  cn_name        VARCHAR2(500),
+  en_name        VARCHAR2(500),
+  cn_abbr        VARCHAR2(500),
+  en_abbr        VARCHAR2(500),
+  fx_id          VARCHAR2(60),
+  cust_id        VARCHAR2(100),
+  create_dt      DATE,
+  update_dt      DATE,
+  etl_dt         DATE,
+  id_mark        VARCHAR2(10),
+  src_table_name VARCHAR2(100),
+  job_cd         VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501
+  is '外汇资金交易对手';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.dept_id
+  is '部门编号';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.cn_name
+  is '中文名称';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.en_name
+  is '英文名称';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.cn_abbr
+  is '中文简称';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.en_abbr
+  is '英文简称';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.fx_id
+  is '外汇编号';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_PTY_FX_CAP_CNTPTY_BAK_20230501.etl_timestamp
+  is 'ETL处理时间戳';
+

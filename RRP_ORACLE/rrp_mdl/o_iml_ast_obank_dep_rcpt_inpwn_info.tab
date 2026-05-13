@@ -1,0 +1,84 @@
+﻿create table RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO
+(
+  asset_id           VARCHAR2(60),
+  lp_id              VARCHAR2(60),
+  vouch_id           VARCHAR2(100),
+  aval_amt           NUMBER(30,2),
+  bank_name          VARCHAR2(150),
+  bank_rgst_cd       VARCHAR2(30),
+  ext_rating_dt      DATE,
+  ext_rating_rest_cd VARCHAR2(30),
+  effect_dt          DATE,
+  exp_dt             DATE,
+  dep_term           NUMBER(30,2),
+  int_rat            NUMBER(30,2),
+  pric_amt           NUMBER(30,2),
+  curr_cd            VARCHAR2(30),
+  create_dt          DATE,
+  update_dt          DATE,
+  etl_dt             DATE,
+  id_mark            VARCHAR2(10),
+  src_table_name     VARCHAR2(100),
+  job_cd             VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6),
+  remark             VARCHAR2(4000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO
+  is '他行存单质押信息';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.asset_id
+  is '资产编号';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.vouch_id
+  is '凭证编号';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.aval_amt
+  is '可用金额';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.bank_name
+  is '银行名称';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.bank_rgst_cd
+  is '银行注册地代码';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.ext_rating_dt
+  is '外部评级日期';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.ext_rating_rest_cd
+  is '外部评级结果代码';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.effect_dt
+  is '生效日期';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.dep_term
+  is '存期';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.int_rat
+  is '利率';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.pric_amt
+  is '本金金额';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IML_AST_OBANK_DEP_RCPT_INPWN_INFO.remark
+  is '备注';
+

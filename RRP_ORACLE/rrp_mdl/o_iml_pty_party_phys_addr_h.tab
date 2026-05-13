@@ -1,0 +1,87 @@
+﻿create table RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H
+(
+  party_id            VARCHAR2(60),
+  lp_id               VARCHAR2(60),
+  src_sys_cd          VARCHAR2(200),
+  phys_addr_type_cd   VARCHAR2(20),
+  seq_num             VARCHAR2(90),
+  start_dt            DATE,
+  cont_addr           VARCHAR2(750),
+  zip_cd              VARCHAR2(90),
+  tel_num             VARCHAR2(90),
+  fax_num             VARCHAR2(90),
+  cty_rg_cd           VARCHAR2(10),
+  phys_addr           VARCHAR2(750),
+  dist_cd             VARCHAR2(30),
+  addr_status_type_cd VARCHAR2(30),
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  fc_flg              VARCHAR2(30),
+  prov_cd             VARCHAR2(30),
+  city_cd             VARCHAR2(30),
+  rg_county_cd        VARCHAR2(30),
+  street_name         VARCHAR2(750),
+  job_cd              VARCHAR2(10),
+  src_table_name      VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H
+  is '当事人物理地址历史';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.src_sys_cd
+  is '源系统代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.phys_addr_type_cd
+  is '物理地址类型代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.seq_num
+  is '序号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.cont_addr
+  is '联系地址';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.zip_cd
+  is '邮政编码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.tel_num
+  is '电话号码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.fax_num
+  is '传真号码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.cty_rg_cd
+  is '国家和地区代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.phys_addr
+  is '物理地址';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.dist_cd
+  is '行政区域代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.addr_status_type_cd
+  is '地址状态类型代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.fc_flg
+  is '首选标志';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.prov_cd
+  is '省代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.city_cd
+  is '市代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.rg_county_cd
+  is '区县代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.street_name
+  is '街道名称';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_PHYS_ADDR_H.src_table_name
+  is '源表名称';
+

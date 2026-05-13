@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.MRPT_TD_SPVCAP
+(
+  spv      VARCHAR2(15) not null,
+  cap      VARCHAR2(18) not null,
+  sys_name VARCHAR2(90) not null,
+  remark   VARCHAR2(90)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.MRPT_TD_SPVCAP
+  is '过程临时表';
+comment on column RRP_MDL.MRPT_TD_SPVCAP.spv
+  is '天旦路径图，有APP1，APP2等等';
+comment on column RRP_MDL.MRPT_TD_SPVCAP.cap
+  is '对应的节点编号，有CAP1，CAP2等等';
+comment on column RRP_MDL.MRPT_TD_SPVCAP.sys_name
+  is '所属系统名称';
+comment on column RRP_MDL.MRPT_TD_SPVCAP.remark
+  is '节点名称';
+

@@ -1,0 +1,19 @@
+﻿create table RRP_MDL.XZY_T_EXPORT
+(
+  owner VARCHAR2(30),
+  name  VARCHAR2(64),
+  type  VARCHAR2(64)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

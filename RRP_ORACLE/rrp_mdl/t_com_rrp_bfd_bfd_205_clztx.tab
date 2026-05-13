@@ -1,0 +1,46 @@
+﻿create table RRP_MDL.T_COM_RRP_BFD_BFD_205_CLZTX
+(
+  rid                 VARCHAR2(50) not null,
+  fin_org_no          VARCHAR2(18),
+  org_no              VARCHAR2(30),
+  fin_org_area_cd     VARCHAR2(6),
+  bill_code           VARCHAR2(100),
+  bill_type           VARCHAR2(2),
+  bill_medium         VARCHAR2(2),
+  draw_dt             VARCHAR2(10),
+  draw_due_dt         VARCHAR2(10),
+  tx_dt               VARCHAR2(10),
+  back_dt             VARCHAR2(10),
+  tr_dt               VARCHAR2(10),
+  drawer_name         VARCHAR2(200),
+  drawer_id_type      VARCHAR2(3),
+  drawer_id_no        VARCHAR2(60),
+  acceptor_name       VARCHAR2(200),
+  acceptor_id_type    VARCHAR2(3),
+  acceptor_id_no      VARCHAR2(60),
+  curr_cd             VARCHAR2(3),
+  bill_amt            NUMBER(20,2),
+  bill_bal            NUMBER(20,2),
+  ztx_rate            NUMBER(10,5),
+  ztx_curr_cd         VARCHAR2(3),
+  ztx_amt             NUMBER(20,2),
+  ztx_bill_bal        NUMBER(20,2),
+  data_dt             VARCHAR2(10),
+  dept_no             VARCHAR2(20),
+  issued_no           VARCHAR2(20),
+  rpt_org_no          VARCHAR2(30),
+  data_ources         VARCHAR2(2),
+  data_modify         VARCHAR2(2),
+  force_sub_sts       VARCHAR2(1),
+  force_sub_reason    VARCHAR2(200),
+  rule_name           VARCHAR2(2000),
+  rule_id             VARCHAR2(1000),
+  orig_acceptor_id_no VARCHAR2(60),
+  orig_drawer_id_no   VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

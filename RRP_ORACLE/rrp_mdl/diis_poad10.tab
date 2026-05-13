@@ -1,0 +1,91 @@
+﻿create table RRP_MDL.DIIS_POAD10
+(
+  rid         VARCHAR2(100) not null,
+  cust_seq    NUMBER(15),
+  code        VARCHAR2(100),
+  name        VARCHAR2(400),
+  type        VARCHAR2(4),
+  pro_amt     NUMBER(30,2),
+  pro_nw_amt  NUMBER(30,2),
+  agg_act     VARCHAR2(2),
+  agg_no      VARCHAR2(100),
+  note        VARCHAR2(600),
+  data_dt     VARCHAR2(20) not null,
+  org_no      VARCHAR2(40),
+  curr_cd     VARCHAR2(6) default 'CNY',
+  dept_no     VARCHAR2(60),
+  issued_no   VARCHAR2(40),
+  rpt_org_no  VARCHAR2(40),
+  data_ources VARCHAR2(4),
+  data_modify VARCHAR2(4),
+  is_seq      VARCHAR2(2),
+  subj_id     VARCHAR2(60)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('1900-01-01')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220331 values ('2022-03-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220630 values ('2022-06-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.DIIS_POAD10
+  is '理财产品信息－存续';
+comment on column RRP_MDL.DIIS_POAD10.rid
+  is '数据主键';
+comment on column RRP_MDL.DIIS_POAD10.cust_seq
+  is '理财产品序号';
+comment on column RRP_MDL.DIIS_POAD10.code
+  is '产品编码';
+comment on column RRP_MDL.DIIS_POAD10.name
+  is '产品名称';
+comment on column RRP_MDL.DIIS_POAD10.type
+  is '产品类型';
+comment on column RRP_MDL.DIIS_POAD10.pro_amt
+  is '产品金额';
+comment on column RRP_MDL.DIIS_POAD10.pro_nw_amt
+  is '产品净值';
+comment on column RRP_MDL.DIIS_POAD10.agg_act
+  is '是否为集合理财产品';
+comment on column RRP_MDL.DIIS_POAD10.agg_no
+  is '集合理财产品编码';
+comment on column RRP_MDL.DIIS_POAD10.note
+  is '备注';
+comment on column RRP_MDL.DIIS_POAD10.data_dt
+  is '数据日期';
+comment on column RRP_MDL.DIIS_POAD10.org_no
+  is '所属机构';
+comment on column RRP_MDL.DIIS_POAD10.curr_cd
+  is '币种';
+comment on column RRP_MDL.DIIS_POAD10.dept_no
+  is '部门编号';
+comment on column RRP_MDL.DIIS_POAD10.issued_no
+  is '填报机构';
+comment on column RRP_MDL.DIIS_POAD10.rpt_org_no
+  is '报送机构号';
+comment on column RRP_MDL.DIIS_POAD10.data_ources
+  is '数据来源';
+comment on column RRP_MDL.DIIS_POAD10.data_modify
+  is '数据修改';
+comment on column RRP_MDL.DIIS_POAD10.is_seq
+  is '是否合计项';
+comment on column RRP_MDL.DIIS_POAD10.subj_id
+  is '科目编号';
+alter table RRP_MDL.DIIS_POAD10
+  add primary key (DATA_DT, RID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

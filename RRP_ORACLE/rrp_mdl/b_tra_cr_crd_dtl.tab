@@ -1,0 +1,161 @@
+﻿create table RRP_MDL.B_TRA_CR_CRD_DTL
+(
+  data_dt            CHAR(8) not null,
+  lgl_rep_id         VARCHAR2(200),
+  tra_seq_no         VARCHAR2(200) not null,
+  crd_no             VARCHAR2(200),
+  acc_id             VARCHAR2(200),
+  org_id             VARCHAR2(200),
+  subj_id            VARCHAR2(200),
+  corp_ind_flg       CHAR(1),
+  cur                CHAR(3),
+  id_no              VARCHAR2(100),
+  tra_typ            VARCHAR2(10),
+  onln_offln_flg     CHAR(1),
+  cash_remit_typ     VARCHAR2(10),
+  cash_trf_flg       CHAR(1),
+  tra_dr_cr_flg      CHAR(1),
+  tra_amt            NUMBER(30,2),
+  cust_comm_amt      NUMBER(30,2),
+  tra_val_dt         CHAR(8),
+  tra_dt             CHAR(8),
+  tra_bill_dt        CHAR(8),
+  opp_acc            VARCHAR2(200),
+  opp_acc_nm         VARCHAR2(500),
+  mer_id             VARCHAR2(200),
+  mer_nm             VARCHAR2(500),
+  mer_mcc_cd         VARCHAR2(200),
+  instm_pay_flg      CHAR(1),
+  instm_tra_typ      VARCHAR2(10),
+  tra_chan           VARCHAR2(10),
+  tra_tm             TIMESTAMP(6),
+  isu_bank_comm_rate NUMBER(20,6),
+  mer_ctry_cd        VARCHAR2(10),
+  mer_rgn_area_cd    VARCHAR2(10),
+  acct_dt            CHAR(8),
+  tra_org_id         VARCHAR2(200),
+  wrk_stn_char       VARCHAR2(10),
+  wrk_stn_id         VARCHAR2(200),
+  abstr              VARCHAR2(2000),
+  remarks            VARCHAR2(2000),
+  dstr_retrv_typ     VARCHAR2(10),
+  tra_exp_dt         CHAR(8),
+  cust_id            VARCHAR2(200),
+  od_biz_typ         VARCHAR2(10),
+  instm_bill_id      VARCHAR2(200),
+  dept_line          VARCHAR2(500),
+  data_src           VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_TRA_CR_CRD_DTL
+  is '信用卡交易流水';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_seq_no
+  is '交易流水号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.crd_no
+  is '卡号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.acc_id
+  is '账户编号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.subj_id
+  is '科目编号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.corp_ind_flg
+  is '对公对私标志';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.cur
+  is '币种';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.id_no
+  is '身份证号码';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_typ
+  is '交易类型';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.onln_offln_flg
+  is '线上线下标志';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.cash_remit_typ
+  is '钞汇类型';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.cash_trf_flg
+  is '现转标志';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_dr_cr_flg
+  is '交易借贷标志';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_amt
+  is '交易金额';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.cust_comm_amt
+  is '客户手续费金额';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_val_dt
+  is '交易起息日期';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_dt
+  is '交易发生日期';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_bill_dt
+  is '交易账单日期';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.opp_acc
+  is '对方账号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.opp_acc_nm
+  is '对方户名';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.mer_id
+  is '商户编号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.mer_nm
+  is '商户名称';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.mer_mcc_cd
+  is '商户MCC码';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.instm_pay_flg
+  is '分期付款标志';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.instm_tra_typ
+  is '分期交易类型';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_chan
+  is '交易渠道';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_tm
+  is '交易时间';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.isu_bank_comm_rate
+  is '发卡行手续费率';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.mer_ctry_cd
+  is '商户国家代码';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.mer_rgn_area_cd
+  is '商户地区行政区划代码';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.acct_dt
+  is '记账日期';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.wrk_stn_char
+  is '工作站性质';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.wrk_stn_id
+  is '工作站编号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.abstr
+  is '摘要';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.remarks
+  is '备注';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.dstr_retrv_typ
+  is '发放收回类型';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.tra_exp_dt
+  is '交易到期日期';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.cust_id
+  is '客户编号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.od_biz_typ
+  is '透支业务类型';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.instm_bill_id
+  is '分期账单编号';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_TRA_CR_CRD_DTL.data_src
+  is '数据来源';
+alter table RRP_MDL.B_TRA_CR_CRD_DTL
+  add constraint PK_B_TRA_CR_CRD_DTL primary key (DATA_DT, TRA_SEQ_NO)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

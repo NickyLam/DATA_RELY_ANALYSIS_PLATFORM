@@ -1,0 +1,15 @@
+﻿create table RRP_MDL.O_IOL_ALBS_BLS_TMP
+(
+  customer_no VARCHAR2(32),
+  crt_date    CHAR(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_IOL_ALBS_BLS_TMP.customer_no
+  is 'Ecif客户编号';
+comment on column RRP_MDL.O_IOL_ALBS_BLS_TMP.crt_date
+  is '检索日期：yyyymmdd';
+

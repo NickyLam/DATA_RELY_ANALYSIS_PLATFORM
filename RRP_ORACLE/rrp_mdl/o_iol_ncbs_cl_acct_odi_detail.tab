@@ -1,0 +1,129 @@
+﻿create table RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL
+(
+  client_no             VARCHAR2(16),
+  internal_key          NUMBER(15),
+  user_id               VARCHAR2(8),
+  company               VARCHAR2(20),
+  int_accrued_diff      NUMBER(15,10),
+  narrative             VARCHAR2(400),
+  stage_no              NUMBER(5),
+  tax_type              VARCHAR2(2),
+  int_class             VARCHAR2(5),
+  calc_begin_date       DATE,
+  calc_end_date         DATE,
+  last_accrual_date     DATE,
+  last_change_date      DATE,
+  last_cycle_date       DATE,
+  next_cycle_date       DATE,
+  tran_timestamp        VARCHAR2(26),
+  int_accrued           NUMBER(17,2),
+  int_accrued_calc_ctd  NUMBER(25,10),
+  int_accrued_ctd       NUMBER(17,2),
+  int_adj               NUMBER(17,2),
+  int_adj_ctd           NUMBER(17,2),
+  int_adj_prev          NUMBER(17,2),
+  int_amt               NUMBER(17,2),
+  int_posted            NUMBER(17,2),
+  int_posted_ctd        NUMBER(17,2),
+  tax_posted            NUMBER(17,2),
+  tax_posted_ctd        NUMBER(17,2),
+  tax_rate              NUMBER(15,8),
+  wrn_amt               NUMBER(17,2),
+  int_accrued_prev      NUMBER(17,2),
+  last_bal_upd_date     DATE,
+  last_int_accrued_prev NUMBER(17,2),
+  last_int_adj_prev     NUMBER(17,2),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL
+  is '复利计息表';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.internal_key
+  is '账户内部键值';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.user_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_accrued_diff
+  is '计提金额差额';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.narrative
+  is '摘要';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.stage_no
+  is '期次';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.tax_type
+  is '税种';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_class
+  is '利息分类';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.calc_begin_date
+  is '利息计算起始日';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.calc_end_date
+  is '利息计算截止日';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.last_accrual_date
+  is '上一利息计提日';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.last_change_date
+  is '最后修改日期';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.last_cycle_date
+  is '上一结息日';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.next_cycle_date
+  is '下一结息日';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_accrued
+  is '累计计提';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_accrued_calc_ctd
+  is '计提日计提实际金额';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_accrued_ctd
+  is '计提日计提利息';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_adj
+  is '利息调增金额';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_adj_ctd
+  is '计提日利息调整';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_adj_prev
+  is '上日利息调整(累计)';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_amt
+  is '利息金额';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_posted
+  is '结息金额';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_posted_ctd
+  is '结息日利息金额';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.tax_posted
+  is '利息税累计金额';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.tax_posted_ctd
+  is '结息日利息税';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.tax_rate
+  is '税率';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.wrn_amt
+  is '贷款核销本金';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.int_accrued_prev
+  is '上日累计计提利息|上日累计计提利息';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.last_bal_upd_date
+  is '上次动户日期';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.last_int_accrued_prev
+  is '上上日累计计提利息';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.last_int_adj_prev
+  is '上上日利息累计计提调整';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NCBS_CL_ACCT_ODI_DETAIL.etl_timestamp
+  is 'ETL处理时间戳';
+

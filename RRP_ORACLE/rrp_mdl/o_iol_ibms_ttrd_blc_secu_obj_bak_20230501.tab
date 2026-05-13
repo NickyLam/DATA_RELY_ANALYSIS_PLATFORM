@@ -1,0 +1,72 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501
+(
+  obj_id           VARCHAR2(30),
+  tsk_id           VARCHAR2(30),
+  beg_date         CHAR(10),
+  end_date         CHAR(10),
+  set_date         CHAR(10),
+  ext_secu_acct_id VARCHAR2(20),
+  secu_acct_id     VARCHAR2(30),
+  trade_grp_id     VARCHAR2(20),
+  i_code           VARCHAR2(80),
+  a_type           VARCHAR2(20),
+  m_type           VARCHAR2(20),
+  blc_type         NUMBER(8),
+  volume           NUMBER(31,8),
+  freeze_volume    NUMBER(31,8),
+  usable_volume    NUMBER(31,8),
+  open_time        CHAR(19),
+  update_time      CHAR(19),
+  p_obj_id         VARCHAR2(30),
+  volume_termcur   NUMBER(31,8),
+  custom_dim1      VARCHAR2(200),
+  etl_dt           DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.obj_id
+  is '对象ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.tsk_id
+  is '任务ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.beg_date
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.end_date
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.set_date
+  is '结算日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.ext_secu_acct_id
+  is '外部证券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.secu_acct_id
+  is '内部证券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.trade_grp_id
+  is '组合交易号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.a_type
+  is '金融工具资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.m_type
+  is '金融工具市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.blc_type
+  is '余额类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.volume
+  is '余额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.freeze_volume
+  is '冻结余额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.usable_volume
+  is '可用余额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.open_time
+  is '开仓时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.p_obj_id
+  is '合约对象ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.volume_termcur
+  is '货币对反向余额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.custom_dim1
+  is '扩展维度1';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BLC_SECU_OBJ_BAK_20230501.etl_dt
+  is '数据日期';
+

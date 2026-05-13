@@ -1,0 +1,465 @@
+﻿create table RRP_MDL.O_IOL_SCSS_TBL_N_TXN
+(
+  sys_date          VARCHAR2(12),
+  sys_seq_num       VARCHAR2(12),
+  msg_src_id        VARCHAR2(6),
+  msg_dest_id       VARCHAR2(6),
+  log_unistamp      VARCHAR2(42),
+  org_biz_txn       VARCHAR2(15),
+  txn_num           VARCHAR2(6),
+  trans_state       VARCHAR2(2),
+  resp_code         VARCHAR2(18),
+  resp_desc         VARCHAR2(150),
+  revsal_flag       VARCHAR2(2),
+  revsal_ssn        VARCHAR2(12),
+  cancel_flag       VARCHAR2(2),
+  cancel_ssn        VARCHAR2(12),
+  key_rsp           VARCHAR2(72),
+  key_revsal        VARCHAR2(72),
+  key_cancel        VARCHAR2(72),
+  chann_num         VARCHAR2(15),
+  org_chann_num     VARCHAR2(15),
+  transnum          VARCHAR2(15),
+  transtyp          VARCHAR2(30),
+  chaldate          VARCHAR2(12),
+  checkcode         VARCHAR2(30),
+  mchnt_type        VARCHAR2(6),
+  mchnt_id          VARCHAR2(23),
+  mchnt_name        VARCHAR2(150),
+  termnl_id         VARCHAR2(12),
+  acqinsid          VARCHAR2(18),
+  acq_inst_id_code  VARCHAR2(18),
+  txn_acct_num      VARCHAR2(48),
+  txn_card_seqid    VARCHAR2(5),
+  txn_acct_isscode  VARCHAR2(18),
+  txn_acct_name     VARCHAR2(150),
+  txn_acc_type      VARCHAR2(30),
+  card_level        VARCHAR2(6),
+  txn_acc_spec      VARCHAR2(30),
+  acc_status        VARCHAR2(3),
+  date_expr         VARCHAR2(12),
+  vrf_flg           VARCHAR2(3),
+  drw_mode          VARCHAR2(3),
+  drw_mode_status   VARCHAR2(3),
+  sett_card_flag    VARCHAR2(2),
+  sett_card_name    VARCHAR2(180),
+  cash_can          VARCHAR2(2),
+  currcy_code_stlm  VARCHAR2(5),
+  amt_trans         VARCHAR2(23),
+  cert_type         VARCHAR2(6),
+  cert_id           VARCHAR2(30),
+  res_ceph_num      VARCHAR2(17),
+  out_acct_id       VARCHAR2(48),
+  out_acct_name     VARCHAR2(189),
+  out_acct_issid    VARCHAR2(18),
+  in_acct_id        VARCHAR2(48),
+  in_acct_name      VARCHAR2(150),
+  in_acct_issid     VARCHAR2(18),
+  pye_acct_id1      VARCHAR2(48),
+  pye_acctname1     VARCHAR2(150),
+  pyr_acctid1       VARCHAR2(48),
+  pyr_acctname1     VARCHAR2(150),
+  pye2pyr_amt1      VARCHAR2(23),
+  pye_acct_id2      VARCHAR2(48),
+  pye_acct_name2    VARCHAR2(150),
+  pyr_acct_id2      VARCHAR2(48),
+  pyr_acct_name2    VARCHAR2(150),
+  pye2pyr_amt2      VARCHAR2(23),
+  pye_acct_id3      VARCHAR2(48),
+  pye_acct_name3    VARCHAR2(150),
+  pyr_acct_id3      VARCHAR2(48),
+  pyr_acct_name3    VARCHAR2(150),
+  pye2pyr_amt3      VARCHAR2(23),
+  pye_acct_id4      VARCHAR2(48),
+  pye_acct_name4    VARCHAR2(150),
+  pyr_acct_id4      VARCHAR2(48),
+  pyr_acct_name4    VARCHAR2(150),
+  pye2pyr_amt4      VARCHAR2(23),
+  pye_fee_acct_id   VARCHAR2(48),
+  pye_fee_acct_name VARCHAR2(150),
+  pyr_fee_acct_id   VARCHAR2(48),
+  pyr_fee_acct_name VARCHAR2(150),
+  tran_fee_amt      VARCHAR2(23),
+  scs_ctl_flg       VARCHAR2(12),
+  f55_9a            VARCHAR2(9),
+  f55_9c            VARCHAR2(3),
+  f55_9f1a          VARCHAR2(6),
+  f55_95            VARCHAR2(15),
+  f55_9f37          VARCHAR2(12),
+  f55_82            VARCHAR2(6),
+  f55_9f36          VARCHAR2(6),
+  f55_9f10          VARCHAR2(96),
+  f55_5f34          VARCHAR2(5),
+  f55_5f2a          VARCHAR2(6),
+  f55_9f26          VARCHAR2(24),
+  f55_9f02          VARCHAR2(18),
+  f55_9f03          VARCHAR2(18),
+  f55_df31          VARCHAR2(36),
+  f55_91            VARCHAR2(48),
+  f55_72            VARCHAR2(384),
+  srv_src_sysid     VARCHAR2(6),
+  srv_dest_sysid    VARCHAR2(6),
+  srv_msgid         VARCHAR2(60),
+  srv_cllpty_sysid  VARCHAR2(60),
+  svr_glob_seqno    VARCHAR2(72),
+  svr_sou_seqno     VARCHAR2(72),
+  svr_sou_date      VARCHAR2(12),
+  svr_sou_time      VARCHAR2(14),
+  svr_src_name      VARCHAR2(18),
+  svr_src_num       VARCHAR2(30),
+  svr_src_msgt      VARCHAR2(30),
+  svr_src_pri       VARCHAR2(3),
+  tell_no           VARCHAR2(30),
+  city_code         VARCHAR2(6),
+  ptyid             VARCHAR2(30),
+  ptybrno           VARCHAR2(18),
+  outnum            VARCHAR2(30),
+  authtelid         VARCHAR2(30),
+  chktelid          VARCHAR2(30),
+  authseqno         VARCHAR2(24),
+  authpwd           VARCHAR2(24),
+  prcscd            VARCHAR2(15),
+  orisouseqno       VARCHAR2(48),
+  orisoudate        VARCHAR2(12),
+  orisoutime        VARCHAR2(21),
+  oriuppno          VARCHAR2(60),
+  oriuppdate        VARCHAR2(12),
+  uppno             VARCHAR2(60),
+  uppdate           VARCHAR2(12),
+  uppcode           VARCHAR2(23),
+  upptxt            VARCHAR2(600),
+  authcode          VARCHAR2(12),
+  colddate          VARCHAR2(12),
+  coldnum           VARCHAR2(60),
+  oricolddate       VARCHAR2(12),
+  oricoldnum        VARCHAR2(60),
+  onlnbal           VARCHAR2(27),
+  acctbal           VARCHAR2(27),
+  msgtype           VARCHAR2(24),
+  miscflag          VARCHAR2(24),
+  misc1             VARCHAR2(48),
+  misc2             VARCHAR2(48),
+  misc3             VARCHAR2(48),
+  misc4             VARCHAR2(48),
+  misc5             VARCHAR2(96),
+  misc6             VARCHAR2(96),
+  resv1             VARCHAR2(192),
+  resv2             VARCHAR2(192),
+  inst_date         VARCHAR2(21),
+  updt_date         VARCHAR2(21),
+  etl_dt            DATE,
+  etl_timestamp     TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_SCSS_TBL_N_TXN
+  is '银联和ATM交易流水表';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.sys_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.sys_seq_num
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.msg_src_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.msg_dest_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.log_unistamp
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.org_biz_txn
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.txn_num
+  is '交易码';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.trans_state
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.resp_code
+  is '响应码';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.resp_desc
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.revsal_flag
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.revsal_ssn
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.cancel_flag
+  is '取消标志';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.cancel_ssn
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.key_rsp
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.key_revsal
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.key_cancel
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.chann_num
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.org_chann_num
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.transnum
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.transtyp
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.chaldate
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.checkcode
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.mchnt_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.mchnt_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.mchnt_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.termnl_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.acqinsid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.acq_inst_id_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.txn_acct_num
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.txn_card_seqid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.txn_acct_isscode
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.txn_acct_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.txn_acc_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.card_level
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.txn_acc_spec
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.acc_status
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.date_expr
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.vrf_flg
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.drw_mode
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.drw_mode_status
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.sett_card_flag
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.sett_card_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.cash_can
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.currcy_code_stlm
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.amt_trans
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.cert_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.cert_id
+  is '证件编号';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.res_ceph_num
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.out_acct_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.out_acct_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.out_acct_issid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.in_acct_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.in_acct_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.in_acct_issid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye_acct_id1
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye_acctname1
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pyr_acctid1
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pyr_acctname1
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye2pyr_amt1
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye_acct_id2
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye_acct_name2
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pyr_acct_id2
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pyr_acct_name2
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye2pyr_amt2
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye_acct_id3
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye_acct_name3
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pyr_acct_id3
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pyr_acct_name3
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye2pyr_amt3
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye_acct_id4
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye_acct_name4
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pyr_acct_id4
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pyr_acct_name4
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye2pyr_amt4
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye_fee_acct_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pye_fee_acct_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pyr_fee_acct_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.pyr_fee_acct_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.tran_fee_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.scs_ctl_flg
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_9a
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_9c
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_9f1a
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_95
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_9f37
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_82
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_9f36
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_9f10
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_5f34
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_5f2a
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_9f26
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_9f02
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_9f03
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_df31
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_91
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.f55_72
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.srv_src_sysid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.srv_dest_sysid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.srv_msgid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.srv_cllpty_sysid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.svr_glob_seqno
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.svr_sou_seqno
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.svr_sou_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.svr_sou_time
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.svr_src_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.svr_src_num
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.svr_src_msgt
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.svr_src_pri
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.tell_no
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.city_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.ptyid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.ptybrno
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.outnum
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.authtelid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.chktelid
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.authseqno
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.authpwd
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.prcscd
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.orisouseqno
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.orisoudate
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.orisoutime
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.oriuppno
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.oriuppdate
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.uppno
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.uppdate
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.uppcode
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.upptxt
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.authcode
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.colddate
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.coldnum
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.oricolddate
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.oricoldnum
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.onlnbal
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.acctbal
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.msgtype
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.miscflag
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.misc1
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.misc2
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.misc3
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.misc4
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.misc5
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.misc6
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.resv1
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.resv2
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.inst_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.updt_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_SCSS_TBL_N_TXN.etl_timestamp
+  is 'etl处理时间';
+

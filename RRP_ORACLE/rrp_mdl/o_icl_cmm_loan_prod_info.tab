@@ -1,0 +1,171 @@
+﻿create table RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO
+(
+  etl_dt                     DATE,
+  lp_id                      VARCHAR2(60),
+  prod_id                    VARCHAR2(100),
+  prod_name                  VARCHAR2(200),
+  super_prod_id              VARCHAR2(100),
+  lmt_prod_flg               VARCHAR2(10),
+  prod_status_cd             VARCHAR2(30),
+  in_out_tab_attr_cd         VARCHAR2(30),
+  prod_effect_dt             DATE,
+  prod_invalid_dt            DATE,
+  prod_edit_id               VARCHAR2(100),
+  cust_type_comb_cd          VARCHAR2(3000),
+  dom_overs_comb_cd          VARCHAR2(3000),
+  curr_comb_cd               VARCHAR2(3000),
+  repay_way_comb_cd          VARCHAR2(3000),
+  guar_way_comb_cd           VARCHAR2(3000),
+  acct_type_cd               VARCHAR2(100),
+  discnt_loan_type_cd        VARCHAR2(30),
+  repay_amt_ctrl_cd          VARCHAR2(30),
+  bf_col_int_flg             VARCHAR2(10),
+  lont_loan_tenor            VARCHAR2(10),
+  shortest_loan_tenor        VARCHAR2(10),
+  subtn_deduct_flg           VARCHAR2(10),
+  auto_callbk_flg            VARCHAR2(10),
+  circl_flg                  VARCHAR2(10),
+  bar_flg                    VARCHAR2(10),
+  int_accr_flg               VARCHAR2(10),
+  comp_int_flg               VARCHAR2(10),
+  pnlt_flg                   VARCHAR2(10),
+  pnlt_comp_int_flg          VARCHAR2(10),
+  comp_int_comp_int_flg      VARCHAR2(10),
+  renew_flg                  VARCHAR2(10),
+  max_renew_cnt              VARCHAR2(10),
+  soterm_flg                 VARCHAR2(10),
+  max_soterm_cnt             VARCHAR2(10),
+  grace_period_corp_cd       VARCHAR2(30),
+  grace_period               VARCHAR2(10),
+  crdtc_grace_period         VARCHAR2(10),
+  sig_distr_flg              VARCHAR2(10),
+  sig_distr_amt_ctrl_flg     VARCHAR2(10),
+  sig_distr_max_amt          VARCHAR2(30),
+  sig_distr_min_amt          VARCHAR2(30),
+  sel_sup_loan_flg           VARCHAR2(10),
+  syn_loan_char_cd           VARCHAR2(30),
+  int_rat_ped_cd             VARCHAR2(30),
+  lowt_exec_int_rat          VARCHAR2(30),
+  higt_exec_int_rat          VARCHAR2(30),
+  ovdue_int_rat_float_way_cd VARCHAR2(30),
+  ovdue_int_rat_float_ratio  VARCHAR2(30),
+  job_cd                     VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO
+  is '贷款产品信息';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.prod_name
+  is '产品名称';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.super_prod_id
+  is '上级产品编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.lmt_prod_flg
+  is '额度产品标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.prod_status_cd
+  is '产品状态代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.in_out_tab_attr_cd
+  is '表内外属性代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.prod_effect_dt
+  is '产品生效日期';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.prod_invalid_dt
+  is '产品失效日期';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.prod_edit_id
+  is '产品版本编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.cust_type_comb_cd
+  is '客户类型组合代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.dom_overs_comb_cd
+  is '境内境外组合代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.curr_comb_cd
+  is '币种组合代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.repay_way_comb_cd
+  is '还款方式组合代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.guar_way_comb_cd
+  is '担保方式组合代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.acct_type_cd
+  is '账户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.discnt_loan_type_cd
+  is '贴现贷款类型代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.repay_amt_ctrl_cd
+  is '还款金额控制代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.bf_col_int_flg
+  is '前收息标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.lont_loan_tenor
+  is '最长贷款期限';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.shortest_loan_tenor
+  is '最短贷款期限';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.subtn_deduct_flg
+  is '持续扣款标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.auto_callbk_flg
+  is '自动回收标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.circl_flg
+  is '循环标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.bar_flg
+  is '随借随还标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.int_accr_flg
+  is '计息标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.comp_int_flg
+  is '复利标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.pnlt_flg
+  is '罚息标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.pnlt_comp_int_flg
+  is '罚息的复利标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.comp_int_comp_int_flg
+  is '复利的复利标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.renew_flg
+  is '展期标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.max_renew_cnt
+  is '最大展期次数';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.soterm_flg
+  is '缩期标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.max_soterm_cnt
+  is '最大缩期次数';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.grace_period_corp_cd
+  is '宽限期单位代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.grace_period
+  is '宽限期';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.crdtc_grace_period
+  is '征信宽限期';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.sig_distr_flg
+  is '单笔发放标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.sig_distr_amt_ctrl_flg
+  is '单次发放金额控制标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.sig_distr_max_amt
+  is '最大发放金额';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.sig_distr_min_amt
+  is '单次最小发放金额';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.sel_sup_loan_flg
+  is '自营贷款标志';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.syn_loan_char_cd
+  is '银团贷款性质代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.int_rat_ped_cd
+  is '利率周期代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.lowt_exec_int_rat
+  is '最低执行利率';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.higt_exec_int_rat
+  is '最高执行利率';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.ovdue_int_rat_float_way_cd
+  is '逾期利率浮动方式代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.ovdue_int_rat_float_ratio
+  is '逾期利率浮动比例';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_PROD_INFO.etl_timestamp
+  is '数据处理时间';
+

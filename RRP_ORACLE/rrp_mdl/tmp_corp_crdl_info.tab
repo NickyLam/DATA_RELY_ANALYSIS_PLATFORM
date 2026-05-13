@@ -1,0 +1,51 @@
+﻿create table RRP_MDL.TMP_CORP_CRDL_INFO
+(
+  cust_id          VARCHAR2(200),
+  cust_nm          VARCHAR2(750),
+  cert_type_cd     VARCHAR2(10),
+  edw_value_name   VARCHAR2(300),
+  crdl_typ         VARCHAR2(10),
+  rrp_value_name   VARCHAR2(300),
+  crdl_no          VARCHAR2(100),
+  crdl_eff_dt      CHAR(8),
+  crdl_exp_dt      CHAR(8),
+  crdl_upd_dt      CHAR(8),
+  main_cert_no_flg VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.TMP_CORP_CRDL_INFO
+  is '临时表';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.cust_id
+  is '客户号';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.cust_nm
+  is '客户名称';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.cert_type_cd
+  is '证件类型代码';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.edw_value_name
+  is '临时表字段';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.crdl_typ
+  is '证件类型';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.rrp_value_name
+  is '临时表字段';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.crdl_no
+  is '证件号码';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.crdl_eff_dt
+  is '证件生效日期';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.crdl_exp_dt
+  is '证件失效日期';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.crdl_upd_dt
+  is '证件更新日期';
+comment on column RRP_MDL.TMP_CORP_CRDL_INFO.main_cert_no_flg
+  is '主证件号标志';
+

@@ -1,0 +1,156 @@
+﻿create table RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501
+(
+  party_id                       VARCHAR2(60),
+  lp_id                          VARCHAR2(60),
+  mem_id                         VARCHAR2(60),
+  mem_cd                         VARCHAR2(60),
+  mem_org_cd                     VARCHAR2(60),
+  mem_org_id                     VARCHAR2(60),
+  org_cate_cd                    VARCHAR2(10),
+  org_lev_cd                     VARCHAR2(10),
+  org_cn_fname                   VARCHAR2(500),
+  org_en_fname                   VARCHAR2(250),
+  org_cn_abbr                    VARCHAR2(250),
+  org_en_abbr                    VARCHAR2(100),
+  unify_soci_crdt_cd             VARCHAR2(30),
+  dist_cd                        VARCHAR2(10),
+  lp_lev_cd                      VARCHAR2(10),
+  org_hibchy_cd                  VARCHAR2(10),
+  prod_valid_dt                  DATE,
+  prod_invalid_dt                DATE,
+  org_status_cd                  VARCHAR2(10),
+  org_intnal_acct_name           VARCHAR2(100),
+  org_intnal_acct_num            VARCHAR2(60),
+  tran_acct_num                  VARCHAR2(60),
+  tran_acct_status_cd            VARCHAR2(10),
+  trust_acct_num                 VARCHAR2(60),
+  trust_acct_status_cd           VARCHAR2(10),
+  cpes_cap_acct_num              VARCHAR2(60),
+  cpes_cap_acct_status_cd        VARCHAR2(10),
+  legal_rep_or_princ             VARCHAR2(100),
+  wdraw_acct_lg_pay_sys_bank_no  VARCHAR2(60),
+  wdraw_acct_name                VARCHAR2(250),
+  wdraw_acct_num                 VARCHAR2(60),
+  rgst_cap                       NUMBER(30,2),
+  addr                           VARCHAR2(250),
+  cotas                          VARCHAR2(100),
+  phone                          VARCHAR2(60),
+  fax                            VARCHAR2(60),
+  zip_cd                         VARCHAR2(60),
+  sys_prtcptr_bigamt_bank_no     VARCHAR2(60),
+  sys_prtcptr_bigamt_bank_name   VARCHAR2(500),
+  ele_bill_agent_bigamt_bank_no  VARCHAR2(60),
+  ele_bill_agent_bigamt_acct_num VARCHAR2(60),
+  udtake_org_cd                  VARCHAR2(10),
+  create_dt                      DATE,
+  update_dt                      DATE,
+  etl_dt                         DATE,
+  id_mark                        VARCHAR2(10),
+  src_table_name                 VARCHAR2(100),
+  job_cd                         VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501
+  is '票交所会员';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.mem_id
+  is '会员编号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.mem_cd
+  is '会员代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.mem_org_cd
+  is '会员机构代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.mem_org_id
+  is '会员机构编号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.org_cate_cd
+  is '机构类别代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.org_lev_cd
+  is '机构级别代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.org_cn_fname
+  is '机构中文全称';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.org_en_fname
+  is '机构英文全称';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.org_cn_abbr
+  is '机构中文简称';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.org_en_abbr
+  is '机构英文简称';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.unify_soci_crdt_cd
+  is '统一社会信用代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.dist_cd
+  is '行政区划代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.lp_lev_cd
+  is '法人级别代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.org_hibchy_cd
+  is '机构层级代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.prod_valid_dt
+  is '产品有效日期';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.prod_invalid_dt
+  is '产品失效日期';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.org_status_cd
+  is '机构状态代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.org_intnal_acct_name
+  is '机构内部账户名称';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.org_intnal_acct_num
+  is '机构内部账户账号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.tran_acct_num
+  is '交易账号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.tran_acct_status_cd
+  is '交易账户状态代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.trust_acct_num
+  is '托管账号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.trust_acct_status_cd
+  is '托管账户状态代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.cpes_cap_acct_num
+  is '票交所资金账户账号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.cpes_cap_acct_status_cd
+  is '票交所资金账户状态代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.legal_rep_or_princ
+  is '法定代表人或负责人';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.wdraw_acct_lg_pay_sys_bank_no
+  is '出金账户开户行大额支付系统行号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.wdraw_acct_name
+  is '出金账户名称';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.wdraw_acct_num
+  is '出金账户账号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.rgst_cap
+  is '注册资本';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.addr
+  is '地址';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.cotas
+  is '联系人';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.phone
+  is '联系电话';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.fax
+  is '传真';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.zip_cd
+  is '邮编';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.sys_prtcptr_bigamt_bank_no
+  is '系统参与者大额行号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.sys_prtcptr_bigamt_bank_name
+  is '系统参与者大额行名';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.ele_bill_agent_bigamt_bank_no
+  is '电票代理行大额行号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.ele_bill_agent_bigamt_acct_num
+  is '电票代理行大额账号';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.udtake_org_cd
+  is '承接机构代码';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PTY_CPES_MEM_BAK_20230501.job_cd
+  is '任务编码';
+

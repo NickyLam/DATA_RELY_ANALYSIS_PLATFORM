@@ -1,0 +1,25 @@
+﻿create table RRP_MDL.T_COM_RRP_MRPT_MRPT_SG02102
+(
+  data_dt          VARCHAR2(10),
+  cust_id          VARCHAR2(30),
+  cust_name        VARCHAR2(200),
+  org_fh           VARCHAR2(200),
+  org_zh           VARCHAR2(200),
+  spl_chain_prod   VARCHAR2(100),
+  bus_breed_name   VARCHAR2(200),
+  currt_bal        NUMBER(20,4),
+  margin_currt_bal NUMBER(20,4),
+  y_avg_bal        NUMBER(20,4),
+  margin_yavg_bal  NUMBER(20,4),
+  dep_ftp_income   NUMBER(20,4),
+  loan_ftp_income  NUMBER(20,4),
+  mdl_biz_income   NUMBER(20,4),
+  sum_ftp_income   NUMBER(20,4),
+  search_org       VARCHAR2(50)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

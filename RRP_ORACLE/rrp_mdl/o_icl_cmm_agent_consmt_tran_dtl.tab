@@ -1,0 +1,147 @@
+﻿create table RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL
+(
+  etl_dt             DATE,
+  lp_id              VARCHAR2(60),
+  ta_cd              VARCHAR2(60),
+  ta_cfm_dt          DATE,
+  ta_cfm_flow_num    VARCHAR2(90),
+  rela_flow_num      VARCHAR2(90),
+  appl_form_id       VARCHAR2(60),
+  init_appl_form_id  VARCHAR2(60),
+  cust_id            VARCHAR2(60),
+  prod_acct_id       VARCHAR2(60),
+  tran_acct_id       VARCHAR2(60),
+  bank_acct_id       VARCHAR2(100),
+  prod_id            VARCHAR2(60),
+  std_prod_id        VARCHAR2(60),
+  prod_name          VARCHAR2(450),
+  cust_mgr_id        VARCHAR2(60),
+  consmt_bus_type_cd VARCHAR2(10),
+  sell_mode_cd       VARCHAR2(10),
+  bus_cd             VARCHAR2(10),
+  cust_type_cd       VARCHAR2(10),
+  curr_cd            VARCHAR2(10),
+  divd_way_cd        VARCHAR2(10),
+  huge_redem_proc_cd VARCHAR2(10),
+  tran_chn_cd        VARCHAR2(10),
+  tran_status_cd     VARCHAR2(10),
+  tran_cd            VARCHAR2(100),
+  appl_lot           NUMBER(30,2),
+  appl_amt           NUMBER(30,2),
+  cfm_lot            NUMBER(30,2),
+  cfm_amt            NUMBER(30,2),
+  tran_comm_fee      NUMBER(30,2),
+  tran_return_code   VARCHAR2(90),
+  tran_return_info   VARCHAR2(1000),
+  tran_subrch_id     VARCHAR2(60),
+  tran_org_id        VARCHAR2(100),
+  tran_teller_id     VARCHAR2(60),
+  auth_teller_id     VARCHAR2(60),
+  tran_happ_dt       DATE,
+  tran_happ_tm       TIMESTAMP(6),
+  prod_nv            NUMBER(30,8),
+  tran_agent_fee     NUMBER(30,2),
+  tran_belong_org_id VARCHAR2(100),
+  job_cd             VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL
+  is '代理代销交易明细';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.ta_cd
+  is 'TA代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.ta_cfm_dt
+  is 'TA确认日期';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.ta_cfm_flow_num
+  is 'TA确认流水号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.rela_flow_num
+  is '关联流水号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.appl_form_id
+  is '申请单编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.init_appl_form_id
+  is '原申请单编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.prod_acct_id
+  is '产品账户编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_acct_id
+  is '交易账户编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.bank_acct_id
+  is '银行账户编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.prod_name
+  is '产品名称';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.consmt_bus_type_cd
+  is '代销业务类型代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.sell_mode_cd
+  is '销售模式代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.bus_cd
+  is '业务代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.divd_way_cd
+  is '分红方式代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.huge_redem_proc_cd
+  is '巨额赎回处理代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_chn_cd
+  is '交易渠道代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_cd
+  is '交易代码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.appl_lot
+  is '申请份额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.appl_amt
+  is '申请金额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.cfm_lot
+  is '确认份额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.cfm_amt
+  is '确认金额';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_comm_fee
+  is '交易手续费';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_return_code
+  is '交易返回码';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_return_info
+  is '交易返回信息';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_subrch_id
+  is '交易支行编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.auth_teller_id
+  is '授权柜员编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_happ_dt
+  is '交易发生日期';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_happ_tm
+  is '交易发生时间';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.prod_nv
+  is '产品净值';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_agent_fee
+  is '交易代理费';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.tran_belong_org_id
+  is '交易归属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_AGENT_CONSMT_TRAN_DTL.job_cd
+  is '任务代码';
+

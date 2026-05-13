@@ -1,0 +1,272 @@
+﻿create table RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL
+(
+  merchant_detail_id             VARCHAR2(32),
+  merchant_short_name            VARCHAR2(128),
+  industr_id                     NUMBER(10),
+  province                       VARCHAR2(64),
+  city                           VARCHAR2(64),
+  county                         VARCHAR2(64),
+  address                        VARCHAR2(256),
+  tel                            VARCHAR2(128),
+  email                          VARCHAR2(64),
+  web_site                       VARCHAR2(128),
+  principal                      VARCHAR2(64),
+  id_code                        VARCHAR2(128),
+  principal_mobile               VARCHAR2(128),
+  customer_phone                 VARCHAR2(128),
+  fax                            VARCHAR2(256),
+  license_photo                  VARCHAR2(300),
+  indentity_photo                VARCHAR2(1000),
+  protocol_photo                 VARCHAR2(1024),
+  org_photo                      VARCHAR2(1024),
+  other_doc                      VARCHAR2(2000),
+  physics_flag                   NUMBER(4),
+  data_source                    NUMBER(4),
+  remark                         VARCHAR2(256),
+  fld_s1                         VARCHAR2(1024),
+  fld_s2                         VARCHAR2(256),
+  fld_s3                         VARCHAR2(1024),
+  fld_n1                         NUMBER(10),
+  fld_n2                         NUMBER(10),
+  fld_n3                         NUMBER(10),
+  fld_d1                         TIMESTAMP(6),
+  create_user                    NUMBER(10),
+  create_emp                     VARCHAR2(32),
+  create_time                    TIMESTAMP(6),
+  update_time                    TIMESTAMP(6),
+  interface_refund_audit         NUMBER(4),
+  id_code_type                   NUMBER(10),
+  business_license_name          VARCHAR2(128),
+  account_code_photo             VARCHAR2(1000),
+  fld_n4                         NUMBER(10),
+  fld_n5                         NUMBER(20),
+  fld_n6                         NUMBER(10),
+  fld_n7                         NUMBER(10),
+  fld_n8                         NUMBER(10),
+  fld_s4                         VARCHAR2(512),
+  fld_s5                         VARCHAR2(512),
+  fld_s6                         VARCHAR2(3072),
+  fld_s7                         VARCHAR2(512),
+  fld_s8                         VARCHAR2(512),
+  id_code_expire                 TIMESTAMP(6),
+  business_license_expire        TIMESTAMP(6),
+  lcaddress                      VARCHAR2(512),
+  questionnaire                  VARCHAR2(1024),
+  approval_form                  VARCHAR2(1024),
+  thi_doc_id                     VARCHAR2(256),
+  nationality_num                VARCHAR2(32),
+  principal_profession           VARCHAR2(192),
+  id_code_begin_time             TIMESTAMP(6),
+  business_license_begin_time    TIMESTAMP(6),
+  contacts_idcode                VARCHAR2(64),
+  manage_type                    VARCHAR2(32),
+  company_prove                  VARCHAR2(256),
+  indoor_photo                   VARCHAR2(512),
+  checkstand_photo               VARCHAR2(256),
+  manager_principal_photo        VARCHAR2(256),
+  register_ip                    VARCHAR2(64),
+  icp_number                     VARCHAR2(64),
+  merchant_label                 VARCHAR2(64),
+  line_flag                      NUMBER(10),
+  online_verifi_photo            VARCHAR2(512),
+  sign_photo                     VARCHAR2(1024),
+  protocol_pdf                   VARCHAR2(1024),
+  customer_no                    VARCHAR2(128),
+  handling_customer_manager_name VARCHAR2(64),
+  handling_customer_manager_id   VARCHAR2(64),
+  handling_bank_branch           VARCHAR2(64),
+  customer_id                    VARCHAR2(20),
+  trade_able_hours_begin         VARCHAR2(100),
+  trade_able_hours_end           VARCHAR2(100),
+  points_offer                   VARCHAR2(10),
+  support_farmer_station         VARCHAR2(200),
+  support_farmer                 NUMBER(1),
+  thi_mch_id                     VARCHAR2(30),
+  start_dt                       DATE,
+  end_dt                         DATE,
+  id_mark                        VARCHAR2(10),
+  etl_timestamp                  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL
+  is '商户详细信息表';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.merchant_detail_id
+  is '商户详细信息ID.使用 商户编号 做商户详细信息的ID';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.merchant_short_name
+  is '商户简称.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.industr_id
+  is '行业类别.关联行业类别表';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.province
+  is '省份.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.city
+  is '城市.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.county
+  is '区/县.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.address
+  is '地址.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.tel
+  is '电话.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.email
+  is '邮箱.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.web_site
+  is '网址.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.principal
+  is '负责人.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.id_code
+  is '负责人身份证.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.principal_mobile
+  is '负责人手机.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.customer_phone
+  is '客服电话.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fax
+  is '传真.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.license_photo
+  is '营业执照.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.indentity_photo
+  is '身份证照片.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.protocol_photo
+  is '商户协议照片.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.org_photo
+  is '组织机构代码证照片.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.other_doc
+  is '其他资料.资料包，以zip和rar格式上传和下载';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.physics_flag
+  is '物理标识.1:正常;2:删除';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.data_source
+  is '数据来源.1:界面录入;2:基础资料导入导出:3:数据迁移';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.remark
+  is '备注.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_s1
+  is '门头照路径';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_s2
+  is '营业执照注册号/统一社会信用代码图片路径';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_s3
+  is '营业场所照片路径';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_n1
+  is '性别';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_n2
+  is '(subjectType)商户主体类型';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_n3
+  is '数值型保留字段3.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_d1
+  is '日期型保留字段1.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.create_user
+  is '创建用户.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.create_emp
+  is '创建人.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.create_time
+  is '创建时间.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.update_time
+  is '更新时间.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.interface_refund_audit
+  is '接口退款审核';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.id_code_type
+  is '证件类型';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.business_license_name
+  is '营业执照名称';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.account_code_photo
+  is '银行卡/开户许可证图片路径';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_n4
+  is '(fixedPlace)小微商户是否有固定经营场所';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_n5
+  is '注册资本金';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_n6
+  is '(customAuthTradeSourceType)商户自主授权的来源类型 1-商户平台自主授权 2-后台编辑商户授权';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_n7
+  is '(mergeAccount)合并入账';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_n8
+  is '(merchantBusinessProperty)商户属性.1-网络特约商户,2-实体特约商户,3-实体兼网络特约商户';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_s4
+  is '(alipayAccount)保存支付宝账号';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_s5
+  is '(contacts)保存联系人';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_s6
+  is '(businessScope)经营范围';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_s7
+  is '(actualBusinessAddress)实际经营地址';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.fld_s8
+  is '(registeredAddress)注册地址';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.id_code_expire
+  is '身份证到期日.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.business_license_expire
+  is '营业执照到期日.';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.lcaddress
+  is '商户定位地址';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.questionnaire
+  is '调查表';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.approval_form
+  is '审批表';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.thi_doc_id
+  is '第三方文档ID';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.nationality_num
+  is '国籍编号';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.principal_profession
+  is '负责人职业';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.id_code_begin_time
+  is '证件有效期开始时间';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.business_license_begin_time
+  is '营业执照有效期开始时间';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.contacts_idcode
+  is '联系人证件号码';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.manage_type
+  is '经营类型';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.company_prove
+  is '单位证明函照片';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.indoor_photo
+  is '内景照';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.checkstand_photo
+  is '收银台照';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.manager_principal_photo
+  is '客户经理与法人合照';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.register_ip
+  is '登记ip';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.icp_number
+  is 'ICP备案号';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.merchant_label
+  is '商户标签';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.line_flag
+  is '条码标识:1公司线，2机构线,3零售线，4数金线';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.online_verifi_photo
+  is '联网核查照';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.sign_photo
+  is '签名照';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.protocol_pdf
+  is '影像平台协议PDF地址';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.customer_no
+  is 'Ecif客户编号';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.handling_customer_manager_name
+  is '经办客户经理';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.handling_customer_manager_id
+  is '经办客户经理工号';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.handling_bank_branch
+  is '经办支行';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.customer_id
+  is '客户号';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.trade_able_hours_begin
+  is '可交易开始时间';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.trade_able_hours_end
+  is '可交易结束时间';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.points_offer
+  is '是否积分优惠';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.thi_mch_id
+  is '第三方商户号';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_AMSS_CMS_MERCHANT_DETAIL.etl_timestamp
+  is 'ETL处理时间戳';
+

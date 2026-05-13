@@ -1,0 +1,93 @@
+﻿create table RRP_MDL.M_GL_BAL_TMP3
+(
+  data_dt         CHAR(8),
+  org_id          VARCHAR2(200),
+  subj_id         VARCHAR2(200),
+  cur             VARCHAR2(200),
+  std_prod_id     NUMBER(20,2),
+  year_cum_bal    NUMBER(20,2),
+  half_cum_bal    NUMBER(20,2),
+  qrt_cum_bal     NUMBER(20,2),
+  mon_cum_bal     NUMBER(20,2),
+  year_cum_cr_bal NUMBER(20,2),
+  year_cum_dr_bal NUMBER(20,2),
+  half_cum_cr_bal NUMBER(20,2),
+  half_cum_dr_bal NUMBER(20,2),
+  qrt_cum_cr_bal  NUMBER(20,2),
+  qrt_cum_dr_bal  NUMBER(20,2),
+  mon_cum_cr_bal  NUMBER(20,2),
+  mon_cum_dr_bal  NUMBER(20,2),
+  year_cum_cr_amt NUMBER(30,2),
+  year_cum_dr_amt NUMBER(30,2),
+  half_cum_cr_amt NUMBER(30,2),
+  half_cum_dr_amt NUMBER(30,2),
+  qrt_cum_cr_amt  NUMBER(30,2),
+  qrt_cum_dr_amt  NUMBER(30,2),
+  mon_cum_cr_amt  NUMBER(30,2),
+  mon_cum_dr_amt  NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_GL_BAL_TMP3
+  is '总账余额累计余额临时表';
+comment on column RRP_MDL.M_GL_BAL_TMP3.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_GL_BAL_TMP3.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_GL_BAL_TMP3.subj_id
+  is '科目编号';
+comment on column RRP_MDL.M_GL_BAL_TMP3.cur
+  is '币种';
+comment on column RRP_MDL.M_GL_BAL_TMP3.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.M_GL_BAL_TMP3.year_cum_bal
+  is '年累计余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.half_cum_bal
+  is '半年累计余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.qrt_cum_bal
+  is '季累计余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.mon_cum_bal
+  is '月累计余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.year_cum_cr_bal
+  is '年累计贷方余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.year_cum_dr_bal
+  is '年累计借方余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.half_cum_cr_bal
+  is '半年累计贷方余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.half_cum_dr_bal
+  is '半年累计借方余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.qrt_cum_cr_bal
+  is '季累计贷方余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.qrt_cum_dr_bal
+  is '季累计借方余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.mon_cum_cr_bal
+  is '月累计贷方余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.mon_cum_dr_bal
+  is '月累计借方余额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.year_cum_cr_amt
+  is '年累计贷方发生额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.year_cum_dr_amt
+  is '年累计借方发生额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.half_cum_cr_amt
+  is '半年累计贷方发生额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.half_cum_dr_amt
+  is '半年累计借方发生额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.qrt_cum_cr_amt
+  is '季累计贷方发生额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.qrt_cum_dr_amt
+  is '季累计借方发生额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.mon_cum_cr_amt
+  is '月累计贷方发生额';
+comment on column RRP_MDL.M_GL_BAL_TMP3.mon_cum_dr_amt
+  is '月累计借方发生额';
+

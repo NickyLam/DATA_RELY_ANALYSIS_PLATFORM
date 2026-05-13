@@ -1,0 +1,288 @@
+﻿create table RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H
+(
+  agt_id                         VARCHAR2(250),
+  lp_id                          VARCHAR2(100),
+  prod_id                        VARCHAR2(100),
+  intnal_dubil_id                VARCHAR2(100),
+  dubil_id                       VARCHAR2(100),
+  acct_id                        VARCHAR2(100),
+  acct_type_cd                   VARCHAR2(30),
+  cust_id                        VARCHAR2(100),
+  cust_lmt_id                    VARCHAR2(100),
+  apot_repay_deduct_acct_num     VARCHAR2(60),
+  tran_ref_no                    VARCHAR2(60),
+  card_no                        VARCHAR2(60),
+  renew_effect_dt                DATE,
+  loan_rgst_dt                   DATE,
+  loan_exp_dt                    DATE,
+  appl_tm                        TIMESTAMP(6),
+  payoff_dt                      DATE,
+  adv_termnt_dt                  DATE,
+  grace_dt_term                  DATE,
+  init_tran_dt                   DATE,
+  fir_exp_repay_dt               DATE,
+  last_behav_dt                  DATE,
+  actv_dt                        DATE,
+  curr_ovdue_days                NUMBER(38),
+  loan_type_cd                   VARCHAR2(30),
+  loan_status_cd                 VARCHAR2(30),
+  loan_tot_perds                 NUMBER(38),
+  curr_perds                     NUMBER(38),
+  surp_perds                     NUMBER(38),
+  loan_pric                      NUMBER(30,2),
+  loan_eh_issue_rpbl_pric        NUMBER(30,2),
+  loan_fst_rpbl_pric             NUMBER(30,2),
+  loan_late_rpbl_pric            NUMBER(30,2),
+  loan_tot_comm_fee              NUMBER(30,2),
+  loan_eh_issue_comm_fee         NUMBER(30,2),
+  loan_fst_comm_fee              NUMBER(30,2),
+  loan_late_comm_fee             NUMBER(30,2),
+  loan_acct_bill_pric            NUMBER(30,2),
+  loan_acct_bill_comm_fee        NUMBER(30,2),
+  repaid_pric                    NUMBER(30,2),
+  repaid_int                     NUMBER(30,2),
+  repaid_fee                     NUMBER(30,2),
+  loan_curr_tot_bal              NUMBER(30,2),
+  loan_unexp_bal                 NUMBER(30,2),
+  loan_expd_bal                  NUMBER(30,2),
+  debt_pric                      NUMBER(30,2),
+  debt_int                       NUMBER(30,2),
+  debt_pnlt                      NUMBER(30,2),
+  loan_unexp_pric                NUMBER(30,2),
+  loan_expd_pric                 NUMBER(30,2),
+  loan_unexp_comm_fee            NUMBER(30,2),
+  loan_expd_comm_fee             NUMBER(30,2),
+  currt_repay_amt                NUMBER(30,2),
+  adv_repay_amt                  NUMBER(30,2),
+  init_tran_curr_amt             NUMBER(30,2),
+  renew_pric_amt                 NUMBER(30,2),
+  b_renew_eh_issue_rpbl_pric     NUMBER(30,2),
+  b_renew_tot_perds              NUMBER(38),
+  b_renew_loan_fst_rpbl_pric     NUMBER(30,2),
+  b_renew_loan_late_rpbl_pric    NUMBER(30,2),
+  b_renew_loan_tot_comm_fee      NUMBER(30,2),
+  b_renew_loan_eh_issue_comm_fee NUMBER(30,2),
+  b_renew_loan_fst_comm_fee      NUMBER(30,2),
+  b_renew_loan_late_comm_fee     NUMBER(30,2),
+  a_renew_fst_comm_fee           NUMBER(30,2),
+  loan_tot_int                   NUMBER(30,2),
+  init_loan_tot_int              NUMBER(30,2),
+  exec_int_rat                   NUMBER(18,8),
+  pnlt_int_rat                   NUMBER(18,8),
+  comp_int_int_rat               NUMBER(18,8),
+  int_rat_fl_rt                  NUMBER(18,6),
+  loan_ovdue_max_perds           NUMBER(10),
+  renewd_cnt                     NUMBER(38),
+  sotermed_cnt                   NUMBER(38),
+  loan_comm_fee_coll_way_cd      VARCHAR2(30),
+  last_behav_type_cd             VARCHAR2(30),
+  int_accr_base_cd               VARCHAR2(30),
+  aging_cd                       VARCHAR2(30),
+  loan_termnt_rs_cd              VARCHAR2(30),
+  syn_id                         VARCHAR2(100),
+  loan_appl_seq_num              VARCHAR2(60),
+  cont_edit_num                  VARCHAR2(500),
+  loan_prod_id                   VARCHAR2(100),
+  bank_contri_ratio              NUMBER(18,6),
+  init_tran_auth_cd              VARCHAR2(30),
+  optimit_lock_edit_num          VARCHAR2(60),
+  revo_dt                        DATE,
+  start_dt                       DATE,
+  end_dt                         DATE,
+  id_mark                        VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H
+  is '微粒贷借据信息历史';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.intnal_dubil_id
+  is '内部借据编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.acct_type_cd
+  is '账户类型代码';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.cust_lmt_id
+  is '客户额度编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.apot_repay_deduct_acct_num
+  is '约定还款扣款账号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.tran_ref_no
+  is '交易参考号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.card_no
+  is '卡号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.renew_effect_dt
+  is '展期生效日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_rgst_dt
+  is '贷款注册日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_exp_dt
+  is '贷款到期日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.appl_tm
+  is '申请时间';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.payoff_dt
+  is '结清日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.adv_termnt_dt
+  is '提前终止日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.grace_dt_term
+  is '宽限日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.init_tran_dt
+  is '原始交易日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.fir_exp_repay_dt
+  is '首个到期还款日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.last_behav_dt
+  is '上次行动日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.actv_dt
+  is '激活日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.curr_ovdue_days
+  is '当前逾期天数';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_type_cd
+  is '贷款类型代码';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_status_cd
+  is '贷款状态代码';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_tot_perds
+  is '贷款总期数';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.curr_perds
+  is '当前期数';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.surp_perds
+  is '剩余期数';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_pric
+  is '贷款本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_eh_issue_rpbl_pric
+  is '贷款每期应还本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_fst_rpbl_pric
+  is '贷款首期应还本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_late_rpbl_pric
+  is '贷款末期应还本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_tot_comm_fee
+  is '贷款总手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_eh_issue_comm_fee
+  is '贷款每期手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_fst_comm_fee
+  is '贷款首期手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_late_comm_fee
+  is '贷款末期手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_acct_bill_pric
+  is '贷款账单的本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_acct_bill_comm_fee
+  is '贷款账单手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.repaid_pric
+  is '已偿还本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.repaid_int
+  is '已偿还利息';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.repaid_fee
+  is '已偿还费用';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_curr_tot_bal
+  is '贷款当前总余额';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_unexp_bal
+  is '贷款未到期余额';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_expd_bal
+  is '贷款已到期余额';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.debt_pric
+  is '欠款本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.debt_int
+  is '欠款利息';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.debt_pnlt
+  is '欠款罚息';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_unexp_pric
+  is '贷款未到期本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_expd_pric
+  is '贷款已到期本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_unexp_comm_fee
+  is '贷款未到期手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_expd_comm_fee
+  is '贷款已到期手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.currt_repay_amt
+  is '当期还款金额';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.adv_repay_amt
+  is '提前还款金额';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.init_tran_curr_amt
+  is '原始交易币种金额';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.renew_pric_amt
+  is '展期本金金额';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.b_renew_eh_issue_rpbl_pric
+  is '展期前每期应还本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.b_renew_tot_perds
+  is '展期前总期数';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.b_renew_loan_fst_rpbl_pric
+  is '展期前贷款首期应还本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.b_renew_loan_late_rpbl_pric
+  is '展期前贷款末期应还本金';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.b_renew_loan_tot_comm_fee
+  is '展期前贷款总手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.b_renew_loan_eh_issue_comm_fee
+  is '展期前贷款每期手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.b_renew_loan_fst_comm_fee
+  is '展期前贷款首期手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.b_renew_loan_late_comm_fee
+  is '展期前贷款末期手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.a_renew_fst_comm_fee
+  is '展期后首期手续费';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_tot_int
+  is '贷款总利息';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.init_loan_tot_int
+  is '原贷款总利息';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.pnlt_int_rat
+  is '罚息利率';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.comp_int_int_rat
+  is '复利利率';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.int_rat_fl_rt
+  is '利率浮动比例';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_ovdue_max_perds
+  is '贷款逾期最大期数';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.renewd_cnt
+  is '已展期次数';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.sotermed_cnt
+  is '已缩期次数';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_comm_fee_coll_way_cd
+  is '贷款手续费收取方式代码';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.last_behav_type_cd
+  is '上次行动类型代码';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.int_accr_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.aging_cd
+  is '账龄代码';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_termnt_rs_cd
+  is '贷款终止原因代码';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.syn_id
+  is '银团编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_appl_seq_num
+  is '贷款申请顺序号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.cont_edit_num
+  is '合同版本号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.loan_prod_id
+  is '贷款产品编号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.bank_contri_ratio
+  is '银行出资比例';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.init_tran_auth_cd
+  is '原始交易授权码';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.optimit_lock_edit_num
+  is '乐观锁版本号';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.revo_dt
+  is '撤销日期';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_WLD_DUBIL_INFO_H.id_mark
+  is '增删标志';
+

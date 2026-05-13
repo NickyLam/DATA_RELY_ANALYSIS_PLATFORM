@@ -1,0 +1,85 @@
+﻿create table RRP_EAST.EAST5_1108_KHLCCPCYXXB
+(
+  yhjgdm        VARCHAR2(30),
+  jrxkzh        VARCHAR2(30),
+  yhjgmc        VARCHAR2(450),
+  bz            VARCHAR2(3),
+  khmc_orig     VARCHAR2(150),
+  khmc          VARCHAR2(150),
+  khzjlb        VARCHAR2(60),
+  khzjhm_orig   VARCHAR2(70),
+  khzjhm        VARCHAR2(70),
+  lccpmc        VARCHAR2(300),
+  cpdjbm        VARCHAR2(30),
+  khcyrq        VARCHAR2(8),
+  khcylcye      NUMBER(20,2),
+  khcylczsrmbye NUMBER(20,2),
+  khcylcfe      NUMBER(20,6),
+  cjrq          VARCHAR2(8),
+  issued_no     VARCHAR2(50),
+  org_no        VARCHAR2(20),
+  dept_no       VARCHAR2(10),
+  address       VARCHAR2(500),
+  rid           VARCHAR2(50) not null
+)
+partition by list (CJRQ)
+(
+  partition PARTITION_20220630 values ('20220630')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values ('20220930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.yhjgdm
+  is '发行机构代码';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.jrxkzh
+  is '金融许可证号';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.yhjgmc
+  is '发行机构名称';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.bz
+  is '币种';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.khmc_orig
+  is '客户名称（脱敏前）';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.khmc
+  is '客户名称';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.khzjlb
+  is '客户证件类别';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.khzjhm_orig
+  is '客户证件号码（脱敏前）';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.khzjhm
+  is '客户证件号码';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.lccpmc
+  is '理财产品名称';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.cpdjbm
+  is '产品登记编码';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.khcyrq
+  is '客户持有日期';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.khcylcye
+  is '客户持有理财余额';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.khcylczsrmbye
+  is '客户持有理财折算人民币余额';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.khcylcfe
+  is '客户持有理财份额';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.cjrq
+  is '采集日期';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.issued_no
+  is '填报机构';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.org_no
+  is '报送机构';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.dept_no
+  is '部门编号';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.address
+  is '归属地';
+comment on column RRP_EAST.EAST5_1108_KHLCCPCYXXB.rid
+  is '数据主键';
+

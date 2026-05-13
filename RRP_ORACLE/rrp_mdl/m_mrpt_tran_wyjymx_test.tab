@@ -1,0 +1,224 @@
+﻿create table RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST
+(
+  data_dt                VARCHAR2(8),
+  cust_id                VARCHAR2(60),
+  cust_name              VARCHAR2(600),
+  acct_id                VARCHAR2(60),
+  sub_acct_id            VARCHAR2(5),
+  cn_acct_cd             VARCHAR2(10),
+  cn_acct_type           VARCHAR2(1000),
+  tran_dt                DATE,
+  tran_type_name         VARCHAR2(500),
+  tran_status_name       VARCHAR2(10),
+  tran_curr_cd           VARCHAR2(10),
+  oc_tran_amt            NUMBER(30,4),
+  tran_amt_convt_cny_amt NUMBER,
+  tran_chn_cd            VARCHAR2(60),
+  tran_chn_name          VARCHAR2(1000),
+  cntpty_acct_id         VARCHAR2(60),
+  cntpty_acct_name       VARCHAR2(500),
+  cntpty_belong_bank     VARCHAR2(500),
+  accti_subj_id          VARCHAR2(60),
+  tran_flow_num          VARCHAR2(100)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values ('20220930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220901 values ('20220901')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220902 values ('20220902')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220903 values ('20220903')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220904 values ('20220904')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220905 values ('20220905')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220906 values ('20220906')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220907 values ('20220907')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220908 values ('20220908')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220909 values ('20220909')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220910 values ('20220910')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220911 values ('20220911')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220912 values ('20220912')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220913 values ('20220913')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220914 values ('20220914')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220915 values ('20220915')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220916 values ('20220916')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220917 values ('20220917')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220918 values ('20220918')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220919 values ('20220919')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220920 values ('20220920')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220921 values ('20220921')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220922 values ('20220922')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220923 values ('20220923')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220924 values ('20220924')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220925 values ('20220925')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220926 values ('20220926')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220927 values ('20220927')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220928 values ('20220928')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220929 values ('20220929')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST
+  is '企业网银交易明细表';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.cust_id
+  is '客户编号';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.cust_name
+  is '客户名称';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.acct_id
+  is '账户编号';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.sub_acct_id
+  is '子账户编号';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.cn_acct_cd
+  is '账户属性代码';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.cn_acct_type
+  is '账户属性类型';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.tran_type_name
+  is '交易名称';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.tran_status_name
+  is '交易状态代码';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.tran_curr_cd
+  is '币种代码';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.oc_tran_amt
+  is '交易金额';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.tran_amt_convt_cny_amt
+  is '折人民币金额';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.tran_chn_cd
+  is '渠道代码';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.tran_chn_name
+  is '渠道名称';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.cntpty_acct_id
+  is '交易对手账户编号';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.cntpty_acct_name
+  is '交易对手账户名称';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.cntpty_belong_bank
+  is '交易对手账户开户行名';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.accti_subj_id
+  is '科目编号';
+comment on column RRP_MDL.M_MRPT_TRAN_WYJYMX_TEST.tran_flow_num
+  is '交易流水号';
+

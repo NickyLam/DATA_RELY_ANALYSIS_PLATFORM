@@ -1,0 +1,54 @@
+﻿create table RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO
+(
+  id             NUMBER(22),
+  draft_id       NUMBER(22),
+  draft_number   VARCHAR2(30),
+  voucher_no     VARCHAR2(180),
+  voucher_curcd  VARCHAR2(3),
+  voucher_amt    NUMBER(18,2),
+  voucher_type   VARCHAR2(2),
+  voucher_source VARCHAR2(1),
+  remark         VARCHAR2(180),
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO
+  is '票据发票信息表';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.id
+  is '主键ID';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.draft_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.draft_number
+  is '票据(包)号';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.voucher_no
+  is '凭证号';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.voucher_curcd
+  is '未知';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.voucher_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.voucher_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.voucher_source
+  is '未知';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_BDMS_BIL_COMMERCIAL_VOUCHER_INFO.id_mark
+  is '增删标志';
+

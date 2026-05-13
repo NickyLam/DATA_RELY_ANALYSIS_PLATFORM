@@ -1,0 +1,177 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT
+(
+  accid                  VARCHAR2(30),
+  accname                VARCHAR2(180),
+  markets                VARCHAR2(150),
+  exhacc                 VARCHAR2(75),
+  password               VARCHAR2(75),
+  status                 NUMBER,
+  currency               VARCHAR2(5),
+  dn_ratio               NUMBER(31,4),
+  threshold              NUMBER(31,4),
+  large_pay_accno        VARCHAR2(75),
+  rate                   NUMBER(10,6),
+  bank_code              VARCHAR2(75),
+  bank_name              VARCHAR2(383),
+  open_date              VARCHAR2(15),
+  is_dvp                 VARCHAR2(2),
+  customer_id            VARCHAR2(45),
+  customer_name          VARCHAR2(150),
+  inner_accid            VARCHAR2(30),
+  enabled                VARCHAR2(2),
+  hands_bank_code        VARCHAR2(45),
+  coupontype             VARCHAR2(15),
+  accounttype            VARCHAR2(2),
+  inner_code             VARCHAR2(45),
+  oldinst_id             VARCHAR2(45),
+  inner_accname          VARCHAR2(180),
+  payment_freq           VARCHAR2(9),
+  rate_def_id            NUMBER(11),
+  update_user            VARCHAR2(150),
+  update_time            VARCHAR2(30),
+  create_time            VARCHAR2(30),
+  invest_type            NUMBER,
+  pay_month              NUMBER,
+  pay_day                NUMBER,
+  i_id                   NUMBER,
+  coupon                 NUMBER(10,6),
+  close_date             VARCHAR2(30),
+  p_type                 VARCHAR2(30),
+  p_class                VARCHAR2(150),
+  subj_code              VARCHAR2(75),
+  swift_code             VARCHAR2(150),
+  mid_bank_acct_code     VARCHAR2(75),
+  mid_bank_name          VARCHAR2(75),
+  mid_swift_code         VARCHAR2(75),
+  use_cash_acc           NUMBER(1),
+  bank_legal_person_name VARCHAR2(225),
+  branch_bank_number     VARCHAR2(135),
+  account_nature         VARCHAR2(225),
+  account_attribute      VARCHAR2(225),
+  cross_border_acc       VARCHAR2(48),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT
+  is '一级资金账户表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.accid
+  is '账户代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.accname
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.markets
+  is '交易市场';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.exhacc
+  is '划款账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.password
+  is '密码（密文）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.status
+  is '状态;1草稿2审核中3审核完成4退回';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.dn_ratio
+  is '等待补充';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.threshold
+  is '等待补充';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.large_pay_accno
+  is '大额支付行号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.rate
+  is '利率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.bank_code
+  is '支付系统银行行号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.bank_name
+  is '银行名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.open_date
+  is '开户日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.is_dvp
+  is '1 是 0 否';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.customer_id
+  is '客户id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.customer_name
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.inner_accid
+  is '内部资金账号id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.enabled
+  is '启用--等待补充';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.hands_bank_code
+  is '农信银行号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.coupontype
+  is '计息方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.accounttype
+  is '账户类别';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.inner_code
+  is '内部账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.oldinst_id
+  is '记账机构';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.inner_accname
+  is '内部账名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.payment_freq
+  is '付息周期,如 1y，6m，7d';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.rate_def_id
+  is '利率定义id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.update_user
+  is '更新人员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.invest_type
+  is '0自有资产（自营业务）、1客户资产（代客、理财）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.pay_month
+  is '支付月份';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.pay_day
+  is '支付日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.i_id
+  is '机构ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.coupon
+  is '执行利率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.close_date
+  is '销户时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.p_type
+  is '产品类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.p_class
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.subj_code
+  is '本金科目号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.swift_code
+  is 'swift电文代号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.mid_bank_acct_code
+  is '中间行账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.mid_bank_name
+  is '中间行名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.mid_swift_code
+  is '中间行swift代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.use_cash_acc
+  is 'swift报文是否含账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.bank_legal_person_name
+  is '开户行法人名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.branch_bank_number
+  is '存款行网点行号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.account_nature
+  is '账户性质';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.account_attribute
+  is '账户属性';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.cross_border_acc
+  is '跨境同业往来账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACC_CASH_EXT.etl_timestamp
+  is 'etl处理时间';
+

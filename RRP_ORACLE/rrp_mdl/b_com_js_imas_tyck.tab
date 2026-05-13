@@ -1,0 +1,74 @@
+﻿create table RRP_MDL.B_COM_JS_IMAS_TYCK
+(
+  org_code               VARCHAR2(18),
+  org_num                VARCHAR2(30),
+  product_type           VARCHAR2(4),
+  cont_party_type        CHAR(3),
+  cont_party_code        VARCHAR2(60),
+  dep_acc_code           VARCHAR2(60),
+  dep_agr_code           VARCHAR2(60),
+  con_bgn_date           CHAR(10),
+  con_due_date           CHAR(10),
+  curr_code              CHAR(3),
+  int_rate               NUMBER(15,5),
+  deposit_reserve_method CHAR(4),
+  cust_id                VARCHAR2(30),
+  jrjglxdm               VARCHAR2(3),
+  ckqxlx                 VARCHAR2(2),
+  djjzlx                 VARCHAR2(4),
+  lllx                   VARCHAR2(4),
+  sjll                   NUMBER(10,5),
+  jzll                   NUMBER(10,5),
+  llfdpl                 VARCHAR2(2),
+  ysbh                   VARCHAR2(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.B_COM_JS_IMAS_TYCK
+  is '金数-利率报表同业存款公共表';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.org_code
+  is '金融机构代码';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.org_num
+  is '内部机构号';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.product_type
+  is '业务类型';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.cont_party_type
+  is '交易对手类别';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.cont_party_code
+  is '交易对手代码';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.dep_acc_code
+  is '存款账户编码';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.dep_agr_code
+  is '存款协议代码';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.con_bgn_date
+  is '协议起始日期';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.con_due_date
+  is '协议到期日期';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.curr_code
+  is '币种';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.int_rate
+  is '利率水平';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.deposit_reserve_method
+  is '缴存准备金方式';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.cust_id
+  is '客户号';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.jrjglxdm
+  is '金融机构类型代码';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.ckqxlx
+  is '存款期限类型';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.djjzlx
+  is '定价基准类型';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.lllx
+  is '利率类型';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.sjll
+  is '实际利率';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.jzll
+  is '基准利率';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.llfdpl
+  is '利率浮动频率';
+comment on column RRP_MDL.B_COM_JS_IMAS_TYCK.ysbh
+  is '预算编号';
+

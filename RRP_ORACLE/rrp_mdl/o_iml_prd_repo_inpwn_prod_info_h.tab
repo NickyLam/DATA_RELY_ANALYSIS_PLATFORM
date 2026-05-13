@@ -1,0 +1,66 @@
+﻿create table RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H
+(
+  prod_id           VARCHAR2(250),
+  lp_id             VARCHAR2(60),
+  fin_prod_id       VARCHAR2(100),
+  brch_seq_num      NUMBER(10),
+  inpwn_fin_prod_id VARCHAR2(100),
+  inpwn_fac_val     NUMBER(30,2),
+  inpwn_qtty        NUMBER(30,2),
+  inpwn_rat         NUMBER(30,14),
+  inpwn_amt         NUMBER(30,2),
+  create_tm         TIMESTAMP(6),
+  update_tm         TIMESTAMP(6),
+  start_dt          DATE,
+  end_dt            DATE,
+  id_mark           VARCHAR2(10),
+  src_table_name    VARCHAR2(100),
+  job_cd            VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H
+  is '回购质押产品信息历史';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.fin_prod_id
+  is '金融产品编号';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.brch_seq_num
+  is '分支序号';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.inpwn_fin_prod_id
+  is '质押金融产品编号';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.inpwn_fac_val
+  is '质押面值';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.inpwn_qtty
+  is '质押数量';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.inpwn_rat
+  is '质押率';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.inpwn_amt
+  is '质押金额';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.create_tm
+  is '创建时间';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.update_tm
+  is '更新时间';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PRD_REPO_INPWN_PROD_INFO_H.job_cd
+  is '任务代码';
+

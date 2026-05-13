@@ -1,0 +1,47 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501
+(
+  keepfolder_id        NUMBER,
+  aspclient_id         NUMBER,
+  keepfolder_code      CHAR(20),
+  keepfolder_shortname VARCHAR2(50),
+  lastmodified         TIMESTAMP(6),
+  costmethod           CHAR(1),
+  calcdayenddate1      NUMBER,
+  calcdayenddate2      NUMBER,
+  controlfactor        VARCHAR2(20),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501
+  is '账户视图';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.keepfolder_id
+  is '账户ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.aspclient_id
+  is '部门ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.keepfolder_code
+  is '账户代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.keepfolder_shortname
+  is '账户简称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.lastmodified
+  is '最后修改时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.costmethod
+  is '核算方式';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.calcdayenddate1
+  is '收盘日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.calcdayenddate2
+  is '交易日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.controlfactor
+  is '控制因素';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_KEEPFOLDER_BAK_20230501.id_mark
+  is '增删标志';
+

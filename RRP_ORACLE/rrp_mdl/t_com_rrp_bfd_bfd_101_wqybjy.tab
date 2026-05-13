@@ -1,0 +1,39 @@
+﻿create table RRP_MDL.T_COM_RRP_BFD_BFD_101_WQYBJY
+(
+  rid              VARCHAR2(50) not null,
+  jrjgfzjgtyshxydm VARCHAR2(18),
+  dwzjlx           VARCHAR2(3),
+  dwzjdm           VARCHAR2(60),
+  dfywkssj         VARCHAR2(10),
+  ygzjlx           VARCHAR2(3),
+  orig_ygzjdm      VARCHAR2(60),
+  ygzjdm           VARCHAR2(60),
+  dfgzje           NUMBER(20,2),
+  dfgzrq           VARCHAR2(10),
+  data_dt          VARCHAR2(10),
+  dept_no          VARCHAR2(20),
+  issued_no        VARCHAR2(20),
+  rpt_org_no       VARCHAR2(30),
+  data_ources      VARCHAR2(2),
+  data_modify      VARCHAR2(2),
+  force_sub_sts    VARCHAR2(1),
+  force_sub_reason VARCHAR2(200),
+  rule_name        VARCHAR2(2000),
+  rule_id          VARCHAR2(1000),
+  org_no           VARCHAR2(60),
+  note             VARCHAR2(60),
+  dw_cust_id       VARCHAR2(200),
+  dwzh             VARCHAR2(200),
+  dwhm             VARCHAR2(2000),
+  yg_cust_id       VARCHAR2(200),
+  ygxm             VARCHAR2(2000),
+  zhlx             VARCHAR2(200),
+  dffy             VARCHAR2(2000),
+  ygzh             VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

@@ -1,0 +1,171 @@
+﻿create table RRP_MDL.O_IOL_ABSS_FLOW_TASK
+(
+  serialno         VARCHAR2(48),
+  objectno         VARCHAR2(48),
+  objecttype       VARCHAR2(60),
+  relativeserialno VARCHAR2(48),
+  flowno           VARCHAR2(48),
+  flowname         VARCHAR2(120),
+  phaseno          VARCHAR2(48),
+  phasename        VARCHAR2(120),
+  phasetype        VARCHAR2(27),
+  applytype        VARCHAR2(60),
+  userid           VARCHAR2(48),
+  username         VARCHAR2(120),
+  orgid            VARCHAR2(48),
+  orgname          VARCHAR2(120),
+  begintime        VARCHAR2(30),
+  endtime          VARCHAR2(30),
+  phasechoice      VARCHAR2(120),
+  phaseaction      VARCHAR2(750),
+  phaseopinion     VARCHAR2(4000),
+  phaseopinion1    VARCHAR2(375),
+  phaseopinion2    VARCHAR2(375),
+  phaseopinion3    VARCHAR2(375),
+  phaseopinion4    VARCHAR2(375),
+  checklistresult  VARCHAR2(120),
+  autodecision     VARCHAR2(120),
+  riskscanresult   VARCHAR2(120),
+  standardtime1    VARCHAR2(48),
+  standardtime2    VARCHAR2(48),
+  costlob          VARCHAR2(48),
+  clientx          NUMBER,
+  clienty          NUMBER,
+  width            NUMBER,
+  heigth           NUMBER,
+  groupinfo        VARCHAR2(1500),
+  processinstno    VARCHAR2(48),
+  processtaskno    VARCHAR2(48),
+  relativeobjectno VARCHAR2(48),
+  flowstate        VARCHAR2(120),
+  forkstate        VARCHAR2(9),
+  version          VARCHAR2(15),
+  baseflowno       VARCHAR2(48),
+  taskstate        VARCHAR2(9),
+  forkno           VARCHAR2(30),
+  allforkno        VARCHAR2(120),
+  parentflowno     VARCHAR2(96),
+  assignedtaskno   VARCHAR2(480),
+  relanoticeno     VARCHAR2(60),
+  start_dt         DATE,
+  end_dt           DATE,
+  id_mark          VARCHAR2(10),
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ABSS_FLOW_TASK
+  is '流程阶段数据';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.objectno
+  is '对象编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.objecttype
+  is '对象类型';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.relativeserialno
+  is '上一流水号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.flowno
+  is '流程编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.flowname
+  is '流程名称';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.phaseno
+  is '阶段编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.phasename
+  is '阶段名称';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.phasetype
+  is '阶段类型';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.applytype
+  is '申请类型';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.userid
+  is '承办人编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.username
+  is '承办人姓名';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.orgid
+  is '承办机构编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.orgname
+  is '承办机构名称';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.begintime
+  is '开始执行时间';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.endtime
+  is '完成执行时间';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.phasechoice
+  is '阶段意见';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.phaseaction
+  is '阶段动作';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.phaseopinion
+  is '意见详情';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.phaseopinion1
+  is '意见详情1';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.phaseopinion2
+  is '意见详情2';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.phaseopinion3
+  is '意见详情3';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.phaseopinion4
+  is '意见详情4';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.checklistresult
+  is '检查清单结果';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.autodecision
+  is '自动审批判断结果';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.riskscanresult
+  is '风险探测结果';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.standardtime1
+  is '标准审批用时';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.standardtime2
+  is '最长审批用时';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.costlob
+  is '审批成本归属';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.clientx
+  is '图元X坐标';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.clienty
+  is '图元Y坐标';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.width
+  is '图元宽度';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.heigth
+  is '图元高度';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.groupinfo
+  is '分组信息';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.processinstno
+  is '流程实例';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.processtaskno
+  is '任务编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.relativeobjectno
+  is '关联对象编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.flowstate
+  is '工作流状态';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.forkstate
+  is '分支状态';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.version
+  is '系统未使用';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.baseflowno
+  is '基础流程编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.taskstate
+  is '任务状态';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.forkno
+  is '并行分支编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.allforkno
+  is '所有的并行分支编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.parentflowno
+  is '父流程编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.assignedtaskno
+  is '指定任务编号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.relanoticeno
+  is '关联意见号';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ABSS_FLOW_TASK.etl_timestamp
+  is 'ETL处理时间戳';
+

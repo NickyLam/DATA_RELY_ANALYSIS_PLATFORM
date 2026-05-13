@@ -1,0 +1,96 @@
+﻿create table RRP_MDL.EAST5_702_ZCHXB_20221231
+(
+  rid        VARCHAR2(50) not null,
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  khtybh     VARCHAR2(70),
+  khmc       VARCHAR2(450),
+  zclx       VARCHAR2(30),
+  hth        VARCHAR2(100) not null,
+  jjh        VARCHAR2(100) not null,
+  bz         VARCHAR2(3) not null,
+  hxbj       NUMBER(20,2),
+  shbnlx     NUMBER(20,2),
+  shbwlx     NUMBER(20,2),
+  hxrq       VARCHAR2(8),
+  shbj       NUMBER(20,2),
+  shlx       NUMBER(20,2),
+  shrq       VARCHAR2(8),
+  shbz       VARCHAR2(12),
+  shygh      VARCHAR2(70),
+  hxzt       VARCHAR2(30),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8) not null,
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  address    VARCHAR2(500),
+  khmc_orig  VARCHAR2(450),
+  khmc_oth   VARCHAR2(5),
+  gsfzjg     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.khtybh
+  is '客户统一编号';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.khmc
+  is '客户名称';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.zclx
+  is '金融资产类型';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.hth
+  is '合同号';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.jjh
+  is '借据号';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.bz
+  is '申请控制金额币种';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.hxbj
+  is '实核本金';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.shbnlx
+  is '实核表内利息';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.shbwlx
+  is '实核表外利息';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.hxrq
+  is '核销日期';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.shbj
+  is '收回本金';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.shlx
+  is '收回利息';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.shrq
+  is '收回日期';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.shbz
+  is '收回标志';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.shygh
+  is '收回员工号';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.hxzt
+  is '核销状态';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.khmc_orig
+  is '客户名称（脱敏前）';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.khmc_oth
+  is '客户是否个人客户';
+comment on column RRP_MDL.EAST5_702_ZCHXB_20221231.gsfzjg
+  is '归属分支机构';
+

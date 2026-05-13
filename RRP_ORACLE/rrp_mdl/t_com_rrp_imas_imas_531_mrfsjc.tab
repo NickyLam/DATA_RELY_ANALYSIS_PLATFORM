@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.T_COM_RRP_IMAS_IMAS_531_MRFSJC
+(
+  rid                VARCHAR2(50) not null,
+  data_dt            VARCHAR2(10),
+  org_no             VARCHAR2(30),
+  cust_no            VARCHAR2(30),
+  fin_org_type_no    VARCHAR2(3),
+  bus_no             VARCHAR2(100),
+  rpch_type          VARCHAR2(3),
+  subj_type          VARCHAR2(2),
+  start_dt           VARCHAR2(10),
+  due_dt             VARCHAR2(10),
+  act_due_dt         VARCHAR2(10),
+  rpch_term_type     VARCHAR2(2),
+  price_base_type    VARCHAR2(4),
+  int_type           VARCHAR2(4),
+  act_int_rate       NUMBER(15,5),
+  base_int_rate      NUMBER(15,5),
+  prin_type          VARCHAR2(2),
+  int_rate_flct_freq VARCHAR2(2),
+  bal                NUMBER(22,2),
+  cntpty_cust_id     VARCHAR2(500),
+  cntpty_cust_nm     VARCHAR2(500),
+  ources_id          VARCHAR2(500),
+  dept_no            VARCHAR2(30),
+  issued_no          VARCHAR2(20),
+  rpt_org_no         VARCHAR2(20),
+  data_ources        VARCHAR2(20),
+  data_modify        VARCHAR2(2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

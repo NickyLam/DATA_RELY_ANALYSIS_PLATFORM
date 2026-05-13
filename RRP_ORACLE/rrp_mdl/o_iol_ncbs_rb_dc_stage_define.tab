@@ -1,0 +1,168 @@
+﻿create table RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE
+(
+  ccy                    VARCHAR2(3),
+  prod_type              VARCHAR2(12),
+  user_id                VARCHAR2(8),
+  term                   VARCHAR2(5),
+  term_type              VARCHAR2(1),
+  auto_settle_flag       VARCHAR2(1),
+  back_status            VARCHAR2(1),
+  company                VARCHAR2(20),
+  error_desc             VARCHAR2(3000),
+  int_calc_type          VARCHAR2(1),
+  issue_year             VARCHAR2(5),
+  operate_method         VARCHAR2(2),
+  part_withdraw_num      NUMBER(5),
+  pay_int_type           VARCHAR2(3),
+  pre_withdraw_flag      VARCHAR2(1),
+  ration_type            VARCHAR2(1),
+  redemption_flag        VARCHAR2(1),
+  reset_int_freq         VARCHAR2(5),
+  sale_type              VARCHAR2(1),
+  stage_code             VARCHAR2(50),
+  stage_code_desc        VARCHAR2(200),
+  stage_limit_class      VARCHAR2(10),
+  stage_prod_class       VARCHAR2(5),
+  stage_status           VARCHAR2(2),
+  transfer_flag          VARCHAR2(1),
+  issue_end_date         DATE,
+  issue_start_date       DATE,
+  precontract_end_time   VARCHAR2(26),
+  precontract_start_time VARCHAR2(26),
+  sale_end_time          VARCHAR2(26),
+  sale_start_time        VARCHAR2(26),
+  tran_date              DATE,
+  tran_timestamp         VARCHAR2(26),
+  distribute_limit       NUMBER(17,2),
+  get_int_freq           VARCHAR2(5),
+  holding_limit          NUMBER(17,2),
+  leave_limit            NUMBER(17,2),
+  stage_max_amt          NUMBER(17,2),
+  stage_min_amt          NUMBER(17,2),
+  stage_remark           VARCHAR2(600),
+  total_limit            NUMBER(17,2),
+  tran_branch            VARCHAR2(12),
+  white_sell_flag        VARCHAR2(1),
+  issue_end_time         VARCHAR2(20),
+  issue_start_time       VARCHAR2(20),
+  allow_buy_way_cd       VARCHAR2(1),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE
+  is '期次定义表';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.ccy
+  is '币种';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.prod_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.user_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.term
+  is '存期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.term_type
+  is '期限单位';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.auto_settle_flag
+  is '自动结清标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.back_status
+  is '额度回收状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.error_desc
+  is '错误描述';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.int_calc_type
+  is '计息类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.issue_year
+  is '发行年度';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.operate_method
+  is '配额类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.part_withdraw_num
+  is '部提次数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.pay_int_type
+  is '付息方式';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.pre_withdraw_flag
+  is '是否允许提前支取';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.ration_type
+  is '配售方式';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.redemption_flag
+  is '是否可赎回';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.reset_int_freq
+  is '利率重置频率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.sale_type
+  is '销售方式';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.stage_code
+  is '期次代码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.stage_code_desc
+  is '期次描述';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.stage_limit_class
+  is '额度扣减类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.stage_prod_class
+  is '期次产品分类';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.stage_status
+  is '期次状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.transfer_flag
+  is '转账标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.issue_end_date
+  is '发行终止日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.issue_start_date
+  is '发行起始日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.precontract_end_time
+  is '预约结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.precontract_start_time
+  is '预约开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.sale_end_time
+  is '止售时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.sale_start_time
+  is '起售时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.tran_date
+  is '交易日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.distribute_limit
+  is '已分配额度';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.get_int_freq
+  is '取息频率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.holding_limit
+  is '已占用额度';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.leave_limit
+  is '剩余额度';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.stage_max_amt
+  is '期次最大购买金额';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.stage_min_amt
+  is '期次起存金额';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.stage_remark
+  is '期次详细备注';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.total_limit
+  is '总额度';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.tran_branch
+  is '核心交易机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.white_sell_flag
+  is '是否白名单发售';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.issue_end_time
+  is '发行终止时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.issue_start_time
+  is '发行起始时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.allow_buy_way_cd
+  is '支持组合购买方式';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_DC_STAGE_DEFINE.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,25 @@
+﻿create table RRP_MDL.T_COM_RRP_EAST_EAST5_901_PJCPXXB_JP
+(
+  pjhm     VARCHAR2(100),
+  pjdqrq   VARCHAR2(8),
+  cprmc    VARCHAR2(450),
+  cprzh    VARCHAR2(60),
+  cprkhhmc VARCHAR2(450),
+  skrmc    VARCHAR2(450),
+  skrzh    VARCHAR2(60),
+  skrkhhmc VARCHAR2(450),
+  jbygh    VARCHAR2(70)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

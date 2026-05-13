@@ -1,0 +1,68 @@
+﻿create table RRP_MDL.M_ADD_LS_006_HOUSE_LAND
+(
+  data_date    VARCHAR2(10),
+  acct_org_num VARCHAR2(20),
+  jywym        VARCHAR2(60),
+  zhwym        VARCHAR2(30),
+  zwjgmc       VARCHAR2(60),
+  khwym        VARCHAR2(30),
+  khmc         VARCHAR2(60),
+  fdcdklb      VARCHAR2(60),
+  dkjzb        NUMBER(10,2),
+  zfts         VARCHAR2(50),
+  jzmj         NUMBER(20,6),
+  jtyjsr       NUMBER(20,6),
+  ywyglf       NUMBER(20,6),
+  sfyfcdy      VARCHAR2(10),
+  zfsj         NUMBER(20,6),
+  zfsfje       NUMBER(20,6),
+  ypzxgz       NUMBER(20,6),
+  sys_source   VARCHAR2(100),
+  tjye         NUMBER(20,6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.M_ADD_LS_006_HOUSE_LAND
+  is '补录表-零售-房地产小基表（模型S67）';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.data_date
+  is '数据日期';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.jywym
+  is '交易唯一码';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.zhwym
+  is '账户唯一码';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.zwjgmc
+  is '账务机构名称';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.khwym
+  is '客户唯一码';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.khmc
+  is '客户名称';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.fdcdklb
+  is '房地产贷款类别';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.dkjzb
+  is '贷款价值比';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.zfts
+  is '住房套数';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.jzmj
+  is '建筑面积（平方米）';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.jtyjsr
+  is '家庭月均收入（元）';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.ywyglf
+  is '月物业管理费（元）';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.sfyfcdy
+  is '是否有房产抵押';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.zfsj
+  is '住房售价（元）';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.zfsfje
+  is '住房首付金额（元）';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.ypzxgz
+  is '押品最新估值（元）';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.sys_source
+  is '来源系统';
+comment on column RRP_MDL.M_ADD_LS_006_HOUSE_LAND.tjye
+  is '统计余额（元）';
+

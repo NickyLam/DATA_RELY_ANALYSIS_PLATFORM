@@ -1,0 +1,93 @@
+﻿create table RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO
+(
+  agt_id                       VARCHAR2(100),
+  lp_id                        VARCHAR2(60),
+  prod_id                      VARCHAR2(60),
+  prod_name                    VARCHAR2(750),
+  ta_cd                        VARCHAR2(30),
+  rgst_rgst_acct_bank_id       VARCHAR2(60),
+  coll_cap_vrfction_acct_id    VARCHAR2(60),
+  coll_cap_veri_acct_acct_name VARCHAR2(375),
+  cap_vrfction_acct_bank_id    VARCHAR2(60),
+  make_acct_bank_acct_id       VARCHAR2(60),
+  make_acct_bank_acct_num_name VARCHAR2(375),
+  keep_acct_bank_acct_id       VARCHAR2(60),
+  keep_acct_bank_acct_num_name VARCHAR2(375),
+  stl_way_cd                   VARCHAR2(10),
+  trust_org_open_bank_name     VARCHAR2(500),
+  trust_org_name               VARCHAR2(375),
+  remark_1                     VARCHAR2(750),
+  start_dt                     DATE,
+  end_dt                       DATE,
+  id_mark                      VARCHAR2(10),
+  src_table_name               VARCHAR2(100),
+  job_cd                       VARCHAR2(10),
+  etl_timestamp                TIMESTAMP(6),
+  buy_acct_id                  VARCHAR2(100),
+  redem_acct_id                VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO
+  is '理财产品清算账户信息';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.prod_name
+  is '产品名称';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.ta_cd
+  is 'TA代码';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.rgst_rgst_acct_bank_id
+  is '注册登记账户银行编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.coll_cap_vrfction_acct_id
+  is '募集验资账户编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.coll_cap_veri_acct_acct_name
+  is '募集验资户账户名称';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.cap_vrfction_acct_bank_id
+  is '验资账户银行编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.make_acct_bank_acct_id
+  is '上帐银行账户编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.make_acct_bank_acct_num_name
+  is '上帐银行账号名称';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.keep_acct_bank_acct_id
+  is '下帐银行账户编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.keep_acct_bank_acct_num_name
+  is '下帐银行账号名称';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.stl_way_cd
+  is '结算方式代码';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.trust_org_open_bank_name
+  is '托管机构开户行名称';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.trust_org_name
+  is '托管机构名称';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.remark_1
+  is '备注1';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.etl_timestamp
+  is '数据处理时间';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.buy_acct_id
+  is '购买账户编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_PROD_CLEAR_ACCT_INFO.redem_acct_id
+  is '赎回账户编号';
+

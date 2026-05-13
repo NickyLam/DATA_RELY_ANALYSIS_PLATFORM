@@ -1,0 +1,33 @@
+﻿create table RRP_MDL.WSD_HH
+(
+  cust_id             VARCHAR2(100),
+  ff_crdt_total_lmt   NUMBER(30,2),
+  ff_opr_crdt_tot_amt NUMBER(30,2),
+  ff_con_crdt_tot_amt NUMBER(30,2),
+  data_src            VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.WSD_HH
+  is '过程临时表';
+comment on column RRP_MDL.WSD_HH.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.WSD_HH.ff_crdt_total_lmt
+  is '发放时授信总额';
+comment on column RRP_MDL.WSD_HH.ff_opr_crdt_tot_amt
+  is '发放时经营授信总额';
+comment on column RRP_MDL.WSD_HH.ff_con_crdt_tot_amt
+  is '发放时消费授信总额';
+comment on column RRP_MDL.WSD_HH.data_src
+  is '数据来源（参见[字典:AML0045]）';
+

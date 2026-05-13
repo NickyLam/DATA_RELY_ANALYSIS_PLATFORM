@@ -1,0 +1,117 @@
+﻿create table RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY
+(
+  counterparty_seq            NUMBER,
+  cus_number                  NUMBER(20),
+  label                       VARCHAR2(96),
+  counterparty_cname          VARCHAR2(384),
+  counterparty_ename          VARCHAR2(384),
+  contact_name                VARCHAR2(90),
+  telephone                   VARCHAR2(30),
+  fax                         VARCHAR2(30),
+  update_user                 NUMBER(5),
+  update_time                 DATE,
+  is_issuer                   VARCHAR2(2),
+  is_bank                     VARCHAR2(2),
+  is_guarantee                VARCHAR2(2),
+  is_custody                  VARCHAR2(2),
+  customer_type               VARCHAR2(30),
+  parent                      NUMBER,
+  rating_level                NVARCHAR2(24),
+  ex_code                     VARCHAR2(96),
+  ex_account                  VARCHAR2(96),
+  swift_code                  VARCHAR2(96),
+  ref_issuer_id               VARCHAR2(60),
+  cfets_member_id             VARCHAR2(60),
+  counterparty_short_cname    VARCHAR2(384),
+  counterparty_short_ename    VARCHAR2(384),
+  cfets_fx_member_id          VARCHAR2(75),
+  cfets_member_attr           VARCHAR2(2),
+  counterparty_fx_short_ename VARCHAR2(384),
+  interbanktype               VARCHAR2(96),
+  overseas                    VARCHAR2(96),
+  start_dt                    DATE,
+  end_dt                      DATE,
+  id_mark                     VARCHAR2(10),
+  etl_timestamp               TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY
+  is '交易对手视图';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.counterparty_seq
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.cus_number
+  is '机构的唯一标识号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.label
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.counterparty_cname
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.counterparty_ename
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.contact_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.telephone
+  is '电话';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.fax
+  is '传真';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.update_user
+  is '更新人员';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.is_issuer
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.is_bank
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.is_guarantee
+  is '是否担保';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.is_custody
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.customer_type
+  is '客户类型 00-对公 01-对私';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.parent
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.rating_level
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.ex_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.ex_account
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.swift_code
+  is 'swift电文代号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.ref_issuer_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.cfets_member_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.counterparty_short_cname
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.counterparty_short_ename
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.cfets_fx_member_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.cfets_member_attr
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.counterparty_fx_short_ename
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.interbanktype
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.overseas
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY.etl_timestamp
+  is 'etl处理时间';
+

@@ -1,0 +1,23 @@
+﻿create table RRP_MDL.PTY_IBANK_CNTPTY_INFO_CM
+(
+  cntpty_id VARCHAR2(60),
+  cust_id   VARCHAR2(100),
+  start_dt  VARCHAR2(20),
+  end_dt    VARCHAR2(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.PTY_IBANK_CNTPTY_INFO_CM
+  is '同业交易对手信息补充表';
+comment on column RRP_MDL.PTY_IBANK_CNTPTY_INFO_CM.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.PTY_IBANK_CNTPTY_INFO_CM.cust_id
+  is '客户编号';
+comment on column RRP_MDL.PTY_IBANK_CNTPTY_INFO_CM.start_dt
+  is '创建日期';
+comment on column RRP_MDL.PTY_IBANK_CNTPTY_INFO_CM.end_dt
+  is '更新日期';
+

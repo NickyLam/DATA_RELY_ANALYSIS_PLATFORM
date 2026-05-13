@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.ADD_SDIS_T_6_15_INFO
+(
+  f150001 VARCHAR2(60),
+  f150007 NUMBER(20,6),
+  f150011 NUMBER(20,2),
+  f150015 NUMBER(20,2),
+  org_no  VARCHAR2(30),
+  data_dt VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_SDIS_T_6_15_INFO
+  is '表6.15 房地产贷款协议补录表';
+comment on column RRP_MDL.ADD_SDIS_T_6_15_INFO.f150001
+  is '协议ID';
+comment on column RRP_MDL.ADD_SDIS_T_6_15_INFO.f150007
+  is '贷款价值比';
+comment on column RRP_MDL.ADD_SDIS_T_6_15_INFO.f150011
+  is '个人住房贷款对应房屋建筑面积';
+comment on column RRP_MDL.ADD_SDIS_T_6_15_INFO.f150015
+  is '个人住房贷款对应房地产押品市场价值';
+comment on column RRP_MDL.ADD_SDIS_T_6_15_INFO.org_no
+  is '填报机构';
+comment on column RRP_MDL.ADD_SDIS_T_6_15_INFO.data_dt
+  is '数据日期';
+

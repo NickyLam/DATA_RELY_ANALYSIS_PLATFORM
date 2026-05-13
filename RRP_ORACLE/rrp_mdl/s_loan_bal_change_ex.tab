@@ -1,0 +1,80 @@
+﻿create table RRP_MDL.S_LOAN_BAL_CHANGE_EX
+(
+  data_dt    VARCHAR2(200),
+  rcpt_id    VARCHAR2(200),
+  org_id     VARCHAR2(200),
+  org_nm     VARCHAR2(200),
+  change_bal NUMBER(30,2),
+  czfs_typ   VARCHAR2(200),
+  czfs_bal   NUMBER(30,2),
+  czfs_dt    VARCHAR2(200),
+  zs_hx_dt   VARCHAR2(200)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240331 values ('20240331')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240531 values ('20240531')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240630 values ('20240630')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20231231 values ('20231231')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240101 values ('20240101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250930 values ('20250930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values ('20220930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.S_LOAN_BAL_CHANGE_EX
+  is '贷款业务整合表';
+comment on column RRP_MDL.S_LOAN_BAL_CHANGE_EX.data_dt
+  is '数据日期';
+comment on column RRP_MDL.S_LOAN_BAL_CHANGE_EX.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.S_LOAN_BAL_CHANGE_EX.org_id
+  is '机构号';
+comment on column RRP_MDL.S_LOAN_BAL_CHANGE_EX.org_nm
+  is '机构名称';
+comment on column RRP_MDL.S_LOAN_BAL_CHANGE_EX.change_bal
+  is '余额变动金额';
+comment on column RRP_MDL.S_LOAN_BAL_CHANGE_EX.czfs_typ
+  is '处置方式
+';
+comment on column RRP_MDL.S_LOAN_BAL_CHANGE_EX.czfs_bal
+  is '处置金额
+';
+comment on column RRP_MDL.S_LOAN_BAL_CHANGE_EX.czfs_dt
+  is '处置时间
+';
+comment on column RRP_MDL.S_LOAN_BAL_CHANGE_EX.zs_hx_dt
+  is '转让或核销时间
+';
+

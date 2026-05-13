@@ -1,0 +1,237 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS
+(
+  inst_id                  NUMBER(16),
+  trade_id                 VARCHAR2(45),
+  inst_type                NUMBER(22),
+  inst_grp_id              NUMBER(16),
+  trd_type                 VARCHAR2(15),
+  set_type                 VARCHAR2(30),
+  theory_set_date          VARCHAR2(15),
+  real_set_date            VARCHAR2(15),
+  h_m_type                 VARCHAR2(30),
+  h_a_type                 VARCHAR2(30),
+  h_i_code                 VARCHAR2(75),
+  party_id                 NUMBER(22),
+  party_name               VARCHAR2(300),
+  order_id                 VARCHAR2(75),
+  is_theory_payment        VARCHAR2(2),
+  bj_market                VARCHAR2(30),
+  bj_state                 NUMBER(22),
+  ext_ord_id               VARCHAR2(75),
+  exe_market               VARCHAR2(45),
+  create_time              VARCHAR2(29),
+  update_time              VARCHAR2(35),
+  update_user              VARCHAR2(150),
+  account_time             VARCHAR2(29),
+  account_user             VARCHAR2(30),
+  memo                     VARCHAR2(750),
+  update_user_id           VARCHAR2(45),
+  cal_date                 VARCHAR2(15),
+  ref_cash_inst_id         NUMBER(16),
+  ref_secu_inst_id         NUMBER(16),
+  inst_setgrp_id           NUMBER(16),
+  state                    NUMBER(16),
+  operator_id              VARCHAR2(45),
+  operator_name            VARCHAR2(150),
+  print_times              NUMBER(22),
+  due_order                VARCHAR2(2),
+  due_obj_key              NUMBER(16),
+  generate_type            NUMBER(22),
+  ref_inst_id              NUMBER(16),
+  is_real_acctg            VARCHAR2(2),
+  real_account_inst_id     NUMBER(16),
+  is_unknown_price         VARCHAR2(2),
+  his_flag                 NUMBER(16),
+  cash_acct_id             VARCHAR2(45),
+  his_inst_id              NUMBER(16),
+  his_ref_inst_id          NUMBER(16),
+  is_operator_checked      VARCHAR2(2),
+  orddate                  VARCHAR2(15),
+  condate                  VARCHAR2(15),
+  is_match                 VARCHAR2(2),
+  settlemode               VARCHAR2(2),
+  host_market              VARCHAR2(30),
+  spv_id                   NUMBER(16),
+  process_type             NUMBER(22),
+  clearing_date            VARCHAR2(15),
+  acctg_estd_completed     VARCHAR2(2),
+  acctg_real_completed     VARCHAR2(2),
+  clearing_completed       VARCHAR2(2),
+  is_period_inst           VARCHAR2(2),
+  tsk_id                   VARCHAR2(45),
+  approvestatus            NUMBER(1),
+  bind_inst_id             NUMBER(16),
+  trader                   VARCHAR2(30),
+  xcc_limit_type           NUMBER(4),
+  exh_extordid             VARCHAR2(75),
+  create_user_id           VARCHAR2(45),
+  q_accname                VARCHAR2(180),
+  q_secu_acct_id           VARCHAR2(45),
+  q_party_zzd_acct_code    VARCHAR2(150),
+  q_p_type                 VARCHAR2(30),
+  q_p_class                VARCHAR2(150),
+  q_currency               VARCHAR2(5),
+  q_i_name                 VARCHAR2(383),
+  q_i_id                   NUMBER(22),
+  q_settle_amount          NUMBER(31,8),
+  q_two_effective_contract VARCHAR2(300),
+  trade_orddate            VARCHAR2(15),
+  trade_ids                VARCHAR2(300),
+  order_ids                VARCHAR2(300),
+  trade_ref_type           NUMBER(22),
+  q_description            VARCHAR2(150),
+  is_refreshable           VARCHAR2(2),
+  etl_dt                   DATE,
+  etl_timestamp            TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS
+  is '主指令表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.inst_id
+  is '产品id-管控平台内部';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.trade_id
+  is '交易编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.inst_type
+  is '存储维度的指令类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.inst_grp_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.trd_type
+  is '交易类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.set_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.theory_set_date
+  is '理论清算日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.real_set_date
+  is '实际结算的日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.h_m_type
+  is '父金融工具市场类型 XSHG: 上交所 XSHE:深交所 X_CNFFEX;中金所 X_CNBD;银行间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.h_a_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.h_i_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.party_name
+  is '员工名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.order_id
+  is '订单编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.is_theory_payment
+  is '是否需要理论核算 0:不需要 1：需要；默认为0；用于抹账的时候，退回到理论状态还是未核算状态';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.bj_market
+  is '薄记市场';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.bj_state
+  is '簿记状态 0:没有簿记';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.ext_ord_id
+  is '外部成交编号，用于指令查询和中债指令匹配';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.exe_market
+  is '二级资金账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.update_user
+  is '更新者id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.account_time
+  is '记账时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.account_user
+  is '复核人员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.update_user_id
+  is '更新用户编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.cal_date
+  is '理论结算日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.ref_cash_inst_id
+  is '关联的资金指令ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.ref_secu_inst_id
+  is '关联的券指令ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.inst_setgrp_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.state
+  is '国家名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.operator_id
+  is '操作人id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.operator_name
+  is '经办人姓名';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.print_times
+  is '打印次数';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.due_order
+  is '挂账顺序';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.due_obj_key
+  is '挂账序号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.generate_type
+  is '指令生成类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.ref_inst_id
+  is '关联主指令号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.is_real_acctg
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.real_account_inst_id
+  is '实际核算主指令号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.is_unknown_price
+  is '是否未知价格 0：已知价格 1：未知价格';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.his_flag
+  is '历史交易表示0.普通交易（默认）1.补录 2.撤销 3.反冲 4。修改';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.cash_acct_id
+  is '内部资金账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.his_inst_id
+  is '调账主指令号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.his_ref_inst_id
+  is '历史关联主指令号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.is_operator_checked
+  is '是否进行过资金指令编辑金额校验 0:未校验,1:已校验';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.orddate
+  is '交易日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.condate
+  is '确认日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.is_match
+  is '是否是清算流水durable结算指令，1：是，其他：不是';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.settlemode
+  is '结算类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.host_market
+  is '托管场所';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.spv_id
+  is 'spv信息id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.process_type
+  is '审批类型：1、准入模型输出结果 2、征信模型输出结果 3、业务申请评分模型输出结果 4、风险核查模型输出结果 5、免下户额度模型输出结果；6、企业征信模型输出结果 7、流水模型输出结果 8、交叉检验模型输出结果 9、综合评分授信模型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.clearing_date
+  is '清算日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.acctg_estd_completed
+  is '理论流程是否完成 0：未完成， 1 已完成';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.acctg_real_completed
+  is '实收流程是否完成 0：未完成， 1 已完成';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.clearing_completed
+  is '清算是否完成 0：未完成， 1 已完成';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.is_period_inst
+  is '0：非存续期指令 1：存续期指令';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.tsk_id
+  is '任务号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.approvestatus
+  is '0：需要检查差额审批；1：不需要检查差额审批；2：周期指令新建状态提交差额审批；3：周期指令新建状态提交差额审批审批通过；4：周期指令自动确认状态提交差额审批；5：周期指令自动确认状态提交差额审批审批通过；-1:差额审批拒绝；';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.bind_inst_id
+  is '绑定id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.trader
+  is '交易员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.xcc_limit_type
+  is '限额指令类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.exh_extordid
+  is '委托编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.create_user_id
+  is '创建人员id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.q_currency
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_HIS.etl_timestamp
+  is 'ETL处理时间戳';
+

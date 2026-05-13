@@ -1,0 +1,80 @@
+﻿create table RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY
+(
+  data_date    VARCHAR2(10),
+  acct_org_num VARCHAR2(20),
+  jywym        VARCHAR2(60),
+  khwym        VARCHAR2(30),
+  khmc         VARCHAR2(200),
+  cplx         VARCHAR2(30),
+  cpmc         VARCHAR2(100),
+  zqzrrq       VARCHAR2(10),
+  zrfslb       VARCHAR2(50),
+  dybj         NUMBER(20,6),
+  czqwjfl      VARCHAR2(10),
+  sfzzg        VARCHAR2(10),
+  ssje         NUMBER(20,6),
+  dzhhxje      NUMBER(20,6),
+  dzhzrhsxj    NUMBER(20,6),
+  zrshqtdj     NUMBER(20,6),
+  zcje         NUMBER(20,6),
+  zczrjypt     VARCHAR2(50),
+  zczrdjpt     VARCHAR2(50),
+  zjjydslb     VARCHAR2(50),
+  sys_source   VARCHAR2(100),
+  sfsc         VARCHAR2(10),
+  jydslb       VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY
+  is '临时表-零售-资产转让模型';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.data_date
+  is '数据日期';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.jywym
+  is '交易唯一码';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.khwym
+  is '客户唯一码';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.khmc
+  is '客户名称';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.cplx
+  is '产品类型';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.cpmc
+  is '产品名称';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.zqzrrq
+  is '债权转让日期';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.zrfslb
+  is '转让方式类别';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.dybj
+  is '对应本金';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.czqwjfl
+  is '处置前五级分类';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.sfzzg
+  is '是否债转股';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.ssje
+  is '损失金额（元）';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.dzhhxje
+  is '调整后核销金额（元）';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.dzhzrhsxj
+  is '调整后转让回收现金（元）';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.zrshqtdj
+  is '转让收回其他对价';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.zcje
+  is '自持金额（元）';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.zczrjypt
+  is '资产转让交易平台';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.zczrdjpt
+  is '资产转让登记平台';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.zjjydslb
+  is '直接交易对手类别';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.sys_source
+  is '来源系统';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.sfsc
+  is '是否删除';
+comment on column RRP_MDL.TMP_ADD_LS_013_ASSETS_CONVEY.jydslb
+  is '交易对手类别（人行）';
+

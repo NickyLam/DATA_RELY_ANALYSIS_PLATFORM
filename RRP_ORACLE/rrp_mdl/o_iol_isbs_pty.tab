@@ -1,0 +1,209 @@
+﻿create table RRP_MDL.O_IOL_ISBS_PTY
+(
+  inr           VARCHAR2(12),
+  extkey        VARCHAR2(36),
+  nam           VARCHAR2(60),
+  ptytyp        VARCHAR2(23),
+  accusr        VARCHAR2(12),
+  hbkaccflg     VARCHAR2(2),
+  hbkconflg     VARCHAR2(2),
+  hbkinr        VARCHAR2(12),
+  heqaccflg     VARCHAR2(2),
+  heqconflg     VARCHAR2(2),
+  heqinr        VARCHAR2(12),
+  prfctr        VARCHAR2(9),
+  resusr        VARCHAR2(12),
+  rskcls        VARCHAR2(9),
+  rskcty        VARCHAR2(3),
+  rsktxt        VARCHAR2(53),
+  uil           VARCHAR2(3),
+  ver           VARCHAR2(6),
+  akkbra        VARCHAR2(5),
+  akkcom        VARCHAR2(12),
+  akkreg        VARCHAR2(3),
+  lidcndflg     VARCHAR2(2),
+  lidmaxdur     NUMBER(4),
+  trdcndflg     VARCHAR2(2),
+  trdtentot     NUMBER(5),
+  trdtenini     NUMBER(5),
+  trdtenext     NUMBER(5),
+  trdextnmb     NUMBER(5),
+  badcndflg     VARCHAR2(2),
+  badtenext     NUMBER(4),
+  adrsta        VARCHAR2(2),
+  seltyp        VARCHAR2(2),
+  buytyp        VARCHAR2(2),
+  sla           VARCHAR2(5),
+  etgextkey     VARCHAR2(12),
+  nam1          VARCHAR2(105),
+  juscod        VARCHAR2(15),
+  bilvvv        NUMBER(8,5),
+  cunqii        VARCHAR2(5),
+  idcode        VARCHAR2(48),
+  idtype        VARCHAR2(2),
+  bchkeyinr     VARCHAR2(12),
+  clscty        VARCHAR2(9),
+  procod        VARCHAR2(3),
+  trnman        VARCHAR2(3),
+  speeco        VARCHAR2(2),
+  idtyp1        VARCHAR2(6),
+  ratstm        VARCHAR2(4000),
+  banktyp       VARCHAR2(5),
+  godcus        VARCHAR2(2),
+  imginr        VARCHAR2(12),
+  bankno        VARCHAR2(30),
+  drccod        VARCHAR2(30),
+  bnkkey        VARCHAR2(48),
+  bnkref        VARCHAR2(30),
+  risran        VARCHAR2(15),
+  imginr2       VARCHAR2(12),
+  risrantxt     VARCHAR2(765),
+  idcodlst      VARCHAR2(300),
+  idtyplst      VARCHAR2(90),
+  iscrb         VARCHAR2(2),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_PTY
+  is '当事人信息';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.inr
+  is '内部唯一id号';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.extkey
+  is '客户号';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.nam
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.ptytyp
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.accusr
+  is '用户帐户的id';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.hbkaccflg
+  is 'housebank帐户标志';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.hbkconflg
+  is 'housebank用户环境标志';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.hbkinr
+  is '银行inr';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.heqaccflg
+  is '总行帐户标志';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.heqconflg
+  is '总行环境标志';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.heqinr
+  is '总行inr';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.prfctr
+  is '收益中心';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.resusr
+  is '客户经理';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.rskcls
+  is '风险等级';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.rskcty
+  is '风险国家';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.rsktxt
+  is '风险文本描述';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.uil
+  is '传输的语言';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.ver
+  is '版本号';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.akkbra
+  is 'akk商业区域';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.akkcom
+  is 'akk公司id';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.akkreg
+  is 'akk地区编号';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.lidcndflg
+  is '特别l/c情况';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.lidmaxdur
+  is 'l/c最大期限日';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.trdcndflg
+  is '特别交易情况';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.trdtentot
+  is '汇票的最大期限日maximum';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.trdtenini
+  is '最初汇票期限initial';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.trdtenext
+  is '汇票的最大延期日maximum';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.trdextnmb
+  is '汇票最大延期数';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.badcndflg
+  is '特别ba情况';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.badtenext
+  is 'ba最大期限日';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.adrsta
+  is '地址状态';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.seltyp
+  is '客户信贷利率';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.buytyp
+  is '客户借贷利率';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.sla
+  is '服务等级';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.etgextkey
+  is '实体组';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.nam1
+  is '中文名称chinese';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.juscod
+  is '技术监督局编号';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.bilvvv
+  is '上浮比率';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.cunqii
+  is '流动资金贷款利率档次';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.idcode
+  is '身份证号码';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.idtype
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.bchkeyinr
+  is '所属分行inr';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.clscty
+  is '国家的信用等级credit';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.procod
+  is '区域代码province';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.trnman
+  is '交易主体';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.speeco
+  is '特殊经济区域';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.idtyp1
+  is 'id类型1';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.banktyp
+  is '银行类型';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.imginr
+  is '影像流水号';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.bankno
+  is '人行行号';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.drccod
+  is '所属直接参与机构';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.bnkkey
+  is '联系地址外部关键字';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.bnkref
+  is 'ECIF同业客户号';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.risran
+  is '反洗钱等级';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.imginr2
+  is '新客户签约书';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.risrantxt
+  is '反洗钱等级描述';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.idcodlst
+  is '证件号码集合';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.idtyplst
+  is '证件类型集合';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.iscrb
+  is '跨境电商/跨境B2B';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ISBS_PTY.etl_timestamp
+  is 'ETL处理时间戳';
+

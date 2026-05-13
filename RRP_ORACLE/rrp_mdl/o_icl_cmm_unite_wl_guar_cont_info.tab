@@ -1,0 +1,96 @@
+﻿create table RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO
+(
+  etl_dt                       DATE,
+  lp_id                        VARCHAR2(60),
+  guar_cont_id                 VARCHAR2(100),
+  guar_cont_type_cd            VARCHAR2(30),
+  guar_way_cd                  VARCHAR2(30),
+  guar_kind_cd                 VARCHAR2(30),
+  status_cd                    VARCHAR2(30),
+  curr_cd                      VARCHAR2(30),
+  sign_dt                      DATE,
+  effect_dt                    DATE,
+  exp_dt                       DATE,
+  cust_id                      VARCHAR2(100),
+  guartor_cust_id              VARCHAR2(100),
+  guartor_name                 VARCHAR2(500),
+  guartor_cert_type_cd         VARCHAR2(30),
+  guartor_cert_no              VARCHAR2(60),
+  guar_amt                     NUMBER(30,2),
+  gover_fin_guar_corp_guar_flg VARCHAR2(10),
+  rev_guar_flg                 VARCHAR2(10),
+  guar_org_name                VARCHAR2(500),
+  guar_item_promis_id          VARCHAR2(100),
+  rgst_org_id                  VARCHAR2(100),
+  rgstrat_id                   VARCHAR2(100),
+  rgst_dt                      DATE,
+  job_cd                       VARCHAR2(10),
+  etl_timestamp                TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO
+  is '联合网贷担保合同信息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guar_cont_id
+  is '担保合同编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guar_cont_type_cd
+  is '担保合同类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guar_way_cd
+  is '担保方式代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guar_kind_cd
+  is '保证种类代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.status_cd
+  is '状态代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.sign_dt
+  is '签订日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.effect_dt
+  is '生效日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guartor_cust_id
+  is '担保人客户编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guartor_name
+  is '担保人名称';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guartor_cert_type_cd
+  is '担保人证件类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guartor_cert_no
+  is '担保人证件号码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guar_amt
+  is '担保金额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.gover_fin_guar_corp_guar_flg
+  is '政府性融资担保公司保证标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.rev_guar_flg
+  is '反担保标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guar_org_name
+  is '担保机构名称';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.guar_item_promis_id
+  is '担保事项承诺书编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.rgst_org_id
+  is '登记机构编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.rgstrat_id
+  is '登记人编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_GUAR_CONT_INFO.etl_timestamp
+  is '数据处理时间';
+

@@ -1,0 +1,10 @@
+﻿create table RRP_MDL.XXXX
+(
+  a INTEGER
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+

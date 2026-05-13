@@ -1,0 +1,124 @@
+﻿create table RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD
+(
+  ledge_cod                 VARCHAR2(4),
+  cust_acctno               VARCHAR2(32),
+  dpact_no                  VARCHAR2(32),
+  comp_opec_bankno          VARCHAR2(20),
+  fund_from                 VARCHAR2(1),
+  txn_obj_acctno            VARCHAR2(50),
+  comb_asno                 VARCHAR2(8),
+  receipt_name              VARCHAR2(200),
+  people_bank_no            VARCHAR2(20),
+  oppo_bank_name            VARCHAR2(60),
+  inst_cod                  VARCHAR2(10),
+  prod_cd                   VARCHAR2(10),
+  curr_code                 VARCHAR2(2),
+  rmt_cash_flg              VARCHAR2(1),
+  oa_bankno                 VARCHAR2(20),
+  opec_bank_name            VARCHAR2(60),
+  cust_actno                VARCHAR2(32),
+  temp_acctno_ctfc          VARCHAR2(16),
+  basic_acctno_license      VARCHAR2(16),
+  trans_chgpflg             VARCHAR2(1),
+  org_intc_date             VARCHAR2(8),
+  org_end_date              VARCHAR2(8),
+  combprod_cod              VARCHAR2(10),
+  comb_acno                 VARCHAR2(32),
+  acct_acno                 VARCHAR2(32),
+  sys_acctno                VARCHAR2(32),
+  sign_contract_fs_prod_cod VARCHAR2(10),
+  safe_acctno_char          VARCHAR2(4),
+  cnrt_code                 VARCHAR2(30),
+  approve_cod               VARCHAR2(25),
+  openup_flg                VARCHAR2(1),
+  openup_opr_name           VARCHAR2(22),
+  resv_lfield               VARCHAR2(200),
+  rsv_fld                   VARCHAR2(16),
+  resv_fld2                 VARCHAR2(200),
+  resv_fld3                 VARCHAR2(200),
+  resv_bal01                NUMBER(17,2),
+  resv_bal02                NUMBER(17,2),
+  appt_amt                  NUMBER(17,2),
+  succ_cnt                  NUMBER(10),
+  if_flag                   VARCHAR2(1),
+  acct_fbal                 NUMBER(17,2),
+  rsv_acfld                 VARCHAR2(50),
+  rsv_adfld                 VARCHAR2(50),
+  rsv_aefld                 VARCHAR2(50),
+  rsv_affld                 VARCHAR2(50),
+  resv_number               NUMBER(10),
+  resv_date1                VARCHAR2(8),
+  resv_date2                VARCHAR2(8),
+  rmk_info                  VARCHAR2(128),
+  mod_opr                   VARCHAR2(8),
+  mod_unit                  VARCHAR2(10),
+  mod_date                  VARCHAR2(8),
+  mod_time                  NUMBER(10),
+  time_sign                 NUMBER(16),
+  rec_sts                   VARCHAR2(1),
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD
+  is '负债账户补充资料登记表';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.ledge_cod
+  is '法人代码';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.cust_acctno
+  is '保证人账号';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.dpact_no
+  is '负债账号';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.fund_from
+  is '资金来源';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.receipt_name
+  is '收款人姓名';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.oppo_bank_name
+  is '行外对手账户行名';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.prod_cd
+  is '产品代码CD1912';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.curr_code
+  is '币种编码';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.cust_actno
+  is '子户号';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.cnrt_code
+  is '合同编号';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.openup_opr_name
+  is '开户拓展人名称';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.resv_lfield
+  is '备用字段';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.succ_cnt
+  is '成功笔数';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.if_flag
+  is '代偿标志（空值）';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.rsv_acfld
+  is '储种';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.rsv_adfld
+  is '序列号';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.rsv_aefld
+  is '账户标识';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.rsv_affld
+  is '本金科目';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.mod_opr
+  is '维护柜员';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.mod_unit
+  is '维护机构代码';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.mod_date
+  is '维护日期';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.mod_time
+  is '维护时间';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.time_sign
+  is '时间戳';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.rec_sts
+  is '记录状态';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACCTINF_ADD.id_mark
+  is '增删标志';
+

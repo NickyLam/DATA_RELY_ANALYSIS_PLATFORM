@@ -1,0 +1,41 @@
+﻿create table RRP_MDL.T_COM_RRP_BFD_BFD_202_FTYDWC
+(
+  rid              VARCHAR2(50) not null,
+  fin_org_no       VARCHAR2(18),
+  org_no           VARCHAR2(30),
+  id_type          VARCHAR2(3),
+  id_no            VARCHAR2(60),
+  reg_addr         VARCHAR2(400),
+  area_cd          VARCHAR2(6),
+  acct_no          VARCHAR2(60),
+  agrt_no          VARCHAR2(60),
+  dpst_prd_type    VARCHAR2(5),
+  agrt_start_dt    VARCHAR2(10),
+  agrt_due_dt      VARCHAR2(10),
+  curr_cd          VARCHAR2(3),
+  bal              NUMBER(20,2),
+  cny_bal          NUMBER(20,2),
+  int_rate         NUMBER(10,5),
+  dpst_rsrv_mode   VARCHAR2(4),
+  data_dt          VARCHAR2(10),
+  dept_no          VARCHAR2(20),
+  issued_no        VARCHAR2(20),
+  rpt_org_no       VARCHAR2(30),
+  data_ources      VARCHAR2(2),
+  data_modify      VARCHAR2(2),
+  force_sub_sts    VARCHAR2(1),
+  force_sub_reason VARCHAR2(200),
+  rule_name        VARCHAR2(2000),
+  rule_id          VARCHAR2(1000),
+  cust_id          VARCHAR2(200),
+  subj_id          VARCHAR2(200),
+  subj_nm          VARCHAR2(500),
+  prod_nm          VARCHAR2(500),
+  acc_id           VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

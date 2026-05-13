@@ -1,0 +1,40 @@
+﻿create table RRP_MDL.T_COM_RRP_FCAMS_SAFE_CRD_TA
+(
+  rid                    VARCHAR2(100) not null,
+  oper_type_code         VARCHAR2(1),
+  reason_code            VARCHAR2(128),
+  refno                  VARCHAR2(54),
+  cert_type_code         VARCHAR2(8),
+  pty_country_code       VARCHAR2(12),
+  id_code                VARCHAR2(128),
+  person_name            VARCHAR2(128),
+  acctno                 VARCHAR2(64),
+  jy_ccy_code            VARCHAR2(12),
+  jy_amt                 NUMBER(22,2),
+  qs_amt_rmb             NUMBER(22,2),
+  mcc_code               VARCHAR2(16),
+  card_type_code         VARCHAR2(1),
+  card_chnl_code         VARCHAR2(1),
+  bank_code              VARCHAR2(16),
+  branch_safecode        VARCHAR2(24),
+  biz_deal_time          VARCHAR2(40),
+  country_code           VARCHAR2(12),
+  bank_self_num          VARCHAR2(128),
+  card_self_num          VARCHAR2(128),
+  data_dt                VARCHAR2(40),
+  org_no                 VARCHAR2(40),
+  xf_status              VARCHAR2(1),
+  data_status            VARCHAR2(1),
+  task_id                VARCHAR2(100),
+  report_type            VARCHAR2(200),
+  bw_status              VARCHAR2(1),
+  approval_status        VARCHAR2(1),
+  approval_refuse_reason VARCHAR2(128),
+  child_data_status      VARCHAR2(1)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

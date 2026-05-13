@@ -1,0 +1,147 @@
+﻿create table RRP_MDL.ADD_SDIS_T_9_2_INFO
+(
+  j020001 VARCHAR2(60),
+  j020002 VARCHAR2(4000),
+  j020003 VARCHAR2(24),
+  j020004 NUMBER(20,6),
+  j020005 NUMBER(20,2),
+  j020006 VARCHAR2(4000),
+  j020007 VARCHAR2(20),
+  j020008 VARCHAR2(8),
+  j020107 VARCHAR2(8),
+  j020009 VARCHAR2(300),
+  j020108 VARCHAR2(2),
+  j020010 VARCHAR2(3),
+  j020011 VARCHAR2(4000),
+  j020014 VARCHAR2(10),
+  j020015 VARCHAR2(10),
+  j020016 VARCHAR2(10),
+  j020017 VARCHAR2(2),
+  j020018 NUMBER(20,6),
+  j020019 NUMBER(20,2),
+  j020020 VARCHAR2(10),
+  j020021 VARCHAR2(4),
+  j020022 NUMBER(20,6),
+  j020026 VARCHAR2(4000),
+  j020027 VARCHAR2(3),
+  j020028 VARCHAR2(4000),
+  j020029 VARCHAR2(4000),
+  j020030 VARCHAR2(5),
+  j020031 VARCHAR2(4000),
+  j020032 VARCHAR2(4000),
+  j020109 VARCHAR2(4000),
+  j020033 VARCHAR2(2),
+  j020034 VARCHAR2(5),
+  j020087 VARCHAR2(20),
+  j020103 VARCHAR2(1),
+  j020106 VARCHAR2(1),
+  j020110 VARCHAR2(1),
+  j020111 VARCHAR2(60),
+  j020104 VARCHAR2(4000),
+  address VARCHAR2(4000),
+  j020105 VARCHAR2(10),
+  dept_no VARCHAR2(10),
+  org_no  VARCHAR2(30),
+  data_dt VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_SDIS_T_9_2_INFO
+  is '表9.2 投融资标的补录表';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020001
+  is '投融资标的id';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020002
+  is '投融资标的名称';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020003
+  is '机构id';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020004
+  is '发行价格';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020005
+  is '发行规模';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020006
+  is '发行机构名称';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020007
+  is '发行机构代码';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020008
+  is '发行机构大类';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020107
+  is '发行机构小类';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020009
+  is '发行国家地区';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020108
+  is '交易流通场所';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020010
+  is '投融资标的币种';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020011
+  is '投融资标的代码';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020014
+  is '起息日期';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020015
+  is '发行日期';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020016
+  is '到期日期';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020017
+  is '投融资标的利率类型';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020018
+  is '利率收益率';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020019
+  is '最近评估价格';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020020
+  is '评估价格日期';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020021
+  is '投融资标的类别';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020022
+  is '资产风险权重';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020026
+  is '基础资产客户名称';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020027
+  is '基础资产客户国家';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020028
+  is '基础资产客户评级';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020029
+  is '基础资产客户评级机构';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020030
+  is '基础资产客户行业类型';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020031
+  is '基础资产外部评级';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020032
+  is '基础资产评级机构';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020109
+  is '基础资产内部评级';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020033
+  is '基础资产最终投向类型';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020034
+  is '基础资产最终投向行业类型';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020087
+  is '含权类型';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020103
+  is '存在变现障碍标识';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020106
+  is '是否投向市场化债转股相关产品';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020110
+  is '是否投向产业基金';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020111
+  is '被持有股权企业客户id';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020104
+  is '备注';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.address
+  is '地区';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.j020105
+  is '采集日期';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.dept_no
+  is '条线';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.org_no
+  is '报送机构';
+comment on column RRP_MDL.ADD_SDIS_T_9_2_INFO.data_dt
+  is '数据日期';
+

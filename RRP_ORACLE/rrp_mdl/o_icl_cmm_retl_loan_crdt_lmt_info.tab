@@ -1,0 +1,138 @@
+﻿create table RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO
+(
+  etl_dt                            DATE,
+  lp_id                             VARCHAR2(60),
+  lmt_cont_id                       VARCHAR2(60),
+  lmt_cont_cn_name                  VARCHAR2(500),
+  lmt_appl_flow_num                 VARCHAR2(60),
+  cust_id                           VARCHAR2(60),
+  tax_num                           VARCHAR2(250),
+  bus_breed_id                      VARCHAR2(60),
+  prod_id                           VARCHAR2(60),
+  prod_name                         VARCHAR2(1000),
+  actv_flg                          VARCHAR2(10),
+  circl_flg                         VARCHAR2(10),
+  low_risk_bus_flg                  VARCHAR2(10),
+  cust_type_cd                      VARCHAR2(10),
+  prod_type_cd                      VARCHAR2(100),
+  tenor_type_cd                     VARCHAR2(10),
+  curr_cd                           VARCHAR2(10),
+  main_guar_way_cd                  VARCHAR2(10),
+  sub_guar_way_cd                   VARCHAR2(10),
+  status_cd                         VARCHAR2(10),
+  bus_breed_name                    VARCHAR2(100),
+  loan_happ_type_cd                 VARCHAR2(30),
+  tenor                             VARCHAR2(60),
+  begin_dt                          DATE,
+  exp_dt                            DATE,
+  belong_org_id                     VARCHAR2(60),
+  belong_brch_id                    VARCHAR2(60),
+  acct_instit_id                    VARCHAR2(60),
+  mgmt_org_id                       VARCHAR2(60),
+  crdt_lmt                          NUMBER(30,2),
+  occu_crdt_lmt                     NUMBER(30,2),
+  surp_crdt_lmt                     NUMBER(30,2),
+  crdt_open_amt                     NUMBER(30,2),
+  lower_ocup_up_level_crdt_open_amt NUMBER(30,6),
+  lower_ocup_up_level_crdt_nmal_amt NUMBER(30,6),
+  job_cd                            VARCHAR2(10),
+  etl_timestamp                     TIMESTAMP(6),
+  borw_usage_type_cd                VARCHAR2(10),
+  cust_mgr_id                       VARCHAR2(60),
+  termnt_dt                         DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO
+  is '零售贷款授信额度信息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.lmt_cont_id
+  is '额度合同编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.lmt_cont_cn_name
+  is '额度合同中文名称';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.lmt_appl_flow_num
+  is '额度申请流水号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.tax_num
+  is '纳税人识别号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.bus_breed_id
+  is '业务品种编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.prod_name
+  is '产品名称';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.actv_flg
+  is '激活标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.circl_flg
+  is '循环标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.low_risk_bus_flg
+  is '低风险业务标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.prod_type_cd
+  is '产品类型代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.tenor_type_cd
+  is '期限类型代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.main_guar_way_cd
+  is '主担保方式代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.sub_guar_way_cd
+  is '子担保方式代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.status_cd
+  is '状态代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.bus_breed_name
+  is '业务品种名称';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.loan_happ_type_cd
+  is '贷款发生类型代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.tenor
+  is '期限';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.begin_dt
+  is '起始日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.belong_brch_id
+  is '所属分行编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.acct_instit_id
+  is '账务机构编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.mgmt_org_id
+  is '管理机构编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.crdt_lmt
+  is '授信额度';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.occu_crdt_lmt
+  is '已用授信额度';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.surp_crdt_lmt
+  is '剩余授信额度';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.crdt_open_amt
+  is '授信敞口金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.lower_ocup_up_level_crdt_open_amt
+  is '下层占用上层授信敞口金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.lower_ocup_up_level_crdt_nmal_amt
+  is '下层占用上层授信名义金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.etl_timestamp
+  is '数据处理时间';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.borw_usage_type_cd
+  is '贷款用途代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_CRDT_LMT_INFO.termnt_dt
+  is '终止日期';
+

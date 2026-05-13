@@ -1,0 +1,34 @@
+﻿create table RRP_MDL.T_COM_RRP_MRPT_MRPT_SG02101
+(
+  data_dt        VARCHAR2(10),
+  cust_id        VARCHAR2(30),
+  cust_name      VARCHAR2(200),
+  cont_id        VARCHAR2(35),
+  dubil_id       VARCHAR2(100),
+  org_fh         VARCHAR2(200),
+  org_zh         VARCHAR2(200),
+  use_prod       VARCHAR2(100),
+  spl_chain_prod VARCHAR2(100),
+  bus_breed_name VARCHAR2(200),
+  corp_size      VARCHAR2(200),
+  core_ent       VARCHAR2(200),
+  dubil_amt      NUMBER(20,4),
+  v_distr_dt     VARCHAR2(10),
+  v_apot_exp_dt  VARCHAR2(10),
+  dep_trm        NUMBER(20),
+  esr_bal        NUMBER(20,4),
+  dubil_bal      NUMBER(20,4),
+  margin_ratio   NUMBER(18,6),
+  margin_amt     NUMBER(20,4),
+  base_rat       NUMBER(18,6),
+  exec_int_rat   NUMBER(18,6),
+  flt_pt         NUMBER(20,6),
+  comm_fee_rat   NUMBER(20,4),
+  search_org     VARCHAR2(50)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

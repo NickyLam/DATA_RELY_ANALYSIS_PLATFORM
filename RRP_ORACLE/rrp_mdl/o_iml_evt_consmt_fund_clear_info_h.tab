@@ -1,0 +1,174 @@
+﻿create table RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H
+(
+  ec_idf_cd             VARCHAR2(30),
+  bal_chk_cfm_cd        VARCHAR2(30),
+  return_info           VARCHAR2(750),
+  host_flow_num         VARCHAR2(150),
+  status_cd             VARCHAR2(30),
+  clear_amt             NUMBER(30,2),
+  froz_amt              NUMBER(30,2),
+  host_tran_code        VARCHAR2(45),
+  tran_org_id           VARCHAR2(100),
+  cap_cate_cd           VARCHAR2(60),
+  termn_id              VARCHAR2(100),
+  bf_actl_enter_acct_dt DATE,
+  lp_id                 VARCHAR2(60),
+  init_clear_flow_num   VARCHAR2(150),
+  tran_teller_id        VARCHAR2(100),
+  intior_cd             VARCHAR2(30),
+  finc_cust_id          VARCHAR2(100),
+  tran_dt               DATE,
+  job_cd                VARCHAR2(10),
+  end_dt                DATE,
+  actl_enter_acct_dt    DATE,
+  clear_flow_num        VARCHAR2(150),
+  unfrz_amt             NUMBER(30,2),
+  id_mark               VARCHAR2(10),
+  bus_cd                VARCHAR2(30),
+  pric                  NUMBER(30,2),
+  prod_acct_num         VARCHAR2(150),
+  tran_chn_cd           VARCHAR2(30),
+  evt_id                VARCHAR2(250),
+  tran_cd               VARCHAR2(100),
+  cfm_flow_num          VARCHAR2(150),
+  clear_dt              DATE,
+  bank_acct_id          VARCHAR2(100),
+  pric_prft_flg         VARCHAR2(10),
+  intfc_proc_flg_cd     VARCHAR2(30),
+  ta_cd                 VARCHAR2(30),
+  memo_comnt            VARCHAR2(375),
+  tran_belong_org_id    VARCHAR2(100),
+  curr_cd               VARCHAR2(30),
+  prod_acct_type_cd     VARCHAR2(30),
+  rela_flow_num         VARCHAR2(150),
+  cust_id               VARCHAR2(100),
+  bank_acct_type_cd     VARCHAR2(30),
+  start_dt              DATE,
+  src_table_name        VARCHAR2(100),
+  bank_id               VARCHAR2(100),
+  cfm_lot               NUMBER(30,3),
+  prod_cd               VARCHAR2(100),
+  return_code           VARCHAR2(45),
+  cust_type_cd          VARCHAR2(30),
+  host_dt               DATE,
+  acct_dir_cd           VARCHAR2(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H
+  is '代销基金资金清算信息历史';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.ec_idf_cd
+  is '钞汇标识代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.bal_chk_cfm_cd
+  is '勾对确认代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.return_info
+  is '返回信息';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.host_flow_num
+  is '主机流水号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.status_cd
+  is '状态代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.clear_amt
+  is '清算金额';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.froz_amt
+  is '冻结金额';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.host_tran_code
+  is '主机交易码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.cap_cate_cd
+  is '资金类别代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.termn_id
+  is '交易终端编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.bf_actl_enter_acct_dt
+  is '变动前实际入账日期';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.init_clear_flow_num
+  is '原清算流水号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.intior_cd
+  is '发起方代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.finc_cust_id
+  is '理财客户编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.actl_enter_acct_dt
+  is '实际入账日期';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.clear_flow_num
+  is '清算流水号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.unfrz_amt
+  is '解冻金额';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.bus_cd
+  is '业务代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.pric
+  is '本金';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.prod_acct_num
+  is '产品账号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.tran_chn_cd
+  is '交易渠道编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.tran_cd
+  is '交易代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.cfm_flow_num
+  is '确认流水号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.clear_dt
+  is '清算日期';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.bank_acct_id
+  is '银行账户编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.pric_prft_flg
+  is '本金收益标志';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.intfc_proc_flg_cd
+  is '接口处理标志代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.ta_cd
+  is 'TA代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.memo_comnt
+  is '摘要说明';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.tran_belong_org_id
+  is '交易所属机构编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.prod_acct_type_cd
+  is '产品账户类型代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.rela_flow_num
+  is '关联流水号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.cust_id
+  is '交易客户编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.bank_acct_type_cd
+  is '银行账户类型代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.bank_id
+  is '银行编号';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.cfm_lot
+  is '确认份额';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.prod_cd
+  is '产品代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.return_code
+  is '返回码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.host_dt
+  is '主机日期';
+comment on column RRP_MDL.O_IML_EVT_CONSMT_FUND_CLEAR_INFO_H.acct_dir_cd
+  is '账务方向代码';
+

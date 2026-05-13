@@ -1,0 +1,25 @@
+﻿create table RRP_MDL.XZY_PTT
+(
+  table_name VARCHAR2(800),
+  ptt_col    VARCHAR2(800),
+  ptt_type   VARCHAR2(80)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on column RRP_MDL.XZY_PTT.table_name
+  is '表名';
+comment on column RRP_MDL.XZY_PTT.ptt_col
+  is '分区字段';
+comment on column RRP_MDL.XZY_PTT.ptt_type
+  is '分区值类型 1：CHAR(8) 2:VARCHAR2(10) 3:DATE';
+

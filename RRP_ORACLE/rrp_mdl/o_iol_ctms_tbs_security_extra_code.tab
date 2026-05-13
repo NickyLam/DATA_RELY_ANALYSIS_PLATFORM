@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE
+(
+  security_code   VARCHAR2(24),
+  extra_type      VARCHAR2(12),
+  extra_code      VARCHAR2(192),
+  customer_number NUMBER(5),
+  modify_user     NUMBER(5),
+  modify_date     DATE,
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10),
+  etl_timestamp   TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE
+  is '债券扩展信息';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE.security_code
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE.extra_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE.extra_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE.customer_number
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE.modify_user
+  is '修改人';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE.modify_date
+  is '修改日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_SECURITY_EXTRA_CODE.etl_timestamp
+  is 'etl处理时间';
+

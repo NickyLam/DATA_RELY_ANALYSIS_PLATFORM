@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP02
+(
+  cust_acct_id       VARCHAR2(100),
+  cust_acct_name     VARCHAR2(450),
+  acct_belong_org_id VARCHAR2(60),
+  org_id1            VARCHAR2(300),
+  fin_inst_code      VARCHAR2(200),
+  fin_lics_num       VARCHAR2(200),
+  org_name           VARCHAR2(750),
+  county_cd          VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP02
+  is '表内借据信息表临时表02';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP02.cust_acct_id
+  is '账户编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP02.cust_acct_name
+  is '账户户名';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP02.acct_belong_org_id
+  is '账户所属机构';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP02.org_id1
+  is '账户所属机构映射报送机构';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP02.fin_inst_code
+  is '银行机构代码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP02.fin_lics_num
+  is '金融许可证号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP02.org_name
+  is '银行机构名称';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TEMP02.county_cd
+  is '机构地区';
+

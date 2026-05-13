@@ -1,0 +1,113 @@
+﻿create table RRP_MDL.S_LOAN_AMT_S71_1016
+(
+  data_dt                 VARCHAR2(8),
+  org_no                  VARCHAR2(200),
+  cust_no                 VARCHAR2(200),
+  rcpt_id                 VARCHAR2(200),
+  cont_id                 VARCHAR2(200),
+  rcpt_stat               VARCHAR2(10),
+  curr_cd                 VARCHAR2(3),
+  loan_biz_typ            VARCHAR2(20),
+  loan_act_dstr_dt        VARCHAR2(8),
+  loan_orig_exp_dt        VARCHAR2(8),
+  lvl5_cl                 VARCHAR2(10),
+  loan_amt                NUMBER(30,2),
+  loan_bal                NUMBER(30,2),
+  loan_net_val            NUMBER(30,2),
+  std_prod_id             VARCHAR2(200),
+  loan_useage             VARCHAR2(2000),
+  income_annual           NUMBER(20,4),
+  ff_crdt_total_lmt       NUMBER(30,2),
+  ff_opr_crdt_tot_amt     NUMBER(30,2),
+  ff_con_crdt_tot_amt     NUMBER(30,2),
+  cbrc_flg                CHAR(1),
+  dsbr_farm_flg           CHAR(1),
+  opr_cust_typ            VARCHAR2(10),
+  non_repy_prin_renew_flg CHAR(1),
+  loan_term               VARCHAR2(10),
+  tjdbfs                  VARCHAR2(10),
+  ent_scale               VARCHAR2(10),
+  corp_cust_typ           VARCHAR2(10),
+  is_cbrc_ent             VARCHAR2(10),
+  loan_dir_bio_flg        CHAR(1),
+  tech_inno_ent_flg       CHAR(1),
+  cust_lrg_cl             VARCHAR2(10),
+  data_src                VARCHAR2(500),
+  qtgrfnh                 VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.S_LOAN_AMT_S71_1016
+  is '贷款业务整合表';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.data_dt
+  is '数据日期';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.org_no
+  is '所属机构';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.cust_no
+  is '交易客户编号';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.cont_id
+  is '合同编号';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.rcpt_stat
+  is '借据状态';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.curr_cd
+  is '币种';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.loan_biz_typ
+  is '业务品种';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.loan_act_dstr_dt
+  is '放款日期';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.loan_orig_exp_dt
+  is '贷款原始到期日期';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.lvl5_cl
+  is '五级分类代码';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.loan_amt
+  is '放款金额';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.loan_bal
+  is '贷款余额';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.loan_net_val
+  is '贷款净值';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.std_prod_id
+  is '行内标准产品编号';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.loan_useage
+  is '贷款用途';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.income_annual
+  is '年化收益';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.ff_crdt_total_lmt
+  is '发放时授信总额';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.ff_opr_crdt_tot_amt
+  is '发放时经营授信总额';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.ff_con_crdt_tot_amt
+  is '发放时消费授信总额';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.cbrc_flg
+  is '银监标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.dsbr_farm_flg
+  is '放款时农户标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.opr_cust_typ
+  is '经营性客户类型';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.non_repy_prin_renew_flg
+  is '无还本续贷标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.loan_term
+  is '贷款期限';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.tjdbfs
+  is '统计担保方式';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.ent_scale
+  is '企业规模';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.corp_cust_typ
+  is '对公客户类型';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.is_cbrc_ent
+  is '是否企业（银监）';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.loan_dir_bio_flg
+  is '境内外标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.tech_inno_ent_flg
+  is '科创企业标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.cust_lrg_cl
+  is '客户大类';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.data_src
+  is '数据来源（参见[字典:AML0045]）';
+comment on column RRP_MDL.S_LOAN_AMT_S71_1016.qtgrfnh
+  is '其他个人非农户标识';
+

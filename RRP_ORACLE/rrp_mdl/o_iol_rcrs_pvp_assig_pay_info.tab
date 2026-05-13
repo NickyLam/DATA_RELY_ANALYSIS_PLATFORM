@@ -1,0 +1,110 @@
+﻿create table RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO
+(
+  pap_pk           VARCHAR2(36),
+  serno            VARCHAR2(32),
+  cont_no          VARCHAR2(30),
+  br_acc           VARCHAR2(32),
+  br_acc_name      VARCHAR2(80),
+  br_ins_code      VARCHAR2(10),
+  br_wprm_code     VARCHAR2(30),
+  br_wprm_ann_date VARCHAR2(10),
+  br_main_opt_scp  VARCHAR2(250),
+  invest_use       VARCHAR2(200),
+  pay_amt          NUMBER(16,2),
+  remark           VARCHAR2(250),
+  bank_name        VARCHAR2(80),
+  bank_no          VARCHAR2(100),
+  payserlno        VARCHAR2(40),
+  currency         VARCHAR2(3),
+  lastpaydate      VARCHAR2(10),
+  businum          VARCHAR2(32),
+  ioflag           VARCHAR2(1),
+  inaddr           VARCHAR2(100),
+  enter_stage      VARCHAR2(1),
+  bill_no          VARCHAR2(40),
+  is_cl            VARCHAR2(1),
+  operator_id      VARCHAR2(20),
+  operator_date    VARCHAR2(20),
+  operator_remark  VARCHAR2(400),
+  postscript       VARCHAR2(40),
+  businumseq       VARCHAR2(20),
+  br_cert_code     VARCHAR2(32),
+  confirm_status   VARCHAR2(1),
+  start_dt         DATE,
+  end_dt           DATE,
+  id_mark          VARCHAR2(10),
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO
+  is '受托支付信息表（出账申请）';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.serno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.cont_no
+  is '合同号';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.br_acc
+  is '交易对手账户号';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.br_acc_name
+  is '交易对手账户名称';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.br_ins_code
+  is '交易对手组织机构代码';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.br_wprm_code
+  is '交易对手工商营业执照号码';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.br_wprm_ann_date
+  is '交易对手工商营业执照年检时间';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.br_main_opt_scp
+  is '交易对手经营范围';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.invest_use
+  is '资金用途';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.pay_amt
+  is '支付金额';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.bank_name
+  is '开户行名称';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.bank_no
+  is '开户行';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.payserlno
+  is '支付序列';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.currency
+  is '支付币种';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.lastpaydate
+  is '最迟支付日';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.businum
+  is '受托支付编号';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.ioflag
+  is '行内行外标识';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.inaddr
+  is '收款人地址';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.enter_stage
+  is '录入阶段 1 申请';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.bill_no
+  is '借据号';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.operator_id
+  is '操作员';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.operator_date
+  is '操作日期';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.operator_remark
+  is '操作备注';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.postscript
+  is '附言';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.businumseq
+  is '受托支付序号';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.br_cert_code
+  is '交易对手身份证号';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.confirm_status
+  is '确认状态';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_RCRS_PVP_ASSIG_PAY_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

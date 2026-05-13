@@ -1,0 +1,52 @@
+﻿create table RRP_MDL.TMP_CMM_GL_BAL
+(
+  etl_dt      DATE,
+  acct_duran  VARCHAR2(10),
+  org_id      VARCHAR2(60),
+  subj_id     VARCHAR2(60),
+  curr_cd     VARCHAR2(10),
+  bgn_dr_bal  NUMBER(30,2),
+  bgn_cr_bal  NUMBER(30,2),
+  curr_dr_amt NUMBER(30,2),
+  curr_cr_amt NUMBER(30,2),
+  end_dr_bal  NUMBER(30,2),
+  end_cr_bal  NUMBER(30,2),
+  subj_dir_cd VARCHAR2(10),
+  job_cd      VARCHAR2(10),
+  subj_lvl    VARCHAR2(1)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on column RRP_MDL.TMP_CMM_GL_BAL.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.acct_duran
+  is '扶贫名录期间';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.org_id
+  is '银行编号';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.subj_id
+  is '科目编号';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.curr_cd
+  is '币种';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.bgn_dr_bal
+  is '期初借方余额';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.bgn_cr_bal
+  is '期初贷方余额';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.curr_dr_amt
+  is '本期借方发生额';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.curr_cr_amt
+  is '本期贷方发生额';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.end_dr_bal
+  is '期末借方余额';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.end_cr_bal
+  is '期末贷方余额';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.subj_dir_cd
+  is '科目方向代码';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.job_cd
+  is '任务代码';
+comment on column RRP_MDL.TMP_CMM_GL_BAL.subj_lvl
+  is '科目级次';
+

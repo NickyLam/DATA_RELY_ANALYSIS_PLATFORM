@@ -1,0 +1,159 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS
+(
+  deal_id              NUMBER,
+  deal_tablename       VARCHAR2(14),
+  aspclient_id         NUMBER,
+  bondscode            VARCHAR2(24),
+  bondsname            VARCHAR2(75),
+  serial_number        VARCHAR2(23),
+  trade_date           NUMBER(8),
+  value_date           NUMBER(8),
+  maturity_date        NUMBER(8),
+  buyorsell            VARCHAR2(2),
+  face_amount          NUMBER(17,2),
+  first_price          NUMBER(17,9),
+  maturity_price       NUMBER(17,9),
+  repo_rate            NUMBER(34,12),
+  amount               NUMBER(17,2),
+  maturity_amount      NUMBER(17,2),
+  fee1                 NUMBER(17,2),
+  tax_amt1             NUMBER(17,2),
+  broker_amt1          NUMBER(17,2),
+  fee2                 NUMBER(17,2),
+  tax_amt2             NUMBER(17,2),
+  broker_amt2          NUMBER(17,2),
+  interest             NUMBER(17,2),
+  portfolio_id         NUMBER(5),
+  portfolio_name       VARCHAR2(120),
+  keepfolder_id        NUMBER,
+  keepfolder_shortname VARCHAR2(75),
+  cptys_short_name     VARCHAR2(192),
+  cptys_id             NUMBER,
+  settle_type          VARCHAR2(30),
+  settle_type2         VARCHAR2(30),
+  dealer_id            NUMBER(5),
+  dealer_name          VARCHAR2(30),
+  ref_number           VARCHAR2(48),
+  cfets_from           VARCHAR2(2),
+  lastmodified         TIMESTAMP(6),
+  datasymbol_id        NUMBER,
+  repo_days            NUMBER,
+  repodeals_id_grand   NUMBER,
+  repo_id              VARCHAR2(24),
+  clearing_type        VARCHAR2(2),
+  dn_dealer            VARCHAR2(900),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10),
+  etl_timestamp        TIMESTAMP(6),
+  trade_time           DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS
+  is '买断式回购交易';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.deal_id
+  is '引用表ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.deal_tablename
+  is '引用表名';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.aspclient_id
+  is '部门代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.bondscode
+  is '质押券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.bondsname
+  is '债券名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.serial_number
+  is '交易号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.trade_date
+  is '交易录入日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.value_date
+  is '首期结算日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.maturity_date
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.buyorsell
+  is '交易方向';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.face_amount
+  is '券面总额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.first_price
+  is '首次净价';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.maturity_price
+  is '到期净价';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.repo_rate
+  is '回购利率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.amount
+  is '金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.maturity_amount
+  is '到期结算金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.fee1
+  is '首期费用';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.tax_amt1
+  is '首期税金';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.broker_amt1
+  is '首期佣金';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.fee2
+  is '到期费用';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.tax_amt2
+  is '到期税金';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.broker_amt2
+  is '到期佣金';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.interest
+  is '应计利息';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.portfolio_id
+  is '交易组别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.portfolio_name
+  is '交易组别名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.keepfolder_id
+  is '后台账户代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.keepfolder_shortname
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.cptys_short_name
+  is '交易对手名';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.cptys_id
+  is '交易对手序号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.settle_type
+  is '首次结算方式';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.settle_type2
+  is '到期结算方式';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.dealer_id
+  is '交易员编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.dealer_name
+  is '交易员名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.ref_number
+  is '成交编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.cfets_from
+  is '是否是CFETS交易';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.lastmodified
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.datasymbol_id
+  is '数据源ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.repo_days
+  is '回购天数';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.repodeals_id_grand
+  is '原始交易ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.repo_id
+  is '回购编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.clearing_type
+  is '清算类型';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.dn_dealer
+  is '引用表ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.etl_timestamp
+  is 'etl处理时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_REPODEALS.trade_time
+  is '交易时间';
+

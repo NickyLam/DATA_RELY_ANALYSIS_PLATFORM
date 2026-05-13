@@ -1,0 +1,69 @@
+﻿create table RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE
+(
+  putoutno         VARCHAR2(32),
+  contractserialno VARCHAR2(32),
+  hostnbr          VARCHAR2(32),
+  dd_status        VARCHAR2(1),
+  hostdate         VARCHAR2(8),
+  firstpayamt      NUMBER(24,6),
+  migtflag         VARCHAR2(80),
+  channel          VARCHAR2(10),
+  isfirstpay       VARCHAR2(2),
+  firstpayratio    NUMBER(24,6),
+  duebillserialno  VARCHAR2(40),
+  billamt          NUMBER(24,6),
+  oarateexaresult  VARCHAR2(1),
+  orderno          VARCHAR2(40),
+  ordersumamt      NUMBER(24,6),
+  start_dt         DATE,
+  end_dt           DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE
+  is '线上放款申请记录';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.putoutno
+  is '出账流水号';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.contractserialno
+  is '关联合同编号';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.hostnbr
+  is '主机流水号为主机记账流水号';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.dd_status
+  is '放款状态';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.hostdate
+  is '信保转账交易日期';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.firstpayamt
+  is '首付款金额';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.migtflag
+  is '迁移标志：CRS RCR ILC UPL';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.channel
+  is '通道';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.isfirstpay
+  is '是否首付款1是2否';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.firstpayratio
+  is '首付款比例%';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.duebillserialno
+  is '借据流水号';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.billamt
+  is '服务费';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.oarateexaresult
+  is 'oa利率审批结果 0 不通过 1 通过1';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.orderno
+  is '订单号';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.ordersumamt
+  is '订单金额';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_PUTOUT_ONLINE.end_dt
+  is '结束时间';
+

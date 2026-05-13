@@ -1,0 +1,238 @@
+﻿create table RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H
+(
+  agt_id                     VARCHAR2(250),
+  lp_id                      VARCHAR2(60),
+  dubil_id                   VARCHAR2(100),
+  acct_id                    VARCHAR2(100),
+  bus_org_id                 VARCHAR2(100),
+  asset_bag_id               VARCHAR2(100),
+  asset_bag_name             VARCHAR2(100),
+  init_prod_id               VARCHAR2(100),
+  init_prod_name             VARCHAR2(250),
+  prod_id                    VARCHAR2(100),
+  prod_name                  VARCHAR2(250),
+  init_bus_breed_cd          VARCHAR2(30),
+  bus_breed_cd               VARCHAR2(30),
+  pkg_dt                     DATE,
+  pkg_flow_num               VARCHAR2(100),
+  unpkg_dt                   DATE,
+  unpkg_flow_num             VARCHAR2(100),
+  post_pkg_tran_dt           DATE,
+  post_pkg_tran_flow_num     VARCHAR2(100),
+  asset_tran_dt              DATE,
+  asset_tran_flow_num        VARCHAR2(100),
+  cancel_asset_bag_dt        DATE,
+  cancel_asset_bag_flow_num  VARCHAR2(100),
+  asset_end_dt               DATE,
+  asset_end_tran_flow_num    VARCHAR2(100),
+  redem_dt                   DATE,
+  redem_tran_flow_num        VARCHAR2(100),
+  buy_dt                     DATE,
+  buy_tran_flow_num          VARCHAR2(100),
+  asset_status_cd            VARCHAR2(30),
+  pkg_pric_amt               NUMBER(30,2),
+  pkg_recvbl_acru_int        NUMBER(30,2),
+  pkg_coll_acru_int          NUMBER(30,2),
+  pkg_recvbl_over_int        NUMBER(30,2),
+  pkg_coll_over_int          NUMBER(30,2),
+  pkg_recvbl_acru_pnlt       NUMBER(30,2),
+  pkg_coll_acru_pnlt         NUMBER(30,2),
+  pkg_recvbl_pnlt            NUMBER(30,2),
+  pkg_coll_pnlt              NUMBER(30,2),
+  pkg_acru_comp_int          NUMBER(30,2),
+  pkg_comp_int               NUMBER(30,2),
+  repaid_pric_tot            NUMBER(30,2),
+  repaid_recvbl_acru_int     NUMBER(30,2),
+  repaid_coll_acru_int       NUMBER(30,2),
+  repaid_recvbl_over_int     NUMBER(30,2),
+  repaid_coll_over_int       NUMBER(30,2),
+  repaid_recvbl_acru_pnlt    NUMBER(30,2),
+  repaid_coll_acru_pnlt      NUMBER(30,2),
+  repaid_recvbl_pnlt         NUMBER(30,2),
+  repaid_coll_pnlt           NUMBER(30,2),
+  repaid_acru_comp_int       NUMBER(30,2),
+  repaid_comp_int            NUMBER(30,2),
+  ld_repaid_pric_tot         NUMBER(30,2),
+  ld_repaid_recvbl_acru_int  NUMBER(30,2),
+  ld_repaid_coll_acru_int    NUMBER(30,2),
+  ld_repaid_recvbl_over_int  NUMBER(30,2),
+  ld_repaid_coll_over_int    NUMBER(30,2),
+  ld_repaid_recvbl_acru_pnlt NUMBER(30,2),
+  ld_repaid_coll_acru_pnlt   NUMBER(30,2),
+  ld_repaid_recvbl_pnlt      NUMBER(30,2),
+  ld_repaid_coll_pnlt        NUMBER(30,2),
+  ld_repaid_acru_comp_int    NUMBER(30,2),
+  ld_repaid_comp_int         NUMBER(30,2),
+  tran_amt                   NUMBER(30,2),
+  redem_amt                  NUMBER(30,2),
+  final_fin_tran_dt          DATE,
+  rec_status_cd              VARCHAR2(30),
+  start_dt                   DATE,
+  end_dt                     DATE,
+  id_mark                    VARCHAR2(10),
+  src_table_name             VARCHAR2(100),
+  job_cd                     VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress
+nologging;
+comment on table RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H
+  is '零售贷款账户资产转让历史';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.bus_org_id
+  is '营业机构编号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.asset_bag_id
+  is '资产包编号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.asset_bag_name
+  is '资产包名称';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.init_prod_id
+  is '原产品编号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.init_prod_name
+  is '原产品名称';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.prod_name
+  is '产品名称';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.init_bus_breed_cd
+  is '原业务品种代码';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.bus_breed_cd
+  is '业务品种代码';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_dt
+  is '封包日期';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_flow_num
+  is '封包流水号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.unpkg_dt
+  is '拆包日期';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.unpkg_flow_num
+  is '拆包流水号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.post_pkg_tran_dt
+  is '延后封包的交易日期';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.post_pkg_tran_flow_num
+  is '延后封包交易流水号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.asset_tran_dt
+  is '资产转让日期';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.asset_tran_flow_num
+  is '资产转让流水号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.cancel_asset_bag_dt
+  is '取消资产包日期';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.cancel_asset_bag_flow_num
+  is '取消资产包流水号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.asset_end_dt
+  is '资产终结日期';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.asset_end_tran_flow_num
+  is '资产终结交易流水号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.redem_dt
+  is '赎回日期';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.redem_tran_flow_num
+  is '赎回交易流水号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.buy_dt
+  is '购买日期';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.buy_tran_flow_num
+  is '购买交易流水号';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.asset_status_cd
+  is '资产状态代码';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_pric_amt
+  is '封包本金金额';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_recvbl_acru_int
+  is '封包应收应计利息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_coll_acru_int
+  is '封包催收应计利息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_recvbl_over_int
+  is '封包应收欠息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_coll_over_int
+  is '封包催收欠息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_recvbl_acru_pnlt
+  is '封包应收应计罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_coll_acru_pnlt
+  is '封包催收应计罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_recvbl_pnlt
+  is '封包应收罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_coll_pnlt
+  is '封包催收罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_acru_comp_int
+  is '封包应计复息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.pkg_comp_int
+  is '封包复息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_pric_tot
+  is '已偿本金总额';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_recvbl_acru_int
+  is '已偿应收应计利息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_coll_acru_int
+  is '已偿催收应计利息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_recvbl_over_int
+  is '已偿应收欠息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_coll_over_int
+  is '已偿催收欠息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_recvbl_acru_pnlt
+  is '已偿应收应计罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_coll_acru_pnlt
+  is '已偿催收应计罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_recvbl_pnlt
+  is '已偿应收罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_coll_pnlt
+  is '已偿催收罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_acru_comp_int
+  is '已偿应计复息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.repaid_comp_int
+  is '已偿复息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_pric_tot
+  is '上日已偿本金总额';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_recvbl_acru_int
+  is '上日已偿应收应计利息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_coll_acru_int
+  is '上日已偿催收应计利息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_recvbl_over_int
+  is '上日已偿应收欠息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_coll_over_int
+  is '上日已偿催收欠息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_recvbl_acru_pnlt
+  is '上日已偿应收应计罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_coll_acru_pnlt
+  is '上日已偿催收应计罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_recvbl_pnlt
+  is '上日已偿应收罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_coll_pnlt
+  is '上日已偿催收罚息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_acru_comp_int
+  is '上日已偿应计复息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.ld_repaid_comp_int
+  is '上日已偿复息';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.tran_amt
+  is '转让金额';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.redem_amt
+  is '赎回金额';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.final_fin_tran_dt
+  is '最后财务交易日期';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.rec_status_cd
+  is '记录状态代码';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_RETL_LOAN_ASSET_TRAN_H.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,120 @@
+﻿create table RRP_MDL.O_IOL_ISBS_BCH
+(
+  inr           VARCHAR2(12),
+  etyexkey      VARCHAR2(12),
+  branch        VARCHAR2(27),
+  bchkey        VARCHAR2(12),
+  bchname       VARCHAR2(450),
+  lev           VARCHAR2(2),
+  upbranch      VARCHAR2(12),
+  bchtyp        VARCHAR2(2),
+  bchflg        VARCHAR2(3),
+  decnum        VARCHAR2(60),
+  tel           VARCHAR2(45),
+  fax           VARCHAR2(24),
+  adr           VARCHAR2(600),
+  swfcod        VARCHAR2(18),
+  adr2          VARCHAR2(600),
+  ver           VARCHAR2(6),
+  namen         VARCHAR2(60),
+  adren         VARCHAR2(60),
+  adren2        VARCHAR2(60),
+  ydjcod        VARCHAR2(9),
+  tid           VARCHAR2(12),
+  upbchkey      VARCHAR2(12),
+  accbch        VARCHAR2(9),
+  bchref        VARCHAR2(6),
+  bchusr        VARCHAR2(12),
+  bchlst        VARCHAR2(2700),
+  sta           VARCHAR2(2),
+  ptyinr        VARCHAR2(12),
+  stpflg        VARCHAR2(9),
+  rmbrpt        VARCHAR2(18),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_BCH
+  is '机构信息表';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.inr
+  is '内部唯一ID';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.etyexkey
+  is '实体关键字';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.branch
+  is '机构编码';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.bchkey
+  is '经办机构编码';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.bchname
+  is '机构名称';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.lev
+  is '机构层次';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.upbranch
+  is '上级机构编码';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.bchtyp
+  is '机构类型';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.bchflg
+  is '机构参考号标志';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.decnum
+  is '金融机构编码';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.tel
+  is '电话';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.fax
+  is '传真';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.adr
+  is '地址';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.swfcod
+  is 'BIC码';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.adr2
+  is '地址';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.ver
+  is '版本号';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.namen
+  is '英文名称';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.adren
+  is '英文地址';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.adren2
+  is '英文地址';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.ydjcod
+  is '外汇管理局印单局代码';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.tid
+  is '收单行系统机构代号';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.upbchkey
+  is '替该机构经办业务的押汇中心对应的国结系统机构编码，未上收的银行此处是其国结系统分行机构编码';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.accbch
+  is '核心机构号';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.bchref
+  is '该机构项下的业务，生成参考号时用到的4位机构号码（由业务人员指定）。';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.bchusr
+  is '核心虚拟柜员';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.bchlst
+  is '包含的分支机构INR';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.sta
+  is '状态';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.ptyinr
+  is '与pty表inr对应';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.stpflg
+  is '是否停用';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.rmbrpt
+  is '金融机构识别码';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ISBS_BCH.etl_timestamp
+  is 'ETL处理时间戳';
+

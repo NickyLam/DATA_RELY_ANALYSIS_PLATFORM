@@ -1,0 +1,123 @@
+﻿create table RRP_MDL.O_IOL_ICMS_FLOW_OBJECT
+(
+  etl_dt         DATE,
+  objecttype     VARCHAR2(64),
+  objectno       VARCHAR2(64),
+  phasetype      VARCHAR2(64),
+  applytype      VARCHAR2(64),
+  flowno         VARCHAR2(64),
+  flowname       VARCHAR2(160),
+  phaseno        VARCHAR2(64),
+  phasename      VARCHAR2(160),
+  objdescribe    VARCHAR2(1000),
+  objattribute1  VARCHAR2(400),
+  objattribute2  VARCHAR2(400),
+  objattribute3  VARCHAR2(400),
+  objattribute4  VARCHAR2(400),
+  objattribute5  VARCHAR2(400),
+  orgid          VARCHAR2(64),
+  orgname        VARCHAR2(160),
+  userid         VARCHAR2(64),
+  username       VARCHAR2(160),
+  inputdate      DATE,
+  archivetime    DATE,
+  applyno        VARCHAR2(64),
+  flowstate      VARCHAR2(400),
+  processinstno  VARCHAR2(64),
+  processtaskno  VARCHAR2(64),
+  relativetaskno VARCHAR2(64),
+  serialno       VARCHAR2(64),
+  tasktype       VARCHAR2(64),
+  version        VARCHAR2(64),
+  baseflowno     VARCHAR2(64),
+  archive        VARCHAR2(12),
+  migtflag       VARCHAR2(200),
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_FLOW_OBJECT
+  is '资产证券化参与方信息历史';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.objecttype
+  is '流程对象任务类型';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.objectno
+  is '流程对象编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.phasetype
+  is '当前阶段类型';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.applytype
+  is '申请类型';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.flowno
+  is '流程模型编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.flowname
+  is '流程模型名称';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.phaseno
+  is '当前阶段编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.phasename
+  is '当前阶段名称';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.objdescribe
+  is '流程描述';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.objattribute1
+  is '流程属性1';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.objattribute2
+  is '流程属性2';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.objattribute3
+  is '流程属性3';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.objattribute4
+  is '流程属性4';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.objattribute5
+  is '流程属性5';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.orgid
+  is '登记机构号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.orgname
+  is '评估单位';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.userid
+  is '登记人编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.username
+  is '登记人名称';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.archivetime
+  is '归档时刻';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.applyno
+  is '申请编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.flowstate
+  is '流程状态';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.processinstno
+  is '流程实例编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.processtaskno
+  is '流程任务编号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.relativetaskno
+  is '关联流程对象流水号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.serialno
+  is '流程对象流水号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.tasktype
+  is '任务类型';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.version
+  is '版本';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.baseflowno
+  is '流程号';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.archive
+  is '归档标识';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.migtflag
+  is '迁移标志：crsrcrilcupl';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_ICMS_FLOW_OBJECT.id_mark
+  is '删除标识';
+

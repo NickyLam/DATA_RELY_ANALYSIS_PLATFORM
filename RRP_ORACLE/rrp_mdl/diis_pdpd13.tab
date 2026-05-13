@@ -1,0 +1,123 @@
+﻿create table RRP_MDL.DIIS_PDPD13
+(
+  rid          VARCHAR2(100) not null,
+  cust_seq     NUMBER(15),
+  name         VARCHAR2(600),
+  cust_id      VARCHAR2(100),
+  fin_org_type VARCHAR2(40),
+  uscc         VARCHAR2(150),
+  obj_name     VARCHAR2(600),
+  obj_id_type  VARCHAR2(4),
+  obj_id_no    VARCHAR2(100),
+  dpst_tot_amt NUMBER(30,2),
+  acct_seq     NUMBER(15),
+  prod_type    VARCHAR2(4),
+  acct_no      VARCHAR2(64),
+  corp_name    VARCHAR2(300),
+  acct_type    VARCHAR2(40),
+  dpst_sts     VARCHAR2(6),
+  id_type      VARCHAR2(40),
+  id_no        VARCHAR2(60),
+  id_valid_dt  VARCHAR2(20),
+  tel_no       VARCHAR2(60),
+  addr         VARCHAR2(270),
+  prin_amt     NUMBER(30,2),
+  int_amt      NUMBER(30,2),
+  tot_amt      NUMBER(30,2),
+  note         VARCHAR2(900),
+  data_dt      VARCHAR2(20) not null,
+  org_no       VARCHAR2(40),
+  curr_cd      VARCHAR2(6),
+  dept_no      VARCHAR2(60),
+  issued_no    VARCHAR2(40),
+  rpt_org_no   VARCHAR2(40),
+  data_ources  VARCHAR2(6),
+  data_modify  VARCHAR2(4),
+  is_seq       VARCHAR2(3),
+  subj_id      VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.DIIS_PDPD13
+  is '存款类金融机构存款-境外';
+comment on column RRP_MDL.DIIS_PDPD13.rid
+  is '数据主键';
+comment on column RRP_MDL.DIIS_PDPD13.cust_seq
+  is '存款人序号';
+comment on column RRP_MDL.DIIS_PDPD13.name
+  is '用户姓名';
+comment on column RRP_MDL.DIIS_PDPD13.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.DIIS_PDPD13.fin_org_type
+  is '金融机构类型';
+comment on column RRP_MDL.DIIS_PDPD13.uscc
+  is '统一社会信用代码';
+comment on column RRP_MDL.DIIS_PDPD13.obj_name
+  is '对象名称';
+comment on column RRP_MDL.DIIS_PDPD13.obj_id_type
+  is '法定代表人或单位负责人证件类型';
+comment on column RRP_MDL.DIIS_PDPD13.obj_id_no
+  is '法定代表人或单位负责人证件号码';
+comment on column RRP_MDL.DIIS_PDPD13.dpst_tot_amt
+  is '各存款账户本息合计';
+comment on column RRP_MDL.DIIS_PDPD13.acct_seq
+  is '存款账户序号';
+comment on column RRP_MDL.DIIS_PDPD13.prod_type
+  is '产品编号';
+comment on column RRP_MDL.DIIS_PDPD13.acct_no
+  is '账号';
+comment on column RRP_MDL.DIIS_PDPD13.corp_name
+  is '公司名称';
+comment on column RRP_MDL.DIIS_PDPD13.acct_type
+  is '账户性质';
+comment on column RRP_MDL.DIIS_PDPD13.dpst_sts
+  is '存款账户状态';
+comment on column RRP_MDL.DIIS_PDPD13.id_type
+  is '证件类型 [枚举: 数标]';
+comment on column RRP_MDL.DIIS_PDPD13.id_no
+  is '证件号码';
+comment on column RRP_MDL.DIIS_PDPD13.id_valid_dt
+  is '客户证件有效期限';
+comment on column RRP_MDL.DIIS_PDPD13.tel_no
+  is '联系电话';
+comment on column RRP_MDL.DIIS_PDPD13.addr
+  is '地址';
+comment on column RRP_MDL.DIIS_PDPD13.prin_amt
+  is '交易本金，债券券面等';
+comment on column RRP_MDL.DIIS_PDPD13.int_amt
+  is '计划支付利息，还本计息区间对应的利息';
+comment on column RRP_MDL.DIIS_PDPD13.tot_amt
+  is '总金额';
+comment on column RRP_MDL.DIIS_PDPD13.note
+  is '备注';
+comment on column RRP_MDL.DIIS_PDPD13.data_dt
+  is '数据日期';
+comment on column RRP_MDL.DIIS_PDPD13.org_no
+  is '所属机构';
+comment on column RRP_MDL.DIIS_PDPD13.curr_cd
+  is '币种';
+comment on column RRP_MDL.DIIS_PDPD13.dept_no
+  is '部门编号';
+comment on column RRP_MDL.DIIS_PDPD13.issued_no
+  is '填报机构';
+comment on column RRP_MDL.DIIS_PDPD13.rpt_org_no
+  is '报送机构号';
+comment on column RRP_MDL.DIIS_PDPD13.data_ources
+  is '数据来源';
+comment on column RRP_MDL.DIIS_PDPD13.data_modify
+  is '数据修改';
+comment on column RRP_MDL.DIIS_PDPD13.is_seq
+  is '是否合计项';
+comment on column RRP_MDL.DIIS_PDPD13.subj_id
+  is '科目编号';
+

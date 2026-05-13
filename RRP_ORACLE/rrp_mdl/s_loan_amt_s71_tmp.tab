@@ -1,0 +1,174 @@
+﻿create table RRP_MDL.S_LOAN_AMT_S71_TMP
+(
+  data_dt                            VARCHAR2(8),
+  org_no                             VARCHAR2(200),
+  cust_no                            VARCHAR2(200),
+  rcpt_id                            VARCHAR2(200),
+  cont_id                            VARCHAR2(200),
+  rcpt_stat                          VARCHAR2(10),
+  curr_cd                            VARCHAR2(3),
+  loan_biz_typ                       VARCHAR2(20),
+  loan_act_dstr_dt                   VARCHAR2(8),
+  loan_orig_exp_dt                   VARCHAR2(8),
+  lvl5_cl                            VARCHAR2(15),
+  loan_amt                           NUMBER(30,2),
+  loan_bal                           NUMBER(30,2),
+  loan_net_val                       NUMBER(30,2),
+  std_prod_id                        VARCHAR2(200),
+  loan_useage                        VARCHAR2(3000),
+  income_annual                      NUMBER(20,4),
+  ff_crdt_total_lmt                  NUMBER(30,2),
+  ff_opr_crdt_tot_amt                NUMBER(30,2),
+  ff_con_crdt_tot_amt                NUMBER(30,2),
+  cbrc_flg                           CHAR(1),
+  dsbr_farm_flg                      CHAR(1),
+  opr_cust_typ                       VARCHAR2(10),
+  non_repy_prin_renew_flg            CHAR(1),
+  loan_term                          VARCHAR2(15),
+  tjdbfs                             VARCHAR2(15),
+  ent_scale                          VARCHAR2(15),
+  corp_cust_typ                      VARCHAR2(10),
+  is_cbrc_ent                        VARCHAR2(15),
+  loan_dir_bio_flg                   CHAR(1),
+  tech_inno_ent_flg                  CHAR(1),
+  cust_lrg_cl                        VARCHAR2(15),
+  data_src                           VARCHAR2(500),
+  qtgrfnh                            VARCHAR2(15),
+  ovd_loan_term                      VARCHAR2(15),
+  tech_ent_flg                       VARCHAR2(8),
+  inovt_med_side_enter_flg           VARCHAR2(10),
+  cty_corp_tech_center_flg           VARCHAR2(10),
+  each_class_scen_tech_list_corp_flg VARCHAR2(10),
+  tech_mid_sml_ent_flg               VARCHAR2(10),
+  yjdlkpkh                           VARCHAR2(8),
+  sys_in_flg                         VARCHAR2(10),
+  fk_org_id                          VARCHAR2(10),
+  ex_servsm_flg                      VARCHAR2(10),
+  no_buslics_prc_flg                 VARCHAR2(10),
+  bgdklx                             VARCHAR2(30),
+  sfjwbgdk                           VARCHAR2(10),
+  sftyjrcbqy                         VARCHAR2(10),
+  fksqygm                            VARCHAR2(32),
+  fkskglx                            VARCHAR2(32),
+  fkyqygm                            VARCHAR2(32),
+  fkykglx                            VARCHAR2(32)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.S_LOAN_AMT_S71_TMP
+  is 'S71普惠小微发放时授信额度表';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.data_dt
+  is '数据日期';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.org_no
+  is '机构号';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.cust_no
+  is '客户号';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.cont_id
+  is '合同编号';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.rcpt_stat
+  is '借据状态';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.curr_cd
+  is '币种';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.loan_biz_typ
+  is '贷款业务类型';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.loan_act_dstr_dt
+  is '贷款实际发放日期';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.loan_orig_exp_dt
+  is '贷款原始到期日期';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.lvl5_cl
+  is '五级分类';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.loan_amt
+  is '放款金额';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.loan_bal
+  is '贷款余额';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.loan_net_val
+  is '贷款净值';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.loan_useage
+  is '贷款用途';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.income_annual
+  is '年化收益';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.ff_crdt_total_lmt
+  is '发放时授信总额';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.ff_opr_crdt_tot_amt
+  is '发放时经营授信总额';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.ff_con_crdt_tot_amt
+  is '发放时消费授信总额';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.cbrc_flg
+  is 'CBRC标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.dsbr_farm_flg
+  is '放款时农户标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.opr_cust_typ
+  is '经营性客户类型';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.non_repy_prin_renew_flg
+  is '无还本续贷标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.loan_term
+  is '贷款期限';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.tjdbfs
+  is '统计担保方式';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.ent_scale
+  is '企业规模';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.corp_cust_typ
+  is '对公客户类型';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.is_cbrc_ent
+  is '是否企业（银监）';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.loan_dir_bio_flg
+  is '贷款投向境内外标识';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.tech_inno_ent_flg
+  is '科创企业标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.cust_lrg_cl
+  is '客户大类';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.data_src
+  is '数据来源';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.qtgrfnh
+  is '其他个人非农户标识';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.ovd_loan_term
+  is '逾期期限';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.tech_ent_flg
+  is '科技型企业标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.inovt_med_side_enter_flg
+  is '创新型中小企业标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.cty_corp_tech_center_flg
+  is '国家企业技术中心标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.each_class_scen_tech_list_corp_flg
+  is '各类科技名单企业标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.tech_mid_sml_ent_flg
+  is '科技型中小企业标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.yjdlkpkh
+  is '原建档立卡贫困户标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.sys_in_flg
+  is '系统内标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.fk_org_id
+  is '累放层机构号';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.ex_servsm_flg
+  is '退役军人标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.no_buslics_prc_flg
+  is '无营业执照负责人标志';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.bgdklx
+  is '并购贷款类型';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.sfjwbgdk
+  is '是否境外并购贷款';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.sftyjrcbqy
+  is '是否退役军人创办企业';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.fksqygm
+  is '放款时企业规模';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.fkskglx
+  is '放款时控股类型';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.fkyqygm
+  is '放款月企业规模';
+comment on column RRP_MDL.S_LOAN_AMT_S71_TMP.fkykglx
+  is '放款月控股类型';
+

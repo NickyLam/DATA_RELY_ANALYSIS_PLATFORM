@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.M_YHYDKXQ_CODE
+(
+  indus_cate_cd   VARCHAR2(10),
+  indus_cate_name VARCHAR2(100),
+  classify        VARCHAR2(16),
+  industry_cd     VARCHAR2(16)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_YHYDKXQ_CODE
+  is '行业类别分类表';
+comment on column RRP_MDL.M_YHYDKXQ_CODE.indus_cate_cd
+  is '行业类别代码 ';
+comment on column RRP_MDL.M_YHYDKXQ_CODE.indus_cate_name
+  is '行业类别名称 ';
+comment on column RRP_MDL.M_YHYDKXQ_CODE.classify
+  is '分类         ';
+comment on column RRP_MDL.M_YHYDKXQ_CODE.industry_cd
+  is '产业码值     ';
+

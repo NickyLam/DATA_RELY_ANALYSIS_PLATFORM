@@ -1,0 +1,14 @@
+﻿create table RRP_MDL.EAST5_KHXXB
+(
+  khtybh VARCHAR2(70)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.EAST5_KHXXB
+  is '客户信息表';
+comment on column RRP_MDL.EAST5_KHXXB.khtybh
+  is '客户统一编号';
+

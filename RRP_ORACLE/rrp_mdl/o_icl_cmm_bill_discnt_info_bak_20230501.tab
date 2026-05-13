@@ -1,0 +1,278 @@
+﻿create table RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501
+(
+  etl_dt                   DATE not null,
+  lp_id                    VARCHAR2(60) not null,
+  bus_id                   VARCHAR2(60) not null,
+  batch_id                 VARCHAR2(60),
+  std_prod_id              VARCHAR2(60),
+  bill_id                  VARCHAR2(60),
+  bill_num                 VARCHAR2(60),
+  subj_id                  VARCHAR2(60),
+  int_adj_subj_id          VARCHAR2(60),
+  cust_id                  VARCHAR2(60),
+  cust_name                VARCHAR2(250),
+  bill_med_cd              VARCHAR2(10),
+  bill_kind_cd             VARCHAR2(10),
+  buy_prod_cd              VARCHAR2(10),
+  discnt_bus_type_cd       VARCHAR2(10),
+  asset_thd_cls_cd         VARCHAR2(30),
+  sys_in_flg               VARCHAR2(10),
+  city_wide_flg            VARCHAR2(10),
+  int_accr_flg             VARCHAR2(10),
+  adj_days                 VARCHAR2(10),
+  provi_type_cd            VARCHAR2(10),
+  buy_way_cd               VARCHAR2(10),
+  bill_bus_type_cd         VARCHAR2(10),
+  bf_cntpty_type_cd        VARCHAR2(10),
+  bf_cntpty_name           VARCHAR2(400),
+  bf_cntpty_flg            VARCHAR2(10),
+  appl_dt                  DATE,
+  recv_dt                  DATE,
+  value_dt                 DATE,
+  revo_dt                  DATE,
+  draw_dt                  DATE,
+  exp_dt                   DATE,
+  dir_rher_name            VARCHAR2(250),
+  discnt_applit_acct_num   VARCHAR2(60),
+  discnt_applit_bank_no    VARCHAR2(60),
+  dscnt_props_cate_cd      VARCHAR2(10),
+  dscnt_props_name         VARCHAR2(500),
+  dscnt_props_orgnz_cd     VARCHAR2(10),
+  dscnt_props_acct_num     VARCHAR2(60),
+  dscnt_props_open_bank_no VARCHAR2(60),
+  dscnt_name               VARCHAR2(500),
+  dscnt_bank_no            VARCHAR2(60),
+  drawer_name              VARCHAR2(250),
+  drawer_cate_cd           VARCHAR2(10),
+  drawer_acct_num          VARCHAR2(60),
+  drawer_open_bank_no      VARCHAR2(60),
+  drawer_open_bank_name    VARCHAR2(250),
+  accptor_name             VARCHAR2(250),
+  accptor_acct_num         VARCHAR2(60),
+  accptor_open_bank_no     VARCHAR2(60),
+  accptor_open_bank_name   VARCHAR2(250),
+  main_guar_way_cd         VARCHAR2(30),
+  agent_discnt_flg         VARCHAR2(10),
+  onl_discnt_flg           VARCHAR2(10),
+  entry_status_cd          VARCHAR2(10),
+  entry_dt                 DATE,
+  int_accr_exp_dt          DATE,
+  discnt_int_rat           NUMBER(18,6),
+  defer_days               VARCHAR2(10),
+  int_accr_days            NUMBER(10),
+  not_ngbl_flg             VARCHAR2(10),
+  hxb_acpt_flg             VARCHAR2(10),
+  curr_cd                  VARCHAR2(10),
+  fac_val_amt              NUMBER(30,2),
+  payoff_flg               VARCHAR2(10),
+  receipt_flg              VARCHAR2(10),
+  bill_status_cd           VARCHAR2(10),
+  discnt_status_cd         VARCHAR2(10),
+  redcst_flg               VARCHAR2(10),
+  currt_bal                NUMBER(30,2),
+  int_adj_bal              NUMBER(30,2),
+  td_acru_int              NUMBER(30,2),
+  currt_acru_int           NUMBER(30,2),
+  int_amt                  NUMBER(18,2),
+  buyer_pay_int_amt        NUMBER(18,2),
+  actl_amt                 NUMBER(30,2),
+  risk_bear_fee            NUMBER(30,2),
+  issue_org_id             VARCHAR2(60),
+  enter_acct_org_id        VARCHAR2(60),
+  cust_mgr_id              VARCHAR2(60),
+  dept_id                  VARCHAR2(60),
+  operr_id                 VARCHAR2(60),
+  agent_name               VARCHAR2(60),
+  drawer_crdt_level_cd     VARCHAR2(10),
+  drawer_rating_org_name   VARCHAR2(250),
+  drawer_rating_exp_dt     DATE,
+  job_cd                   VARCHAR2(10),
+  bill_sub_intrv_id        VARCHAR2(60),
+  bill_entry_id            VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501
+  is '票据贴现信息';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.batch_id
+  is '批次编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bill_id
+  is '票据编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bill_num
+  is '票据号码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.int_adj_subj_id
+  is '利息调整科目编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bill_med_cd
+  is '票据介质代码CD1385';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bill_kind_cd
+  is '票据种类代码CD1384';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.buy_prod_cd
+  is '买入产品代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.discnt_bus_type_cd
+  is '贴现业务类型代码CD1074';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.asset_thd_cls_cd
+  is '资产三分类代码CD2060';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.sys_in_flg
+  is '系统内标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.city_wide_flg
+  is '同城标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.int_accr_flg
+  is '计息标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.adj_days
+  is '调整天数';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.provi_type_cd
+  is '计提类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.buy_way_cd
+  is '买入方式代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bill_bus_type_cd
+  is '票据业务类型代码CD1444';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bf_cntpty_type_cd
+  is '前交易对手类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bf_cntpty_name
+  is '前交易对手名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bf_cntpty_flg
+  is '前交易对手标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.appl_dt
+  is '申请日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.recv_dt
+  is '签收日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.revo_dt
+  is '撤销日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.draw_dt
+  is '出票日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.dir_rher_name
+  is '直接前手名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.discnt_applit_acct_num
+  is '贴现申请人账号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.discnt_applit_bank_no
+  is '贴现申请人行号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.dscnt_props_cate_cd
+  is '贴出人类别代码CD1443';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.dscnt_props_name
+  is '贴出人名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.dscnt_props_orgnz_cd
+  is '贴出人组织机构代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.dscnt_props_acct_num
+  is '贴出人账号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.dscnt_props_open_bank_no
+  is '贴出人开户行行号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.dscnt_name
+  is '贴入人名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.dscnt_bank_no
+  is '贴入人行号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.drawer_name
+  is '出票人名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.drawer_cate_cd
+  is '出票人类别代码CD1443';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.drawer_acct_num
+  is '出票人账号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.drawer_open_bank_no
+  is '出票人开户行行号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.drawer_open_bank_name
+  is '出票人开户行名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.accptor_name
+  is '承兑人名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.accptor_acct_num
+  is '承兑人账号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.accptor_open_bank_no
+  is '承兑人开户行行号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.accptor_open_bank_name
+  is '承兑人开户行名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.main_guar_way_cd
+  is '主担保方式代码CD1502';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.agent_discnt_flg
+  is '代理贴现标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.onl_discnt_flg
+  is '在线贴现标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.entry_status_cd
+  is '记账状态代码CD1425';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.entry_dt
+  is '记账日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.int_accr_exp_dt
+  is '计息到期日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.discnt_int_rat
+  is '贴现利率';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.defer_days
+  is '顺延天数';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.int_accr_days
+  is '计息天数';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.not_ngbl_flg
+  is '不得转让标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.hxb_acpt_flg
+  is '我行承兑标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.curr_cd
+  is '币种代码CD1728';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.fac_val_amt
+  is '票面金额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.payoff_flg
+  is '结清标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.receipt_flg
+  is '小票标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bill_status_cd
+  is '票据状态代码CD1489';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.discnt_status_cd
+  is '贴现状态代码CD1270';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.redcst_flg
+  is '再贴现标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.int_adj_bal
+  is '利息调整余额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.td_acru_int
+  is '当日应计利息';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.currt_acru_int
+  is '当期应计利息';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.int_amt
+  is '利息金额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.buyer_pay_int_amt
+  is '买方付息金额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.actl_amt
+  is '实付金额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.risk_bear_fee
+  is '风险承担费';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.issue_org_id
+  is '签发机构编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.enter_acct_org_id
+  is '入账机构编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.dept_id
+  is '部门编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.operr_id
+  is '操作员编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.agent_name
+  is '代理人名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.drawer_crdt_level_cd
+  is '出票人信用等级代码CD1624';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.drawer_rating_org_name
+  is '出票人评级机构名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.drawer_rating_exp_dt
+  is '出票人评级到期日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bill_sub_intrv_id
+  is '票据子区间编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCNT_INFO_BAK_20230501.bill_entry_id
+  is '票据唯一标识';
+

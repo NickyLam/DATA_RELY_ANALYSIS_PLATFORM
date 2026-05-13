@@ -1,0 +1,158 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501
+(
+  entry_id            VARCHAR2(30),
+  tsk_id              VARCHAR2(30),
+  entry_date          CHAR(10),
+  flow_id             VARCHAR2(30),
+  chg_id              VARCHAR2(30),
+  inst_id             NUMBER(16),
+  bkkpg_org_id        VARCHAR2(30),
+  subj_org_id         VARCHAR2(30),
+  subj_code           VARCHAR2(100),
+  subj_sub_code       VARCHAR2(100),
+  inner_acct_sn       VARCHAR2(30),
+  core_acct_code      VARCHAR2(30),
+  step                VARCHAR2(20),
+  debit_credit_flag   CHAR(1),
+  red_blue_flag       CHAR(1),
+  pending_cancel_flag CHAR(1),
+  currency            CHAR(3),
+  value               NUMBER(31,2),
+  state               CHAR(1),
+  is_sending_core     CHAR(1),
+  secu_acct_id        VARCHAR2(30),
+  cash_acct_id        VARCHAR2(30),
+  update_time         CHAR(19),
+  estd_or_real        CHAR(1),
+  memo                VARCHAR2(200),
+  core_acct_name      VARCHAR2(200),
+  grp_flow_id         VARCHAR2(30),
+  acctg_obj_id        VARCHAR2(30),
+  chg_type            VARCHAR2(20),
+  detail_flag         CHAR(1),
+  src_type            VARCHAR2(20),
+  send_state          CHAR(1),
+  is_manual           CHAR(1),
+  ext_secu_acct_id    VARCHAR2(20),
+  ext_cash_acct_id    VARCHAR2(20),
+  i9_flag             CHAR(1),
+  ext_i_code          VARCHAR2(80),
+  ext_a_type          VARCHAR2(20),
+  ext_m_type          VARCHAR2(20),
+  ext_dim1            VARCHAR2(200),
+  ext_dim2            VARCHAR2(200),
+  ext_dim3            VARCHAR2(200),
+  ext_dim4            VARCHAR2(200),
+  ext_dim5            VARCHAR2(200),
+  ext_dim6            VARCHAR2(200),
+  ext_value1          VARCHAR2(30),
+  ext_value2          VARCHAR2(30),
+  ext_value3          VARCHAR2(200),
+  etl_dt              DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501
+  is '会计分录表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.entry_id
+  is '凭证ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.tsk_id
+  is '任务ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.entry_date
+  is '凭证日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.flow_id
+  is '流水号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.chg_id
+  is '变动ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.inst_id
+  is '主指令ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.bkkpg_org_id
+  is '记账机构号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.subj_org_id
+  is '科目机构码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.subj_code
+  is '科目码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.subj_sub_code
+  is '科目子码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.inner_acct_sn
+  is '内部账序号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.core_acct_code
+  is '核心账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.step
+  is '步骤；0：利息计提；1：利息结转；2：公允价值损益计提；3：公允价值损益结转；4：收付。';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.debit_credit_flag
+  is '借贷标识；1：借；2：贷。';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.red_blue_flag
+  is '红蓝字；1：普通；2：红字；3：蓝字。';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.pending_cancel_flag
+  is '挂销账标识；0：普通；1：内部挂账；2：内部销账；3：外部挂账；4：外部销账。';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.value
+  is '借贷值';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.state
+  is '0：未发送；1：已发送；2：未发送抹账；3：已发送抹账。';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.is_sending_core
+  is '是否发送核心账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.secu_acct_id
+  is '券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.cash_acct_id
+  is '资金账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.estd_or_real
+  is '理论OR实际核算；E：理论核算；R：实际核算';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.core_acct_name
+  is '核心账号名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.grp_flow_id
+  is '合并流水号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.acctg_obj_id
+  is '核算对象ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.chg_type
+  is '变动类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.detail_flag
+  is '明细标记';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.src_type
+  is '源数据类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.send_state
+  is '发送状态';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.is_manual
+  is '1：手工凭证 0：非手工凭证';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_secu_acct_id
+  is '外部券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_cash_acct_id
+  is '外部资金账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.i9_flag
+  is 'I9标记';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_a_type
+  is '金融工具资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_m_type
+  is '金融工具市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_dim1
+  is '扩展维度1';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_dim2
+  is '扩展维度2';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_dim3
+  is '扩展维度3';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_dim4
+  is '扩展维度4';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_dim5
+  is '扩展维度5';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_dim6
+  is '扩展维度6';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_value1
+  is '扩展值字段1';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_value2
+  is '扩展值字段2';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.ext_value3
+  is '扩展值3';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_BOOKKEEPING_ENTRY_BAK_20230501.etl_dt
+  is 'ETL处理日期';
+

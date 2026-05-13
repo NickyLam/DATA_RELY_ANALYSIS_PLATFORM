@@ -1,0 +1,113 @@
+﻿create table RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO
+(
+  serno                        VARCHAR2(40),
+  cont_no                      VARCHAR2(30),
+  cus_id                       VARCHAR2(30),
+  cus_name                     VARCHAR2(60),
+  consignor_id                 VARCHAR2(30),
+  consignor_name               VARCHAR2(120),
+  consignor_cert_no            VARCHAR2(32),
+  consignor_cert_type          VARCHAR2(2),
+  consignor_type               VARCHAR2(2),
+  dep_account                  VARCHAR2(32),
+  dep_account_name             VARCHAR2(120),
+  dep_account_type             VARCHAR2(10),
+  cap_account                  VARCHAR2(32),
+  cap_account_name             VARCHAR2(120),
+  cap_account_type             VARCHAR2(10),
+  int_account                  VARCHAR2(32),
+  int_account_name             VARCHAR2(120),
+  int_account_type             VARCHAR2(10),
+  fee_account                  VARCHAR2(32),
+  fee_account_name             VARCHAR2(120),
+  fee_account_type             VARCHAR2(10),
+  tax_account                  VARCHAR2(32),
+  tax_account_name             VARCHAR2(120),
+  tax_account_type             VARCHAR2(10),
+  entrust_dep_account          VARCHAR2(32),
+  entrust_dep_account_name     VARCHAR2(120),
+  entrust_dep_account_type     VARCHAR2(10),
+  entrust_dep_account_bank     VARCHAR2(20),
+  entrust_dep_account_bankname VARCHAR2(200),
+  nationaleconomycategory      VARCHAR2(2),
+  nationaleconomysubclass      VARCHAR2(3),
+  start_dt                     DATE,
+  end_dt                       DATE,
+  id_mark                      VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO
+  is '委托人信息表';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.serno
+  is '申请业务流水号';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.cont_no
+  is '借款合同号';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.cus_id
+  is '借款人客户号';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.cus_name
+  is '借款人名称';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.consignor_id
+  is '委托人客户号';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.consignor_name
+  is '委托人名称';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.consignor_cert_no
+  is '委托证人件号码';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.consignor_cert_type
+  is '委托人证件类型';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.consignor_type
+  is '委托人类型';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.dep_account
+  is '委托人存款账户';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.dep_account_name
+  is '委托人存款账户名称';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.dep_account_type
+  is '委托人存款账户支付工具类型';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.cap_account
+  is '本金归还入账账户';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.cap_account_name
+  is '本金归还入账账户名称';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.cap_account_type
+  is '本金归还入账账户支付工具类型';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.int_account
+  is '利息归还入账账户';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.int_account_name
+  is '利息归还入账账户名称';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.int_account_type
+  is '利息归还入账账户支付工具类型';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.fee_account
+  is '手续费收取账号';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.fee_account_name
+  is '手续费收取账号名称';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.fee_account_type
+  is '手续费收取账号支付工具类型';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.tax_account
+  is '印花税扣税账号';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.tax_account_name
+  is '印花税扣税账号名称';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.tax_account_type
+  is '印花税扣税账号支付工具类型';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.entrust_dep_account
+  is '委托存款账户';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.entrust_dep_account_name
+  is '委托存款账户名称';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.entrust_dep_account_type
+  is '委托存款账户支付工具类型';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.entrust_dep_account_bank
+  is '委托存款账户开户行行号（行内的）';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.entrust_dep_account_bankname
+  is '委托存款账户开户行行名称（行内的）';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.nationaleconomycategory
+  is '国民经济大类';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.nationaleconomysubclass
+  is '国民经济部门子类';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_RCRS_IQP_CONSIGNOR_INFO.id_mark
+  is '增删标志';
+

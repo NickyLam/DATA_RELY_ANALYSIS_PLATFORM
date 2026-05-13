@@ -1,0 +1,66 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS
+(
+  obj_id           VARCHAR2(45),
+  acctg_obj_id     VARCHAR2(45),
+  ext_secu_acct_id VARCHAR2(30),
+  secu_acct_id     VARCHAR2(45),
+  tsk_id           VARCHAR2(45),
+  beg_date         VARCHAR2(15),
+  end_date         VARCHAR2(15),
+  cal_start_date   VARCHAR2(15),
+  cal_end_date     VARCHAR2(15),
+  open_time        VARCHAR2(29),
+  update_time      VARCHAR2(29),
+  due_ai           NUMBER(31,8),
+  due_cp           NUMBER(31,8),
+  dtl_due_type     VARCHAR2(15),
+  etl_dt           DATE,
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS
+  is '明细DUE对象历史表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.obj_id
+  is '对象Id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.acctg_obj_id
+  is '核算对象Id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.ext_secu_acct_id
+  is '外部券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.secu_acct_id
+  is '内部券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.tsk_id
+  is '任务Id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.beg_date
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.end_date
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.cal_start_date
+  is '计息开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.cal_end_date
+  is '计息结束日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.open_time
+  is '开仓时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.due_ai
+  is '应收未收利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.due_cp
+  is '应收未收净价成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.dtl_due_type
+  is '明细due类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_ACCOUNTING_DTLDUE_OBJ_HIS.etl_timestamp
+  is 'ETL处理时间戳';
+

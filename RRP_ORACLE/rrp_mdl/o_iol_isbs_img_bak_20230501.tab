@@ -1,0 +1,93 @@
+﻿create table RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501
+(
+  inr         VARCHAR2(8),
+  msgid       VARCHAR2(35),
+  objtyp      VARCHAR2(6),
+  objinr      VARCHAR2(8),
+  fileid      VARCHAR2(50),
+  filnam      VARCHAR2(80),
+  filpth      VARCHAR2(80),
+  inifrm      VARCHAR2(6),
+  filefrm     VARCHAR2(4),
+  filetype    VARCHAR2(4),
+  filedesc    VARCHAR2(120),
+  vldflg      VARCHAR2(4),
+  fpid        VARCHAR2(50),
+  invtp       VARCHAR2(4),
+  invnb       VARCHAR2(20),
+  invoicecode VARCHAR2(20),
+  untaxamt    NUMBER(18,3),
+  invdt       DATE,
+  yxflg       VARCHAR2(1),
+  branch      VARCHAR2(8),
+  ownref      VARCHAR2(40),
+  delflg      VARCHAR2(1),
+  updow       VARCHAR2(3),
+  isdow       VARCHAR2(1),
+  usrkey      VARCHAR2(10),
+  credat      TIMESTAMP(6),
+  etl_dt      DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501
+  is '发票信息表';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.inr
+  is '数据序号';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.msgid
+  is '报文标识号';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.objtyp
+  is '关联业务表类型';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.objinr
+  is '关联业务表INR';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.fileid
+  is '人行回传影像ID';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.filnam
+  is '影像名称';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.filpth
+  is '文件存放路径';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.inifrm
+  is '对应的业务交易';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.filefrm
+  is '影像类别';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.filetype
+  is '影像类型';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.filedesc
+  is '影像描述';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.vldflg
+  is '有效标识';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.fpid
+  is '发票影像ID';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.invtp
+  is '发票类型';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.invnb
+  is '发票号码';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.invoicecode
+  is '发票代码';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.untaxamt
+  is '未税金额';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.invdt
+  is '开票日期';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.yxflg
+  is '影像分类';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.branch
+  is '所属机构';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.ownref
+  is '业务编号';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.delflg
+  is '删除标志';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.updow
+  is '上传/下载';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.isdow
+  is '下载成功标志';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.usrkey
+  is '柜员号';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.credat
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_ISBS_IMG_BAK_20230501.etl_dt
+  is 'ETL处理日期';
+

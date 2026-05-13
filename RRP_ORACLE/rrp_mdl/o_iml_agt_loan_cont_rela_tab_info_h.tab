@@ -1,0 +1,54 @@
+﻿create table RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H
+(
+  agt_id         VARCHAR2(250),
+  lp_id          VARCHAR2(100),
+  cont_id        VARCHAR2(100),
+  obj_type_name  VARCHAR2(500),
+  obj_id         VARCHAR2(100),
+  rela_amt       NUMBER(30,2),
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10),
+  src_table_name VARCHAR2(100),
+  job_cd         VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H
+  is '贷款合同关联表信息历史';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.obj_type_name
+  is '对象类型名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.obj_id
+  is '对象编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.rela_amt
+  is '关联金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_CONT_RELA_TAB_INFO_H.etl_timestamp
+  is 'etl处理时间戳';
+

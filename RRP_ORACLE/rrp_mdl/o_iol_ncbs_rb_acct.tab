@@ -1,0 +1,378 @@
+﻿create table RRP_MDL.O_IOL_NCBS_RB_ACCT
+(
+  acct_name                  VARCHAR2(200),
+  acct_seq_no                VARCHAR2(5),
+  acct_status                VARCHAR2(1),
+  acct_type                  VARCHAR2(1),
+  base_acct_no               VARCHAR2(64),
+  business_unit              VARCHAR2(10),
+  card_no                    VARCHAR2(50),
+  client_no                  VARCHAR2(16),
+  client_type                VARCHAR2(3),
+  doc_type                   VARCHAR2(10),
+  document_id                VARCHAR2(60),
+  document_type              VARCHAR2(4),
+  internal_key               NUMBER(15),
+  prod_type                  VARCHAR2(12),
+  profit_center              VARCHAR2(20),
+  reason_code                VARCHAR2(10),
+  user_id                    VARCHAR2(8),
+  voucher_status             VARCHAR2(3),
+  term                       VARCHAR2(5),
+  term_type                  VARCHAR2(1),
+  acct_class                 VARCHAR2(1),
+  acct_desc                  VARCHAR2(200),
+  acct_exec                  VARCHAR2(24),
+  acct_license_no            VARCHAR2(50),
+  acct_nature                VARCHAR2(10),
+  acct_real_flag             VARCHAR2(1),
+  acct_res_status            VARCHAR2(1),
+  acct_status_prev           VARCHAR2(1),
+  acct_stop_pay              VARCHAR2(1),
+  addtl_principal            VARCHAR2(1),
+  agreement_id               VARCHAR2(50),
+  all_dep_ind                VARCHAR2(1),
+  all_dra_ind                VARCHAR2(1),
+  appr_flag                  VARCHAR2(1),
+  appr_letter_no             VARCHAR2(30),
+  auto_renew_rollover        VARCHAR2(1),
+  auto_settle_flag           VARCHAR2(1),
+  bal_type                   VARCHAR2(2),
+  checked_flag               VARCHAR2(1),
+  company                    VARCHAR2(20),
+  cur_stage_no               NUMBER(4),
+  dac_value                  VARCHAR2(200),
+  gl_type                    VARCHAR2(1),
+  impound_fad                VARCHAR2(1),
+  individual_flag            VARCHAR2(1),
+  int_ind_flag               VARCHAR2(1),
+  joint_acct_flag            VARCHAR2(1),
+  last_mvmt_status           VARCHAR2(1),
+  lead_acct_flag             VARCHAR2(1),
+  main_bal_flag              VARCHAR2(1),
+  main_int_flag              VARCHAR2(1),
+  management_free_flag       VARCHAR2(1),
+  multi_bal_type_flag        VARCHAR2(1),
+  no_tran_flag               VARCHAR2(1),
+  osa_flag                   VARCHAR2(1),
+  ownership_type             VARCHAR2(2),
+  partial_renew_roll         VARCHAR2(1),
+  prefix                     VARCHAR2(10),
+  recover_flag               VARCHAR2(1),
+  region_flag                VARCHAR2(1),
+  renew_no                   NUMBER(5),
+  rollover_no                NUMBER(5),
+  settle                     VARCHAR2(1),
+  source_module              VARCHAR2(3),
+  source_type                VARCHAR2(6),
+  terminal_id                VARCHAR2(50),
+  times_renewed              NUMBER(5),
+  times_rolledover           NUMBER(5),
+  xrate_id                   VARCHAR2(1),
+  accounting_status          VARCHAR2(3),
+  accounting_status_prev     VARCHAR2(3),
+  fixed_call                 VARCHAR2(1),
+  accounting_status_upd_date DATE,
+  acct_close_date            DATE,
+  acct_due_date              DATE,
+  acct_license_date          DATE,
+  acct_open_date             DATE,
+  acct_status_upd_date       DATE,
+  approval_date              DATE,
+  dormant_date               DATE,
+  effect_date                DATE,
+  last_change_date           DATE,
+  last_tran_date             DATE,
+  maturity_date              DATE,
+  open_tran_date             DATE,
+  ori_maturity_date          DATE,
+  orig_acct_open_date        DATE,
+  settle_date                DATE,
+  tran_timestamp             VARCHAR2(26),
+  iss_country                VARCHAR2(3),
+  acct_branch                VARCHAR2(12),
+  acct_ccy                   VARCHAR2(3),
+  acct_close_reason          VARCHAR2(300),
+  acct_close_user_id         VARCHAR2(8),
+  alt_acct_name              VARCHAR2(200),
+  appr_user_id               VARCHAR2(8),
+  home_branch                VARCHAR2(12),
+  last_change_user_id        VARCHAR2(8),
+  main_prod_type             VARCHAR2(12),
+  mm_ref_no                  VARCHAR2(50),
+  notice_period              VARCHAR2(5),
+  old_prod_type              VARCHAR2(12),
+  parent_internal_key        NUMBER(15),
+  settle_user_id             VARCHAR2(8),
+  voucher_start_no           VARCHAR2(50),
+  xrate                      NUMBER(15,8),
+  apply_branch               VARCHAR2(12),
+  acct_name_prefix           VARCHAR2(50),
+  acct_name_suffix           VARCHAR2(50),
+  open_user_id               VARCHAR2(8),
+  acct_property2             VARCHAR2(10),
+  amend_date                 DATE,
+  is_med_ins_flag            VARCHAR2(1),
+  is_travel_card_flag        VARCHAR2(1),
+  travel_due_date            DATE,
+  is_soc_fin_flag            VARCHAR2(1),
+  start_dt                   DATE,
+  end_dt                     DATE,
+  id_mark                    VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_RB_ACCT
+  is '账户基本信息表';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_seq_no
+  is '账户子账号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_status
+  is '账户状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_type
+  is '账户类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.base_acct_no
+  is '交易账号/卡号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.business_unit
+  is '账套';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.card_no
+  is '卡号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.client_type
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.doc_type
+  is '凭证类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.document_id
+  is '证件号码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.document_type
+  is '客户证件类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.internal_key
+  is '账户内部键值';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.prod_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.profit_center
+  is '利润中心';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.reason_code
+  is '账户用途';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.user_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.voucher_status
+  is '凭证状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.term
+  is '存期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.term_type
+  is '期限单位';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_class
+  is '账户等级';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_desc
+  is '账户描述';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_exec
+  is '银行客户经理编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_license_no
+  is '账户许可证号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_nature
+  is '存款账户类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_real_flag
+  is '账户虚实标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_res_status
+  is '账户限制标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_status_prev
+  is '账户上一状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_stop_pay
+  is '账户余额止付标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.addtl_principal
+  is '是否允许增加本金';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.agreement_id
+  is '协议编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.all_dep_ind
+  is '通存标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.all_dra_ind
+  is '通兑标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.appr_flag
+  is '复核标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.appr_letter_no
+  is '核准件编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.auto_renew_rollover
+  is '自动转存方式';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.auto_settle_flag
+  is '自动结清标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.bal_type
+  is '余额类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.checked_flag
+  is '黑名单是否已检查标志位';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.cur_stage_no
+  is '当前期数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.dac_value
+  is 'dac值防篡改加密';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.gl_type
+  is '总账类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.impound_fad
+  is '强制扣划导致违约状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.individual_flag
+  is '对公对私标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.int_ind_flag
+  is '是否计息';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.joint_acct_flag
+  is '联合账户标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.last_mvmt_status
+  is '定期账户上一次更改状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.lead_acct_flag
+  is '主账户标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.main_bal_flag
+  is '主账户是否带余额';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.main_int_flag
+  is '主账户是否带利息';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.management_free_flag
+  is '对公免收管理费标志，对私免收管理费和卡年费标识';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.multi_bal_type_flag
+  is '是否多余额';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.no_tran_flag
+  is '6个月无交易标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.osa_flag
+  is '离岸标记';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.ownership_type
+  is '归属种类';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.partial_renew_roll
+  is '是否部分本金转存';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.prefix
+  is '前缀';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.recover_flag
+  is '实时追缴标志字段';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.region_flag
+  is '区内区外标记';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.renew_no
+  is '本金转存次数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.rollover_no
+  is '本息转存次数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.settle
+  is '结算标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.source_module
+  is '源模块';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.source_type
+  is '渠道编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.terminal_id
+  is '交易终端编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.times_renewed
+  is '已本金转存次数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.times_rolledover
+  is '已本息转存次数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.xrate_id
+  is '汇兑方式';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.accounting_status
+  is '核算状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.accounting_status_prev
+  is '上次核算状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.fixed_call
+  is '定期账户细类';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.accounting_status_upd_date
+  is '核算状态变更日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_close_date
+  is '销户日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_due_date
+  is '账户有效日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_license_date
+  is '账户许可证签发日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_open_date
+  is '账户开户日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_status_upd_date
+  is '账户状态变更日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.approval_date
+  is '复核日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.dormant_date
+  is '转不动户日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.effect_date
+  is '产品生效日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.last_change_date
+  is '最后修改日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.last_tran_date
+  is '最后交易日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.maturity_date
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.open_tran_date
+  is '开户后首次交易日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.ori_maturity_date
+  is '账户原始到期日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.orig_acct_open_date
+  is '账户原始开立日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.settle_date
+  is '结算日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.iss_country
+  is '发证国家';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_branch
+  is '开户机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_ccy
+  is '账户币种';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_close_reason
+  is '关闭原因';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_close_user_id
+  is '账户销户操作柜员';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.alt_acct_name
+  is '备用账户名称';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.appr_user_id
+  is '复核柜员';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.home_branch
+  is '客户管理行';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.last_change_user_id
+  is '最后修改柜员';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.main_prod_type
+  is '卡产品代码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.mm_ref_no
+  is '资金交易参考号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.notice_period
+  is '通知期限';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.old_prod_type
+  is '原产品类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.parent_internal_key
+  is '上级账户标识符';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.settle_user_id
+  is '结算柜员';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.voucher_start_no
+  is '凭证起始号码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.xrate
+  is '汇率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.apply_branch
+  is '申请机构';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_name_prefix
+  is '账户名称前缀';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_name_suffix
+  is '账户名称后缀';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.open_user_id
+  is '开户柜员编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.acct_property2
+  is '账户性质2';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.amend_date
+  is '变更日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.is_med_ins_flag
+  is '是否医保账户标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.is_travel_card_flag
+  is '是否旅行通账户标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.travel_due_date
+  is '旅行通卡有效期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.is_soc_fin_flag
+  is '是否为社保卡下金融账户标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT.etl_timestamp
+  is 'ETL处理时间戳';
+

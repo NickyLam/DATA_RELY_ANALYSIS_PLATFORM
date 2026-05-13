@@ -1,0 +1,35 @@
+﻿create table RRP_MDL.S63_LOAN_APP
+(
+  app_id        VARCHAR2(200),
+  cust_id       VARCHAR2(200),
+  app_dt        VARCHAR2(200),
+  corp_cust_typ VARCHAR2(200),
+  cust_name     VARCHAR2(200),
+  bz            VARCHAR2(200),
+  org_id        VARCHAR2(200),
+  app_amt       NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.S63_LOAN_APP
+  is '贷款申请信息整合表';
+comment on column RRP_MDL.S63_LOAN_APP.app_id
+  is '申请编号';
+comment on column RRP_MDL.S63_LOAN_APP.cust_id
+  is '客户编号';
+comment on column RRP_MDL.S63_LOAN_APP.app_dt
+  is '申请日期';
+comment on column RRP_MDL.S63_LOAN_APP.corp_cust_typ
+  is '统计客户类型';
+comment on column RRP_MDL.S63_LOAN_APP.cust_name
+  is '客户名称';
+comment on column RRP_MDL.S63_LOAN_APP.bz
+  is '备注';
+comment on column RRP_MDL.S63_LOAN_APP.org_id
+  is '机构名称';
+comment on column RRP_MDL.S63_LOAN_APP.app_amt
+  is '申请金额';
+

@@ -1,0 +1,92 @@
+﻿create table RRP_MDL.B_LOAN_EXN_INFO
+(
+  data_dt        CHAR(8) not null,
+  lgl_rep_id     VARCHAR2(200),
+  cont_id        VARCHAR2(200) not null,
+  rcpt_id        VARCHAR2(200) not null,
+  loan_extn_id   VARCHAR2(200) not null,
+  cust_id        VARCHAR2(200),
+  org_id         VARCHAR2(200),
+  extn_dt        CHAR(8) not null,
+  extn_exp_dt    CHAR(8),
+  cur            CHAR(3),
+  extn_amt       NUMBER(30,2),
+  orig_rate      NUMBER(20,6),
+  rate_typ       VARCHAR2(10),
+  extn_base_rate NUMBER(20,6),
+  rate_flt_val   NUMBER(20,6),
+  orig_cont_id   VARCHAR2(200),
+  orig_rcpt_no   VARCHAR2(200),
+  tra_tlr_no     VARCHAR2(30),
+  grant_tlr_no   VARCHAR2(30),
+  extn_rate      NUMBER(20,6),
+  dept_line      VARCHAR2(500),
+  data_src       VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_LOAN_EXN_INFO
+  is '贷款展期信息';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.cont_id
+  is '合同编号';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.loan_extn_id
+  is '贷款展期编号';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.extn_dt
+  is '展期日期';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.extn_exp_dt
+  is '展期到期日期';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.cur
+  is '币种';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.extn_amt
+  is '展期金额';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.orig_rate
+  is '原利率';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.rate_typ
+  is '利率类型';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.extn_base_rate
+  is '展期基准利率';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.rate_flt_val
+  is '利率浮动值';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.orig_cont_id
+  is '原合同号';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.orig_rcpt_no
+  is '原借据号';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.tra_tlr_no
+  is '交易柜员号';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.grant_tlr_no
+  is '授权柜员号';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.extn_rate
+  is '展期利率';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_LOAN_EXN_INFO.data_src
+  is '数据来源';
+alter table RRP_MDL.B_LOAN_EXN_INFO
+  add constraint PK_B_LOAN_EXN_INFO primary key (DATA_DT, CONT_ID, RCPT_ID, LOAN_EXTN_ID, EXTN_DT)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

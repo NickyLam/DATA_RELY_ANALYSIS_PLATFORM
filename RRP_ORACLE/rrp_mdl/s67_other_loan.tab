@@ -1,0 +1,27 @@
+﻿create table RRP_MDL.S67_OTHER_LOAN
+(
+  rcpt_id      VARCHAR2(200),
+  cont_id      VARCHAR2(200),
+  loan_biz_typ VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.S67_OTHER_LOAN
+  is '过程临时表';
+comment on column RRP_MDL.S67_OTHER_LOAN.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.S67_OTHER_LOAN.cont_id
+  is '合同号';
+comment on column RRP_MDL.S67_OTHER_LOAN.loan_biz_typ
+  is '贷款业务类型';
+

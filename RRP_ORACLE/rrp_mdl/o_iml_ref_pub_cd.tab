@@ -1,0 +1,51 @@
+﻿create table RRP_MDL.O_IML_REF_PUB_CD
+(
+  etl_dt          DATE,
+  cd_id           VARCHAR2(60),
+  cd_tab_en_name  VARCHAR2(60),
+  cd_tab_cn_descb VARCHAR2(250),
+  cd_val          VARCHAR2(60),
+  cd_descb        VARCHAR2(1000),
+  data_std_flg    VARCHAR2(10),
+  quote_data_std  VARCHAR2(10),
+  remark          VARCHAR2(100),
+  job_cd          VARCHAR2(10),
+  valid_flg       VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_REF_PUB_CD
+  is '公共代码表';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.cd_id
+  is '代码编号';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.cd_tab_en_name
+  is '代码表英文名称';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.cd_tab_cn_descb
+  is '代码表中文描述';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.cd_val
+  is '代码值';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.cd_descb
+  is '代码描述';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.data_std_flg
+  is '数据标准标志';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.quote_data_std
+  is '引用数据标准';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.remark
+  is '备注';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_REF_PUB_CD.valid_flg
+  is '有效标志';
+

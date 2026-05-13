@@ -1,0 +1,53 @@
+﻿create table RRP_MDL.B_OTH_PRO_IMPT_INFO
+(
+  data_dt    CHAR(8) not null,
+  lgl_rep_id VARCHAR2(200),
+  org_id     VARCHAR2(200) not null,
+  cur        CHAR(3) not null,
+  biz_typ    VARCHAR2(10) not null,
+  subj_id    VARCHAR2(200),
+  pro_impt   NUMBER(30,2),
+  dept_line  VARCHAR2(500),
+  data_src   VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_OTH_PRO_IMPT_INFO
+  is '减值准备信息';
+comment on column RRP_MDL.B_OTH_PRO_IMPT_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_OTH_PRO_IMPT_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_OTH_PRO_IMPT_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_OTH_PRO_IMPT_INFO.cur
+  is '币种';
+comment on column RRP_MDL.B_OTH_PRO_IMPT_INFO.biz_typ
+  is '业务类型';
+comment on column RRP_MDL.B_OTH_PRO_IMPT_INFO.subj_id
+  is '科目编号';
+comment on column RRP_MDL.B_OTH_PRO_IMPT_INFO.pro_impt
+  is '减值准备';
+comment on column RRP_MDL.B_OTH_PRO_IMPT_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_OTH_PRO_IMPT_INFO.data_src
+  is '数据来源';
+alter table RRP_MDL.B_OTH_PRO_IMPT_INFO
+  add constraint PK_B_OTH_PRO_IMPT_INFO primary key (DATA_DT, ORG_ID, CUR, BIZ_TYP)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

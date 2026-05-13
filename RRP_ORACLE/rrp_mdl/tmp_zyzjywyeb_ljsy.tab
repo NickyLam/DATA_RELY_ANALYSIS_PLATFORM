@@ -1,0 +1,17 @@
+﻿create table RRP_MDL.TMP_ZYZJYWYEB_LJSY
+(
+  jrgjbh VARCHAR2(60),
+  ljsy   NUMBER(20,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.TMP_ZYZJYWYEB_LJSY
+  is '自营资金业务余额表累计收益临时表';
+comment on column RRP_MDL.TMP_ZYZJYWYEB_LJSY.jrgjbh
+  is '金融工具编号';
+comment on column RRP_MDL.TMP_ZYZJYWYEB_LJSY.ljsy
+  is '累计收益';
+

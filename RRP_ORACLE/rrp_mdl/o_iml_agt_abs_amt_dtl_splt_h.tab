@@ -1,0 +1,72 @@
+﻿create table RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H
+(
+  agt_id                          VARCHAR2(250),
+  lp_id                           VARCHAR2(100),
+  asset_amt_dtl_seq_num           VARCHAR2(60),
+  asset_bag_cont_dtl_seq_num      VARCHAR2(60),
+  cust_id                         VARCHAR2(100),
+  amt_type_cd                     VARCHAR2(30),
+  paybl_bank_int_amt              NUMBER(30,2),
+  loan_surp_amt                   NUMBER(30,2),
+  redem_paybl_cntpty_int          NUMBER(30,2),
+  redem_surp_cntpty_int           NUMBER(30,2),
+  pkg_tran_in_suspd_crdt_acct_amt NUMBER(30,2),
+  final_modif_dt                  DATE,
+  tran_tm                         TIMESTAMP(6),
+  start_dt                        DATE,
+  end_dt                          DATE,
+  id_mark                         VARCHAR2(10),
+  src_table_name                  VARCHAR2(100),
+  job_cd                          VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H
+  is '资产证券化金额明细拆分历史';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.asset_amt_dtl_seq_num
+  is '资产金额明细序号';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.asset_bag_cont_dtl_seq_num
+  is '资产包合同明细序号';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.amt_type_cd
+  is '金额类型代码';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.paybl_bank_int_amt
+  is '应付行内金额';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.loan_surp_amt
+  is '贷款剩余金额';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.redem_paybl_cntpty_int
+  is '赎回应付对手利息';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.redem_surp_cntpty_int
+  is '赎回剩余对手利息';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.pkg_tran_in_suspd_crdt_acct_amt
+  is '封包转入暂收款账户金额';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.final_modif_dt
+  is '最后修改日期';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_ABS_AMT_DTL_SPLT_H.job_cd
+  is '任务编码';
+

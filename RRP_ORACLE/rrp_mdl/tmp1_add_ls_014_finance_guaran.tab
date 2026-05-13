@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.TMP1_ADD_LS_014_FINANCE_GUARAN
+(
+  loan_cont_id                 VARCHAR2(100),
+  guartor_id                   VARCHAR2(60),
+  guartor_name                 VARCHAR2(500),
+  gover_fin_guar_corp_guar_flg VARCHAR2(100),
+  rn                           NUMBER,
+  data_src                     VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.TMP1_ADD_LS_014_FINANCE_GUARAN
+  is '补录表-零售-融资担保机构代偿模型（G5305）';
+comment on column RRP_MDL.TMP1_ADD_LS_014_FINANCE_GUARAN.loan_cont_id
+  is '被担保合同编号';
+comment on column RRP_MDL.TMP1_ADD_LS_014_FINANCE_GUARAN.guartor_id
+  is '保证人编号';
+comment on column RRP_MDL.TMP1_ADD_LS_014_FINANCE_GUARAN.guartor_name
+  is '担保人名称';
+comment on column RRP_MDL.TMP1_ADD_LS_014_FINANCE_GUARAN.gover_fin_guar_corp_guar_flg
+  is '政府融资担保公司保证标志';
+comment on column RRP_MDL.TMP1_ADD_LS_014_FINANCE_GUARAN.rn
+  is '排序';
+comment on column RRP_MDL.TMP1_ADD_LS_014_FINANCE_GUARAN.data_src
+  is '数据来源';
+

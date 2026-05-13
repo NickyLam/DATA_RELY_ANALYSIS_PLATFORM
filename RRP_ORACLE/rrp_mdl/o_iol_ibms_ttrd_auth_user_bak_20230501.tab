@@ -1,0 +1,89 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501
+(
+  user_id               NUMBER(19),
+  user_name             VARCHAR2(100),
+  i_id                  NUMBER(19),
+  email                 VARCHAR2(128),
+  tel_num               VARCHAR2(32),
+  mobile_num            VARCHAR2(32),
+  employee_card_no      VARCHAR2(64),
+  full_chinese_spell    VARCHAR2(250),
+  password              VARCHAR2(512),
+  account               VARCHAR2(32),
+  birth_day             VARCHAR2(10),
+  flag                  NUMBER(5),
+  status                NUMBER(5),
+  head_chinese_spell    VARCHAR2(100),
+  create_time           CHAR(23),
+  update_time           CHAR(23),
+  is_first_login        CHAR(1),
+  pwd_update_date       CHAR(10),
+  input_pwd_error_times NUMBER(2),
+  password_history      VARCHAR2(512),
+  state                 CHAR(1),
+  update_user           NUMBER(19),
+  qq_number             VARCHAR2(32),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501
+  is '用户表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.user_id
+  is '用户ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.user_name
+  is '姓名';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.i_id
+  is '组织机构ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.email
+  is '邮箱';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.tel_num
+  is '座机号码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.mobile_num
+  is '手机号码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.employee_card_no
+  is '工牌号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.full_chinese_spell
+  is '姓名拼音';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.password
+  is '密码的MD5值';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.account
+  is '登录帐号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.birth_day
+  is '出生日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.flag
+  is '0:普通用户，1:系统管理员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.status
+  is '帐号状态(0:启用,-1:停用,1:未启用)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.head_chinese_spell
+  is '姓名拼音头字母';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.update_time
+  is '修改时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.is_first_login
+  is '是否首次登陆：1是，0否';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.pwd_update_date
+  is '密码修改日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.input_pwd_error_times
+  is '密码输入错误次数';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.password_history
+  is '注销额度';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.state
+  is '记录状态（已生效1、未生效0）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.update_user
+  is '修改用户ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.qq_number
+  is 'QQ号码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_AUTH_USER_BAK_20230501.id_mark
+  is '增删标志';
+

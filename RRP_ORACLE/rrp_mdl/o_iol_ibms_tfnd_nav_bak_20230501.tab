@@ -1,0 +1,68 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501
+(
+  f_id        NUMBER(16),
+  i_code      VARCHAR2(30),
+  a_type      VARCHAR2(20),
+  m_type      VARCHAR2(20),
+  f_totalnav  NUMBER(38,4),
+  f_yield_7d  NUMBER(31,15),
+  f_pubdate   CHAR(10),
+  beg_date    CHAR(10),
+  end_date    CHAR(10),
+  imp_date    CHAR(10),
+  pipe_id     NUMBER,
+  f_cumu_nav  VARCHAR2(40),
+  f_profit_1w NUMBER(31,15),
+  f_unitnav   NUMBER(31,15),
+  f_scal      NUMBER(38,2),
+  f_count     NUMBER(38,2),
+  start_dt    DATE,
+  end_dt      DATE,
+  id_mark     VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501
+  is '基金收益行情';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.f_id
+  is '主键';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.i_code
+  is '基金代码';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.f_totalnav
+  is '总净价';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.f_yield_7d
+  is '七天年化收益率';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.f_pubdate
+  is '公布日期';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.beg_date
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.end_date
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.imp_date
+  is '导入时间';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.pipe_id
+  is '管道ID';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.f_cumu_nav
+  is '累积单位净值';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.f_profit_1w
+  is '七天万分收益';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.f_unitnav
+  is '单位净价';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.f_scal
+  is '基金规模（元）';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.f_count
+  is '基金总份额';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TFND_NAV_BAK_20230501.id_mark
+  is '增删标志';
+

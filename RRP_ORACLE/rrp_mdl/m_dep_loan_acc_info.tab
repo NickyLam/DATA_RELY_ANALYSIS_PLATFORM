@@ -1,0 +1,67 @@
+﻿create table RRP_MDL.M_DEP_LOAN_ACC_INFO
+(
+  data_dt                VARCHAR2(8),
+  acct_id                VARCHAR2(60),
+  acct_name              VARCHAR2(750),
+  cust_acct_id           VARCHAR2(100),
+  cust_acct_sub_acct_num VARCHAR2(100),
+  cds_liab_acct_num      VARCHAR2(60),
+  cust_id                VARCHAR2(60),
+  subj_id                VARCHAR2(60),
+  subj_name              VARCHAR2(375),
+  corp_acct_flg          VARCHAR2(10),
+  belong_org_id          VARCHAR2(60),
+  org_id1                VARCHAR2(300),
+  fin_inst_code          VARCHAR2(200),
+  org_name               VARCHAR2(750),
+  flag                   VARCHAR2(15),
+  data_src               VARCHAR2(10)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240630 values ('20240630')
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.M_DEP_LOAN_ACC_INFO
+  is '存款贷款账户信息表';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.acct_id
+  is '账户编号';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.acct_name
+  is '账户名称';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.cust_acct_id
+  is '客户账户编号';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.cust_acct_sub_acct_num
+  is '客户账户子户号';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.cds_liab_acct_num
+  is '负债账户编号';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.subj_id
+  is '科目编号';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.subj_name
+  is '科目名称';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.corp_acct_flg
+  is '对公账户标志';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.org_id1
+  is '目标机构号';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.fin_inst_code
+  is '目标机构银行机构代码';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.org_name
+  is '目标机构银行机构名称';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.flag
+  is '标志';
+comment on column RRP_MDL.M_DEP_LOAN_ACC_INFO.data_src
+  is '数据来源';
+

@@ -1,0 +1,27 @@
+﻿create table RRP_MDL.ADD_B_PUB_EMP_INFO
+(
+  emp_id    VARCHAR2(200) not null,
+  blng_dept VARCHAR2(500),
+  post_id   VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_B_PUB_EMP_INFO
+  is '离职员工信息补充表';
+comment on column RRP_MDL.ADD_B_PUB_EMP_INFO.emp_id
+  is '员工编号';
+comment on column RRP_MDL.ADD_B_PUB_EMP_INFO.blng_dept
+  is '所属部门';
+comment on column RRP_MDL.ADD_B_PUB_EMP_INFO.post_id
+  is '岗位编号';
+alter table RRP_MDL.ADD_B_PUB_EMP_INFO
+  add constraint PK_ADD_B_PUB_EMP_INFO primary key (EMP_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

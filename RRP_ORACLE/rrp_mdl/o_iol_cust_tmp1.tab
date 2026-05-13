@@ -1,0 +1,18 @@
+﻿create table RRP_MDL.O_IOL_CUST_TMP1
+(
+  cust_id VARCHAR2(60),
+  dt      DATE,
+  rowno   INTEGER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_IOL_CUST_TMP1.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.O_IOL_CUST_TMP1.dt
+  is '时间';
+comment on column RRP_MDL.O_IOL_CUST_TMP1.rowno
+  is '行号';
+

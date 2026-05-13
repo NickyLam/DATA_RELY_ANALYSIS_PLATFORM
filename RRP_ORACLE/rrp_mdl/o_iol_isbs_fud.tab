@@ -1,0 +1,342 @@
+﻿create table RRP_MDL.O_IOL_ISBS_FUD
+(
+  inr           VARCHAR2(12),
+  ownref        VARCHAR2(24),
+  nam           VARCHAR2(60),
+  opndat        DATE,
+  proref        VARCHAR2(48),
+  ovaref        VARCHAR2(48),
+  trnway        VARCHAR2(2),
+  lmttyp        VARCHAR2(2),
+  expdat        DATE,
+  frgact        VARCHAR2(33),
+  frgcur        VARCHAR2(5),
+  frgamt        NUMBER(18,2),
+  rat           NUMBER(14,6),
+  cnyact        VARCHAR2(33),
+  cnycur        VARCHAR2(5),
+  cnyamt        NUMBER(18,2),
+  clsdat        DATE,
+  mrgact        VARCHAR2(27),
+  mrgcur        VARCHAR2(5),
+  cshpct        NUMBER(7,4),
+  cshpctori     NUMBER(7,4),
+  aplptyinr     VARCHAR2(12),
+  aplptainr     VARCHAR2(12),
+  aplnam        VARCHAR2(60),
+  apltyp        VARCHAR2(2),
+  aplref        VARCHAR2(24),
+  inqref        VARCHAR2(24),
+  fixlmt        VARCHAR2(2),
+  begdat        DATE,
+  enddat        DATE,
+  stdlmt        VARCHAR2(9),
+  extlmt        VARCHAR2(2),
+  extflg        VARCHAR2(2),
+  hdltyp        VARCHAR2(2),
+  sysrat        NUMBER(14,6),
+  sptrat        NUMBER(14,6),
+  appdat        DATE,
+  infdsp        VARCHAR2(2),
+  spread        VARCHAR2(2),
+  ver           VARCHAR2(6),
+  credat        DATE,
+  pnttyp        VARCHAR2(9),
+  pntinr        VARCHAR2(12),
+  branchinr     VARCHAR2(12),
+  bchkeyinr     VARCHAR2(12),
+  lstamt        NUMBER(18,2),
+  syflg         VARCHAR2(2),
+  losamt        NUMBER(18,3),
+  loscur        VARCHAR2(5),
+  lstcur        VARCHAR2(5),
+  etyextkey     VARCHAR2(12),
+  trnman        VARCHAR2(3),
+  trdint        VARCHAR2(5),
+  trdout        VARCHAR2(5),
+  regref        VARCHAR2(24),
+  setdat        DATE,
+  setref        VARCHAR2(24),
+  cetrat        NUMBER(14,6),
+  ceurat        NUMBER(14,6),
+  cesamt        NUMBER(18,2),
+  cesact        VARCHAR2(27),
+  betrat        NUMBER(14,6),
+  beurat        NUMBER(14,6),
+  besamt        NUMBER(18,2),
+  eusinc        NUMBER(18,2),
+  eudtyp        VARCHAR2(2),
+  cdrrat        NUMBER(14,6),
+  cdramt        NUMBER(18,2),
+  cdract        VARCHAR2(27),
+  bdrrat        NUMBER(14,6),
+  bdramt        NUMBER(18,2),
+  dcrinc        NUMBER(18,2),
+  mrgcurbnk     VARCHAR2(5),
+  cshpctbnk     NUMBER(3),
+  cnyamtbnk     NUMBER(18,2),
+  cnycurbnk     VARCHAR2(5),
+  cvaref        VARCHAR2(48),
+  inffrgamt     NUMBER(18,3),
+  infexpdat     DATE,
+  inffvaref     VARCHAR2(48),
+  infadvflg     VARCHAR2(2),
+  clsflg        VARCHAR2(2),
+  cdtref        VARCHAR2(30),
+  lmtpct        NUMBER(3),
+  ccvint        VARCHAR2(5),
+  ccvrat        NUMBER(14,6),
+  lmdamt        NUMBER(16,3),
+  mrgamt        NUMBER(16,3),
+  lmtamt        NUMBER(16,3),
+  mrgamtbnk     NUMBER(16,3),
+  ownusr        VARCHAR2(12),
+  oldownref     VARCHAR2(33),
+  mrgamtprt     NUMBER(16,3),
+  padflg        VARCHAR2(2),
+  selflg        VARCHAR2(2),
+  zjly          VARCHAR2(60),
+  rptcod        VARCHAR2(33),
+  dbway         VARCHAR2(2),
+  setlmttyp     VARCHAR2(2),
+  rcvbnkamt     NUMBER(16,2),
+  rcvtyp        VARCHAR2(2),
+  ownact        VARCHAR2(51),
+  seqno         VARCHAR2(8),
+  hkchn         VARCHAR2(8),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_FUD
+  is '远期结售汇信息表';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.inr
+  is '主键';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.ownref
+  is 'Own Reference (业务参考号)';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.nam
+  is '显示名称';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.opndat
+  is '创建日期';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.proref
+  is '委托书编号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.ovaref
+  is '客户参数编号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.trnway
+  is '交易方向';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.lmttyp
+  is '交割类型';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.expdat
+  is '到期日';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.frgact
+  is '外币账号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.frgcur
+  is '外币币别';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.frgamt
+  is '外币金额';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.rat
+  is '成交汇率';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cnyact
+  is '人民币账号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cnycur
+  is '人民币币别';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cnyamt
+  is '人民币金额';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.clsdat
+  is '闭卷日期';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.mrgact
+  is '保证金账号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.mrgcur
+  is '保证金币别';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cshpct
+  is '保证金比例';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cshpctori
+  is '当前保证金比例';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.aplptyinr
+  is '申请人PTY表INR';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.aplptainr
+  is '申请人PTA表INR';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.aplnam
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.apltyp
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.aplref
+  is '客户参考号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.inqref
+  is '询价编号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.fixlmt
+  is '固定期限交割)';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.begdat
+  is '起始日';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.enddat
+  is '终止日';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.stdlmt
+  is '标准期限';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.extlmt
+  is '是否可宽限';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.extflg
+  is '择期交割通知标志';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.hdltyp
+  is '合理状态';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.sysrat
+  is '系统内平盘汇率';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.sptrat
+  is '远期价格';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.appdat
+  is '客户申请日期';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.infdsp
+  is '显示信息标志';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.spread
+  is '展期标志';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.ver
+  is '版本号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.credat
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.pnttyp
+  is '父业务类型';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.pntinr
+  is '父业务主键';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.branchinr
+  is '所属机构主键';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.bchkeyinr
+  is '经办机构主键';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.lstamt
+  is '损益人民币金额';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.syflg
+  is '是否损失';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.losamt
+  is '我行损失金额';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.loscur
+  is '币种';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.lstcur
+  is '币种';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.etyextkey
+  is '业务主体信息';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.trnman
+  is '交易主体';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.trdint
+  is '结汇类型';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.trdout
+  is 'TRADE OUT';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.regref
+  is 'Register reference';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.setdat
+  is 'Settlement date';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.setref
+  is '交割编号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cetrat
+  is '客户展期近端汇率';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.ceurat
+  is '客户展期远端汇率';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cesamt
+  is '客户展期损益';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cesact
+  is '客户展期损益入/出账号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.betrat
+  is '我行展期近端汇率';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.beurat
+  is '我行展期远端汇率';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.besamt
+  is '我行展期损益';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.eusinc
+  is '展期价差收益';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.eudtyp
+  is '日期展期类型';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cdrrat
+  is '客户对冲价格';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cdramt
+  is '客户损失金额';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cdract
+  is '客户扣款"号(违约)';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.bdrrat
+  is '我行对冲价格';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.bdramt
+  is '我行违约损益';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.dcrinc
+  is '违约价差收益';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.mrgcurbnk
+  is 'Margin Currency (保证金币别)';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cshpctbnk
+  is 'Margin Percent (保证金比例)';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cnyamtbnk
+  is 'CN Amount (人民币金额-银行端)';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cnycurbnk
+  is 'CN Currency (人民币币别-银行端)';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cvaref
+  is '客户协议编号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.inffrgamt
+  is '通知交割金额';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.infexpdat
+  is '通知交割到期日';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.inffvaref
+  is '签约编号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.infadvflg
+  is '通知交割类型';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.clsflg
+  is '授信闭卷状态';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.cdtref
+  is '授信编号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.lmtpct
+  is '授信额度比例';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.ccvint
+  is '保证金计息方式';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.ccvrat
+  is '保证金中间价';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.lmdamt
+  is '授信额度扣减金额';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.mrgamt
+  is '本次保证金金额';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.lmtamt
+  is '展期新增授信额度';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.mrgamtbnk
+  is '银行端保证金/授信额度';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.ownusr
+  is '经办人';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.oldownref
+  is '历史参考号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.mrgamtprt
+  is '保证金余额';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.padflg
+  is '垫款标志';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.selflg
+  is '自营标志';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.zjly
+  is '资金来源';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.rptcod
+  is '申报代码';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.dbway
+  is '担保方式';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.setlmttyp
+  is '交割期限类型';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.rcvbnkamt
+  is '收合作银行金额';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.rcvtyp
+  is '收款类';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.ownact
+  is '我行扣款/收款账号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.seqno
+  is '账户序列号';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.hkchn
+  is '汇款渠道';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ISBS_FUD.etl_timestamp
+  is 'ETL处理时间戳';
+

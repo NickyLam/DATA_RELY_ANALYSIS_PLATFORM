@@ -1,0 +1,153 @@
+﻿create table RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL
+(
+  access_jnl_no     VARCHAR2(48),
+  trans_code        VARCHAR2(48),
+  trans_channel     VARCHAR2(24),
+  cust_no           VARCHAR2(24),
+  cust_name         VARCHAR2(48),
+  id_type           VARCHAR2(12),
+  id_no             VARCHAR2(48),
+  card_type         VARCHAR2(2),
+  card_no           VARCHAR2(48),
+  client_id         VARCHAR2(24),
+  branch_id         VARCHAR2(24),
+  auth_flag         VARCHAR2(2),
+  auth_result       VARCHAR2(2),
+  author_id         VARCHAR2(24),
+  cur_step          VARCHAR2(3),
+  trans_time        TIMESTAMP(6),
+  update_time       TIMESTAMP(6),
+  trans_status      VARCHAR2(3),
+  trans_msg         VARCHAR2(96),
+  create_user       VARCHAR2(48),
+  update_user       VARCHAR2(48),
+  session_id        VARCHAR2(48),
+  session_id2       VARCHAR2(48),
+  session_id3       VARCHAR2(48),
+  session_id4       VARCHAR2(48),
+  session_id5       VARCHAR2(48),
+  session_id6       VARCHAR2(48),
+  session_id7       VARCHAR2(48),
+  session_id8       VARCHAR2(48),
+  session_id9       VARCHAR2(48),
+  trans_address     VARCHAR2(384),
+  task_state        VARCHAR2(2),
+  longitude         VARCHAR2(96),
+  latitude          VARCHAR2(96),
+  trans_city        VARCHAR2(384),
+  trans_city_code   VARCHAR2(48),
+  connect_type      VARCHAR2(2),
+  refuse_info       VARCHAR2(3000),
+  refuse_detail     VARCHAR2(4000),
+  trans_node_status VARCHAR2(8),
+  is_risk_record    VARCHAR2(8),
+  start_dt          DATE,
+  end_dt            DATE,
+  id_mark           VARCHAR2(10),
+  etl_timestamp     TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL
+  is '交易流水表';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.access_jnl_no
+  is '流水号';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.trans_code
+  is '交码';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.trans_channel
+  is '交易渠道';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.cust_no
+  is '客户号';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.id_type
+  is '证件类型';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.id_no
+  is '证件号码';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.card_type
+  is '卡类型';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.card_no
+  is '卡号';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.client_id
+  is '坐席编号';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.branch_id
+  is '机构编号';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.auth_flag
+  is '是否授权';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.auth_result
+  is '授权结果';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.author_id
+  is '授权用户编号';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.cur_step
+  is '当前步骤';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.trans_time
+  is '交易时间';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.trans_status
+  is '交易状态';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.trans_msg
+  is '交易结果';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.create_user
+  is '创建用户';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.update_user
+  is '更新用户';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.session_id
+  is '会话Id';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.session_id2
+  is '会话Id2';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.session_id3
+  is '会话Id3';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.session_id4
+  is '会话Id4';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.session_id5
+  is '会话Id5';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.session_id6
+  is '会话Id6';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.session_id7
+  is '会话Id7';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.session_id8
+  is '会话Id8';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.session_id9
+  is '会话Id9';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.trans_address
+  is '交易地址';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.task_state
+  is '是否质检  否-0;是-1';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.longitude
+  is '经度';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.latitude
+  is '维度';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.trans_city
+  is '交易城市';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.trans_city_code
+  is '城市编码';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.connect_type
+  is '流水接通类型，0-未接通，1-已接通';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.refuse_info
+  is '未接通的拒绝类型，如黑名单、未满18周岁等';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.refuse_detail
+  is '拒绝内容明细';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.trans_node_status
+  is '交易节点状态';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.is_risk_record
+  is '是否是风险记录';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_SVBS_HX_TRANS_JNL.etl_timestamp
+  is 'ETL处理时间戳';
+

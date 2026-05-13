@@ -1,0 +1,113 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501
+(
+  i_id                           VARCHAR2(22),
+  h_datefield                    VARCHAR2(19),
+  h_textfield                    VARCHAR2(60),
+  h_numberfield                  NUMBER(31,2),
+  h_combobox                     VARCHAR2(100),
+  h_textarea                     VARCHAR2(3000),
+  hx_industy                     VARCHAR2(30),
+  hx_industy_detail              VARCHAR2(30),
+  rh_custeconomypart             VARCHAR2(500),
+  rh_businesstype                VARCHAR2(500),
+  rh_isrelevancy                 VARCHAR2(100),
+  rh_code                        VARCHAR2(100),
+  rh_institutioncode             VARCHAR2(100),
+  rh_depositaccount              VARCHAR2(100),
+  rh_economicsector              VARCHAR2(300),
+  rh_bankname                    VARCHAR2(100),
+  rh_regist                      VARCHAR2(100),
+  rh_innerrate                   VARCHAR2(100),
+  rh_firmsize                    VARCHAR2(100),
+  rh_begindate                   VARCHAR2(100),
+  rh_registcode                  VARCHAR2(100),
+  rh_codetype                    VARCHAR2(100),
+  rh_custtype                    VARCHAR2(100),
+  hx_juridical_p_cert_type       VARCHAR2(30),
+  hx_juridical_p_cert_code       VARCHAR2(30),
+  hx_pd_of_vali4juridical_p_cert CHAR(10),
+  funds_prsv                     VARCHAR2(100),
+  prim_org_ptyid                 VARCHAR2(20),
+  spv_cd                         VARCHAR2(100),
+  spv_name                       VARCHAR2(250),
+  spv_type                       VARCHAR2(100),
+  start_dt                       DATE,
+  end_dt                         DATE,
+  id_mark                        VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501
+  is '机构扩展信息表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.i_id
+  is '主键';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.h_datefield
+  is '日期类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.h_textfield
+  is '文本类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.h_numberfield
+  is '数值类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.h_combobox
+  is '下拉框类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.h_textarea
+  is '文本域类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.hx_industy
+  is '最终投向行业-大类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.hx_industy_detail
+  is '最终投向行业-细类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_custeconomypart
+  is '客户国民经济部门';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_businesstype
+  is '所属行业';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_isrelevancy
+  is '是否关联方';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_code
+  is '代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_institutioncode
+  is '金融机构编码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_depositaccount
+  is '基本存款账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_economicsector
+  is '经济成分';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_bankname
+  is '基本账户开户行名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_regist
+  is '注册地址';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_innerrate
+  is '内部评级';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_firmsize
+  is '企业规模';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_begindate
+  is '成立日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_registcode
+  is '注册地行政区划码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_codetype
+  is '代码类别';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.rh_custtype
+  is '客户类别';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.hx_juridical_p_cert_type
+  is '法人证件类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.hx_juridical_p_cert_code
+  is '法人证件号码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.hx_pd_of_vali4juridical_p_cert
+  is '法人证件有效期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.funds_prsv
+  is '资管产品统计编码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.prim_org_ptyid
+  is '主机构客户号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.spv_cd
+  is 'SPV代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.spv_name
+  is 'SPV名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.spv_type
+  is 'SPV类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_INSTITUTION_EXT_BAK_20230501.id_mark
+  is '增删标志';
+

@@ -1,0 +1,118 @@
+﻿create table RRP_MDL.B_CPTL_CD_INVEST_INFO_T
+(
+  data_dt       CHAR(8) not null,
+  lgl_rep_id    VARCHAR2(200),
+  cust_id       VARCHAR2(200) not null,
+  org_id        VARCHAR2(200),
+  acc_id        VARCHAR2(200),
+  cd_no         VARCHAR2(200),
+  acc_typ       VARCHAR2(10),
+  prod_cl       VARCHAR2(10),
+  cur           CHAR(3),
+  book_bal      NUMBER(30,2),
+  recv_int      NUMBER(30,2),
+  isu_dt        CHAR(8),
+  val_dt        CHAR(8),
+  exp_dt        CHAR(8),
+  mkt_val       NUMBER(30,2),
+  subj_id       VARCHAR2(200),
+  lvl5_cl       VARCHAR2(10),
+  cd_trf_mode   VARCHAR2(10),
+  pro_impt      NUMBER(30,2),
+  dep_ins_amt   NUMBER(30,2),
+  dur           INTEGER,
+  mod_dur       INTEGER,
+  stats_subj_id VARCHAR2(200),
+  rate          NUMBER(20,6),
+  gl_cl         VARCHAR2(10),
+  crdt_lmt_id   VARCHAR2(200),
+  dep_rsv_mode  VARCHAR2(10),
+  dept_line     VARCHAR2(500),
+  data_src      VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220722 values ('20220722')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_CPTL_CD_INVEST_INFO_T
+  is '存单投资信息';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.cust_id
+  is '客户编号';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.acc_id
+  is '账户编号';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.cd_no
+  is '存单号';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.acc_typ
+  is '账户类型';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.prod_cl
+  is '产品分类';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.cur
+  is '币种';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.book_bal
+  is '账面余额';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.recv_int
+  is '应收利息';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.isu_dt
+  is '发行日期';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.val_dt
+  is '起息日期';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.mkt_val
+  is '市场价值';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.subj_id
+  is '科目编号';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.lvl5_cl
+  is '五级分类';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.cd_trf_mode
+  is '存单转让方式';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.pro_impt
+  is '减值准备';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.dep_ins_amt
+  is '被存款保险制度覆盖的金额';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.dur
+  is '久期';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.mod_dur
+  is '修正久期';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.stats_subj_id
+  is '统计科目编号';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.rate
+  is '利率';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.gl_cl
+  is '会计分类';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.crdt_lmt_id
+  is '授信额度编号';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.dep_rsv_mode
+  is '缴存准备金方式';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_CPTL_CD_INVEST_INFO_T.data_src
+  is '数据来源';
+alter table RRP_MDL.B_CPTL_CD_INVEST_INFO_T
+  add constraint PK_B_CPTL_CD_INVEST_INFO primary key (DATA_DT, CUST_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

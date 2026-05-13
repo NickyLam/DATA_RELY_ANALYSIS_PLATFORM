@@ -1,0 +1,59 @@
+﻿create table RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT
+(
+  u_uuid        VARCHAR2(100),
+  cust_no       VARCHAR2(20),
+  acct_no       VARCHAR2(50),
+  prod_max_type VARCHAR2(50),
+  prod_mix_type VARCHAR2(50),
+  prod_id       VARCHAR2(50),
+  prod_name     VARCHAR2(500),
+  posi_income   NUMBER(20,2),
+  day_income    NUMBER(20,2),
+  mcml_income   NUMBER(20,2),
+  qcml_income   NUMBER(20,2),
+  ycml_income   NUMBER(20,2),
+  ahcml_income  NUMBER(20,2),
+  dt_month      VARCHAR2(6),
+  cfm_dt        VARCHAR2(10),
+  load_date     VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT
+  is '手机收益_日表';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.u_uuid
+  is '主键';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.cust_no
+  is '客户号';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.acct_no
+  is '账号';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.prod_max_type
+  is '产品大类(理财-IFM \;基金-FUND \;存款-DPST\;组合宝-SATR\;信托-SOCB)';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.prod_mix_type
+  is '产品小类';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.prod_id
+  is '产品ID';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.prod_name
+  is '产品名称';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.posi_income
+  is '持仓金额';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.day_income
+  is '日收益金额';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.mcml_income
+  is '月累计收益数';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.qcml_income
+  is '季累计收益数';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.ycml_income
+  is '年累计收益数';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.ahcml_income
+  is '历史累计收益';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.dt_month
+  is '月份(格式:yyyyMM)';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.cfm_dt
+  is '数据日期';
+comment on column RRP_MDL.O_BDW_U_INCOME_STATI_DETAIL_DAY_TO_YBT.load_date
+  is '数据日期';
+

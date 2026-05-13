@@ -1,0 +1,158 @@
+﻿create table RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE
+(
+  datainput_id   VARCHAR2(32) not null,
+  data_date      VARCHAR2(10),
+  acct_org_num   VARCHAR2(20),
+  jywym          VARCHAR2(200),
+  zhwym          VARCHAR2(60),
+  khwym          VARCHAR2(60),
+  khmc           VARCHAR2(100),
+  pjbh           VARCHAR2(60),
+  jbjgmc         VARCHAR2(500),
+  jbjgjgszxzqhdm VARCHAR2(6),
+  zwjgmc         VARCHAR2(500),
+  zwjgjgszxzqhdm VARCHAR2(6),
+  txgtjcyml      VARCHAR2(100),
+  sftxgjscy      VARCHAR2(10),
+  txgjszzydlmc   VARCHAR2(100),
+  gjscymc        VARCHAR2(100),
+  sftxzscqmjxcy  VARCHAR2(10),
+  zscqmjxcymc    VARCHAR2(100),
+  txszjjhxcydl   VARCHAR2(100),
+  szjjhxcymc     VARCHAR2(100),
+  txzlxxxcyml    VARCHAR2(100),
+  zyxxxcymc      VARCHAR2(100),
+  sftxwhcydl     VARCHAR2(10),
+  whcymc         VARCHAR2(100),
+  sfgyqyjsgzsjdk VARCHAR2(10),
+  sfyshz         VARCHAR2(10),
+  sfnycyhltqy    VARCHAR2(10),
+  sfyq           VARCHAR2(10),
+  sys_source     VARCHAR2(100),
+  sfgxrbz        VARCHAR2(10),
+  khzbkhjlkhh    VARCHAR2(60),
+  khzbgyh        VARCHAR2(60),
+  khzbkhjlmc     VARCHAR2(500),
+  khzbkhjlssjg   VARCHAR2(60),
+  jjzbkhjlh      VARCHAR2(60),
+  jjzbgyh        VARCHAR2(60),
+  jjzbkhjlmc     VARCHAR2(100),
+  jjzbkhjlssjg   VARCHAR2(60),
+  sys_data_date  VARCHAR2(20) not null,
+  sys_data_case  VARCHAR2(32) not null,
+  sys_operator   VARCHAR2(256),
+  sys_oper_org   VARCHAR2(32) not null,
+  sys_oper_date  VARCHAR2(20),
+  sys_data_state VARCHAR2(10),
+  sys_order_no   NUMBER(19),
+  error_mark     VARCHAR2(2),
+  flow_node_id   VARCHAR2(32),
+  comments       VARCHAR2(500),
+  wjhymc         VARCHAR2(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE
+  is '补录表-对公-账务基表-应用';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.datainput_id
+  is '数据录入时间';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.data_date
+  is '数据日期';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.jywym
+  is '交易唯一码';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.zhwym
+  is '账户唯一码';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.khwym
+  is '客户唯一码';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.khmc
+  is '客户名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.pjbh
+  is '票据编号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.jbjgmc
+  is '经办机构名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.jbjgjgszxzqhdm
+  is '经办机构机构所在行政区划代码';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.zwjgmc
+  is '账务机构名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.zwjgjgszxzqhdm
+  is '账务机构机构所在行政区划代码';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.txgtjcyml
+  is '投向高技术产业门类';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sftxgjscy
+  is '是否投向高技术产业';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.txgjszzydlmc
+  is '投向高技术制造业大类';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.gjscymc
+  is '高技术产业名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sftxzscqmjxcy
+  is '是否投向知识产权密集型产业';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.zscqmjxcymc
+  is '知识产权密集型产业名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.txszjjhxcydl
+  is '投向数字经济核心产业大类';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.szjjhxcymc
+  is '数字经济核心产业名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.txzlxxxcyml
+  is '投向战略性新兴产业门类';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.zyxxxcymc
+  is '战略性新兴产业名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sftxwhcydl
+  is '是否投向文化产业大类';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.whcymc
+  is '文化产业名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sfgyqyjsgzsjdk
+  is '是否工业企业技术改造升级贷款';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sfyshz
+  is '是否银税合作';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sfnycyhltqy
+  is '是否农业产业化龙头企业';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sfyq
+  is '是否延期';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sys_source
+  is '来源系统';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sfgxrbz
+  is '是否关系人保证';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.khzbkhjlkhh
+  is '客户主办客户经理客户号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.khzbgyh
+  is '客户主办柜员号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.khzbkhjlmc
+  is '客户主办客户经理名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.khzbkhjlssjg
+  is '客户主办客户经理所属机构';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.jjzbkhjlh
+  is '借据主办客户经理号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.jjzbgyh
+  is '借据主办柜员号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.jjzbkhjlmc
+  is '借据主办客户经理名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.jjzbkhjlssjg
+  is '借据主办客户经理所属机构';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sys_data_date
+  is '数据日期';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sys_data_case
+  is '任务实例ID';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sys_operator
+  is '补录人员';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sys_oper_org
+  is '补录机构';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sys_oper_date
+  is '操作日期';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sys_data_state
+  is '数据状态:save(已保存),submit(已提交),reject(驳回),sucess(审核通过),refuse(已回退)';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.sys_order_no
+  is '序号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.error_mark
+  is '错误标记';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.flow_node_id
+  is '流程节点';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.comments
+  is '取款虚拟柜员号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_ETL_DELETE.wjhymc
+  is '玩具业行业名称';
+

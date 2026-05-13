@@ -1,0 +1,376 @@
+﻿create table RRP_MDL.EAST5_701_SXXXB
+(
+  rid         VARCHAR2(50) not null,
+  yhjgdm      VARCHAR2(30),
+  jrxkzh      VARCHAR2(30),
+  nbjgh       VARCHAR2(30),
+  khtybh      VARCHAR2(70),
+  khmc        VARCHAR2(450),
+  khzjlb      VARCHAR2(60),
+  khzjhm      VARCHAR2(70),
+  sxxyh       VARCHAR2(60) not null,
+  sxxymc      VARCHAR2(450),
+  edsqrq      VARCHAR2(8),
+  sxztzl      VARCHAR2(60),
+  sxzl        VARCHAR2(60),
+  sxed        NUMBER(20,2),
+  yyed        NUMBER(20,2),
+  bz          VARCHAR2(3),
+  sxksrq      VARCHAR2(8),
+  sxdqrq      VARCHAR2(8),
+  sxjcyj      VARCHAR2(3000),
+  sprgh       VARCHAR2(70),
+  jbrgh       VARCHAR2(70),
+  sxzt        VARCHAR2(6),
+  bbz         VARCHAR2(600),
+  cjrq        VARCHAR2(8) not null,
+  dept_no     VARCHAR2(10),
+  src_sys_id  VARCHAR2(10),
+  issued_no   VARCHAR2(50),
+  org_no      VARCHAR2(20),
+  address     VARCHAR2(500),
+  khmc_orig   VARCHAR2(400),
+  khzjhm_orig VARCHAR2(70),
+  khmc_oth    VARCHAR2(5),
+  dkcpmc      VARCHAR2(100),
+  gsfzjg      VARCHAR2(200)
+)
+partition by range (CJRQ)
+(
+  partition PARTITION_19000101 values less than ('19000102')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20181231 values less than ('20190101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20190131 values less than ('20190201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20190228 values less than ('20190301')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20190331 values less than ('20190401')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20190430 values less than ('20190501')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20190531 values less than ('20190601')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20190630 values less than ('20190701')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20190731 values less than ('20190801')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20190831 values less than ('20190901')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20190930 values less than ('20191001')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20191031 values less than ('20191101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20191130 values less than ('20191201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20191231 values less than ('20200101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20200131 values less than ('20200201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20200229 values less than ('20200301')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20200331 values less than ('20200401')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20200430 values less than ('20200501')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20200531 values less than ('20200601')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20200630 values less than ('20200701')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20200731 values less than ('20200801')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20200831 values less than ('20200901')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20200930 values less than ('20201001')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20201031 values less than ('20201101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20201130 values less than ('20201201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20201231 values less than ('20210101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210131 values less than ('20210201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210228 values less than ('20210301')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210331 values less than ('20210401')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210430 values less than ('20210501')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210531 values less than ('20210601')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210630 values less than ('20210701')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210731 values less than ('20210801')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210831 values less than ('20210901')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210930 values less than ('20211001')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20211031 values less than ('20211101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20211130 values less than ('20211201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20211231 values less than ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220131 values less than ('20220201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220228 values less than ('20220301')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220331 values less than ('20220401')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220430 values less than ('20220501')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220630 values less than ('20220701')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220731 values less than ('20220801')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220831 values less than ('20220901')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values less than ('20221001')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221031 values less than ('20221101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221130 values less than ('20221201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221231 values less than ('20230101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230131 values less than ('20230201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230228 values less than ('20230301')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230331 values less than ('20230401')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230430 values less than ('20230501')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.EAST5_701_SXXXB
+  is '授信信息表';
+comment on column RRP_MDL.EAST5_701_SXXXB.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_701_SXXXB.yhjgdm
+  is '银行机构代码';
+comment on column RRP_MDL.EAST5_701_SXXXB.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_701_SXXXB.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_701_SXXXB.khtybh
+  is '客户统一编号';
+comment on column RRP_MDL.EAST5_701_SXXXB.khmc
+  is '客户名称';
+comment on column RRP_MDL.EAST5_701_SXXXB.khzjlb
+  is '客户证件类别';
+comment on column RRP_MDL.EAST5_701_SXXXB.khzjhm
+  is '客户证件号码';
+comment on column RRP_MDL.EAST5_701_SXXXB.sxxyh
+  is '授信协议号';
+comment on column RRP_MDL.EAST5_701_SXXXB.sxxymc
+  is '授信协议名称';
+comment on column RRP_MDL.EAST5_701_SXXXB.edsqrq
+  is '额度申请日期';
+comment on column RRP_MDL.EAST5_701_SXXXB.sxztzl
+  is '授信主体种类';
+comment on column RRP_MDL.EAST5_701_SXXXB.sxzl
+  is '授信种类';
+comment on column RRP_MDL.EAST5_701_SXXXB.sxed
+  is '授信额度';
+comment on column RRP_MDL.EAST5_701_SXXXB.yyed
+  is '已用额度';
+comment on column RRP_MDL.EAST5_701_SXXXB.bz
+  is '币种';
+comment on column RRP_MDL.EAST5_701_SXXXB.sxksrq
+  is '授信开始日期';
+comment on column RRP_MDL.EAST5_701_SXXXB.sxdqrq
+  is '授信到期日期';
+comment on column RRP_MDL.EAST5_701_SXXXB.sxjcyj
+  is '授信审批意见';
+comment on column RRP_MDL.EAST5_701_SXXXB.sprgh
+  is '审批人工号';
+comment on column RRP_MDL.EAST5_701_SXXXB.jbrgh
+  is '经办人工号';
+comment on column RRP_MDL.EAST5_701_SXXXB.sxzt
+  is '授信状态';
+comment on column RRP_MDL.EAST5_701_SXXXB.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_701_SXXXB.cjrq
+  is '采集日期';
+comment on column RRP_MDL.EAST5_701_SXXXB.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_701_SXXXB.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_701_SXXXB.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_701_SXXXB.org_no
+  is '报送机构';
+comment on column RRP_MDL.EAST5_701_SXXXB.address
+  is '归属地';
+comment on column RRP_MDL.EAST5_701_SXXXB.khmc_orig
+  is '客户名称（脱敏前）';
+comment on column RRP_MDL.EAST5_701_SXXXB.khzjhm_orig
+  is '客户证件号码（脱敏前）';
+comment on column RRP_MDL.EAST5_701_SXXXB.khmc_oth
+  is '客户是否个人客户';
+comment on column RRP_MDL.EAST5_701_SXXXB.dkcpmc
+  is '贷款产品名称 只用来区分行内外产品';
+comment on column RRP_MDL.EAST5_701_SXXXB.gsfzjg
+  is '归属分支机构';
+

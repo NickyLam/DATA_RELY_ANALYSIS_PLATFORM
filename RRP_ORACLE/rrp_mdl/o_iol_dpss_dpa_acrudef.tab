@@ -1,0 +1,138 @@
+﻿create table RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF
+(
+  ledge_cod          VARCHAR2(4),
+  dpact_no           VARCHAR2(32),
+  prod_cd            VARCHAR2(10),
+  acct_curr          VARCHAR2(2),
+  acct_opec_opun     VARCHAR2(10),
+  int_cod            VARCHAR2(30),
+  intc_mode          VARCHAR2(1),
+  intc_bal_flg       VARCHAR2(1),
+  intc_flag          VARCHAR2(1),
+  rate_cod           VARCHAR2(30),
+  intc_bdate         VARCHAR2(8),
+  tl_seqno           VARCHAR2(16),
+  last_rcal_date     VARCHAR2(8),
+  next_date          VARCHAR2(8),
+  min_bal            NUMBER(17,2),
+  max_bal            NUMBER(17,2),
+  acct_acru_mthd     NUMBER(10),
+  stand_acru_way     VARCHAR2(2),
+  def_cost_mthd      VARCHAR2(5),
+  cal_tax            VARCHAR2(1),
+  last_abal          NUMBER(17,2),
+  next_start_date    VARCHAR2(8),
+  acru_int           NUMBER(20,6),
+  check_cod          VARCHAR2(16),
+  int_ldaycad        NUMBER(20,6),
+  last_upddate       VARCHAR2(8),
+  intc_total_bal     NUMBER(21,2),
+  pay_int_bizcod     VARCHAR2(4),
+  man_acctno         VARCHAR2(32),
+  rcbl_adj_int       NUMBER(21,7),
+  rcbl_adj_amt       NUMBER(21,2),
+  ltytotal_weit      NUMBER(21,2),
+  ytotal_weit        NUMBER(21,2),
+  ly_totweit         NUMBER(21,2),
+  acru_taxes_rate    NUMBER(11,7),
+  rcbl_taxes         NUMBER(20,6),
+  taxes              NUMBER(20,6),
+  gl_synch_flg       NUMBER(10),
+  last_intc_date     VARCHAR2(8),
+  min_payamt         NUMBER(17,2),
+  red_bal_dealway    NUMBER(10),
+  int_year           NUMBER(20,6),
+  ttl_aint           NUMBER(20,6),
+  tax_year           NUMBER(20,6),
+  total_taxes        NUMBER(20,6),
+  last_rcal_daterule VARCHAR2(2),
+  last_adjint_way    NUMBER(10),
+  last_int_opera     VARCHAR2(30),
+  last_int_seqno     NUMBER(10),
+  last_rcal_rate     NUMBER(11,7),
+  pay_int_cycl       VARCHAR2(8),
+  pay_int_mthd       NUMBER(10),
+  day_num            NUMBER(10),
+  qrt_arg_bal        NUMBER(17,2),
+  int_days           NUMBER(10),
+  yavg_amt           NUMBER(17,2),
+  intc_cust_acctno   VARCHAR2(32),
+  intc_acctno        VARCHAR2(32),
+  last_intdate       VARCHAR2(8),
+  next_paydate       VARCHAR2(8),
+  nation_cod         VARCHAR2(3),
+  mod_opr            VARCHAR2(8),
+  mod_unit           VARCHAR2(10),
+  mod_date           VARCHAR2(8),
+  mod_time           NUMBER(10),
+  time_sign          NUMBER(16),
+  ser_num            NUMBER(10),
+  rec_sts            VARCHAR2(1),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF
+  is '负债账户信息表_视图';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.ledge_cod
+  is '法人代码';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.dpact_no
+  is '负债账号';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.prod_cd
+  is '产品代码CD1912';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.acct_curr
+  is '产品币种';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.intc_flag
+  is '是否计息标志';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.tl_seqno
+  is '柜员流水号';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.next_date
+  is '下一日期';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.min_bal
+  is '最小余额';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.max_bal
+  is '最大余额';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.acru_int
+  is '应计利息';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.last_intc_date
+  is '上次结息日';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.red_bal_dealway
+  is '负余额处理方式';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.pay_int_cycl
+  is '付息频率';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.pay_int_mthd
+  is '付息方法';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.day_num
+  is '每期天数';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.int_days
+  is '本次记息天数';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.last_intdate
+  is '上次计息日';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.nation_cod
+  is '国别代码';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.mod_opr
+  is '维护柜员';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.mod_unit
+  is '维护机构代码';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.mod_date
+  is '维护日期';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.mod_time
+  is '维护时间';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.time_sign
+  is '时间戳';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.ser_num
+  is '序列号';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.rec_sts
+  is '记录状态';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_DPSS_DPA_ACRUDEF.id_mark
+  is '增删标志';
+

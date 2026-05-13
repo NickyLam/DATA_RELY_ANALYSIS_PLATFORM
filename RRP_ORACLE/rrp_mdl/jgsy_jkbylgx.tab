@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.JGSY_JKBYLGX
+(
+  mk      VARCHAR2(30),
+  gcb     VARCHAR2(200),
+  mbbm    VARCHAR2(200),
+  mbbzd   VARCHAR2(200),
+  ylmk    VARCHAR2(30),
+  ylgcm   VARCHAR2(200),
+  ylmbbm  VARCHAR2(200),
+  ylmbbzd VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.JGSY_JKBYLGX
+  is '监管溯源_接口表依赖关系';
+comment on column RRP_MDL.JGSY_JKBYLGX.mk
+  is '模块';
+comment on column RRP_MDL.JGSY_JKBYLGX.gcb
+  is '过程名';
+comment on column RRP_MDL.JGSY_JKBYLGX.mbbm
+  is '目标表名';
+comment on column RRP_MDL.JGSY_JKBYLGX.mbbzd
+  is '目标表字段';
+comment on column RRP_MDL.JGSY_JKBYLGX.ylmk
+  is '依赖模块';
+comment on column RRP_MDL.JGSY_JKBYLGX.ylgcm
+  is '依赖过程名';
+comment on column RRP_MDL.JGSY_JKBYLGX.ylmbbm
+  is '依赖目标表名';
+comment on column RRP_MDL.JGSY_JKBYLGX.ylmbbzd
+  is '依赖目标表字段';
+

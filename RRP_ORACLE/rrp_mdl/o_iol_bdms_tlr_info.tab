@@ -1,0 +1,70 @@
+﻿create table RRP_MDL.O_IOL_BDMS_TLR_INFO
+(
+  id            VARCHAR2(45),
+  tlr_no        VARCHAR2(45),
+  tlr_name      VARCHAR2(45),
+  br_id         VARCHAR2(45),
+  update_date   TIMESTAMP(6),
+  update_userid VARCHAR2(48),
+  br_manager_id VARCHAR2(45),
+  status        VARCHAR2(2),
+  is_del        NUMBER(22),
+  create_userid VARCHAR2(48),
+  create_date   TIMESTAMP(6),
+  mem_user_id   VARCHAR2(15),
+  domainid      VARCHAR2(30),
+  employeeid    VARCHAR2(12),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_BDMS_TLR_INFO
+  is '用户信息表';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.id
+  is '主键ID';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.tlr_no
+  is '操作员编号';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.tlr_name
+  is '操作员姓名';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.br_id
+  is '所属机构id';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.update_date
+  is '修改时间';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.update_userid
+  is '修改人';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.br_manager_id
+  is '总行id';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.status
+  is '状态';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.is_del
+  is '是否已删除';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.create_userid
+  is '创建人';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.create_date
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.domainid
+  is '域账号';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.employeeid
+  is '员工编号';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_BDMS_TLR_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

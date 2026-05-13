@@ -1,0 +1,129 @@
+﻿create table RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630
+(
+  data_dt        CHAR(8) not null,
+  lgl_rep_id     VARCHAR2(200),
+  org_id         VARCHAR2(200),
+  tra_id         VARCHAR2(200) not null,
+  biz_vrty       VARCHAR2(500),
+  base_ast_typ   VARCHAR2(10),
+  base_ast_nm    VARCHAR2(500),
+  tra_typ        VARCHAR2(10),
+  cont_cl        VARCHAR2(10),
+  tra_stat       VARCHAR2(10),
+  buyer_nm       VARCHAR2(500),
+  buyer_cust_id  VARCHAR2(200),
+  seller_nm      VARCHAR2(500),
+  seller_cust_id VARCHAR2(200),
+  tra_dt         CHAR(8),
+  tra_tm         TIMESTAMP(6),
+  val_dt         CHAR(8),
+  exp_dt         CHAR(8),
+  end_dt         CHAR(8),
+  dely_freq      VARCHAR2(500),
+  ulyg_num       NUMBER(30,2),
+  ulyg_num_unit  VARCHAR2(10),
+  deal_prc       NUMBER(30,2),
+  deal_prc_unit  VARCHAR2(10),
+  tra_place      VARCHAR2(500),
+  dely_mode      VARCHAR2(10),
+  option_typ     VARCHAR2(10),
+  exer_mode      VARCHAR2(10),
+  exer_prc       NUMBER(30,2),
+  exer_prc_unit  VARCHAR2(10),
+  mrgn_flg       CHAR(1),
+  prim_agrt_nm   VARCHAR2(500),
+  cntrl_cntpr_nm VARCHAR2(500),
+  valt_amt       NUMBER(30,2),
+  valt_cur       CHAR(3),
+  valt_dt        CHAR(8),
+  tra_emp_no     VARCHAR2(200),
+  aprv_psn_no    VARCHAR2(30),
+  dept_line      VARCHAR2(500),
+  data_src       VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.org_id
+  is '银行编号';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.tra_id
+  is '交易编号';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.biz_vrty
+  is '业务品种';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.base_ast_typ
+  is '基础资产类型';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.base_ast_nm
+  is '基础资产名称';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.tra_typ
+  is '交易类型';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.cont_cl
+  is '合约种类';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.tra_stat
+  is '交易状态';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.buyer_nm
+  is '买方名称';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.buyer_cust_id
+  is '买方客户编号';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.seller_nm
+  is '卖方名称';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.seller_cust_id
+  is '卖方客户编号';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.tra_dt
+  is '成交日期';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.tra_tm
+  is '交易时间';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.val_dt
+  is '起息日期';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.end_dt
+  is '结束时间';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.dely_freq
+  is '交割频率';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.ulyg_num
+  is '标的数量';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.ulyg_num_unit
+  is '标的数量单位';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.deal_prc
+  is '成交价格';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.deal_prc_unit
+  is '成交价格单位';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.tra_place
+  is '交易场所';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.dely_mode
+  is '交割方式';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.option_typ
+  is '期权类型';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.exer_mode
+  is '行权方式';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.exer_prc
+  is '行权价格';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.exer_prc_unit
+  is '行权价格单位';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.mrgn_flg
+  is '保证金标志';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.prim_agrt_nm
+  is '主协议名称';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.cntrl_cntpr_nm
+  is '中央交易对手';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.valt_amt
+  is '估值金额';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.valt_cur
+  is '估值币种';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.valt_dt
+  is '估值日期';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.tra_emp_no
+  is '交易员工号';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.aprv_psn_no
+  is '审批人工号';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_EAST_DERIV_CPTL_DTL_20220630.data_src
+  is '数据来源（参见[字典:AML0045]）';
+

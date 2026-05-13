@@ -1,0 +1,17 @@
+﻿create table RRP_MDL.TMP_LWB
+(
+  data_dt DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

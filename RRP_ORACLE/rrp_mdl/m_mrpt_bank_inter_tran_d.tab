@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.M_MRPT_BANK_INTER_TRAN_D
+(
+  data_dt                      VARCHAR2(8),
+  sign_brch_org_id             VARCHAR2(200),
+  sign_netw_org_id             VARCHAR2(60),
+  sign_netw_org_name           VARCHAR2(1000),
+  cust_id                      VARCHAR2(60),
+  cust_name                    VARCHAR2(600),
+  open_conl_bk_flg             VARCHAR2(20),
+  open_mbank_flg               VARCHAR2(20),
+  conl_bk_inter_tran_cnt       NUMBER,
+  mobile_onl_bk_inter_tran_cnt NUMBER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_MRPT_BANK_INTER_TRAN_D
+  is '企业电子银行互动类交易明细表';
+comment on column RRP_MDL.M_MRPT_BANK_INTER_TRAN_D.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_BANK_INTER_TRAN_D.sign_brch_org_id
+  is '签约分行机构编号';
+comment on column RRP_MDL.M_MRPT_BANK_INTER_TRAN_D.sign_netw_org_id
+  is '签约网点机构编号';
+comment on column RRP_MDL.M_MRPT_BANK_INTER_TRAN_D.sign_netw_org_name
+  is '签约网点机构名称';
+comment on column RRP_MDL.M_MRPT_BANK_INTER_TRAN_D.cust_id
+  is '客户编号';
+comment on column RRP_MDL.M_MRPT_BANK_INTER_TRAN_D.cust_name
+  is '客户名称';
+comment on column RRP_MDL.M_MRPT_BANK_INTER_TRAN_D.open_conl_bk_flg
+  is '是否开通企业网银';
+comment on column RRP_MDL.M_MRPT_BANK_INTER_TRAN_D.open_mbank_flg
+  is '是否开通手机银行';
+comment on column RRP_MDL.M_MRPT_BANK_INTER_TRAN_D.conl_bk_inter_tran_cnt
+  is '企业网网银互动类交易次数';
+comment on column RRP_MDL.M_MRPT_BANK_INTER_TRAN_D.mobile_onl_bk_inter_tran_cnt
+  is '手机网银互动类交易次数';
+

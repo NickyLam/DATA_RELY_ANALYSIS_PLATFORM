@@ -1,0 +1,59 @@
+﻿create table RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT
+(
+  index_no    VARCHAR2(64) default '-' not null,
+  data_date   VARCHAR2(32) default '-' not null,
+  org_no      VARCHAR2(64) default '-' not null,
+  dim1        VARCHAR2(64) default '-' not null,
+  dim2        VARCHAR2(64) default '-' not null,
+  dim3        VARCHAR2(64) default '-' not null,
+  dim4        VARCHAR2(64) default '-' not null,
+  dim5        VARCHAR2(64) default '-' not null,
+  dim6        VARCHAR2(64) default '-' not null,
+  dim7        VARCHAR2(64) default '-' not null,
+  dim8        VARCHAR2(64) default '-' not null,
+  dim9        VARCHAR2(64) default '-' not null,
+  dim10       VARCHAR2(64) default '-' not null,
+  index_val   NUMBER(38,6),
+  template_id VARCHAR2(64),
+  currency    VARCHAR2(64) default '-' not null
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT
+  is '监管报送指标结果表';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.index_no
+  is '指标编号';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.data_date
+  is '数据日期';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.org_no
+  is '机构编号';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.dim1
+  is 'DIM1';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.dim2
+  is 'DIM2';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.dim3
+  is 'DIM3';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.dim4
+  is 'DIM4';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.dim5
+  is 'DIM5';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.dim6
+  is 'DIM6';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.dim7
+  is 'DIM7';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.dim8
+  is 'DIM8';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.dim9
+  is 'DIM9';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.dim10
+  is 'DIM10';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.index_val
+  is '指标值';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.template_id
+  is '实例编号';
+comment on column RRP_MDL.RRPS_RPTS_RPT_REPORT_RESULT.currency
+  is '币种';
+

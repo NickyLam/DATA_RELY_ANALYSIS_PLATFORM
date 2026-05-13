@@ -1,0 +1,105 @@
+﻿create table RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO
+(
+  appnum          VARCHAR2(16),
+  menuviewnum     VARCHAR2(12),
+  menunum         VARCHAR2(50),
+  menuname        VARCHAR2(128),
+  menuicon        VARCHAR2(128),
+  menupath        VARCHAR2(128),
+  menutype        VARCHAR2(2),
+  sortnum         VARCHAR2(10),
+  parentmenunum   VARCHAR2(20),
+  isvisible       VARCHAR2(5),
+  mainbranch      VARCHAR2(10),
+  mainuser        VARCHAR2(12),
+  maindate        VARCHAR2(10),
+  maintime        VARCHAR2(8),
+  tadpath         VARCHAR2(120),
+  weight          VARCHAR2(20),
+  tranflag        VARCHAR2(1),
+  rltflag         VARCHAR2(2),
+  iconactive      VARCHAR2(200),
+  bankflag        VARCHAR2(10),
+  recomdeal       VARCHAR2(10),
+  englishmenuname VARCHAR2(100),
+  navigationmode  VARCHAR2(100),
+  iscommon        VARCHAR2(100),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10),
+  etl_timestamp   TIMESTAMP(6),
+  inoutviewflag   VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO
+  is '交易菜单表';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.appnum
+  is '应用编号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.menuviewnum
+  is '菜单视图编号-一级菜单';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.menunum
+  is '菜单编号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.menuname
+  is '菜单名称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.menuicon
+  is '菜单图标';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.menupath
+  is '菜单路径';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.menutype
+  is '菜单类型 : 01 目录节点 02 交易节点 03 功能节点';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.sortnum
+  is '排序号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.parentmenunum
+  is '父菜单编号 : 根节点的父节点为0';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.isvisible
+  is '是否可见 : 0 不可见 1可见';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.mainbranch
+  is '维护机构';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.mainuser
+  is '维护用户';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.maindate
+  is '维护日期';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.maintime
+  is '维护时间';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.tadpath
+  is '交易路径';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.weight
+  is '交易权重 用来统计交易数量';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.tranflag
+  is '菜单分类 0-非金融类|1-金融类|2-查询类';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.rltflag
+  is '权限限制配置 0-未配置 1-配置';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.iconactive
+  is '选中时的图片';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.bankflag
+  is '是否离行标识：0 在行 1 离行';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.recomdeal
+  is '是否推荐交易：0 是 1 否';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.englishmenuname
+  is '英文名称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.navigationmode
+  is '导航模式';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.iscommon
+  is '是否常用';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_MENU_INFO.inoutviewflag
+  is '内部/客服-服务视图|1-内部 2-客服';
+

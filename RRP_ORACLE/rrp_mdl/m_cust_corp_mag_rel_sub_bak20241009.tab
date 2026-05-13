@@ -1,0 +1,34 @@
+﻿create table RRP_MDL.M_CUST_CORP_MAG_REL_SUB_BAK20241009
+(
+  data_dt               CHAR(8) not null,
+  lgl_rep_id            VARCHAR2(200),
+  cust_id               VARCHAR2(200) not null,
+  rel_typ_rsk           VARCHAR2(15) not null,
+  shrh_rel_ent_nm       VARCHAR2(750) not null,
+  shrh_rel_ent_typ      VARCHAR2(10),
+  shrh_rel_ent_crdl_typ VARCHAR2(10),
+  shrh_rel_ent_crdl_no  VARCHAR2(100),
+  regd_cd               VARCHAR2(200),
+  shrh_rel_ent_cust_id  VARCHAR2(200),
+  ctry_cd               VARCHAR2(100),
+  hold_shr_pct          NUMBER(18,4),
+  shrh_stru_crpnd_dt    CHAR(8),
+  upd_info_dt           CHAR(8),
+  act_cntlr_flg         CHAR(1),
+  rel_stat              VARCHAR2(10),
+  dept_line             VARCHAR2(750),
+  data_src              VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

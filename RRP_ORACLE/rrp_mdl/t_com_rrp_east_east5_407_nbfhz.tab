@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.T_COM_RRP_EAST_EAST5_407_NBFHZ
+(
+  rid        VARCHAR2(50) not null,
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  yhjgmc     VARCHAR2(450),
+  mxkmbh     VARCHAR2(60),
+  mxkmmc     VARCHAR2(300),
+  zhmc       VARCHAR2(450),
+  nbfhzzh    VARCHAR2(60),
+  bz         VARCHAR2(3),
+  jdbz       VARCHAR2(12),
+  jfye       NUMBER(20,2),
+  dfye       NUMBER(20,2),
+  jxbz       VARCHAR2(3),
+  jxfs       VARCHAR2(60),
+  ll         NUMBER(20,6),
+  khrq       VARCHAR2(8),
+  xhrq       VARCHAR2(8),
+  zhzt       VARCHAR2(30),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8) not null,
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  address    VARCHAR2(500),
+  zhmc_oth   VARCHAR2(5),
+  zhmc_orig  VARCHAR2(450),
+  gsfzjg     VARCHAR2(200),
+  acctno     VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

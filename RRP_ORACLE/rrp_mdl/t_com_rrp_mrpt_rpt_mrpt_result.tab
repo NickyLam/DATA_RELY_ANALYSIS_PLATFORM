@@ -1,0 +1,15 @@
+﻿create table RRP_MDL.T_COM_RRP_MRPT_RPT_MRPT_RESULT
+(
+  data_date VARCHAR2(10),
+  org_no    VARCHAR2(60),
+  currency  VARCHAR2(10),
+  index_no  VARCHAR2(80),
+  index_val NUMBER(36,6),
+  rpt_no    VARCHAR2(40)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

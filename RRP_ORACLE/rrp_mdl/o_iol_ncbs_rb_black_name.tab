@@ -1,0 +1,77 @@
+﻿create table RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME
+(
+  acct_status    CHAR(1),
+  base_acct_no   VARCHAR2(50),
+  client_name    VARCHAR2(100),
+  client_no      VARCHAR2(16),
+  document_id    VARCHAR2(30),
+  document_type  VARCHAR2(4),
+  black_no       VARCHAR2(50),
+  black_seq      VARCHAR2(50),
+  company        VARCHAR2(20),
+  list_source    CHAR(1),
+  our_bank_flag  CHAR(1),
+  uncounter_desc VARCHAR2(50),
+  create_date    DATE,
+  effect_date    DATE,
+  expire_date    DATE,
+  tran_timestamp VARCHAR2(26),
+  remark1        VARCHAR2(200),
+  remark2        VARCHAR2(200),
+  remark3        VARCHAR2(200),
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME
+  is '核心黑名单表';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.acct_status
+  is '账户状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.base_acct_no
+  is '交易账号/卡号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.client_name
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.document_id
+  is '证件号码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.document_type
+  is '客户证件类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.black_no
+  is '黑名单编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.black_seq
+  is '黑名单序号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.list_source
+  is '名单来源';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.our_bank_flag
+  is '黑名单客户标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.uncounter_desc
+  is '入表原因';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.create_date
+  is '创建日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.effect_date
+  is '产品生效日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.expire_date
+  is '失效日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.remark1
+  is '备注1';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.remark2
+  is '备注2';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.remark3
+  is '备注3';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_BLACK_NAME.id_mark
+  is '删除标识';
+

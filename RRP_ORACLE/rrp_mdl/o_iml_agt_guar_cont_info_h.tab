@@ -1,0 +1,212 @@
+﻿create table RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H
+(
+  agt_id                   VARCHAR2(250),
+  guar_cont_id             VARCHAR2(100),
+  guar_cont_type_cd        VARCHAR2(30),
+  guar_way_cd              VARCHAR2(30),
+  cont_status_cd           VARCHAR2(30),
+  cont_sign_dt             DATE,
+  cont_effect_dt           DATE,
+  cont_exp_dt              DATE,
+  cust_id                  VARCHAR2(100),
+  guartor_id               VARCHAR2(100),
+  guartor_name             VARCHAR2(1000),
+  guar_curr_cd             VARCHAR2(30),
+  guar_tot_amt             NUMBER(30,2),
+  other_espec_apot_descb   VARCHAR2(500),
+  guar_opinion_descb       VARCHAR2(500),
+  check_guar_dt            DATE,
+  guartor_cert_type_cd     VARCHAR2(30),
+  guartor_cert_no          VARCHAR2(60),
+  guartor_loan_card_no     VARCHAR2(60),
+  guar_guar_form_cd        VARCHAR2(30),
+  rgst_org_id              VARCHAR2(100),
+  rgst_teller_id           VARCHAR2(100),
+  rgst_dt                  DATE,
+  update_org_id            VARCHAR2(100),
+  update_teller_id         VARCHAR2(100),
+  modif_dt                 DATE,
+  lp_id                    VARCHAR2(100),
+  auth_begin_dt            DATE,
+  rev_guar_measure_flg     VARCHAR2(10),
+  nat_std_indus_dir_cd     VARCHAR2(30),
+  corp_size_cd             VARCHAR2(30),
+  natnal_econ_dept_type_cd VARCHAR2(30),
+  rgst_dist_cd             VARCHAR2(30),
+  dir_hxb_guar_flg         VARCHAR2(10),
+  obg_name                 VARCHAR2(500),
+  obg_cust_id              VARCHAR2(100),
+  gcust_flg                VARCHAR2(10),
+  resdnt_flg               VARCHAR2(10),
+  rgst_cty_rg_cd           VARCHAR2(30),
+  guartor_net_asset        NUMBER(18,6),
+  matn_flg                 VARCHAR2(10),
+  lmt_cont_id              VARCHAR2(100),
+  ocup_guar_lmt_flg        VARCHAR2(10),
+  file_dt                  DATE,
+  guar_type_cls_cd         VARCHAR2(30),
+  guar_exp_dt              DATE,
+  guar_begin_dt            DATE,
+  guar_range_cd            VARCHAR2(30),
+  pri_contr_id             VARCHAR2(100),
+  brwer_name               VARCHAR2(500),
+  text_cont_id             VARCHAR2(100),
+  ts_flg                   VARCHAR2(10),
+  elec_cont_type           VARCHAR2(60),
+  main_guar_way_cd         VARCHAR2(30),
+  margin_ratio             NUMBER(18,6),
+  credt_org_name           VARCHAR2(500),
+  credt_org_id             VARCHAR2(100),
+  guar_mon_tenor           NUMBER(10),
+  aldy_guar_amt            NUMBER(30,2),
+  aval_bal                 NUMBER(30,2),
+  auto_que_crdtc_rept_flg  VARCHAR2(10),
+  crdtc_que_auth_id        VARCHAR2(100),
+  start_dt                 DATE,
+  end_dt                   DATE,
+  id_mark                  VARCHAR2(10),
+  src_table_name           VARCHAR2(100),
+  job_cd                   VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H
+  is '担保合同信息历史';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_cont_id
+  is '担保合同编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_cont_type_cd
+  is '担保合同类型代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_way_cd
+  is '担保方式代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.cont_status_cd
+  is '合同状态代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.cont_sign_dt
+  is '合同签定日期';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.cont_effect_dt
+  is '合同生效日期';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.cont_exp_dt
+  is '合同到期日期';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guartor_id
+  is '担保人编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guartor_name
+  is '担保人名称';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_curr_cd
+  is '担保币种代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_tot_amt
+  is '担保总金额';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.other_espec_apot_descb
+  is '其它特别约定描述';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_opinion_descb
+  is '担保意见描述';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.check_guar_dt
+  is '核保日期';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guartor_cert_type_cd
+  is '担保人证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guartor_cert_no
+  is '担保人证件号码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guartor_loan_card_no
+  is '担保人贷款卡号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_guar_form_cd
+  is '保证担保形式代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.rgst_org_id
+  is '登记机构编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.update_org_id
+  is '更新机构编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.update_teller_id
+  is '更新柜员编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.modif_dt
+  is '变更日期';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.auth_begin_dt
+  is '授权起始日期';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.rev_guar_measure_flg
+  is '反担保措施标志';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.nat_std_indus_dir_cd
+  is '国标行业投向代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.corp_size_cd
+  is '企业规模代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.natnal_econ_dept_type_cd
+  is '国民经济部门类型代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.rgst_dist_cd
+  is '注册地行政区划代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.dir_hxb_guar_flg
+  is '直接向我行担保标志';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.obg_name
+  is '权利人名称';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.obg_cust_id
+  is '权利人客户编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.gcust_flg
+  is '代保管标志';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.resdnt_flg
+  is '居民标志';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.rgst_cty_rg_cd
+  is '注册地国家和地区代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guartor_net_asset
+  is '保证人净资产';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.matn_flg
+  is '维护标志';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.lmt_cont_id
+  is '额度合同编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.ocup_guar_lmt_flg
+  is '占用担保额度标志';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.file_dt
+  is '归档日期';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_type_cls_cd
+  is '担保类型分类代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_exp_dt
+  is '担保到期日期';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_begin_dt
+  is '担保起始日期';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_range_cd
+  is '担保范围代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.pri_contr_id
+  is '主合同编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.brwer_name
+  is '借款人名称';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.text_cont_id
+  is '文本合同编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.ts_flg
+  is '暂存标志';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.elec_cont_type
+  is '电子合同类型';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.main_guar_way_cd
+  is '主担保方式代码';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.margin_ratio
+  is '保证金比例';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.credt_org_name
+  is '债权人机构名称';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.credt_org_id
+  is '债权人机构编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.guar_mon_tenor
+  is '担保月期限';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.aldy_guar_amt
+  is '已担保金额';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.aval_bal
+  is '可用余额';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.auto_que_crdtc_rept_flg
+  is '自动查询征信报告标志';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.crdtc_que_auth_id
+  is '征信查询授权书编号';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_GUAR_CONT_INFO_H.job_cd
+  is '任务编码';
+

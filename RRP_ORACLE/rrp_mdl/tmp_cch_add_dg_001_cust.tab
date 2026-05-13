@@ -1,0 +1,72 @@
+﻿create table RRP_MDL.TMP_CCH_ADD_DG_001_CUST
+(
+  datainput_id       VARCHAR2(32) not null,
+  data_date          VARCHAR2(10),
+  acct_org_num       VARCHAR2(20),
+  khwym              VARCHAR2(30),
+  khmc               VARCHAR2(100),
+  zjlx               VARCHAR2(100),
+  zjhm               VARCHAR2(100),
+  sfgtqy             VARCHAR2(10),
+  bxcdjmfylb         VARCHAR2(100),
+  bnljcdhjmdxdxgfyje NUMBER(20,6),
+  sys_source         VARCHAR2(100),
+  sys_data_date      VARCHAR2(20) not null,
+  sys_data_case      VARCHAR2(32) not null,
+  sys_operator       VARCHAR2(256),
+  sys_oper_org       VARCHAR2(32) not null,
+  sys_oper_date      VARCHAR2(20),
+  sys_data_state     VARCHAR2(10),
+  sys_order_no       NUMBER(19),
+  error_mark         VARCHAR2(2),
+  flow_node_id       VARCHAR2(32),
+  comments           VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.datainput_id
+  is '数据录入时间';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.data_date
+  is '数据日期';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.khwym
+  is '客户唯一码';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.khmc
+  is '客户名称';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.zjlx
+  is '证件类型代码';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.zjhm
+  is '证件号码';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.sfgtqy
+  is '是否关停企业';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.bxcdjmfylb
+  is '本行承担/减免费用类別';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.bnljcdhjmdxdxgfyje
+  is '本年累计承担或减免的信贷相关费用金额（元）';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.sys_source
+  is '来源系统';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.sys_data_date
+  is '数据日期';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.sys_data_case
+  is '任务实例ID';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.sys_operator
+  is '补录人员';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.sys_oper_org
+  is '补录机构';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.sys_oper_date
+  is '操作日期';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.sys_data_state
+  is '数据状态:save(已保存),submit(已提交),reject(驳回),sucess(审核通过),refuse(已回退)';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.sys_order_no
+  is '序号';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.error_mark
+  is '错误标记';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.flow_node_id
+  is '流程节点';
+comment on column RRP_MDL.TMP_CCH_ADD_DG_001_CUST.comments
+  is '取款虚拟柜员号';
+

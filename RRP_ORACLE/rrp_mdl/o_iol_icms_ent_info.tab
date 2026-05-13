@@ -1,0 +1,552 @@
+﻿create table RRP_MDL.O_IOL_ICMS_ENT_INFO
+(
+  basicbank                     VARCHAR2(200),
+  basicaccount                  VARCHAR2(50),
+  mybank                        VARCHAR2(80),
+  mybankaccount                 VARCHAR2(32),
+  otherbank                     VARCHAR2(80),
+  otherbankaccount              VARCHAR2(32),
+  accountdate                   DATE,
+  creditdate                    DATE,
+  evaluatedate                  DATE,
+  remark                        VARCHAR2(500),
+  inputuserid                   VARCHAR2(32),
+  inputorgid                    VARCHAR2(12),
+  inputdate                     DATE,
+  updateuserid                  VARCHAR2(32),
+  updateorgid                   VARCHAR2(32),
+  updatedate                    DATE,
+  swiftcode                     VARCHAR2(32),
+  financeorglicence             VARCHAR2(32),
+  financeorgcode                VARCHAR2(32),
+  countryrisk                   VARCHAR2(80),
+  corpid                        VARCHAR2(32),
+  corporgid                     VARCHAR2(32),
+  registerregioncode            VARCHAR2(32),
+  economictype                  VARCHAR2(80),
+  countrycode                   VARCHAR2(18),
+  fictitiousperson              VARCHAR2(200),
+  fictitiouspersonid            VARCHAR2(80),
+  listingcorpornot              VARCHAR2(2),
+  hasiebusiness                 VARCHAR2(2),
+  registerdate                  DATE,
+  mcompanyname                  VARCHAR2(80),
+  mcompanycerttype              VARCHAR2(10),
+  mcompanycertid                VARCHAR2(30),
+  firstloandate                 DATE,
+  subjectbusiness               VARCHAR2(2500),
+  industrytypeforrs             VARCHAR2(18),
+  strategicemergingindustrytype VARCHAR2(4),
+  corporationgrowthstage        VARCHAR2(4),
+  organiztype                   VARCHAR2(10),
+  orgdetail                     VARCHAR2(30),
+  ifoversea                     VARCHAR2(2),
+  rwacustomertype               VARCHAR2(4),
+  isnewsetup                    VARCHAR2(2),
+  privateent                    VARCHAR2(2),
+  bankingsupervision            VARCHAR2(2),
+  bankingtype                   VARCHAR2(30),
+  isdebt                        VARCHAR2(2),
+  islimit                       VARCHAR2(2),
+  laborintensiveentflag         VARCHAR2(2),
+  holdingtype                   VARCHAR2(18),
+  iscountrysidenterprise        VARCHAR2(2),
+  isblack                       VARCHAR2(2),
+  locality                      VARCHAR2(2),
+  isfreshcust                   VARCHAR2(2),
+  lmcredittype                  VARCHAR2(4),
+  businessstrategy              VARCHAR2(4),
+  industrialrestructuringtype   VARCHAR2(4),
+  transformationandupgradeid    VARCHAR2(2),
+  orgstatus                     VARCHAR2(2),
+  onlylimit                     NUMBER(24,6),
+  shareholderstructuredate      DATE,
+  clyxcustomerid                VARCHAR2(40),
+  chargedepartment              VARCHAR2(80),
+  isrelativetrade               VARCHAR2(2),
+  corpidetitytype               VARCHAR2(18),
+  fundsource                    VARCHAR2(200),
+  fiscalsource                  VARCHAR2(4),
+  serviceupdateresult           VARCHAR2(4),
+  governmentlevel               VARCHAR2(4),
+  isrelatedparty                VARCHAR2(2),
+  managearea                    VARCHAR2(200),
+  financecorpid                 VARCHAR2(32),
+  otherorgname                  VARCHAR2(80),
+  corpstartdate                 DATE,
+  isdlfr                        VARCHAR2(2),
+  ispart                        VARCHAR2(2),
+  isoverseas                    VARCHAR2(2),
+  authflag                      VARCHAR2(2),
+  isinvestcust                  VARCHAR2(2),
+  distributestatus              VARCHAR2(2),
+  customertype                  VARCHAR2(18),
+  ifsme                         VARCHAR2(2),
+  fictitiouspersoncertificateid VARCHAR2(50),
+  fictitiousmobile              VARCHAR2(50),
+  registeradd                   VARCHAR2(400),
+  newregioncode                 VARCHAR2(18),
+  financedirectorname           VARCHAR2(80),
+  mobilephone                   VARCHAR2(32),
+  loancardpassword              VARCHAR2(32),
+  projectflag                   VARCHAR2(18),
+  realtyflag                    VARCHAR2(18),
+  isstrategycustomer            VARCHAR2(10),
+  financefiamtel                VARCHAR2(30),
+  financeothertel               VARCHAR2(30),
+  actualcontrollercounts        NUMBER(15),
+  investmencounts               NUMBER(15),
+  financetype2                  VARCHAR2(18),
+  greencategory                 VARCHAR2(20),
+  governmentltype               VARCHAR2(4),
+  upbelongcustid                VARCHAR2(64),
+  stateownedentholdingflag      VARCHAR2(2),
+  acceptbankid                  VARCHAR2(40),
+  acceptbankname                VARCHAR2(80),
+  creditinstitutioncode         VARCHAR2(2),
+  societyinstitutioncode        VARCHAR2(2),
+  ratifydate                    DATE,
+  commercialregisterno          VARCHAR2(32),
+  taxpayerregisterno            VARCHAR2(32),
+  survivalstatus                VARCHAR2(4),
+  environmentrisktype           VARCHAR2(4),
+  migtflag                      VARCHAR2(80),
+  corpregisteradd               VARCHAR2(300),
+  corpvaliditydate              VARCHAR2(10),
+  platformaffiliatetype         VARCHAR2(18),
+  platformlawtype               VARCHAR2(18),
+  techcorpidentifytime          VARCHAR2(10),
+  techcorptype                  VARCHAR2(1),
+  customerid                    VARCHAR2(16),
+  customername                  VARCHAR2(200),
+  englishname                   VARCHAR2(80),
+  licenseno                     VARCHAR2(100),
+  licensebegin                  DATE,
+  licensematurity               DATE,
+  nationaltaxno                 VARCHAR2(32),
+  landtaxno                     VARCHAR2(32),
+  setupdate                     DATE,
+  loancardno                    VARCHAR2(30),
+  loancardflag                  VARCHAR2(1),
+  supercorpname                 VARCHAR2(80),
+  supercertid                   VARCHAR2(32),
+  supercerttype                 VARCHAR2(18),
+  superloancardno               VARCHAR2(32),
+  enttype                       VARCHAR2(18),
+  entscale                      VARCHAR2(18),
+  calcuentscale                 VARCHAR2(18),
+  orgtype                       VARCHAR2(18),
+  orgform                       VARCHAR2(18),
+  orgbelong                     VARCHAR2(80),
+  industrytype                  VARCHAR2(5),
+  ecgroupflag                   VARCHAR2(1),
+  registercurrency              VARCHAR2(3),
+  registeramount                NUMBER(24,6),
+  financedepttel                VARCHAR2(32),
+  emailadd                      VARCHAR2(400),
+  finarunarea                   VARCHAR2(18),
+  finabranchnum                 NUMBER(22),
+  listingcorptype               VARCHAR2(80),
+  employeenumber                NUMBER(10),
+  salesamount                   NUMBER(24,6),
+  generalassets                 NUMBER(24,6),
+  entindustrytype               VARCHAR2(18),
+  financetype                   VARCHAR2(7),
+  businessscope                 VARCHAR2(4000),
+  customerhistory               VARCHAR2(1500),
+  importrightsflag              VARCHAR2(6),
+  creditlevel                   VARCHAR2(32),
+  workfieldarea                 NUMBER(24,6),
+  workfieldfee                  VARCHAR2(32),
+  manageinfo                    VARCHAR2(2500),
+  mainproduction                VARCHAR2(1000),
+  paidcurrency                  VARCHAR2(3),
+  paidamount                    NUMBER(24,6),
+  groupflag                     VARCHAR2(1),
+  isgovernmentplarform          VARCHAR2(10),
+  migtoldvalue                  VARCHAR2(250),
+  firstloanflag                 VARCHAR2(1),
+  actualcontroller              VARCHAR2(200),
+  freshxdcatalog                VARCHAR2(10),
+  isfreshzqproj                 VARCHAR2(2),
+  advancedmanuflag              VARCHAR2(2),
+  cultureindustryflag           VARCHAR2(2),
+  onlynewentflag                VARCHAR2(2),
+  onlynewsmallentflag           VARCHAR2(2),
+  ecodepartmentcode             VARCHAR2(8),
+  start_dt                      DATE,
+  end_dt                        DATE,
+  id_mark                       VARCHAR2(10),
+  etl_timestamp                 TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_ENT_INFO
+  is '公司客户基本信息';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.basicbank
+  is '基本帐户行';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.basicaccount
+  is '基本账户账号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.mybank
+  is '我行开户行';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.mybankaccount
+  is '我行开户帐号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.otherbank
+  is '他行开户行';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.otherbankaccount
+  is '他行开户帐号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.accountdate
+  is '在我行首次开立账户时间';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.creditdate
+  is '与我行建立信贷关系时间';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.evaluatedate
+  is '评估日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.inputorgid
+  is '登记机构编号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.swiftcode
+  is 'SWIFT代码';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.financeorglicence
+  is '金融机构许可证';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.financeorgcode
+  is '金融机构代码';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.countryrisk
+  is '国别风险';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.corpid
+  is '法人编号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.corporgid
+  is '法人机构编号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.registerregioncode
+  is '登记地行政区划代码';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.economictype
+  is '经济类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.countrycode
+  is '所在国家(地区)';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.fictitiousperson
+  is '法定代表人(姓名)';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.fictitiouspersonid
+  is '法定代表人证件号码（事业单位等=身份证号）';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.listingcorpornot
+  is '是否上市公司标志';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.hasiebusiness
+  is '有无进出口经营项目';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.registerdate
+  is '注册日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.mcompanyname
+  is '母公司名称';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.mcompanycerttype
+  is '母公司证件类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.mcompanycertid
+  is '母公司证件号码';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.firstloandate
+  is '首贷日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.subjectbusiness
+  is '主营业务';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.industrytypeforrs
+  is '所属行业类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.strategicemergingindustrytype
+  is '战略新兴产业类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.corporationgrowthstage
+  is '企业成长阶段';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.organiztype
+  is '组织机构类别';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.orgdetail
+  is '组织机构类别细分';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.ifoversea
+  is '是否离岸户';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.rwacustomertype
+  is '加权风险资产客户分类';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isnewsetup
+  is '是否为新建企业';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.privateent
+  is '是否民营企业';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.bankingsupervision
+  is '是否银监小企业';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.bankingtype
+  is '银监小企业规模';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isdebt
+  is '是否为逃废债企业';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.islimit
+  is '是否属于两高行业';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.laborintensiveentflag
+  is '是否劳动密集型企业';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.holdingtype
+  is '控股类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.iscountrysidenterprise
+  is '农村城市标志';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isblack
+  is '是否黑名单客户标志';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.locality
+  is '是否我行认定小企业';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isfreshcust
+  is '是否绿色信贷标志';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.lmcredittype
+  is '客户洗钱风险分类';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.businessstrategy
+  is '授信策略';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.industrialrestructuringtype
+  is '客户产业结构调整类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.transformationandupgradeid
+  is '工业转型升级标识';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.orgstatus
+  is '部门状态';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.onlylimit
+  is '单一限额';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.shareholderstructuredate
+  is '股东结构对应日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.clyxcustomerid
+  is '策略营销客户号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.chargedepartment
+  is '上级主管单位';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isrelativetrade
+  is '是否我行关联交易';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.corpidetitytype
+  is '征信报送企业身份标识类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.fundsource
+  is '经费来源';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.fiscalsource
+  is '财政补助收入来源';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.serviceupdateresult
+  is '客户服务升级分类';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.governmentlevel
+  is '政府等级';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isrelatedparty
+  is '是否我行关联方标志';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.managearea
+  is '政府机构行政区划';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.financecorpid
+  is '非现场监管统计机构编码';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.otherorgname
+  is '发证机关';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.corpstartdate
+  is '发证日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isdlfr
+  is '是否独立法人';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.ispart
+  is '是否我行股东';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isoverseas
+  is '是否海外子行客户';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.authflag
+  is '是否授权';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isinvestcust
+  is '是否投资类客户';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.distributestatus
+  is '分配状态';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.customertype
+  is '客户机构类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.ifsme
+  is '是否中小企业事业部专营客户';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.fictitiouspersoncertificateid
+  is '法定代表人证明书标号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.fictitiousmobile
+  is '法定代表人移动电话';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.registeradd
+  is '注册地址';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.newregioncode
+  is '行政区域（风险预警）';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.financedirectorname
+  is '财务总监姓名';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.mobilephone
+  is '财务总监移动电话\移动电话';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.loancardpassword
+  is '贷款卡密码';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.projectflag
+  is '机构目前是否有项目';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.realtyflag
+  is '是否从事房地产开发';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isstrategycustomer
+  is '是否战略客户';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.financefiamtel
+  is '财务负责人家庭电话';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.financeothertel
+  is '财务负责人其他电话';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.actualcontrollercounts
+  is '实际控制人个数';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.investmencounts
+  is '主要出资人个数';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.financetype2
+  is '金融机构类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.greencategory
+  is '绿色贷款用途';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.governmentltype
+  is '政府客户类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.upbelongcustid
+  is '上级法人机构编号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.stateownedentholdingflag
+  is '是否国企控股';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.acceptbankid
+  is '承兑行行号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.acceptbankname
+  is '承兑行行名';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.creditinstitutioncode
+  is '机构信用代码';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.societyinstitutioncode
+  is '社会信用代码';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.ratifydate
+  is '核准日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.commercialregisterno
+  is '工商注册号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.taxpayerregisterno
+  is '纳税人识别号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.survivalstatus
+  is '存续状态';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.environmentrisktype
+  is '重大环境安全风险分类';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.migtflag
+  is '迁移标志：crsrcrilcupl';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.corpregisteradd
+  is '组织机构代码注册地址';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.corpvaliditydate
+  is '组织机构代码有效期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.platformaffiliatetype
+  is '地方融资平台按隶属关系分类类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.platformlawtype
+  is '地方融资平台按法律性质分类类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.techcorpidentifytime
+  is '科技型企业认定时间';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.techcorptype
+  is '地方融资平台按隶属关系分类类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.customerid
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.customername
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.englishname
+  is '客户英文名';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.licenseno
+  is '营业执照登记号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.licensebegin
+  is '证件生效日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.licensematurity
+  is '证件失效日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.nationaltaxno
+  is '税务登记证号(国税)';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.landtaxno
+  is '税务登记证号(地税)';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.setupdate
+  is '企业成立日期';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.loancardno
+  is '中征码';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.loancardflag
+  is '中证码是否有效';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.supercorpname
+  is '上级公司名称';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.supercertid
+  is '上级公司组织机构代码';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.supercerttype
+  is '上级公司证件类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.superloancardno
+  is '上级公司贷款卡编号';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.enttype
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.entscale
+  is '企业规模';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.calcuentscale
+  is '企业测算规模';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.orgtype
+  is '组织类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.orgform
+  is '组织形式';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.orgbelong
+  is '机构隶属';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.industrytype
+  is '国标行业分类';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.ecgroupflag
+  is '是否集团客户标志';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.registercurrency
+  is '注册资本币种';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.registeramount
+  is '注册资本';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.financedepttel
+  is '财务部联系电话';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.emailadd
+  is '公司E－Mail';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.finarunarea
+  is '金融机构经营区域范围';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.finabranchnum
+  is '金融机构一级分支机构数量';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.listingcorptype
+  is '上市类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.employeenumber
+  is '企业员工人数';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.salesamount
+  is '销售收入';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.generalassets
+  is '企业总资产总额';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.entindustrytype
+  is '企业行业类型';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.financetype
+  is '同业客户-金融机构类别';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.businessscope
+  is '经营范围';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.customerhistory
+  is '历史沿革、管理水平简介';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.importrightsflag
+  is '有无进出口经营权';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.creditlevel
+  is '本行即期信用等级';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.workfieldarea
+  is '经营场地面积';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.workfieldfee
+  is '经营场地所有权';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.manageinfo
+  is '合法经营情况';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.mainproduction
+  is '主要产品情况';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.paidcurrency
+  is '实收币种';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.paidamount
+  is '实收资本金额';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.groupflag
+  is '是否集团标志';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isgovernmentplarform
+  is '是否政府融资平台';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.migtoldvalue
+  is '迁移数据-参数转换前字段值';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.firstloanflag
+  is '首贷标志';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.actualcontroller
+  is '实际控制人';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.freshxdcatalog
+  is '绿色信贷细分类目';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.isfreshzqproj
+  is '是否绿色债券项目';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.advancedmanuflag
+  is '先进制造业标志（0-否，1-是）';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.cultureindustryflag
+  is '文化产业标志（0-否，1-是）';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.onlynewentflag
+  is '专精特新中小企业标志（0-否，1-是）';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.onlynewsmallentflag
+  is '专精特新小巨人企业标志（0-否，1-是）';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.ecodepartmentcode
+  is '国民经济类型-EcoDepartmentCode';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_ENT_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,180 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE
+(
+  deal_id                  NUMBER,
+  deal_name                VARCHAR2(26),
+  aspclient_id             NUMBER,
+  portfolio_id             NUMBER,
+  portfolio_name           VARCHAR2(120),
+  cpty_name                VARCHAR2(384),
+  keepfolder_id            NUMBER,
+  keepfolder_shortname     VARCHAR2(75),
+  ref_number               VARCHAR2(48),
+  currency                 VARCHAR2(5),
+  trade_date               NUMBER,
+  value_date               NUMBER(8),
+  security_code            VARCHAR2(45),
+  bondsname                VARCHAR2(75),
+  amount                   NUMBER,
+  settle_amt               NUMBER,
+  price                    NUMBER,
+  uw_fee_rate              NUMBER,
+  note                     VARCHAR2(4000),
+  trade_type               VARCHAR2(2),
+  sell_portfolio           NUMBER,
+  sell_portfolio_name      VARCHAR2(120),
+  security_trade_no        VARCHAR2(23),
+  fee                      NUMBER,
+  tax_amt                  NUMBER,
+  broker_amt               NUMBER,
+  uw_buy_no                VARCHAR2(23),
+  uw_buy_id                NUMBER,
+  valid_source_sn          VARCHAR2(23),
+  cancel_reason            VARCHAR2(384),
+  uw_price                 NUMBER,
+  cfets_from               VARCHAR2(2),
+  review_status            VARCHAR2(2),
+  review_user_id           VARCHAR2(15),
+  review_user_name         VARCHAR2(48),
+  review_time              DATE,
+  serial_number            VARCHAR2(23),
+  dealer_id                NUMBER(4),
+  lastmodified             TIMESTAMP(6),
+  counterparty_seq         NUMBER,
+  counterparty_short_cname VARCHAR2(384),
+  security_trade_id        NUMBER,
+  trading_fee              NUMBER,
+  fee_return               NUMBER,
+  fee_date                 NUMBER(8),
+  return_rate              NUMBER,
+  fx_price                 NUMBER,
+  fee_type                 VARCHAR2(2),
+  dn_dealer                VARCHAR2(900),
+  dealer_name              VARCHAR2(30),
+  start_dt                 DATE,
+  end_dt                   DATE,
+  id_mark                  VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE
+  is '承分销';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.deal_id
+  is '引用表ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.deal_name
+  is '引用表名';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.aspclient_id
+  is '部门编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.portfolio_id
+  is '交易组别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.portfolio_name
+  is '交易组别名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.cpty_name
+  is '交易对手';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.keepfolder_id
+  is '账户ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.keepfolder_shortname
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.ref_number
+  is '成交编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.currency
+  is '交易币别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.trade_date
+  is '交易日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.value_date
+  is '交割日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.security_code
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.bondsname
+  is '债券名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.amount
+  is '交易面额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.settle_amt
+  is '成交金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.price
+  is '承分销价';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.uw_fee_rate
+  is '承销手续费率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.note
+  is '备注';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.trade_type
+  is '交易类型';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.sell_portfolio
+  is '转自营投组ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.sell_portfolio_name
+  is '转自营投组名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.security_trade_no
+  is '交易的现券表交易单号(SERIAL_NUMBER)';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.fee
+  is '手续费';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.tax_amt
+  is '税金';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.broker_amt
+  is '佣金';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.uw_buy_no
+  is '附属交易对应承销买入主交易的单号（SERIAL_NUMBER）';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.uw_buy_id
+  is '附属交易对应承销买入主交易的单号（DEAL_ID）';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.valid_source_sn
+  is '审批单号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.cancel_reason
+  is '撤销原因';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.uw_price
+  is '分销卖出对应承销买入的价格';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.cfets_from
+  is '是否场内交易';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.review_status
+  is '复核状态(前台)';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.review_user_id
+  is '复核人员ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.review_user_name
+  is '复核人员名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.review_time
+  is '复核日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.serial_number
+  is '交易序号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.dealer_id
+  is '交易员ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.lastmodified
+  is '最近更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.counterparty_seq
+  is 'comstar交易对手序号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.counterparty_short_cname
+  is '交易对手';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.security_trade_id
+  is '交易的现券表ID号(DEAL_ID)';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.trading_fee
+  is '交易费用';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.fee_return
+  is '返还手续费';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.fee_date
+  is '手续费划付日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.return_rate
+  is '手续费返还比例';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.fx_price
+  is '分销价';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.fee_type
+  is '手续费类型';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.dn_dealer
+  is '本币交易员';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.dealer_name
+  is '交易员名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_UNDERWRITE.etl_timestamp
+  is 'ETL处理时间戳';
+

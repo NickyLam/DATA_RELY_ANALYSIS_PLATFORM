@@ -1,0 +1,237 @@
+﻿create table RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT
+(
+  id                  VARCHAR2(60),
+  top_branch_no       VARCHAR2(15),
+  contract_no         VARCHAR2(60),
+  apply_date          VARCHAR2(12),
+  product_no          VARCHAR2(12),
+  cust_pro_no         VARCHAR2(14),
+  cust_pro_name       VARCHAR2(150),
+  busi_date           VARCHAR2(12),
+  quote_no            VARCHAR2(24),
+  busi_type           VARCHAR2(6),
+  inner_flag          VARCHAR2(2),
+  is_send             VARCHAR2(2),
+  quote_mode          VARCHAR2(2),
+  deal_id             VARCHAR2(30),
+  trade_direct        VARCHAR2(8),
+  busi_branch_no      VARCHAR2(18),
+  branch_acct         VARCHAR2(48),
+  acct_branch_no      VARCHAR2(15),
+  user_id             VARCHAR2(15),
+  facct_no            VARCHAR2(48),
+  manager_no          VARCHAR2(30),
+  department_no       VARCHAR2(15),
+  cust_no             VARCHAR2(18),
+  cust_user_id        VARCHAR2(15),
+  cust_name           VARCHAR2(150),
+  cust_acct           VARCHAR2(48),
+  cust_bank_no        VARCHAR2(18),
+  cust_brh_no         VARCHAR2(15),
+  draft_type          VARCHAR2(6),
+  draft_attr          VARCHAR2(6),
+  sum_count           NUMBER(8),
+  sum_amount          NUMBER(18,2),
+  buy_back_amt        NUMBER(18,2),
+  tenor_days          NUMBER(8),
+  sub_deal_flag       VARCHAR2(2),
+  quote_valid_tm      VARCHAR2(21),
+  clear_speed         VARCHAR2(6),
+  clear_type          VARCHAR2(6),
+  settle_time         VARCHAR2(21),
+  settle_mode         VARCHAR2(6),
+  settle_amt          NUMBER(18,2),
+  due_settle_amt      NUMBER(18,2),
+  settle_date         VARCHAR2(12),
+  due_settle_date     VARCHAR2(12),
+  rate                NUMBER(9,6),
+  due_rate            NUMBER(7,6),
+  pay_interest        NUMBER(18,2),
+  due_pay_interest    NUMBER(18,2),
+  yield_rate          NUMBER(13,6),
+  select_type         VARCHAR2(8),
+  package_no          VARCHAR2(24),
+  check_status        VARCHAR2(3),
+  credit_check_status VARCHAR2(3),
+  credit_no           VARCHAR2(60),
+  account_status      VARCHAR2(3),
+  message_status      VARCHAR2(3),
+  settle_status       VARCHAR2(6),
+  last_upd_opr        VARCHAR2(45),
+  last_upd_time       VARCHAR2(21),
+  misc                VARCHAR2(675),
+  reserver1           VARCHAR2(384),
+  reserver2           VARCHAR2(384),
+  contract_status     VARCHAR2(3),
+  modify_flag         VARCHAR2(2),
+  created_by          VARCHAR2(45),
+  i9_type             VARCHAR2(15),
+  own_pro_no          VARCHAR2(14),
+  own_pro_name        VARCHAR2(150),
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  etl_timestamp       TIMESTAMP(6),
+  bussiness_type      VARCHAR2(12)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT
+  is '对话报价协议表';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.id
+  is '主键ID';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.top_branch_no
+  is '总行机构号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.contract_no
+  is '协议号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.apply_date
+  is '申请日期';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.product_no
+  is '产品号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.cust_pro_no
+  is '交易对手非法人产品号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.cust_pro_name
+  is '交易对手非法人产品名称';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.busi_date
+  is '承兑签发日期';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.quote_no
+  is '报价单编号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.busi_type
+  is '业务类型： BT01 转贴现 BT02 质押式回购 BT03 买断式回购 BT06 央行卖票';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.inner_flag
+  is '系统内外标识： 0 否 1 是';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.is_send
+  is '是否发送报文： 0 否 1 是';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.quote_mode
+  is '报价方式： 0 定向报价 1 全市场报价';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.deal_id
+  is '成交单编号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.trade_direct
+  is '交易方向： TDD01 买入 TDD02 卖出';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.busi_branch_no
+  is '业务机构号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.branch_acct
+  is '资金账户';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.acct_branch_no
+  is '账务机构号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.user_id
+  is '交易员ID';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.facct_no
+  is '资金账号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.manager_no
+  is '客户经理';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.department_no
+  is '部门编号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.cust_no
+  is '客户号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.cust_user_id
+  is '交易员ID';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.cust_acct
+  is '客户帐号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.cust_bank_no
+  is '交易对手行号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.cust_brh_no
+  is '贴现申请人开户机构代码';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.draft_type
+  is '票据类型： AC01 银承 AC02 商承';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.draft_attr
+  is '票据介质： ME01 纸票 ME02 电票';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.sum_count
+  is '票据张数';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.sum_amount
+  is '票据总额';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.buy_back_amt
+  is '回购金额';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.tenor_days
+  is '持票期限';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.sub_deal_flag
+  is '部分成交选项： 0 否 1 是';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.quote_valid_tm
+  is '报价有效时间';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.clear_speed
+  is '清算速度： CS00 T+0 CS01 T+1';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.clear_type
+  is '清算类型： CT01 全额清算 CT02 净额清算';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.settle_time
+  is '最晚结算时间';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.settle_mode
+  is '结算方式： ST01 票款对付（DVP） ST02 纯票过户（FOP）';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.settle_amt
+  is '结算金额';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.due_settle_amt
+  is '到期结算金额';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.settle_date
+  is '结算日期';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.due_settle_date
+  is '到期结算日期';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.rate
+  is '利率';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.due_rate
+  is '到期利率';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.pay_interest
+  is '应付利息';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.due_pay_interest
+  is '到期应付利息';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.yield_rate
+  is '收益率';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.select_type
+  is '挑票类型： CSM01 单票 CSM02 票据包';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.package_no
+  is '票据包编号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.check_status
+  is '检查状态';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.credit_check_status
+  is '额度检查状态： 00 未处理 01 占用中 02 占用成功 03 占用失败 04 释放成功 05 释放失败';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.credit_no
+  is '额度编号';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.account_status
+  is '记账状态： 00 未处理 01 记账中 02 记账成功 03 记账失败 04 抹账成功 05 抹账失败';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.message_status
+  is '报文状态： 01 已发送申请报文 00 未处理 02 收到确认 03 成交通知 04 终止通知 05 申请撤销 06 已发送撤销报文收到人行确认成功 11 已发送签收报文 21 已发送申请收到人行确认失败 22 已发送撤销报文收到人行确认失败 23 已发送签收报文收到人行确认失败 24 已发送申请收到人行签收拒绝（再贴现） 12 已发送签收收到人行确认成功';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.settle_status
+  is '清算状态： MS00 待结算确认 MS01 待处理 MS02 清算处理中 MS03 资金排队中 MS04 结算成功 MS05 结算失败 MS06 已撤销';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.last_upd_opr
+  is '最后操作员';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.last_upd_time
+  is '最后修改时间';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.misc
+  is '备注';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.reserver1
+  is '预留域1';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.reserver2
+  is '预留域2';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.contract_status
+  is '审批状态： 00 未提交 01 审批中 02 审批完成 03 审批退回 04 审批拒绝';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.modify_flag
+  is '是否修改： 0 否 1 是';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.created_by
+  is '创建人';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.i9_type
+  is 'I9新会计准则资产类型，转贴现业务默认为FVOCI，买入返售默认AC分类';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.own_pro_no
+  is '本方非法人产品';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.own_pro_name
+  is '本方非法人产品名称';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IOL_BDMS_CPES_QUOTE_CONTRACT.bussiness_type
+  is '业务所属分行';
+

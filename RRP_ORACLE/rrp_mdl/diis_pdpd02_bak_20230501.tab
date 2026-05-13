@@ -1,0 +1,198 @@
+﻿create table RRP_MDL.DIIS_PDPD02_BAK_20230501
+(
+  rid          VARCHAR2(100) not null,
+  cust_seq     NUMBER(15),
+  name         VARCHAR2(400),
+  cust_id      VARCHAR2(100),
+  sex          VARCHAR2(4),
+  nationality  VARCHAR2(6),
+  occupation   VARCHAR2(100),
+  dpst_tot_amt NUMBER(30,2),
+  acct_seq     NUMBER(15),
+  prod_type    VARCHAR2(4),
+  acct_no      VARCHAR2(64),
+  acct_type    VARCHAR2(40),
+  dpst_sts     VARCHAR2(4),
+  id_type      VARCHAR2(4) default '',
+  id_no        VARCHAR2(60),
+  id_valid_dt  VARCHAR2(20),
+  tel_no       VARCHAR2(60),
+  addr         VARCHAR2(180),
+  prin_amt     NUMBER(30,2),
+  int_amt      NUMBER(30,2),
+  tot_amt      NUMBER(30,2),
+  note         VARCHAR2(600),
+  data_dt      VARCHAR2(20) not null,
+  org_no       VARCHAR2(40),
+  curr_cd      VARCHAR2(6) default 'CNY',
+  dept_no      VARCHAR2(60),
+  issued_no    VARCHAR2(40),
+  rpt_org_no   VARCHAR2(40),
+  data_ources  VARCHAR2(4),
+  data_modify  VARCHAR2(4),
+  b_tot_amt    NUMBER(30,2),
+  s_tot_amt    NUMBER(30,2),
+  is_seq       VARCHAR2(2),
+  subj_id      VARCHAR2(60),
+  indv_bus_flg VARCHAR2(2),
+  web_bus_flg  VARCHAR2(10),
+  dep_kind     VARCHAR2(200),
+  base_cur     CHAR(3),
+  dep_bal      NUMBER(30,2)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('1900-01-01')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220331 values ('2022-03-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210630 values ('2021-06-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220831 values ('2022-08-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220630 values ('2022-06-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221031 values ('2022-10-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221130 values ('2022-11-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values ('2022-09-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221231 values ('2022-12-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230131 values ('2023-01-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230228 values ('2023-02-28')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230331 values ('2023-03-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230430 values ('2023-04-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.DIIS_PDPD02_BAK_20230501
+  is '个人存款-不含高管人员-境外';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.rid
+  is '数据主键';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.cust_seq
+  is '存款人序号';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.name
+  is '存款人名称';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.cust_id
+  is '识别码';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.sex
+  is '性别';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.nationality
+  is '国籍';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.occupation
+  is '职业';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.dpst_tot_amt
+  is '各存款账户本息合计';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.acct_seq
+  is '存款账户序号';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.prod_type
+  is '存款产品类别';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.acct_no
+  is '存款账户号码';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.acct_type
+  is '存款账户类型';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.dpst_sts
+  is '存款状态';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.id_type
+  is '开户证件类型';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.id_no
+  is '开户证件号码';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.id_valid_dt
+  is '开户证件有效期限';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.tel_no
+  is '联系电话';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.addr
+  is '联系地址';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.prin_amt
+  is '存款本金';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.int_amt
+  is '应付利息';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.tot_amt
+  is '本息合计';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.note
+  is '备注';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.data_dt
+  is '数据日期';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.org_no
+  is '机构编号';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.curr_cd
+  is '币种';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.dept_no
+  is '条线';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.issued_no
+  is '填报机构';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.rpt_org_no
+  is '报送机构号';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.data_ources
+  is '数据来源';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.data_modify
+  is '数据修改';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.b_tot_amt
+  is '其中:被保险存款本息合计';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.s_tot_amt
+  is '其中:受保存款本息合计';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.is_seq
+  is '是否合计项';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.subj_id
+  is '科目编号';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.indv_bus_flg
+  is '是否个体工商户';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.web_bus_flg
+  is '是否微众存款';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.dep_kind
+  is '储种';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.base_cur
+  is '来源币种';
+comment on column RRP_MDL.DIIS_PDPD02_BAK_20230501.dep_bal
+  is '折算前存款余额';
+alter table RRP_MDL.DIIS_PDPD02_BAK_20230501
+  add primary key (DATA_DT, RID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

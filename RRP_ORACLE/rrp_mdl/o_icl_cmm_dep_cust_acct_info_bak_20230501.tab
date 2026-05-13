@@ -1,0 +1,156 @@
+﻿create table RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501
+(
+  etl_dt                   DATE not null,
+  lp_id                    VARCHAR2(60) not null,
+  cust_acct_id             VARCHAR2(60) not null,
+  cust_acct_name           VARCHAR2(300),
+  cust_id                  VARCHAR2(60),
+  max_sub_acct_num         VARCHAR2(60),
+  std_prod_id              VARCHAR2(60),
+  drawdown_way_cd          VARCHAR2(10),
+  acct_status_cd           VARCHAR2(10),
+  acct_type_cd             VARCHAR2(10),
+  e_acct_type_cd           VARCHAR2(10),
+  e_acct_status_cd         VARCHAR2(10),
+  acct_drawdown_way_status VARCHAR2(10),
+  froz_status_cd           VARCHAR2(10),
+  stop_pay_status_cd       VARCHAR2(10),
+  acpt_pay_status_cd       VARCHAR2(10),
+  acct_usage_cd            VARCHAR2(30),
+  vouch_kind_cd            VARCHAR2(10),
+  vouch_char_cd            VARCHAR2(10),
+  vouch_form_cd            VARCHAR2(10),
+  netw_vrfction_rest_cd    VARCHAR2(30),
+  vrif_status_cd           VARCHAR2(30),
+  sleep_acct_flg           VARCHAR2(10),
+  dormt_acct_flg           VARCHAR2(10),
+  privavy_acct_flg         VARCHAR2(10),
+  corp_acct_flg            VARCHAR2(10),
+  bind_acct_flg            VARCHAR2(10),
+  fiscal_dep_flg           VARCHAR2(10),
+  acct_belong_org_id       VARCHAR2(60),
+  open_acct_org_id         VARCHAR2(60),
+  open_acct_teller_id      VARCHAR2(60),
+  open_acct_chn_cd         VARCHAR2(10),
+  open_acct_flow_num       VARCHAR2(60),
+  open_acct_dt             DATE,
+  open_acct_tm             TIMESTAMP(6),
+  close_acct_org_id        VARCHAR2(60),
+  clos_acct_teller_id      VARCHAR2(60),
+  clos_acct_flow_num       VARCHAR2(60),
+  clos_acct_dt             DATE,
+  clos_acct_tm             TIMESTAMP(6),
+  unvrif_rs_descb          VARCHAR2(300),
+  disp_method_descb        VARCHAR2(100),
+  tran_chn_status_cd       VARCHAR2(60),
+  job_cd                   VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501
+  is '存款主账户信息';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.cust_acct_id
+  is '客户账户编号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.cust_acct_name
+  is '客户账户名称';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.max_sub_acct_num
+  is '最大子户号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.drawdown_way_cd
+  is '支取方式代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.acct_status_cd
+  is '账户状态代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.acct_type_cd
+  is '账户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.e_acct_type_cd
+  is '电子账户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.e_acct_status_cd
+  is '电子账户状态代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.acct_drawdown_way_status
+  is '账户支取方式状态';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.froz_status_cd
+  is '冻结状态代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.stop_pay_status_cd
+  is '止付状态代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.acpt_pay_status_cd
+  is '收付状态代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.acct_usage_cd
+  is '账户用途代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.vouch_kind_cd
+  is '凭证种类代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.vouch_char_cd
+  is '凭证性质代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.vouch_form_cd
+  is '凭证形式代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.netw_vrfction_rest_cd
+  is '联网核查结果代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.vrif_status_cd
+  is '核实状态代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.sleep_acct_flg
+  is '睡眠户标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.dormt_acct_flg
+  is '不动户标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.privavy_acct_flg
+  is '隐私账户标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.corp_acct_flg
+  is '对公账户标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.bind_acct_flg
+  is '绑定账户标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.fiscal_dep_flg
+  is '财政性存款标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.acct_belong_org_id
+  is '账户所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.open_acct_org_id
+  is '开户机构编号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.open_acct_teller_id
+  is '开户柜员编号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.open_acct_chn_cd
+  is '开户渠道代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.open_acct_flow_num
+  is '开户流水号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.open_acct_dt
+  is '开户日期';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.open_acct_tm
+  is '开户时间';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.close_acct_org_id
+  is '销户机构编号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.clos_acct_teller_id
+  is '销户柜员编号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.clos_acct_flow_num
+  is '销户流水号';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.clos_acct_dt
+  is '销户日期';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.clos_acct_tm
+  is '销户时间';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.unvrif_rs_descb
+  is '无法核实原因描述';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.disp_method_descb
+  is '处置方法描述';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.tran_chn_status_cd
+  is '交易渠道状态代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501.job_cd
+  is '任务代码';
+create index RRP_MDL.IDX_DEP_CUST_ACCT_INFO on RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501 (CUST_ACCT_ID)
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+alter table RRP_MDL.O_ICL_CMM_DEP_CUST_ACCT_INFO_BAK_20230501
+  add constraint PK_O_ICL_CMM_DEP_CUST_ACCT_INFO primary key (ETL_DT, LP_ID, CUST_ACCT_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

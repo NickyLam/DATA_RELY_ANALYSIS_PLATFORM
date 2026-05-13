@@ -1,0 +1,78 @@
+﻿create table RRP_MDL.EAST5_401_ZZKJQKMB_20230331
+(
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30) not null,
+  yhjgmc     VARCHAR2(450),
+  kjkmbh     VARCHAR2(60) not null,
+  kjkmmc     VARCHAR2(300),
+  bz         VARCHAR2(3) not null,
+  qcjfye     NUMBER(20,2),
+  qcdfye     NUMBER(20,2),
+  jffse      NUMBER(20,2),
+  dffse      NUMBER(20,2),
+  qmjfye     NUMBER(20,2),
+  qmdfye     NUMBER(20,2),
+  bszq       VARCHAR2(20) not null,
+  kjrq       VARCHAR2(8) not null,
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8) not null,
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  address    VARCHAR2(500),
+  rid        VARCHAR2(50) not null,
+  gsfzjg     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.yhjgmc
+  is '银行机构名称';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.kjkmbh
+  is '会计科目编号';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.kjkmmc
+  is '会计科目名称';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.bz
+  is '申请控制金额币种';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.qcjfye
+  is '期初借方余额';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.qcdfye
+  is '期初贷方余额';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.jffse
+  is '临时表字段';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.dffse
+  is '临时表字段';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.qmjfye
+  is '期末借方余额';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.qmdfye
+  is '期末贷方余额';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.bszq
+  is '临时表字段';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.kjrq
+  is '会计日期';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_401_ZZKJQKMB_20230331.gsfzjg
+  is '归属分支机构';
+

@@ -1,0 +1,39 @@
+﻿create table RRP_MDL.CONFIG_ORG_AREA
+(
+  org_id    VARCHAR2(100),
+  org_name  VARCHAR2(200),
+  parent_id VARCHAR2(100),
+  area_id   VARCHAR2(10),
+  gsfzjg    VARCHAR2(100),
+  useable   VARCHAR2(10),
+  data_dt   VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.CONFIG_ORG_AREA
+  is '机构地区配置表';
+comment on column RRP_MDL.CONFIG_ORG_AREA.org_id
+  is '机构号';
+comment on column RRP_MDL.CONFIG_ORG_AREA.org_name
+  is '机构名称';
+comment on column RRP_MDL.CONFIG_ORG_AREA.parent_id
+  is '上级机构号';
+comment on column RRP_MDL.CONFIG_ORG_AREA.area_id
+  is '归属区域编号';
+comment on column RRP_MDL.CONFIG_ORG_AREA.gsfzjg
+  is '归属分支机构';
+comment on column RRP_MDL.CONFIG_ORG_AREA.useable
+  is '是否启用（1：是；0：否）';
+comment on column RRP_MDL.CONFIG_ORG_AREA.data_dt
+  is '数据日期';
+

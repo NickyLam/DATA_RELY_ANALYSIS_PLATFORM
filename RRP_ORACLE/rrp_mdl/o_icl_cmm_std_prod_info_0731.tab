@@ -1,0 +1,41 @@
+﻿create table RRP_MDL.O_ICL_CMM_STD_PROD_INFO_0731
+(
+  etl_dt           DATE,
+  lp_id            VARCHAR2(60),
+  prod_id          VARCHAR2(500),
+  prod_name        VARCHAR2(4000),
+  level1_prod_id   VARCHAR2(500),
+  level1_prod_name VARCHAR2(4000),
+  level2_prod_id   VARCHAR2(500),
+  level2_prod_name VARCHAR2(4000),
+  level3_prod_id   VARCHAR2(500),
+  level3_prod_name VARCHAR2(4000),
+  level4_prod_id   VARCHAR2(500),
+  level4_prod_name VARCHAR2(4000),
+  issue_status_cd  VARCHAR2(60),
+  prod_lev_cd      VARCHAR2(60),
+  prod_status_cd   VARCHAR2(4000),
+  effect_dt        DATE,
+  invalid_dt       DATE,
+  prod_sum         VARCHAR2(4000),
+  mgmt_dept_name   VARCHAR2(4000),
+  map_rule_descb   VARCHAR2(4000),
+  base_prod_id     VARCHAR2(60),
+  comb_prod_flg    VARCHAR2(10),
+  prod_range_cd    VARCHAR2(10),
+  provi_merge_flg  VARCHAR2(10),
+  job_cd           VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

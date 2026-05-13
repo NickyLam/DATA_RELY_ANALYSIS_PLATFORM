@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501
+(
+  etl_dt        DATE,
+  lp_id         VARCHAR2(60),
+  curr_cd       VARCHAR2(10),
+  curr_name     VARCHAR2(100),
+  mdl_price     NUMBER(18,8),
+  base_price    NUMBER(18,8),
+  cny_exch_rat  NUMBER(18,8),
+  usd_exch_rat  NUMBER(18,8),
+  eur_exch_rat  NUMBER(18,8),
+  job_cd        VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501
+  is '汇率信息';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.curr_name
+  is '币种名称';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.mdl_price
+  is '中间价';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.base_price
+  is '基准价';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.cny_exch_rat
+  is '折人民币汇率';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.usd_exch_rat
+  is '折美元汇率';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.eur_exch_rat
+  is '折欧元汇率';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_EXCH_RAT_INFO_BAK_20230501.etl_timestamp
+  is '数据处理时间';
+

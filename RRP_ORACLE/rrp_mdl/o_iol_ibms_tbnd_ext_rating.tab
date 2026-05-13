@@ -1,0 +1,66 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING
+(
+  i_code               VARCHAR2(45),
+  a_type               VARCHAR2(30),
+  m_type               VARCHAR2(30),
+  b_grade              VARCHAR2(15),
+  b_rating_institution VARCHAR2(1500),
+  beg_date             VARCHAR2(15),
+  end_date             VARCHAR2(15),
+  rating_type          VARCHAR2(2),
+  imp_date             VARCHAR2(15),
+  pipe_id              NUMBER,
+  b_id                 NUMBER,
+  outlook              VARCHAR2(75),
+  shadow_grade         VARCHAR2(15),
+  b_rating_change      VARCHAR2(2),
+  etl_dt               DATE,
+  etl_timestamp        TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING
+  is '债券外部评级表';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.i_code
+  is '交易代码';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.b_grade
+  is '信用评级';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.b_rating_institution
+  is '主体评级';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.beg_date
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.end_date
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.rating_type
+  is '0 外部 1内部';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.imp_date
+  is '导入日期';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.pipe_id
+  is '管道编号';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.b_id
+  is '序号';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.outlook
+  is '评级展望';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.shadow_grade
+  is '影子评级';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.b_rating_change
+  is '评级变动方向0.首次1.维持2.调高3.调低';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_IBMS_TBND_EXT_RATING.etl_timestamp
+  is 'ETL处理时间戳';
+

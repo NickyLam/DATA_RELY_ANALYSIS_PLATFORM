@@ -1,0 +1,66 @@
+﻿create table RRP_MDL.ETL_DATA_CLEANUP_CONF
+(
+  tab_group     INTEGER,
+  sch_name      VARCHAR2(128),
+  table_name    VARCHAR2(128),
+  table_name_cn VARCHAR2(200),
+  table_lvl     VARCHAR2(32),
+  begin_dt      VARCHAR2(8),
+  end_dt        VARCHAR2(8),
+  cle_type      VARCHAR2(32),
+  keep_num      INTEGER,
+  keep_type     VARCHAR2(20),
+  col_name      VARCHAR2(128),
+  col_type      VARCHAR2(128),
+  col_format    VARCHAR2(128),
+  create_per    VARCHAR2(100),
+  create_dt     VARCHAR2(8),
+  exec_status   VARCHAR2(2000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ETL_DATA_CLEANUP_CONF
+  is '数据清理配置表';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.tab_group
+  is '分组，可配置调度并行';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.sch_name
+  is '模式名';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.table_name
+  is '表名';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.table_name_cn
+  is '表中文名';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.table_lvl
+  is '层级:贴源、模型、集市';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.begin_dt
+  is '开始日期';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.end_dt
+  is '结束日期';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.cle_type
+  is '清数方式:CP清空分区,DP删除分区,D删除数据';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.keep_num
+  is '保留天数:保留天数之外+KEEP_TYPE之外的数据都删除';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.keep_type
+  is '保留类型:N无,W周末,X旬末,M月末,Q季末,HY半年,Y年';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.col_name
+  is '条件字段:删除条件字段，如DATA_DT/ETL_DT';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.col_type
+  is '条件字段类型:DATE VARCHAR2';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.col_format
+  is '条件字段格式:YYYYMMDD YYYY-MM-DD';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.create_per
+  is '创建人';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.create_dt
+  is '创建日期';
+comment on column RRP_MDL.ETL_DATA_CLEANUP_CONF.exec_status
+  is '执行状态:最后执行日期与状态';
+

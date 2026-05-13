@@ -1,0 +1,90 @@
+﻿create table RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H
+(
+  party_id         VARCHAR2(250),
+  lp_id            VARCHAR2(60),
+  prtcptr_id       VARCHAR2(100),
+  prtcptr_name     VARCHAR2(150),
+  prtcptr_type_cd  VARCHAR2(30),
+  acct_id          VARCHAR2(100),
+  acct_name        VARCHAR2(375),
+  open_bank_no     VARCHAR2(150),
+  bigamt_bank_no   VARCHAR2(150),
+  bigamt_bank_name VARCHAR2(150),
+  rela_ps_name     VARCHAR2(300),
+  tel_num          VARCHAR2(90),
+  rgst_emply_id    VARCHAR2(100),
+  rgst_org_id      VARCHAR2(100),
+  rgst_dt          DATE,
+  modif_emply_id   VARCHAR2(100),
+  modif_org_id     VARCHAR2(100),
+  modif_dt         DATE,
+  ts_flg           VARCHAR2(10),
+  start_dt         DATE,
+  end_dt           DATE,
+  id_mark          VARCHAR2(10),
+  src_table_name   VARCHAR2(100),
+  job_cd           VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H
+  is '资产证券化参与方信息历史';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.prtcptr_id
+  is '参与方编号';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.prtcptr_name
+  is '参与方名称';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.prtcptr_type_cd
+  is '参与方类型代码';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.open_bank_no
+  is '开户行行号';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.bigamt_bank_no
+  is 'VLOOKUP(E10774,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.bigamt_bank_name
+  is '大额行名';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.rela_ps_name
+  is '关联人姓名';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.tel_num
+  is '电话号码';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.rgst_emply_id
+  is '登记员工编号';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.rgst_org_id
+  is '登记机构编号';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.modif_emply_id
+  is '修改员工编号';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.modif_org_id
+  is '修改机构编号';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.modif_dt
+  is '修改日期';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.ts_flg
+  is '暂存标志';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PTY_ABS_PRTCPTR_INFO_H.job_cd
+  is '任务代码';
+

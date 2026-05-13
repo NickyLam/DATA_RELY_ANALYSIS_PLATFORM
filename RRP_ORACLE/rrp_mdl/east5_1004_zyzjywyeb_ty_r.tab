@@ -1,0 +1,110 @@
+﻿create table RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R
+(
+  rid           VARCHAR2(50) not null,
+  jrxkzh        VARCHAR2(30),
+  nbjgh         VARCHAR2(30),
+  yhjgmc        VARCHAR2(450),
+  mxkmbh        VARCHAR2(60),
+  mxkmmc        VARCHAR2(300),
+  jrgjbh        VARCHAR2(300) not null,
+  jrgjmc        VARCHAR2(450),
+  jyzhlx        VARCHAR2(12),
+  yedl          VARCHAR2(60),
+  ywzl          VARCHAR2(60),
+  ywxl          VARCHAR2(60),
+  cpmc          VARCHAR2(300),
+  bz            VARCHAR2(3),
+  cycb          NUMBER(20,2),
+  zmye          NUMBER(20,2),
+  bqsy          NUMBER(20,2),
+  ljsy          NUMBER(20,2),
+  nhll          NUMBER(20,6),
+  xyfxqz        NUMBER(20,6),
+  wjfl          VARCHAR2(6),
+  jzzb          NUMBER(20,2),
+  qxrq          VARCHAR2(8),
+  dqrq          VARCHAR2(8),
+  bbz           VARCHAR2(600),
+  cjrq          VARCHAR2(8) not null,
+  dept_no       VARCHAR2(10),
+  src_sys_id    VARCHAR2(10),
+  issued_no     VARCHAR2(50),
+  org_no        VARCHAR2(20),
+  address       VARCHAR2(500),
+  gsfzjg        VARCHAR2(200),
+  data_src_desc VARCHAR2(2000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R
+  is '自营资金业务余额表';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.yhjgmc
+  is '银行机构名称';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.mxkmbh
+  is '明细科目编号';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.mxkmmc
+  is '明细科目名称';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.jrgjbh
+  is '金融工具编号';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.jrgjmc
+  is '金融工具名称';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.jyzhlx
+  is '账户类型';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.yedl
+  is '业务大类';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.ywzl
+  is '业务种类';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.ywxl
+  is '业务小类';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.cpmc
+  is '产品名称';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.bz
+  is '申请控制金额币种';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.cycb
+  is '持有成本';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.zmye
+  is '账面余额';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.bqsy
+  is '本期收益';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.ljsy
+  is '累计收益';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.nhll
+  is '年化利率';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.xyfxqz
+  is '信用风险权重';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.wjfl
+  is '五级分类';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.jzzb
+  is '减值准备';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.qxrq
+  is '起息日期';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.dqrq
+  is '到期日期';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.gsfzjg
+  is '归属分支机构';
+comment on column RRP_MDL.EAST5_1004_ZYZJYWYEB_TY_R.data_src_desc
+  is '数据来源系统';
+

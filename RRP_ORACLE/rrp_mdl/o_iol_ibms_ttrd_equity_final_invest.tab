@@ -1,0 +1,72 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST
+(
+  id                NUMBER(22),
+  ratio_id          NUMBER(22),
+  i_code            VARCHAR2(75),
+  a_type            VARCHAR2(45),
+  m_type            VARCHAR2(45),
+  final_invest_type VARCHAR2(450),
+  invest_ratio      NUMBER(31,6),
+  grade             VARCHAR2(75),
+  low_prop          NUMBER(31,6),
+  high_prop         NUMBER(31,6),
+  weight            NUMBER(31,6),
+  remark            VARCHAR2(750),
+  date_explain      VARCHAR2(450),
+  asset_class       VARCHAR2(75),
+  start_dt          DATE,
+  end_dt            DATE,
+  id_mark           VARCHAR2(10),
+  etl_timestamp     TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST
+  is '最终投向类型表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.id
+  is '序号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.ratio_id
+  is '占比id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.a_type
+  is '资产大类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.final_invest_type
+  is '最终投向类型（穿透底层）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.invest_ratio
+  is '当期投资金额占比(%)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.grade
+  is '评级（金融债权为主体评级/非金融债权为债项评级）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.low_prop
+  is '合同中的最低投资比例(%)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.high_prop
+  is '合同中的最高投资比例(%)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.weight
+  is '权重(%)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.date_explain
+  is '数据项说明';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.asset_class
+  is '映射资本新规基础资产品种或资产中类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST.etl_timestamp
+  is 'ETL处理时间戳';
+

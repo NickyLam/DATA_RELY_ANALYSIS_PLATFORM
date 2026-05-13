@@ -1,0 +1,179 @@
+﻿create table RRP_MDL.EAST5_704_ZCZRGXB
+(
+  rid        VARCHAR2(50) not null,
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  zrhth      VARCHAR2(100) not null,
+  xdzclx     VARCHAR2(30),
+  xdjjh      VARCHAR2(100) not null,
+  zrdkbj     NUMBER(20,2),
+  bbz        VARCHAR2(600),
+  zrdklx     NUMBER(20,2),
+  cjrq       VARCHAR2(8) not null,
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  address    VARCHAR2(500),
+  gsfzjg     VARCHAR2(200)
+)
+partition by range (CJRQ)
+(
+  partition PARTITION_19000101 values less than ('19000102')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20181231 values less than ('20190101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20191231 values less than ('20200101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20200630 values less than ('20200701')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20201231 values less than ('20210101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210630 values less than ('20210701')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20211231 values less than ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220131 values less than ('20220201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220228 values less than ('20220301')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220331 values less than ('20220401')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220430 values less than ('20220501')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220531 values less than ('20220601')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220630 values less than ('20220701')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220731 values less than ('20220801')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220831 values less than ('20220901')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values less than ('20221001')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221031 values less than ('20221101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221130 values less than ('20221201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221231 values less than ('20230101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230131 values less than ('20230201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230228 values less than ('20230301')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230331 values less than ('20230401')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230430 values less than ('20230501')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.EAST5_704_ZCZRGXB
+  is '资产转让关系表';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.zrhth
+  is '转让合同号';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.xdzclx
+  is '信贷资产类型';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.xdjjh
+  is '信贷借据号';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.zrdkbj
+  is '转让贷款本金';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.zrdklx
+  is '转让贷款利息';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.cjrq
+  is '采集日期';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.org_no
+  is '报送机构';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.address
+  is '归属地';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB.gsfzjg
+  is '归属分支机构';
+alter table RRP_MDL.EAST5_704_ZCZRGXB
+  add constraint PK_EAST5_704_ZCZRGXB primary key (CJRQ, XDJJH, ZRHTH)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

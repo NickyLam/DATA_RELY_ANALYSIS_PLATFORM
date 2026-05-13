@@ -1,0 +1,44 @@
+﻿create table RRP_MDL.TMP_D05_2_MONTHBAL
+(
+  custno         VARCHAR2(15),
+  ntlycd         VARCHAR2(4),
+  originalperiod VARCHAR2(1),
+  curr_code      VARCHAR2(3),
+  this_dp_bal    NUMBER(20,2),
+  acctno         VARCHAR2(50),
+  acctid         VARCHAR2(20),
+  surplus_bal    NUMBER(20,2),
+  this_cainbl    NUMBER(18,2),
+  total_cainbl   NUMBER(18,2),
+  data_dt        CHAR(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.TMP_D05_2_MONTHBAL
+  is '临时表';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.custno
+  is '客户号';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.ntlycd
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.originalperiod
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.curr_code
+  is '报表币种';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.this_dp_bal
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.acctno
+  is '账号';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.acctid
+  is '账号/卡号';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.surplus_bal
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.this_cainbl
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.total_cainbl
+  is '临时表字段';
+comment on column RRP_MDL.TMP_D05_2_MONTHBAL.data_dt
+  is '数据时间';
+

@@ -1,0 +1,129 @@
+﻿create table RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO
+(
+  etl_dt                    DATE,
+  lp_id                     VARCHAR2(60),
+  base_asset_id             VARCHAR2(60),
+  dubil_id                  VARCHAR2(100),
+  cont_id                   VARCHAR2(100),
+  loan_cont_id              VARCHAR2(60),
+  asset_pool_id             VARCHAR2(100),
+  curr_cd                   VARCHAR2(30),
+  loan_amt                  NUMBER(30,2),
+  bad_debt_amt              NUMBER(30,2),
+  ovdue_amt                 NUMBER(30,2),
+  loan_bal                  NUMBER(30,2),
+  idle_amt                  NUMBER(30,2),
+  asset_status_cd           VARCHAR2(30),
+  tran_cosdetn              NUMBER(30,2),
+  pkg_belong_hxb_int        NUMBER(30,2),
+  pkg_pric_bal              NUMBER(30,8),
+  pkg_asset_bal             NUMBER(30,8),
+  pkg_belong_hxb_int_rat    NUMBER(30,8),
+  redem_belong_hxb_int      NUMBER(30,8),
+  redem_belong_trust_int    NUMBER(30,8),
+  redem_cosdetn             NUMBER(30,8),
+  redem_belong_trust_pric   NUMBER(30,8),
+  redem_cosdetn_pric        NUMBER(30,8),
+  redem_cosdetn_int         NUMBER(30,8),
+  pkg_bf_int_recvbl_bal     NUMBER(30,2),
+  pkg_post_int_recvbl_tot   NUMBER(30,2),
+  pkg_post_int_recvbl_bal   NUMBER(30,2),
+  rtn_pkg_post_int_recvbl   NUMBER(30,2),
+  tran_loan_int_tot         NUMBER(30,2),
+  recvbl_acct_id            VARCHAR2(60),
+  recvbl_acct_name          VARCHAR2(150),
+  recvbl_acct_belong_org_id VARCHAR2(60),
+  job_cd                    VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6),
+  rpbl_int                  NUMBER(30,2),
+  cust_id                   VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO
+  is '资产证券化基础资产信息';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.base_asset_id
+  is '基础资产编号';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.loan_cont_id
+  is '贷款合同编号';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.asset_pool_id
+  is '资产池编号';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.loan_amt
+  is '贷款金额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.bad_debt_amt
+  is '坏账金额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.ovdue_amt
+  is '逾期金额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.loan_bal
+  is '贷款余额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.idle_amt
+  is '呆滞金额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.asset_status_cd
+  is '资产状态代码';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.tran_cosdetn
+  is '转让对价';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.pkg_belong_hxb_int
+  is '封包时归属我行利息';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.pkg_pric_bal
+  is '封包时本金余额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.pkg_asset_bal
+  is '封包时资产余额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.pkg_belong_hxb_int_rat
+  is '封包时归属我行利率';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.redem_belong_hxb_int
+  is '赎回时归属我行利息';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.redem_belong_trust_int
+  is '赎回时归属信托利息';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.redem_cosdetn
+  is '赎回对价';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.redem_belong_trust_pric
+  is '赎回时归属信托本金';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.redem_cosdetn_pric
+  is '赎回对价本金';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.redem_cosdetn_int
+  is '赎回对价利息';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.pkg_bf_int_recvbl_bal
+  is '封包前应收利息余额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.pkg_post_int_recvbl_tot
+  is '封包后应收利息总额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.pkg_post_int_recvbl_bal
+  is '封包后应收利息余额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.rtn_pkg_post_int_recvbl
+  is '已归还封包后应收利息';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.tran_loan_int_tot
+  is '转让贷款利息总额';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.recvbl_acct_id
+  is '收款账户编号';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.recvbl_acct_name
+  is '收款账户名称';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.recvbl_acct_belong_org_id
+  is '收款账户所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.etl_timestamp
+  is '数据处理时间';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.rpbl_int
+  is '应还利息';
+comment on column RRP_MDL.O_ICL_CMM_ABS_BASE_ASSET_INFO.cust_id
+  is '客户编号';
+

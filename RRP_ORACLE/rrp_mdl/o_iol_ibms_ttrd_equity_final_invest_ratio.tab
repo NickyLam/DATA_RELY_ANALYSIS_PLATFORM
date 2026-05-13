@@ -1,0 +1,81 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO
+(
+  id                 NUMBER(22),
+  final_invest_type  VARCHAR2(450),
+  weight             NUMBER(31,6),
+  date_explain       VARCHAR2(450),
+  asset_class        VARCHAR2(75),
+  parent_id          NUMBER(22),
+  invest_ratio_flag  VARCHAR2(2),
+  grade_flag         VARCHAR2(2),
+  grade_type         VARCHAR2(2),
+  low_prop_flag      VARCHAR2(2),
+  high_prop_flag     VARCHAR2(2),
+  weight_flag        VARCHAR2(2),
+  style_level        VARCHAR2(2),
+  remark             VARCHAR2(750),
+  relate_ratio_grade VARCHAR2(2),
+  node_type          VARCHAR2(2),
+  grade_required     VARCHAR2(2),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO
+  is '净值型项目基础资产权重模板表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.id
+  is '序号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.final_invest_type
+  is '最终投向类型（穿透底层）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.weight
+  is '权重(%)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.date_explain
+  is '数据项说明';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.asset_class
+  is '映射资本新规基础资产品种或资产中类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.parent_id
+  is '所属分类id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.invest_ratio_flag
+  is '当期投资金额占比是否只读：1只读';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.grade_flag
+  is '评级是否只读：1只读';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.grade_type
+  is '评级类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.low_prop_flag
+  is '合同中的最低投资比例是否只读：1只读';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.high_prop_flag
+  is '合同中的最高投资是否只读：1只读';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.weight_flag
+  is '权重是否只读：1只读';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.style_level
+  is '1-加粗 2-空1格 3-空2格';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.relate_ratio_grade
+  is '评级和权重是否存在联动,1-是 0-否';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.node_type
+  is '几类节点  1 一类项   2 二类项 3 三类项';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.grade_required
+  is '该项比例有值，主体评级项必填逻辑  1存在该逻辑 0 不存在该逻辑';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_FINAL_INVEST_RATIO.etl_timestamp
+  is 'ETL处理时间戳';
+

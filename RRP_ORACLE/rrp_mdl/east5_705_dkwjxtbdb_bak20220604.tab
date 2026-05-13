@@ -1,0 +1,81 @@
+﻿create table RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604
+(
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  yhjgmc     VARCHAR2(450),
+  xdhth      VARCHAR2(100),
+  xdjjh      VARCHAR2(100) not null,
+  khtybh     VARCHAR2(70),
+  khmc       VARCHAR2(450),
+  tzrq       VARCHAR2(8) not null,
+  ywjfl      VARCHAR2(6),
+  xwjfl      VARCHAR2(6),
+  bdyy       VARCHAR2(30),
+  bdfs       VARCHAR2(30),
+  jbgyh      VARCHAR2(30),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8) not null,
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  address    VARCHAR2(500),
+  rid        VARCHAR2(50) not null,
+  khmc_orig  VARCHAR2(450),
+  khmc_oth   VARCHAR2(5),
+  gsfzjg     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.yhjgmc
+  is '银行机构名称';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.xdhth
+  is '信贷合同号';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.xdjjh
+  is '信贷借据号';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.khtybh
+  is '客户统一编号';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.khmc
+  is '客户名称';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.tzrq
+  is '发生调整的日期';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.ywjfl
+  is '原五级分类';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.xwjfl
+  is '新五级分类';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.bdyy
+  is '变动原因';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.bdfs
+  is '变动方式';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.jbgyh
+  is '经办人工号';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.khmc_orig
+  is '客户名称（脱敏前）';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.khmc_oth
+  is '客户是否个人客户';
+comment on column RRP_MDL.EAST5_705_DKWJXTBDB_BAK20220604.gsfzjg
+  is '归属分支机构';
+

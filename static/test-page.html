@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>血缘查询测试工具</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 { color: #333; margin-bottom: 20px; font-size: 24px; }
+        
+        .test-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .test-section h2 {
+            color: #6366f1;
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        label { font-weight: 600; color: #374151; min-width: 80px; }
+
+        input[type="text"] {
+            padding: 10px 12px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            min-width: 280px;
+            height: 42px;
+            line-height: 20px;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+        }
+
+        select {
+            padding: 10px 12px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            height: 42px;
+            line-height: 20px;
+        }
+
+        button {
+            padding: 10px 24px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            height: 42px;
+            line-height: 20px;
+            white-space: nowrap;
+        }
+        
+        button:hover {
+            background: #4f46e5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(99,102,241,0.3);
+        }
+        
+        .result-area {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .success { background: #dcfce7; color: #166534; }
+        .error { background: #fee2e2; color: #991b1b; }
+        .warning { background: #fef3c7; color: #92400e; }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .stat-label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔬 血缘查询诊断工具</h1>
+    
+    <!-- 场景1：上游追溯 -->
+    <div class="test-section">
+        <h2>场景1：EAST5_201_GRJCXXB.KHXM 上游追溯</h2>
+        <div class="form-row">
+            <label>表名:</label>
+            <input type="text" id="table1" value="EAST5_201_GRJCXXB" placeholder="输入完整表名">
+            
+            <label>字段:</label>
+            <input type="text" id="field1" value="KHXM" placeholder="输入字段名">
+            
+            <button onclick="testScenario1()">🔍 执行查询</button>
+        </div>
+        <div class="stats-grid" id="stats1"></div>
+        <pre id="result1">点击按钮执行查询...</pre>
+    </div>
+    
+    <!-- 场景2：下游追溯 -->
+    <div class="test-section">
+        <h2>场景2：O_ICL_CMM_INDV_CUST_BASIC_INFO.CUST_NAME 下游追溯</h2>
+        <div class="form-row">
+            <label>表名:</label>
+            <input type="text" id="table2" value="O_ICL_CMM_INDV_CUST_BASIC_INFO" placeholder="输入完整表名">
+
+            <label>字段:</label>
+            <input type="text" id="field2" value="CUST_NAME" placeholder="输入字段名">
+
+            <label>方向:</label>
+            <select id="mode2">
+                <option value="downstream" selected>下游去向 ↓</option>
+                <option value="upstream">上游来源 ↑</option>
+                <option value="both">双向 ↔</option>
+            </select>
+
+            <button onclick="testScenario2()">🔍 执行查询</button>
+        </div>
+        <div class="stats-grid" id="stats2"></div>
+        <pre id="result2">点击按钮执行查询...</pre>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8899';
+        
+        async function apiRequest(url, options = {}) {
+            const response = await fetch(`${API_BASE}${url}`, {
+                headers: { 'Content-Type': 'application/json', ...options.headers },
+                ...options
+            });
+            return response.json();
+        }
+        
+        async function testScenario1() {
+            const table = document.getElementById('table1').value.trim();
+            const field = document.getElementById('field1').value.trim();
+            const resultEl = document.getElementById('result1');
+            const statsEl = document.getElementById('stats1');
+            
+            resultEl.textContent = '⏳ 正在查询...';
+            statsEl.innerHTML = '';
+            
+            try {
+                const response = await apiRequest('/api/lineage/query', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        table: table,
+                        field: field,
+                        depth: 4,
+                        mode: 'upstream',
+                        options: { include_fields: true, limit: 100, use_cache: false }
+                    })
+                });
+                
+                if (response.code !== 200) throw new Error(response.message || '请求失败');
+                
+                const data = response.data;
+                
+                // 显示统计信息
+                statsEl.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-value">${data.nodes_count}</div>
+                        <div class="stat-label">节点数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${data.edges_count}</div>
+                        <div class="stat-label">边数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${data.field_mapping_count}</div>
+                        <div class="stat-label">字段映射</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${data.query_time_ms}ms</div>
+                        <div class="stat-label">耗时</div>
+                    </div>
+                `;
+                
+                // 格式化详细结果
+                let output = `✅ 查询成功\n`;
+                output += `═══════════════════════════════════════\n\n`;
+                output += `目标表: ${data.query_target?.table}\n`;
+                output += `目标字段: ${data.query_target?.field}\n\n`;
+                
+                output += `📍 节点列表 (${data.nodes_count}个):\n`;
+                output += `───────────────────────────────────────\n`;
+                data.nodes.forEach((node, i) => {
+                    output += `${i+1}. [${node.layer.padEnd(6)}] ${node.id || node.short_name}\n`;
+                });
+                
+                output += `\n🔗 边列表 (${data.edges_count}条):\n`;
+                output += `───────────────────────────────────────\n`;
+                data.edges.forEach((edge, i) => {
+                    const src = edge.source_table.split('.').pop();
+                    const tgt = edge.target_table.split('.').pop();
+                    const srcF = edge.source_field || '';
+                    const tgtF = edge.target_field || '';
+                    output += `${i+1}. ${src}.${srcF} → ${tgt}.${tgtF}\n`;
+                });
+                
+                resultEl.textContent = output;
+                
+            } catch (error) {
+                resultEl.textContent = `❌ 错误: ${error.message}`;
+            }
+        }
+        
+        async function testScenario2() {
+            const table = document.getElementById('table2').value.trim();
+            const field = document.getElementById('field2').value.trim();
+            const mode = document.getElementById('mode2').value;
+            const resultEl = document.getElementById('result2');
+            const statsEl = document.getElementById('stats2');
+            
+            resultEl.textContent = '⏳ 正在查询...';
+            statsEl.innerHTML = '';
+            
+            try {
+                console.log(`[TEST] 发送查询: table=${table}, field=${field}, mode=${mode}`);
+                
+                const response = await apiRequest('/api/lineage/query', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        table: table,
+                        field: field,
+                        depth: 10,
+                        mode: mode,
+                        options: { include_fields: true, limit: 200, use_cache: false }
+                    })
+                });
+                
+                console.log('[TEST] API响应:', response);
+                
+                if (response.code !== 200) throw new Error(response.message || '请求失败');
+                
+                const data = response.data;
+                
+                // 显示统计信息
+                statsEl.innerHTML = `
+                    <div class="stat-card">
+                        <div class="stat-value">${data.nodes_count}</div>
+                        <div class="stat-label">节点数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${data.edges_count}</div>
+                        <div class="stat-label">边数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${data.field_mapping_count}</div>
+                        <div class="stat-label">字段映射</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">${data.query_time_ms}ms</div>
+                        <div class="stat-label">耗时</div>
+                    </div>
+                `;
+                
+                // 判断是否正常
+                const isNormal = data.nodes_count >= 10 && data.edges_count >= 10;
+                const statusBadge = isNormal ? 
+                    '<span class="status-badge success">✅ 数据正常</span>' : 
+                    '<span class="status-badge warning">⚠️ 数据偏少</span>';
+                
+                // 格式化详细结果
+                let output = `${statusBadge} 查询成功\n`;
+                output += `═══════════════════════════════════════\n\n`;
+                output += `查询参数:\n`;
+                output += `  表名: ${table} (${table.length}字符)\n`;
+                output += `  字段: ${field}\n`;
+                output += `  方向: ${mode}\n`;
+                output += `  解析后的目标表: ${data.query_target?.table}\n\n`;
+                
+                output += `📍 节点列表 (${data.nodes_count}个):\n`;
+                output += `───────────────────────────────────────\n`;
+                if (data.nodes.length > 0) {
+                    data.nodes.slice(0, 20).forEach((node, i) => {
+                        output += `${i+1}. [${(node.layer||'').padEnd(6)}] ${node.id || node.short_name}\n`;
+                    });
+                    if (data.nodes.length > 20) {
+                        output += `\n  ... 还有 ${data.nodes.length - 20} 个节点未显示\n`;
+                    }
+                } else {
+                    output += `  ⚠️ 无节点数据！\n`;
+                }
+                
+                output += `\n🔗 边列表 (${data.edges_count}条):\n`;
+                output += `───────────────────────────────────────\n`;
+                if (data.edges.length > 0) {
+                    data.edges.slice(0, 15).forEach((edge, i) => {
+                        const src = edge.source_table.split('.').pop();
+                        const tgt = edge.target_table.split('.').pop();
+                        const srcF = edge.source_field || '';
+                        const tgtF = edge.target_field || '';
+                        output += `${i+1}. ${src}.${srcF} → ${tgt}.${tgtF}\n`;
+                    });
+                    if (data.edges.length > 15) {
+                        output += `\n  ... 还有 ${data.edges.length - 15} 条边未显示\n`;
+                    }
+                } else {
+                    output += `  ⚠️ 无边数据！\n`;
+                }
+                
+                resultEl.textContent = output;
+                
+            } catch (error) {
+                resultEl.textContent = `❌ 错误: ${error.message}\n\n请检查:\n1. 后端服务是否运行在 http://localhost:8899\n2. 表名和字段名是否正确\n3. 浏览器控制台(F12)是否有错误信息`;
+            }
+        }
+        
+        // 页面加载时自动执行一次
+        window.onload = function() {
+            console.log('🧪 血缘查询诊断工具已加载');
+            console.log('💡 提示：点击"执行查询"按钮进行测试');
+        };
+    </script>
+</body>
+</html>

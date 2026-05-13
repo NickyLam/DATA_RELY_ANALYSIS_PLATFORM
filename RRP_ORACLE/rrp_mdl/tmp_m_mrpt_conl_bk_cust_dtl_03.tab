@@ -1,0 +1,58 @@
+﻿create table RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03
+(
+  cust_id             VARCHAR2(60),
+  cust_name           VARCHAR2(1000),
+  sign_brch_org_id    VARCHAR2(10),
+  sign_brch_name      VARCHAR2(1000),
+  sign_netw_id        VARCHAR2(80),
+  sign_netw_name      VARCHAR2(1000),
+  belong_induty_cd    VARCHAR2(10),
+  conl_bk_status_cd   VARCHAR2(10),
+  conl_bk_status_name VARCHAR2(30),
+  conl_bk_sign_dt     VARCHAR2(10),
+  conl_bk_wrtoff_dt   VARCHAR2(20),
+  sign_mbank_flg      VARCHAR2(30),
+  mbank_sign_dt       VARCHAR2(20),
+  mbank_wrtoff_dt     VARCHAR2(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.cust_id
+  is '客户号';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.cust_name
+  is '客户名称';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.sign_brch_org_id
+  is '分行编号';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.sign_brch_name
+  is '分行名称';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.sign_netw_id
+  is '开户网点编号';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.sign_netw_name
+  is '机构名称';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.belong_induty_cd
+  is '行业类型代码';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.conl_bk_status_cd
+  is '网银客户状态代码';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.conl_bk_status_name
+  is '企业网银状态';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.conl_bk_sign_dt
+  is '开户时间';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.conl_bk_wrtoff_dt
+  is '最后交易时间';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.sign_mbank_flg
+  is '开通手机银行标志';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.mbank_sign_dt
+  is '签约银企通时间';
+comment on column RRP_MDL.TMP_M_MRPT_CONL_BK_CUST_DTL_03.mbank_wrtoff_dt
+  is 'OA注销时间';
+

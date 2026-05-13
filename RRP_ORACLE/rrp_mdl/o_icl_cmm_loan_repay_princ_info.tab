@@ -1,0 +1,54 @@
+﻿create table RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO
+(
+  etl_dt                   DATE,
+  lp_id                    VARCHAR2(60),
+  dubil_id                 VARCHAR2(60),
+  cust_id                  VARCHAR2(60),
+  repay_princ_cust_no      VARCHAR2(60),
+  repay_princ_name         VARCHAR2(250),
+  repay_princ_cert_type    VARCHAR2(30),
+  repay_princ_cert_no      VARCHAR2(60),
+  repay_princ_idti_type_cd VARCHAR2(30),
+  repay_princ_type_cd      VARCHAR2(30),
+  job_cd                   VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO
+  is '贷款还款责任人信息';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.repay_princ_cust_no
+  is '还款责任人客户号';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.repay_princ_name
+  is '还款责任人姓名';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.repay_princ_cert_type
+  is '还款责任人证件类型';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.repay_princ_cert_no
+  is '还款责任人证件号码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.repay_princ_idti_type_cd
+  is '还款责任人身份类型代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.repay_princ_type_cd
+  is '还款责任人类型代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_LOAN_REPAY_PRINC_INFO.etl_timestamp
+  is '数据处理时间';
+

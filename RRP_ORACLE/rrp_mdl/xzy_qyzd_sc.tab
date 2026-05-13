@@ -1,0 +1,21 @@
+﻿create table RRP_MDL.XZY_QYZD_SC
+(
+  tab_name   VARCHAR2(800),
+  tab_col    VARCHAR2(800),
+  tab_cn     VARCHAR2(4000),
+  tab_col_cn VARCHAR2(4000),
+  tab_chg    VARCHAR2(800)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

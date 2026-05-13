@@ -1,0 +1,47 @@
+﻿create table RRP_MDL.M_MRPT_QYDZYHHDLJYMX
+(
+  data_dt                      VARCHAR2(10),
+  sign_brch_org_id             VARCHAR2(150),
+  sign_brch_org_name           VARCHAR2(1000),
+  sign_netw_org_id             VARCHAR2(150),
+  sign_netw_org_name           VARCHAR2(1000),
+  cust_id                      VARCHAR2(150),
+  cust_name                    VARCHAR2(1000),
+  open_conl_bk_flg             VARCHAR2(20),
+  open_mbank_flg               VARCHAR2(20),
+  conl_bk_inter_tran_cnt       NUMBER,
+  mobile_onl_bk_inter_tran_cnt NUMBER
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.M_MRPT_QYDZYHHDLJYMX
+  is '企业电子银行互动类交易明细表';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.sign_brch_org_id
+  is '签约分行机构编号';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.sign_brch_org_name
+  is '签约分行机构名称';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.sign_netw_org_id
+  is '签约网点机构编号';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.sign_netw_org_name
+  is '签约网点机构名称';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.cust_id
+  is '客户编号';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.cust_name
+  is '客户名称';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.open_conl_bk_flg
+  is '开通企业网银标志';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.open_mbank_flg
+  is '开通手机银行标志';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.conl_bk_inter_tran_cnt
+  is '企业网网银互动类交易次数';
+comment on column RRP_MDL.M_MRPT_QYDZYHHDLJYMX.mobile_onl_bk_inter_tran_cnt
+  is '手机网银互动类交易次数';
+

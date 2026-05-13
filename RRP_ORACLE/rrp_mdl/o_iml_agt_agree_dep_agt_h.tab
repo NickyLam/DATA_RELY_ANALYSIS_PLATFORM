@@ -1,0 +1,117 @@
+﻿create table RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H
+(
+  agt_id                       VARCHAR2(250),
+  lp_id                        VARCHAR2(100),
+  dep_agt_id                   VARCHAR2(250),
+  sign_seq_num                 VARCHAR2(60),
+  effect_dt                    DATE,
+  invalid_dt                   DATE,
+  int_cls_cd                   VARCHAR2(30),
+  int_rat_type_cd              VARCHAR2(30),
+  prod_id                      VARCHAR2(100),
+  sign_agt_status_cd           VARCHAR2(30),
+  acct_id                      VARCHAR2(100),
+  cust_acct_num                VARCHAR2(100),
+  acct_prod_id                 VARCHAR2(100),
+  acct_curr_cd                 VARCHAR2(30),
+  sub_acct_num                 VARCHAR2(60),
+  dep_tenor                    NUMBER(10),
+  tenor_type_cd                VARCHAR2(30),
+  sub_acct_fix_int_rat         NUMBER(18,8),
+  sub_acct_int_rat_float_ratio NUMBER(18,6),
+  sub_acct_int_rat_float_point NUMBER(18,8),
+  bank_int_int_rat             NUMBER(18,8),
+  float_int_rat                NUMBER(18,8),
+  file_amt                     NUMBER(30,2),
+  mon_int_accr_base_cd         VARCHAR2(30),
+  year_int_accr_base_cd        VARCHAR2(30),
+  int_accr_base_cd             VARCHAR2(30),
+  cust_id                      VARCHAR2(100),
+  start_dt                     DATE,
+  end_dt                       DATE,
+  id_mark                      VARCHAR2(10),
+  src_table_name               VARCHAR2(100),
+  job_cd                       VARCHAR2(10),
+  etl_timestamp                TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H
+  is '协定存款协议历史';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.dep_agt_id
+  is '存款协议编号';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.sign_seq_num
+  is '签约序号';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.effect_dt
+  is '生效日期';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.invalid_dt
+  is '失效日期';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.int_cls_cd
+  is '利息分类代码';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.int_rat_type_cd
+  is '利率类型代码';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.sign_agt_status_cd
+  is '签约协议状态代码';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.cust_acct_num
+  is '客户账号';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.acct_prod_id
+  is '账户产品编号';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.acct_curr_cd
+  is '账户币种代码';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.sub_acct_num
+  is '子账号';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.dep_tenor
+  is '存款期限';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.tenor_type_cd
+  is '期限类型代码';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.sub_acct_fix_int_rat
+  is '分户级固定利率';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.sub_acct_int_rat_float_ratio
+  is '分户级利率浮动比例';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.sub_acct_int_rat_float_point
+  is '分户级利率浮动点数';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.bank_int_int_rat
+  is '行内利率';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.float_int_rat
+  is '浮动利率';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.file_amt
+  is '靠档金额';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.mon_int_accr_base_cd
+  is '月计息基准代码';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.year_int_accr_base_cd
+  is '年计息基准代码';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.int_accr_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_AGREE_DEP_AGT_H.etl_timestamp
+  is 'etl处理时间戳';
+

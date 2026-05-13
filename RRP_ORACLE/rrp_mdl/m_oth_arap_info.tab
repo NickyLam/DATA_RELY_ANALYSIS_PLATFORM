@@ -1,0 +1,50 @@
+﻿create table RRP_MDL.M_OTH_ARAP_INFO
+(
+  data_dt      CHAR(8) not null,
+  lgl_rep_id   VARCHAR2(200),
+  acc_id       VARCHAR2(200) not null,
+  org_id       VARCHAR2(200),
+  rcv_pay_typ  VARCHAR2(10),
+  cust_id      VARCHAR2(200),
+  cur          CHAR(3),
+  lvl5_cl      VARCHAR2(10),
+  recv_pbl_amt NUMBER(30,2),
+  exp_dt       CHAR(8),
+  subj_id      VARCHAR2(200),
+  dept_line    VARCHAR2(500),
+  data_src     VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.M_OTH_ARAP_INFO
+  is '其他应收应付信息';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.acc_id
+  is '账户编号';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.rcv_pay_typ
+  is '收付类型';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.cur
+  is '币种';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.lvl5_cl
+  is '五级分类';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.recv_pbl_amt
+  is '应收应付金额';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.subj_id
+  is '科目编号';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_OTH_ARAP_INFO.data_src
+  is '数据来源';
+

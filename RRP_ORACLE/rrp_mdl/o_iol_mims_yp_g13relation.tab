@@ -1,0 +1,39 @@
+﻿create table RRP_MDL.O_IOL_MIMS_YP_G13RELATION
+(
+  id            VARCHAR2(8),
+  name          VARCHAR2(75),
+  guartype      VARCHAR2(30),
+  fieldidx      NUMBER(22),
+  preid         VARCHAR2(8),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_MIMS_YP_G13RELATION
+  is 'G13报表分配关系明细表';
+comment on column RRP_MDL.O_IOL_MIMS_YP_G13RELATION.id
+  is '主键ID';
+comment on column RRP_MDL.O_IOL_MIMS_YP_G13RELATION.name
+  is '名称';
+comment on column RRP_MDL.O_IOL_MIMS_YP_G13RELATION.guartype
+  is '押品类型';
+comment on column RRP_MDL.O_IOL_MIMS_YP_G13RELATION.fieldidx
+  is '排序';
+comment on column RRP_MDL.O_IOL_MIMS_YP_G13RELATION.preid
+  is '包含下层统计id';
+comment on column RRP_MDL.O_IOL_MIMS_YP_G13RELATION.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IOL_MIMS_YP_G13RELATION.etl_timestamp
+  is 'etl处理时间戳';
+

@@ -1,0 +1,54 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING
+(
+  issuer_id       VARCHAR2(60),
+  issuer_name_zh  VARCHAR2(96),
+  issuer_name_en  VARCHAR2(96),
+  firm_id         VARCHAR2(24),
+  rating          VARCHAR2(24),
+  modify_time     DATE,
+  rating_date     VARCHAR2(12),
+  rating_category VARCHAR2(2),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10),
+  etl_timestamp   TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING
+  is '发行人评级';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.issuer_id
+  is '发行人编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.issuer_name_zh
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.issuer_name_en
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.firm_id
+  is '评级公司id';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.rating
+  is '评级';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.modify_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.rating_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.rating_category
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_ISSUER_RATING.etl_timestamp
+  is 'etl处理时间';
+

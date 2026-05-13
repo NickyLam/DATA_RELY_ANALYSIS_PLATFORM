@@ -1,0 +1,26 @@
+﻿create table RRP_MDL.JS_AREA_YANG_TEST
+(
+  代码   VARCHAR2(100 CHAR),
+  名称   VARCHAR2(100 CHAR),
+  上级码值 VARCHAR2(100 CHAR),
+  生效日期 VARCHAR2(100 CHAR),
+  失效日期 VARCHAR2(100 CHAR)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.JS_AREA_YANG_TEST
+  is '地区标志';
+comment on column RRP_MDL.JS_AREA_YANG_TEST.代码
+  is '代码';
+comment on column RRP_MDL.JS_AREA_YANG_TEST.名称
+  is '名称';
+comment on column RRP_MDL.JS_AREA_YANG_TEST.上级码值
+  is '上级码值';
+comment on column RRP_MDL.JS_AREA_YANG_TEST.生效日期
+  is '生效日期';
+comment on column RRP_MDL.JS_AREA_YANG_TEST.失效日期
+  is '失效日期';
+

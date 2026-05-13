@@ -1,0 +1,33 @@
+﻿create table RRP_MDL.M_GUA_CONT_INFO_YBT_TMP
+(
+  cont_id      VARCHAR2(200),
+  cont_type    VARCHAR2(10),
+  exp_dt       DATE,
+  payoff_dt    DATE,
+  cont_mgmt_id VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_GUA_CONT_INFO_YBT_TMP
+  is '担保合同-被担保业务类型';
+comment on column RRP_MDL.M_GUA_CONT_INFO_YBT_TMP.cont_id
+  is '合同号';
+comment on column RRP_MDL.M_GUA_CONT_INFO_YBT_TMP.cont_type
+  is '业务类型';
+comment on column RRP_MDL.M_GUA_CONT_INFO_YBT_TMP.exp_dt
+  is '合同到期日期';
+comment on column RRP_MDL.M_GUA_CONT_INFO_YBT_TMP.payoff_dt
+  is '借据结清日期';
+comment on column RRP_MDL.M_GUA_CONT_INFO_YBT_TMP.cont_mgmt_id
+  is '合同经办客户经理员工号';
+

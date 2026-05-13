@@ -1,0 +1,279 @@
+﻿create table RRP_EAST.EAST5_705_DKWJXTBDB
+(
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  yhjgmc     VARCHAR2(450),
+  xdhth      VARCHAR2(100),
+  xdjjh      VARCHAR2(100),
+  khtybh     VARCHAR2(70),
+  khmc       VARCHAR2(450),
+  tzrq       VARCHAR2(8),
+  ywjfl      VARCHAR2(6),
+  xwjfl      VARCHAR2(6),
+  bdyy       VARCHAR2(30),
+  bdfs       VARCHAR2(30),
+  jbgyh      VARCHAR2(70),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8) not null,
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  address    VARCHAR2(500),
+  rid        VARCHAR2(50) not null,
+  khmc_orig  VARCHAR2(450),
+  khmc_oth   VARCHAR2(5),
+  gsfzjg     VARCHAR2(200)
+)
+partition by list (CJRQ)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220630 values ('20220630')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values ('20220930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230531 values ('20230531')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20230630 values ('20230630')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20230731 values ('20230731')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20230831 values ('20230831')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20230930 values ('20230930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20231031 values ('20231031')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20231130 values ('20231130')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20231231 values ('20231231')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240131 values ('20240131')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240229 values ('20240229')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240331 values ('20240331')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240430 values ('20240430')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240531 values ('20240531')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240630 values ('20240630')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250531 values ('20250531')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250630 values ('20250630')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250930 values ('20250930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_EAST.EAST5_705_DKWJXTBDB
+  is '贷款五级形态变动表';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.jrxkzh
+  is '金融许可证号';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.nbjgh
+  is '内部机构号';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.yhjgmc
+  is '银行机构名称';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.xdhth
+  is '信贷合同号';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.xdjjh
+  is '信贷借据号';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.khtybh
+  is '客户统一编号';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.khmc
+  is '客户名称';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.tzrq
+  is '调整日期';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.ywjfl
+  is '原五级分类';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.xwjfl
+  is '新五级分类';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.bdyy
+  is '变动原因';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.bdfs
+  is '变动方式';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.jbgyh
+  is '经办人工号';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.bbz
+  is '备注';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.cjrq
+  is '采集日期';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.issued_no
+  is '填报机构';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.org_no
+  is '报送机构';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.dept_no
+  is '部门编号';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.src_sys_id
+  is '来源系统ID';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.address
+  is '归属地';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.rid
+  is '数据主键';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.khmc_orig
+  is '客户名称（脱敏前）';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.khmc_oth
+  is '客户是否个人客户';
+comment on column RRP_EAST.EAST5_705_DKWJXTBDB.gsfzjg
+  is '归属分支机构';
+

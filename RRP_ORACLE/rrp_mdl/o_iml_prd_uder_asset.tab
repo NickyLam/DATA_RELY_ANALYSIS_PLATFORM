@@ -1,0 +1,132 @@
+﻿create table RRP_MDL.O_IML_PRD_UDER_ASSET
+(
+  intnal_asset_id      VARCHAR2(100),
+  lp_id                VARCHAR2(60),
+  up_level_asset_id    VARCHAR2(100),
+  fin_instm_id         VARCHAR2(100),
+  asset_type_id        VARCHAR2(100),
+  market_type_id       VARCHAR2(100),
+  asset_id             VARCHAR2(100),
+  asset_name           VARCHAR2(750),
+  asset_cls_cd         VARCHAR2(30),
+  asset_subdv_cd       VARCHAR2(30),
+  invest_amt           NUMBER(30,8),
+  invest_dt            DATE,
+  value_dt             DATE,
+  exp_dt               DATE,
+  int_rat              NUMBER(18,8),
+  pay_int_freq         VARCHAR2(30),
+  fir_pay_int_dt       DATE,
+  curr_cd              VARCHAR2(30),
+  imp_dt               DATE,
+  cntpty_id            VARCHAR2(100),
+  uder_asset_status_cd VARCHAR2(30),
+  ocup_crdt_flg        VARCHAR2(10),
+  crdt_status_cd       VARCHAR2(30),
+  crdt_main_id         VARCHAR2(100),
+  crdt_wt              NUMBER(18,6),
+  crdt_amt             NUMBER(30,8),
+  checker_id           VARCHAR2(100),
+  check_tm             TIMESTAMP(6),
+  check_dt             DATE,
+  invest_ratio         NUMBER(18,6),
+  risk_wt              NUMBER(18,6),
+  rating_rest_cd       VARCHAR2(30),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10),
+  src_table_name       VARCHAR2(100),
+  job_cd               VARCHAR2(10),
+  etl_timestamp        TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PRD_UDER_ASSET
+  is '底层资产表';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.intnal_asset_id
+  is '内部资产编号';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.up_level_asset_id
+  is '上层资产编号';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.fin_instm_id
+  is '金融工具编号';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.asset_type_id
+  is '资产类型编号';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.market_type_id
+  is '市场类型编号';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.asset_id
+  is '资产编号';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.asset_name
+  is '资产名称';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.asset_cls_cd
+  is '资产分类代码';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.asset_subdv_cd
+  is '资产细分类代码';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.invest_amt
+  is '投资金额';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.invest_dt
+  is '投资日期';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.int_rat
+  is '利率';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.pay_int_freq
+  is '付息频率';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.fir_pay_int_dt
+  is '首次付息日期';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.imp_dt
+  is '导入日期';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.uder_asset_status_cd
+  is '底层资产状态代码';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.ocup_crdt_flg
+  is '占用授信标志';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.crdt_status_cd
+  is '授信状态代码';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.crdt_main_id
+  is '授信主体编号';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.crdt_wt
+  is '授信权重';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.crdt_amt
+  is '授信金额';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.checker_id
+  is '复核人编号';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.check_tm
+  is '复核时间';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.check_dt
+  is '复核日期';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.invest_ratio
+  is '投资比例';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.risk_wt
+  is '风险权重';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.rating_rest_cd
+  is '评级结果代码';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_PRD_UDER_ASSET.etl_timestamp
+  is 'ETL处理时间戳';
+

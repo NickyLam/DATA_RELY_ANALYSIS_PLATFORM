@@ -1,0 +1,96 @@
+﻿create table RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS
+(
+  sccode             VARCHAR2(48),
+  evalmode           VARCHAR2(3),
+  evaldate           VARCHAR2(15),
+  curreny            VARCHAR2(15),
+  rate               NUMBER(18,10),
+  outevalexpdate     VARCHAR2(15),
+  outevaldeptcode    VARCHAR2(450),
+  outevalmethod      VARCHAR2(150),
+  outevalflag        VARCHAR2(2),
+  outevalamt1        NUMBER(20,2),
+  outevaldate        VARCHAR2(15),
+  outevalamt         NUMBER(20,2),
+  evalamt            NUMBER(20,2),
+  evalamt2           NUMBER(20,2),
+  businessinsid      VARCHAR2(45),
+  confmamt           NUMBER(20,2),
+  condate            VARCHAR2(15),
+  firstoutevalamt    NUMBER(20,2),
+  firstevalamt       NUMBER(20,2),
+  firstconfmamt      NUMBER(20,2),
+  startbusinessinsid VARCHAR2(45),
+  verecoginition     VARCHAR2(2),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS
+  is '押品价值历史信息';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.sccode
+  is '押品编号';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.evalmode
+  is '评估方式 01-外部评估      02-内部评估      03-外部和内部评估';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.evaldate
+  is '评估日期 评估价值评估的日期';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.curreny
+  is '币种';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.rate
+  is '汇率';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.outevalexpdate
+  is '外部评估价值有效期截止日';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.outevaldeptcode
+  is '外部评估机构';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.outevalmethod
+  is '外部评估方法 01-指数法_外部指数        02-指数法_内部构建指数        03-市场法        04-收益法        05-重置成本法        06-工程进度法        07-非上市公司股权净资产比例法        08-直接引用法_金融质抵质押品        09-直接引用法_动产        10-直接引用法_房地产        11-直接引用法_询价        12-其他';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.outevalflag
+  is '是否有外部预评估报告 0-否            1-是';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.outevalamt1
+  is '外部预评估报告的评估价值';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.outevaldate
+  is '外部正式评估报告评估日期';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.outevalamt
+  is '外部正式评估报告的评估价值';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.evalamt
+  is '内部评估价值 根据内部评估方法计算出的内部评估价值';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.evalamt2
+  is '申请评估确认价值 分析外部评估和内部评估价值后，客户经理得出评估确认价值';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.businessinsid
+  is '流程编号 我行确认价值对应的流程编号，如我行确认价值为自动重估得到，则该字段为空';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.confmamt
+  is '我行确认价值';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.condate
+  is '评估认定日期';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.firstoutevalamt
+  is '初评外部正式评估价值';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.firstevalamt
+  is '初评内部评估价值 根据内部评估方法计算出的内部评估价值';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.firstconfmamt
+  is '初评我行确认价值';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.startbusinessinsid
+  is '初评流程编号';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.verecoginition
+  is '押品价值认定方式';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_MIMS_SI_VALUEINFOHIS.etl_timestamp
+  is 'ETL处理时间戳';
+

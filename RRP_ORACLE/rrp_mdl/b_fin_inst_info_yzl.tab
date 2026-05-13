@@ -1,0 +1,133 @@
+﻿create table RRP_MDL.B_FIN_INST_INFO_YZL
+(
+  data_dt                  CHAR(8) not null,
+  lgl_rep_id               VARCHAR2(200),
+  org_id                   VARCHAR2(200),
+  fin_inst_id              VARCHAR2(200) not null,
+  fin_inst_nm              VARCHAR2(500),
+  ast_typ                  VARCHAR2(10),
+  cur                      CHAR(3),
+  isu_prc                  NUMBER(30,2),
+  isu_tot_scale            NUMBER(30,2),
+  isu_org_nm               VARCHAR2(500),
+  isu_org_id               VARCHAR2(200),
+  isu_ctry_cd              VARCHAR2(200),
+  isu_dt                   CHAR(8),
+  exp_dt                   CHAR(8),
+  rate_typ                 VARCHAR2(10),
+  act_rate                 NUMBER(20,6),
+  option_flg               CHAR(1),
+  rctly_ases_prc           NUMBER(30,2),
+  ases_prc_dt              CHAR(8),
+  base_ast_id              VARCHAR2(200),
+  base_ast_nm              VARCHAR2(500),
+  base_ast_scale           NUMBER(30,2),
+  base_ast_pct             NUMBER(18,4),
+  base_ast_rtg             VARCHAR2(10),
+  base_ast_rtg_org_nm      VARCHAR2(500),
+  base_ast_cust_nm         VARCHAR2(500),
+  base_ast_cust_ctry_cd    VARCHAR2(10),
+  base_ast_cust_rtg        VARCHAR2(10),
+  base_ast_cust_rtg_org_nm VARCHAR2(500),
+  base_ast_cust_idy        VARCHAR2(10),
+  fnl_dir_typ              VARCHAR2(10),
+  fnl_dir_idy              VARCHAR2(10),
+  dept_line                VARCHAR2(500),
+  data_src                 VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220228 values ('20220228')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_FIN_INST_INFO_YZL
+  is '金融工具基础信息';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.org_id
+  is '机构编号';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.fin_inst_id
+  is '金融工具编号';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.fin_inst_nm
+  is '金融工具名称';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.ast_typ
+  is '资产类型';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.cur
+  is '币种';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.isu_prc
+  is '发行价格';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.isu_tot_scale
+  is '发行总规模';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.isu_org_nm
+  is '发行机构名称';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.isu_org_id
+  is '发行机构编码';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.isu_ctry_cd
+  is '发行国家代码';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.isu_dt
+  is '发行日期';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.rate_typ
+  is '利率类型';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.act_rate
+  is '实际利率';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.option_flg
+  is '含权标识';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.rctly_ases_prc
+  is '最近评估价格';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.ases_prc_dt
+  is '评估价格日期';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_id
+  is '基础资产编号';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_nm
+  is '基础资产名称';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_scale
+  is '基础资产规模';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_pct
+  is '基础资产占比';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_rtg
+  is '基础资产评级';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_rtg_org_nm
+  is '基础资产评级机构';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_cust_nm
+  is '基础资产客户名称';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_cust_ctry_cd
+  is '基础资产客户国家';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_cust_rtg
+  is '基础资产客户评级';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_cust_rtg_org_nm
+  is '基础资产客户评级机构';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.base_ast_cust_idy
+  is '基础资产客户行业';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.fnl_dir_typ
+  is '最终投向类型';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.fnl_dir_idy
+  is '最终投向行业';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_FIN_INST_INFO_YZL.data_src
+  is '数据来源';
+alter table RRP_MDL.B_FIN_INST_INFO_YZL
+  add constraint PK_B_FIN_INST_INFO_YZL primary key (DATA_DT, FIN_INST_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

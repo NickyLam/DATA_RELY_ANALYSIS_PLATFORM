@@ -1,0 +1,107 @@
+﻿create table RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501
+(
+  counterparty_seq            NUMBER,
+  cus_number                  NUMBER(20),
+  label                       CHAR(64),
+  counterparty_cname          VARCHAR2(256),
+  counterparty_ename          VARCHAR2(256),
+  contact_name                CHAR(60),
+  telephone                   CHAR(20),
+  fax                         CHAR(20),
+  update_user                 NUMBER(5),
+  update_time                 DATE,
+  is_issuer                   CHAR(1),
+  is_bank                     CHAR(1),
+  is_guarantee                CHAR(1),
+  is_custody                  CHAR(1),
+  customer_type               VARCHAR2(20),
+  parent                      NUMBER,
+  rating_level                NVARCHAR2(8),
+  ex_code                     CHAR(64),
+  ex_account                  CHAR(64),
+  swift_code                  CHAR(64),
+  ref_issuer_id               CHAR(40),
+  cfets_member_id             CHAR(40),
+  counterparty_short_cname    VARCHAR2(256),
+  counterparty_short_ename    VARCHAR2(256),
+  cfets_fx_member_id          VARCHAR2(50),
+  cfets_member_attr           CHAR(1),
+  counterparty_fx_short_ename VARCHAR2(256),
+  interbanktype               VARCHAR2(64),
+  overseas                    VARCHAR2(64),
+  start_dt                    DATE,
+  end_dt                      DATE,
+  id_mark                     VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501
+  is '交易对手视图';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.counterparty_seq
+  is '交易对手编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.cus_number
+  is '机构编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.label
+  is '其他系统编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.counterparty_cname
+  is '中文名称';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.counterparty_ename
+  is '英文名称';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.contact_name
+  is '联系人';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.telephone
+  is '电话';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.fax
+  is '传真';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.update_user
+  is '更新用户';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.is_issuer
+  is '是否为发行者';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.is_bank
+  is '是否为银行';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.is_guarantee
+  is '是否为保证人';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.is_custody
+  is '是否为托管机构';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.customer_type
+  is '行业类别';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.parent
+  is '母公司';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.rating_level
+  is '內部信用評級';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.ex_code
+  is '联行号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.ex_account
+  is '人行大额支付系统号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.swift_code
+  is 'SWIFT 电文代号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.ref_issuer_id
+  is 'ISSUER, OR GUARANTEE 会有该字段';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.cfets_member_id
+  is '外汇编号或者第三方交易对手编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.counterparty_short_cname
+  is '交易对手方中文简称';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.counterparty_short_ename
+  is '交易对手方英文简称';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.cfets_fx_member_id
+  is '外汇编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.cfets_member_attr
+  is '外汇会员类型';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.counterparty_fx_short_ename
+  is '外汇交易对手方英文简称';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.interbanktype
+  is '交易对手同业类型';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.overseas
+  is '境内境外';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_COUNTERPARTY_BAK_20230501.id_mark
+  is '增删标志';
+

@@ -1,0 +1,120 @@
+﻿create table RRP_MDL.ADD_DG_003_MONEY_BAK20230512
+(
+  data_date      VARCHAR2(10),
+  acct_org_num   VARCHAR2(20),
+  jywym          VARCHAR2(60),
+  zhwym          VARCHAR2(60),
+  khwym          VARCHAR2(60),
+  khmc           VARCHAR2(100),
+  pjbh           VARCHAR2(60),
+  jbjgmc         VARCHAR2(60),
+  jbjgjgszxzqhdm VARCHAR2(6),
+  zwjgmc         VARCHAR2(60),
+  zwjgjgszxzqhdm VARCHAR2(6),
+  txgtjcyml      VARCHAR2(100),
+  sftxgjscy      VARCHAR2(10),
+  txgjszzydlmc   VARCHAR2(100),
+  gjscymc        VARCHAR2(100),
+  sftxzscqmjxcy  VARCHAR2(10),
+  zscqmjxcymc    VARCHAR2(100),
+  txszjjhxcydl   VARCHAR2(100),
+  szjjhxcymc     VARCHAR2(100),
+  txzlxxxcyml    VARCHAR2(100),
+  zyxxxcymc      VARCHAR2(100),
+  sftxwhcydl     VARCHAR2(10),
+  whcymc         VARCHAR2(100),
+  sfgyqyjsgzsjdk VARCHAR2(10),
+  sfyshz         VARCHAR2(10),
+  sfnycyhltqy    VARCHAR2(10),
+  sfyq           VARCHAR2(10),
+  sys_source     VARCHAR2(100),
+  sfgxrbz        VARCHAR2(10),
+  khzbkhjlkhh    VARCHAR2(60),
+  khzbgyh        VARCHAR2(60),
+  khzbkhjlmc     VARCHAR2(100),
+  khzbkhjlssjg   VARCHAR2(60),
+  jjzbkhjlh      VARCHAR2(60),
+  jjzbgyh        VARCHAR2(60),
+  jjzbkhjlmc     VARCHAR2(100),
+  jjzbkhjlssjg   VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.data_date
+  is '数据日期';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.jywym
+  is '交易唯一码                ';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.zhwym
+  is '账户唯一码                ';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.khwym
+  is '客户唯一码';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.khmc
+  is '客户名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.pjbh
+  is '评价编号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.jbjgmc
+  is '经办机构名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.jbjgjgszxzqhdm
+  is '经办机构机构所在行政区划代码';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.zwjgmc
+  is '账务机构名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.zwjgjgszxzqhdm
+  is '账务机构机构所在行政区划代码';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.txgtjcyml
+  is '投向高技术产业门类';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.sftxgjscy
+  is '是否投向高技术产业';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.txgjszzydlmc
+  is '投向高技术制造业大类名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.gjscymc
+  is '高技术产业名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.sftxzscqmjxcy
+  is '是否投向知识产权密集型产业';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.zscqmjxcymc
+  is '知识产权密集型产业名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.txszjjhxcydl
+  is '投向数字经济核心产业大类';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.szjjhxcymc
+  is '数字经济核心产业名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.txzlxxxcyml
+  is '投向战略性新兴产业门类';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.zyxxxcymc
+  is '战略性新兴产业名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.sftxwhcydl
+  is '是否投向文化产业大类';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.whcymc
+  is '文化产业名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.sfgyqyjsgzsjdk
+  is '是否工业企业技术改造升级贷款';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.sfyshz
+  is '是否银税合作';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.sfnycyhltqy
+  is '是否农业产业化龙头企业';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.sfyq
+  is '是否延期';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.sys_source
+  is '来源系统';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.sfgxrbz
+  is '是否关系人保证';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.khzbkhjlkhh
+  is '客户主办客户经理客户号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.khzbgyh
+  is '客户主办柜员号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.khzbkhjlmc
+  is '客户主办客户经理名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.khzbkhjlssjg
+  is '客户主办客户经理所属机构';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.jjzbkhjlh
+  is '借据主办客户经理号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.jjzbgyh
+  is '借据主办柜员号';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.jjzbkhjlmc
+  is '借据主办客户经理名称';
+comment on column RRP_MDL.ADD_DG_003_MONEY_BAK20230512.jjzbkhjlssjg
+  is '借据主办客户经理所属机构';
+

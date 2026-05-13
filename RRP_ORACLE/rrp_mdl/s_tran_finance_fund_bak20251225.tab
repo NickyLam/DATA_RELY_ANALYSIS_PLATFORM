@@ -1,0 +1,35 @@
+﻿create table RRP_MDL.S_TRAN_FINANCE_FUND_BAK20251225
+(
+  data_dt                        INTEGER,
+  tran_date                      DATE,
+  acct_num                       VARCHAR2(30),
+  ref_num                        VARCHAR2(100),
+  org_num                        VARCHAR2(12),
+  cust_id                        VARCHAR2(30),
+  prod_code                      VARCHAR2(30),
+  tran_type                      CHAR(1),
+  business_type                  CHAR(2),
+  selling_channel                CHAR(1),
+  curr_cd                        CHAR(3),
+  amt                            NUMBER(20,4),
+  departmentd                    VARCHAR2(150),
+  date_sourcesd                  VARCHAR2(150),
+  internet_sale_org              CHAR(1),
+  bus_cd                         VARCHAR2(10),
+  tran_status_cd                 VARCHAR2(10),
+  ta_cd                          VARCHAR2(60),
+  provi_for_aged_target_fund_flg VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

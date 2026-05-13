@@ -1,0 +1,54 @@
+﻿create table RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ
+(
+  mk      VARCHAR2(30),
+  mkmc    VARCHAR2(30),
+  gcm     VARCHAR2(200),
+  mbbm    VARCHAR2(200),
+  qtzbbh  VARCHAR2(200),
+  htzbbh  VARCHAR2(200),
+  ylmk    VARCHAR2(30),
+  ylmkmc  VARCHAR2(30),
+  ylgcm   VARCHAR2(200),
+  ylmbbm  VARCHAR2(200),
+  ylmbbzd VARCHAR2(200),
+  tjzd    VARCHAR2(2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ
+  is '监管溯源_依赖关系_字段级_汇总 - 1104大集中';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.mk
+  is '模块';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.mkmc
+  is '模块名称';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.gcm
+  is '过程名';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.mbbm
+  is '目标表名';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.qtzbbh
+  is '前台指标编号';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.htzbbh
+  is '后台指标编号';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.ylmk
+  is '依赖模块';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.ylmkmc
+  is '依赖模块名称';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.ylgcm
+  is '依赖过程名';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.ylmbbm
+  is '依赖目标表名';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.ylmbbzd
+  is '依赖目标表字段';
+comment on column RRP_MDL.JGSY_YLGX_ZDJ_HZ_1104DJZ.tjzd
+  is '条件字段';
+

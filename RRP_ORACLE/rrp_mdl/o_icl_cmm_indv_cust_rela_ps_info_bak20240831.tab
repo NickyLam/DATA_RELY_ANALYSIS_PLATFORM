@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.O_ICL_CMM_INDV_CUST_RELA_PS_INFO_BAK20240831
+(
+  etl_dt                    DATE,
+  lp_id                     VARCHAR2(60),
+  cust_id                   VARCHAR2(60),
+  rela_ps_cust_id           VARCHAR2(100),
+  rela_type_cd              VARCHAR2(20),
+  rela_ps_name              VARCHAR2(750),
+  rela_ps_cert_type_cd      VARCHAR2(20),
+  rela_ps_cert_no           VARCHAR2(90),
+  rela_ps_gender_cd         VARCHAR2(10),
+  rela_ps_birth_dt          DATE,
+  rela_ps_nati_place        VARCHAR2(500),
+  rela_ps_nationty_cd       VARCHAR2(20),
+  rela_ps_nation_cd         VARCHAR2(20),
+  rela_ps_dist_cd           VARCHAR2(30),
+  rela_ps_marriage_situ_cd  VARCHAR2(10),
+  rela_ps_resd_status_cd    VARCHAR2(20),
+  rela_ps_politic_status_cd VARCHAR2(10),
+  rela_ps_work_unit_cust_id VARCHAR2(60),
+  rela_ps_work_unit_name    VARCHAR2(500),
+  rela_ps_tel_num           VARCHAR2(90),
+  rela_ps_tel_ext_num       VARCHAR2(60),
+  rela_ps_mobile_no         VARCHAR2(90),
+  rela_ps_work_unit_addr    VARCHAR2(1000),
+  rela_ps_work_unit_tel     VARCHAR2(60),
+  rela_ps_id                VARCHAR2(100),
+  job_cd                    VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

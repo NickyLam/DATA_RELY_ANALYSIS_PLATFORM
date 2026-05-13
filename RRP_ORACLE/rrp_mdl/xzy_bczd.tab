@@ -1,0 +1,37 @@
+﻿create table RRP_MDL.XZY_BCZD
+(
+  sys_en     VARCHAR2(800),
+  db_en      VARCHAR2(800),
+  owner      VARCHAR2(800),
+  table_name VARCHAR2(800),
+  col_en     VARCHAR2(800),
+  col_cn     VARCHAR2(4000),
+  col_ty     VARCHAR2(800),
+  col_df     VARCHAR2(800),
+  if_key     VARCHAR2(800),
+  if_null    VARCHAR2(800),
+  if_index   VARCHAR2(800),
+  if_mg      VARCHAR2(800),
+  mg_ty      VARCHAR2(800),
+  if_code    VARCHAR2(800),
+  yydmb      VARCHAR2(800),
+  yybzbh     VARCHAR2(800),
+  zdms       VARCHAR2(800),
+  if_gb      VARCHAR2(800),
+  gbre       VARCHAR2(800),
+  mark       VARCHAR2(800),
+  bs         VARCHAR2(800)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

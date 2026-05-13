@@ -1,0 +1,38 @@
+﻿create table RRP_MDL.T_COM_RRP_IMAS_IMAS_341_WTDKJC_ALL
+(
+  rid                VARCHAR2(50) not null,
+  data_dt            VARCHAR2(10),
+  cntr_no            VARCHAR2(100),
+  loan_no            VARCHAR2(100),
+  cust_no            VARCHAR2(30),
+  client_cust_no     VARCHAR2(30),
+  org_no             VARCHAR2(30),
+  loan_iss_dt        VARCHAR2(10),
+  loan_due_dt        VARCHAR2(10),
+  loan_ext_due_dt    VARCHAR2(10),
+  loan_due_type      VARCHAR2(2),
+  int_type           VARCHAR2(4),
+  price_base_type    VARCHAR2(4),
+  base_int_rate      NUMBER(15,5),
+  act_int_rate       NUMBER(15,5),
+  int_rate_flct_freq VARCHAR2(2),
+  loan_ch            VARCHAR2(4),
+  loan_std_prod_id   VARCHAR2(200),
+  loan_std_prod_nm   VARCHAR2(500),
+  subj_id            VARCHAR2(200),
+  rcpt_stat          VARCHAR2(10),
+  loan_amt           NUMBER(30,2),
+  loan_bal           NUMBER(30,2),
+  data_src           VARCHAR2(500),
+  dept_no            VARCHAR2(30),
+  issued_no          VARCHAR2(20),
+  rpt_org_no         VARCHAR2(20),
+  data_ources        VARCHAR2(20),
+  data_modify        VARCHAR2(2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

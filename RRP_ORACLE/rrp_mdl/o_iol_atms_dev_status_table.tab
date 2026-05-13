@@ -1,0 +1,505 @@
+﻿create table RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE
+(
+  dev_no                        VARCHAR2(20),
+  dev_status                    VARCHAR2(20),
+  dev_tx_status                 VARCHAR2(20),
+  dev_net_status                VARCHAR2(20),
+  dev_run_status                VARCHAR2(20),
+  dev_cashbox_status            VARCHAR2(20),
+  dev_mod_status                VARCHAR2(20),
+  dev_potential_fault           VARCHAR2(20),
+  status_last_time              VARCHAR2(14),
+  status_expire_time            VARCHAR2(14),
+  tx_type                       VARCHAR2(15),
+  tx_time                       VARCHAR2(14),
+  atm_type                      VARCHAR2(1),
+  cash_unit_type                VARCHAR2(1),
+  status_info_type              VARCHAR2(1),
+  combin_unit_type              VARCHAR2(1),
+  idc_device_status             VARCHAR2(15),
+  cim_device_status             VARCHAR2(15),
+  cdm_device_status             VARCHAR2(15),
+  dep_device_status             VARCHAR2(15),
+  ups_device_status             VARCHAR2(15),
+  spr_device_status             VARCHAR2(15),
+  rpr_device_status             VARCHAR2(15),
+  jpr_device_status             VARCHAR2(15),
+  chk_device_status             VARCHAR2(15),
+  ttu_device_status             VARCHAR2(15),
+  pbk_device_status             VARCHAR2(15),
+  pin_device_status             VARCHAR2(15),
+  siu_device_status             VARCHAR2(15),
+  cam_device_status             VARCHAR2(15),
+  idc_media_status              VARCHAR2(20),
+  idc_capture_bin_status        VARCHAR2(20),
+  idc_capture_bin_count         VARCHAR2(10),
+  cim_accept_or_status          VARCHAR2(20),
+  cim_escrow_status             VARCHAR2(20),
+  cim_cash_units                VARCHAR2(20),
+  cim_shutter_status            VARCHAR2(40),
+  cim_transport_status          VARCHAR2(40),
+  cim_inout_position            VARCHAR2(40),
+  cim_input_output_status       VARCHAR2(100),
+  cim_pu_id                     VARCHAR2(100),
+  cim_pu_count                  VARCHAR2(100),
+  cim_pu_cash_in_count          VARCHAR2(100),
+  cim_pu_status                 VARCHAR2(100),
+  cim_pupos_name                VARCHAR2(200),
+  cim_cu_id                     VARCHAR2(100),
+  cim_pcu_id                    VARCHAR2(100),
+  cim_cu_note_value             VARCHAR2(100),
+  cim_cu_currency               VARCHAR2(100),
+  cim_cu_count                  VARCHAR2(100),
+  cim_cu_cash_in_count          VARCHAR2(100),
+  cim_cu_type                   VARCHAR2(500),
+  cim_cu_status                 VARCHAR2(100),
+  cdm_shutter_status            VARCHAR2(20),
+  cdm_dispenser_status          VARCHAR2(20),
+  cdm_safe_door_status          VARCHAR2(20),
+  cdm_stacker_status            VARCHAR2(20),
+  cdm_cash_units                VARCHAR2(20),
+  cdm_transport_status          VARCHAR2(40),
+  cdm_out_position              VARCHAR2(40),
+  cdm_input_output_status       VARCHAR2(20),
+  cdm_pu_status                 VARCHAR2(100),
+  cdm_pu_id                     VARCHAR2(100),
+  cdm_pu_initial_count          VARCHAR2(100),
+  cdm_pu_current_count          VARCHAR2(100),
+  cdm_pu_reject_count           VARCHAR2(100),
+  cdm_pupos_name                VARCHAR2(200),
+  cdm_cu_id                     VARCHAR2(100),
+  cdm_pcu_id                    VARCHAR2(100),
+  cdm_cu_note_value             VARCHAR2(100),
+  cdm_cu_currency               VARCHAR2(100),
+  cdm_cu_current_count          VARCHAR2(100),
+  cdm_cu_initial_count          VARCHAR2(100),
+  cdm_cu_reject_count           VARCHAR2(100),
+  cdm_cu_type                   VARCHAR2(500),
+  cdm_cu_status                 VARCHAR2(100),
+  dep_deposit_status            VARCHAR2(20),
+  dep_deposit_container_status  VARCHAR2(20),
+  dep_envelope_supply_status    VARCHAR2(20),
+  dep_envelope_status           VARCHAR2(20),
+  dep_printer_status            VARCHAR2(20),
+  dep_printer_ink               VARCHAR2(20),
+  dep_deposited_items           VARCHAR2(10),
+  dep_transport_status          VARCHAR2(20),
+  dep_shutter_status            VARCHAR2(20),
+  ups_low                       VARCHAR2(20),
+  ups_engaged                   VARCHAR2(20),
+  ups_powering                  VARCHAR2(20),
+  ups_recovered                 VARCHAR2(20),
+  spr_media_status              VARCHAR2(20),
+  spr_paper_status              VARCHAR2(20),
+  spr_retract_bin_status        VARCHAR2(20),
+  spr_ink_status                VARCHAR2(20),
+  spr_toner_status              VARCHAR2(20),
+  spr_stack_count               VARCHAR2(10),
+  chk_media_status              VARCHAR2(20),
+  chk_ink_status                VARCHAR2(20),
+  rpr_media_status              VARCHAR2(20),
+  rpr_paper_status              VARCHAR2(20),
+  rpr_retract_bin_status        VARCHAR2(20),
+  rpr_ink_status                VARCHAR2(20),
+  rpr_toner_status              VARCHAR2(20),
+  jpr_media_status              VARCHAR2(20),
+  jpr_paper_status              VARCHAR2(20),
+  jpr_ink_status                VARCHAR2(20),
+  jpr_toner_status              VARCHAR2(20),
+  pbk_media_status              VARCHAR2(20),
+  pbk_ink_status                VARCHAR2(20),
+  pbk_toner_status              VARCHAR2(20),
+  pbk_retract_bin_status        VARCHAR2(20),
+  pbk_retract_bin_count         VARCHAR2(10),
+  siu_operator_switch           VARCHAR2(20),
+  siu_terminal_tamper           VARCHAR2(20),
+  siu_alarm_tamper              VARCHAR2(20),
+  siu_seismic                   VARCHAR2(20),
+  siu_proximity_detector        VARCHAR2(20),
+  siu_heat                      VARCHAR2(20),
+  siu_ambient_light             VARCHAR2(20),
+  siu_cabinet_state             VARCHAR2(20),
+  siu_safe_state                VARCHAR2(20),
+  siu_shield_state              VARCHAR2(20),
+  siu_bill_acceptor_light       VARCHAR2(20),
+  siu_card_reader_light         VARCHAR2(20),
+  siu_cheque_unit_light         VARCHAR2(20),
+  siu_coin_dispenser_light      VARCHAR2(20),
+  siu_note_dispenser_light      VARCHAR2(20),
+  siu_envelope_depository_light VARCHAR2(20),
+  siu_passbook_printer_light    VARCHAR2(20),
+  siu_pinpad_light              VARCHAR2(20),
+  siu_receipt_printer_light     VARCHAR2(20),
+  siu_envelope_dispenser_light  VARCHAR2(20),
+  cam_camera_area               VARCHAR2(40),
+  cam_camera_area_status        VARCHAR2(40),
+  cam_media_status              VARCHAR2(40),
+  cam_picture_staken            VARCHAR2(10),
+  dev_cash_status               VARCHAR2(1),
+  action_type                   VARCHAR2(2),
+  action_note                   VARCHAR2(2),
+  icc_device_status             VARCHAR2(15),
+  icc_media_status              VARCHAR2(20),
+  isc_device_status             VARCHAR2(15),
+  isc_media_status              VARCHAR2(20),
+  irc_device_status             VARCHAR2(15),
+  irc_media_status              VARCHAR2(20),
+  fpi_device_status             VARCHAR2(15),
+  crd_device_status             VARCHAR2(15),
+  ccd_device_status             VARCHAR2(15),
+  dpr_device_status             VARCHAR2(15),
+  bcr_device_status             VARCHAR2(15),
+  cam_status_area               VARCHAR2(100),
+  cam_status_media              VARCHAR2(100),
+  cam_status_state              VARCHAR2(100),
+  cam_status_pictures           VARCHAR2(100),
+  dev_crs_status                VARCHAR2(1),
+  pjc_ret_code                  VARCHAR2(20),
+  pjc_cru_status                VARCHAR2(20),
+  pjc_ej_sendtime               VARCHAR2(20),
+  pjc_ej_date                   VARCHAR2(20),
+  pjc_ej_nsend                  VARCHAR2(20),
+  cdm_cu_number                 VARCHAR2(100),
+  cim_cu_number                 VARCHAR2(100),
+  start_dt                      DATE,
+  end_dt                        DATE,
+  id_mark                       VARCHAR2(10),
+  etl_timestamp                 TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE
+  is '设备模块状态表';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dev_no
+  is '设备号';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dev_status
+  is 'HEALTHY(正常) FATAL（故障）WARNING（警告）UNKNOWN（未知）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dev_tx_status
+  is 'HEALTHY（正常）PARTSERVICE（部分服务）NOSERVICE（停止服务）UNKNOWN（未知）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dev_net_status
+  is 'HEALTHY（正常）FATAL（故障，即离线）WARNING（警告）UNKNOW（未知）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dev_run_status
+  is 'HEALTHY(正常) CLOSE（关机）MAINTAIN（维护）NETFATAL（P通讯故障）PARTSERVICE（部分服务）NOSERVICE（停止服务）STOP（停用）UNKNOWN（未知）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dev_cashbox_status
+  is 'OK（充足）LOW（不足）EMPTY（缺炒）FULL（钞满）UNKNOWN（未知）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dev_mod_status
+  is 'HEALTHY(正常) FATAL（故障） WARNING（警告） UNKNOWN（未知）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dev_potential_fault
+  is '设备是否存在潜在故障（未使用）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.status_last_time
+  is '上次更新时间（yyyymmddhhmmss）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.status_expire_time
+  is '状态超时时间（yyyymmddhhmmss）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.tx_type
+  is 'CWD-取款 DET-存款';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.tx_time
+  is '交易时间（yyyymmddhhmmss）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.atm_type
+  is '1 --自动取款机(ATM) 2--自动存款机(CDM) 3--自动存取款机(CRS) 4--多媒体查询机(BSM)';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cash_unit_type
+  is 'P--Physical,L--Logical';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.status_info_type
+  is '1--定时状态报文 2--强制发送状态报文';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.combin_unit_type
+  is '0--按默认方式合并 1--按PUPosName合并 2--按DevCdmCUID合并 3--按PUPosName和DevCdmCUID合并';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.idc_device_status
+  is 'HEALTHY FATAL WARNING NODEVICE UNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_device_status
+  is 'CIM模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_device_status
+  is 'CMD模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dep_device_status
+  is 'DEP模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.ups_device_status
+  is 'UPS模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.spr_device_status
+  is 'SPR模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.rpr_device_status
+  is 'RPR模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.jpr_device_status
+  is 'JPR模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.chk_device_status
+  is 'CHK模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.ttu_device_status
+  is 'TTU模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pbk_device_status
+  is 'PBK模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pin_device_status
+  is 'PIN模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_device_status
+  is 'SIU模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cam_device_status
+  is 'CAM模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.idc_media_status
+  is 'PRESENT NOTPRESENT INJAWS JAMMED';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.idc_capture_bin_status
+  is 'NOBIN BINOK BINHIGH BINFULL';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.idc_capture_bin_count
+  is '回收箱数量';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_accept_or_status
+  is 'HEALTHY FATAL UNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_escrow_status
+  is 'EMPTY NOEMPTY FULL NOESCROW UNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_cash_units
+  is 'OK, Warning, Fatal, Unknown';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_shutter_status
+  is 'Closed, Open, Jammed, Unknown, NotSupported';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_transport_status
+  is 'OK, Inoperable, Unknown, NotSupported';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_inout_position
+  is 'InLeft,InRight,InCenter,InTop,InBottom,InFront,InRear,OutLeft,OutRight, OutCenter, OutTop, OutBottom, OutFront, OutRear';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_input_output_status
+  is 'EMPTY NOEMPTY UNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_pu_id
+  is '物理单元标识（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_pu_count
+  is '当前物理单元纸币数（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_pu_cash_in_count
+  is '物理单元废钞数（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_pu_status
+  is '逻辑单元状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_pupos_name
+  is 'CIM物理钞箱物理位置名集合';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_cu_id
+  is '逻辑单元标识（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_pcu_id
+  is '物理单元与逻辑单元对应关系（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_cu_note_value
+  is '逻辑单元纸币面值（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_cu_currency
+  is '逻辑单元币种（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_cu_count
+  is '当前逻辑单元纸币数（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_cu_cash_in_count
+  is '逻辑单元废钞数（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_cu_type
+  is '逻辑单元类型';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_cu_status
+  is 'CIM逻辑单元状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_shutter_status
+  is 'Closed, Open, Jammed, Unknown, NotSupported';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_dispenser_status
+  is '退钞状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_safe_door_status
+  is 'OPEN FATAL CLOSED LOCKED NOTSUPPORTED';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_stacker_status
+  is 'CDM暂存器状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_cash_units
+  is 'OK, Warning, Fatal, Unknown';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_transport_status
+  is 'OK, Inoperable, Unknown, NotSupported';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_out_position
+  is 'Left,Right,Center,Top,Bottom,Front,Rear';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_input_output_status
+  is 'EMPTY NOTEMPTY UNKNOWN NOTSUPPORTED';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_pu_status
+  is '物理单元状态(数组)';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_pu_id
+  is 'CDM物理单元标识（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_pu_initial_count
+  is 'CDM当前物理单元纸币数（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_pu_current_count
+  is '当前物理单元初始币数';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_pu_reject_count
+  is 'CDM物理单元废钞数（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_pupos_name
+  is 'CDM物理钞箱物理位置名集合';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_cu_id
+  is 'CDM逻辑单元标识（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_pcu_id
+  is 'CDM物理单元与逻辑单元对应关系（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_cu_note_value
+  is 'CDM逻辑单元纸币面值（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_cu_currency
+  is 'CDM逻辑单元币种（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_cu_current_count
+  is 'CDM当前逻辑单元纸币数（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_cu_initial_count
+  is '当前逻辑单元初始币数';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_cu_reject_count
+  is 'CDM逻辑单元废钞数（数组）';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_cu_type
+  is 'CDM逻辑单元类型';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_cu_status
+  is 'CDM逻辑单元状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dep_deposit_status
+  is 'OK NOTPRESENT DEPOSITJAMMED SHUTTERJAMMED';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dep_deposit_container_status
+  is 'OK HIGH FULL NOTPRESENT';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dep_envelope_supply_status
+  is 'OK LOW EMPTY';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dep_envelope_status
+  is 'READY NOTREADY';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dep_printer_status
+  is 'READY NOTREADY';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dep_printer_ink
+  is 'OK LOW EMPTY';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dep_deposited_items
+  is '已存信封数量';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dep_transport_status
+  is '传送部件状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dep_shutter_status
+  is '挡板状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.ups_low
+  is 'TRUE FALSE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.ups_engaged
+  is 'TRUE FALSE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.ups_powering
+  is 'TRUE FALSE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.ups_recovered
+  is 'TRUE FALSE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.spr_media_status
+  is 'NOPRESENT PRESENT INJAMS JAMMED';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.spr_paper_status
+  is 'FULL LOW OUT UNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.spr_retract_bin_status
+  is 'NOBIN OK BINHIGH BINFULL BINUNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.spr_ink_status
+  is '墨水状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.spr_toner_status
+  is '色带状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.spr_stack_count
+  is '暂存数量';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.chk_media_status
+  is 'NOPRESENT PRESENT INJAMS JAMMED';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.chk_ink_status
+  is 'NOBIN OK BINHIGH BINFULL BINUNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.rpr_media_status
+  is 'NOPRESENT PRESENT INJAMS JAMMED';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.rpr_paper_status
+  is 'FULL LOW OUT UNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.rpr_retract_bin_status
+  is 'NOBIN OK BINHIGH BINFULL BINUNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.rpr_ink_status
+  is 'RPR墨水状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.rpr_toner_status
+  is 'RPR色带状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.jpr_media_status
+  is 'NOPRESENT PRESENT INJAMS JAMMED';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.jpr_paper_status
+  is 'FULL LOW OUT UNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.jpr_ink_status
+  is 'JPR墨水状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.jpr_toner_status
+  is 'JPR色带状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pbk_media_status
+  is 'NOPRESENT PRESENT INJAMS JAMMED';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pbk_ink_status
+  is 'FULL LOW OUT UNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pbk_toner_status
+  is 'FULL LOW OUT UNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pbk_retract_bin_status
+  is 'NOBIN OK BINHIGH BINFULL BINUNKNOWN';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pbk_retract_bin_count
+  is 'PBK回收单元数量';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_operator_switch
+  is 'NOSENSOR ERROR RUN MAINTENANCE SUPERVISOR';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_terminal_tamper
+  is 'NOSENSOR ERROR ON OFF';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_alarm_tamper
+  is 'NOSENSOR ERROR ON OFF';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_seismic
+  is 'NOSENSOR ERROR ON OFF';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_proximity_detector
+  is 'NOSENSOR ERROR ON OFF';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_heat
+  is 'NOSENSOR ERROR ON OFF';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_ambient_light
+  is 'NOSENSOR ERROR VERYLIGHT LIGHT MEDIUMLIGHT DARK VERYDARK';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_cabinet_state
+  is '机箱状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_safe_state
+  is 'SIU安全门状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_shield_state
+  is 'SIU档板状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_bill_acceptor_light
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_card_reader_light
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_cheque_unit_light
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_coin_dispenser_light
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_note_dispenser_light
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_envelope_depository_light
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_passbook_printer_light
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_pinpad_light
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_receipt_printer_light
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.siu_envelope_dispenser_light
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cam_camera_area
+  is 'room,person,exit_slot';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cam_camera_area_status
+  is 'HEALTHY FATAL NODEVICE';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cam_media_status
+  is 'LOW HIGH FULL';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cam_picture_staken
+  is '已获取图像';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dev_cash_status
+  is '0：正常1：无法取款2：无法存款3：无法存取款';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.action_type
+  is '运行状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.action_note
+  is '运行子状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.icc_device_status
+  is 'ICC_DEVICE_STATUS';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.icc_media_status
+  is 'ICC_MEDIA_STATUS';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.isc_device_status
+  is 'ISC_DEVICE_STATUS';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.isc_media_status
+  is 'ISC_MEDIA_STATUS';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.irc_device_status
+  is 'IRC_DEVICE_STATUS';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.irc_media_status
+  is 'IRC_MEDIA_STATUS';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.fpi_device_status
+  is 'FPI_DEVICE_STATUS';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.crd_device_status
+  is 'CRD_DEVICE_STATUS';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.ccd_device_status
+  is 'CCD_DEVICE_STATUS';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dpr_device_status
+  is '盖章模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.bcr_device_status
+  is '二维码扫描仪模块状态';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.dev_crs_status
+  is '0：正常1：无法取款2：无法存款3：无法存取款';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pjc_ret_code
+  is 'PJC故障码';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pjc_cru_status
+  is 'PJC模块主状态，Healthy-正常（进程存在），Fatal-失败';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pjc_ej_sendtime
+  is 'PJC流水上传时间';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pjc_ej_date
+  is 'PJC上传流水日期';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.pjc_ej_nsend
+  is '剩余未发送缓存流水情况，Without-未采集到流水，Ok-未发送流水数据为0，High-未发送流水数据未达到阀值，Full-未发送流水数据大于等于阀值';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cdm_cu_number
+  is '取款箱逻辑钞箱索引号';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.cim_cu_number
+  is '存款箱逻辑钞箱索引号';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ATMS_DEV_STATUS_TABLE.etl_timestamp
+  is 'ETL处理时间戳';
+

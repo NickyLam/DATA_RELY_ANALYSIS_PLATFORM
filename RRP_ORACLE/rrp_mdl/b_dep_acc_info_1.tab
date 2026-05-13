@@ -1,0 +1,170 @@
+﻿create table RRP_MDL.B_DEP_ACC_INFO_1
+(
+  data_dt                  CHAR(8) not null,
+  lgl_rep_id               VARCHAR2(200),
+  acc_id                   VARCHAR2(200) not null,
+  cust_id                  VARCHAR2(200),
+  org_id                   VARCHAR2(200),
+  cur                      CHAR(3),
+  dep_prod_cd              VARCHAR2(200),
+  dep_prod_typ             VARCHAR2(10),
+  val_dt                   CHAR(8),
+  dep_bal                  NUMBER(30,2),
+  dep_exp_dt               CHAR(8),
+  corp_ind_flg             CHAR(1),
+  subj_id                  VARCHAR2(200),
+  rate                     NUMBER(20,6),
+  open_acc_dt              CHAR(8),
+  open_acc_tlr_no          VARCHAR2(30),
+  cnl_acc_dt               CHAR(8),
+  dep_acc_stat             VARCHAR2(10),
+  last_acc_chg_dt          CHAR(8),
+  cash_remit_typ           VARCHAR2(10),
+  agrt_dep_psn_typ         VARCHAR2(10),
+  rate_re_prc_dt           CHAR(8),
+  innr_adv_exp_option_flg  CHAR(1),
+  adv_draw_flg             CHAR(1),
+  ntc_wd_dt                CHAR(8),
+  ntc_wd_amt               NUMBER(30,2),
+  cr_crd_ex_pay_flg        CHAR(1),
+  pbl_int                  NUMBER(30,2),
+  co_dep_typ               VARCHAR2(10),
+  dep_ins_amt              NUMBER(30,2),
+  biz_rel_dep_amt          NUMBER(30,2),
+  td_apvl_acc_flg          CHAR(1),
+  int_calc_flg             CHAR(1),
+  spcl_dep_typ             VARCHAR2(10),
+  entrs_loan_fund_sub_cl   VARCHAR2(10),
+  consr_typ                VARCHAR2(10),
+  ind_dmd_dep_acc_typ      VARCHAR2(10),
+  pbc_acc_typ              VARCHAR2(10),
+  time_dmd_flg             CHAR(1),
+  open_acc_chan            VARCHAR2(10),
+  prc_base_typ             VARCHAR2(10),
+  rate_typ                 VARCHAR2(10),
+  base_rate                NUMBER(20,6),
+  rate_flt_freq            VARCHAR2(10),
+  gua_yld                  NUMBER(18,4),
+  high_yld_rto             NUMBER(18,4),
+  dif_plc_dep_flg          CHAR(1),
+  dep_rsv_mode             VARCHAR2(10),
+  act_end_dt               CHAR(8),
+  biz_occur_tmpnt_act_rate NUMBER(20,6),
+  biz_tmpnt_base_rate      NUMBER(20,6),
+  dept_line                VARCHAR2(500),
+  data_src                 VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.B_DEP_ACC_INFO_1
+  is '存款账户信息';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.acc_id
+  is '账户编号:EF05AI01';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.org_id
+  is '银行编号';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.cur
+  is '账号币种';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.dep_prod_cd
+  is '存款产品代码';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.dep_prod_typ
+  is '存款产品类型';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.val_dt
+  is '起息日期';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.dep_bal
+  is '存款余额';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.dep_exp_dt
+  is '存款到期日期';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.corp_ind_flg
+  is '对公对私标志';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.subj_id
+  is '科目编号';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.rate
+  is '回购利率';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.open_acc_dt
+  is '开户日期';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.open_acc_tlr_no
+  is '开户柜员号';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.cnl_acc_dt
+  is '结清日期';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.dep_acc_stat
+  is '存款账户状态';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.last_acc_chg_dt
+  is '上次动户日期';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.cash_remit_typ
+  is '钞汇类型';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.agrt_dep_psn_typ
+  is '协议存款人类型';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.rate_re_prc_dt
+  is '利率重新定价日期';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.innr_adv_exp_option_flg
+  is '内嵌提前到期期权标志';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.adv_draw_flg
+  is '可提前支取标志';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.ntc_wd_dt
+  is '通知取款日期';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.ntc_wd_amt
+  is '通知取款金额';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.cr_crd_ex_pay_flg
+  is '信用卡溢缴款标志';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.pbl_int
+  is '应付利息';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.co_dep_typ
+  is '单位存款类型';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.dep_ins_amt
+  is '被存款保险制度覆盖的金额';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.biz_rel_dep_amt
+  is '有业务关系存款金额';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.td_apvl_acc_flg
+  is '待核准账户标志';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.int_calc_flg
+  is '计息标志';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.spcl_dep_typ
+  is '专项存款类型';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.entrs_loan_fund_sub_cl
+  is '委托贷款基金细类';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.consr_typ
+  is '委托人类型';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.ind_dmd_dep_acc_typ
+  is '个人活期存款账户类型';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.pbc_acc_typ
+  is '人行账户类型';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.time_dmd_flg
+  is '定活标志';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.open_acc_chan
+  is '开户渠道';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.prc_base_typ
+  is '定价基准类型';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.rate_typ
+  is '利率类型';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.base_rate
+  is '基准利率';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.rate_flt_freq
+  is '利率浮动频率';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.gua_yld
+  is '保底收益率';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.high_yld_rto
+  is '最高收益率';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.dif_plc_dep_flg
+  is '异地存款标志';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.dep_rsv_mode
+  is '缴存准备金方式';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.act_end_dt
+  is '实际终止日期';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.biz_occur_tmpnt_act_rate
+  is '业务发生时点实际利率';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.biz_tmpnt_base_rate
+  is '业务发生时点基准利率';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_DEP_ACC_INFO_1.data_src
+  is '数据来源（参见[字典:AML0045]）';
+

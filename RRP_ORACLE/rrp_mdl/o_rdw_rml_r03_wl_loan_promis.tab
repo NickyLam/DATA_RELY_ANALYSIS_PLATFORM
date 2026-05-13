@@ -1,0 +1,66 @@
+﻿create table RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS
+(
+  lmt_cont_no     VARCHAR2(100),
+  cust_no         VARCHAR2(100),
+  mgmt_org_no     VARCHAR2(60),
+  std_prod_no     VARCHAR2(100),
+  curr_cd         VARCHAR2(60),
+  crdt_lmt        NUMBER(38,8),
+  used_amt        NUMBER(30,2),
+  available_amt   NUMBER(30,2),
+  begin_dt        DATE,
+  exp_dt          DATE,
+  circl_flg       VARCHAR2(30),
+  guar_flg        VARCHAR2(10),
+  loan_promis_cls VARCHAR2(10),
+  group_no        VARCHAR2(10),
+  etl_dt          DATE,
+  curr_bal        NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS
+  is '风险集市_R03_网贷贷款承诺';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.lmt_cont_no
+  is '合同编号';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.cust_no
+  is '客户编号';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.mgmt_org_no
+  is '机构编号';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.std_prod_no
+  is '产品编号';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.crdt_lmt
+  is '总额度';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.used_amt
+  is '已用额度';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.available_amt
+  is '可用金额';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.begin_dt
+  is '生效日期';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.exp_dt
+  is '结束日期';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.circl_flg
+  is '循环标志';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.guar_flg
+  is '有担保标志';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.loan_promis_cls
+  is '贷款承诺分类';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.group_no
+  is '组号';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_RDW_RML_R03_WL_LOAN_PROMIS.curr_bal
+  is '当期余额';
+

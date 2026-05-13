@@ -1,0 +1,33 @@
+﻿create table RRP_MDL.ADD_SDIS_T_7_9_INFO
+(
+  g090001 VARCHAR2(60),
+  g090003 VARCHAR2(60),
+  g090006 VARCHAR2(2),
+  org_no  VARCHAR2(30),
+  data_dt VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_SDIS_T_7_9_INFO
+  is '表7.9不良资产处置补录表';
+comment on column RRP_MDL.ADD_SDIS_T_7_9_INFO.g090001
+  is '协议ID';
+comment on column RRP_MDL.ADD_SDIS_T_7_9_INFO.g090003
+  is '借据ID';
+comment on column RRP_MDL.ADD_SDIS_T_7_9_INFO.g090006
+  is '资产转让方式';
+comment on column RRP_MDL.ADD_SDIS_T_7_9_INFO.org_no
+  is '填报机构';
+comment on column RRP_MDL.ADD_SDIS_T_7_9_INFO.data_dt
+  is '数据日期';
+

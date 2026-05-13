@@ -1,0 +1,40 @@
+# Python runtime/cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Logs and process ids
+*.log
+server.log
+*.pid
+.server.pid
+
+# Local temp/input/output artifacts
+temp_uploads/
+output/
+test_output/
+*.tmp
+*.temp
+
+# Generated packages and archives
+dist/
+build/
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

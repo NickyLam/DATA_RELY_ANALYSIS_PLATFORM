@@ -1,0 +1,194 @@
+﻿create table RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO
+(
+  txn_dt                    VARCHAR2(12),
+  txn_tms                   VARCHAR2(45),
+  txn_cd                    VARCHAR2(30),
+  trx_seq                   VARCHAR2(60),
+  app_dt                    VARCHAR2(12),
+  app_tm                    VARCHAR2(45),
+  app_id                    VARCHAR2(60),
+  app_ord_nbr               VARCHAR2(30),
+  merch_status              VARCHAR2(2),
+  aprv_status               VARCHAR2(2),
+  txn_typ                   VARCHAR2(15),
+  merch_id                  VARCHAR2(30),
+  merch_name                VARCHAR2(300),
+  regu_mode                 VARCHAR2(15),
+  acct_typ                  VARCHAR2(6),
+  regu_acct_num             VARCHAR2(75),
+  regu_act_nm               VARCHAR2(150),
+  regu_open_bk_name         VARCHAR2(300),
+  regu_open_bk_num          VARCHAR2(30),
+  acct_typ_cd               VARCHAR2(6),
+  marg_acct_num             VARCHAR2(75),
+  marg_act_nm               VARCHAR2(300),
+  marg_open_bk_name         VARCHAR2(300),
+  marg_open_bk_num          VARCHAR2(30),
+  corp_name                 VARCHAR2(300),
+  csld_soci_crdt_cd         VARCHAR2(30),
+  corp_login_addr           VARCHAR2(300),
+  clog_addr                 VARCHAR2(300),
+  corp_estab_dt             VARCHAR2(12),
+  corp_tel_num              VARCHAR2(20),
+  oper_scope                VARCHAR2(4000),
+  oper_licence_url          VARCHAR2(750),
+  qlfy_proof_url            VARCHAR2(750),
+  blng_bran_num             VARCHAR2(30),
+  blng_bran_name            VARCHAR2(300),
+  lp_name                   VARCHAR2(300),
+  lp_cert_typ               VARCHAR2(6),
+  lp_iden_num               VARCHAR2(60),
+  lp_ceph_num               VARCHAR2(20),
+  lp_iden_fro_url           VARCHAR2(600),
+  lp_iden_obv_url           VARCHAR2(600),
+  oprt_name                 VARCHAR2(150),
+  oprt_ceph_num             VARCHAR2(20),
+  oprt_cert_typ             VARCHAR2(6),
+  oprt_cert_num             VARCHAR2(60),
+  oprt_cert_url             VARCHAR2(750),
+  oprt_cert_print_piece_url VARCHAR2(750),
+  aprv_comnt                VARCHAR2(300),
+  input_tell_num            VARCHAR2(30),
+  input_org_id              VARCHAR2(30),
+  check_tell_num            VARCHAR2(30),
+  check_org_id              VARCHAR2(30),
+  apprv_tell_num            VARCHAR2(30),
+  apprv_org_id              VARCHAR2(30),
+  memo                      VARCHAR2(600),
+  bak1                      VARCHAR2(150),
+  bak2                      VARCHAR2(150),
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO
+  is '商户签约信息表';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.txn_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.txn_tms
+  is '交易时间';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.txn_cd
+  is '中台交易码';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.trx_seq
+  is '交易流水号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.app_dt
+  is '操作日期';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.app_tm
+  is '操作日期';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.app_id
+  is '申请编号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.app_ord_nbr
+  is '申请序号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.merch_status
+  is '商户状态：0:未启用、1:已启用、2:已停用';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.aprv_status
+  is '审批状态:0:待提交、1:待审批、2:已通过、3:未通过';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.txn_typ
+  is '操作类型：0:商户注册、1:信息变更、2:服务变更';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.merch_id
+  is '商户编号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.merch_name
+  is '商户名称';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.regu_mode
+  is '监管模式：01银行存管模式、02风险储备金模式、03复合模式；';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.acct_typ
+  is '账户类型 01:监管账户 02:保证金账户';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.regu_acct_num
+  is '监管账号信息-账号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.regu_act_nm
+  is '监管账号信息-户名';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.regu_open_bk_name
+  is '监管账号信息-开户行名称';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.regu_open_bk_num
+  is '监管账号信息-开户行行号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.acct_typ_cd
+  is '账户类型 01:监管账户 02:保证金账户';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.marg_acct_num
+  is '保证金账号信息-账号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.marg_act_nm
+  is '保证金账号信息-户名';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.marg_open_bk_name
+  is '保证金账号信息-开户行名称';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.marg_open_bk_num
+  is '保证金账号信息-开户行行号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.corp_name
+  is '基本信息-公司名称';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.csld_soci_crdt_cd
+  is '基本信息-统一社会信用代码';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.corp_login_addr
+  is '基本信息-注册地址';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.clog_addr
+  is '基本信息-办学地址';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.corp_estab_dt
+  is '基本信息-成立日期';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.corp_tel_num
+  is '基本信息-办公电话';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.oper_scope
+  is '基本信息-经营范围';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.oper_licence_url
+  is '基本信息-营业执照URL地址';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.qlfy_proof_url
+  is '基本信息-资质证明URL地址';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.blng_bran_num
+  is '管理职责-归属分行行号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.blng_bran_name
+  is '管理职责-归属分行名称';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.lp_name
+  is '法人代表信息-姓名';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.lp_cert_typ
+  is '法人代表信息-证件类型';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.lp_iden_num
+  is '法人代表信息-身份证号码';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.lp_ceph_num
+  is '法人代表信息-手机号码';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.lp_iden_fro_url
+  is '法人身份证正面URL地址';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.lp_iden_obv_url
+  is '法人身份证反面URL地址';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.oprt_name
+  is '经办人信息-姓名';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.oprt_ceph_num
+  is '经办人信息-手机号码';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.oprt_cert_typ
+  is '经办人信息-证件类型';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.oprt_cert_num
+  is '经办人信息-证件号码';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.oprt_cert_url
+  is '经办人链接地址';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.oprt_cert_print_piece_url
+  is '经办人打印链接地址';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.aprv_comnt
+  is '审批人意见';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.input_tell_num
+  is '录入柜员号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.input_org_id
+  is '录入机构号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.check_tell_num
+  is '复核柜员号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.check_org_id
+  is '复核机构号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.apprv_tell_num
+  is '审批柜员号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.apprv_org_id
+  is '审批机构号';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.memo
+  is '审批备注';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.bak1
+  is '备注字段1';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.bak2
+  is '备注字段2';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_MPCS_A1USETPSIGNACCTINFO.etl_timestamp
+  is 'ETL处理时间戳';
+

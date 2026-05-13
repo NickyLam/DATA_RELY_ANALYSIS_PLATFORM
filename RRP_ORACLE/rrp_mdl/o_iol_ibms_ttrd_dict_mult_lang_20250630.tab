@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_DICT_MULT_LANG_20250630
+(
+  dict_type        VARCHAR2(75),
+  dict_sub_type    VARCHAR2(75),
+  dict_key         VARCHAR2(383),
+  dict_lang        VARCHAR2(75),
+  dict_value       VARCHAR2(1500),
+  dict_key_order   NUMBER(22),
+  loadflag         VARCHAR2(2),
+  isdefault        VARCHAR2(2),
+  dict_description VARCHAR2(300),
+  front_flag       VARCHAR2(2),
+  start_dt         DATE,
+  end_dt           DATE,
+  id_mark          VARCHAR2(10),
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

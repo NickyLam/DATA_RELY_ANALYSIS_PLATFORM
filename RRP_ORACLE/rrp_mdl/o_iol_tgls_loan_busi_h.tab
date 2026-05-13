@@ -1,0 +1,387 @@
+﻿create table RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H
+(
+  stacid        NUMBER(9),
+  systid        VARCHAR2(30),
+  trandt        VARCHAR2(8),
+  transq        VARCHAR2(64),
+  bsnssq        VARCHAR2(50),
+  tranbr        VARCHAR2(12),
+  acctbr        VARCHAR2(12),
+  prcscd        VARCHAR2(30),
+  prodcd        VARCHAR2(12),
+  loanp1        VARCHAR2(25),
+  loanp2        VARCHAR2(25),
+  loanp3        VARCHAR2(25),
+  loanp4        VARCHAR2(25),
+  loanp5        VARCHAR2(25),
+  loanp6        VARCHAR2(25),
+  loanp7        VARCHAR2(25),
+  loanp8        VARCHAR2(25),
+  loanp9        VARCHAR2(25),
+  loanpa        VARCHAR2(25),
+  trantp        VARCHAR2(9),
+  crcycd        VARCHAR2(3),
+  custcd        VARCHAR2(16),
+  status        VARCHAR2(1),
+  serino        VARCHAR2(30),
+  bathid        VARCHAR2(50),
+  evetdn        VARCHAR2(16),
+  trprcd        VARCHAR2(16),
+  tranam        NUMBER(20,2),
+  centcd        VARCHAR2(16),
+  prsncd        VARCHAR2(8),
+  prlncd        VARCHAR2(16),
+  acctno        VARCHAR2(64),
+  assis0        VARCHAR2(30),
+  assis1        VARCHAR2(30),
+  assis2        VARCHAR2(30),
+  assis3        VARCHAR2(30),
+  assis4        VARCHAR2(30),
+  assis5        VARCHAR2(30),
+  assis6        VARCHAR2(30),
+  assis7        VARCHAR2(30),
+  assis8        VARCHAR2(30),
+  assis9        VARCHAR2(30),
+  numex0        NUMBER(20,2),
+  numex1        NUMBER(20,2),
+  numex2        NUMBER(20,2),
+  numex3        NUMBER(20,2),
+  numex4        NUMBER(20,2),
+  numex5        NUMBER(20,2),
+  numex6        NUMBER(20,2),
+  numex7        NUMBER(20,2),
+  numex8        NUMBER(20,2),
+  numex9        NUMBER(20,2),
+  numexa        NUMBER(20,2),
+  numexb        NUMBER(20,2),
+  numexc        NUMBER(20,2),
+  numexd        NUMBER(20,2),
+  numexe        NUMBER(20,2),
+  numexf        NUMBER(20,2),
+  numexg        NUMBER(20,2),
+  numexh        NUMBER(20,2),
+  numexi        NUMBER(20,2),
+  numexj        NUMBER(20,2),
+  chrex0        VARCHAR2(30),
+  chrex1        VARCHAR2(30),
+  chrex2        VARCHAR2(30),
+  chrex3        VARCHAR2(30),
+  chrex4        VARCHAR2(30),
+  chrex5        VARCHAR2(30),
+  chrex6        VARCHAR2(30),
+  chrex7        VARCHAR2(30),
+  chrex8        VARCHAR2(30),
+  chrex9        VARCHAR2(30),
+  chrexa        VARCHAR2(30),
+  chrexb        VARCHAR2(30),
+  chrexc        VARCHAR2(30),
+  chrexd        VARCHAR2(30),
+  chrexe        VARCHAR2(30),
+  chrexf        VARCHAR2(30),
+  chrexg        VARCHAR2(30),
+  chrexh        VARCHAR2(30),
+  chrexi        VARCHAR2(30),
+  chrexj        VARCHAR2(30),
+  datex0        VARCHAR2(30),
+  datex1        VARCHAR2(30),
+  datex2        VARCHAR2(30),
+  datex3        VARCHAR2(30),
+  datex4        VARCHAR2(30),
+  tranti        TIMESTAMP(6),
+  nume21        NUMBER(20,2),
+  nume22        NUMBER(20,2),
+  nume23        NUMBER(20,2),
+  nume24        NUMBER(20,2),
+  nume25        NUMBER(20,2),
+  nume26        NUMBER(20,2),
+  nume27        NUMBER(20,2),
+  nume28        NUMBER(20,2),
+  nume29        NUMBER(20,2),
+  nume30        NUMBER(20,2),
+  nume31        NUMBER(20,2),
+  nume32        NUMBER(20,2),
+  nume33        NUMBER(20,2),
+  nume34        NUMBER(20,2),
+  nume35        NUMBER(20,2),
+  nume36        NUMBER(20,2),
+  nume37        NUMBER(20,2),
+  nume38        NUMBER(20,2),
+  nume39        NUMBER(20,2),
+  nume40        NUMBER(20,2),
+  nume41        NUMBER(20,2),
+  nume42        NUMBER(20,2),
+  nume43        NUMBER(20,2),
+  nume44        NUMBER(20,2),
+  nume45        NUMBER(20,2),
+  nume46        NUMBER(20,2),
+  nume47        NUMBER(20,2),
+  nume48        NUMBER(20,2),
+  nume49        NUMBER(20,2),
+  nume50        NUMBER(20,2),
+  strkst        VARCHAR2(1),
+  strkdt        VARCHAR2(8),
+  strksq        VARCHAR2(64),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H
+  is '通用交易明细流水归集表';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.stacid
+  is '账套';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.systid
+  is '交易来源系统编号';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.trandt
+  is '交易日期';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.transq
+  is '交易流水';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.bsnssq
+  is '业务流水';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.tranbr
+  is '交易机构编号';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.acctbr
+  is '贷款机构';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.prcscd
+  is '处理码';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.prodcd
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.loanp1
+  is '产品属性1';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.loanp2
+  is '产品属性2';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.loanp3
+  is '产品属性3';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.loanp4
+  is '产品属性4';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.loanp5
+  is '产品属性5';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.loanp6
+  is '产品属性6';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.loanp7
+  is '产品属性7';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.loanp8
+  is '产品属性8';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.loanp9
+  is '产品属性9';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.loanpa
+  is '产品属性10';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.trantp
+  is '交易方式(tr:转账，cs:现金)';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.crcycd
+  is '币种代码';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.custcd
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.status
+  is '交易状态(0:未处理1：处理成功2：处理失败3：差错处理中4：差错处理完成)';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.serino
+  is '序号';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.bathid
+  is '批次号';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.evetdn
+  is '交易方向add增加，minus减少';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.trprcd
+  is '余额类型';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.tranam
+  is '交易金额';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.centcd
+  is '责任中心';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.prsncd
+  is '员工编号';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.prlncd
+  is '产品线';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.acctno
+  is '账户';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.assis0
+  is '辅助核算0（自定义）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.assis1
+  is '辅助核算1（自定义）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.assis2
+  is '辅助核算2（自定义）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.assis3
+  is '辅助核算3（自定义）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.assis4
+  is '辅助核算4（自定义）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.assis5
+  is '辅助核算5（自定义）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.assis6
+  is '辅助核算6（自定义）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.assis7
+  is '辅助核算7（自定义）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.assis8
+  is '辅助核算8（自定义）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.assis9
+  is '辅助核算9（自定义）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numex0
+  is '金额1';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numex1
+  is '金额2';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numex2
+  is '金额3';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numex3
+  is '金额4';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numex4
+  is '金额5';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numex5
+  is '金额6';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numex6
+  is '金额7';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numex7
+  is '金额8';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numex8
+  is '金额9';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numex9
+  is '金额10';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numexa
+  is '金额11';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numexb
+  is '金额12';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numexc
+  is '金额13';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numexd
+  is '金额14';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numexe
+  is '金额15';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numexf
+  is '金额16';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numexg
+  is '金额17';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numexh
+  is '金额18';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numexi
+  is '金额19';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.numexj
+  is '金额20';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrex0
+  is '字符串1';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrex1
+  is '字符串2';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrex2
+  is '字符串3';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrex3
+  is '字符串4';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrex4
+  is '字符串5';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrex5
+  is '字符串6';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrex6
+  is '字符串7';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrex7
+  is '字符串8';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrex8
+  is '字符串9';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrex9
+  is '字符串10';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrexa
+  is '字符串11';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrexb
+  is '字符串12';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrexc
+  is '字符串13';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrexd
+  is '字符串14';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrexe
+  is '字符串15';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrexf
+  is '字符串16';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrexg
+  is '字符串17';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrexh
+  is '字符串18';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrexi
+  is '字符串19';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.chrexj
+  is '字符串20';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.datex0
+  is '日期1';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.datex1
+  is '日期2';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.datex2
+  is '日期3';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.datex3
+  is '日期4';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.datex4
+  is '日期5';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.tranti
+  is '系统时间';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume21
+  is '金额21';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume22
+  is '金额22';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume23
+  is '金额23';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume24
+  is '金额24';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume25
+  is '金额25';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume26
+  is '金额26';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume27
+  is '金额27';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume28
+  is '金额28';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume29
+  is '金额29';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume30
+  is '金额30';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume31
+  is '金额31';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume32
+  is '金额32';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume33
+  is '金额33';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume34
+  is '金额34';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume35
+  is '金额35';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume36
+  is '金额36';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume37
+  is '金额37';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume38
+  is '金额38';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume39
+  is '金额39';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume40
+  is '金额40';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume41
+  is '金额41';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume42
+  is '金额42';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume43
+  is '金额43';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume44
+  is '金额44';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume45
+  is '金额45';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume46
+  is '金额46';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume47
+  is '金额47';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume48
+  is '金额48';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume49
+  is '金额49';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.nume50
+  is '金额50';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.strkst
+  is '冲正标识（0：正常业务1：冲正业务）';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.strkdt
+  is '被冲正业务交易日期';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.strksq
+  is '被冲正业务交易流水';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IOL_TGLS_LOAN_BUSI_H.etl_timestamp
+  is 'etl处理时间戳';
+

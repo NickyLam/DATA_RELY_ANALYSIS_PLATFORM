@@ -1,0 +1,69 @@
+﻿create table RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT
+(
+  rep_finprod_id     VARCHAR2(100),
+  finprod_market_id  VARCHAR2(64),
+  rep_finprod_name   VARCHAR2(600),
+  rep_issue_party_id VARCHAR2(12),
+  rep_asset_type     VARCHAR2(100),
+  rep_ccy            VARCHAR2(100),
+  rep_trade_market   VARCHAR2(100),
+  rep_send_status    VARCHAR2(100),
+  rep_status_date    DATE,
+  is_rep_target      VARCHAR2(100),
+  create_user        VARCHAR2(40),
+  create_dept        VARCHAR2(64),
+  create_time        TIMESTAMP(6),
+  update_user        VARCHAR2(40),
+  update_time        TIMESTAMP(6),
+  etl_dt             DATE,
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT
+  is '资产报送';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.rep_finprod_id
+  is '金融产品代码';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.finprod_market_id
+  is '市场代码，可以按规则生成，或者手输，不校验唯一';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.rep_finprod_name
+  is '金融产品名称';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.rep_issue_party_id
+  is '发行机构代码（中债那边每家银行固定一个代码，联社是以分设为单位的）';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.rep_asset_type
+  is '资产/负债类别';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.rep_ccy
+  is '币种';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.rep_trade_market
+  is '交易流通场所';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.rep_send_status
+  is '报送状态';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.rep_status_date
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.is_rep_target
+  is '是否报送对象';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.create_user
+  is '创建人';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.create_dept
+  is '创建部门';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.update_user
+  is '更新人';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IOL_FAMS_REP_ASSET_DEPT.etl_timestamp
+  is 'etl处理时间戳';
+

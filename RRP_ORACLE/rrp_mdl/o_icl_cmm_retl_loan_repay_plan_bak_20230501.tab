@@ -1,0 +1,121 @@
+﻿create table RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501
+(
+  etl_dt                      DATE not null,
+  lp_id                       VARCHAR2(60) not null,
+  dubil_id                    VARCHAR2(60) not null,
+  acct_id                     VARCHAR2(60),
+  cust_id                     VARCHAR2(60),
+  tot_perds                   NUMBER(10),
+  repay_perds                 NUMBER(10) not null,
+  repay_sub_perds             NUMBER(10) not null,
+  value_dt                    DATE,
+  repaybl_dt                  DATE not null,
+  grace_repay_dt              DATE,
+  last_repay_dt               DATE,
+  next_repay_dt               DATE,
+  modif_dt                    DATE,
+  repay_type_cd               VARCHAR2(10),
+  repay_status_cd             VARCHAR2(10),
+  ovdue_flg                   VARCHAR2(10),
+  repay_flg                   VARCHAR2(10),
+  curr_cd                     VARCHAR2(10),
+  exec_int_rat                NUMBER(18,8),
+  acru_nomal_pric             NUMBER(30,2),
+  curr_issue_recvbl_amt       NUMBER(30,2),
+  curr_issue_recvbl_pric      NUMBER(30,2),
+  curr_issue_int_recvbl       NUMBER(30,2),
+  curr_issue_recvbl_acru_int  NUMBER(30,2),
+  curr_issue_coll_acru_int    NUMBER(30,2),
+  curr_issue_recvbl_over_int  NUMBER(30,2),
+  curr_issue_coll_over_int    NUMBER(30,2),
+  curr_issue_recvbl_acru_pnlt NUMBER(30,2),
+  curr_issue_coll_acru_pnlt   NUMBER(30,2),
+  curr_issue_recvbl_pnlt      NUMBER(30,2),
+  curr_issue_coll_pnlt        NUMBER(30,2),
+  curr_issue_acru_comp_int    NUMBER(30,2),
+  curr_issue_comp_int         NUMBER(30,2),
+  job_cd                      VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501
+  is '零售贷款还款计划';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.tot_perds
+  is '总期数';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.repay_perds
+  is '还款期数';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.repay_sub_perds
+  is '还款子期数';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.repaybl_dt
+  is '应还款日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.grace_repay_dt
+  is '宽限还款日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.last_repay_dt
+  is '上次还款日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.next_repay_dt
+  is '下次还款日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.modif_dt
+  is '修改日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.repay_type_cd
+  is '还款类型代码CD1290';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.repay_status_cd
+  is '还款状态代码CD1114';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.ovdue_flg
+  is '逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.repay_flg
+  is '偿还标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_cd
+  is '币种代码CD1728';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.acru_nomal_pric
+  is '应计正常本金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_recvbl_amt
+  is '本期应收金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_recvbl_pric
+  is '本期应收本金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_int_recvbl
+  is '本期应收利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_recvbl_acru_int
+  is '本期应收应计利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_coll_acru_int
+  is '本期催收应计利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_recvbl_over_int
+  is '本期应收欠息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_coll_over_int
+  is '本期催收欠息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_recvbl_acru_pnlt
+  is '本期应收应计罚息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_coll_acru_pnlt
+  is '本期催收应计罚息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_recvbl_pnlt
+  is '本期应收罚息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_coll_pnlt
+  is '本期催收罚息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_acru_comp_int
+  is '本期应计复息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.curr_issue_comp_int
+  is '本期复息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501.job_cd
+  is '任务代码';
+create index RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_1 on RRP_MDL.O_ICL_CMM_RETL_LOAN_REPAY_PLAN_BAK_20230501 (ETL_DT, DUBIL_ID, REPAY_PERDS, REPAY_SUB_PERDS)
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

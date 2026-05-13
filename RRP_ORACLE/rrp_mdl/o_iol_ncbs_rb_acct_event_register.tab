@@ -1,0 +1,205 @@
+﻿create table RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER
+(
+  acct_seq_no           VARCHAR2(5),
+  amt_type              VARCHAR2(10),
+  base_acct_no          VARCHAR2(64),
+  business_unit         VARCHAR2(10),
+  client_no             VARCHAR2(16),
+  client_type           VARCHAR2(3),
+  doc_type              VARCHAR2(10),
+  int_type              VARCHAR2(5),
+  internal_key          NUMBER(15),
+  prod_type             VARCHAR2(12),
+  profit_center         VARCHAR2(20),
+  reference             VARCHAR2(50),
+  user_id               VARCHAR2(8),
+  voucher_no            VARCHAR2(50),
+  term                  VARCHAR2(5),
+  term_type             VARCHAR2(1),
+  company               VARCHAR2(20),
+  gl_posted_flag        VARCHAR2(1),
+  int_cap_flag          VARCHAR2(1),
+  movt_status           VARCHAR2(1),
+  narrative             VARCHAR2(400),
+  prefix                VARCHAR2(10),
+  print_cnt             NUMBER(5),
+  seq_no                VARCHAR2(50),
+  seq_renew_rollover_no VARCHAR2(50),
+  source_module         VARCHAR2(3),
+  tax_type              VARCHAR2(2),
+  tran_status           VARCHAR2(1),
+  int_class             VARCHAR2(5),
+  accounting_status     VARCHAR2(3),
+  acct_open_date        DATE,
+  last_cycle_date       DATE,
+  maturity_date         DATE,
+  reversal_date         DATE,
+  tran_date             DATE,
+  tran_timestamp        VARCHAR2(26),
+  acct_branch           VARCHAR2(12),
+  acct_ccy              VARCHAR2(3),
+  acct_level_int_rate   NUMBER(15,8),
+  actual_rate           NUMBER(15,8),
+  calc_days             NUMBER(5),
+  calc_int_amt          NUMBER(38,2),
+  debt_int_rate         NUMBER(15,8),
+  float_rate            NUMBER(15,8),
+  gross_interest_amt    NUMBER(17,2),
+  int_adj               NUMBER(17,2),
+  int_adj_ctd           NUMBER(17,2),
+  net_interest_amt      NUMBER(17,2),
+  principal_amt         NUMBER(17,2),
+  real_rate             NUMBER(15,8),
+  spread_rate           NUMBER(15,8),
+  tax_amt               NUMBER(17,2),
+  tax_rate              NUMBER(15,8),
+  tran_amt              NUMBER(17,2),
+  tran_branch           VARCHAR2(12),
+  reaccount_cd          VARCHAR2(20),
+  bus_seq_no            VARCHAR2(33),
+  calc_begin_date       DATE,
+  year_basis            VARCHAR2(3),
+  month_basis           VARCHAR2(3),
+  etl_dt                DATE,
+  etl_timestamp         TIMESTAMP(6)
+)
+partition by range (ETL_DT)
+(
+  partition PARTITION_19000101 values less than (TO_DATE(' 1900-01-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250930 values less than (TO_DATE(' 2025-10-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER
+  is '账户重要事件登记簿';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.acct_seq_no
+  is '账户子账号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.amt_type
+  is '金额类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.base_acct_no
+  is '交易账号/卡号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.business_unit
+  is '账套';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.client_type
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.doc_type
+  is '凭证类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.int_type
+  is '利率类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.internal_key
+  is '账户内部键值';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.prod_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.profit_center
+  is '利润中心';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.reference
+  is '交易参考号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.user_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.voucher_no
+  is '凭证号码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.term
+  is '存期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.term_type
+  is '期限单位';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.gl_posted_flag
+  is '过账标记';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.int_cap_flag
+  is '资本化标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.movt_status
+  is '转存类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.narrative
+  is '摘要';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.prefix
+  is '前缀';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.print_cnt
+  is '打印次数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.seq_no
+  is '序号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.seq_renew_rollover_no
+  is '转存序号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.source_module
+  is '源模块';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.tax_type
+  is '税种';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.tran_status
+  is '冲补抹标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.int_class
+  is '利息分类';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.accounting_status
+  is '核算状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.acct_open_date
+  is '账户开户日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.last_cycle_date
+  is '上一结息日';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.maturity_date
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.reversal_date
+  is '冲正日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.tran_date
+  is '交易日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.acct_branch
+  is '开户机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.acct_ccy
+  is '账户币种';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.acct_level_int_rate
+  is '账户基础利率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.actual_rate
+  is '行内利率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.calc_days
+  is '算息天数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.calc_int_amt
+  is '算息金额';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.debt_int_rate
+  is '支取利率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.float_rate
+  is '浮动利率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.gross_interest_amt
+  is '总利息金额';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.int_adj
+  is '利息调增金额';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.int_adj_ctd
+  is '计提日利息调整';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.net_interest_amt
+  is '净利息';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.principal_amt
+  is '交易本金';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.real_rate
+  is '执行利率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.spread_rate
+  is '浮动点数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.tax_amt
+  is '税金';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.tax_rate
+  is '税率';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.tran_branch
+  is '核心交易机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.reaccount_cd
+  is '对账代码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.bus_seq_no
+  is '业务流水号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.calc_begin_date
+  is '利息计算起始日';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.year_basis
+  is '年基准天数';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.month_basis
+  is '月基准';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_EVENT_REGISTER.etl_timestamp
+  is 'ETL处理时间戳';
+

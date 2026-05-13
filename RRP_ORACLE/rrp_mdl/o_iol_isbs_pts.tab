@@ -1,0 +1,95 @@
+﻿create table RRP_MDL.O_IOL_ISBS_PTS
+(
+  inr           VARCHAR2(12),
+  objtyp        VARCHAR2(9),
+  objinr        VARCHAR2(12),
+  rol           VARCHAR2(5),
+  ptainr        VARCHAR2(12),
+  ptyinr        VARCHAR2(12),
+  extkey        VARCHAR2(24),
+  adrblk        VARCHAR2(216),
+  ref           VARCHAR2(24),
+  nam           VARCHAR2(60),
+  ownref        VARCHAR2(30),
+  dftcur        VARCHAR2(5),
+  dftdsp        VARCHAR2(5),
+  dftact        VARCHAR2(51),
+  dftfeecur     VARCHAR2(5),
+  dftactptainr  VARCHAR2(12),
+  glggrpflg     VARCHAR2(5),
+  extact        VARCHAR2(51),
+  ver           VARCHAR2(6),
+  bankno        VARCHAR2(12),
+  issbaninf     VARCHAR2(60),
+  adrblkcn      VARCHAR2(246),
+  bankno1       VARCHAR2(30),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_PTS
+  is '每笔业务涉及到的Party信息';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.inr
+  is '内部唯一ID号';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.objtyp
+  is '联系实体类型';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.objinr
+  is '联系实体INR';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.rol
+  is '角色类型';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.ptainr
+  is '关联地址的INR';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.ptyinr
+  is '关联当事人INR';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.extkey
+  is '联系地址外部关键字';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.adrblk
+  is '地址信息';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.ref
+  is '地址参考';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.nam
+  is '当事人基本名称';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.ownref
+  is '交易参考号和角色';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.dftcur
+  is '默认货币种类';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.dftdsp
+  is '默认的角色等级';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.dftact
+  is '默认账户种类';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.dftfeecur
+  is '默认费用使用的货币种类';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.dftactptainr
+  is '默认帐户';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.glggrpflg
+  is '费用合计方式标志';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.extact
+  is '帐号';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.ver
+  is '版本号';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.bankno
+  is '银行号';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.bankno1
+  is '人行行号';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ISBS_PTS.etl_timestamp
+  is 'ETL处理时间戳';
+

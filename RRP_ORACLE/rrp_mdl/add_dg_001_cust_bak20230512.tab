@@ -1,0 +1,39 @@
+﻿create table RRP_MDL.ADD_DG_001_CUST_BAK20230512
+(
+  data_date          VARCHAR2(10),
+  acct_org_num       VARCHAR2(20),
+  khwym              VARCHAR2(30),
+  khmc               VARCHAR2(100),
+  zjlx               VARCHAR2(100),
+  zjhm               VARCHAR2(100),
+  sfgtqy             VARCHAR2(10),
+  bxcdjmfylb         VARCHAR2(100),
+  bnljcdhjmdxdxgfyje NUMBER(20,6),
+  sys_source         VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.ADD_DG_001_CUST_BAK20230512.data_date
+  is '数据日期';
+comment on column RRP_MDL.ADD_DG_001_CUST_BAK20230512.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.ADD_DG_001_CUST_BAK20230512.khwym
+  is '客户唯一码';
+comment on column RRP_MDL.ADD_DG_001_CUST_BAK20230512.khmc
+  is '客户名称';
+comment on column RRP_MDL.ADD_DG_001_CUST_BAK20230512.zjlx
+  is '证件类型代码';
+comment on column RRP_MDL.ADD_DG_001_CUST_BAK20230512.zjhm
+  is '证件号码';
+comment on column RRP_MDL.ADD_DG_001_CUST_BAK20230512.sfgtqy
+  is '是否关停企业';
+comment on column RRP_MDL.ADD_DG_001_CUST_BAK20230512.bxcdjmfylb
+  is '本行承担/减免费用类別';
+comment on column RRP_MDL.ADD_DG_001_CUST_BAK20230512.bnljcdhjmdxdxgfyje
+  is '本年累计承担或减免的信贷相关费用金额（元）';
+comment on column RRP_MDL.ADD_DG_001_CUST_BAK20230512.sys_source
+  is '来源系统';
+

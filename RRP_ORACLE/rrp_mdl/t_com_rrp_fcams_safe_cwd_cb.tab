@@ -1,0 +1,40 @@
+﻿create table RRP_MDL.T_COM_RRP_FCAMS_SAFE_CWD_CB
+(
+  rid                    VARCHAR2(100) not null,
+  actiontype             VARCHAR2(1),
+  actiondesc             VARCHAR2(128),
+  rptno                  VARCHAR2(52),
+  bankbizcode            VARCHAR2(60),
+  custcode               VARCHAR2(36),
+  custname               VARCHAR2(128),
+  dealtime               VARCHAR2(40),
+  txccy                  VARCHAR2(12),
+  cshdrawamt             NUMBER(22,2),
+  cshdrawamtusd          NUMBER(22,2),
+  purfxdrawamt           NUMBER(22,2),
+  purfxdrawamtusd        NUMBER(22,2),
+  purfxacct              VARCHAR2(64),
+  oppbankcode            VARCHAR2(24),
+  acctdrawamt            NUMBER(22,2),
+  acctdrawamtusd         NUMBER(22,2),
+  drawacct               VARCHAR2(64),
+  cshdrawdesc            VARCHAR2(40),
+  cshdstcty              VARCHAR2(12),
+  remark                 VARCHAR2(256),
+  data_dt                VARCHAR2(40),
+  org_no                 VARCHAR2(40),
+  xf_status              VARCHAR2(1),
+  data_status            VARCHAR2(1),
+  task_id                VARCHAR2(100),
+  report_type            VARCHAR2(200),
+  bw_status              VARCHAR2(1),
+  approval_status        VARCHAR2(1),
+  approval_refuse_reason VARCHAR2(128),
+  child_data_status      VARCHAR2(1)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

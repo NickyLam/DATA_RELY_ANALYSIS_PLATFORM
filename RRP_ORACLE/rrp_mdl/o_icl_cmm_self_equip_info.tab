@@ -1,0 +1,96 @@
+﻿create table RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO
+(
+  etl_dt                   DATE,
+  lp_id                    VARCHAR2(60),
+  equip_id                 VARCHAR2(60),
+  equip_ip_addr_id         VARCHAR2(60),
+  belong_org_id            VARCHAR2(60),
+  in_bank_flg              VARCHAR2(10),
+  self_equip_model         VARCHAR2(90),
+  self_equip_type_cd       VARCHAR2(10),
+  equip_type_name          VARCHAR2(100),
+  equip_type_name_cn_descb VARCHAR2(150),
+  equip_status_cd          VARCHAR2(10),
+  equip_matnce_id          VARCHAR2(60),
+  equip_install_dt         DATE,
+  cash_flg                 VARCHAR2(10),
+  install_way_cd           VARCHAR2(10),
+  dist_cd                  VARCHAR2(20),
+  chn_id                   VARCHAR2(60),
+  equip_install_addr       VARCHAR2(750),
+  equip_kind_name          VARCHAR2(60),
+  job_cd                   VARCHAR2(10),
+  self_equip_model_descb   VARCHAR2(100),
+  equip_provi_name         VARCHAR2(500),
+  equip_matnce_name        VARCHAR2(500),
+  equip_start_use_dt       DATE,
+  equip_stop_use_dt        DATE,
+  termn_id                 VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO
+  is '自助设备信息';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_id
+  is '设备编号';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_ip_addr_id
+  is '设备IP地址编号';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.in_bank_flg
+  is '在行标志';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.self_equip_model
+  is '自助设备型号';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.self_equip_type_cd
+  is '自助设备类型代码';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_type_name
+  is '设备类型名称';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_type_name_cn_descb
+  is '设备类型名称中文描述';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_status_cd
+  is '设备状态代码';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_matnce_id
+  is '设备维护商编号';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_install_dt
+  is '设备安装日期';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.cash_flg
+  is '现金标志';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.install_way_cd
+  is '安装方式代码';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.dist_cd
+  is '行政区划代码';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.chn_id
+  is '渠道编号';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_install_addr
+  is '设备安装地址';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_kind_name
+  is '设备种类名称';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.self_equip_model_descb
+  is '自助设备型号描述';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_provi_name
+  is '设备供应商名称';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_matnce_name
+  is '设备维护商名称';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_start_use_dt
+  is '设备启用日期';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.equip_stop_use_dt
+  is '设备停用日期';
+comment on column RRP_MDL.O_ICL_CMM_SELF_EQUIP_INFO.termn_id
+  is '终端编号';
+

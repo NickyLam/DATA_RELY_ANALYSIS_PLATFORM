@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA
+(
+  cash_proj_cd    VARCHAR2(30),
+  lp_id           VARCHAR2(100),
+  cash_proj_descb VARCHAR2(500),
+  debit_crdt_flg  VARCHAR2(10),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10),
+  src_table_name  VARCHAR2(100),
+  job_cd          VARCHAR2(10),
+  etl_timestamp   TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA
+  is '现金项目定义参数表';
+comment on column RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA.cash_proj_cd
+  is '现金项目代码';
+comment on column RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA.cash_proj_descb
+  is '现金项目描述';
+comment on column RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA.debit_crdt_flg
+  is '借贷标志';
+comment on column RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_REF_CASH_PROJ_DEF_PARA.etl_timestamp
+  is '数据处理时间';
+

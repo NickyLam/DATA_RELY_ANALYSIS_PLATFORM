@@ -1,0 +1,38 @@
+﻿create table RRP_MDL.M_OTH_BSL_RT_CHG_INFO
+(
+  data_dt      CHAR(8),
+  org_id       VARCHAR2(200),
+  loan_id      VARCHAR2(200),
+  cnv_occur_dt CHAR(8),
+  cnv_typ      VARCHAR2(10),
+  cnv_amt      NUMBER(30,2),
+  cnv_bfr_rate NUMBER(20,6),
+  dept_line    VARCHAR2(500),
+  data_src     VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.M_OTH_BSL_RT_CHG_INFO
+  is '参考基准利率贷款转换情况表';
+comment on column RRP_MDL.M_OTH_BSL_RT_CHG_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_OTH_BSL_RT_CHG_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_OTH_BSL_RT_CHG_INFO.loan_id
+  is '贷款编号';
+comment on column RRP_MDL.M_OTH_BSL_RT_CHG_INFO.cnv_occur_dt
+  is '转换发生日期';
+comment on column RRP_MDL.M_OTH_BSL_RT_CHG_INFO.cnv_typ
+  is '转换类型';
+comment on column RRP_MDL.M_OTH_BSL_RT_CHG_INFO.cnv_amt
+  is '转换发生额';
+comment on column RRP_MDL.M_OTH_BSL_RT_CHG_INFO.cnv_bfr_rate
+  is '转换前利率';
+comment on column RRP_MDL.M_OTH_BSL_RT_CHG_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_OTH_BSL_RT_CHG_INFO.data_src
+  is '数据来源';
+

@@ -1,0 +1,258 @@
+﻿create table RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW
+(
+  evt_id                       VARCHAR2(250),
+  bus_flow_num                 VARCHAR2(100),
+  lp_id                        VARCHAR2(100),
+  chn_dt                       DATE,
+  ova_flow_num                 VARCHAR2(100),
+  ups_flow_num                 VARCHAR2(200),
+  sys_flow_num                 VARCHAR2(200),
+  serv_flow_num                VARCHAR2(100),
+  plat_flow_num                VARCHAR2(200),
+  chn_id                       VARCHAR2(100),
+  chn_tm                       TIMESTAMP(6),
+  chn_ip_addr                  VARCHAR2(1000),
+  chn_tran_code                VARCHAR2(100),
+  chn_tran_name                VARCHAR2(500),
+  tran_type_cd                 VARCHAR2(200),
+  tran_org_id                  VARCHAR2(100),
+  tran_org_name                VARCHAR2(500),
+  high_low_teller_flg          VARCHAR2(10),
+  tran_teller_id               VARCHAR2(100),
+  tran_teller_name             VARCHAR2(500),
+  auth_teller_id               VARCHAR2(100),
+  auth_teller_name             VARCHAR2(500),
+  auth_flow_num                VARCHAR2(200),
+  auth_mode_cd                 VARCHAR2(30),
+  long_flow_tran_flg           VARCHAR2(10),
+  cust_type                    VARCHAR2(30),
+  cust_id                      VARCHAR2(100),
+  cust_name                    VARCHAR2(500),
+  cert_type_cd                 VARCHAR2(30),
+  cert_no                      VARCHAR2(200),
+  acct_id                      VARCHAR2(100),
+  acct_num_name                VARCHAR2(500),
+  tran_curr_cd                 VARCHAR2(30),
+  tran_amt                     NUMBER(30,2),
+  debit_crdt_flg               VARCHAR2(10),
+  cash_trans_flg               VARCHAR2(10),
+  cust_netw_vrfction_rest_cd   VARCHAR2(2500),
+  face_recn_rest_cd            VARCHAR2(30),
+  face_recn_score              NUMBER(10,2),
+  cntpty_cate_cd               VARCHAR2(30),
+  cntpty_id                    VARCHAR2(100),
+  cntpty_cust_acct_num         VARCHAR2(200),
+  cntpty_name                  VARCHAR2(500),
+  agent_flg                    VARCHAR2(10),
+  agent_name                   VARCHAR2(500),
+  agent_cert_type_cd           VARCHAR2(30),
+  agent_cert_no                VARCHAR2(200),
+  agent_cont_num               VARCHAR2(60),
+  agent_nation_cd              VARCHAR2(30),
+  agent_gender_cd              VARCHAR2(30),
+  agent_career_cd              VARCHAR2(1000),
+  agent_licen_issue_autho_addr VARCHAR2(2000),
+  agent_cont_addr              VARCHAR2(1500),
+  agent_cert_start_dt          DATE,
+  agent_cert_exp_dt            DATE,
+  agent_netw_vrfction_rest_cd  VARCHAR2(30),
+  agent_face_recn_rest_cd      VARCHAR2(30),
+  agent_face_recn_score        NUMBER(10,2),
+  agent_rs_descb               VARCHAR2(1000),
+  vouch_matrl_qtty             NUMBER(30),
+  blend_way_cd                 VARCHAR2(30),
+  blend_status_cd              VARCHAR2(30),
+  tran_status_cd               VARCHAR2(30),
+  tran_dt                      DATE,
+  tran_tm                      TIMESTAMP(6),
+  high_risk_flg                VARCHAR2(30),
+  descb                        VARCHAR2(1000),
+  manual_blend_flg             VARCHAR2(100),
+  bus_apv_flow_num             VARCHAR2(60),
+  spcs_turn_loc_flg            VARCHAR2(100),
+  rela_bus_flow_num            VARCHAR2(200),
+  brch_init_appl_loc_flg       VARCHAR2(100),
+  spcs_appl_flg                VARCHAR2(100),
+  blip_scene_code              VARCHAR2(100),
+  blip_id                      VARCHAR2(600),
+  app_num                      VARCHAR2(100),
+  etl_dt                       DATE,
+  src_table_name               VARCHAR2(100),
+  job_cd                       VARCHAR2(10),
+  etl_timestamp                TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW
+  is '智能网点业务流水';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.bus_flow_num
+  is '业务流水号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.chn_dt
+  is '渠道日期';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.ova_flow_num
+  is '全局流水号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.ups_flow_num
+  is '上游流水号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.sys_flow_num
+  is '系统流水号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.serv_flow_num
+  is '服务流水号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.plat_flow_num
+  is '平台流水号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.chn_id
+  is '渠道编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.chn_tm
+  is '渠道时间';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.chn_ip_addr
+  is '渠道ip地址';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.chn_tran_code
+  is '渠道交易编码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.chn_tran_name
+  is '渠道交易名称';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.tran_type_cd
+  is '交易类型代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.tran_org_name
+  is '交易机构名称';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.high_low_teller_flg
+  is '高低柜标志';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.tran_teller_name
+  is '交易柜员姓名';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.auth_teller_id
+  is '授权柜员编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.auth_teller_name
+  is '授权柜员姓名';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.auth_flow_num
+  is '授权流水号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.auth_mode_cd
+  is '授权模式代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.long_flow_tran_flg
+  is '长流程交易标志';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cust_type
+  is '客户类型代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cert_type_cd
+  is '证件类型代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cert_no
+  is '证件号码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.acct_num_name
+  is '账号名称';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.tran_curr_cd
+  is '交易币种代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.debit_crdt_flg
+  is '借贷标志';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cash_trans_flg
+  is '现转标志';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cust_netw_vrfction_rest_cd
+  is '客户联网核查结果代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.face_recn_rest_cd
+  is '人脸识别结果代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.face_recn_score
+  is '人脸识别分数';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cntpty_cate_cd
+  is '交易对手类别代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cntpty_cust_acct_num
+  is '交易对手客户账号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.cntpty_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_flg
+  is '代理标志';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_name
+  is '代办人名称';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_cert_type_cd
+  is '代办人证件类型代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_cert_no
+  is '代办人证件号码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_cont_num
+  is '代办人联系号码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_nation_cd
+  is '代办人国籍代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_gender_cd
+  is '代办人性别代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_career_cd
+  is '代办人职业代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_licen_issue_autho_addr
+  is '代办人发证机关地址';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_cont_addr
+  is '代办人联系地址';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_cert_start_dt
+  is '代办人证件开始日期';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_cert_exp_dt
+  is '交易代办人证件到期日期';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_netw_vrfction_rest_cd
+  is '代办人联网核查结果代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_face_recn_rest_cd
+  is '代办人人脸识别结果代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_face_recn_score
+  is '代办人人脸识别分数';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.agent_rs_descb
+  is '代办原因描述';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.vouch_matrl_qtty
+  is '凭证资料数量';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.blend_way_cd
+  is '勾兑方式代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.blend_status_cd
+  is '勾兑状态代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.high_risk_flg
+  is '高风险标志';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.descb
+  is '描述';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.manual_blend_flg
+  is '手工勾兑标志';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.bus_apv_flow_num
+  is '业务审批流水号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.spcs_turn_loc_flg
+  is '后援中心转本地标志';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.rela_bus_flow_num
+  is '关联业务流水号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.brch_init_appl_loc_flg
+  is '分行主动申请本地标志';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.spcs_appl_flg
+  is '后援申请撤退标志';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.blip_scene_code
+  is '影像场景码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.blip_id
+  is '影像编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.app_num
+  is '应用编号';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_INTELLGE_BRAC_BUS_FLOW.etl_timestamp
+  is 'etl处理时间戳';
+

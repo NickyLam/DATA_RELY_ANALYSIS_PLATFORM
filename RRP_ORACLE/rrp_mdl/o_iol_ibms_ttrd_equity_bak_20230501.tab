@@ -1,0 +1,161 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501
+(
+  i_code             VARCHAR2(50),
+  a_type             VARCHAR2(20),
+  m_type             VARCHAR2(20),
+  l_code             VARCHAR2(30),
+  i_name             VARCHAR2(200),
+  currency           CHAR(3),
+  country            CHAR(2),
+  q_type             CHAR(2),
+  p_type             VARCHAR2(30),
+  p_class            VARCHAR2(100),
+  list_date          CHAR(10),
+  open_date          CHAR(10),
+  issuer             VARCHAR2(200),
+  risk_rating        NUMBER(22),
+  trustee            VARCHAR2(255),
+  imp_date           CHAR(10),
+  pipe_id            NUMBER(22),
+  chinesespell       VARCHAR2(100),
+  update_user        VARCHAR2(100),
+  update_time        VARCHAR2(23),
+  account_user       VARCHAR2(30),
+  account_time       VARCHAR2(20),
+  issuer_id          NUMBER(22),
+  trustee_id         NUMBER(22),
+  usable_flag        NUMBER(22),
+  product_rate       VARCHAR2(100),
+  rate_institution   VARCHAR2(100),
+  open_type          VARCHAR2(20),
+  start_open_date    VARCHAR2(20),
+  end_open_date      VARCHAR2(20),
+  guarantee_way      VARCHAR2(2),
+  guarantee_infor    VARCHAR2(300),
+  ctrct_id           VARCHAR2(50),
+  platform           VARCHAR2(2),
+  invest_direction   VARCHAR2(500),
+  final_invest       VARCHAR2(10),
+  five_class         VARCHAR2(2),
+  contract_version   VARCHAR2(2),
+  extordid           VARCHAR2(50),
+  mitigation_freq    VARCHAR2(10),
+  manager_id         NUMBER(16),
+  manager_value      VARCHAR2(255),
+  risk_proportion    NUMBER(14,6),
+  middle_classify    VARCHAR2(50),
+  small_classify     VARCHAR2(50),
+  closing_start_date CHAR(10),
+  closing_end_date   CHAR(10),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501
+  is '净值型产品信息表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.a_type
+  is '资产类型：净值型项目SPT_NTP';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.l_code
+  is '本地代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.i_name
+  is '金融工具名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.country
+  is '国家';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.q_type
+  is '发行类型：净值型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.p_type
+  is '产品类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.p_class
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.list_date
+  is '上市时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.open_date
+  is '开发时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.issuer
+  is '发行人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.risk_rating
+  is '风险等级';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.trustee
+  is '托管人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.imp_date
+  is '导入日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.pipe_id
+  is '导入方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.chinesespell
+  is '拼音简称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.update_user
+  is '更新者id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.account_user
+  is '复核人员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.account_time
+  is '记账时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.issuer_id
+  is '发行机构ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.trustee_id
+  is '托管机构ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.usable_flag
+  is '是否已生效：1： 正常 0： 新增';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.product_rate
+  is '产品评级';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.rate_institution
+  is '评级机构';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.open_type
+  is '每日开放：0,每周开放：1';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.start_open_date
+  is '开放周期开始日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.end_open_date
+  is '开放周期结束日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.guarantee_way
+  is '担保方式';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.guarantee_infor
+  is '担保物情况';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.ctrct_id
+  is '合同编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.platform
+  is '平台';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.invest_direction
+  is '投向';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.final_invest
+  is '最终投向类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.five_class
+  is '五级分类（正常:0,关注:1,次级:2,可疑:3,损失:4）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.contract_version
+  is '合同版本号（已审合同:0,送审合同:1,标准合同:2）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.extordid
+  is '外部交易号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.mitigation_freq
+  is '缓释频率';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.manager_id
+  is '实际管理人ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.manager_value
+  is '实际管理人';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.risk_proportion
+  is '风险权重占比';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.middle_classify
+  is '业务中类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.small_classify
+  is '业务小类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.closing_start_date
+  is '封闭开始日(对应开放类型为封闭型)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.closing_end_date
+  is '封闭结束日(对应开放类型为封闭型)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_BAK_20230501.id_mark
+  is '增删标志';
+

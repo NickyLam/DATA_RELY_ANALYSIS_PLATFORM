@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.T_COM_RRP_DIIS_DIIS_POAD01
+(
+  rid          VARCHAR2(100) not null,
+  cust_seq     NUMBER(15),
+  name         VARCHAR2(400),
+  cust_id      VARCHAR2(100),
+  uscc         VARCHAR2(100),
+  obj_name     VARCHAR2(400),
+  obj_id_type  VARCHAR2(4),
+  obj_id_no    VARCHAR2(100),
+  dpst_tot_amt NUMBER(30,2),
+  acct_seq     NUMBER(15),
+  prod_type    VARCHAR2(4),
+  acct_no      VARCHAR2(64),
+  corp_name    VARCHAR2(200),
+  acct_type    VARCHAR2(40),
+  dpst_sts     VARCHAR2(4),
+  id_type      VARCHAR2(40),
+  id_no        VARCHAR2(60),
+  id_valid_dt  VARCHAR2(20),
+  tel_no       VARCHAR2(60),
+  addr         VARCHAR2(180),
+  prin_amt     NUMBER(30,2),
+  int_amt      NUMBER(30,2),
+  tot_amt      NUMBER(30,2),
+  note         VARCHAR2(600),
+  data_dt      VARCHAR2(20) not null,
+  org_no       VARCHAR2(40),
+  curr_cd      VARCHAR2(6),
+  dept_no      VARCHAR2(60),
+  issued_no    VARCHAR2(40),
+  rpt_org_no   VARCHAR2(40),
+  data_ources  VARCHAR2(4),
+  data_modify  VARCHAR2(4),
+  dpst_pc_amt  NUMBER(30,2),
+  dpst_ac_amt  NUMBER(30,2),
+  pg_ct_no     VARCHAR2(400),
+  agg_act      VARCHAR2(2),
+  is_seq       VARCHAR2(2),
+  subj_id      VARCHAR2(60),
+  subj_nm      VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

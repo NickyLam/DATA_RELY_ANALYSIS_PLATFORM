@@ -1,0 +1,129 @@
+﻿create table RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT
+(
+  etl_dt            DATE,
+  evt_id            VARCHAR2(250),
+  lp_id             VARCHAR2(60),
+  src_evt_id        VARCHAR2(100),
+  tran_tm           TIMESTAMP(6),
+  tran_code         VARCHAR2(45),
+  rgst_teller_id    VARCHAR2(60),
+  tran_name         VARCHAR2(375),
+  tran_id           VARCHAR2(60),
+  bus_table_name    VARCHAR2(375),
+  bus_tab_flow_num  VARCHAR2(90),
+  tran_descb        VARCHAR2(375),
+  bus_teller_id     VARCHAR2(60),
+  tran_cmplt_tm     TIMESTAMP(6),
+  remark            VARCHAR2(750),
+  auth_status_cd    VARCHAR2(30),
+  submit_status_cd  VARCHAR2(30),
+  check_dt          DATE,
+  auth_curr_cd      VARCHAR2(30),
+  auth_amt          NUMBER(30,8),
+  curr_cd           VARCHAR2(30),
+  tran_amt          NUMBER(30,8),
+  modif_teller_id   VARCHAR2(60),
+  ord_tab_flow_num  VARCHAR2(90),
+  org_id            VARCHAR2(60),
+  entry_org_id      VARCHAR2(60),
+  bus_belong_org_id VARCHAR2(60),
+  org_idf_cd        VARCHAR2(30),
+  ova_flow_num      VARCHAR2(150),
+  revs_flow_num     VARCHAR2(150),
+  revs_rs           VARCHAR2(750),
+  start_dt          DATE,
+  end_dt            DATE,
+  id_mark           VARCHAR2(10),
+  src_table_name    VARCHAR2(100),
+  job_cd            VARCHAR2(10),
+  etl_timestamp     TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT
+  is '国结交易流水事件';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.src_evt_id
+  is '源事件编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.tran_code
+  is '交易码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.tran_name
+  is '交易名称';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.tran_id
+  is '交易编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.bus_table_name
+  is '业务表名称';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.bus_tab_flow_num
+  is '业务表流水号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.tran_descb
+  is '交易描述';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.bus_teller_id
+  is '业务柜员编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.tran_cmplt_tm
+  is '交易完成时间';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.remark
+  is '备注';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.auth_status_cd
+  is '授权状态代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.submit_status_cd
+  is '提交状态代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.check_dt
+  is '复核日期';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.auth_curr_cd
+  is '授权币种代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.auth_amt
+  is '授权金额';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.modif_teller_id
+  is '修改柜员编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.ord_tab_flow_num
+  is 'ORD表流水号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.entry_org_id
+  is '记账机构编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.bus_belong_org_id
+  is '业务所属机构编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.org_idf_cd
+  is '机构标识代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.ova_flow_num
+  is '全局流水号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.revs_flow_num
+  is '冲正流水号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.revs_rs
+  is '冲正原因';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT.etl_timestamp
+  is '数据处理时间';
+

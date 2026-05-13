@@ -1,0 +1,147 @@
+﻿create table RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE
+(
+  datainput_id    VARCHAR2(32) not null,
+  data_date       VARCHAR2(10),
+  acct_org_num    VARCHAR2(20),
+  zwjgmc          VARCHAR2(200),
+  jgszsjxzq       VARCHAR2(6),
+  zhwym           VARCHAR2(60),
+  jywym           VARCHAR2(200),
+  khwym           VARCHAR2(60),
+  khmc            VARCHAR2(200),
+  tjxwqylb        VARCHAR2(100),
+  sfphxwqy        VARCHAR2(10),
+  sxed            NUMBER(20,6),
+  fkrq            VARCHAR2(10),
+  fkje            NUMBER(20,6),
+  tjye            NUMBER(20,6),
+  dkdqrq          VARCHAR2(10),
+  bgrdkyqts       NUMBER(20,6),
+  tjyqts          NUMBER(20,6),
+  tjyqbjje        NUMBER(20,6),
+  wjfl            VARCHAR2(10),
+  dbjgbh          VARCHAR2(100),
+  dbjgmc          VARCHAR2(100),
+  dbfs            VARCHAR2(100),
+  sfrzdbgsbz      VARCHAR2(10),
+  zfxrzdbjgbj     VARCHAR2(100),
+  sfzfxrzdbgsbz   VARCHAR2(10),
+  sfnhjxxnyjyztdk VARCHAR2(10),
+  bndljsjhddcje   NUMBER(20,6),
+  bgrswlxdczrje   NUMBER(20,6),
+  bz              VARCHAR2(1000),
+  sys_source      VARCHAR2(100),
+  sfsc            VARCHAR2(10),
+  jyxkzbh         VARCHAR2(70),
+  sys_data_date   VARCHAR2(20) not null,
+  sys_data_case   VARCHAR2(32) not null,
+  sys_operator    VARCHAR2(256),
+  sys_oper_org    VARCHAR2(32) not null,
+  sys_oper_date   VARCHAR2(20),
+  sys_data_state  VARCHAR2(10),
+  sys_order_no    NUMBER(19),
+  error_mark      VARCHAR2(2),
+  flow_node_id    VARCHAR2(32),
+  comments        VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE
+  is '补录表-零售-融资担保机构代偿模型（G5305）-应用';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.datainput_id
+  is '数据录入时间';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.data_date
+  is '数据日期';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.zwjgmc
+  is '账务机构名称';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.jgszsjxzq
+  is '机构所在省级行政区';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.zhwym
+  is '账户唯一码';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.jywym
+  is '交易唯一码';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.khwym
+  is '客户唯一码';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.khmc
+  is '客户名称';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.tjxwqylb
+  is '统计小微企业类别';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sfphxwqy
+  is '是否普惠小微企业';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sxed
+  is '授信额度';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.fkrq
+  is '放款日期';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.fkje
+  is '放款金额';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.tjye
+  is '统计余额（元）';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.dkdqrq
+  is '贷款到期日期';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.bgrdkyqts
+  is '报告日贷款逾期天数';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.tjyqts
+  is '统计逾期天数（天）';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.tjyqbjje
+  is '统计逾期本金金额（元）';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.wjfl
+  is '五级分类';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.dbjgbh
+  is '担保机构编号';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.dbjgmc
+  is '担保机构名称';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.dbfs
+  is '担保方式';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sfrzdbgsbz
+  is '是否融资担保公司保证';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.zfxrzdbjgbj
+  is '政府性融资担保机构标记';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sfzfxrzdbgsbz
+  is '是否政府性融资担保公司保证';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sfnhjxxnyjyztdk
+  is '是否农户及新型农业经营主体贷款';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.bndljsjhddcje
+  is '本年度累计实际获得代偿金额（元）';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.bgrswlxdczrje
+  is '报告日尚未履行代偿责任金额（元）';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.bz
+  is '备注';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sys_source
+  is '来源系统';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sfsc
+  is '是否删除';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.jyxkzbh
+  is '经营许可证编号';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sys_data_date
+  is '数据日期';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sys_data_case
+  is '任务实例ID';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sys_operator
+  is '补录人员';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sys_oper_org
+  is '补录机构';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sys_oper_date
+  is '操作日期';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sys_data_state
+  is '数据状态:save(已保存),submit(已提交),reject(驳回),sucess(审核通过),refuse(已回退)';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.sys_order_no
+  is '序号';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.error_mark
+  is '错误标记';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.flow_node_id
+  is '流程节点';
+comment on column RRP_MDL.ADD_LS_014_FINANCE_GUARAN_ETL_DELETE.comments
+  is '取款虚拟柜员号';
+

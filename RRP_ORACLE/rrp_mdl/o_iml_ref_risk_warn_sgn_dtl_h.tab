@@ -1,0 +1,60 @@
+﻿create table RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H
+(
+  warn_id          VARCHAR2(100),
+  lp_id            VARCHAR2(100),
+  warn_name        VARCHAR2(500),
+  warn_sgn_type_cd VARCHAR2(30),
+  warn_descb       VARCHAR2(4000),
+  warn_hibchy      VARCHAR2(60),
+  rgst_dt          DATE,
+  modif_dt         DATE,
+  start_dt         DATE,
+  end_dt           DATE,
+  id_mark          VARCHAR2(10),
+  src_table_name   VARCHAR2(100),
+  job_cd           VARCHAR2(10),
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H
+  is '风险预警信号详情历史';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.warn_id
+  is '预警编号';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.warn_name
+  is '预警名称';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.warn_sgn_type_cd
+  is '预警信号类型代码';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.warn_descb
+  is '预警描述';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.warn_hibchy
+  is '预警层级';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.modif_dt
+  is '变更日期';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_REF_RISK_WARN_SGN_DTL_H.etl_timestamp
+  is 'etl处理时间戳';
+

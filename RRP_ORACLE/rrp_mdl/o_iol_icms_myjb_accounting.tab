@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.O_IOL_ICMS_MYJB_ACCOUNTING
+(
+  column_name    VARCHAR2(40),
+  column_content VARCHAR2(32),
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_MYJB_ACCOUNTING
+  is '借呗汇总记账文件';
+comment on column RRP_MDL.O_IOL_ICMS_MYJB_ACCOUNTING.column_name
+  is '字段名称';
+comment on column RRP_MDL.O_IOL_ICMS_MYJB_ACCOUNTING.column_content
+  is '字段值';
+comment on column RRP_MDL.O_IOL_ICMS_MYJB_ACCOUNTING.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_MYJB_ACCOUNTING.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_MYJB_ACCOUNTING.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_MYJB_ACCOUNTING.etl_timestamp
+  is 'etl处理时间戳';
+

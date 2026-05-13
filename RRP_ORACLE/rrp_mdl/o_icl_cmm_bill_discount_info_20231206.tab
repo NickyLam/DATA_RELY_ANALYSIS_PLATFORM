@@ -1,0 +1,225 @@
+﻿create table RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206
+(
+  etl_dt                            DATE,
+  lp_id                             VARCHAR2(60),
+  bus_id                            VARCHAR2(60),
+  batch_id                          VARCHAR2(60),
+  std_prod_id                       VARCHAR2(60),
+  bill_id                           VARCHAR2(60),
+  bill_num                          VARCHAR2(60),
+  bill_sub_intrv_id                 VARCHAR2(60),
+  subj_id                           VARCHAR2(60),
+  int_adj_subj_id                   VARCHAR2(60),
+  cont_id                           VARCHAR2(60),
+  ctr_nt_id                         VARCHAR2(60),
+  exp_repo_agt_id                   VARCHAR2(60),
+  bill_cont_id                      VARCHAR2(60),
+  bill_prod_id                      VARCHAR2(60),
+  bill_med_cd                       VARCHAR2(10),
+  bill_kind_cd                      VARCHAR2(10),
+  draw_dt                           DATE,
+  exp_dt                            DATE,
+  actl_exp_dt                       DATE,
+  appl_dt                           DATE,
+  bus_dt                            DATE,
+  stl_dt                            DATE,
+  repo_dt                           DATE,
+  actl_repo_dt                      DATE,
+  curr_cd                           VARCHAR2(10),
+  fac_val_amt                       NUMBER(30,2),
+  stl_amt                           NUMBER(30,2),
+  repo_amt                          NUMBER(30,2),
+  int_amt                           NUMBER(30,2),
+  repo_int_amt                      NUMBER(30,2),
+  discnt_int_rat                    NUMBER(18,8),
+  redem_int_rat                     NUMBER(18,8),
+  currt_bal                         NUMBER(30,2),
+  int_adj_bal                       NUMBER(30,2),
+  td_acru_int                       NUMBER(30,2),
+  currt_acru_int                    NUMBER(30,2),
+  bus_type_cd                       VARCHAR2(10),
+  asset_thd_cls_cd                  VARCHAR2(30),
+  tran_dir_cd                       VARCHAR2(10),
+  discnt_dt                         DATE,
+  discnt_ps_unify_soci_crdt_cd_cert VARCHAR2(60),
+  cntpty_id                         VARCHAR2(60),
+  cntpty_name                       VARCHAR2(250),
+  cntpty_bank_no                    VARCHAR2(60),
+  cntpty_cate_cd                    VARCHAR2(10),
+  cntpty_type_cd                    VARCHAR2(10),
+  hxb_acpt_flg                      VARCHAR2(10),
+  bill_src_cd                       VARCHAR2(10),
+  sys_in_flg                        VARCHAR2(10),
+  quot_way_cd                       VARCHAR2(10),
+  stl_way_cd                        VARCHAR2(10),
+  lock_flg                          VARCHAR2(10),
+  hold_days                         NUMBER(18),
+  defer_days                        NUMBER(18),
+  valid_flg                         VARCHAR2(10),
+  bus_status_cd                     VARCHAR2(10),
+  entry_status_cd                   VARCHAR2(10),
+  lmt_id                            VARCHAR2(60),
+  lmt_status_cd                     VARCHAR2(10),
+  cust_mgr_id                       VARCHAR2(60),
+  dept_id                           VARCHAR2(60),
+  bus_org_id                        VARCHAR2(60),
+  acct_instit_id                    VARCHAR2(60),
+  bf_cntpty_flg                     VARCHAR2(10),
+  bf_cntpty_name                    VARCHAR2(250),
+  bf_cntpty_type_cd                 VARCHAR2(10),
+  job_cd                            VARCHAR2(10),
+  discnt_ps_name                    VARCHAR2(250)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206
+  is '票据转贴现信息';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.batch_id
+  is '批次编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bill_id
+  is '票据编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bill_num
+  is '票据号码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bill_sub_intrv_id
+  is '票据子区间编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.subj_id
+  is '科目代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.int_adj_subj_id
+  is '利息调整科目编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.cont_id
+  is '合同号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.ctr_nt_id
+  is '成交单编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.exp_repo_agt_id
+  is '到期回购协议编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bill_cont_id
+  is '票据合同编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bill_prod_id
+  is '票据产品编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bill_med_cd
+  is '票据介质代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bill_kind_cd
+  is '票据种类代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.draw_dt
+  is '出票日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.actl_exp_dt
+  is '实际到期日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.appl_dt
+  is '申请日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bus_dt
+  is '业务日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.stl_dt
+  is '结算日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.repo_dt
+  is '约定回购日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.actl_repo_dt
+  is '实际回购日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.curr_cd
+  is '币种代码CD1728';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.fac_val_amt
+  is '票面金额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.stl_amt
+  is '结算金额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.repo_amt
+  is '回购金额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.int_amt
+  is '利息金额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.repo_int_amt
+  is '回购利息金额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.discnt_int_rat
+  is '贴现利率';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.redem_int_rat
+  is '赎回利率';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.int_adj_bal
+  is '利息调整余额';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.td_acru_int
+  is '当日应计利息';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.currt_acru_int
+  is '当期应计利息';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bus_type_cd
+  is '业务类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.asset_thd_cls_cd
+  is '资产三分类代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.tran_dir_cd
+  is '交易方向代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.discnt_dt
+  is '贴现日期';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.discnt_ps_unify_soci_crdt_cd_cert
+  is '贴现人统一社会信用代码证';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.cntpty_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.cntpty_bank_no
+  is '交易对手行号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.cntpty_cate_cd
+  is '交易对手类别代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.cntpty_type_cd
+  is '交易对手类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.hxb_acpt_flg
+  is '我行承兑标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bill_src_cd
+  is '票据来源代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.sys_in_flg
+  is '系统内标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.quot_way_cd
+  is '报价方式代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.stl_way_cd
+  is '结算方式代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.lock_flg
+  is '锁定标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.hold_days
+  is '持票天数';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.defer_days
+  is '顺延天数';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.valid_flg
+  is '有效标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bus_status_cd
+  is '业务状态代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.entry_status_cd
+  is '记账状态代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.lmt_id
+  is '额度编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.lmt_status_cd
+  is '额度状态代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.dept_id
+  is '部门编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bus_org_id
+  is '业务机构编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.acct_instit_id
+  is '账务机构编号';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bf_cntpty_flg
+  is '前交易对手标志';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bf_cntpty_name
+  is '前交易对手名称';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.bf_cntpty_type_cd
+  is '前交易对手类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_BILL_DISCOUNT_INFO_20231206.discnt_ps_name
+  is '原始贴现人名称';
+

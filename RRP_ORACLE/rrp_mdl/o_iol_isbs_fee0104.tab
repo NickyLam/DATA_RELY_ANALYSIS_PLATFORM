@@ -1,0 +1,87 @@
+﻿create table RRP_MDL.O_IOL_ISBS_FEE0104
+(
+  inr                    VARCHAR2(12),
+  trninr                 VARCHAR2(12),
+  credattim              TIMESTAMP(6),
+  seq                    VARCHAR2(3),
+  client_no              VARCHAR2(30),
+  fee_type               VARCHAR2(18),
+  fee_ccy                VARCHAR2(5),
+  fee_amt                NUMBER(17,2),
+  fee_charge_method      VARCHAR2(2),
+  charge_mode            VARCHAR2(2),
+  charge_to_base_acct_no VARCHAR2(75),
+  charge_to_acct_seq_no  VARCHAR2(5),
+  withdrawal_type        VARCHAR2(2),
+  effect_date            VARCHAR2(12),
+  amort_start            VARCHAR2(12),
+  amort_end              VARCHAR2(12),
+  feecod                 VARCHAR2(9),
+  ownkey                 VARCHAR2(30),
+  othcli                 VARCHAR2(30),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_FEE0104
+  is '费率';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.inr
+  is '主键';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.trninr
+  is 'TRN主键';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.credattim
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.seq
+  is '序号';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.client_no
+  is '客户号';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.fee_type
+  is '汇率类别';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.fee_ccy
+  is '帐户动作收用币种';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.fee_amt
+  is '账户动作收用金额';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.fee_charge_method
+  is '服务手续费收取方式';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.charge_mode
+  is '收取标志';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.charge_to_base_acct_no
+  is '收取账号';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.charge_to_acct_seq_no
+  is '收取账号序号';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.withdrawal_type
+  is '支取方式码';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.effect_date
+  is '生效日期';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.amort_start
+  is '摊销起始日期';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.amort_end
+  is '摊销截止日期';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.feecod
+  is '交易类别';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.ownkey
+  is '业务编号';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.othcli
+  is '外层客户号';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ISBS_FEE0104.etl_timestamp
+  is 'ETL处理时间戳';
+

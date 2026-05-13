@@ -1,0 +1,60 @@
+﻿create table RRP_MDL.M_DICT_G19_REMAPPING
+(
+  type_code   VARCHAR2(20),
+  type_name   VARCHAR2(300),
+  l_core      VARCHAR2(20),
+  l_name      VARCHAR2(300),
+  m_core      VARCHAR2(20),
+  m_name      VARCHAR2(300),
+  s_core      VARCHAR2(20),
+  s_name      VARCHAR2(300),
+  ori_core    VARCHAR2(20),
+  ori_name    VARCHAR2(300),
+  code        VARCHAR2(30),
+  name        VARCHAR2(300),
+  sts         VARCHAR2(2),
+  update_time VARCHAR2(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_DICT_G19_REMAPPING
+  is 'G19行业映射关系表';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.type_code
+  is '码值类型';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.type_name
+  is '码值类型名称';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.l_core
+  is '行业大类';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.l_name
+  is '行业大类名称';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.m_core
+  is '行业中类';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.m_name
+  is '行业中类名称';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.s_core
+  is '行业小类';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.s_name
+  is '行业小类名称';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.ori_core
+  is '原码值';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.ori_name
+  is '原码值名称';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.code
+  is '码值';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.name
+  is '码值名称';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.sts
+  is '有效状态';
+comment on column RRP_MDL.M_DICT_G19_REMAPPING.update_time
+  is '更新时间';
+

@@ -1,0 +1,54 @@
+﻿create table RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H
+(
+  bus_id                   VARCHAR2(60),
+  intnal_acct_prod_cd      VARCHAR2(30),
+  intnal_acct_seq_num      VARCHAR2(60),
+  auto_open_acct_acct_name VARCHAR2(200),
+  tot_acct_flg             VARCHAR2(10),
+  inside_acct_src_cd       VARCHAR2(10),
+  aply_mech_curr_cd        VARCHAR2(10),
+  start_dt                 DATE,
+  end_dt                   DATE,
+  id_mark                  VARCHAR2(10),
+  src_table_name           VARCHAR2(100),
+  job_cd                   VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H
+  is '内部帐户业务对照历史表';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.intnal_acct_prod_cd
+  is '内部帐户产品代码';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.intnal_acct_seq_num
+  is '内部帐户序号';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.auto_open_acct_acct_name
+  is '自动开户户名';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.tot_acct_flg
+  is '总户标志';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.inside_acct_src_cd
+  is '内部户来源代码CD1319';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.aply_mech_curr_cd
+  is '套用币种代码CD1728';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_REF_INTNAL_ACCT_BUS_COMP_H.job_cd
+  is '任务代码';
+

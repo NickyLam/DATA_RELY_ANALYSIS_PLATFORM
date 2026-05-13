@@ -1,0 +1,17 @@
+﻿create table RRP_MDL.TEMP_BFD_CUST_ID
+(
+  cust_id VARCHAR2(100),
+  id_no   VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.TEMP_BFD_CUST_ID
+  is '金数临时表_对比数据用';
+comment on column RRP_MDL.TEMP_BFD_CUST_ID.cust_id
+  is '客户号';
+comment on column RRP_MDL.TEMP_BFD_CUST_ID.id_no
+  is '身份证号码';
+

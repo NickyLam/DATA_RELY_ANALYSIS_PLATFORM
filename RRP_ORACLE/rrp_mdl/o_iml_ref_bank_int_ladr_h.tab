@@ -1,0 +1,111 @@
+﻿create table RRP_MDL.O_IML_REF_BANK_INT_LADR_H
+(
+  ladr_seq_num             VARCHAR2(60),
+  lp_id                    VARCHAR2(100),
+  org_id                   VARCHAR2(100),
+  curr_cd                  VARCHAR2(30),
+  bank_int_int_rat_type_cd VARCHAR2(30),
+  year_base_days           VARCHAR2(30),
+  effect_dt                DATE,
+  invalid_dt               DATE,
+  base_rat_type_id         VARCHAR2(100),
+  base_exch_rat            VARCHAR2(500),
+  ped_freq_cd              VARCHAR2(30),
+  eh_issue_days            NUMBER(10),
+  ladr_amt                 NUMBER(30,2),
+  bank_int_int_rat         NUMBER(18,8),
+  int_rat_discnt           NUMBER(18,8),
+  float_ratio              NUMBER(18,6),
+  float_point              NUMBER(18,8),
+  max_cu_ratio             NUMBER(18,8),
+  min_cu_ratio             NUMBER(18,8),
+  min_int_rat              NUMBER(18,8),
+  max_int_rat              NUMBER(18,8),
+  max_float_point          NUMBER(4),
+  min_float_point          NUMBER(4),
+  max_float_ratio          NUMBER(18,8),
+  min_float_ratio          NUMBER(18,8),
+  start_dt                 DATE,
+  end_dt                   DATE,
+  id_mark                  VARCHAR2(10),
+  src_table_name           VARCHAR2(100),
+  job_cd                   VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_REF_BANK_INT_LADR_H
+  is '行内利率阶梯历史';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.ladr_seq_num
+  is '阶梯序号';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.bank_int_int_rat_type_cd
+  is '行内利率类型代码';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.year_base_days
+  is '年基准天数';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.effect_dt
+  is '生效日期';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.invalid_dt
+  is '失效日期';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.base_rat_type_id
+  is '基准利率类型编号';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.base_exch_rat
+  is '基础汇率';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.ped_freq_cd
+  is '周期频率代码';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.eh_issue_days
+  is '每期天数';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.ladr_amt
+  is '阶梯金额';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.bank_int_int_rat
+  is '行内利率';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.int_rat_discnt
+  is '利率折扣';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.float_ratio
+  is '浮动比例';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.float_point
+  is '浮动点数';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.max_cu_ratio
+  is '最大上浮比例';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.min_cu_ratio
+  is '最小上浮比例';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.min_int_rat
+  is '最小利率';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.max_int_rat
+  is '最大利率';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.max_float_point
+  is '浮动点差上限';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.min_float_point
+  is '浮动点差下限';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.max_float_ratio
+  is '最大下浮比例';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.min_float_ratio
+  is '最小下浮比例';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_REF_BANK_INT_LADR_H.etl_timestamp
+  is 'etl处理时间戳';
+

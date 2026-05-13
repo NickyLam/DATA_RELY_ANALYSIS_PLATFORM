@@ -1,0 +1,245 @@
+﻿create table RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501
+(
+  etl_dt                     DATE,
+  lp_id                      VARCHAR2(60),
+  fin_instm_id               VARCHAR2(500),
+  asset_type_id              VARCHAR2(60),
+  market_type_id             VARCHAR2(60),
+  fin_instm_name             VARCHAR2(250),
+  fin_instm_abbr             VARCHAR2(250),
+  std_prod_id                VARCHAR2(60),
+  prod_type_cd               VARCHAR2(10),
+  asset_type_name            VARCHAR2(250),
+  prod_cls_tenor_cd          VARCHAR2(10),
+  issuer_cust_id             VARCHAR2(60),
+  issue_org_id               VARCHAR2(60),
+  discov_org_cls_name        VARCHAR2(500),
+  issue_dt                   DATE,
+  mger_cust_id               VARCHAR2(60),
+  mger_id                    VARCHAR2(60),
+  mger_name                  VARCHAR2(500),
+  mgmt_mode_cd               VARCHAR2(60),
+  value_dt                   DATE,
+  exp_dt                     DATE,
+  tenor_cd                   VARCHAR2(10),
+  base_rat_id                VARCHAR2(60),
+  int_accr_base_cd           VARCHAR2(10),
+  int_rat_adj_way_cd         VARCHAR2(10),
+  int_rat_adj_ped_freq       VARCHAR2(10),
+  int_rat_adj_ped_corp_cd    VARCHAR2(30),
+  issue_way_cd               VARCHAR2(10),
+  cty_cd                     VARCHAR2(10),
+  curr_cd                    VARCHAR2(10),
+  fac_val_amt                NUMBER(30,2),
+  fac_val_int_rat            NUMBER(18,8),
+  fwd_int_rat_curve          VARCHAR2(500),
+  disct_int_rat_curve        VARCHAR2(500),
+  risk_wt                    NUMBER(18,8),
+  contn_weight_flg           VARCHAR2(10),
+  pay_int_ped_cd             VARCHAR2(10),
+  src_pay_int_ped_cd         VARCHAR2(10),
+  pay_int_freq               NUMBER(18),
+  fir_pay_int_dt             DATE,
+  belong_org_id              VARCHAR2(60),
+  cashflow_get_way_cd        VARCHAR2(30),
+  spec_aim_vector_type_cd    VARCHAR2(60),
+  spec_aim_vector_code       VARCHAR2(60),
+  am_prod_stat_code          VARCHAR2(60),
+  issuer_id                  VARCHAR2(60),
+  issuer_rg_cd               VARCHAR2(60),
+  move_way_cd                VARCHAR2(60),
+  non_uder_asset_cls_cd      VARCHAR2(60),
+  non_uder_asset_subclass_cd VARCHAR2(60),
+  dr_input_freq_cd           VARCHAR2(10),
+  dr_effect_dt               DATE,
+  dr_exp_dt                  DATE,
+  margin_dr_ratio            NUMBER(18,8),
+  hxb_dep_rcpt_dr_ratio      NUMBER(18,8),
+  tbond_dr_ratio             NUMBER(18,8),
+  chn_pb_bond_dr_ratio       NUMBER(18,8),
+  chn_cb_dr_ratio            NUMBER(18,8),
+  chn_pub_dept_dr_ratio      NUMBER(18,8),
+  other_dr_ratio             NUMBER(18,8),
+  dr_prod_descb_info         VARCHAR2(500),
+  dr_acct_id                 VARCHAR2(250),
+  dr_acct_bal                NUMBER(30,8),
+  fund_open_dt               DATE,
+  actl_finer_cust_id         VARCHAR2(60),
+  actl_finer_name            VARCHAR2(500),
+  actl_finer_group_name      VARCHAR2(500),
+  set_open_flg               VARCHAR2(10),
+  set_open_ped_cd            VARCHAR2(20),
+  open_type_cd               VARCHAR2(20),
+  incre_crdt_way_cd          VARCHAR2(60),
+  incre_crdt_main_name       VARCHAR2(500),
+  set_open_tenor_start_dt    DATE,
+  set_open_tenor_end_dt      DATE,
+  usage_descb                VARCHAR2(500),
+  guar_way_comb              VARCHAR2(500),
+  crdt_class_proj_flg        VARCHAR2(10),
+  job_cd                     VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501
+  is '同业金融工具';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.fin_instm_id
+  is '金融工具编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.asset_type_id
+  is '资产类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.market_type_id
+  is '市场类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.fin_instm_name
+  is '金融工具名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.fin_instm_abbr
+  is '金融工具简称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.prod_type_cd
+  is '产品类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.asset_type_name
+  is '资产类型名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.prod_cls_tenor_cd
+  is '产品分类期限代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.issuer_cust_id
+  is '发行人客户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.issue_org_id
+  is '发行机构编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.discov_org_cls_name
+  is '发现机构分类名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.issue_dt
+  is '发行日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.mger_cust_id
+  is '管理人客户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.mger_id
+  is '管理人编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.mger_name
+  is '管理人名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.mgmt_mode_cd
+  is '管理模式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.tenor_cd
+  is '期限代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.base_rat_id
+  is '基准利率编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.int_accr_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.int_rat_adj_way_cd
+  is '利率调整方式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.int_rat_adj_ped_freq
+  is '利率调整周期频率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.int_rat_adj_ped_corp_cd
+  is '利率调整周期单位代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.issue_way_cd
+  is '发行模式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.cty_cd
+  is '国家代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.fac_val_amt
+  is '票面金额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.fac_val_int_rat
+  is '票面利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.fwd_int_rat_curve
+  is '远期利率曲线';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.disct_int_rat_curve
+  is '折现利率曲线';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.risk_wt
+  is '风险权重';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.contn_weight_flg
+  is '含权标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.pay_int_ped_cd
+  is '付息周期代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.src_pay_int_ped_cd
+  is '源付息周期代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.pay_int_freq
+  is '付息频率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.fir_pay_int_dt
+  is '首次付息日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.cashflow_get_way_cd
+  is '现金流获取方式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.spec_aim_vector_type_cd
+  is '特定目的载体类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.spec_aim_vector_code
+  is '特定目的载体编码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.am_prod_stat_code
+  is '资管产品统计编码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.issuer_id
+  is '发行人编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.issuer_rg_cd
+  is '发行人地区代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.move_way_cd
+  is '运行方式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.non_uder_asset_cls_cd
+  is '非底层资产分类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.non_uder_asset_subclass_cd
+  is '非底层资产细类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.dr_input_freq_cd
+  is '缓释录入频率代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.dr_effect_dt
+  is '缓释生效日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.dr_exp_dt
+  is '缓释到期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.margin_dr_ratio
+  is '保证金缓释比例';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.hxb_dep_rcpt_dr_ratio
+  is '我行存单缓释比例';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.tbond_dr_ratio
+  is '国债缓释比例';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.chn_pb_bond_dr_ratio
+  is '我国政策性银行债券缓释比例';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.chn_cb_dr_ratio
+  is '我国商业银行缓释比例';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.chn_pub_dept_dr_ratio
+  is '我国公共部门缓释比例';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.other_dr_ratio
+  is '其他缓释比例';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.dr_prod_descb_info
+  is '缓释品描述信息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.dr_acct_id
+  is '缓释账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.dr_acct_bal
+  is '缓释账户余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.fund_open_dt
+  is '基金开放日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.actl_finer_cust_id
+  is '实际融资人客户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.actl_finer_name
+  is '实际融资人名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.actl_finer_group_name
+  is '实际融资人集团名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.set_open_flg
+  is '定开标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.set_open_ped_cd
+  is '定开周期代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.open_type_cd
+  is '开放类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.incre_crdt_way_cd
+  is '增信方式代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.incre_crdt_main_name
+  is '增信主体名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.set_open_tenor_start_dt
+  is '定开期限开始日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.set_open_tenor_end_dt
+  is '定开期限结束日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.usage_descb
+  is '用途描述';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.guar_way_comb
+  is '担保方式组合';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.crdt_class_proj_flg
+  is '信贷类项目标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_FIN_INSTM_BAK_20230501.job_cd
+  is '任务代码';
+

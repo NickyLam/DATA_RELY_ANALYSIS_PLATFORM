@@ -1,0 +1,73 @@
+﻿create table RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501
+(
+  etl_dt                   DATE not null,
+  lp_id                    VARCHAR2(60) not null,
+  subj_id                  VARCHAR2(60) not null,
+  subj_name                VARCHAR2(250),
+  super_subj_id            VARCHAR2(60),
+  super_subj_name          VARCHAR2(250),
+  subj_lev_cd              VARCHAR2(30),
+  subj_char_cd             VARCHAR2(10),
+  subj_bal_dir_cd          VARCHAR2(10),
+  subj_src_cls_cd          VARCHAR2(10),
+  trdpty_ctrl_acct_type_cd VARCHAR2(10),
+  dtl_subj_flg             VARCHAR2(10),
+  in_out_tab_flg           VARCHAR2(10),
+  allow_od_flg             VARCHAR2(10),
+  allow_budget_flg         VARCHAR2(10),
+  allow_post_flg           VARCHAR2(10),
+  adj_flg                  VARCHAR2(10),
+  job_cd                   VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501
+  is '科目信息';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.subj_name
+  is '科目名称';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.super_subj_id
+  is '上级科目编号';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.super_subj_name
+  is '上级科目名称';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.subj_lev_cd
+  is '科目级别代码';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.subj_char_cd
+  is '科目性质代码';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.subj_bal_dir_cd
+  is '科目余额方向代码';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.subj_src_cls_cd
+  is '科目来源分类代码';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.trdpty_ctrl_acct_type_cd
+  is '第三方控制账户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.dtl_subj_flg
+  is '明细科目标志';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.in_out_tab_flg
+  is '表内外标志';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.allow_od_flg
+  is '允许透支标志';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.allow_budget_flg
+  is '允许预算标志';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.allow_post_flg
+  is '允许过账标志';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.adj_flg
+  is '调节标志';
+comment on column RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501.job_cd
+  is '任务代码';
+alter table RRP_MDL.O_ICL_CMM_SUBJ_INFO_BAK_20230501
+  add constraint PK_O_ICL_CMM_SUBJ_INFO primary key (ETL_DT, LP_ID, SUBJ_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

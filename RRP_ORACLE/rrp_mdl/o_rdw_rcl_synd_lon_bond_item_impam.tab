@@ -1,0 +1,365 @@
+﻿create table RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM
+(
+  bond_item_no             VARCHAR2(150),
+  repaid_nomal_int         NUMBER(30,2),
+  repaid_ovdue_pric_pnlt   NUMBER(30,2),
+  dubil_amt                NUMBER(30,2),
+  cl_curr_currt_bal        NUMBER(30,2),
+  repay_period_cd          VARCHAR2(15),
+  biz_breed_no             VARCHAR2(150),
+  daily_exec_int_rat       NUMBER(38,8),
+  nomal_pric               NUMBER(30,2),
+  recvbl_acru_pnlt         NUMBER(30,2),
+  off_bs_over_int_bal      NUMBER(30,2),
+  nomal_int                NUMBER(30,2),
+  recvbl_pnlt              NUMBER(30,2),
+  repaid_ovdue_pric        NUMBER(30,2),
+  product_no               VARCHAR2(750),
+  int_set_way_cd           VARCHAR2(15),
+  execu_org_no             VARCHAR2(90),
+  base_int_rate            NUMBER(38,8),
+  in_bs_over_int_bal       NUMBER(30,2),
+  in_bs_int                NUMBER(30,2),
+  acm_recvbl_uncol_int_amt NUMBER(30,2),
+  repaid_nomal_pric        NUMBER(30,2),
+  pric_bal                 NUMBER(30,2),
+  pric_repay_freq_cd       VARCHAR2(90),
+  int_rat_adj_way_cd       VARCHAR2(15),
+  distr_amt                NUMBER(30,2),
+  repaid_fee               NUMBER(30,2),
+  int_rat_flo_val          NUMBER(38,10),
+  lon_usage_cd             VARCHAR2(15),
+  ovdue_pric_pnlt          NUMBER(30,2),
+  ovdue_int_pnlt           NUMBER(30,2),
+  wrt_off_flg              VARCHAR2(15),
+  repay_way_cd             VARCHAR2(15),
+  level10_class_cd         VARCHAR2(15),
+  curr_issue_perds         NUMBER(10),
+  ovdue_int                NUMBER(30,2),
+  repaid_ovdue_int_pnlt    NUMBER(30,2),
+  int_rat_float_dir_cd     VARCHAR2(15),
+  value_dt                 DATE,
+  curr_ovdue_flg           NUMBER(22),
+  int_ovdue_days           NUMBER(22),
+  off_bs_int               NUMBER(30,2),
+  next_int_rat_adj_dt      DATE,
+  int_accr_flg             VARCHAR2(15),
+  accrued_non_accrued_flg  VARCHAR2(15),
+  dir_indus_cd             VARCHAR2(150),
+  level5_class_cd          VARCHAR2(15),
+  normal_prin_subject_no   VARCHAR2(90),
+  recvbl_over_int          NUMBER(30,2),
+  ovdue_int_rate           NUMBER(38,8),
+  td_acru_int              NUMBER(38,8),
+  currt_acru_int           NUMBER(30,2),
+  ovdue_pric               NUMBER(30,2),
+  int_base_cd              VARCHAR2(15),
+  payoff_dt                DATE,
+  repaid_ovdue_int         NUMBER(30,2),
+  pric_ovdue_flg           VARCHAR2(15),
+  next_repay_dt            DATE,
+  cust_no                  VARCHAR2(90),
+  int_ovdue_flg            VARCHAR2(15),
+  curr_int_rat_effect_dt   DATE,
+  repay_freq_cd            VARCHAR2(90),
+  dubil_status_cd          VARCHAR2(15),
+  curr_cd                  VARCHAR2(15),
+  recvbl_fee               NUMBER(30,2),
+  int_accr_way_cd          VARCHAR2(15),
+  cust_name                VARCHAR2(150),
+  curr_ovdue_term          NUMBER(22),
+  mature_dt                DATE,
+  tot_perds                NUMBER(10),
+  exec_int_rate            NUMBER(38,8),
+  last_repay_dt            DATE,
+  comp_int_flg             VARCHAR2(15),
+  int_rat_float_way_cd     VARCHAR2(15),
+  repay_acct_no            VARCHAR2(150),
+  cust_mgr_no              VARCHAR2(90),
+  ovdue_prin_subject_no    VARCHAR2(90),
+  surp_perds               NUMBER(10),
+  currt_bal                NUMBER(30,2),
+  bond_item_status_cd      VARCHAR2(15),
+  int_repay_freq_cd        VARCHAR2(15),
+  accts_org_no             VARCHAR2(90),
+  distr_dt                 DATE,
+  ovdue_days               NUMBER(22),
+  adv_vat_amt              NUMBER(30,2),
+  cred_rht_turn_flg        VARCHAR2(15),
+  loan_type_cd             VARCHAR2(15),
+  pkg_seq_num              VARCHAR2(90),
+  v_ccy_cd_before          VARCHAR2(15),
+  v_dfc_ecl_cd             VARCHAR2(15),
+  asset_three_cls_cd       VARCHAR2(45),
+  n_ecl                    NUMBER(26,5),
+  n_ecl_before_dcf         NUMBER(26,5),
+  n_ecl_before             NUMBER(26,5),
+  etl_dt                   DATE,
+  cont_id                  VARCHAR2(100),
+  guartor_name             VARCHAR2(500),
+  open_acct_dt             DATE,
+  comp_int_calc_way_cd     VARCHAR2(45),
+  payoff_ind               VARCHAR2(15),
+  int_rate_float_freq_cd   VARCHAR2(45),
+  biz_strip_line_cd        VARCHAR2(45),
+  repay_freq_val           NUMBER(22),
+  int_repay_freq_val       NUMBER(22),
+  wrt_off_pric             NUMBER(30,2),
+  wrt_off_int              NUMBER(30,2),
+  repay_prin               NUMBER(30,2),
+  repay_int                NUMBER(30,2),
+  bus_breed_cd             VARCHAR2(60),
+  tax_ecl                  NUMBER(30,2),
+  n_ecl_dcf                NUMBER(26,5),
+  tax_ecl_before           NUMBER(30,2),
+  guartor_cust_id          VARCHAR2(100)
+)
+partition by range (ETL_DT)
+(
+  partition PARTITION_19000101 values less than (TO_DATE(' 1900-01-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20251031 values less than (TO_DATE(' 2025-11-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    )
+);
+comment on table RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM
+  is '联合贷款借据减值表';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.bond_item_no
+  is '借据编号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repaid_nomal_int
+  is '已偿还正常利息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repaid_ovdue_pric_pnlt
+  is '已偿还逾期本金罚息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.dubil_amt
+  is '借据金额';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.cl_curr_currt_bal
+  is '折本币当期余额';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repay_period_cd
+  is '还款周期代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.biz_breed_no
+  is '业务品种编号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.daily_exec_int_rat
+  is '每日执行利率';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.nomal_pric
+  is '正常本金';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.recvbl_acru_pnlt
+  is '应收应计罚息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.off_bs_over_int_bal
+  is '表外欠息余额';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.nomal_int
+  is '正常利息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.recvbl_pnlt
+  is '应收罚息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repaid_ovdue_pric
+  is '已偿还逾期本金';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.product_no
+  is '产品编号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_set_way_cd
+  is '结息方式代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.execu_org_no
+  is '管户机构编号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.base_int_rate
+  is '基准利率';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.in_bs_over_int_bal
+  is '表内欠息余额';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.in_bs_int
+  is '表内利息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.acm_recvbl_uncol_int_amt
+  is '累计应收未收利息金额';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repaid_nomal_pric
+  is '已偿还正常本金';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.pric_bal
+  is '本金余额';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.pric_repay_freq_cd
+  is '本金还款频率代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_rat_adj_way_cd
+  is '利率调整方式代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.distr_amt
+  is '放款金额';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repaid_fee
+  is '已偿还费用';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_rat_flo_val
+  is '利率浮动值';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.lon_usage_cd
+  is '贷款用途代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.ovdue_pric_pnlt
+  is '逾期本金罚息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.ovdue_int_pnlt
+  is '逾期利息罚息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.wrt_off_flg
+  is '核销标志';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repay_way_cd
+  is '还款方式代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.level10_class_cd
+  is '十级分类代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.curr_issue_perds
+  is '当前期数';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.ovdue_int
+  is '逾期利息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repaid_ovdue_int_pnlt
+  is '已偿还逾期利息罚息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_rat_float_dir_cd
+  is '利率浮动方向代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.curr_ovdue_flg
+  is '当前逾期标志';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_ovdue_days
+  is '利息逾期天数';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.off_bs_int
+  is '表外利息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.next_int_rat_adj_dt
+  is '下次利率调整日期';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_accr_flg
+  is '计息标志';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.accrued_non_accrued_flg
+  is '应计非应计标志';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.dir_indus_cd
+  is '贷款投向行业代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.level5_class_cd
+  is '五级分类代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.normal_prin_subject_no
+  is '正常本金科目编号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.recvbl_over_int
+  is '应收欠息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.ovdue_int_rate
+  is '逾期执行利率';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.td_acru_int
+  is '当日应计利息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.currt_acru_int
+  is '当期应计利息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.ovdue_pric
+  is '逾期本金';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.payoff_dt
+  is '结清日期';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repaid_ovdue_int
+  is '已偿还逾期利息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.pric_ovdue_flg
+  is '本金逾期标志';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.next_repay_dt
+  is '下次还款日期';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.cust_no
+  is '客户编号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_ovdue_flg
+  is '利息逾期标志';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.curr_int_rat_effect_dt
+  is '当前利率生效日期';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repay_freq_cd
+  is '还款频率代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.dubil_status_cd
+  is '借据状态代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.recvbl_fee
+  is '应收费用';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_accr_way_cd
+  is '计息方式代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.curr_ovdue_term
+  is '当前逾期期数';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.mature_dt
+  is '到期日期';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.tot_perds
+  is '贷款期数';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.exec_int_rate
+  is '正常执行利率';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.last_repay_dt
+  is '上次还款日期';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.comp_int_flg
+  is '复息标志';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_rat_float_way_cd
+  is '利率浮动方式代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repay_acct_no
+  is '还款账号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.cust_mgr_no
+  is '客户经理编号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.ovdue_prin_subject_no
+  is '逾期本金科目编号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.surp_perds
+  is '剩余期数';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.bond_item_status_cd
+  is '借据状态代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_repay_freq_cd
+  is '利息还款频率代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.accts_org_no
+  is '账务机构编号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.distr_dt
+  is '发放日期';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.ovdue_days
+  is '本金逾期天数';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.adv_vat_amt
+  is '代垫增值税';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.cred_rht_turn_flg
+  is '债权直转标志';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.loan_type_cd
+  is '贷款类型代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.pkg_seq_num
+  is '打包序号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.v_ccy_cd_before
+  is '原币币种';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.v_dfc_ecl_cd
+  is '调整后：’dcf‘ 未调整： ’ecl‘';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.asset_three_cls_cd
+  is '三分类代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.n_ecl
+  is '减值';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.n_ecl_before_dcf
+  is 'dcf调整后的原币ecl';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.n_ecl_before
+  is '原币ecl';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.guartor_name
+  is '担保人名称';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.open_acct_dt
+  is '开户日期';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.comp_int_calc_way_cd
+  is '复利计算方式代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.payoff_ind
+  is '结清标志';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_rate_float_freq_cd
+  is '利率浮动频率代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.biz_strip_line_cd
+  is '业务条线代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repay_freq_val
+  is '还款频率值';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.int_repay_freq_val
+  is '利息还款频率值';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.wrt_off_pric
+  is '核销本金';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.wrt_off_int
+  is '核销利息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repay_prin
+  is '下期应收本金';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.repay_int
+  is '下期应收利息';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.bus_breed_cd
+  is '业务品种代码';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.tax_ecl
+  is '垫付增值税ecl';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.n_ecl_dcf
+  is 'dcf调整后的ecl';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.tax_ecl_before
+  is '垫付增值税原币ECL';
+comment on column RRP_MDL.O_RDW_RCL_SYND_LON_BOND_ITEM_IMPAM.guartor_cust_id
+  is '担保人客户号';
+

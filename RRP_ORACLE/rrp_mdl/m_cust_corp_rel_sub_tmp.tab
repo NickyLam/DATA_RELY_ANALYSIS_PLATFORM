@@ -1,0 +1,113 @@
+﻿create table RRP_MDL.M_CUST_CORP_REL_SUB_TMP
+(
+  data_dt             CHAR(8) not null,
+  lgl_rep_id          VARCHAR2(200),
+  cust_id             VARCHAR2(200) not null,
+  rel_typ             VARCHAR2(10),
+  rel_psn_typ         VARCHAR2(10) not null,
+  rel_psn_cust_nm     VARCHAR2(500),
+  rel_psn_cust_id     VARCHAR2(200),
+  rel_psn_ctry_cd     VARCHAR2(10),
+  rel_psn_crdl_typ    VARCHAR2(10),
+  rel_psn_crdl_no     VARCHAR2(100) not null,
+  pbc_no              VARCHAR2(200),
+  fin_permit_no       VARCHAR2(100),
+  act_cntlr_flg       CHAR(1),
+  act_cntlr_typ       VARCHAR2(10),
+  regd_cd_rsk         VARCHAR2(200),
+  upd_info_dt         CHAR(8),
+  senior_impt_psn_flg CHAR(1),
+  rel_stat            VARCHAR2(10),
+  pp1_no              VARCHAR2(200),
+  pp1_isu_dt          CHAR(8),
+  pp1_exp_dt          CHAR(8),
+  pp2_no              VARCHAR2(200),
+  pp2_isu_dt          CHAR(8),
+  pp2_exp_dt          CHAR(8),
+  pp3_no              VARCHAR2(200),
+  pp3_isu_dt          CHAR(8),
+  pp3_exp_dt          CHAR(8),
+  oth_crdl_typ1       VARCHAR2(10),
+  oth_crdl_no1        VARCHAR2(100),
+  oth_crdl_typ2       VARCHAR2(10),
+  oth_crdl_no2        VARCHAR2(100),
+  dept_line           VARCHAR2(500),
+  data_src            VARCHAR2(500),
+  rowno               INTEGER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.M_CUST_CORP_REL_SUB_TMP
+  is '对公客户关联人子表临时表';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.data_dt
+  is '数据时间';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.cust_id
+  is '客户号';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.rel_typ
+  is '关系类型';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.rel_psn_typ
+  is '关联人类型';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.rel_psn_cust_nm
+  is '关联人客户名称';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.rel_psn_cust_id
+  is '关联人客户编号';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.rel_psn_ctry_cd
+  is '关联人国家代码';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.rel_psn_crdl_typ
+  is '关联人证件类型';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.rel_psn_crdl_no
+  is '关联人证件号码';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.pbc_no
+  is '人行支付行号';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.fin_permit_no
+  is '金融许可证号';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.act_cntlr_flg
+  is '实际控制人标志';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.act_cntlr_typ
+  is '实际控制人类型';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.regd_cd_rsk
+  is '登记注册代码（客户风险）';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.upd_info_dt
+  is '更新信息日期';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.senior_impt_psn_flg
+  is '高管及重要联系人标志';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.rel_stat
+  is '关联关系状态';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.pp1_no
+  is '护照1号码';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.pp1_isu_dt
+  is '护照1签发日期';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.pp1_exp_dt
+  is '护照1到期日期';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.pp2_no
+  is '护照2号码';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.pp2_isu_dt
+  is '护照2签发日期';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.pp2_exp_dt
+  is '护照2到期日期';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.pp3_no
+  is '护照3号码';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.pp3_isu_dt
+  is '护照3签发日期';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.pp3_exp_dt
+  is '护照3到期日期';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.oth_crdl_typ1
+  is '其他证件类型1';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.oth_crdl_no1
+  is '其他证件号码1';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.oth_crdl_typ2
+  is '其他证件类型2';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.oth_crdl_no2
+  is '其他证件号码2';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.data_src
+  is '数据来源';
+comment on column RRP_MDL.M_CUST_CORP_REL_SUB_TMP.rowno
+  is '行号';
+

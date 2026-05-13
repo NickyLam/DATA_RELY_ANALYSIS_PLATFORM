@@ -1,0 +1,39 @@
+﻿create table RRP_MDL.M_MRPT_LDGR_DATA
+(
+  data_dt   VARCHAR2(10),
+  report_id VARCHAR2(10),
+  org_id    VARCHAR2(60),
+  itemcd    VARCHAR2(48),
+  itemna    VARCHAR2(4000),
+  item_vl   NUMBER(38,2),
+  item_lyvl NUMBER(38,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_MRPT_LDGR_DATA
+  is '核算中台报表数据';
+comment on column RRP_MDL.M_MRPT_LDGR_DATA.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_LDGR_DATA.report_id
+  is '报表编号(PL:利润表,BS02:资产负债表(统计))';
+comment on column RRP_MDL.M_MRPT_LDGR_DATA.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_MRPT_LDGR_DATA.itemcd
+  is '指标编号';
+comment on column RRP_MDL.M_MRPT_LDGR_DATA.itemna
+  is '指标名称';
+comment on column RRP_MDL.M_MRPT_LDGR_DATA.item_vl
+  is '指标值-本期数';
+comment on column RRP_MDL.M_MRPT_LDGR_DATA.item_lyvl
+  is '指标值-上年末';
+

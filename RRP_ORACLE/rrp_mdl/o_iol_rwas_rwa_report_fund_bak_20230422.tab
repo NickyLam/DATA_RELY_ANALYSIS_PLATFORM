@@ -1,0 +1,141 @@
+﻿create table RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422
+(
+  data_date                    DATE,
+  loan_ref_id                  NUMBER(9),
+  loan_ref_no                  VARCHAR2(100),
+  i_code                       VARCHAR2(40),
+  asset_thd_cls_cd             VARCHAR2(20),
+  product_name                 VARCHAR2(40),
+  start_date                   DATE,
+  due_date                     DATE,
+  org_cd                       VARCHAR2(40),
+  ccy_name                     VARCHAR2(40),
+  cust_name                    VARCHAR2(100),
+  subject_cd                   VARCHAR2(60),
+  interest_receive_subject_cd  VARCHAR2(60),
+  accrual_class_subject_cd     VARCHAR2(60),
+  interest_adjust_subject_cd   VARCHAR2(60),
+  fairvalue_changes_subject_cd VARCHAR2(60),
+  provision_single_subject_cd  VARCHAR2(60),
+  asset_balance_hcurr          NUMBER(22,6),
+  receivable_int               NUMBER(18,2),
+  accrued_int                  NUMBER(22,6),
+  int_adj                      NUMBER(22,6),
+  fair_value_change            NUMBER(22,2),
+  provision                    NUMBER(22,6),
+  ead_orig                     NUMBER(22,6),
+  ead_provision                NUMBER(22,6),
+  invest_cash_amt              NUMBER(22,2),
+  invest_mof_amt               NUMBER(22,2),
+  invest_cen_bank_amt          NUMBER(22,2),
+  invest_pse_sov_amt           NUMBER(22,2),
+  invest_pse_rglt_amt          NUMBER(22,2),
+  invest_policy_sen_amt        NUMBER(22,2),
+  invest_policy_sub_amt        NUMBER(22,2),
+  invest_bank_short_amt        NUMBER(22,2),
+  invest_bank_long_amt         NUMBER(22,2),
+  invest_bank_sub_amt          NUMBER(22,2),
+  invest_othfin_amt            NUMBER(22,2),
+  invest_corp_amt              NUMBER(22,2),
+  invest_oth_assets_twamt      NUMBER(22,2),
+  invest_oth_assets_ohamt      NUMBER(22,2),
+  rwaamount                    NUMBER(18,2),
+  register_date                DATE,
+  fund_name                    VARCHAR2(500),
+  etl_dt                       DATE,
+  etl_timestamp                TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.data_date
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.loan_ref_id
+  is '债项ID';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.loan_ref_no
+  is '借据号';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.asset_thd_cls_cd
+  is '资产三分类代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.product_name
+  is '产品名称';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.start_date
+  is '起息日';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.due_date
+  is '到期日期';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.org_cd
+  is '组织机构代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.ccy_name
+  is '币种代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.subject_cd
+  is '科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.interest_receive_subject_cd
+  is '应收利息科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.accrual_class_subject_cd
+  is '应计科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.interest_adjust_subject_cd
+  is '利息调整科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.fairvalue_changes_subject_cd
+  is '公允价值变动科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.provision_single_subject_cd
+  is '准备金科目代码';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.asset_balance_hcurr
+  is '资产余额(本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.receivable_int
+  is '应收利息(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.accrued_int
+  is '应计利息(本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.int_adj
+  is '利息调整';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.fair_value_change
+  is '公允价值变动(本币）';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.provision
+  is '计提准备金(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.ead_orig
+  is '原始风险暴露(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.ead_provision
+  is '扣减准备金后的风险暴露(本币)';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_cash_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_mof_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_cen_bank_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_pse_sov_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_pse_rglt_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_policy_sen_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_policy_sub_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_bank_short_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_bank_long_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_bank_sub_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_othfin_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_corp_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_oth_assets_twamt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.invest_oth_assets_ohamt
+  is '未知';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.rwaamount
+  is 'RWA（风险加权资产）金额';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.register_date
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.fund_name
+  is '基金名称';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_RWAS_RWA_REPORT_FUND_BAK_20230422.etl_timestamp
+  is 'etl处理时间';
+

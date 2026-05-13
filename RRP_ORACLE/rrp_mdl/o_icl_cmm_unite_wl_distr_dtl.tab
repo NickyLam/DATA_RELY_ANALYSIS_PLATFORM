@@ -1,0 +1,114 @@
+﻿create table RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL
+(
+  etl_dt             DATE,
+  lp_id              VARCHAR2(60),
+  dubil_id           VARCHAR2(100),
+  cust_id            VARCHAR2(60),
+  cust_name          VARCHAR2(500),
+  cust_cert_type_cd  VARCHAR2(10),
+  cust_cert_no       VARCHAR2(100),
+  crdt_id            VARCHAR2(100),
+  loan_appl_form_num VARCHAR2(100),
+  distr_flow_num     VARCHAR2(250),
+  prod_id            VARCHAR2(100),
+  loan_contr_no      VARCHAR2(100),
+  loan_status_cd     VARCHAR2(10),
+  loan_usage         VARCHAR2(500),
+  curr_cd            VARCHAR2(10),
+  distr_amt          NUMBER(30,2),
+  appl_dt            DATE,
+  distr_dt           DATE,
+  loan_pd_cnt        NUMBER(10),
+  repay_way_cd       VARCHAR2(10),
+  grace_period_days  NUMBER(10),
+  int_rat_type_cd    VARCHAR2(10),
+  loan_day_int_rat   NUMBER(18,8),
+  pric_repay_freq    NUMBER(10),
+  int_repay_freq     NUMBER(10),
+  guar_type_cd       VARCHAR2(10),
+  recvbl_num         VARCHAR2(100),
+  recvbl_num_type_cd VARCHAR2(10),
+  repay_num          VARCHAR2(100),
+  repay_num_type_cd  VARCHAR2(10),
+  intnal_carr_idf    VARCHAR2(10),
+  job_cd             VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL
+  is '联合网贷放款明细';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.cust_name
+  is '客户姓名';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.cust_cert_type_cd
+  is '客户证件类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.cust_cert_no
+  is '客户证件号码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.crdt_id
+  is '授信编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.loan_appl_form_num
+  is '贷款申请单号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.distr_flow_num
+  is '放款流水号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.loan_contr_no
+  is '贷款合同号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.loan_status_cd
+  is '贷款状态代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.loan_usage
+  is '贷款用途';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.distr_amt
+  is '放款金额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.appl_dt
+  is '申请日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.distr_dt
+  is '放款日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.loan_pd_cnt
+  is '贷款期次数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.repay_way_cd
+  is '还款方式代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.grace_period_days
+  is '宽限期天数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.int_rat_type_cd
+  is '利率类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.loan_day_int_rat
+  is '贷款日利率';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.pric_repay_freq
+  is '本金还款频率';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.int_repay_freq
+  is '利息还款频率';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.guar_type_cd
+  is '担保类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.recvbl_num
+  is '收款帐号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.recvbl_num_type_cd
+  is '收款帐号类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.repay_num
+  is '还款帐号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.repay_num_type_cd
+  is '还款帐号类型代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.intnal_carr_idf
+  is '内部结转标识';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_DISTR_DTL.job_cd
+  is '任务代码';
+

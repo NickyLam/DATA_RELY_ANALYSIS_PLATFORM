@@ -1,0 +1,71 @@
+﻿create table RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO
+(
+  col_id       VARCHAR2(128) not null,
+  module_id    VARCHAR2(128),
+  col_name_en  VARCHAR2(192),
+  col_name     VARCHAR2(1500),
+  col_type     VARCHAR2(32),
+  col_length   NUMBER(10),
+  col_accuracy NUMBER(10),
+  seq          NUMBER(10),
+  is_null      VARCHAR2(1),
+  is_pk        VARCHAR2(1),
+  dim_type     VARCHAR2(32),
+  measure_type VARCHAR2(32),
+  remark       VARCHAR2(4000)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO
+  is '数据模型字段信息表';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.col_id
+  is '字段ID';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.module_id
+  is '模型ID';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.col_name_en
+  is '字段英文名称';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.col_name
+  is '字段名称';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.col_type
+  is '字段类型';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.col_length
+  is '长度';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.col_accuracy
+  is '精度';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.seq
+  is '排序';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.is_null
+  is '是否可为空：可为空Y，不可为空N';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.is_pk
+  is '是否主键，时主键Y，不是主键N';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.dim_type
+  is '维度类型';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.measure_type
+  is '度量类型';
+comment on column RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO.remark
+  is '备注';
+alter table RRP_MDL.INDEX_LIB_DATA_MODULE_COL_INFO
+  add primary key (COL_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+

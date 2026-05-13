@@ -1,0 +1,20 @@
+﻿create table RRP_MDL.XZY_ASC
+(
+  party_id         VARCHAR2(2),
+  cert_type_cd     VARCHAR2(20),
+  main_cert_no_flg CHAR(1),
+  cert_num         VARCHAR2(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

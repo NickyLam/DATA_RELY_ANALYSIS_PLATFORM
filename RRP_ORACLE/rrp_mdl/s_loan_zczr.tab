@@ -1,0 +1,116 @@
+﻿create table RRP_MDL.S_LOAN_ZCZR
+(
+  data_dt       VARCHAR2(12),
+  seq_num       VARCHAR2(32),
+  rcpt_id       VARCHAR2(256),
+  trf_cont_id   VARCHAR2(1000),
+  cust_id       VARCHAR2(64),
+  cust_name     VARCHAR2(1000),
+  zclx          VARCHAR2(64),
+  org_id        VARCHAR2(32),
+  org_name      VARCHAR2(500),
+  lvl5_cl       VARCHAR2(8),
+  lvl5_cl_name  VARCHAR2(32),
+  zrqdkbj       NUMBER(38,6),
+  jyds          VARCHAR2(500),
+  jydslxdm      VARCHAR2(64),
+  jydslxmc      VARCHAR2(500),
+  jypt          VARCHAR2(500),
+  zrshjk        NUMBER(38,6),
+  zrshbjje      NUMBER(38,6),
+  cehxje        NUMBER(38,6),
+  shkx          NUMBER(38,6),
+  dffy          NUMBER(38,6),
+  ddzzs         NUMBER(38,6),
+  data_src      VARCHAR2(64),
+  asset_tran_dt VARCHAR2(12),
+  bz            VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250131 values ('20250131')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250331 values ('20250331')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250430 values ('20250430')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250930 values ('20250930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.S_LOAN_ZCZR
+  is '资产转让整合表';
+comment on column RRP_MDL.S_LOAN_ZCZR.data_dt
+  is '数据日期';
+comment on column RRP_MDL.S_LOAN_ZCZR.seq_num
+  is '序号';
+comment on column RRP_MDL.S_LOAN_ZCZR.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.S_LOAN_ZCZR.trf_cont_id
+  is '转让合同号';
+comment on column RRP_MDL.S_LOAN_ZCZR.cust_id
+  is '客户号';
+comment on column RRP_MDL.S_LOAN_ZCZR.cust_name
+  is '客户名称';
+comment on column RRP_MDL.S_LOAN_ZCZR.zclx
+  is '资产类型';
+comment on column RRP_MDL.S_LOAN_ZCZR.org_id
+  is '机构编号';
+comment on column RRP_MDL.S_LOAN_ZCZR.org_name
+  is '机构名称';
+comment on column RRP_MDL.S_LOAN_ZCZR.lvl5_cl
+  is '转让时五级分类代码';
+comment on column RRP_MDL.S_LOAN_ZCZR.lvl5_cl_name
+  is '转让时五级分类名称';
+comment on column RRP_MDL.S_LOAN_ZCZR.zrqdkbj
+  is '转让前贷款本金余额';
+comment on column RRP_MDL.S_LOAN_ZCZR.jyds
+  is '交易对手';
+comment on column RRP_MDL.S_LOAN_ZCZR.jydslxdm
+  is '交易对手类型代码';
+comment on column RRP_MDL.S_LOAN_ZCZR.jydslxmc
+  is '交易对手类型名称';
+comment on column RRP_MDL.S_LOAN_ZCZR.jypt
+  is '交易平台';
+comment on column RRP_MDL.S_LOAN_ZCZR.zrshjk
+  is '转让收回价款';
+comment on column RRP_MDL.S_LOAN_ZCZR.zrshbjje
+  is '转让收回本金金额';
+comment on column RRP_MDL.S_LOAN_ZCZR.cehxje
+  is '差额核销金额';
+comment on column RRP_MDL.S_LOAN_ZCZR.shkx
+  is '收回利息';
+comment on column RRP_MDL.S_LOAN_ZCZR.dffy
+  is '垫付费用';
+comment on column RRP_MDL.S_LOAN_ZCZR.ddzzs
+  is '代垫增值税';
+comment on column RRP_MDL.S_LOAN_ZCZR.data_src
+  is '数据来源';
+comment on column RRP_MDL.S_LOAN_ZCZR.asset_tran_dt
+  is '账务处理时间';
+comment on column RRP_MDL.S_LOAN_ZCZR.bz
+  is '备注';
+

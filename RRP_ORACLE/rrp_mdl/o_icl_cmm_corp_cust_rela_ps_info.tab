@@ -1,0 +1,132 @@
+﻿create table RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO
+(
+  etl_dt                    DATE,
+  lp_id                     VARCHAR2(60),
+  cust_id                   VARCHAR2(60),
+  rela_type_cd              VARCHAR2(20),
+  rela_ps_cust_id           VARCHAR2(100),
+  rela_ps_name              VARCHAR2(750),
+  rela_ps_nation_cd         VARCHAR2(20),
+  rela_ps_cert_type_cd      VARCHAR2(20),
+  rela_ps_cert_no           VARCHAR2(90),
+  rela_ps_cert_effect_dt    DATE,
+  rela_ps_cert_exp_dt       DATE,
+  rela_ps_higt_edu_cd       VARCHAR2(20),
+  rela_ps_post_cd           VARCHAR2(100),
+  rela_ps_senior_man_flg    VARCHAR2(10),
+  rela_ps_shard_flg         VARCHAR2(10),
+  legal_rep_flg             VARCHAR2(10),
+  rela_ps_tel_num           VARCHAR2(750),
+  rela_ps_tel_ext_num       VARCHAR2(60),
+  rela_ps_mobile_no         VARCHAR2(750),
+  rela_ps_work_unit_addr    VARCHAR2(1000),
+  rela_ps_work_unit_tel_num VARCHAR2(500),
+  rela_ps_en_last_name      VARCHAR2(100),
+  rela_ps_en_name           VARCHAR2(100),
+  rela_ps_stament_flg       VARCHAR2(10),
+  rela_ps_tax_red_idti_cd   VARCHAR2(10),
+  rela_ps_birth_dt          DATE,
+  rela_ps_cn_birth_addr     VARCHAR2(1000),
+  rela_ps_en_birth_addr     VARCHAR2(1000),
+  rela_ps_cn_resdnt_addr    VARCHAR2(1000),
+  rela_ps_en_resdnt_addr    VARCHAR2(1000),
+  ctrler_type_cd            VARCHAR2(10),
+  rela_ps_post_name         VARCHAR2(1500),
+  rela_ps_id                VARCHAR2(100),
+  ctrler_tax_null_rs_descb  VARCHAR2(3000),
+  ctrler_tax_num            VARCHAR2(500),
+  ctrler_tax_red_cty        VARCHAR2(250),
+  job_cd                    VARCHAR2(10),
+  rela_ps_latest_update_tm  DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO
+  is '对公客户关联人信息';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_type_cd
+  is '关联类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_cust_id
+  is '关联人客户编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_name
+  is '关联人姓名';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_nation_cd
+  is '关联人国别代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_cert_type_cd
+  is '关联人证件类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_cert_no
+  is '关联人证件号码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_cert_effect_dt
+  is '关联人证件生效日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_cert_exp_dt
+  is '关联人证件到期日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_higt_edu_cd
+  is '关联人最高学历代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_post_cd
+  is '关联人职务代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_senior_man_flg
+  is '关联人高管标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_shard_flg
+  is '关联人股东标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.legal_rep_flg
+  is '法人代表标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_tel_num
+  is '关联人电话号码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_tel_ext_num
+  is '关联人电话分机号码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_mobile_no
+  is '关联人手机号码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_work_unit_addr
+  is '关联人工作单位地址';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_work_unit_tel_num
+  is '关联人工作单位电话号码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_en_last_name
+  is '关联人英文姓氏';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_en_name
+  is '关联人英文名称';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_stament_flg
+  is '关联人自证声明标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_tax_red_idti_cd
+  is '关联人税收居民身份代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_birth_dt
+  is '关联人出生日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_cn_birth_addr
+  is '关联人中文出生地址';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_en_birth_addr
+  is '关联人英文出生地址';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_cn_resdnt_addr
+  is '关联人中文居住地址';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_en_resdnt_addr
+  is '关联人英文居住地址';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.ctrler_type_cd
+  is '控制人类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_post_name
+  is '关联人职务名称';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_id
+  is '关联人编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.ctrler_tax_null_rs_descb
+  is '控制人纳税人识别号空值原因描述';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.ctrler_tax_num
+  is '控制人纳税人识别号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.ctrler_tax_red_cty
+  is '控制人纳税居民国家';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_CUST_RELA_PS_INFO.rela_ps_latest_update_tm
+  is '关联人最新更新时间';
+

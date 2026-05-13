@@ -1,0 +1,198 @@
+﻿create table RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW
+(
+  evt_id                       VARCHAR2(250),
+  lp_id                        VARCHAR2(100),
+  fee_rat_id                   VARCHAR2(100),
+  acct_id                      VARCHAR2(100),
+  provi_dt                     DATE,
+  sys_id                       VARCHAR2(100),
+  tran_ref_no                  VARCHAR2(60),
+  tran_org_id                  VARCHAR2(100),
+  cust_acct_num                VARCHAR2(100),
+  sub_acct_num                 VARCHAR2(60),
+  prod_id                      VARCHAR2(100),
+  curr_cd                      VARCHAR2(30),
+  cust_id                      VARCHAR2(100),
+  int_cls_cd                   VARCHAR2(30),
+  int_rat_type_cd              VARCHAR2(30),
+  year_int_accr_base_cd        VARCHAR2(30),
+  mon_int_accr_base_cd         VARCHAR2(30),
+  int_accr_base_cd             VARCHAR2(30),
+  provi_accum                  NUMBER(30,2),
+  agt_float_ratio              NUMBER(18,6),
+  bank_int_int_rat             NUMBER(18,8),
+  agt_fix_int_rat              NUMBER(18,8),
+  agt_float_point              NUMBER(18,8),
+  int_rat_float_ratio          NUMBER(18,6),
+  sub_acct_fix_int_rat         NUMBER(18,8),
+  sub_acct_int_rat_float_ratio NUMBER(18,6),
+  sub_acct_int_rat_float_point NUMBER(18,8),
+  agt_chg_way_cd               VARCHAR2(30),
+  exec_int_rat                 NUMBER(18,8),
+  int_accr_way_cd              VARCHAR2(30),
+  int_amt                      NUMBER(30,2),
+  acm_provi_int                NUMBER(30,2),
+  provi_day_provi_actl_amt     NUMBER(30,2),
+  provi_day_provi_int          NUMBER(30,2),
+  provi_amt_bal                NUMBER(30,8),
+  last_provi_dt                DATE,
+  currt_acm_int_accr_days      NUMBER(10),
+  tax_category_cd              VARCHAR2(30),
+  provi_tax_rat                NUMBER(18,6),
+  int_tax_acm_amt              NUMBER(30,2),
+  provi_day_int_tax_init_amt   NUMBER(30,2),
+  provi_day_int_tax            NUMBER(30,2),
+  int_tax_bal                  NUMBER(30,8),
+  merge_flg                    VARCHAR2(10),
+  post_flg                     VARCHAR2(10),
+  tran_aldy_revd_flg           VARCHAR2(10),
+  chn_id                       VARCHAR2(100),
+  accti_status_cd              VARCHAR2(30),
+  sob_cate_cd                  VARCHAR2(30),
+  addit_remark                 VARCHAR2(500),
+  tran_intior_type_cd          VARCHAR2(30),
+  cntpty_tran_ref_no           VARCHAR2(60),
+  src_module_type_cd           VARCHAR2(30),
+  check_entry_cd               VARCHAR2(30),
+  tran_tm                      TIMESTAMP(6),
+  bus_flow_num                 VARCHAR2(100),
+  etl_dt                       DATE,
+  src_table_name               VARCHAR2(100),
+  job_cd                       VARCHAR2(10),
+  etl_timestamp                TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW
+  is '存款计提流水';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.fee_rat_id
+  is '费率编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.provi_dt
+  is '计提日期';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.sys_id
+  is '系统编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.tran_ref_no
+  is '交易参考号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.cust_acct_num
+  is '客户账号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.sub_acct_num
+  is '子账号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.int_cls_cd
+  is '利息分类代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.int_rat_type_cd
+  is '利率类型代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.year_int_accr_base_cd
+  is '年计息基准代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.mon_int_accr_base_cd
+  is '月计息基准代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.int_accr_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.provi_accum
+  is '计提积数';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.agt_float_ratio
+  is '协议浮动比例';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.bank_int_int_rat
+  is '行内利率';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.agt_fix_int_rat
+  is '协议固定利率';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.agt_float_point
+  is '协议浮动点数';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.int_rat_float_ratio
+  is '利率浮动比例';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.sub_acct_fix_int_rat
+  is '分户级固定利率';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.sub_acct_int_rat_float_ratio
+  is '分户级利率浮动比例';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.sub_acct_int_rat_float_point
+  is '分户级利率浮动点数';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.agt_chg_way_cd
+  is '协议变动方式代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.int_accr_way_cd
+  is '计息方式代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.int_amt
+  is '利息金额';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.acm_provi_int
+  is '累计计提利息';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.provi_day_provi_actl_amt
+  is '计提日计提实际金额';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.provi_day_provi_int
+  is '计提日计提利息';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.provi_amt_bal
+  is '计提金额差额';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.last_provi_dt
+  is '上一计提日期';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.currt_acm_int_accr_days
+  is '当期累计计息天数';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.tax_category_cd
+  is '税种代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.provi_tax_rat
+  is '计提税率';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.int_tax_acm_amt
+  is '利息税累计金额';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.provi_day_int_tax_init_amt
+  is '计提日利息税原金额';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.provi_day_int_tax
+  is '计提日利息税';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.int_tax_bal
+  is '利息税差额';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.merge_flg
+  is '合并标志';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.post_flg
+  is '过账标志';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.tran_aldy_revd_flg
+  is '交易已冲正标志';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.chn_id
+  is '渠道编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.accti_status_cd
+  is '核算状态代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.sob_cate_cd
+  is '账套类别代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.addit_remark
+  is '附加备注';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.tran_intior_type_cd
+  is '交易发起方类型代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.cntpty_tran_ref_no
+  is '交易对手交易参考号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.src_module_type_cd
+  is '源模块类型代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.check_entry_cd
+  is '对账码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.bus_flow_num
+  is '业务流水号';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_DEP_PROVI_FLOW.etl_timestamp
+  is 'etl处理时间戳';
+

@@ -1,0 +1,57 @@
+﻿create table RRP_MDL.O_RRP_DMC
+(
+  ssxt  VARCHAR2(20),
+  sjkm  VARCHAR2(255),
+  msm   VARCHAR2(100),
+  bywm  VARCHAR2(100),
+  bzwm  VARCHAR2(2000),
+  bglx  VARCHAR2(255),
+  zdywm VARCHAR2(100),
+  zdzwm VARCHAR2(2000),
+  zdlx  VARCHAR2(100),
+  zdcd  VARCHAR2(60),
+  yxk   VARCHAR2(20),
+  sqdh  VARCHAR2(255),
+  bbh   VARCHAR2(255)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_RRP_DMC
+  is '数控平台表';
+comment on column RRP_MDL.O_RRP_DMC.ssxt
+  is '所属系统';
+comment on column RRP_MDL.O_RRP_DMC.sjkm
+  is '数据库名';
+comment on column RRP_MDL.O_RRP_DMC.msm
+  is '模式名';
+comment on column RRP_MDL.O_RRP_DMC.bywm
+  is '表英文名';
+comment on column RRP_MDL.O_RRP_DMC.bzwm
+  is '表中文名';
+comment on column RRP_MDL.O_RRP_DMC.bglx
+  is '变更类型';
+comment on column RRP_MDL.O_RRP_DMC.zdywm
+  is '字段英文名';
+comment on column RRP_MDL.O_RRP_DMC.zdzwm
+  is '字段中文名';
+comment on column RRP_MDL.O_RRP_DMC.zdlx
+  is '字段类型';
+comment on column RRP_MDL.O_RRP_DMC.zdcd
+  is '字段长度';
+comment on column RRP_MDL.O_RRP_DMC.yxk
+  is '允许空';
+comment on column RRP_MDL.O_RRP_DMC.sqdh
+  is '申请单号';
+comment on column RRP_MDL.O_RRP_DMC.bbh
+  is '版本号';
+

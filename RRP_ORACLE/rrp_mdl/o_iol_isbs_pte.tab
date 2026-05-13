@@ -1,0 +1,108 @@
+﻿create table RRP_MDL.O_IOL_ISBS_PTE
+(
+  inr           VARCHAR2(12),
+  objtyp        VARCHAR2(9),
+  objinr        VARCHAR2(12),
+  subid         VARCHAR2(6),
+  cbtpfx        VARCHAR2(5),
+  grpkey        VARCHAR2(9),
+  extid         VARCHAR2(24),
+  liaptyinr     VARCHAR2(12),
+  liaptainr     VARCHAR2(12),
+  cdtptsinr     VARCHAR2(12),
+  ownref        VARCHAR2(30),
+  nam           VARCHAR2(60),
+  feeinr        VARCHAR2(12),
+  begdat        DATE,
+  clsdat        DATE,
+  setdat        DATE,
+  nxtcomdat     DATE,
+  rolpay        VARCHAR2(5),
+  matdat        DATE,
+  covtyp        VARCHAR2(2),
+  prc           NUMBER(3),
+  amtflg        VARCHAR2(2),
+  ver           VARCHAR2(6),
+  asgtxt        VARCHAR2(615),
+  asbtxt        VARCHAR2(615),
+  tenday        NUMBER(3),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_PTE
+  is '表外信息';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.inr
+  is '内部唯一ID号';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.objtyp
+  is '关联PTS的类型';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.objinr
+  is '关联PTS的INR';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.subid
+  is '标识PTS的多个PTE';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.cbtpfx
+  is '表外风险类型';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.grpkey
+  is '责任组';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.extid
+  is '关联实体CBS';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.liaptyinr
+  is '记账用户的PTY的唯一INR';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.liaptainr
+  is '记账用户的PTA的唯一INR';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.cdtptsinr
+  is '贷方INR';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.ownref
+  is '参考号';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.nam
+  is '帐务信息';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.feeinr
+  is '费用INR';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.begdat
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.clsdat
+  is '关闭日期';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.setdat
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.nxtcomdat
+  is '下次费用计算时间';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.rolpay
+  is '付费角色';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.matdat
+  is '到期日';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.covtyp
+  is '结帐类型';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.prc
+  is '分配百分比';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.amtflg
+  is '记账方式';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.ver
+  is '版本号';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.asgtxt
+  is '代理人信息';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.asbtxt
+  is '代理银行信息';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.tenday
+  is '最大到期日';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ISBS_PTE.etl_timestamp
+  is 'ETL处理时间戳';
+

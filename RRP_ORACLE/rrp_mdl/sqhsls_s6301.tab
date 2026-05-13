@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.SQHSLS_S6301
+(
+  data_dt      VARCHAR2(400),
+  cust_id      VARCHAR2(400),
+  crdl_no      VARCHAR2(400),
+  opr_cust_typ VARCHAR2(400)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.SQHSLS_S6301
+  is 'S63临时表02';
+comment on column RRP_MDL.SQHSLS_S6301.data_dt
+  is '数据日期';
+comment on column RRP_MDL.SQHSLS_S6301.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.SQHSLS_S6301.crdl_no
+  is '证件号码';
+comment on column RRP_MDL.SQHSLS_S6301.opr_cust_typ
+  is '经营性客户类型';
+

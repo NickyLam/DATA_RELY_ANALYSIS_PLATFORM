@@ -1,0 +1,84 @@
+﻿create table RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB
+(
+  etl_dt                          VARCHAR2(200),
+  payoff_src_name                 VARCHAR2(1000),
+  cust_id                         VARCHAR2(150),
+  oper_org_id                     VARCHAR2(150),
+  oper_org_name                   VARCHAR2(1000),
+  unify_soci_crdt_cd              VARCHAR2(60),
+  corp_acct_id                    VARCHAR2(200),
+  corp_acct_name                  VARCHAR2(1000),
+  payoff_start_dt                 VARCHAR2(150),
+  emply_acct_id                   VARCHAR2(150),
+  emply_cust_no                   VARCHAR2(200),
+  staf_cd_type_cd                 VARCHAR2(60),
+  staf_cd_type_name               VARCHAR2(1000),
+  staf_cd_cd                      VARCHAR2(90),
+  acct_num_type                   VARCHAR2(150),
+  payoff_sal_amt                  NUMBER(30,2),
+  payoff_sal_dt                   VARCHAR2(150),
+  payoff_postsc                   VARCHAR2(1000),
+  inside_acct_cors_corp_cust_name VARCHAR2(1000),
+  inside_acct_cors_cert_no        VARCHAR2(120),
+  etl_timestamp                   TIMESTAMP(6)
+)
+partition by range (ETL_DT)
+(
+  partition PARTITION_20241101 values less than (TO_DATE(' 2024-11-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    )
+);
+comment on table RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB
+  is '代发明细表';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.payoff_src_name
+  is '代发来源名称';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.oper_org_id
+  is '经办机构编号';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.oper_org_name
+  is '经办机构名称';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.unify_soci_crdt_cd
+  is '统一社会信用代码';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.corp_acct_id
+  is '单位账户编号';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.corp_acct_name
+  is '单位账户名称';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.payoff_start_dt
+  is '代发开始日期';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.emply_acct_id
+  is '员工账户编号';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.emply_cust_no
+  is '员工客户号';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.staf_cd_type_cd
+  is '员工证件类型代码';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.staf_cd_type_name
+  is '员工证件类型名称';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.staf_cd_cd
+  is '员工证件代码';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.acct_num_type
+  is '账号类型';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.payoff_sal_amt
+  is '代发工资金额';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.payoff_sal_dt
+  is '代发工资日期';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.payoff_postsc
+  is '代发附言';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.inside_acct_cors_corp_cust_name
+  is '内部户对应的企业客户名';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.inside_acct_cors_cert_no
+  is '内部户对应的证件号';
+comment on column RRP_MDL.O_IOL_CRPS_D_PAYOFF_DTL_TAB_TAB.etl_timestamp
+  is 'ETL处理时间';
+

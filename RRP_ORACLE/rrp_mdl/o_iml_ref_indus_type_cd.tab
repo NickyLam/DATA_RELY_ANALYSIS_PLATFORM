@@ -1,0 +1,60 @@
+﻿create table RRP_MDL.O_IML_REF_INDUS_TYPE_CD
+(
+  indus_type_cd     VARCHAR2(10),
+  indus_type_name   VARCHAR2(100),
+  indus_cate_cd     VARCHAR2(10),
+  indus_cate_name   VARCHAR2(100),
+  indus_gen_cd      VARCHAR2(10),
+  indus_gen_name    VARCHAR2(100),
+  indus_categy_cd   VARCHAR2(10),
+  indus_categy_name VARCHAR2(100),
+  valid_flg         VARCHAR2(10),
+  invalid_dt        DATE,
+  etl_dt            DATE,
+  src_table_name    VARCHAR2(100),
+  job_cd            VARCHAR2(10),
+  etl_timestamp     TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_REF_INDUS_TYPE_CD
+  is '行业类型代码表';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.indus_type_cd
+  is '行业类型代码';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.indus_type_name
+  is '行业类型名称';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.indus_cate_cd
+  is '行业类别代码';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.indus_cate_name
+  is '行业类别名称';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.indus_gen_cd
+  is '行业大类代码';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.indus_gen_name
+  is '行业大类名称';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.indus_categy_cd
+  is '行业门类代码';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.indus_categy_name
+  is '行业门类名称';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.valid_flg
+  is '有效标志';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.invalid_dt
+  is '失效日期';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_REF_INDUS_TYPE_CD.etl_timestamp
+  is '数据处理时间';
+

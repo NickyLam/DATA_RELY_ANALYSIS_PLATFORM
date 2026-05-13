@@ -1,0 +1,357 @@
+﻿create table RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H
+(
+  appl_id                      VARCHAR2(100),
+  lp_id                        VARCHAR2(100),
+  out_acct_flow_num            VARCHAR2(100),
+  loan_type_cd                 VARCHAR2(30),
+  entr_dep_acct_id             VARCHAR2(100),
+  entr_dep_sub_acct_num        VARCHAR2(60),
+  csner_dep_acct_id            VARCHAR2(100),
+  pric_auto_rtn_flg            VARCHAR2(10),
+  int_auto_rtn_flg             VARCHAR2(10),
+  comn_inst_repay_flg          VARCHAR2(10),
+  inst_loan_tot_perds          NUMBER(10),
+  tenor_type_cd                VARCHAR2(30),
+  entr_loan_comm_fee_rat       NUMBER(18,6),
+  crdt_distr_repay_plan_flg    VARCHAR2(10),
+  stop_accr_int_flg            VARCHAR2(10),
+  margin_int_rat_type_cd       VARCHAR2(30),
+  margin_int_rat_float_type_cd VARCHAR2(30),
+  margin_int_rat_float_way_cd  VARCHAR2(30),
+  margin_flo_val               NUMBER(18,6),
+  margin_int_accr_method_cd    VARCHAR2(30),
+  margin_int_rat_level_cd      VARCHAR2(30),
+  margin_agt_rat               NUMBER(30,8),
+  margin_exp_dt                DATE,
+  bill_uniq_ind_no             VARCHAR2(100),
+  lc_amt                       NUMBER(30,8),
+  ibank_payfan_pric            NUMBER(30,2),
+  discnt_bus_accptor_name      VARCHAR2(500),
+  bill_id                      VARCHAR2(100),
+  strk_bal_flg                 VARCHAR2(10),
+  int_accr_days                NUMBER(10),
+  ibank_payfan_provi_int_rat   NUMBER(18,8),
+  todos                        NUMBER(30,8),
+  bill_comm_fee_charge_way_cd  VARCHAR2(30),
+  log_mode_pay_cd              VARCHAR2(30),
+  acpt_bus_accptor_name        VARCHAR2(500),
+  draw_dt                      DATE,
+  bill_type_cd                 VARCHAR2(30),
+  trust_flg                    VARCHAR2(10),
+  bill_cls_cd                  VARCHAR2(30),
+  intstl_bus_id                VARCHAR2(100),
+  accpt_bil_comm_fee_amt       NUMBER(30,8),
+  trade_fin_rela_amt_one       NUMBER(30,8),
+  trade_fin_rela_amt_two       NUMBER(30,8),
+  trade_fin_rela_amt_three     NUMBER(30,8),
+  trade_fin_rela_dt_one        DATE,
+  trade_fin_rela_dt_two        DATE,
+  trade_fin_ratio              NUMBER(18,6),
+  coll_type_cd                 VARCHAR2(30),
+  bill_rgst_status_flg         VARCHAR2(30),
+  guar_org_id                  VARCHAR2(100),
+  int_amt                      NUMBER(30,8),
+  recv_bank_name               VARCHAR2(500),
+  trade_fin_type_cd            VARCHAR2(30),
+  exp_lc_issue_bank_name       VARCHAR2(500),
+  recver_open_bank_name        VARCHAR2(500),
+  accept_ps_name               VARCHAR2(500),
+  inv_id                       VARCHAR2(100),
+  enter_id                     VARCHAR2(100),
+  distr_cond_impt_flg          VARCHAR2(10),
+  trade_fin_rela_curr_cd_one   VARCHAR2(30),
+  trade_fin_rela_curr_cd_two   VARCHAR2(30),
+  trade_fin_rela_curr_cd_three VARCHAR2(30),
+  log_bnft_bank_name           VARCHAR2(500),
+  fft_acpt_bank_no             VARCHAR2(100),
+  accptor_open_bank_no         VARCHAR2(60),
+  fft_cfm_bank_bank_no         VARCHAR2(100),
+  buyer_pay_int_amt            NUMBER(30,2),
+  redem_flg                    VARCHAR2(10),
+  trade_fin_bus_id_one         VARCHAR2(100),
+  trade_fin_bus_id_two         VARCHAR2(100),
+  era_pay_bank_name            VARCHAR2(500),
+  log_type_cd                  VARCHAR2(30),
+  trade_fin_tenor_type_cd_one  VARCHAR2(30),
+  trade_fin_tenor_type_cd_two  VARCHAR2(30),
+  accptor_open_bank_name       VARCHAR2(500),
+  stl_acct_open_bank_name      VARCHAR2(500),
+  stl_acct_cust_name           VARCHAR2(500),
+  buyer_pay_int_acct_id        VARCHAR2(100),
+  fin_log_flg                  VARCHAR2(10),
+  enter_open_bank_name         VARCHAR2(500),
+  enter_cust_name              VARCHAR2(500),
+  payfan_pric_repay_way_cd     VARCHAR2(30),
+  lmt_cont_id                  VARCHAR2(100),
+  pre_recv_int_flg             VARCHAR2(10),
+  coll_comp_int_flg            VARCHAR2(10),
+  out_acct_tran_code           VARCHAR2(60),
+  check_org_id                 VARCHAR2(100),
+  check_teller_id              VARCHAR2(100),
+  check_dt                     DATE,
+  margin_tran_status_cd        VARCHAR2(30),
+  repay_plan_tran_status_cd    VARCHAR2(30),
+  core_out_acct_flow_num       VARCHAR2(100),
+  fin_sys_out_acct_flg         VARCHAR2(10),
+  cap_src_cd                   VARCHAR2(30),
+  acpt_entry_tran_dt           DATE,
+  acpt_entry_tran_flow_num     VARCHAR2(100),
+  start_dt                     DATE,
+  end_dt                       DATE,
+  id_mark                      VARCHAR2(10),
+  src_table_name               VARCHAR2(100),
+  job_cd                       VARCHAR2(10),
+  etl_timestamp                TIMESTAMP(6),
+  file_int_flg                 VARCHAR2(10),
+  comm_fee                     NUMBER(20,2),
+  lc_benefc                    VARCHAR2(100),
+  fix_int_rat_flg              VARCHAR2(30),
+  lc_issuer                    VARCHAR2(250),
+  lc_benefc_name               VARCHAR2(500),
+  cntpty_recvbl_acct_id        VARCHAR2(100),
+  cntpty_recvbl_acct_name      VARCHAR2(500),
+  cntpty_recvbl_bank_no        VARCHAR2(100),
+  cntpty_recvbl_bank_name      VARCHAR2(500),
+  level1_fft_actl_enter_id     VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H
+  is '贷款出账对公贷款附属信息历史';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.appl_id
+  is '申请编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.out_acct_flow_num
+  is '出账流水号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.loan_type_cd
+  is '贷款类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.entr_dep_acct_id
+  is '委托存款账户账号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.entr_dep_sub_acct_num
+  is '委托存款子账号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.csner_dep_acct_id
+  is '委托人存款账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.pric_auto_rtn_flg
+  is '本金自动归还标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.int_auto_rtn_flg
+  is '利息自动归还标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.comn_inst_repay_flg
+  is '普通分期还款标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.inst_loan_tot_perds
+  is '分期贷款总期数';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.tenor_type_cd
+  is '期限类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.entr_loan_comm_fee_rat
+  is '委托贷款手续费率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.crdt_distr_repay_plan_flg
+  is '信贷发放还款计划标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.stop_accr_int_flg
+  is '停息标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.margin_int_rat_type_cd
+  is '保证金利率类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.margin_int_rat_float_type_cd
+  is '保证金利率浮动类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.margin_int_rat_float_way_cd
+  is '保证金利率浮动方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.margin_flo_val
+  is '保证金浮动值';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.margin_int_accr_method_cd
+  is '保证金计息方法代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.margin_int_rat_level_cd
+  is '保证金利率档次代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.margin_agt_rat
+  is '保证金协议利率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.margin_exp_dt
+  is '保证金到期日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.bill_uniq_ind_no
+  is '票据唯一标识号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.lc_amt
+  is '信用证金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.ibank_payfan_pric
+  is '同业代付本金';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.discnt_bus_accptor_name
+  is '贴现业务承兑人名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.bill_id
+  is '票据编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.strk_bal_flg
+  is '冲账标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.int_accr_days
+  is '计息天数';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.ibank_payfan_provi_int_rat
+  is '同业代付计提利率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.todos
+  is '工本费';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.bill_comm_fee_charge_way_cd
+  is '票据手续费收费方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.log_mode_pay_cd
+  is '保函支付方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.acpt_bus_accptor_name
+  is '承兑业务承兑人名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.draw_dt
+  is '出票日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.bill_type_cd
+  is '票据类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trust_flg
+  is '托管标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.bill_cls_cd
+  is '票据分类代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.intstl_bus_id
+  is '国结业务编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.accpt_bil_comm_fee_amt
+  is '承兑汇票手续费金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_rela_amt_one
+  is '贸易融资相关金额一';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_rela_amt_two
+  is '贸易融资相关金额二';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_rela_amt_three
+  is '贸易融资相关金额三';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_rela_dt_one
+  is '贸易融资相关日期一';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_rela_dt_two
+  is '贸易融资相关日期二';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_ratio
+  is '贸易融资比例';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.coll_type_cd
+  is '代收类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.bill_rgst_status_flg
+  is '票据登记状态标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.guar_org_id
+  is '担保机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.int_amt
+  is '利息金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.recv_bank_name
+  is '收款行名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_type_cd
+  is '贸易融资类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.exp_lc_issue_bank_name
+  is '出口信用证开证行名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.recver_open_bank_name
+  is '收款人开户行名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.accept_ps_name
+  is '收票人名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.inv_id
+  is '发票号码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.enter_id
+  is '入账账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.distr_cond_impt_flg
+  is '放款条件落实标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_rela_curr_cd_one
+  is '贸易融资相关币种代码一';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_rela_curr_cd_two
+  is '贸易融资相关币种代码二';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_rela_curr_cd_three
+  is '贸易融资相关币种代码三';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.log_bnft_bank_name
+  is '保函受益行名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.fft_acpt_bank_no
+  is '福费廷承兑行行号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.accptor_open_bank_no
+  is '承兑人开户行行号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.fft_cfm_bank_bank_no
+  is '福费廷保兑行行号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.buyer_pay_int_amt
+  is '买方付息金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.redem_flg
+  is '赎回标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_bus_id_one
+  is '贸易融资业务编号一';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_bus_id_two
+  is '贸易融资业务编号二';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.era_pay_bank_name
+  is '代付行名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.log_type_cd
+  is '保函类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_tenor_type_cd_one
+  is '贸易融资期限类型代码一';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.trade_fin_tenor_type_cd_two
+  is '贸易融资期限类型代码二';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.accptor_open_bank_name
+  is '承兑人开户行名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.stl_acct_open_bank_name
+  is '结算帐号开户行名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.stl_acct_cust_name
+  is '结算帐号客户名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.buyer_pay_int_acct_id
+  is '买方付息账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.fin_log_flg
+  is '融资性保函标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.enter_open_bank_name
+  is '入账账户开户行名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.enter_cust_name
+  is '入账账户客户名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.payfan_pric_repay_way_cd
+  is '代付本金还款方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.lmt_cont_id
+  is '额度合同编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.pre_recv_int_flg
+  is '预收息标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.coll_comp_int_flg
+  is '收复息标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.out_acct_tran_code
+  is '出帐交易码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.check_org_id
+  is '复核机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.check_teller_id
+  is '复核柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.check_dt
+  is '复核日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.margin_tran_status_cd
+  is '保证金交易状态代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.repay_plan_tran_status_cd
+  is '还款计划交易状态代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.core_out_acct_flow_num
+  is '核心出账流水号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.fin_sys_out_acct_flg
+  is '融资系统出账标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.cap_src_cd
+  is '资金来源代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.acpt_entry_tran_dt
+  is '承兑记账交易日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.acpt_entry_tran_flow_num
+  is '承兑记账交易流水号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.file_int_flg
+  is '靠档计息标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.comm_fee
+  is '手续费';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.lc_benefc
+  is '信用证受益人';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.fix_int_rat_flg
+  is '固定利率标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.lc_issuer
+  is '信用证开证人';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.lc_benefc_name
+  is '信用证受益人名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.cntpty_recvbl_acct_id
+  is '交易对手收款账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.cntpty_recvbl_acct_name
+  is '交易对手收款账户名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.cntpty_recvbl_bank_no
+  is '交易对手收款行行号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.cntpty_recvbl_bank_name
+  is '交易对手收款行名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_CORP_LOAN_ATTACH_INFO_H.level1_fft_actl_enter_id
+  is '一级福费廷实际入账账户编号';
+

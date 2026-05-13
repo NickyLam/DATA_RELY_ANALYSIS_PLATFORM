@@ -1,0 +1,125 @@
+﻿create table RRP_MDL.O_IOL_NCBS_RB_AGREEMENT
+(
+  acct_name                 VARCHAR2(200),
+  acct_seq_no               VARCHAR2(5),
+  base_acct_no              VARCHAR2(50),
+  client_no                 VARCHAR2(16),
+  client_short              VARCHAR2(150),
+  prod_type                 VARCHAR2(12),
+  user_id                   VARCHAR2(8),
+  agreement_class           VARCHAR2(10),
+  agreement_close_acct_flag VARCHAR2(1),
+  agreement_id              VARCHAR2(50),
+  agreement_key             VARCHAR2(30),
+  agreement_key_type        VARCHAR2(2),
+  agreement_status          VARCHAR2(2),
+  agreement_type            VARCHAR2(5),
+  company                   VARCHAR2(20),
+  out_sign_channel          VARCHAR2(20),
+  sign_channel              VARCHAR2(20),
+  agreement_open_date       DATE,
+  end_date                  DATE,
+  last_change_date          DATE,
+  out_sign_date             DATE,
+  sign_date                 DATE,
+  start_date                DATE,
+  tran_timestamp            VARCHAR2(26),
+  acct_ccy                  VARCHAR2(3),
+  agre_prod_type            VARCHAR2(12),
+  agreement_amt             NUMBER(17,2),
+  last_change_user_id       VARCHAR2(8),
+  opposite_internal_key     NUMBER(15),
+  out_sign_branch           VARCHAR2(12),
+  out_sign_user_id          VARCHAR2(8),
+  sign_branch               VARCHAR2(12),
+  sign_user_id              VARCHAR2(8),
+  tran_branch               VARCHAR2(12),
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_RB_AGREEMENT
+  is '合同/协议信息表';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.acct_seq_no
+  is '账户子账号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.base_acct_no
+  is '交易账号/卡号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.client_short
+  is '客户简称';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.prod_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.user_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.agreement_class
+  is '协议分类';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.agreement_close_acct_flag
+  is '签约后是否允许销户';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.agreement_id
+  is '协议编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.agreement_key
+  is '协议键值';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.agreement_key_type
+  is '协议键类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.agreement_status
+  is '协议状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.agreement_type
+  is '协议类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.out_sign_channel
+  is '解约渠道';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.sign_channel
+  is '签约渠道';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.agreement_open_date
+  is '协议签订日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.end_date
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.last_change_date
+  is '最后修改日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.out_sign_date
+  is '解约日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.sign_date
+  is '签约日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.start_date
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.acct_ccy
+  is '账户币种';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.agre_prod_type
+  is '签约主产品类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.agreement_amt
+  is '协议金额';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.last_change_user_id
+  is '最后修改柜员';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.opposite_internal_key
+  is '签约对方账户内部键';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.out_sign_branch
+  is '解约机构';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.out_sign_user_id
+  is '解约柜员';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.sign_branch
+  is '签约机构';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.sign_user_id
+  is '签约柜员';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.tran_branch
+  is '核心交易机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_AGREEMENT.etl_timestamp
+  is 'ETL处理时间戳';
+

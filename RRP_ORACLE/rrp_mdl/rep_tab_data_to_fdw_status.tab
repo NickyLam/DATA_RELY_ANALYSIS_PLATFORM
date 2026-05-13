@@ -1,0 +1,33 @@
+﻿create table RRP_MDL.REP_TAB_DATA_TO_FDW_STATUS
+(
+  report_id   VARCHAR2(30),
+  report_name VARCHAR2(300),
+  report_date VARCHAR2(10),
+  status      VARCHAR2(15),
+  etl_date    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.REP_TAB_DATA_TO_FDW_STATUS
+  is '监管报送供数给财务集市状态表';
+comment on column RRP_MDL.REP_TAB_DATA_TO_FDW_STATUS.report_id
+  is '报表编号';
+comment on column RRP_MDL.REP_TAB_DATA_TO_FDW_STATUS.report_name
+  is '报表名称';
+comment on column RRP_MDL.REP_TAB_DATA_TO_FDW_STATUS.report_date
+  is '报表日期';
+comment on column RRP_MDL.REP_TAB_DATA_TO_FDW_STATUS.status
+  is '跑批状态 y-完成 n-未完成';
+comment on column RRP_MDL.REP_TAB_DATA_TO_FDW_STATUS.etl_date
+  is '跑批时间';
+

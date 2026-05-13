@@ -1,0 +1,666 @@
+﻿create table RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP
+(
+  data_dt                     CHAR(8) not null,
+  lgl_rep_id                  VARCHAR2(200),
+  acc_id                      VARCHAR2(200),
+  rcpt_id                     VARCHAR2(200) not null,
+  cont_id                     VARCHAR2(200),
+  bill_no                     VARCHAR2(200),
+  coop_agrt_id                VARCHAR2(200),
+  cust_id                     VARCHAR2(200),
+  org_id                      VARCHAR2(200),
+  subj_id                     VARCHAR2(200),
+  loan_std_prod_id            VARCHAR2(200),
+  loan_std_prod_nm            VARCHAR2(750),
+  loan_prod_id                VARCHAR2(200),
+  loan_prod_nm                VARCHAR2(750),
+  loan_biz_typ                VARCHAR2(20),
+  cur                         CHAR(3),
+  loan_amt                    NUMBER(30,2),
+  loan_bal                    NUMBER(38,8),
+  int_adj                     NUMBER(18,4),
+  fair_val_chg                NUMBER(30,2),
+  ovd_prin_bal                NUMBER(30,2),
+  in_int_ovd_bal              NUMBER(30,2),
+  out_int_ovd_bal             NUMBER(30,2),
+  loan_act_dstr_dt            CHAR(8),
+  loan_orig_exp_dt            CHAR(8),
+  loan_act_exp_dt             CHAR(8),
+  act_end_dt                  CHAR(8),
+  last_repy_dt                CHAR(8),
+  last_repy_amt               NUMBER(30,2),
+  val_dt                      CHAR(8),
+  open_acc_dt                 CHAR(8),
+  cnl_acc_dt                  CHAR(8),
+  prin_ovd_dt                 CHAR(8),
+  int_ovd_dt                  CHAR(8),
+  ovd_days                    INTEGER,
+  ovd_typ                     VARCHAR2(10),
+  loan_useage                 VARCHAR2(3000),
+  lvl5_cl                     VARCHAR2(15),
+  gua_mode                    VARCHAR2(15),
+  loan_dir_rgn                VARCHAR2(15),
+  loan_dir_idy                VARCHAR2(15),
+  syn_loan_flg                CHAR(1),
+  proj_loan_flg               CHAR(1),
+  idy_stru_adj_typ            VARCHAR2(10),
+  idy_trnst_upg_flg           CHAR(1),
+  strtg_emer_idy_typ          VARCHAR2(10),
+  bank_tax_coop_loan_flg      CHAR(1),
+  agr_rel_loan_flg            CHAR(1),
+  rl_est_loan_flg             CHAR(1),
+  iall_loan_flg               CHAR(1),
+  ov_sea_mrg_loan_flg         CHAR(1),
+  grn_loan_useage_cl          VARCHAR2(15),
+  ent_gua_loan_typ            VARCHAR2(10),
+  campus_cnsmp_loan_flg       CHAR(1),
+  lcl_govfinpltf_loan_flg     CHAR(1),
+  land_thirdparty_loan_typ    VARCHAR2(10),
+  farmer_thirdparty_loan_typ  VARCHAR2(10),
+  pov_alle_rec_flg            CHAR(1),
+  loan_hdl_chan               VARCHAR2(30),
+  net_loan_flg                CHAR(1),
+  cr_crd_biz_od_typ           VARCHAR2(10),
+  repy_mode                   VARCHAR2(15),
+  loan_frm                    VARCHAR2(15),
+  rcmm_loan_flg               CHAR(1),
+  adj_bad_flg                 CHAR(1),
+  aldy_rcmm_flg               CHAR(1),
+  cton_prd_loan_flg           CHAR(1),
+  cash_trf_flg                CHAR(1),
+  fst_loan_flg                CHAR(1),
+  first_loan_flg              CHAR(1),
+  pboc_grn_loan_flg           CHAR(1),
+  cbrc_grn_loan_flg           CHAR(1),
+  cnsmp_scn_loan_flg          CHAR(1),
+  loan_finc_spt_mode          VARCHAR2(15),
+  acurt_pov_alle_loan_flg     CHAR(1),
+  rate_re_prc_dt              CHAR(8),
+  rate_flt_freq               VARCHAR2(15),
+  rate_typ                    VARCHAR2(10),
+  ast_scrtz_prod_id           VARCHAR2(200),
+  exec_rate                   NUMBER(38,8),
+  base_rate                   NUMBER(38,8),
+  cntr_gua_loan_flg           CHAR(1),
+  rate_flt_val                NUMBER(38,8),
+  prc_base_typ                VARCHAR2(10),
+  tot_prd_num                 INTEGER,
+  curr_prd                    INTEGER,
+  cum_debt_prd_num            INTEGER,
+  cnu_debt_prd_num            INTEGER,
+  extn_cnt                    INTEGER,
+  dsbr_mode                   VARCHAR2(15),
+  int_calc_mode               VARCHAR2(15),
+  mrgn_pct                    NUMBER(18,4),
+  mrgn_cur                    CHAR(3),
+  mrgn                        NUMBER(30,2),
+  mrgn_acc                    VARCHAR2(300),
+  loan_ofr_no                 VARCHAR2(30),
+  accrd_int                   NUMBER(30,2),
+  pro_impt                    NUMBER(30,2),
+  com_pro                     NUMBER(30,2),
+  spcl_pro                    NUMBER(30,2),
+  esp_pro                     NUMBER(30,2),
+  spcl_loan_flg               CHAR(1),
+  orig_rcpt_no                VARCHAR2(2000),
+  fnd_pct                     NUMBER(18,4),
+  etr_acc                     VARCHAR2(300),
+  etr_acc_nm                  VARCHAR2(750),
+  loan_etr_acc_open_bank_nm   VARCHAR2(750),
+  repy_acc                    VARCHAR2(300),
+  loan_repy_acc_open_bank_nm  VARCHAR2(750),
+  rcpt_stat                   VARCHAR2(10),
+  acc_stat                    VARCHAR2(10),
+  rev_loan_flg                CHAR(1),
+  rel_psn_gua_loan_flg        CHAR(1),
+  bear_or_red_amt             NUMBER(30,2),
+  dept_line                   VARCHAR2(750),
+  data_src                    VARCHAR2(500),
+  rstd_loan_flg               CHAR(1),
+  net_loan_prod_typ           VARCHAR2(10),
+  fit_net_loan_reg_rule_flg   CHAR(1),
+  fin_gua_org_loan_flg        CHAR(1),
+  net_loan_svc_fee_expn       NUMBER(30,2),
+  net_loan_biz_mode           VARCHAR2(10),
+  bio_loan_flg                CHAR(1),
+  grn_cnsmp_fin_useage_cl     VARCHAR2(10),
+  cer_mtg_loan_flg            CHAR(1),
+  er_mtg_loan_flg             CHAR(1),
+  grn_loan_useage_cl_1104     VARCHAR2(10),
+  lcl_fin_pltf_hier_typ       VARCHAR2(10),
+  lcl_govfinpltf_loan_dir_rgn VARCHAR2(10),
+  lcl_govfinpltf_fin_char     VARCHAR2(10),
+  gov_fin_gua_loan_flg        CHAR(1),
+  loan_dir_fta_typ            VARCHAR2(10),
+  trf_in_loan_dt              CHAR(8),
+  loan_flg                    CHAR(1),
+  loan_biz_nm                 VARCHAR2(200),
+  lmt_cont_id                 VARCHAR2(200),
+  gxh_pay_type                VARCHAR2(60),
+  gxh_pay_freq                VARCHAR2(90),
+  asset_tran_dt               CHAR(8),
+  east_flg                    CHAR(1),
+  loan_dir_bio_flg            CHAR(1),
+  ovd_int_bal                 NUMBER(20,2),
+  loan_crdt_lmt_tot           NUMBER(20,2),
+  refac_flg                   CHAR(1),
+  bill_act_amt                NUMBER(20,2),
+  loan_modal_cd               VARCHAR2(100),
+  oper_org_id                 VARCHAR2(500),
+  oper_teller_id              VARCHAR2(500),
+  renew_exp_day               VARCHAR2(12),
+  loan_act_first_dt           CHAR(8),
+  fir_lon_dt                  CHAR(8),
+  loan_mgr_id                 VARCHAR2(500),
+  loan_teller_id              VARCHAR2(500),
+  loan_mgr_name               VARCHAR2(750),
+  loan_mgr_belong_org_id      VARCHAR2(500),
+  cncl_dt                     CHAR(8),
+  fixed_int_mark              VARCHAR2(15),
+  discnt_cust_id              VARCHAR2(500),
+  sys_in_flg                  VARCHAR2(10),
+  cntpty_id                   VARCHAR2(100),
+  in_bs_int                   NUMBER(30,2),
+  off_bs_int                  NUMBER(30,2),
+  hold_days                   INTEGER,
+  distr_amt                   NUMBER(20,2),
+  distr_dt                    CHAR(8),
+  dsbr_farm_flg               CHAR(1),
+  ctr_nt_id                   VARCHAR2(100),
+  recvbl_pnlt                 NUMBER(30,2),
+  coll_pnlt                   NUMBER(30,2),
+  recvbl_comp_int             NUMBER(30,2),
+  recvbl_int_sub              NUMBER(30,2),
+  recvbl_fine                 NUMBER(30,2),
+  recvbl_over_int             NUMBER(30,2),
+  coll_over_int               NUMBER(30,2),
+  tenor                       NUMBER(20),
+  loan_useage_sub_cl          VARCHAR2(150),
+  cust_char                   VARCHAR2(150),
+  out_acct_flow_num           VARCHAR2(100),
+  indtype                     VARCHAR2(150),
+  icms_cust_id                VARCHAR2(100),
+  hxb_acpt_flg                VARCHAR2(100),
+  bill_sub_intrv_id           VARCHAR2(100),
+  intnal_carr_flg             VARCHAR2(30),
+  lc_benefc                   VARCHAR2(100),
+  fix_int_rat_flg             VARCHAR2(30),
+  lc_issuer                   VARCHAR2(250),
+  base_rat_imas               NUMBER(38,8),
+  abs_flg                     VARCHAR2(10),
+  asset_tran_flg              VARCHAR2(10),
+  cred_rht_turn_flg           VARCHAR2(10),
+  loan_type_cd                VARCHAR2(10),
+  init_distr_amt              NUMBER(30,2),
+  init_distr_dt               VARCHAR2(8),
+  init_tot_perds              INTEGER,
+  init_curr_prd               INTEGER,
+  regroup_loan_flg            VARCHAR2(10),
+  regroup_loan_type_cd        VARCHAR2(60),
+  cntpty_cust_id              VARCHAR2(60),
+  repl_old_bond_flg           VARCHAR2(10),
+  renew_flg_wdq               VARCHAR2(10),
+  provi_for_aged_property_flg VARCHAR2(10),
+  happ_way_cd                 VARCHAR2(30),
+  payoff_dt                   CHAR(8),
+  suit_fee_bal                NUMBER(30,6),
+  bill_num                    VARCHAR2(90),
+  green_crdt_cust_flg         VARCHAR2(10),
+  green_crdt_cls_cd           VARCHAR2(10),
+  green_crdt_cls_new          VARCHAR2(10),
+  third_rcpt_id               VARCHAR2(100),
+  iswhite_flg                 VARCHAR2(10),
+  ybt_flg                     CHAR(1),
+  acct_modif_cate_cd          VARCHAR2(30),
+  sfjwbgdk                    VARCHAR2(10),
+  bgdklx                      VARCHAR2(30),
+  sftyjrcbqy                  VARCHAR2(10),
+  actl_amt                    NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP
+  is '表内借据信息临时表';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.data_dt
+  is '数据时间';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.acc_id
+  is '账户编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cont_id
+  is '合同号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.bill_no
+  is '票据编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.coop_agrt_id
+  is '合作协议编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cust_id
+  is '客户号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.subj_id
+  is '科目代码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_std_prod_id
+  is '贷款标准产品编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_std_prod_nm
+  is '贷款标准产品名称';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_prod_id
+  is '产品号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_prod_nm
+  is '贷款产品名称';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_biz_typ
+  is '贷款业务类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cur
+  is '币种';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_amt
+  is '放款金额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_bal
+  is '贷款余额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.int_adj
+  is '利息调整';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.fair_val_chg
+  is '公允价值变动';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.ovd_prin_bal
+  is '逾期本金余额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.in_int_ovd_bal
+  is '表内欠息余额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.out_int_ovd_bal
+  is '表外欠息余额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_act_dstr_dt
+  is '贷款实际发放日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_orig_exp_dt
+  is '贷款原始到期日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_act_exp_dt
+  is '贷款实际到期日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.act_end_dt
+  is '实际终止日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.last_repy_dt
+  is '上次还款日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.last_repy_amt
+  is '上次还款金额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.val_dt
+  is '起息日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.open_acc_dt
+  is '开户日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cnl_acc_dt
+  is '销户日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.prin_ovd_dt
+  is '本金逾期日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.int_ovd_dt
+  is '利息逾期日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.ovd_days
+  is '逾期天数';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.ovd_typ
+  is '逾期类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_useage
+  is '贷款用途';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.lvl5_cl
+  is '五级分类';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.gua_mode
+  is '担保方式';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_dir_rgn
+  is '贷款投向地区';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_dir_idy
+  is '贷款投向行业';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.syn_loan_flg
+  is '银团贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.proj_loan_flg
+  is '项目贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.idy_stru_adj_typ
+  is '产业结构调整类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.idy_trnst_upg_flg
+  is '工业转型升级标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.strtg_emer_idy_typ
+  is '战略新兴产业类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.bank_tax_coop_loan_flg
+  is '银税合作贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.agr_rel_loan_flg
+  is '涉农贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rl_est_loan_flg
+  is '房地产贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.iall_loan_flg
+  is '投贷联动贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.ov_sea_mrg_loan_flg
+  is '境外并购贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.grn_loan_useage_cl
+  is '绿色贷款用途分类';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.ent_gua_loan_typ
+  is '创业担保贷款类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.campus_cnsmp_loan_flg
+  is '校园消费贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.lcl_govfinpltf_loan_flg
+  is '地方政府融资平台贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.land_thirdparty_loan_typ
+  is '将承包土地的经营权抵押给第三方的担保贷款类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.farmer_thirdparty_loan_typ
+  is '将农民住房财产权抵押给第三方的担保贷款类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.pov_alle_rec_flg
+  is '未脱贫建档立卡户贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_hdl_chan
+  is '贷款办理渠道';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.net_loan_flg
+  is '互联网贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cr_crd_biz_od_typ
+  is '类信用卡业务透支类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.repy_mode
+  is '还款方式';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_frm
+  is '贷款形式';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rcmm_loan_flg
+  is '重组贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.adj_bad_flg
+  is '下调为不良标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.aldy_rcmm_flg
+  is '曾重组标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cton_prd_loan_flg
+  is '缩期贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cash_trf_flg
+  is '现转标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.fst_loan_flg
+  is '首贷户贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.first_loan_flg
+  is '首次贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.pboc_grn_loan_flg
+  is 'PBOC绿色贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cbrc_grn_loan_flg
+  is 'CBRC绿色贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cnsmp_scn_loan_flg
+  is '消费场景贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_finc_spt_mode
+  is '贷款财政扶持方式';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.acurt_pov_alle_loan_flg
+  is '精准扶贫贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rate_re_prc_dt
+  is '利率重新定价日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rate_flt_freq
+  is '利率浮动频率';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rate_typ
+  is '利率类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.ast_scrtz_prod_id
+  is '资产证券化产品编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.exec_rate
+  is '执行利率';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.base_rate
+  is '基准利率';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cntr_gua_loan_flg
+  is '反担保贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rate_flt_val
+  is '利率浮动值';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.prc_base_typ
+  is '定价基准类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.tot_prd_num
+  is '总期数';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.curr_prd
+  is '当前期数';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cum_debt_prd_num
+  is '累计欠款期数';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cnu_debt_prd_num
+  is '连续欠款期数';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.extn_cnt
+  is '展期次数';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.dsbr_mode
+  is '放款方式';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.int_calc_mode
+  is '计息方式';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.mrgn_pct
+  is '保证金比例';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.mrgn_cur
+  is '保证金币种';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.mrgn
+  is '保证金';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.mrgn_acc
+  is '保证金账号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_ofr_no
+  is '信贷员工号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.accrd_int
+  is '应计利息';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.pro_impt
+  is '减值准备';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.com_pro
+  is '一般准备';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.spcl_pro
+  is '专项准备';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.esp_pro
+  is '特别准备';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.spcl_loan_flg
+  is '专项贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.orig_rcpt_no
+  is '原借据号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.fnd_pct
+  is '出资比例';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.etr_acc
+  is '入账账号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.etr_acc_nm
+  is '入账账号户名';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_etr_acc_open_bank_nm
+  is '贷款入账账号开户行名称';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.repy_acc
+  is '还款账号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_repy_acc_open_bank_nm
+  is '贷款还款账号开户行名称';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rcpt_stat
+  is '借据状态';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.acc_stat
+  is '账户状态';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rev_loan_flg
+  is '循环贷贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rel_psn_gua_loan_flg
+  is '关系人保证贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.bear_or_red_amt
+  is '承担或减免的信贷费用金额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.data_src
+  is '数据来源';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.rstd_loan_flg
+  is '重组贷款标识';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.net_loan_prod_typ
+  is '网贷产品类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.fit_net_loan_reg_rule_flg
+  is '符合网贷监管规定标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.fin_gua_org_loan_flg
+  is '融资担保机构担保贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.net_loan_svc_fee_expn
+  is '网贷服务费支出';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.net_loan_biz_mode
+  is '网贷业务模式';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.bio_loan_flg
+  is '境内外贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.grn_cnsmp_fin_useage_cl
+  is '绿色消费融资用途分类';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cer_mtg_loan_flg
+  is '以碳排放权为抵押的贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.er_mtg_loan_flg
+  is '以环境权益为抵押的贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.grn_loan_useage_cl_1104
+  is '绿色贷款用途分类1104';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.lcl_fin_pltf_hier_typ
+  is '地方融资平台层级类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.lcl_govfinpltf_loan_dir_rgn
+  is '地方政府融资平台贷款投向地区';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.lcl_govfinpltf_fin_char
+  is '地方政府融资平台融资性质';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.gov_fin_gua_loan_flg
+  is '政府性融资担保机构担保贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_dir_fta_typ
+  is '贷款投向自贸区类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.trf_in_loan_dt
+  is '贷款转入日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_flg
+  is '业务类型标识';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_biz_nm
+  is '业务品种名称';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.lmt_cont_id
+  is '额度合同编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.gxh_pay_type
+  is '还款方式';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.gxh_pay_freq
+  is '还款频度';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.asset_tran_dt
+  is '资产转让日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.east_flg
+  is 'EAST口径标识';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_dir_bio_flg
+  is '贷款投向境内外标识';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.ovd_int_bal
+  is '逾期利息金额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_crdt_lmt_tot
+  is '单户授信总额度';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.refac_flg
+  is '支小再贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.bill_act_amt
+  is '转帖现、福费廷的贷款金额取实付金额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_modal_cd
+  is '贷款形态代码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.oper_org_id
+  is '经办机构编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.oper_teller_id
+  is '经办柜员编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.renew_exp_day
+  is '展期到期日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_act_first_dt
+  is '本行首贷日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.fir_lon_dt
+  is '征信首贷日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_mgr_id
+  is '借据主办客户经理号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_teller_id
+  is '借据主办柜员号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_mgr_name
+  is '借据主办客户经理名称';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_mgr_belong_org_id
+  is '借据主办客户经理所属机构';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cncl_dt
+  is '核销日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.fixed_int_mark
+  is '利率是否固定';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.discnt_cust_id
+  is '直贴人客户编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.sys_in_flg
+  is '系统内标志： 1系统外 0系统内';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.in_bs_int
+  is '表内利息';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.off_bs_int
+  is '表外利息';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.hold_days
+  is '持票天数';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.distr_amt
+  is '放款金额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.distr_dt
+  is '放款日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.dsbr_farm_flg
+  is '放款时农户标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.ctr_nt_id
+  is '成交单编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.recvbl_pnlt
+  is '应收罚息';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.coll_pnlt
+  is '催收罚息';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.recvbl_comp_int
+  is '应收复息';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.recvbl_int_sub
+  is '应收贴息';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.recvbl_fine
+  is '应收罚金';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.recvbl_over_int
+  is '应收欠息';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.coll_over_int
+  is '催收欠息';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.tenor
+  is '剩余期限';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_useage_sub_cl
+  is '贷款用途细类';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cust_char
+  is '客户性质';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.out_acct_flow_num
+  is '出账流水号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.indtype
+  is '联合网贷客户性质';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.icms_cust_id
+  is '信贷客户编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.hxb_acpt_flg
+  is '我行承兑标识';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.bill_sub_intrv_id
+  is '子票据区间编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.intnal_carr_flg
+  is '内部结转标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.lc_benefc
+  is '信用证受益人';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.fix_int_rat_flg
+  is '固定利率标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.lc_issuer
+  is '信用证开证人';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.base_rat_imas
+  is '基准利率IMAS';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.abs_flg
+  is '资产证券化标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.asset_tran_flg
+  is '资产转让标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cred_rht_turn_flg
+  is '债权直转标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.loan_type_cd
+  is '借据类型代码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.init_distr_amt
+  is '原始放款金额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.init_distr_dt
+  is '原始放款日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.init_tot_perds
+  is '原始总期数';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.init_curr_prd
+  is '原始当前期数';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.regroup_loan_flg
+  is '重组贷款标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.regroup_loan_type_cd
+  is '重组贷款类型代码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.cntpty_cust_id
+  is '交易对手客户编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.repl_old_bond_flg
+  is '置换旧债标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.renew_flg_wdq
+  is '展期未到期标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.provi_for_aged_property_flg
+  is '养老产业标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.happ_way_cd
+  is '发生方式代码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.payoff_dt
+  is '结清日期';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.suit_fee_bal
+  is '诉讼费余额';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.bill_num
+  is '票据编码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.green_crdt_cust_flg
+  is '绿色信贷客户标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.green_crdt_cls_cd
+  is '绿色信贷分类_旧版代码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.green_crdt_cls_new
+  is '绿色信贷分类_新版代码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.third_rcpt_id
+  is '第三方借据编号';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.iswhite_flg
+  is '白户标志';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.ybt_flg
+  is '一表通口径标识';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.acct_modif_cate_cd
+  is '账户变更类别代码';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.sfjwbgdk
+  is '是否境外并购贷款';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.bgdklx
+  is '并购贷款类型';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.sftyjrcbqy
+  is '是否退役军人创办企业';
+comment on column RRP_MDL.M_LOAN_IN_DUBILL_INFO_TMP.actl_amt
+  is '实付金额';
+

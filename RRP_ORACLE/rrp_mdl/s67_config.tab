@@ -1,0 +1,27 @@
+﻿create table RRP_MDL.S67_CONFIG
+(
+  rcpt_id VARCHAR2(200),
+  fwzj    NUMBER(30,6),
+  sfje    NUMBER(30,6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.S67_CONFIG
+  is '过程临时表';
+comment on column RRP_MDL.S67_CONFIG.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.S67_CONFIG.fwzj
+  is '房屋总价';
+comment on column RRP_MDL.S67_CONFIG.sfje
+  is '首付金额';
+

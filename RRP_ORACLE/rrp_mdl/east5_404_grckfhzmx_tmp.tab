@@ -1,0 +1,162 @@
+﻿create table RRP_MDL.EAST5_404_GRCKFHZMX_TMP
+(
+  rid          VARCHAR2(50) not null,
+  jyxlh        VARCHAR2(100) not null,
+  jrxkzh       VARCHAR2(30),
+  nbjgh        VARCHAR2(30),
+  ywbljgh      VARCHAR2(30),
+  yhjgmc       VARCHAR2(450),
+  mxkmbh       VARCHAR2(60),
+  mxkmmc       VARCHAR2(300),
+  khtybh       VARCHAR2(60),
+  zhmc         VARCHAR2(450),
+  zjlb         VARCHAR2(60),
+  zjhm         VARCHAR2(70) not null,
+  grckzh       VARCHAR2(60) not null,
+  wbzh         VARCHAR2(60),
+  jylx         VARCHAR2(60),
+  jyjdbz       VARCHAR2(3),
+  hxjyrq       VARCHAR2(8) not null,
+  hxjysj       VARCHAR2(6) not null,
+  bz           VARCHAR2(3),
+  jyje         NUMBER(20,2),
+  zhye         NUMBER(20,2),
+  dfzh         VARCHAR2(60),
+  dfhm         VARCHAR2(450),
+  dfxh         VARCHAR2(30),
+  dfxm         VARCHAR2(450),
+  zy           VARCHAR2(600),
+  fy           VARCHAR2(600),
+  cbmbz        VARCHAR2(9),
+  xzbz         VARCHAR2(3),
+  jyqd         VARCHAR2(60),
+  ipdz         VARCHAR2(40),
+  macdz        VARCHAR2(60),
+  dbrxm        VARCHAR2(150),
+  dbrzjlb      VARCHAR2(60),
+  dbrzjhm      VARCHAR2(70),
+  jygyh        VARCHAR2(30),
+  sqgyh        VARCHAR2(30),
+  bbz          VARCHAR2(600),
+  dept_no      VARCHAR2(10),
+  cjrq         VARCHAR2(8) not null,
+  src_sys_id   VARCHAR2(10),
+  issued_no    VARCHAR2(50),
+  org_no       VARCHAR2(20),
+  address      VARCHAR2(200),
+  dbrxm_orig   VARCHAR2(450),
+  dbrzjhm_orig VARCHAR2(70),
+  zjhm_orig    VARCHAR2(70),
+  zhmc_orig    VARCHAR2(450),
+  dfhm_oth     VARCHAR2(5),
+  dfhm_orig    VARCHAR2(450),
+  gsfzjg       VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.jyxlh
+  is '交易序列号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.ywbljgh
+  is '业务办理机构号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.yhjgmc
+  is '银行机构名称';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.mxkmbh
+  is '明细科目编号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.mxkmmc
+  is '明细科目名称';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.khtybh
+  is '客户统一编号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.zhmc
+  is '账户名称';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.zjlb
+  is '证件类别';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.zjhm
+  is '证件号码';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.grckzh
+  is '个人存款账号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.wbzh
+  is '外部账号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.jylx
+  is '交易类型';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.jyjdbz
+  is '交易借贷标志';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.hxjyrq
+  is '核心交易日期';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.hxjysj
+  is '核心交易时间';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.bz
+  is '申请控制金额币种';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.jyje
+  is '交易金额';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.zhye
+  is '余额（折合人民币）';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dfzh
+  is '对方账号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dfhm
+  is '对方户名';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dfxh
+  is '对方行号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dfxm
+  is '对方行名';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.zy
+  is '事由';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.fy
+  is '附言';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.cbmbz
+  is '冲补抹标志';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.xzbz
+  is '现转标志';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.jyqd
+  is '交易渠道';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.ipdz
+  is 'IP地址';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.macdz
+  is 'MAC地址';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dbrxm
+  is '代办人姓名';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dbrzjlb
+  is '代办人证件类别';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dbrzjhm
+  is '代办人证件号码';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.jygyh
+  is '交易柜员号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.sqgyh
+  is '授权柜员';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dbrxm_orig
+  is '代办人姓名（脱敏前）';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dbrzjhm_orig
+  is '代办人证件号码（脱敏前）';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.zjhm_orig
+  is '证件号码（脱敏前）';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.zhmc_orig
+  is '账户名称（脱敏前）';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dfhm_oth
+  is '户名是否自然人名称';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.dfhm_orig
+  is '对方户名（脱敏前）';
+comment on column RRP_MDL.EAST5_404_GRCKFHZMX_TMP.gsfzjg
+  is '归属分支机构';
+

@@ -1,0 +1,101 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501
+(
+  i_code                     VARCHAR2(30),
+  a_type                     VARCHAR2(20),
+  m_type                     VARCHAR2(20),
+  p_class_ext                VARCHAR2(60),
+  hx_businessmiddle          VARCHAR2(100),
+  hx_businesssmall           VARCHAR2(100),
+  hx_investcategory          VARCHAR2(500),
+  hx_investbroheading        VARCHAR2(500),
+  hx_islocfinanc             VARCHAR2(100),
+  hx_isdistbus               VARCHAR2(100),
+  hx_isgover_fund            VARCHAR2(100),
+  hx_isvc_fund               VARCHAR2(100),
+  hx_incredit_type           VARCHAR2(100),
+  hx_cremainname             VARCHAR2(300),
+  hxabs_invest1_type         VARCHAR2(100),
+  hxabs_invest2_type         VARCHAR2(100),
+  hxabs_investamount         NUMBER(31,2),
+  hxabs_investinfeamount     NUMBER(31,2),
+  hxabs_creditassecu         VARCHAR2(100),
+  hxabs_csrcalloassecu       VARCHAR2(100),
+  hx_creditpartyid           NUMBER,
+  hx_basictrader             VARCHAR2(1000),
+  hx_undatype                VARCHAR2(200),
+  hxabs_penetration_type     VARCHAR2(5),
+  hxabs_isdebt_for_equity    CHAR(1),
+  hxabs_isconsumer_financing CHAR(1),
+  hxabs_againabs             VARCHAR2(100),
+  start_dt                   DATE,
+  end_dt                     DATE,
+  id_mark                    VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501
+  is '债券补录信息表';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.i_code
+  is '债券代码';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.p_class_ext
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_businessmiddle
+  is '业务中类';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_businesssmall
+  is '业务小类';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_investcategory
+  is '投向行业门类';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_investbroheading
+  is '投向行业大类';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_islocfinanc
+  is '是否地方政府融资平台';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_isdistbus
+  is '是否异地业务';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_isgover_fund
+  is '是否政府投资基金';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_isvc_fund
+  is '是否创业投资基金';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_incredit_type
+  is '增信方式';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_cremainname
+  is '增信主体名称';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hxabs_invest1_type
+  is '投资分类1';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hxabs_invest2_type
+  is '投资分类2';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hxabs_investamount
+  is '原投资产总金额（万元）';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hxabs_investinfeamount
+  is '原投资产品劣后级金额（万元）';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hxabs_creditassecu
+  is '信贷资产支持证券';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hxabs_csrcalloassecu
+  is '证监会同意发行的企业资产支持证券';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_creditpartyid
+  is '授信主体';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_basictrader
+  is '基础资产客户';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hx_undatype
+  is '底层资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hxabs_penetration_type
+  is '穿透类型';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hxabs_isdebt_for_equity
+  is '是否投向市场化债转股';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hxabs_isconsumer_financing
+  is '是否为消费服务类融资';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.hxabs_againabs
+  is '是否再资产证券化(1:是,0否)';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TRPT_TBND_EXT_BAK_20230501.id_mark
+  is '增删标志';
+

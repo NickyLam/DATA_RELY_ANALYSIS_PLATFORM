@@ -1,0 +1,99 @@
+﻿create table RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT
+(
+  sob_id            VARCHAR2(100),
+  lp_id             VARCHAR2(60),
+  happ_dt           DATE,
+  enter_acct_dt     DATE,
+  layered_id        VARCHAR2(100),
+  sub_prod_flg      VARCHAR2(10),
+  sob_dt            DATE,
+  prft_mode_cd      VARCHAR2(30),
+  paid_in_capital   NUMBER(30,2),
+  td_paybl_margin   NUMBER(30,2),
+  acm_paybl_margin  NUMBER(30,2),
+  provi_int_rat     NUMBER(30,14),
+  fee_bf_asset_nv   NUMBER(30,2),
+  asset_nv          NUMBER(30,2),
+  fee_f_unit_nv     NUMBER(30,14),
+  corp_nv           NUMBER(30,14),
+  bf_ten_thous_prft NUMBER(30,14),
+  ten_thous_prft    NUMBER(30,14),
+  bf_td_aual_yld    NUMBER(30,14),
+  td_aual_yld       NUMBER(30,14),
+  fee_ped_aual_yld  NUMBER(30,14),
+  ped_aual_yld      NUMBER(30,14),
+  bf_sevn_aual_yld  NUMBER(30,14),
+  sevn_aual_yld     NUMBER(30,14),
+  etl_dt            DATE,
+  src_table_name    VARCHAR2(100),
+  job_cd            VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT
+  is '资管统计分析账套汇总';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.sob_id
+  is '账套编号';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.happ_dt
+  is '发生日期';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.enter_acct_dt
+  is '入账日期';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.layered_id
+  is 'VLOOKUP(E10679,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.sub_prod_flg
+  is '子产品标志';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.sob_dt
+  is '账套日期';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.prft_mode_cd
+  is '收益模式代码';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.paid_in_capital
+  is '实收资本';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.td_paybl_margin
+  is 'VLOOKUP(E10685,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.acm_paybl_margin
+  is '累计应付利润';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.provi_int_rat
+  is '计提利率';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.fee_bf_asset_nv
+  is '费前资产净值';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.asset_nv
+  is '资产净值';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.fee_f_unit_nv
+  is 'VLOOKUP(E10696,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.corp_nv
+  is '单位净值';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.bf_ten_thous_prft
+  is '费前万份收益';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.ten_thous_prft
+  is '万份收益';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.bf_td_aual_yld
+  is '费前当日年化收益率';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.td_aual_yld
+  is 'VLOOKUP(E10674,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.fee_ped_aual_yld
+  is '费用周期年化收益率';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.ped_aual_yld
+  is '周期年化收益率';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.bf_sevn_aual_yld
+  is 'VLOOKUP(E10695,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.sevn_aual_yld
+  is '七日年化收益率';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_FIN_AM_STAT_ANALY_SOB_TOT.job_cd
+  is '任务代码';
+

@@ -1,0 +1,131 @@
+﻿create table RRP_MDL.L_AGRE_CREDITLINE
+(
+  data_date             INTEGER not null,
+  facility_no           VARCHAR2(60) not null,
+  cust_id               VARCHAR2(30) not null,
+  curr_cd               CHAR(3),
+  org_num               VARCHAR2(12),
+  facility_eff_dt       DATE,
+  facility_end_dt       DATE,
+  apply_dt              DATE,
+  facility_wf_dt        DATE,
+  facility_wf_reason    CHAR(2),
+  facility_amt          NUMBER(20,4),
+  public_facility       CHAR(1),
+  facility_sts          CHAR(1),
+  cyc_flg               CHAR(1),
+  undraw_facility_amt   NUMBER(20,4),
+  facility_typ          CHAR(1),
+  grp_facility_no       VARCHAR2(60),
+  facility_busi_typ     CHAR(1),
+  facility_name         VARCHAR2(200),
+  opinion               VARCHAR2(2000),
+  autho_name            VARCHAR2(30),
+  temp_limit            CHAR(1),
+  facility_emp_id       VARCHAR2(30),
+  departmentd           VARCHAR2(100),
+  date_sourcesd         VARCHAR2(100),
+  used_facility_amt     NUMBER(18,2),
+  facility_effective_dt DATE,
+  first_credit_data     DATE,
+  facility_typ_person   CHAR(1),
+  tax_related_flg       CHAR(1),
+  consume_facility_amt  NUMBER(20,4),
+  business_facility_amt NUMBER(20,4),
+  facility_typ_credit   CHAR(2),
+  facility_limit        NUMBER(20,4),
+  facility_limit_id     VARCHAR2(60),
+  bus_breed_id          VARCHAR2(30),
+  ibs_facility_amt      NUMBER(20,4),
+  obs_facility_amt      NUMBER(20,4),
+  loan_happ_type_cd     VARCHAR2(30),
+  rela_cont_id          VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.L_AGRE_CREDITLINE
+  is '授信额度表';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.data_date
+  is '数据日期';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_no
+  is '额度编号';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.cust_id
+  is '客户号';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.curr_cd
+  is '币种';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.org_num
+  is '机构号';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_eff_dt
+  is '授信额度起始日期';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_end_dt
+  is '授信额度终止日期';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.apply_dt
+  is '授信申请日期';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_wf_dt
+  is '授信额度注销生效日期';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_wf_reason
+  is '授信额度注销原因';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_amt
+  is '授信额度';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.public_facility
+  is '公开授信标志';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_sts
+  is '额度是否有效';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.cyc_flg
+  is '循环额度标志';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.undraw_facility_amt
+  is '未动拨授信额度';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_typ
+  is '授信对象类型';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.grp_facility_no
+  is '集团/供应链授信编号';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_busi_typ
+  is '授信业务类型';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_name
+  is '授信协议名称';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.opinion
+  is '决策单意见';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.autho_name
+  is '最终审批人';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.temp_limit
+  is '是否临时额度';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_emp_id
+  is '授信员工号';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.departmentd
+  is '归属部门';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.date_sourcesd
+  is '数据来源';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.used_facility_amt
+  is '已使用授信额度';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_effective_dt
+  is '授信额度生效日期';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.first_credit_data
+  is '首次授信日期';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_typ_person
+  is '授信额度分类';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.tax_related_flg
+  is '银税合作授信标志';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.consume_facility_amt
+  is '消费性授信额度';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.business_facility_amt
+  is '经营性授信额度';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_typ_credit
+  is '授信额度类型';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_limit
+  is '授信限额';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.facility_limit_id
+  is '授信限额编号';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.bus_breed_id
+  is '业务品种代码';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.ibs_facility_amt
+  is '表内授信额度';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.obs_facility_amt
+  is '表外授信额度';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.loan_happ_type_cd
+  is '发生类型';
+comment on column RRP_MDL.L_AGRE_CREDITLINE.rela_cont_id
+  is '原合同编号';
+

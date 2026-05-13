@@ -1,0 +1,69 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV
+(
+  e_id          NUMBER(16),
+  i_code        VARCHAR2(45),
+  a_type        VARCHAR2(30),
+  m_type        VARCHAR2(30),
+  total_nav     NUMBER(38,4),
+  unit_nav      NUMBER(10,6),
+  profit_1w     NUMBER(15,6),
+  yield_7d      NUMBER(10,6),
+  pub_date      VARCHAR2(15),
+  beg_date      VARCHAR2(15),
+  end_date      VARCHAR2(15),
+  imp_date      VARCHAR2(15),
+  pipe_id       NUMBER(22),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV
+  is '净值型产品信息表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.e_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.total_nav
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.unit_nav
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.profit_1w
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.yield_7d
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.pub_date
+  is '发布日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.beg_date
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.end_date
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.imp_date
+  is '导入日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.pipe_id
+  is '导入管道';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_NAV.etl_timestamp
+  is 'etl处理时间';
+

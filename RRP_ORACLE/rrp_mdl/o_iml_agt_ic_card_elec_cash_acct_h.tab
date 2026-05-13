@@ -1,0 +1,90 @@
+﻿create table RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H
+(
+  agt_id                      VARCHAR2(250),
+  lp_id                       VARCHAR2(100),
+  card_no                     VARCHAR2(60),
+  card_ser_num                VARCHAR2(60),
+  app_idf                     VARCHAR2(60),
+  elec_cash_acct_status_cd    VARCHAR2(30),
+  elec_cash_acct_curr_cd      VARCHAR2(30),
+  elec_cash_acct_bal          NUMBER(30,2),
+  elec_cash_bal_uplmi         NUMBER(30,2),
+  elec_cash_sig_tran_lmt      NUMBER(30,2),
+  acm_load_amt                NUMBER(30,2),
+  app_effect_dt               DATE,
+  app_invalid_dt              DATE,
+  elec_cash_acct_open_acct_dt DATE,
+  open_acct_org_id            VARCHAR2(100),
+  start_dt                    DATE,
+  end_dt                      DATE,
+  id_mark                     VARCHAR2(10),
+  src_table_name              VARCHAR2(100),
+  job_cd                      VARCHAR2(10),
+  etl_timestamp               TIMESTAMP(6),
+  acct_name                   VARCHAR2(500),
+  clos_acct_dt                DATE,
+  clos_acct_flow_num          VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H
+  is 'IC卡电子现金账户历史';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.card_no
+  is '卡号';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.card_ser_num
+  is '卡序列号';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.app_idf
+  is '应用标识符';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.elec_cash_acct_status_cd
+  is '电子现金账户状态代码';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.elec_cash_acct_curr_cd
+  is '电子现金账户币种代码';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.elec_cash_acct_bal
+  is '电子现金账户余额';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.elec_cash_bal_uplmi
+  is '电子现金余额上限';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.elec_cash_sig_tran_lmt
+  is '电子现金单笔交易限额';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.acm_load_amt
+  is '累计圈存金额';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.app_effect_dt
+  is '应用生效日期';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.app_invalid_dt
+  is '应用失效日期';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.elec_cash_acct_open_acct_dt
+  is '电子现金账户开户日期';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.open_acct_org_id
+  is '开户机构编号';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.clos_acct_dt
+  is '销户日期';
+comment on column RRP_MDL.O_IML_AGT_IC_CARD_ELEC_CASH_ACCT_H.clos_acct_flow_num
+  is '销户流号';
+

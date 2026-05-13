@@ -1,0 +1,120 @@
+﻿create table RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION
+(
+  acct_name           VARCHAR2(200),
+  acct_seq_no         VARCHAR2(5),
+  acct_status         VARCHAR2(1),
+  base_acct_no        VARCHAR2(64),
+  card_no             VARCHAR2(50),
+  client_no           VARCHAR2(16),
+  client_type         VARCHAR2(3),
+  document_id         VARCHAR2(60),
+  document_type       VARCHAR2(4),
+  internal_key        NUMBER(15),
+  prod_type           VARCHAR2(12),
+  reason_code         VARCHAR2(10),
+  acct_class          VARCHAR2(1),
+  acct_nature         VARCHAR2(10),
+  acct_real_flag      VARCHAR2(1),
+  app_flag            VARCHAR2(1),
+  company             VARCHAR2(20),
+  default_settle_acct VARCHAR2(1),
+  individual_flag     VARCHAR2(1),
+  is_card             VARCHAR2(1),
+  is_corp_settle_card VARCHAR2(1),
+  lead_acct_flag      VARCHAR2(1),
+  reason_code_desc    VARCHAR2(100),
+  shard_id            VARCHAR2(5),
+  source_type         VARCHAR2(6),
+  tran_timestamp      VARCHAR2(26),
+  acct_branch         VARCHAR2(12),
+  acct_ccy            VARCHAR2(3),
+  actual_acct_no      VARCHAR2(50),
+  parent_internal_key NUMBER(15),
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  etl_timestamp       TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION
+  is '账户客户关系表';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.acct_seq_no
+  is '账户子账号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.acct_status
+  is '账户状态';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.base_acct_no
+  is '交易账号/卡号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.card_no
+  is '卡号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.client_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.client_type
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.document_id
+  is '证件号码';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.document_type
+  is '客户证件类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.internal_key
+  is '账户内部键值';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.prod_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.reason_code
+  is '账户用途';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.acct_class
+  is '账户等级';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.acct_nature
+  is '存款账户类型';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.acct_real_flag
+  is '账户虚实标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.app_flag
+  is '附属卡标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.company
+  is '法人';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.default_settle_acct
+  is '是否默认结算账户';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.individual_flag
+  is '对公对私标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.is_card
+  is '是否卡';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.is_corp_settle_card
+  is '单位结算卡标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.lead_acct_flag
+  is '主账户标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.reason_code_desc
+  is '原因代码描述';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.shard_id
+  is '分库标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.source_type
+  is '渠道编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.tran_timestamp
+  is '交易时间戳';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.acct_branch
+  is '开户机构编号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.acct_ccy
+  is '账户币种';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.actual_acct_no
+  is '实际账号';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.parent_internal_key
+  is '上级账户标识符';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NCBS_RB_ACCT_CLIENT_RELATION.etl_timestamp
+  is 'etl处理时间戳';
+

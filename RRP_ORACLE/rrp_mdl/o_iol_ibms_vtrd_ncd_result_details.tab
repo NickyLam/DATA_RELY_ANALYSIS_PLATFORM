@@ -1,0 +1,106 @@
+﻿create table RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS
+(
+  seq_id                NUMBER,
+  sysordid              VARCHAR2(20),
+  ref_sysordid          VARCHAR2(20),
+  i_code                VARCHAR2(30),
+  a_type                VARCHAR2(20),
+  m_type                VARCHAR2(20),
+  issue_type            VARCHAR2(1),
+  partyid               NUMBER,
+  partyname             VARCHAR2(150),
+  bid_price             NUMBER(31,4),
+  bid_amount            NUMBER(31,4),
+  bidding_price         NUMBER(31,4),
+  bidding_amount        NUMBER(31,4),
+  bid_time              VARCHAR2(19),
+  username              VARCHAR2(50),
+  bidding_actual_amount NUMBER(31,4),
+  memo                  VARCHAR2(200),
+  sales_organization    VARCHAR2(4000),
+  cost_calculate_rule   VARCHAR2(200),
+  bidding_pay_amount    NUMBER(31,4),
+  bank_code             VARCHAR2(100),
+  trdacccode            VARCHAR2(100),
+  sales_name            VARCHAR2(4000),
+  sales_org_name        VARCHAR2(4000),
+  sales_ratio           VARCHAR2(4000),
+  sales_org_ratio       VARCHAR2(4000),
+  sales_name_rate       VARCHAR2(4000),
+  sales_org_name_rate   VARCHAR2(4000),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS
+  is '同业存单发行结果明细表';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.seq_id
+  is '序列号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.sysordid
+  is '交易单号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.ref_sysordid
+  is '子交易单号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.i_code
+  is '存单代码';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.a_type
+  is '存单资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.m_type
+  is '存单市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.issue_type
+  is '发行方式(1-报价发行,2-招标发行,3-浮息发行)';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.partyid
+  is '认购人ID';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.partyname
+  is '认购人名称';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.bid_price
+  is '投标价位(元)';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.bid_amount
+  is '投标量(亿元)';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.bidding_price
+  is '中标价位(元)';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.bidding_amount
+  is '中标量(亿元)';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.bid_time
+  is '认购时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.username
+  is '提交用户';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.bidding_actual_amount
+  is '实际认购量';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.sales_organization
+  is '销售机构';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.cost_calculate_rule
+  is '费用计算规则';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.bidding_pay_amount
+  is '缴款金额(元)';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.bank_code
+  is '开户行行号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.trdacccode
+  is '交易账号';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.sales_name
+  is '销售机构名称';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.sales_org_name
+  is '销售机构(华兴)';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_VTRD_NCD_RESULT_DETAILS.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.T_COM_RRP_EAST_EAST5_510_MYRZYWB
+(
+  rid        VARCHAR2(50) not null,
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  yhjgmc     VARCHAR2(450),
+  xdhth      VARCHAR2(100),
+  xdjjh      VARCHAR2(100),
+  myrzpz     VARCHAR2(60),
+  bz         VARCHAR2(3),
+  myrzje     NUMBER(20,2),
+  fkrq       VARCHAR2(8),
+  hkrq       VARCHAR2(8),
+  kzhmc      VARCHAR2(450),
+  ghfmc      VARCHAR2(450),
+  xhfmc      VARCHAR2(450),
+  myjybj     VARCHAR2(1500),
+  zfdxmc     VARCHAR2(450),
+  hkdxmc     VARCHAR2(450),
+  sxfbz      VARCHAR2(3),
+  sxfje      NUMBER(20,2),
+  bzjbl      NUMBER(20,2),
+  bzjbz      VARCHAR2(3),
+  bzjje      NUMBER(20,2),
+  bzjzh      VARCHAR2(60),
+  dkzt       VARCHAR2(30),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8) not null,
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  address    VARCHAR2(500),
+  gsfzjg     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

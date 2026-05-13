@@ -1,0 +1,27 @@
+﻿create table RRP_MDL.S_G1102_BASE
+(
+  data_dt  VARCHAR2(12),
+  credno   VARCHAR2(180),
+  confmamt NUMBER(20,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.S_G1102_BASE
+  is 'G1102报表分配价值';
+comment on column RRP_MDL.S_G1102_BASE.data_dt
+  is '数据日期';
+comment on column RRP_MDL.S_G1102_BASE.credno
+  is '借据编号';
+comment on column RRP_MDL.S_G1102_BASE.confmamt
+  is '分配我行确认价值';
+

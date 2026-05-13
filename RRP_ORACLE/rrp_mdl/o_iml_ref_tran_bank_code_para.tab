@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA
+(
+  tran_code      VARCHAR2(100),
+  tran_name      VARCHAR2(500),
+  fin_tran_flg   VARCHAR2(30),
+  create_dt      DATE,
+  update_dt      DATE,
+  etl_dt         DATE,
+  id_mark        VARCHAR2(10),
+  src_table_name VARCHAR2(100),
+  job_cd         VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA
+  is '交易银行交易码参数';
+comment on column RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA.tran_code
+  is '交易码';
+comment on column RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA.tran_name
+  is '交易名称';
+comment on column RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA.fin_tran_flg
+  is '金融交易标志';
+comment on column RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_REF_TRAN_BANK_CODE_PARA.etl_timestamp
+  is '数据处理时间';
+

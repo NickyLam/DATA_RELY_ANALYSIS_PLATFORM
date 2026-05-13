@@ -1,0 +1,35 @@
+﻿create table RRP_MDL.ADD_INVEST_FINAL_DIR
+(
+  id           VARCHAR2(150),
+  fin_instm_id VARCHAR2(100),
+  sys_prod_cl  VARCHAR2(100),
+  std_prod_cl  VARCHAR2(100),
+  zztxlx_g31   VARCHAR2(100),
+  zb           NUMBER(20,6),
+  book_bal     NUMBER(20,2),
+  cthtxlx      VARCHAR2(100),
+  zztxlxdm     VARCHAR2(150),
+  zztxlxmc     VARCHAR2(100),
+  pj           VARCHAR2(150)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_INVEST_FINAL_DIR
+  is '投资标的补录表';
+comment on column RRP_MDL.ADD_INVEST_FINAL_DIR.id
+  is '主键ID';
+comment on column RRP_MDL.ADD_INVEST_FINAL_DIR.fin_instm_id
+  is '金融工具编号';
+comment on column RRP_MDL.ADD_INVEST_FINAL_DIR.book_bal
+  is '账面余额';
+

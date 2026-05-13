@@ -1,0 +1,177 @@
+﻿create table RRP_MDL.DIIS_POAD05
+(
+  rid          VARCHAR2(100) not null,
+  cust_seq     NUMBER(15),
+  name         VARCHAR2(400),
+  fin_org_code VARCHAR2(28),
+  fin_name     VARCHAR2(400),
+  capital_no   VARCHAR2(64),
+  acct_seq     NUMBER(15),
+  prod_type    VARCHAR2(40),
+  acct_no      VARCHAR2(64),
+  tel_no       VARCHAR2(60),
+  addr         VARCHAR2(180),
+  data_dt      VARCHAR2(20) not null,
+  org_no       VARCHAR2(40),
+  curr_cd      VARCHAR2(6) default 'CNY',
+  dept_no      VARCHAR2(60),
+  issued_no    VARCHAR2(40),
+  rpt_org_no   VARCHAR2(40),
+  data_ources  VARCHAR2(4),
+  data_modify  VARCHAR2(4),
+  org_name     VARCHAR2(100),
+  acct_c_seq   NUMBER(15),
+  cs_type      VARCHAR2(40),
+  cs_no        VARCHAR2(400),
+  cs_amt       NUMBER(30,2),
+  cs_amt_tot   NUMBER(30,2),
+  prin_amt     NUMBER(30,2),
+  int_amt      NUMBER(30,2),
+  tot_amt      NUMBER(30,2),
+  note         VARCHAR2(600),
+  gzqbxhj_amt  NUMBER(30,2),
+  is_seq       VARCHAR2(2),
+  subj_id      VARCHAR2(60)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('1900-01-01')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220331 values ('2022-03-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20210630 values ('2021-06-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220831 values ('2022-08-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220630 values ('2022-06-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221031 values ('2022-10-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221130 values ('2022-11-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values ('2022-09-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20221231 values ('2022-12-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230131 values ('2023-01-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230228 values ('2023-02-28')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230331 values ('2023-03-31')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230430 values ('2023-04-30')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.DIIS_POAD05
+  is '人民银行债权信息统计表';
+comment on column RRP_MDL.DIIS_POAD05.rid
+  is '数据主键';
+comment on column RRP_MDL.DIIS_POAD05.cust_seq
+  is '所属地人民银行机构序号';
+comment on column RRP_MDL.DIIS_POAD05.name
+  is '所属地人民银行机构名称';
+comment on column RRP_MDL.DIIS_POAD05.fin_org_code
+  is '所属地人民银行机构金融机构编码';
+comment on column RRP_MDL.DIIS_POAD05.fin_name
+  is '所属地人民银行机构负责人姓名';
+comment on column RRP_MDL.DIIS_POAD05.capital_no
+  is '资金划出账户';
+comment on column RRP_MDL.DIIS_POAD05.acct_seq
+  is '债权账户序号';
+comment on column RRP_MDL.DIIS_POAD05.prod_type
+  is '人民银行债权类型';
+comment on column RRP_MDL.DIIS_POAD05.acct_no
+  is '资金划入账户';
+comment on column RRP_MDL.DIIS_POAD05.tel_no
+  is '单位联系电话';
+comment on column RRP_MDL.DIIS_POAD05.addr
+  is '单位地址';
+comment on column RRP_MDL.DIIS_POAD05.data_dt
+  is '数据日期';
+comment on column RRP_MDL.DIIS_POAD05.org_no
+  is '机构编号';
+comment on column RRP_MDL.DIIS_POAD05.curr_cd
+  is '币种';
+comment on column RRP_MDL.DIIS_POAD05.dept_no
+  is '条线';
+comment on column RRP_MDL.DIIS_POAD05.issued_no
+  is '填报机构';
+comment on column RRP_MDL.DIIS_POAD05.rpt_org_no
+  is '报送机构号';
+comment on column RRP_MDL.DIIS_POAD05.data_ources
+  is '数据来源';
+comment on column RRP_MDL.DIIS_POAD05.data_modify
+  is '数据修改';
+comment on column RRP_MDL.DIIS_POAD05.org_name
+  is '机构名称';
+comment on column RRP_MDL.DIIS_POAD05.acct_c_seq
+  is '序号';
+comment on column RRP_MDL.DIIS_POAD05.cs_type
+  is '抵质押物类型';
+comment on column RRP_MDL.DIIS_POAD05.cs_no
+  is '抵质押物账号（抵质押合同号）';
+comment on column RRP_MDL.DIIS_POAD05.cs_amt
+  is '抵质押物金额（估值）';
+comment on column RRP_MDL.DIIS_POAD05.cs_amt_tot
+  is '抵质押物金额（估值）小计';
+comment on column RRP_MDL.DIIS_POAD05.prin_amt
+  is '债权余额';
+comment on column RRP_MDL.DIIS_POAD05.int_amt
+  is '应付利息';
+comment on column RRP_MDL.DIIS_POAD05.tot_amt
+  is '本息合计';
+comment on column RRP_MDL.DIIS_POAD05.note
+  is '备注';
+comment on column RRP_MDL.DIIS_POAD05.gzqbxhj_amt
+  is '各债权本息合计';
+comment on column RRP_MDL.DIIS_POAD05.is_seq
+  is '是否合计项';
+comment on column RRP_MDL.DIIS_POAD05.subj_id
+  is '科目编号';
+alter table RRP_MDL.DIIS_POAD05
+  add primary key (DATA_DT, RID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

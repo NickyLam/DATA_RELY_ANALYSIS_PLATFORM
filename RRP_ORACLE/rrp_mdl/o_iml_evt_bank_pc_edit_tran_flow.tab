@@ -1,0 +1,177 @@
+﻿create table RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW
+(
+  evt_id                 VARCHAR2(60),
+  lp_id                  VARCHAR2(60),
+  flow_num               VARCHAR2(60),
+  tran_tm                TIMESTAMP(6),
+  tran_dt                DATE,
+  tran_code              VARCHAR2(100),
+  tran_order             VARCHAR2(100),
+  unify_cust_id          VARCHAR2(60),
+  user_seq_num           VARCHAR2(60),
+  tran_chn_cd            VARCHAR2(20),
+  cust_name              VARCHAR2(500),
+  menu_id                VARCHAR2(100),
+  tran_status_cd         VARCHAR2(10),
+  tran_return_code       VARCHAR2(500),
+  fail_rs_descb          VARCHAR2(2000),
+  tran_acct_num          VARCHAR2(60),
+  tran_amt               NUMBER(30,2),
+  curr_cd                VARCHAR2(10),
+  chn_send_flow_id       VARCHAR2(1000),
+  sorc_sys_flow_id       VARCHAR2(100),
+  core_tran_flow_id      VARCHAR2(60),
+  comm_fee               NUMBER(30,2),
+  parent_flow_id         VARCHAR2(60),
+  src_flow_seq_id        VARCHAR2(60),
+  auth_refuse_rs         VARCHAR2(250),
+  visit_flow_id          VARCHAR2(60),
+  core_tran_dt           DATE,
+  callout_tran_code      VARCHAR2(100),
+  cust_ip                VARCHAR2(500),
+  curr_server_host_name  VARCHAR2(100),
+  req_src_server_ip      VARCHAR2(60),
+  cust_termn_mac_addr    VARCHAR2(30),
+  cust_termn_oper_sys    VARCHAR2(30),
+  cust_termn_brow        VARCHAR2(60),
+  cust_termn_equip_model VARCHAR2(30),
+  cust_termn_equip_id    VARCHAR2(60),
+  session_id             VARCHAR2(250),
+  rela_flow_id           VARCHAR2(60),
+  save_cert_way_cd       VARCHAR2(10),
+  auth_status_cd         VARCHAR2(10),
+  bank_agent_flg         VARCHAR2(10),
+  auth_role_seq_num      VARCHAR2(10),
+  submit_core_dt         DATE,
+  submit_core_tm         TIMESTAMP(6),
+  tran_tot_qtty          NUMBER(30),
+  remark                 VARCHAR2(1000),
+  bus_flow_num           VARCHAR2(100),
+  chain_way_track_no     VARCHAR2(60),
+  ups_flow_num           VARCHAR2(100),
+  etl_dt                 DATE,
+  src_table_name         VARCHAR2(100),
+  job_cd                 VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW
+  is '银行PC版交易流水';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.flow_num
+  is '流水号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.tran_code
+  is '交易码';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.tran_order
+  is '交易命令';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.unify_cust_id
+  is '统一客户编号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.user_seq_num
+  is '用户顺序号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.tran_chn_cd
+  is '交易渠道代码';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.cust_name
+  is '客户姓名';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.menu_id
+  is '菜单id';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.tran_return_code
+  is '交易返回编码';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.fail_rs_descb
+  is '失败原因描述';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.tran_acct_num
+  is '交易账号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.chn_send_flow_id
+  is '渠道发送流水编号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.sorc_sys_flow_id
+  is '源系统流水编号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.core_tran_flow_id
+  is '核心交易流水编号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.comm_fee
+  is '手续费';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.parent_flow_id
+  is '父流水编号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.src_flow_seq_id
+  is '来源流水顺序编号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.auth_refuse_rs
+  is '授权拒绝原因';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.visit_flow_id
+  is '访问流水编号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.core_tran_dt
+  is '核心交易日期';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.callout_tran_code
+  is '被调方交易码';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.cust_ip
+  is '客户ip';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.curr_server_host_name
+  is '当前服务器主机名称';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.req_src_server_ip
+  is '请求来源服务器ip';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.cust_termn_mac_addr
+  is '客户终端mac地址';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.cust_termn_oper_sys
+  is '客户终端操作系统';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.cust_termn_brow
+  is '客户终端浏览器';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.cust_termn_equip_model
+  is '客户终端设备型号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.cust_termn_equip_id
+  is '客户终端设备id';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.session_id
+  is '会话id';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.rela_flow_id
+  is '关联流水编号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.save_cert_way_cd
+  is '安全认证方式代码';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.auth_status_cd
+  is '授权状态代码';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.bank_agent_flg
+  is '银行代办标志';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.auth_role_seq_num
+  is '授权角色序号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.submit_core_dt
+  is '提交核心日期';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.submit_core_tm
+  is '提交核心时间';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.tran_tot_qtty
+  is '交易总数量';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.remark
+  is '备注';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.bus_flow_num
+  is '业务流水号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.chain_way_track_no
+  is '链路跟踪号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.ups_flow_num
+  is '上游流水号';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_BANK_PC_EDIT_TRAN_FLOW.etl_timestamp
+  is 'etl处理时间戳';
+

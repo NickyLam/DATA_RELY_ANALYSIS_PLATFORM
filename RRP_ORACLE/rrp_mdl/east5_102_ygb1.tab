@@ -1,0 +1,92 @@
+﻿create table RRP_MDL.EAST5_102_YGB1
+(
+  rid         VARCHAR2(50) not null,
+  jrxkzh      VARCHAR2(30),
+  nbjgh       VARCHAR2(30),
+  yhjgmc      VARCHAR2(450),
+  gh          VARCHAR2(30) not null,
+  xm          VARCHAR2(150),
+  gj          VARCHAR2(60),
+  zjlb        VARCHAR2(60),
+  zjhm        VARCHAR2(70),
+  lxdh        VARCHAR2(30),
+  ssbm        VARCHAR2(150),
+  gwbh        VARCHAR2(60),
+  gwmc        VARCHAR2(150),
+  sfgg        VARCHAR2(3),
+  pfrq        VARCHAR2(8),
+  rzrq        VARCHAR2(8),
+  yglx        VARCHAR2(30),
+  ygzt        VARCHAR2(30),
+  bbz         VARCHAR2(600),
+  cjrq        VARCHAR2(8) not null,
+  org_no      VARCHAR2(20),
+  issued_no   VARCHAR2(50),
+  dept_no     VARCHAR2(10),
+  is_not_null VARCHAR2(100),
+  src_sys_id  VARCHAR2(10),
+  address     VARCHAR2(200),
+  zjhm_orig   VARCHAR2(70)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.EAST5_102_YGB1
+  is '员工表';
+comment on column RRP_MDL.EAST5_102_YGB1.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_102_YGB1.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_102_YGB1.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_102_YGB1.yhjgmc
+  is '银行机构名称';
+comment on column RRP_MDL.EAST5_102_YGB1.gh
+  is '工号';
+comment on column RRP_MDL.EAST5_102_YGB1.xm
+  is '姓名';
+comment on column RRP_MDL.EAST5_102_YGB1.gj
+  is '国籍';
+comment on column RRP_MDL.EAST5_102_YGB1.zjlb
+  is '证件类别';
+comment on column RRP_MDL.EAST5_102_YGB1.zjhm
+  is '证件号码';
+comment on column RRP_MDL.EAST5_102_YGB1.lxdh
+  is '申请人联系电话';
+comment on column RRP_MDL.EAST5_102_YGB1.ssbm
+  is '所属部门';
+comment on column RRP_MDL.EAST5_102_YGB1.gwbh
+  is '岗位编号';
+comment on column RRP_MDL.EAST5_102_YGB1.gwmc
+  is '岗位名称';
+comment on column RRP_MDL.EAST5_102_YGB1.sfgg
+  is '是否高管';
+comment on column RRP_MDL.EAST5_102_YGB1.pfrq
+  is '批复日期';
+comment on column RRP_MDL.EAST5_102_YGB1.rzrq
+  is '任职日期';
+comment on column RRP_MDL.EAST5_102_YGB1.yglx
+  is '员工类型';
+comment on column RRP_MDL.EAST5_102_YGB1.ygzt
+  is '员工状态';
+comment on column RRP_MDL.EAST5_102_YGB1.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_102_YGB1.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_102_YGB1.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_102_YGB1.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_102_YGB1.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_102_YGB1.is_not_null
+  is '是否非空';
+comment on column RRP_MDL.EAST5_102_YGB1.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_102_YGB1.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_102_YGB1.zjhm_orig
+  is '证件号码（脱敏前）';
+

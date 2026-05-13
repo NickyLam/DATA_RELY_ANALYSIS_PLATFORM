@@ -1,0 +1,27 @@
+﻿create table RRP_MDL.EPCS_INST_THRD_INFO
+(
+  name        VARCHAR2(200),
+  inst_type   VARCHAR2(45),
+  detail_type VARCHAR2(45)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.EPCS_INST_THRD_INFO
+  is '资金流第三方支付与公共机构信息';
+comment on column RRP_MDL.EPCS_INST_THRD_INFO.name
+  is '机构名称';
+comment on column RRP_MDL.EPCS_INST_THRD_INFO.inst_type
+  is '机构类型';
+comment on column RRP_MDL.EPCS_INST_THRD_INFO.detail_type
+  is '详细分类';
+

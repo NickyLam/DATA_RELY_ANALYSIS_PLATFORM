@@ -1,0 +1,57 @@
+﻿create table RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604
+(
+  rid        VARCHAR2(50) not null,
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  zrhth      VARCHAR2(100) not null,
+  xdzclx     VARCHAR2(30),
+  xdjjh      VARCHAR2(100) not null,
+  zrdkbj     NUMBER(20,2),
+  bbz        VARCHAR2(600),
+  zrdklx     NUMBER(20,2),
+  cjrq       VARCHAR2(8) not null,
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  address    VARCHAR2(500),
+  gsfzjg     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.zrhth
+  is '转让合同号';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.xdzclx
+  is '信贷资产类型';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.xdjjh
+  is '信贷借据号';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.zrdkbj
+  is '转让贷款本金';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.zrdklx
+  is '转让贷款利息';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_704_ZCZRGXB_BAK20220604.gsfzjg
+  is '归属分支机构';
+

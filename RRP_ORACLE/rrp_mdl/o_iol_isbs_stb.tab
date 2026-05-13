@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.O_IOL_ISBS_STB
+(
+  tbl           VARCHAR2(9),
+  uil           VARCHAR2(3),
+  cod           VARCHAR2(12),
+  txt           VARCHAR2(120),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_STB
+  is 'CodeTable内容';
+comment on column RRP_MDL.O_IOL_ISBS_STB.tbl
+  is '参数代码';
+comment on column RRP_MDL.O_IOL_ISBS_STB.uil
+  is '语种';
+comment on column RRP_MDL.O_IOL_ISBS_STB.cod
+  is '参数值';
+comment on column RRP_MDL.O_IOL_ISBS_STB.txt
+  is '注释';
+comment on column RRP_MDL.O_IOL_ISBS_STB.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_ISBS_STB.etl_timestamp
+  is 'ETL处理时间戳';
+

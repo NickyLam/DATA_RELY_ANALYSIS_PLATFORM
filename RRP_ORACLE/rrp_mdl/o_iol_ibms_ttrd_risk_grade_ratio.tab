@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO
+(
+  id               NUMBER(22),
+  risk_detail      VARCHAR2(300),
+  parent_id        NUMBER(22),
+  is_default_grade VARCHAR2(2),
+  style_level      VARCHAR2(2),
+  check_level      VARCHAR2(2),
+  start_dt         DATE,
+  end_dt           DATE,
+  id_mark          VARCHAR2(10),
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO
+  is '最终投向类型信息（华兴）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO.id
+  is '主键';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO.risk_detail
+  is '资产信息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO.parent_id
+  is '所属分类id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO.is_default_grade
+  is '评级是否只读';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO.style_level
+  is '1-加粗2-空一格3-空2哥';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO.check_level
+  is '0-无控制1-控制子节点小于父节点2-控制子节点和为100';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_RATIO.etl_timestamp
+  is 'etl处理时间戳';
+

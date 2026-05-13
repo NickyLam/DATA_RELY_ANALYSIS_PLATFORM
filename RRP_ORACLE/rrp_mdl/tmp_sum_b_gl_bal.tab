@@ -1,0 +1,60 @@
+﻿create table RRP_MDL.TMP_SUM_B_GL_BAL
+(
+  data_dt     CHAR(8) not null,
+  lgl_rep_id  VARCHAR2(200),
+  freq        VARCHAR2(10) not null,
+  org_id      VARCHAR2(200) not null,
+  cur         CHAR(3) not null,
+  subj_id     VARCHAR2(200) not null,
+  subj_nm     VARCHAR2(500),
+  subj_lvl    INTEGER,
+  subj_typ    VARCHAR2(10),
+  bgn_dr_bal  NUMBER(30,2),
+  bgn_cr_bal  NUMBER(30,2),
+  curr_dr_amt NUMBER(30,2),
+  curr_cr_amt NUMBER(30,2),
+  end_dr_bal  NUMBER(30,2),
+  end_cr_bal  NUMBER(30,2),
+  dept_line   VARCHAR2(500),
+  data_src    VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.data_dt
+  is '数据日期';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.freq
+  is '频度';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.org_id
+  is '银行编号';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.cur
+  is '账号币种';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.subj_id
+  is '科目编号';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.subj_nm
+  is '核算科目名称';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.subj_lvl
+  is '科目级次';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.subj_typ
+  is '科目类别';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.bgn_dr_bal
+  is '期初借方余额';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.bgn_cr_bal
+  is '期初贷方余额';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.curr_dr_amt
+  is '本期借方发生额';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.curr_cr_amt
+  is '本期贷方发生额';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.end_dr_bal
+  is '期末借方余额';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.end_cr_bal
+  is '期末贷方余额';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.dept_line
+  is '部门条线';
+comment on column RRP_MDL.TMP_SUM_B_GL_BAL.data_src
+  is '数据来源（参见[字典:AML0045]）';
+

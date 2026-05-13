@@ -1,0 +1,53 @@
+﻿create table RRP_MDL.T_COM_RRP_EAST_EAST5_905_DLDXJYXXB
+(
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  yhjgmc     VARCHAR2(450),
+  khtybh     VARCHAR2(70),
+  khmc       VARCHAR2(450),
+  khzh       VARCHAR2(60),
+  khhmc      VARCHAR2(450),
+  jybh       VARCHAR2(60),
+  dldxjylx   VARCHAR2(60),
+  dxcpmc     VARCHAR2(300),
+  jyfx       VARCHAR2(6),
+  jyrq       VARCHAR2(8),
+  bz         VARCHAR2(3),
+  jyje       NUMBER(20,2),
+  fxjgmc     VARCHAR2(450),
+  fxjgpj     VARCHAR2(20),
+  fxjgpjjg   VARCHAR2(450),
+  fxjgqszh   VARCHAR2(60),
+  fxjgqshm   VARCHAR2(450),
+  rzrmc      VARCHAR2(450),
+  rzrsshy    VARCHAR2(30),
+  sxfbz      VARCHAR2(3),
+  sxfje      NUMBER(20,2),
+  xzbz       VARCHAR2(3),
+  jyygh      VARCHAR2(70),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8) not null,
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  address    VARCHAR2(500),
+  rid        VARCHAR2(50) not null,
+  khmc_orig  VARCHAR2(450),
+  khmc_oth   VARCHAR2(5),
+  gsfzjg     VARCHAR2(200),
+  bdh        VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

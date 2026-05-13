@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.M_TRA_INTL_ACC_DTL_TEMP04
+(
+  data_dt          VARCHAR2(8),
+  tran_dt          DATE,
+  tran_flow_num    VARCHAR2(200),
+  tra_seq_no       VARCHAR2(200),
+  opp_acc_id       VARCHAR2(60),
+  opp_cust_acct_id VARCHAR2(100),
+  opp_sub_acct_id  VARCHAR2(100),
+  nu               INTEGER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_TRA_INTL_ACC_DTL_TEMP04
+  is '交易对手信息临时表';
+comment on column RRP_MDL.M_TRA_INTL_ACC_DTL_TEMP04.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_TRA_INTL_ACC_DTL_TEMP04.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.M_TRA_INTL_ACC_DTL_TEMP04.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.M_TRA_INTL_ACC_DTL_TEMP04.tra_seq_no
+  is '交易流水号';
+comment on column RRP_MDL.M_TRA_INTL_ACC_DTL_TEMP04.opp_acc_id
+  is '对方账户ID';
+comment on column RRP_MDL.M_TRA_INTL_ACC_DTL_TEMP04.opp_cust_acct_id
+  is '对方账户';
+comment on column RRP_MDL.M_TRA_INTL_ACC_DTL_TEMP04.opp_sub_acct_id
+  is '对方账户子序号';
+comment on column RRP_MDL.M_TRA_INTL_ACC_DTL_TEMP04.nu
+  is '序号';
+

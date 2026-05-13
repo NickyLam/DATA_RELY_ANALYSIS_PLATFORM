@@ -1,0 +1,171 @@
+﻿create table RRP_MDL.O_IOL_TGLS_GLI_VCHR_H
+(
+  stacid        NUMBER(19),
+  trandt        VARCHAR2(8),
+  transq        VARCHAR2(20),
+  vchrsq        VARCHAR2(20),
+  tranbr        VARCHAR2(12),
+  acctbr        VARCHAR2(12),
+  itemcd        VARCHAR2(30),
+  crcycd        VARCHAR2(3),
+  centcd        VARCHAR2(16),
+  prsncd        VARCHAR2(16),
+  custcd        VARCHAR2(30),
+  prducd        VARCHAR2(16),
+  prlncd        VARCHAR2(16),
+  acctno        VARCHAR2(30),
+  trantp        VARCHAR2(9),
+  amntcd        VARCHAR2(9),
+  tranam        NUMBER(20,2),
+  smrytx        VARCHAR2(400),
+  exchcn        NUMBER(15,8),
+  exchus        NUMBER(11,7),
+  usercd        VARCHAR2(20),
+  sourdt        VARCHAR2(8),
+  soursq        VARCHAR2(64),
+  sourst        VARCHAR2(4),
+  toitem        VARCHAR2(30),
+  assis0        VARCHAR2(6),
+  assis1        VARCHAR2(12),
+  assis2        VARCHAR2(30),
+  assis3        VARCHAR2(30),
+  assis4        VARCHAR2(30),
+  assis5        VARCHAR2(30),
+  assis6        VARCHAR2(30),
+  assis7        VARCHAR2(30),
+  assis8        VARCHAR2(30),
+  assis9        VARCHAR2(30),
+  dealst        VARCHAR2(1),
+  prcscd        VARCHAR2(20),
+  itemna        VARCHAR2(200),
+  prcsna        VARCHAR2(60),
+  strkst        VARCHAR2(1),
+  strkdt        VARCHAR2(8),
+  strksq        VARCHAR2(50),
+  crcysd        VARCHAR2(3),
+  traneq        NUMBER(21,2),
+  taxbst        VARCHAR2(1),
+  dealmg        VARCHAR2(50),
+  trannm        NUMBER,
+  transt        VARCHAR2(1),
+  taxam         NUMBER(20,2),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_TGLS_GLI_VCHR_H
+  is '接口传票历史表';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.stacid
+  is '账套标识';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.trandt
+  is '总账日期（总账入账日期）';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.transq
+  is '总账流水（总账入账流水）';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.vchrsq
+  is '传票流水';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.tranbr
+  is '交易机构编号';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.acctbr
+  is '账务机构编号';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.itemcd
+  is '科目编号';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.crcycd
+  is '币种代码';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.centcd
+  is '责任中心辅助核算';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.prsncd
+  is '职员辅助核算';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.custcd
+  is '往来单位（辅助）';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.prducd
+  is '产品辅助核算';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.prlncd
+  is '业务条线';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.acctno
+  is '总账账号';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.trantp
+  is '交易类型（tr,cs）';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.amntcd
+  is '借贷方向（d:借(收)c:贷(付)）';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.tranam
+  is '交易金额';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.smrytx
+  is '摘要';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.exchcn
+  is '中间价';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.exchus
+  is '折算率';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.usercd
+  is '用户代码';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.sourdt
+  is '源系统日期';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.soursq
+  is '源系统流水号（凭证号）';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.sourst
+  is '源系统标识（ltts-综合业务acct-财务）';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.toitem
+  is '对方科目编号';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.assis0
+  is '渠道编号';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.assis1
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.assis2
+  is '辅助核算2';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.assis3
+  is '辅助核算3';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.assis4
+  is '辅助核算4';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.assis5
+  is '辅助核算5';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.assis6
+  is '辅助核算6';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.assis7
+  is '辅助核算7';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.assis8
+  is '辅助核算8';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.assis9
+  is '辅助核算9';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.dealst
+  is '处理状态(0：未处理1:成功2：失败5：不处理6：已回执)';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.prcscd
+  is '交易码';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.itemna
+  is '科目名称';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.prcsna
+  is '交易码名称';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.strkst
+  is '冲正标识（0：正常业务1：冲正业务）';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.strkdt
+  is '被冲正业务交易日期';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.strksq
+  is '被冲正业务交易流水';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.crcysd
+  is '本位币';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.traneq
+  is '折算金额（本位币）';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.taxbst
+  is '日终应税流水处理状态(0：未处理1:成功2：失败5：不处理6：已回执)';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.dealmg
+  is '价税分离错误信息';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.trannm
+  is '交易笔数';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.transt
+  is '处理状态（1已处理0未处理）';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.taxam
+  is '税额';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IOL_TGLS_GLI_VCHR_H.etl_timestamp
+  is 'etl处理时间戳';
+

@@ -1,0 +1,393 @@
+﻿create table RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT
+(
+  id                   NUMBER(20),
+  global_no            VARCHAR2(64),
+  txn_no               VARCHAR2(64),
+  txn_date             VARCHAR2(8),
+  txn_time             VARCHAR2(6),
+  txn_type             VARCHAR2(2),
+  corporate            VARCHAR2(64),
+  mcht_no              VARCHAR2(32),
+  product_no           VARCHAR2(32),
+  tran_no              VARCHAR2(64),
+  tran_date            VARCHAR2(8),
+  tran_time            VARCHAR2(20),
+  status               VARCHAR2(30),
+  biz_status           VARCHAR2(30),
+  trade_type           VARCHAR2(24),
+  route_type           VARCHAR2(6),
+  priority             VARCHAR2(2),
+  work_date            VARCHAR2(8),
+  amount               NUMBER(20,2),
+  currency             VARCHAR2(6),
+  payee_acct_no        VARCHAR2(42),
+  payee_acct_name      NVARCHAR2(64),
+  payee_acct_type      VARCHAR2(30),
+  payee_host_type      VARCHAR2(30),
+  payee_bank_code      VARCHAR2(24),
+  payer_acct_no        VARCHAR2(32),
+  payer_acct_name      NVARCHAR2(64),
+  payer_acct_type      VARCHAR2(30),
+  payer_host_type      VARCHAR2(30),
+  payer_phone          VARCHAR2(24),
+  payer_valid_date     VARCHAR2(8),
+  payer_cvn2           VARCHAR2(4),
+  payer_bank_code      VARCHAR2(24),
+  real_payer_acct_no   VARCHAR2(32),
+  real_payer_acct_name NVARCHAR2(64),
+  real_payer_acct_type VARCHAR2(30),
+  real_payer_host_type VARCHAR2(30),
+  ret_code             VARCHAR2(60),
+  ret_msg              NVARCHAR2(512),
+  is_limited           VARCHAR2(2),
+  action_type          VARCHAR2(24),
+  host_status          VARCHAR2(30),
+  account_cnt          NUMBER(10),
+  host_code_list       VARCHAR2(120),
+  host_no              VARCHAR2(64),
+  reverse_no           VARCHAR2(64),
+  refunded             VARCHAR2(2),
+  pmc_code             VARCHAR2(12),
+  pmc_no               VARCHAR2(64),
+  pmc_status           VARCHAR2(30),
+  pmc_ret_code         VARCHAR2(24),
+  pmc_ret_msg          NVARCHAR2(512),
+  pmc_date             VARCHAR2(8),
+  pmc_time             VARCHAR2(6),
+  pmc_cost             NUMBER(20,2),
+  mcht_fee             NUMBER(20,2),
+  fee_no               VARCHAR2(64),
+  fee_status           VARCHAR2(12),
+  charge_type          VARCHAR2(2),
+  check_date           VARCHAR2(8),
+  checked              VARCHAR2(2),
+  check_state          VARCHAR2(12),
+  is_charge            VARCHAR2(1),
+  is_delay             VARCHAR2(1),
+  delay_time           VARCHAR2(12),
+  fee_amount           NUMBER(20,2),
+  chl_checking_code    VARCHAR2(30),
+  chl_check_date       VARCHAR2(8),
+  auth_teller_no       VARCHAR2(30),
+  check_teller_no      VARCHAR2(30),
+  trans_org_no         VARCHAR2(30),
+  summery_code         VARCHAR2(30),
+  consumer_id          VARCHAR2(30),
+  is_notify            VARCHAR2(2),
+  notify_addr          VARCHAR2(100),
+  notify_service_name  VARCHAR2(60),
+  payer_ext_map_id     VARCHAR2(60),
+  payee_ext_map_id     VARCHAR2(60),
+  route_map_id         VARCHAR2(60),
+  host_desc            VARCHAR2(256),
+  channel_desc         VARCHAR2(256),
+  balance_desc         VARCHAR2(256),
+  check_time           DATE,
+  buiness_module       VARCHAR2(32),
+  init_mcht_no         VARCHAR2(64),
+  sys_comm_no          VARCHAR2(64),
+  pmc_ret_no           VARCHAR2(64),
+  pmc_ret_date         VARCHAR2(8),
+  pmc_ret_time         VARCHAR2(20),
+  pmc_ret_status       VARCHAR2(20),
+  mcht_check_mode      VARCHAR2(32),
+  payer_bank_name      VARCHAR2(256),
+  payee_bank_name      VARCHAR2(256),
+  check_flag           VARCHAR2(30),
+  host_date            VARCHAR2(8),
+  host_time            VARCHAR2(6),
+  acc_bean_json        VARCHAR2(3000),
+  clear_date           VARCHAR2(8),
+  cleared              VARCHAR2(2),
+  clear_no             VARCHAR2(64),
+  clear_type           VARCHAR2(2),
+  clear_cycle          NUMBER(11),
+  teller_no            VARCHAR2(64),
+  payee_phone          VARCHAR2(24),
+  payee_valid_date     VARCHAR2(8),
+  payee_cvn2           VARCHAR2(4),
+  biz_type             VARCHAR2(24),
+  sign_no              VARCHAR2(64),
+  batch_no             VARCHAR2(64),
+  purpose              VARCHAR2(384),
+  log_id               VARCHAR2(64),
+  server_id            VARCHAR2(64),
+  sharding             VARCHAR2(64),
+  remark               VARCHAR2(384),
+  create_time          DATE,
+  update_time          DATE,
+  trace_msg            VARCHAR2(256),
+  advance_flag         VARCHAR2(4),
+  biz_sys_code         VARCHAR2(24),
+  checking_code        VARCHAR2(24),
+  business_code        VARCHAR2(2),
+  payee_cert_type      VARCHAR2(4),
+  payer_cert_type      VARCHAR2(4),
+  etl_dt               DATE,
+  etl_timestamp        TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT
+  is '平台贷记类交易交互流水表';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.id
+  is '主键ID';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.global_no
+  is '全局流水号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.txn_no
+  is '平台流水号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.txn_date
+  is '操作日期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.txn_time
+  is '交易时间';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.txn_type
+  is '交易种类';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.corporate
+  is '法人标识';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.mcht_no
+  is '商户/支付机构编号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.product_no
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.tran_no
+  is '商户交易流水号 / 交易流水号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.tran_date
+  is '交易日期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.tran_time
+  is '商户流水时间，格式：hhmmss';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.status
+  is '状态;1草稿2审核中3审核完成4退回';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.biz_status
+  is '业务处理状态';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.trade_type
+  is '支付类型';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.route_type
+  is '交易路由方式，默认：自动，取值：routetype';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.priority
+  is '优先级';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.work_date
+  is '工作日期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.amount
+  is '金额';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_acct_no
+  is '收款人账号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_acct_name
+  is '收款方账户户名';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_acct_type
+  is '收款方账号类别，取值：accttypeenum';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_host_type
+  is '收款方账号所属核心类别';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_bank_code
+  is '收款行清算行行号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_acct_no
+  is '付款方账号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_acct_name
+  is '付款方账户名称';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_acct_type
+  is '付款方账号类别，取值：accttypeenum';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_host_type
+  is '付款方账号所属核心类别';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_phone
+  is '付款方手机号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_valid_date
+  is '付款方贷记卡有效期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_cvn2
+  is '付款方贷记卡安全码';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_bank_code
+  is '付款行清算行行号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.real_payer_acct_no
+  is '实际付款人账号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.real_payer_acct_name
+  is '实际付款人名称';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.real_payer_acct_type
+  is '实际付款人账户类型';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.real_payer_host_type
+  is '实际付款人所属核心类型';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.ret_code
+  is '返回码';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.ret_msg
+  is '开户行地址名称';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.is_limited
+  is '是否已累计客户限额,y-已限额处理 n-未限额处理';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.action_type
+  is '请求的业务接口类型，取值：actiontype';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.host_status
+  is '交易核心账务状态';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.account_cnt
+  is '本次记账操作步骤总数';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.host_code_list
+  is '请求的核心系统编码，适用于多核心业务系统（debit_host-eas_host）';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.host_no
+  is '主机交易流水';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.reverse_no
+  is '核心冲正流水号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.refunded
+  is '是否已经退款，取值：booleanenum';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_code
+  is '通道系统编码';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_no
+  is '通道交易流水号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_status
+  is '通道原始状态值';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_ret_code
+  is '通道的原始返回码';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_ret_msg
+  is '通道的原始返回码描述';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_date
+  is '通道交易日期，无法获取时，取平台交易日期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_time
+  is '通道交易时间，无法获取时，取平台交易时间';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_cost
+  is '通道成本费，单位：元';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.mcht_fee
+  is '渠道交易手续费，单位：元';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.fee_no
+  is '渠道手续费记账流水号（核心流水）';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.fee_status
+  is '手续费计收状态，取值：feestatus';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.charge_type
+  is '计费类型，取值：chargetypeenum';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.check_date
+  is '初审日期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.checked
+  is '对账处理标识，取值：checkedenum';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.check_state
+  is '对账状态，用于描述对账是对平或是具体差错类型';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.is_charge
+  is '是否收取手续费（y-收取；n-不收取）';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.is_delay
+  is '是否需要延时转账（y-需要延时转账；n-不需要延时转账）';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.delay_time
+  is '延时时间（以小时为单位）';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.fee_amount
+  is '客户手续费，一般与渠道交易手续费一致';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.chl_checking_code
+  is '渠道对账产品代码';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.chl_check_date
+  is '渠道对账日期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.auth_teller_no
+  is '授权柜员号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.check_teller_no
+  is '复核柜员号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.trans_org_no
+  is '交易机构号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.summery_code
+  is '交易机构号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.consumer_id
+  is '调用系统号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.is_notify
+  is '是否需要异步通知（y：接受；n：不接受）';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.notify_addr
+  is '异步通知地址';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.notify_service_name
+  is '异步通知服务名称';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_ext_map_id
+  is '付款方扩展map编号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_ext_map_id
+  is '收款方扩展map编号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.route_map_id
+  is '明细扩展MAP编号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.host_desc
+  is '核心对账处理描述信息';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.channel_desc
+  is '通道对账处理描述信息';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.balance_desc
+  is '平衡性检查处理描述信息';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.check_time
+  is '复核时间(yyyy-MM-ddHH:mm:ss)';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.buiness_module
+  is 'local-本行；cross：跨行';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.init_mcht_no
+  is '源发起渠道编号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.sys_comm_no
+  is '业务流水号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_ret_no
+  is '通道响应流水号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_ret_date
+  is '通道响应日期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_ret_time
+  is '通道响应时间';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.pmc_ret_status
+  is '通道原始状态';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.mcht_check_mode
+  is 'fixed：渠道自定义对账；default：系统默认对账代码对账';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_bank_name
+  is '付款方银行名称';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_bank_name
+  is '收款人开户行名称';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.check_flag
+  is '对账标识（balance-视作对平；not_check-暂无需对账；processed-已处理）';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.host_date
+  is '后台记账日期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.host_time
+  is '核心响应时间（会计时间）';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.acc_bean_json
+  is '记账请求的bean报文信息（以json串存储）';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.clear_date
+  is '清算日期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.cleared
+  is '是否已经清算，取值：booleanenum';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.clear_no
+  is '清算流水号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.clear_type
+  is '清算类型';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.clear_cycle
+  is '清算周期，实时清算时为0，周期清算时0~99';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.teller_no
+  is '柜员';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_phone
+  is '收款方手机号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_valid_date
+  is '收款方贷记卡有效期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_cvn2
+  is '收款方贷记卡安全码';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.biz_type
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.sign_no
+  is '渠道协议签约号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.batch_no
+  is '批文文号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.purpose
+  is '用途';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.log_id
+  is '保函编号';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.server_id
+  is '交易服务器id';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.sharding
+  is '分库参考值专用字段，无业务含义';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.trace_msg
+  is '链路跟踪信息';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.advance_flag
+  is '是否垫资标识(00：不垫支;1：垫支)';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.biz_sys_code
+  is '业务所属系统';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.checking_code
+  is '对账业务代码';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.business_code
+  is '行业类型（金融、建筑、通讯等）';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payee_cert_type
+  is '收款人证件类型';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.payer_cert_type
+  is '付款人证件类型';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_PPPS_T_TXN_CREDIT.etl_timestamp
+  is 'etl处理时间';
+

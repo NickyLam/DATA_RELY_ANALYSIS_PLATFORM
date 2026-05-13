@@ -1,0 +1,108 @@
+﻿create table RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN
+(
+  etl_dt                     DATE,
+  lp_id                      VARCHAR2(60),
+  dubil_id                   VARCHAR2(100),
+  cust_id                    VARCHAR2(60),
+  prod_id                    VARCHAR2(60),
+  tot_perds                  NUMBER(10),
+  repay_perds                NUMBER(10),
+  repay_sub_perds            NUMBER(10),
+  value_dt                   DATE,
+  repaybl_dt                 DATE,
+  payoff_dt                  DATE,
+  pric_turn_ovdue_dt         DATE,
+  int_turn_ovdue_dt          DATE,
+  inst_status_cd             VARCHAR2(30),
+  ovdue_flg                  VARCHAR2(10),
+  repay_flg                  VARCHAR2(10),
+  curr_cd                    VARCHAR2(10),
+  pric_ovdue_days            NUMBER(22),
+  int_ovdue_days             NUMBER(22),
+  curr_issue_recvbl_pric     NUMBER(30,2),
+  curr_issue_int_recvbl      NUMBER(30,2),
+  curr_issue_recvbl_pric_bal NUMBER(30,2),
+  curr_issue_int_recvbl_bal  NUMBER(30,2),
+  curr_issue_ovdue_pric_pnlt NUMBER(30,2),
+  curr_issue_ovdue_int_pnlt  NUMBER(30,2),
+  job_cd                     VARCHAR2(10),
+  init_tot_perds             NUMBER(10),
+  init_repay_perds           NUMBER(10),
+  init_value_dt              DATE,
+  grace_dt                   DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN
+  is '联合网贷还款计划';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.tot_perds
+  is '贷款期数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.repay_perds
+  is '还款期数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.repay_sub_perds
+  is '还款子期数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.repaybl_dt
+  is '应还款日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.payoff_dt
+  is '结清日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.pric_turn_ovdue_dt
+  is '本金转逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.int_turn_ovdue_dt
+  is '利息转逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.inst_status_cd
+  is '分期状态代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.ovdue_flg
+  is '逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.repay_flg
+  is '偿还标志';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.pric_ovdue_days
+  is '本金逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.int_ovdue_days
+  is '利息逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.curr_issue_recvbl_pric
+  is '本期应收本金';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.curr_issue_int_recvbl
+  is '本期应收利息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.curr_issue_recvbl_pric_bal
+  is '本期应收本金余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.curr_issue_int_recvbl_bal
+  is '本期应收利息余额';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.curr_issue_ovdue_pric_pnlt
+  is '本期逾期本金罚息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.curr_issue_ovdue_int_pnlt
+  is '本期逾期利息罚息';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.init_tot_perds
+  is '原始总期数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.init_repay_perds
+  is '原始还款期数';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.init_value_dt
+  is '原始起息日期';
+comment on column RRP_MDL.O_ICL_CMM_UNITE_WL_REPAY_PLAN.grace_dt
+  is '宽限日期';
+

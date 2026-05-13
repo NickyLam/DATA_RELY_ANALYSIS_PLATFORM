@@ -1,0 +1,78 @@
+﻿create table RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG
+(
+  causefailure VARCHAR2(128),
+  note1        VARCHAR2(128),
+  note2        VARCHAR2(128),
+  note3        VARCHAR2(128),
+  note4        VARCHAR2(128),
+  note5        VARCHAR2(128),
+  loginstate   VARCHAR2(2),
+  regtype      VARCHAR2(2),
+  regtime      VARCHAR2(6),
+  datereg      VARCHAR2(8),
+  deviceoid    VARCHAR2(128),
+  hostname     VARCHAR2(30),
+  loginip      VARCHAR2(20),
+  sessionid    VARCHAR2(128),
+  outflag      VARCHAR2(2),
+  username     VARCHAR2(150),
+  usernum      VARCHAR2(12),
+  appnum       VARCHAR2(16),
+  branchnum    VARCHAR2(10),
+  etl_dt       DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG
+  is '用户登录登出日志表';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.causefailure
+  is '失败原因';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.note1
+  is '备注1';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.note2
+  is '备注2';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.note3
+  is '备注3';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.note4
+  is '备注4';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.note5
+  is '备注5';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.loginstate
+  is '登录状态 : 0失败 1成功';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.regtype
+  is '登记类型 : 登记类型：0登出 1登入';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.regtime
+  is '登记时间-hhmmss';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.datereg
+  is '登记日期-yyyymmdd';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.deviceoid
+  is '设备oid';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.hostname
+  is '主机名';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.loginip
+  is '登录ip';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.sessionid
+  is 'sessionid';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.outflag
+  is '1-本人登出，2-强制登出';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.username
+  is '用户名称';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.usernum
+  is '用户编号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.appnum
+  is '渠道编号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.branchnum
+  is '机构号';
+comment on column RRP_MDL.O_IOL_NIBS_IB_UPM_USERLOGIN_LOG.etl_dt
+  is 'etl处理日期';
+

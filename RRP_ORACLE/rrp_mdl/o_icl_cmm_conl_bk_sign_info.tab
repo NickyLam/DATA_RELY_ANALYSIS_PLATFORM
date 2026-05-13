@@ -1,0 +1,144 @@
+﻿create table RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO
+(
+  etl_dt                  DATE,
+  lp_id                   VARCHAR2(60),
+  cust_id                 VARCHAR2(60),
+  cust_cn_name            VARCHAR2(600),
+  cust_en_name            VARCHAR2(100),
+  open_acct_tm            TIMESTAMP(6),
+  open_acct_brch_id       VARCHAR2(60),
+  open_acct_brac_id       VARCHAR2(60),
+  belong_brac_id          VARCHAR2(60),
+  open_acct_operr_id      VARCHAR2(60),
+  sign_chn_cd             VARCHAR2(10),
+  cust_mgr_id             VARCHAR2(60),
+  group_cust_flg          VARCHAR2(10),
+  cash_ctrl_flg           VARCHAR2(10),
+  sup_chain_sys_flg       VARCHAR2(10),
+  sign_yqt_flg            VARCHAR2(10),
+  onl_bank_cust_type_cd   VARCHAR2(10),
+  onl_bank_cust_status_cd VARCHAR2(10),
+  cert_type_cd            VARCHAR2(10),
+  cert_no                 VARCHAR2(60),
+  orgnz_cd                VARCHAR2(60),
+  legal_rep_name          VARCHAR2(120),
+  lp_cert_type_cd         VARCHAR2(10),
+  lp_cert_no              VARCHAR2(60),
+  lp_tel_num              VARCHAR2(60),
+  lp_cert_exp_dt          DATE,
+  edit_flg                VARCHAR2(10),
+  posta_addr              VARCHAR2(600),
+  tel_num                 VARCHAR2(60),
+  fax_num                 VARCHAR2(60),
+  zip_cd                  VARCHAR2(60),
+  charge_acct_id          VARCHAR2(60),
+  charge_curr_cd          VARCHAR2(10),
+  final_tran_tm           TIMESTAMP(6),
+  status_modif_descb_info VARCHAR2(300),
+  sign_yqt_tm             TIMESTAMP(6),
+  oa_wrtoff_tm            TIMESTAMP(6),
+  init_oa_id              VARCHAR2(60),
+  oa_reim_rela_acct_id    VARCHAR2(60),
+  onl_bank_tran_lmt       NUMBER(30,2),
+  job_cd                  VARCHAR2(10),
+  etl_timestamp           TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO
+  is '企业网银签约信息';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.cust_cn_name
+  is '客户中文名称';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.cust_en_name
+  is '客户英文名称';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.open_acct_tm
+  is '开户时间';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.open_acct_brch_id
+  is '开户分行编号';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.open_acct_brac_id
+  is '开户网点编号';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.belong_brac_id
+  is '归属网点编号';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.open_acct_operr_id
+  is '开户操作员编号';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.sign_chn_cd
+  is '签约渠道代码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.group_cust_flg
+  is '集团客户标志';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.cash_ctrl_flg
+  is '现金控制标志';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.sup_chain_sys_flg
+  is '供应链系统标志';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.sign_yqt_flg
+  is '签约银企通标志';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.onl_bank_cust_type_cd
+  is '网银客户类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.onl_bank_cust_status_cd
+  is '网银客户状态代码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.cert_type_cd
+  is '证件类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.cert_no
+  is '证件号码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.orgnz_cd
+  is '组织机构代码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.legal_rep_name
+  is '法人代表名称';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.lp_cert_type_cd
+  is '法人证件类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.lp_cert_no
+  is '法人证件号码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.lp_tel_num
+  is '法人电话号码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.lp_cert_exp_dt
+  is '法人证件到期日期';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.edit_flg
+  is '版本标志';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.posta_addr
+  is '通讯地址';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.tel_num
+  is '电话号码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.fax_num
+  is '传真号码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.zip_cd
+  is '邮政编码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.charge_acct_id
+  is '收费账户编号';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.charge_curr_cd
+  is '收费币种代码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.final_tran_tm
+  is '最后交易时间';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.status_modif_descb_info
+  is '状态变更描述信息';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.sign_yqt_tm
+  is '签约银企通时间';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.oa_wrtoff_tm
+  is 'oa注销时间';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.init_oa_id
+  is '原oa编号';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.oa_reim_rela_acct_id
+  is 'oa报销关联账户编号';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.onl_bank_tran_lmt
+  is '网银转账限额';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_CONL_BK_SIGN_INFO.etl_timestamp
+  is '数据处理时间';
+

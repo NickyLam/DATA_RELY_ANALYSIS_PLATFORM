@@ -1,0 +1,92 @@
+﻿create table RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK
+(
+  oa_flow_task_id                VARCHAR2(180),
+  task_name                      VARCHAR2(4000),
+  flow_type_id                   VARCHAR2(60),
+  assignee                       VARCHAR2(60),
+  assignee_organ_code            VARCHAR2(60),
+  assign_date                    TIMESTAMP(6),
+  completed_date                 TIMESTAMP(6),
+  drafted_party_id               VARCHAR2(60),
+  drafted_party_organ_code       VARCHAR2(60),
+  drafted_date                   TIMESTAMP(6),
+  urgency                        VARCHAR2(60),
+  task_status                    VARCHAR2(60),
+  task_url                       VARCHAR2(765),
+  process_instance_id            VARCHAR2(180),
+  batch_no                       VARCHAR2(765),
+  act_ru_task_id                 VARCHAR2(180),
+  oa_node_id                     VARCHAR2(60),
+  parent_flow_task_id            VARCHAR2(180),
+  parent_task_party_id           VARCHAR2(60),
+  is_wait                        VARCHAR2(60),
+  notes                          VARCHAR2(765),
+  last_updated_stamp             TIMESTAMP(6),
+  last_updated_tx_stamp          TIMESTAMP(6),
+  created_stamp                  TIMESTAMP(6),
+  created_tx_stamp               TIMESTAMP(6),
+  current_state                  VARCHAR2(765),
+  assignee_role_id               VARCHAR2(60),
+  drafted_party_organ_code_dummy VARCHAR2(765),
+  assignee_dummy                 VARCHAR2(60),
+  drafted_party_id_dummy         VARCHAR2(60),
+  assignee_organ_code_dummy      VARCHAR2(765),
+  complete_channel               VARCHAR2(30),
+  data_year                      VARCHAR2(30),
+  authorizer                     VARCHAR2(60),
+  start_dt                       DATE,
+  end_dt                         DATE,
+  id_mark                        VARCHAR2(10),
+  etl_timestamp                  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK
+  is '流程任务';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.task_name
+  is '任务节点';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.flow_type_id
+  is '流程类型id';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.task_status
+  is '任务状态 1-已获取 2-已提交 3-已延后 4-已退票';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.process_instance_id
+  is '流程实例ID';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.batch_no
+  is '理赔批次号';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.act_ru_task_id
+  is '任务ID';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.notes
+  is '备注';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.last_updated_stamp
+  is '最后更新时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.last_updated_tx_stamp
+  is '最后更新事务时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.created_stamp
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.created_tx_stamp
+  is '创建交易时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.assignee_role_id
+  is '处理人角色';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.data_year
+  is '数据年份';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.authorizer
+  is '授权柜员号';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NOAS_OA_FLOW_TASK.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,57 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501
+(
+  extend_id         NUMBER(16),
+  trd_id            NUMBER(16),
+  u_i_code          VARCHAR2(30),
+  u_a_type          VARCHAR2(20),
+  u_m_type          VARCHAR2(20),
+  fst_set_amount    NUMBER(31,4),
+  end_set_amount    NUMBER(31,4),
+  fst_set_aiamount  NUMBER(31,4),
+  end_set_aiamount  NUMBER(31,4),
+  u_secu_acc_id     VARCHAR2(30),
+  u_grpid           VARCHAR2(30),
+  u_secu_ext_acc_id VARCHAR2(20),
+  end_set_days      NUMBER,
+  start_dt          DATE,
+  end_dt            DATE,
+  id_mark           VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.extend_id
+  is '主键ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.trd_id
+  is '交易单ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.u_i_code
+  is '标的I_CODE';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.u_a_type
+  is '标的A_TYPE';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.u_m_type
+  is '标的M_TYPE';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.fst_set_amount
+  is '首期金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.end_set_amount
+  is '到期金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.fst_set_aiamount
+  is '首期总应计利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.end_set_aiamount
+  is '到期总应计利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.u_secu_acc_id
+  is '标的内部证券ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.u_grpid
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.u_secu_ext_acc_id
+  is '外部证券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.end_set_days
+  is '到期交易的清算速度';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_OTC_TRADE_EXTEND_BAK_20230501.id_mark
+  is '增删标志';
+

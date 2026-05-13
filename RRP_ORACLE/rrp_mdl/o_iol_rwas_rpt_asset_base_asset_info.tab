@@ -1,0 +1,136 @@
+﻿create table RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO
+(
+  data_date                 DATE,
+  pk_col                    VARCHAR2(300),
+  loan_ref_no               VARCHAR2(300),
+  fund_cd                   VARCHAR2(180),
+  fund_name                 VARCHAR2(600),
+  base_loan_ref_no          VARCHAR2(300),
+  base_product_cd           VARCHAR2(120),
+  base_product_type         VARCHAR2(300),
+  base_product_name         VARCHAR2(1200),
+  financial_asset_class     VARCHAR2(120),
+  ccy_cd                    VARCHAR2(30),
+  pric_bal                  NUMBER(18,2),
+  accrued_int               NUMBER(18,2),
+  receivable_int            NUMBER(18,2),
+  int_adj                   NUMBER(18,2),
+  fairvalue_changes         NUMBER(18,2),
+  accrued_receiv_int        NUMBER(18,2),
+  provision                 NUMBER(18,2),
+  ead_orig                  NUMBER(18,2),
+  asset_net_per             NUMBER(8,4),
+  true_invest_ratio         NUMBER(18,6),
+  min_invest_ratio          NUMBER(18,6),
+  max_invest_ratio          NUMBER(18,6),
+  authorized_by_third_party VARCHAR2(30),
+  risk_weight               NUMBER(31,6),
+  fm_avg_rw                 NUMBER(18,6),
+  fm_alvg_rw                NUMBER(18,6),
+  base_sec_name             VARCHAR2(300),
+  accorg_no                 VARCHAR2(60),
+  accorg_name               VARCHAR2(766),
+  asset_type_name           VARCHAR2(180),
+  report_line_no            VARCHAR2(120),
+  report_line_name          VARCHAR2(600),
+  load_date                 VARCHAR2(60),
+  rwa_before_adj            NUMBER(18,2),
+  rwa_after_adj             NUMBER(18,2),
+  g4b_r_item_code           VARCHAR2(300),
+  etl_dt                    DATE,
+  etl_timestamp             TIMESTAMP(6)
+)
+partition by range (ETL_DT)
+(
+  partition PARTITION_19000101 values less than (TO_DATE(' 1900-01-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250930 values less than (TO_DATE(' 2025-10-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO
+  is '内部管理报表_资管产品基础资产明细';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.data_date
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.pk_col
+  is 'PK_COL';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.loan_ref_no
+  is '债项编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.fund_cd
+  is '资产管理产品编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.fund_name
+  is '资产管理产品名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.base_loan_ref_no
+  is '基础资产债项编号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.base_product_cd
+  is '基础资产描述';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.base_product_type
+  is '基础资产产品类型';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.base_product_name
+  is '基础资产产品名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.financial_asset_class
+  is '金融资产三分类';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.ccy_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.pric_bal
+  is '本金余额本币';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.accrued_int
+  is '应计利息本币';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.receivable_int
+  is '应收利息本币';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.int_adj
+  is '利息调整本币';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.fairvalue_changes
+  is '公允价值变动本币';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.accrued_receiv_int
+  is '应收未收利息本币';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.provision
+  is '准备金本币';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.ead_orig
+  is '原始风险暴露本币';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.asset_net_per
+  is '占资产比例%';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.true_invest_ratio
+  is '投资比例';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.min_invest_ratio
+  is '最小投资比例';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.max_invest_ratio
+  is '最大投资比例';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.authorized_by_third_party
+  is '定期报告是否经过第三方托管人确认';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.risk_weight
+  is '权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.fm_avg_rw
+  is '资管产品基础资产平均权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.fm_alvg_rw
+  is '资管产品调整杠杆率后的权重';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.base_sec_name
+  is '基础资产债券名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.accorg_no
+  is '入账机构';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.accorg_name
+  is '入账机构名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.asset_type_name
+  is '资产大类名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.report_line_no
+  is 'G4B_1报表栏位号';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.report_line_name
+  is 'G4B_1栏位名称';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.load_date
+  is '加载日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.rwa_before_adj
+  is '调整前风险加权资产';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.rwa_after_adj
+  is '调整后风险加权资产';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.g4b_r_item_code
+  is 'G4B-5项目';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_RWAS_RPT_ASSET_BASE_ASSET_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,165 @@
+﻿create table RRP_MDL.O_IML_AGT_BOND_TRAN
+(
+  agt_id                VARCHAR2(60),
+  lp_id                 VARCHAR2(60),
+  bus_id                VARCHAR2(60),
+  bus_table_name        VARCHAR2(150),
+  dept_id               VARCHAR2(60),
+  bond_id               VARCHAR2(60),
+  bond_name             VARCHAR2(150),
+  bond_type_cd          VARCHAR2(10),
+  std_prod_id           VARCHAR2(60),
+  tran_id               VARCHAR2(60),
+  tran_dt               DATE,
+  dlvy_dt               DATE,
+  tran_dir_cd           VARCHAR2(10),
+  curr_cd               VARCHAR2(10),
+  tran_net_price        NUMBER(18,10),
+  tran_full_price       NUMBER(18,10),
+  exp_yld_rat           NUMBER(18,10),
+  stl_amt               NUMBER(30,2),
+  portf_id              VARCHAR2(60),
+  portf_name            VARCHAR2(150),
+  acct_b_id             VARCHAR2(60),
+  acct_b_name           VARCHAR2(150),
+  acct_b_attr_cd        VARCHAR2(10),
+  asset_cls4_cd         VARCHAR2(10),
+  cntpty_name           VARCHAR2(150),
+  cntpty_id             VARCHAR2(60),
+  stl_way_cd            VARCHAR2(10),
+  dealer_id             VARCHAR2(60),
+  dealer_name           VARCHAR2(150),
+  bag_id                VARCHAR2(60),
+  comm_fee              NUMBER(30,2),
+  tax                   NUMBER(30,2),
+  comm                  NUMBER(30,2),
+  cert_face_tot         NUMBER(30,2),
+  acru_int_tot          NUMBER(30,2),
+  cfets_tran_flg        VARCHAR2(10),
+  tran_src_cd           VARCHAR2(10),
+  asset_type_cd         VARCHAR2(10),
+  init_bus_id           VARCHAR2(60),
+  acpt_pay_cfm_modif_tm TIMESTAMP(6),
+  tran_status_cd        VARCHAR2(30),
+  dc_dealer_name        VARCHAR2(1500),
+  create_dt             DATE,
+  update_dt             DATE,
+  etl_dt                DATE,
+  id_mark               VARCHAR2(10),
+  src_table_name        VARCHAR2(100),
+  job_cd                VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_BOND_TRAN
+  is '债券交易';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.bus_table_name
+  is '业务表名称';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.dept_id
+  is '部门编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.bond_id
+  is '债券编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.bond_name
+  is '债券名称';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.bond_type_cd
+  is '债券类型代码';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.tran_id
+  is '交易编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.dlvy_dt
+  is '交割日期';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.tran_dir_cd
+  is '交易方向代码';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.tran_net_price
+  is '交易净价';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.tran_full_price
+  is '交易全价';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.exp_yld_rat
+  is '到期收益率';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.stl_amt
+  is '转贴现金额';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.portf_id
+  is '投组编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.portf_name
+  is '投组名称';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.acct_b_id
+  is '账簿编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.acct_b_name
+  is '账簿名称';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.acct_b_attr_cd
+  is '账簿属性代码';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.asset_cls4_cd
+  is '资产四分类代码';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.cntpty_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.stl_way_cd
+  is '结算方式代码';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.dealer_id
+  is '交易员编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.dealer_name
+  is '交易员名称';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.bag_id
+  is '成交编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.comm_fee
+  is '手续费';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.tax
+  is '税金';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.comm
+  is '佣金';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.cert_face_tot
+  is '券面总额';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.acru_int_tot
+  is '应计利息总额';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.cfets_tran_flg
+  is 'CFETS交易标志';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.tran_src_cd
+  is '交易来源代码';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.asset_type_cd
+  is '资产类型代码';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.init_bus_id
+  is '原业务编号';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.acpt_pay_cfm_modif_tm
+  is '收付确认修改时间';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.dc_dealer_name
+  is '本币交易员名称';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_BOND_TRAN.etl_timestamp
+  is 'ETL处理时间戳';
+

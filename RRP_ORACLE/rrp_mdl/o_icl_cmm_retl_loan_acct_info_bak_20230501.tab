@@ -1,0 +1,533 @@
+﻿create table RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501
+(
+  etl_dt                       DATE not null,
+  lp_id                        VARCHAR2(60) not null,
+  acct_id                      VARCHAR2(60) not null,
+  acct_name                    VARCHAR2(500),
+  cust_id                      VARCHAR2(60),
+  cont_id                      VARCHAR2(60),
+  dubil_num                    VARCHAR2(60),
+  loan_distr_acct_num          VARCHAR2(60),
+  loan_repay_num               VARCHAR2(60),
+  std_prod_id                  VARCHAR2(60),
+  prod_id                      VARCHAR2(60),
+  subj_id                      VARCHAR2(60),
+  init_pric_subj_id            VARCHAR2(60),
+  in_bs_int_subj_id            VARCHAR2(60),
+  off_bs_int_subj_id           VARCHAR2(60),
+  int_income_subj_id           VARCHAR2(60),
+  int_income_adj_subj_id       VARCHAR2(60),
+  acctnt_cate_cd               VARCHAR2(10),
+  bus_breed_id                 VARCHAR2(30),
+  asset_thd_cls_cd             VARCHAR2(30),
+  loan_modal_cd                VARCHAR2(10),
+  loan_acct_status_cd          VARCHAR2(10),
+  unite_loan_cd                VARCHAR2(10),
+  priv_loan_flg                VARCHAR2(10),
+  promis_loan_flg              VARCHAR2(10),
+  circl_loan_flg               VARCHAR2(10),
+  deriv_loan_flg               VARCHAR2(10),
+  agent_loan_flg               VARCHAR2(10),
+  oots_accti_flg               VARCHAR2(10),
+  loan_modal_dg_subj_accti_flg VARCHAR2(10),
+  loan_tenor                   VARCHAR2(10),
+  loan_tenor_type_cd           VARCHAR2(10),
+  acru_non_acru_cd             VARCHAR2(10),
+  final_fin_dt                 DATE,
+  open_acct_teller_id          VARCHAR2(60),
+  clos_acct_teller_id          VARCHAR2(60),
+  open_acct_org_id             VARCHAR2(60),
+  mgmt_org_id                  VARCHAR2(60),
+  acct_instit_id               VARCHAR2(60),
+  open_acct_dt                 DATE,
+  distr_dt                     DATE,
+  value_dt                     DATE,
+  exp_dt                       DATE,
+  clos_acct_dt                 DATE,
+  int_sub_flg                  VARCHAR2(10),
+  renew_flg                    VARCHAR2(10),
+  renew_cnt                    NUMBER(10),
+  int_accr_rule                VARCHAR2(10),
+  int_accr_flg                 VARCHAR2(10),
+  comp_int_flg                 VARCHAR2(10),
+  pre_recv_int_way             VARCHAR2(10),
+  int_rat_adj_way_cd           VARCHAR2(10),
+  int_rat_base_type_cd         VARCHAR2(10),
+  base_rat_id                  VARCHAR2(60),
+  base_rat                     NUMBER(18,8),
+  exec_int_rat                 NUMBER(18,8),
+  int_rat_float_way_cd         VARCHAR2(10),
+  int_rat_adj_ped_corp_cd      VARCHAR2(10),
+  int_rat_adj_ped_freq         NUMBER(10),
+  int_rat_flo_val              NUMBER(18,6),
+  curr_int_rat_effect_dt       DATE,
+  next_int_rat_adj_dt          DATE,
+  int_set_way_cd               VARCHAR2(10),
+  int_accr_way_cd              VARCHAR2(10),
+  ped_distr_flg                VARCHAR2(10),
+  distr_way_cd                 VARCHAR2(10),
+  repay_way_cd                 VARCHAR2(10),
+  irr_repay_way_cd             VARCHAR2(10),
+  repay_ped_corp_cd            VARCHAR2(10),
+  repay_ped                    NUMBER(10,2),
+  allow_adv_repay_flg          VARCHAR2(10),
+  wrt_off_flg                  VARCHAR2(10),
+  asset_tran_status_cd         VARCHAR2(10),
+  tran_bf_int_recvbl           NUMBER(30,2),
+  ovdue_flg                    VARCHAR2(10),
+  ovdue_int_accr_way_cd        VARCHAR2(30),
+  ovdue_pnlt_float_way_cd      VARCHAR2(30),
+  pric_ovdue_flg               VARCHAR2(10),
+  int_ovdue_flg                VARCHAR2(10),
+  curr_ovdue_perds             NUMBER(10),
+  pric_ovdue_days              NUMBER(10),
+  int_ovdue_days               NUMBER(10),
+  ovdue_pric_bal               NUMBER(30,2),
+  ovdue_int_amt                NUMBER(30,2),
+  ovdue_comp_int_amt           NUMBER(30,2),
+  fir_ovdue_dt                 DATE,
+  ovdue_int_rat                NUMBER(18,8),
+  ovdue_int_rat_flo_val        NUMBER(18,6),
+  tot_perds                    NUMBER(10),
+  curr_issue_perds             NUMBER(10),
+  last_repay_dt                DATE,
+  curr_cd                      VARCHAR2(10),
+  next_repay_dt                DATE,
+  next_rpp_amt                 NUMBER(30,2),
+  next_repay_int_amt           NUMBER(30,2),
+  cont_amt                     NUMBER(30,2),
+  dubil_amt                    NUMBER(30,2),
+  distr_amt                    NUMBER(30,2),
+  froz_distrd_amt              NUMBER(30,2),
+  distrd_amt                   NUMBER(30,2),
+  td_acru_int                  NUMBER(30,8),
+  td_int_income                NUMBER(30,8),
+  td_int_income_adj            NUMBER(30,8),
+  currt_acru_int               NUMBER(30,8),
+  nomal_pric                   NUMBER(30,2),
+  ovdue_pric                   NUMBER(30,2),
+  idle_pric                    NUMBER(30,2),
+  bad_debt_pric                NUMBER(30,2),
+  loan_fund                    NUMBER(30,2),
+  recvbl_acru_int              NUMBER(30,2),
+  coll_acru_int                NUMBER(30,2),
+  recvbl_acru_pnlt             NUMBER(30,2),
+  coll_acru_pnlt               NUMBER(30,2),
+  recvbl_pnlt                  NUMBER(30,2),
+  coll_pnlt                    NUMBER(30,2),
+  acru_comp_int                NUMBER(30,2),
+  recvbl_comp_int              NUMBER(30,2),
+  acru_int_sub                 NUMBER(30,2),
+  recvbl_int_sub               NUMBER(30,2),
+  amorted_int                  NUMBER(30,2),
+  wrt_off_pric                 NUMBER(30,2),
+  wrt_off_int                  NUMBER(30,2),
+  int_income                   NUMBER(30,2),
+  wrt_off_advc_fee_bal         NUMBER(30,2),
+  wrt_off_advc_fee_amt         NUMBER(30,2),
+  recvbl_fine                  NUMBER(30,2),
+  fine_inco                    NUMBER(30,2),
+  resv                         NUMBER(30,2),
+  recvbl_over_int              NUMBER(30,2),
+  coll_over_int                NUMBER(30,2),
+  in_bs_int                    NUMBER(30,2),
+  off_bs_int                   NUMBER(30,2),
+  acm_recvbl_uncol_int_amt     NUMBER(30,2),
+  repaid_pric                  NUMBER(30,2),
+  repaid_int                   NUMBER(30,2),
+  repaid_pnlt                  NUMBER(30,2),
+  repaid_comp_int              NUMBER(30,2),
+  repaid_fee                   NUMBER(30,2),
+  pric_bal                     NUMBER(30,2),
+  currt_bal                    NUMBER(30,2),
+  cl_curr_currt_bal            NUMBER(30,2),
+  ear_d_bal                    NUMBER(30,2),
+  ear_m_bal                    NUMBER(30,2),
+  ear_s_bal                    NUMBER(30,2),
+  ear_y_bal                    NUMBER(30,2),
+  y_acm_bal                    NUMBER(30,2),
+  s_acm_bal                    NUMBER(30,2),
+  m_acm_bal                    NUMBER(30,2),
+  cl_curr_ear_d_bal            NUMBER(30,2),
+  cl_curr_ear_m_bal            NUMBER(30,2),
+  cl_curr_ear_s_bal            NUMBER(30,2),
+  cl_curr_ear_y_bal            NUMBER(30,2),
+  cl_curr_y_acm_bal            NUMBER(30,2),
+  cl_curr_ear_d_y_acm_bal      NUMBER(30,2),
+  cl_curr_ear_m_y_acm_bal      NUMBER(30,2),
+  cl_curr_ear_s_y_acm_bal      NUMBER(30,2),
+  cl_curr_ear_y_y_acm_bal      NUMBER(30,2),
+  cl_curr_s_acm_bal            NUMBER(30,2),
+  cl_curr_ear_d_s_acm_bal      NUMBER(30,2),
+  cl_curr_ear_s_s_acm_bal      NUMBER(30,2),
+  cl_curr_ear_y_s_acm_bal      NUMBER(30,2),
+  cl_curr_m_acm_bal            NUMBER(30,2),
+  cl_curr_ear_d_m_acm_bal      NUMBER(30,2),
+  cl_curr_ear_m_m_acm_bal      NUMBER(30,2),
+  cl_curr_ear_y_m_acm_bal      NUMBER(30,2),
+  y_avg_bal                    NUMBER(30,2),
+  q_avg_bal                    NUMBER(30,2),
+  m_avg_bal                    NUMBER(30,2),
+  cl_curr_y_avg_bal            NUMBER(30,2),
+  cl_curr_q_avg_bal            NUMBER(30,2),
+  cl_curr_m_avg_bal            NUMBER(30,2),
+  job_cd                       VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501
+  is '零售贷款账户信息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.dubil_num
+  is '借据号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.loan_distr_acct_num
+  is '贷款放款账号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.loan_repay_num
+  is '贷款还款账号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.init_pric_subj_id
+  is '原本金科目编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.in_bs_int_subj_id
+  is '表内利息科目编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.off_bs_int_subj_id
+  is '表外利息科目编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_income_subj_id
+  is '利息收入科目编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_income_adj_subj_id
+  is '利息收入调整科目编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.acctnt_cate_cd
+  is '会计类别代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.bus_breed_id
+  is '业务品种编号REF_RETL_LOAN_BUS_BREED_COMP_H';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.asset_thd_cls_cd
+  is '资产三分类代码CD2060';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.loan_modal_cd
+  is '贷款形态代码CD1397';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.loan_acct_status_cd
+  is '贷款账户状态代码CD1248';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.unite_loan_cd
+  is '联合贷款代码CD1110';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.priv_loan_flg
+  is '对私贷款标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.promis_loan_flg
+  is '承诺贷款标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.circl_loan_flg
+  is '循环贷款标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.deriv_loan_flg
+  is '衍生贷款标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.agent_loan_flg
+  is '代理贷款标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.oots_accti_flg
+  is '按一逾两呆核算标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.loan_modal_dg_subj_accti_flg
+  is '贷款形态分科目核算标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.loan_tenor
+  is '贷款期限';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.loan_tenor_type_cd
+  is '贷款期限类型代码CD1651';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.acru_non_acru_cd
+  is '应计非应计代码CD1106';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.final_fin_dt
+  is '最后财务日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.open_acct_teller_id
+  is '开户柜员编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.clos_acct_teller_id
+  is '销户柜员编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.open_acct_org_id
+  is '开户机构编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.mgmt_org_id
+  is '管理机构编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.acct_instit_id
+  is '账务机构编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.open_acct_dt
+  is '开户日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.distr_dt
+  is '放款日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.clos_acct_dt
+  is '销户日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_sub_flg
+  is '贴息标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.renew_flg
+  is '展期标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.renew_cnt
+  is '展期次数';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_accr_rule
+  is '计息规则CD1068';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_accr_flg
+  is '计息标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.comp_int_flg
+  is '复息标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.pre_recv_int_way
+  is '预收息方式CD1108';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_rat_adj_way_cd
+  is '利率调整方式代码CD1039';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_rat_base_type_cd
+  is '利率基准类型代码CD1742';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.base_rat_id
+  is '基准利率编号';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.base_rat
+  is '基准利率';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_rat_float_way_cd
+  is '利率浮动方式代码CD1016';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_rat_adj_ped_corp_cd
+  is '利率调整周期单位代码CD1281';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_rat_adj_ped_freq
+  is '利率调整周期频率';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_rat_flo_val
+  is '利率浮动值';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.curr_int_rat_effect_dt
+  is '当前利率生效日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.next_int_rat_adj_dt
+  is '下次利率调整日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_set_way_cd
+  is '结息方式代码CD1007';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_accr_way_cd
+  is '计息方式代码CD1323';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ped_distr_flg
+  is '周期性放款标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.distr_way_cd
+  is '放款方式代码CD1490';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.repay_way_cd
+  is '还款方式代码CD1072';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.irr_repay_way_cd
+  is '不规则还款方式代码';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.repay_ped_corp_cd
+  is '还款周期单位代码CD1497';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.repay_ped
+  is '还款周期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.allow_adv_repay_flg
+  is '允许提前还款标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.wrt_off_flg
+  is '核销标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.asset_tran_status_cd
+  is '资产转让状态代码CD2079';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.tran_bf_int_recvbl
+  is '转让前应收利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ovdue_flg
+  is '逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ovdue_int_accr_way_cd
+  is '逾期计息方式代码CD1109';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ovdue_pnlt_float_way_cd
+  is '逾期罚息浮动方式代码CD1016';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.pric_ovdue_flg
+  is '本金逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_ovdue_flg
+  is '利息逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.curr_ovdue_perds
+  is '当前逾期期数';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.pric_ovdue_days
+  is '本金逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_ovdue_days
+  is '利息逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ovdue_pric_bal
+  is '逾期本金余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ovdue_int_amt
+  is '逾期利息金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ovdue_comp_int_amt
+  is '逾期复利金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.fir_ovdue_dt
+  is '首次逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ovdue_int_rat
+  is '逾期利率';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ovdue_int_rat_flo_val
+  is '逾期利率浮动值';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.tot_perds
+  is '总期数';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.curr_issue_perds
+  is '本期期数';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.last_repay_dt
+  is '上次还款日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.curr_cd
+  is '币种代码CD1728';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.next_repay_dt
+  is '下次还款日期';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.next_rpp_amt
+  is '下次还本金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.next_repay_int_amt
+  is '下次还息金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cont_amt
+  is '合同金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.dubil_amt
+  is '借据金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.distr_amt
+  is '放款金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.froz_distrd_amt
+  is '冻结可发放金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.distrd_amt
+  is '可发放金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.td_acru_int
+  is '当日应计利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.td_int_income
+  is '当日利息收入';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.td_int_income_adj
+  is '当日利息收入调整';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.currt_acru_int
+  is '当期应计利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.nomal_pric
+  is '正常本金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ovdue_pric
+  is '逾期本金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.idle_pric
+  is '呆滞本金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.bad_debt_pric
+  is '呆账本金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.loan_fund
+  is '贷款基金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.recvbl_acru_int
+  is '应收应计利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.coll_acru_int
+  is '催收应计利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.recvbl_acru_pnlt
+  is '应收应计罚息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.coll_acru_pnlt
+  is '催收应计罚息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.recvbl_pnlt
+  is '应收罚息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.coll_pnlt
+  is '催收罚息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.acru_comp_int
+  is '应计复息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.recvbl_comp_int
+  is '应收复息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.acru_int_sub
+  is '应计贴息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.recvbl_int_sub
+  is '应收贴息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.amorted_int
+  is '待摊利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.wrt_off_pric
+  is '核销本金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.wrt_off_int
+  is '核销利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.int_income
+  is '利息收入';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.wrt_off_advc_fee_bal
+  is '核销垫付费余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.wrt_off_advc_fee_amt
+  is '核销垫付费金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.recvbl_fine
+  is '应收罚金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.fine_inco
+  is '罚金收入';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.resv
+  is '准备金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.recvbl_over_int
+  is '应收欠息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.coll_over_int
+  is '催收欠息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.in_bs_int
+  is '表内利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.off_bs_int
+  is '表外利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.acm_recvbl_uncol_int_amt
+  is '累计应收未收利息金额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.repaid_pric
+  is '已偿还本金';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.repaid_int
+  is '已偿还利息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.repaid_pnlt
+  is '已偿还罚息';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.repaid_comp_int
+  is '已偿还复利';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.repaid_fee
+  is '已偿还费用';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.pric_bal
+  is '本金余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_currt_bal
+  is '折本币当期余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ear_d_bal
+  is '日初余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ear_m_bal
+  is '月初余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ear_s_bal
+  is '季初余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.ear_y_bal
+  is '年初余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.y_acm_bal
+  is '年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.s_acm_bal
+  is '季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.m_acm_bal
+  is '月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_d_bal
+  is '折本币日初余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_m_bal
+  is '折本币月初余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_s_bal
+  is '折本币季初余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_y_bal
+  is '折本币年初余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_y_acm_bal
+  is '折本币年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_d_y_acm_bal
+  is '折本币日初年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_m_y_acm_bal
+  is '折本币月初年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_s_y_acm_bal
+  is '折本币季初年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_y_y_acm_bal
+  is '折本币年初年累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_s_acm_bal
+  is '折本币季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_d_s_acm_bal
+  is '折本币日初季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_s_s_acm_bal
+  is '折本币季初季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_y_s_acm_bal
+  is '折本币年初季累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_m_acm_bal
+  is '折本币月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_d_m_acm_bal
+  is '折本币日初月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_m_m_acm_bal
+  is '折本币月初月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_ear_y_m_acm_bal
+  is '折本币年初月累计余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.y_avg_bal
+  is '年日均余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.q_avg_bal
+  is '季日均余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.m_avg_bal
+  is '月日均余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_y_avg_bal
+  is '折本币年日均余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_q_avg_bal
+  is '折本币季日均余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.cl_curr_m_avg_bal
+  is '折本币月日均余额';
+comment on column RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501.job_cd
+  is '任务代码';
+create index RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_1 on RRP_MDL.O_ICL_CMM_RETL_LOAN_ACCT_INFO_BAK_20230501 (ETL_DT, DUBIL_NUM)
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

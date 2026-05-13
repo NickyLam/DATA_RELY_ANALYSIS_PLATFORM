@@ -1,0 +1,108 @@
+﻿create table RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY
+(
+  serialno           VARCHAR2(64),
+  accountno          VARCHAR2(100),
+  accountname        VARCHAR2(200),
+  subacctnum         VARCHAR2(60),
+  accountcurrency    VARCHAR2(10),
+  transactionamt     NUMBER(24,6),
+  accountrodtype     VARCHAR2(64),
+  handletype         VARCHAR2(48),
+  handledate         DATE,
+  handlebalancesum   NUMBER(24,6),
+  handledesc         VARCHAR2(3000),
+  handlenum          VARCHAR2(32),
+  approvestatus      VARCHAR2(64),
+  inputuserid        VARCHAR2(64),
+  inputorgid         VARCHAR2(64),
+  inputdate          DATE,
+  operateuserid      VARCHAR2(64),
+  operateorgid       VARCHAR2(64),
+  operatedate        DATE,
+  updateuserid       VARCHAR2(64),
+  updateorgid        VARCHAR2(64),
+  updatedate         DATE,
+  counterpartyzh     VARCHAR2(64),
+  counterpartyname   VARCHAR2(200),
+  counterpartyzhbank VARCHAR2(200),
+  programno          VARCHAR2(64),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY
+  is '抵债资产处置流程申请记录表';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.accountno
+  is '账户';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.accountname
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.subacctnum
+  is '子账户';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.accountcurrency
+  is '账户币种';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.transactionamt
+  is '交易价格';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.accountrodtype
+  is '账户产品类型';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.handletype
+  is '处置方式';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.handledate
+  is '处置日期';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.handlebalancesum
+  is '回收金额汇总';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.handledesc
+  is '处置说明';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.handlenum
+  is '处置数量';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.approvestatus
+  is '审批状态';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.operateuserid
+  is '经办客户经理';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.operateorgid
+  is '经办客户经理所属机构';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.operatedate
+  is '经办时间';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.counterpartyzh
+  is '交易对手账号';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.counterpartyname
+  is '受让方（交易对手）';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.counterpartyzhbank
+  is '交易对手账号开户行名称';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.programno
+  is '方案编号';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_ASSET_DISPOSAL_APPLY.etl_timestamp
+  is 'ETL处理时间戳';
+

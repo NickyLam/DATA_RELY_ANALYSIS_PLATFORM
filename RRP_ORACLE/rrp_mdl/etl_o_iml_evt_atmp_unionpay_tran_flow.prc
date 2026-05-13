@@ -1,0 +1,295 @@
+﻿CREATE OR REPLACE PROCEDURE RRP_MDL.ETL_O_IML_EVT_ATMP_UNIONPAY_TRAN_FLOW(I_P_DATE IN INTEGER,
+                                                                  O_ERRCODE OUT VARCHAR2
+                                                                  )
+  /**************************************************************************
+  *  程序名称：ETL_O_IML_EVT_ATMP_UNIONPAY_TRAN_FLOW
+  *  功能描述：ATMP银联前置交易流水
+  *  创建日期：20220820
+  *  开发人员：梅炜
+  *  来源表： IML.V_EVT_ATMP_UNIONPAY_TRAN_FLOW
+  *  目标表： O_IML_EVT_ATMP_UNIONPAY_TRAN_FLOW
+  *  配置表：
+  *  修改情况：序号  修改日期  修改人   修改原因
+  *             1    20220619  梅炜     首次创建
+  ***************************************************************************/
+AS
+  -- 定义变量 --
+  V_STEP      INTEGER := 0;               --处理步骤
+  V_P_DATE    VARCHAR2(8);                --跑批数据日期
+  V_STARTTIME DATE;                       --处理开始时间
+  V_ENDTIME   DATE;                       --处理结束时间
+  V_SQLCOUNT  INTEGER := 0;               --更新或删除影响的记录数
+  V_SQLMSG    VARCHAR2(300);              --SQL执行描述信息
+  V_STEP_DESC VARCHAR2(200);              --任务名称
+  V_PART_NAME VARCHAR2(200);              --分区名
+  V_TAB_NAME  VARCHAR2(100) := 'O_IML_EVT_ATMP_UNIONPAY_TRAN_FLOW'; --表名
+  V_PROC_NAME VARCHAR2(50) := 'ETL_O_IML_EVT_ATMP_UNIONPAY_TRAN_FLOW'; --程序名称
+  V_SYSTEM    VARCHAR2(30) := '监管报送'; --来源系统 --默认写监管报送系统，有真实来源的按实际写
+BEGIN
+  -- 处理参数及月末等判断逻辑 --
+  V_P_DATE := TO_CHAR(I_P_DATE); --获取跑批日期
+  V_PART_NAME := 'PARTITION_'||V_P_DATE;
+
+  -- 支持重跑 --
+  V_STEP := 1;
+  V_STEP_DESC := '-- 程序跑批开始 --';
+  V_STARTTIME := SYSDATE;
+  DELETE FROM RRP_MDL.O_IML_EVT_ATMP_UNIONPAY_TRAN_FLOW T
+   WHERE T.ETL_DT <= TO_DATE(V_P_DATE,'YYYYMMDD')
+     AND T.ETL_DT>= TO_DATE(V_P_DATE,'YYYYMMDD')-14;
+  V_SQLCOUNT := SQL%ROWCOUNT;
+  V_SQLMSG := '返回值：['||SQLCODE||'],执行信息：'||SQLERRM;
+  O_ERRCODE := '0';
+  V_ENDTIME := SYSDATE;
+  COMMIT;
+  ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,V_SQLMSG);
+
+  --增加分区--
+  V_STEP := 2;
+  V_STEP_DESC := '-- 程序跑批开始 --';
+  V_STARTTIME := SYSDATE;
+  ETL_PARTITION_ADD(V_P_DATE, V_TAB_NAME, '3', O_ERRCODE);
+  --EXECUTE IMMEDIATE ('ALTER TABLE '||V_TAB_NAME||' TRUNCATE PARTITION '||V_PART_NAME);--分区表的重跑处理
+  V_SQLCOUNT := SQL%ROWCOUNT;
+  V_SQLMSG := '返回值：['||SQLCODE||'],执行信息：'||SQLERRM;
+  O_ERRCODE := '0';
+  V_ENDTIME := SYSDATE;
+  COMMIT;
+  ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,V_SQLMSG);
+
+  -- 程序业务逻辑处理主体部分 --
+  V_STEP := V_STEP + 1;
+  V_STEP_DESC := '数据落地-ATMP银联前置交易流水';
+  V_STARTTIME := SYSDATE;
+  INSERT INTO RRP_MDL.O_IML_EVT_ATMP_UNIONPAY_TRAN_FLOW
+    (EVT_ID
+    ,LP_ID
+    ,SEND_ORG_ID
+    ,SYS_FOLLOW_ID
+    ,TRAN_TM
+    ,TRAN_CD
+    ,TRAN_TYPE_CD
+    ,PROC_ORG_ID
+    ,TRAN_DT
+    ,TELLER_ID
+    ,TRAN_ORG_ID
+    ,CHN_CD
+    ,MSG_TYPE_CD
+    ,MAIN_ACCT_ID
+    ,PROC_CD
+    ,INTNAL_PROC_CD
+    ,TRAN_AMT
+    ,ONL_ACCT_BAL
+    ,ACCT_TD_AVAL_BAL
+    ,ATM_DRAW_TD_AVAL_BAL
+    ,TRAN_FEE
+    ,PROC_ORG_SITE_TM
+    ,PROC_ORG_SITE_DT
+    ,CLEAR_DT
+    ,MERCHT_TYPE_CD
+    ,TRAN_SERV_INPUT_WAY_CD
+    ,TRAN_SERV_COND_CD
+    ,RETRIV_REF_ID
+    ,APPRV_TRAN_AUTH_ID
+    ,RETURN_CODE
+    ,PROC_TERMN_ID
+    ,PROC_MERCHT_ID
+    ,PROC_MERCHT_NAME
+    ,ADDIT_RESP_DESCB
+    ,ADDIT_PRIV
+    ,CURR_CD
+    ,RESV_REGION
+    ,RECV_ORG_ID
+    ,CUPS_RESV_NUM
+    ,INIT_PROC_ORG_ID
+    ,INIT_SEND_ORG_ID
+    ,INIT_SYS_FOLLOW_ID
+    ,INIT_TRAN_TM
+    ,UNIONPAY_EXCH_RAT
+    ,EXPNS_ACCT_ID
+    ,DEPOT_ACCT_ID
+    ,ATMC_TRAN_FLOW_NUM
+    ,MSG_HEAD_INFO
+    ,TRAN_STATUS_CD
+    ,ERR_CD
+    ,ERR_INFO
+    ,TERMN_TYPE_CD
+    ,INIT_WAY_CD
+    ,MERCHT_CTY_RG_CD
+    ,DEDUCT_AMT
+    ,DEDUCT_EXCH_RAT
+    ,CLEAR_AMT
+    ,SEND_ORG_ACTL_ID
+    ,CROSS_BOR_FLG
+    ,CARD_SER_NUM
+    ,ACCESS_IC_DATA_REGION
+    ,SEND_IC_DATA_REGION
+    ,INTNAL_TRAN_CD
+    ,FCURR_TRAN_AMT
+    ,BANK_ACCT_TYPE_CD
+    ,OPEN_ACCT_ORG_ID
+    ,COMM_FEE
+    ,CARD_TYPE_CD
+    ,CARD_TRAN_TYPE_CD
+    ,QR_CODE_PAY_SCENE_CD
+    ,CROSS_BANK_FLG
+    ,DEGR_FLG
+    ,BEPS_UNPASEW_FLG
+    ,SUBCLASS_RETURN_CODE
+    ,MEMO_CD
+    ,OVA_FLOW_NUM
+    ,TRAN_FLOW_NUM
+    ,INIT_TRAN_FLOW_NUM
+    ,UPP_ENTER_STATUS_CD
+    ,ENTRY_FLOW_NUM
+    ,ENTRY_DT
+    ,DELAY_DEDUCT_TRAN_FLOW_NUM
+    ,DELAY_DEDUCT_TRAN_DT
+    ,UNIONPAY_DELAY_TRAN_RETURN_CD
+    ,DELAY_TRAN_RETURN_CD
+    ,TERMN_EQUIP_ID
+    ,TERMN_IP_ADDR
+    ,TERMN_SIM_NUM
+    ,TERMN_GPS_POSITION
+    ,RSRV_MOBILE_NO
+    ,CUST_ID
+    ,CUST_NAME
+    ,MIDGROD_TRAN_DT
+    ,ACCT_DT
+    ,INIT_TRAN_CD
+    ,ETL_DT
+    ,SRC_TABLE_NAME
+    ,JOB_CD
+    )
+  SELECT EVT_ID
+        ,LP_ID
+        ,SEND_ORG_ID
+        ,SYS_FOLLOW_ID
+        ,TRAN_TM
+        ,TRAN_CD
+        ,TRAN_TYPE_CD
+        ,PROC_ORG_ID
+        ,TRAN_DT
+        ,TELLER_ID
+        ,TRAN_ORG_ID
+        ,CHN_CD
+        ,MSG_TYPE_CD
+        ,MAIN_ACCT_ID
+        ,PROC_CD
+        ,INTNAL_PROC_CD
+        ,TRAN_AMT
+        ,ONL_ACCT_BAL
+        ,ACCT_TD_AVAL_BAL
+        ,ATM_DRAW_TD_AVAL_BAL
+        ,TRAN_FEE
+        ,PROC_ORG_SITE_TM
+        ,PROC_ORG_SITE_DT
+        ,CLEAR_DT
+        ,MERCHT_TYPE_CD
+        ,TRAN_SERV_INPUT_WAY_CD
+        ,TRAN_SERV_COND_CD
+        ,RETRIV_REF_ID
+        ,APPRV_TRAN_AUTH_ID
+        ,RETURN_CODE
+        ,PROC_TERMN_ID
+        ,PROC_MERCHT_ID
+        ,PROC_MERCHT_NAME
+        ,ADDIT_RESP_DESCB
+        ,ADDIT_PRIV
+        ,CURR_CD
+        ,RESV_REGION
+        ,RECV_ORG_ID
+        ,CUPS_RESV_NUM
+        ,INIT_PROC_ORG_ID
+        ,INIT_SEND_ORG_ID
+        ,INIT_SYS_FOLLOW_ID
+        ,INIT_TRAN_TM
+        ,UNIONPAY_EXCH_RAT
+        ,EXPNS_ACCT_ID
+        ,DEPOT_ACCT_ID
+        ,ATMC_TRAN_FLOW_NUM
+        ,MSG_HEAD_INFO
+        ,TRAN_STATUS_CD
+        ,ERR_CD
+        ,ERR_INFO
+        ,TERMN_TYPE_CD
+        ,INIT_WAY_CD
+        ,MERCHT_CTY_RG_CD
+        ,DEDUCT_AMT
+        ,DEDUCT_EXCH_RAT
+        ,CLEAR_AMT
+        ,SEND_ORG_ACTL_ID
+        ,CROSS_BOR_FLG
+        ,CARD_SER_NUM
+        ,ACCESS_IC_DATA_REGION
+        ,SEND_IC_DATA_REGION
+        ,INTNAL_TRAN_CD
+        ,FCURR_TRAN_AMT
+        ,BANK_ACCT_TYPE_CD
+        ,OPEN_ACCT_ORG_ID
+        ,COMM_FEE
+        ,CARD_TYPE_CD
+        ,CARD_TRAN_TYPE_CD
+        ,QR_CODE_PAY_SCENE_CD
+        ,CROSS_BANK_FLG
+        ,DEGR_FLG
+        ,BEPS_UNPASEW_FLG
+        ,SUBCLASS_RETURN_CODE
+        ,MEMO_CD
+        ,OVA_FLOW_NUM
+        ,TRAN_FLOW_NUM
+        ,INIT_TRAN_FLOW_NUM
+        ,UPP_ENTER_STATUS_CD
+        ,ENTRY_FLOW_NUM
+        ,ENTRY_DT
+        ,DELAY_DEDUCT_TRAN_FLOW_NUM
+        ,DELAY_DEDUCT_TRAN_DT
+        ,UNIONPAY_DELAY_TRAN_RETURN_CD
+        ,DELAY_TRAN_RETURN_CD
+        ,TERMN_EQUIP_ID
+        ,TERMN_IP_ADDR
+        ,TERMN_SIM_NUM
+        ,TERMN_GPS_POSITION
+        ,RSRV_MOBILE_NO
+        ,CUST_ID
+        ,CUST_NAME
+        ,MIDGROD_TRAN_DT
+        ,ACCT_DT
+        ,INIT_TRAN_CD
+        ,ETL_DT
+        ,SRC_TABLE_NAME
+        ,JOB_CD
+    FROM IML.V_EVT_ATMP_UNIONPAY_TRAN_FLOW  --视图-ATMP银联前置交易流水
+   WHERE ETL_DT >= TO_DATE(V_P_DATE,'YYYYMMDD') - 14
+     AND ETL_DT <= TO_DATE(V_P_DATE,'YYYYMMDD');
+
+  V_SQLCOUNT := SQL%ROWCOUNT;
+  V_SQLMSG := '返回值：['||SQLCODE||'],描述信息：'||SQLERRM;
+  O_ERRCODE := '0';
+  V_ENDTIME := SYSDATE;
+  COMMIT;
+  ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,V_SQLMSG);
+
+  -- 如需要分析表，请用如下代码 --
+  -- DBMS_STATS.GATHER_TABLE_STATS(OWNNAME=>'写上数据库用户名',TABLENAME => '写上表名字',PARTNAME => 'P_'||V_P_DATE||'',DEGREE => 16,CASCATE => TRUE);
+  ETL_DBMS_STATS(V_P_DATE, V_TAB_NAME, V_PART_NAME, O_ERRCODE);
+
+  INSERT INTO RRP_MDL.ETL_STATE(ETL_DATE, PROC_NAME,END_TIME)
+  VALUES (V_P_DATE,V_PROC_NAME,TO_CHAR(SYSTIMESTAMP,'YYYYMMDD HH24:MI:SS'));
+  COMMIT;
+  -- 程序跑批结束记录 --
+  V_STEP_DESC := '-- 程序跑批结束 --';
+  ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,'');
+
+-- 程序异常处理部分 --
+EXCEPTION
+  WHEN OTHERS THEN
+    V_SQLMSG := '返回值：['||SQLCODE||'],描述信息：'||SQLERRM;
+    ROLLBACK;
+    O_ERRCODE := '1';
+    V_ENDTIME := SYSDATE;
+    ETL_YUSYS_LOG(V_P_DATE,V_SYSTEM,V_PROC_NAME,V_STARTTIME,V_ENDTIME,V_STEP,V_STEP_DESC,V_SQLCOUNT,O_ERRCODE,V_SQLMSG);
+
+END ETL_O_IML_EVT_ATMP_UNIONPAY_TRAN_FLOW;
+/
+

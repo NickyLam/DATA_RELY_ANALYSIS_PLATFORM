@@ -1,0 +1,120 @@
+﻿create table RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL
+(
+  etl_dt                DATE,
+  evt_id                VARCHAR2(250),
+  lp_cd                 VARCHAR2(60),
+  bus_id                VARCHAR2(100),
+  bus_table_name        VARCHAR2(150),
+  dept_id               VARCHAR2(100),
+  bond_id               VARCHAR2(100),
+  bond_name             VARCHAR2(150),
+  bond_type_cd          VARCHAR2(30),
+  tran_id               VARCHAR2(100),
+  tran_dt               DATE,
+  dlvy_dt               DATE,
+  tran_dir_cd           VARCHAR2(30),
+  tran_net_price        NUMBER(30,2),
+  tran_full_price       NUMBER(30,2),
+  exp_yld_rat           NUMBER(18,8),
+  stl_amt               NUMBER(30,2),
+  portf_id              VARCHAR2(100),
+  portf_name            VARCHAR2(150),
+  acct_b_id             VARCHAR2(100),
+  acct_b_name           VARCHAR2(150),
+  acct_b_attr_cd        VARCHAR2(30),
+  asset_cls4_name       VARCHAR2(100),
+  stl_way_cd            VARCHAR2(30),
+  dealer_id             VARCHAR2(100),
+  dealer_name           VARCHAR2(150),
+  cert_face_tot         NUMBER(30,2),
+  cfets_tran_flg        VARCHAR2(10),
+  tran_src_cd           VARCHAR2(30),
+  asset_type_cd         VARCHAR2(30),
+  acpt_pay_cfm_modif_tm TIMESTAMP(6),
+  issue_status_cd       VARCHAR2(30),
+  job_cd                VARCHAR2(10),
+  src_table_name        VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL
+  is '债券发行交易明细';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.lp_cd
+  is '法人代码';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.bus_table_name
+  is '业务表名称';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.dept_id
+  is '部门编号';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.bond_id
+  is '债券编号';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.bond_name
+  is '债券名称';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.bond_type_cd
+  is '债券类型代码';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.tran_id
+  is '交易编号';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.dlvy_dt
+  is '交割日期';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.tran_dir_cd
+  is '交易方向代码';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.tran_net_price
+  is '交易净价';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.tran_full_price
+  is '交易全价';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.exp_yld_rat
+  is '到期收益率';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.stl_amt
+  is '结算金额';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.portf_id
+  is '投组编号';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.portf_name
+  is '投组名称';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.acct_b_id
+  is '账簿编号';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.acct_b_name
+  is '账簿名称';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.acct_b_attr_cd
+  is '账簿属性代码';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.asset_cls4_name
+  is '资产四分类名称';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.stl_way_cd
+  is '结算方式代码';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.dealer_id
+  is '交易员编号';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.dealer_name
+  is '交易员名称';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.cert_face_tot
+  is '券面总额';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.cfets_tran_flg
+  is 'CFETS交易标志';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.tran_src_cd
+  is '交易来源代码';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.asset_type_cd
+  is '资产类型代码';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.acpt_pay_cfm_modif_tm
+  is '收付确认修改时间';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.issue_status_cd
+  is '发行状态代码';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_EVT_BOND_ISSUE_TRAN_DTL.src_table_name
+  is '源表名称';
+

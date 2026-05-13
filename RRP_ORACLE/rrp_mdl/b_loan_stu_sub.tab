@@ -1,0 +1,62 @@
+﻿create table RRP_MDL.B_LOAN_STU_SUB
+(
+  data_dt             CHAR(8) not null,
+  lgl_rep_id          VARCHAR2(200),
+  loan_cont_id        VARCHAR2(200) not null,
+  stu_id_card_no      VARCHAR2(100),
+  sch_nm              VARCHAR2(500),
+  sch_addr            VARCHAR2(500),
+  sch_area_cd         VARCHAR2(10),
+  family_addr         VARCHAR2(500),
+  family_addr_area_cd VARCHAR2(10),
+  sl_biz_typ          VARCHAR2(10),
+  dept_line           VARCHAR2(500),
+  data_src            VARCHAR2(500)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_20220101 values ('20220101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.B_LOAN_STU_SUB
+  is '助学贷款子表';
+comment on column RRP_MDL.B_LOAN_STU_SUB.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_LOAN_STU_SUB.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_LOAN_STU_SUB.loan_cont_id
+  is '贷款合同号';
+comment on column RRP_MDL.B_LOAN_STU_SUB.stu_id_card_no
+  is '学生证号';
+comment on column RRP_MDL.B_LOAN_STU_SUB.sch_nm
+  is '学校名称';
+comment on column RRP_MDL.B_LOAN_STU_SUB.sch_addr
+  is '学校地址';
+comment on column RRP_MDL.B_LOAN_STU_SUB.sch_area_cd
+  is '学校行政区划代码';
+comment on column RRP_MDL.B_LOAN_STU_SUB.family_addr
+  is '家庭住址';
+comment on column RRP_MDL.B_LOAN_STU_SUB.family_addr_area_cd
+  is '家庭住址行政区划代码';
+comment on column RRP_MDL.B_LOAN_STU_SUB.sl_biz_typ
+  is '助学贷款业务类型';
+comment on column RRP_MDL.B_LOAN_STU_SUB.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_LOAN_STU_SUB.data_src
+  is '数据来源';
+alter table RRP_MDL.B_LOAN_STU_SUB
+  add constraint PK_B_LOAN_STU_SUB primary key (DATA_DT, LOAN_CONT_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

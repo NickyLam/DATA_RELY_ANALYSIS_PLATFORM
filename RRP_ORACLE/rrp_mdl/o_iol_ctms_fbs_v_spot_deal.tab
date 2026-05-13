@@ -1,0 +1,156 @@
+﻿create table RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL
+(
+  cus_number           NUMBER(5),
+  branch_number        NUMBER(5),
+  deal_sqno            NUMBER(18),
+  deal_date            DATE,
+  value_date           DATE,
+  crncy_pair_id        NUMBER(8),
+  spot_rate            NUMBER,
+  child_rate           NUMBER,
+  cost_rate            NUMBER,
+  first_amnt           NUMBER,
+  second_amnt          NUMBER,
+  trade_purpose        NUMBER(2),
+  business_date        DATE,
+  counter_party_id     NUMBER(8),
+  counter_party_scname VARCHAR2(256),
+  split_type           NUMBER(2),
+  update_time          TIMESTAMP(6),
+  deal_dir             NUMBER,
+  pdd_deal_sqno        NUMBER(18),
+  deal_status          VARCHAR2(2),
+  first_crncy          VARCHAR2(3),
+  second_crncy         VARCHAR2(3),
+  client_deal_sqno     VARCHAR2(30),
+  trade_type           VARCHAR2(2),
+  deal_source          VARCHAR2(2),
+  deal_market          VARCHAR2(8),
+  settle_type          NUMBER(2),
+  deal_link_sqno       NUMBER,
+  modify_date          DATE,
+  portfolio_sqno       NUMBER(18),
+  portfolio_id         NUMBER(8),
+  portfolio_name       VARCHAR2(255),
+  portfolio_type       VARCHAR2(40),
+  portfolio_status     VARCHAR2(2),
+  portfolio_link_sqno  NUMBER(18),
+  clear_dep            VARCHAR2(10),
+  event_type           VARCHAR2(2),
+  event_date           DATE,
+  event_link_sqno      NUMBER(18),
+  event_mask           VARCHAR2(2),
+  link_deal_sqno       NUMBER(18),
+  confirm_indc         VARCHAR2(5),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10),
+  dealer               VARCHAR2(40)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL
+  is '即期视图';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.cus_number
+  is '机构的唯一标识号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.branch_number
+  is '分支机构的唯一标识号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.deal_sqno
+  is '投组交易流水号，交易的FMS内部唯一编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.deal_date
+  is '交易日期和时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.value_date
+  is '起息日';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.crncy_pair_id
+  is '货币对的SRNO';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.spot_rate
+  is '成交汇率';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.child_rate
+  is '分行汇率';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.cost_rate
+  is '成本汇率';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.first_amnt
+  is '货币1交易金额';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.second_amnt
+  is '货币2交易金额';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.trade_purpose
+  is '交易目的 0：其他 1：自营交易 2：代客交易 3：内部交易 4：经纪交易';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.business_date
+  is '系统交易日，交易录入时的系统日期和时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.counter_party_id
+  is '交易对手编码';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.counter_party_scname
+  is '交易对手中文简称';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.split_type
+  is '交易拆分的类型';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.update_time
+  is '记录修改日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.deal_dir
+  is '交易方向 1买 -1 卖';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.pdd_deal_sqno
+  is '原始交易流水号，交易的FMS内部唯一编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.deal_status
+  is '成交单状态';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.first_crncy
+  is '第一货币';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.second_crncy
+  is '第二货币';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.client_deal_sqno
+  is '业务成交编号，来源如下： 1. 手工可不输入。 2. 文件导入，必须包含业务成交编号，且必须唯一。 3. 外部接口导入交易中，必须包含成交编号，且必须唯一。 4. CSTP下载交易中的成交编号。';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.trade_type
+  is '交易模式 ZZ：其它 A：匿名（对应TradeInstrument=3） B：双边（对应TradeInstrument=1） GB：黄金.询价模式（对应TradeInstrument=6）';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.deal_source
+  is '交易来源 C：CSTP，CSTP下载交易 E：External API，银行接口下载交易 F：File，文件导入交易 M：Manual，手工录入交易';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.deal_market
+  is '交易场所： 其它 CFETS R：（保留） E：（保留） B：银行 S：模拟交易 V：虚拟交易（多笔交易组合出来的）（2.0.0）';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.settle_type
+  is '清算方式 0：不用清算 1：双边净额清算，即集中净额清算（询价） 2：双边全额清算 3：集中净额清算（竞价） 4：净额+全额（暂时不使用）';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.deal_link_sqno
+  is '交易修改删除的序列关系。 1. 交易修改时，通过本字段，R交易关联到U交易，A交易关联到R交易。 2. 交易删除时，通过本字段，R交易关联到D交易。 3. 无修改删除时，本字段为NULL';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.modify_date
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.portfolio_sqno
+  is '投组交易编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.portfolio_id
+  is '投资组合ID';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.portfolio_name
+  is '投资组合名称';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.portfolio_type
+  is '投组类型： 交易 对冲  自营买卖 市场平盘';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.portfolio_status
+  is '投资组合状态： A：新交易 U：交易被修改 D：CSTP下载交易或第三方接口下载交易根据规则自动分配入投组 R：反向交易，用来通知周边系统，自己的原交易被删除，并反向对冲原交易的头寸和损益 M：已到期交易，交易全部完成交割后，由A状态置为M状态 C：取消投组';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.portfolio_link_sqno
+  is '投组交易链接编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.clear_dep
+  is '清算机构 ZZ：其它； AA：上清所';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.event_type
+  is 'NM 正常。DV 交割衍生,可拆分。SP 注销衍生,可拆分。BK 违约衍生,可拆分。RO 展期衍生,可拆分。RB 提前交割衍,可拆分。EX 期权行';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.event_date
+  is '事件日期';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.event_link_sqno
+  is '事件(违约，展期，提前交割)关联交易编号';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.event_mask
+  is 'NM 正常。DV 交割衍生,可拆分。SP 注销衍生,可拆分。BK 违约衍生,可拆分。RO 展期衍生,可拆分。RB 提前交割衍,可拆分。EX 期权行';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.link_deal_sqno
+  is '期权的投组交易编号（SQNO）';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.confirm_indc
+  is '交易后确认标识';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_FBS_V_SPOT_DEAL.dealer
+  is '交易员';
+

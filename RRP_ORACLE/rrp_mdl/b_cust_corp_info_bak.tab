@@ -1,0 +1,240 @@
+﻿create table RRP_MDL.B_CUST_CORP_INFO_BAK
+(
+  data_dt                   CHAR(8) not null,
+  lgl_rep_id                VARCHAR2(200),
+  cust_id                   VARCHAR2(200) not null,
+  org_id                    VARCHAR2(200),
+  cust_nm                   VARCHAR2(500),
+  cust_eng_nm               VARCHAR2(500),
+  crdl_typ                  VARCHAR2(10),
+  crdl_no                   VARCHAR2(100),
+  crdl_eff_dt               CHAR(8),
+  crdl_exp_dt               CHAR(8),
+  crdl_upd_dt               CHAR(8),
+  cust_cl                   VARCHAR2(10),
+  cust_typ_rsk              VARCHAR2(10),
+  natl_econ_dept_cl         VARCHAR2(10),
+  gov_aff_ins_flg           CHAR(1),
+  fin_org_typ               VARCHAR2(10),
+  fin_permit_no             VARCHAR2(100),
+  pbc_no                    VARCHAR2(200),
+  fin_org_id                VARCHAR2(200),
+  ent_scale                 VARCHAR2(10),
+  ent_hldg_typ              VARCHAR2(10),
+  rsdnt_flg                 CHAR(1),
+  regd_land_ctry_cd         VARCHAR2(10),
+  regd_land_area_cd         VARCHAR2(10),
+  regd_addr                 VARCHAR2(500),
+  regd_info_upd_dt          CHAR(8),
+  opr_land_ctry_cd          VARCHAR2(10),
+  opr_land_area_cd          VARCHAR2(10),
+  opr_addr                  VARCHAR2(500),
+  upd_wrk_addr_dt           CHAR(8),
+  cust_blng_idy             VARCHAR2(10),
+  grn_loan_idy_cl           VARCHAR2(10),
+  mjr_env_safe_rsk_ent_cl   VARCHAR2(10),
+  open_ebank_flg            CHAR(1),
+  ent_close_flg             CHAR(1),
+  ent_gua_sml_micro_ent_flg CHAR(1),
+  fit_sml_micro_ent_flg     CHAR(1),
+  cn_cptl_flg               CHAR(1),
+  vil_city_flg              CHAR(1),
+  family_farm_flg           CHAR(1),
+  ent_grow_up_stage         VARCHAR2(10),
+  spv_sub_cl                VARCHAR2(10),
+  microfin_co_flg           CHAR(1),
+  tech_mid_sml_ent_flg      CHAR(1),
+  high_tech_ent_flg         CHAR(1),
+  tech_ent_flg              CHAR(1),
+  tech_inno_ent_flg         CHAR(1),
+  ipo_co_flg                CHAR(1),
+  big_rsk_exp_cust_flg      CHAR(1),
+  rel_pty_flg               CHAR(1),
+  grp_mbr_cust_flg          CHAR(1),
+  opr_scope                 VARCHAR2(2000),
+  estb_dt                   CHAR(8),
+  tel                       VARCHAR2(30),
+  regd_cptl                 NUMBER(30,2),
+  regd_cptl_cur             CHAR(3),
+  paid_in_cptl              NUMBER(30,2),
+  paid_in_cptl_cur          CHAR(3),
+  bsc_dep_acc               VARCHAR2(200),
+  bsc_acc_open_bank_nm      VARCHAR2(500),
+  bsc_acc_open_bank_id      VARCHAR2(200),
+  emp_num                   INTEGER,
+  rsk_warn_sgnl             VARCHAR2(200),
+  foc_evt                   VARCHAR2(500),
+  pd                        NUMBER(18,4),
+  inr_rtg                   VARCHAR2(10),
+  ext_rtg                   VARCHAR2(10),
+  cust_cr_rtg_tot_grd       INTEGER,
+  cust_crdt_rtg             INTEGER,
+  first_estbl_crdt_rel_dt   CHAR(8),
+  loan_cert_no              VARCHAR2(200),
+  opr_stat                  VARCHAR2(10),
+  opr_stat_end_dt           CHAR(8),
+  cust_stat                 VARCHAR2(10),
+  dept_line                 VARCHAR2(500),
+  data_src                  VARCHAR2(500),
+  tech_ent_idtfy_dt         CHAR(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.org_id
+  is '银行编号';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.cust_nm
+  is '客户名称';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.cust_eng_nm
+  is '客户英文名称';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.crdl_typ
+  is '证件类型';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.crdl_no
+  is '证件号码';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.crdl_eff_dt
+  is '证件生效日期';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.crdl_exp_dt
+  is '证件失效日期';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.crdl_upd_dt
+  is '证件更新日期';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.cust_cl
+  is '客户分类';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.cust_typ_rsk
+  is '客户类型（客户风险）';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.natl_econ_dept_cl
+  is '国民经济部门分类';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.gov_aff_ins_flg
+  is '事业单位标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.fin_org_typ
+  is '金融机构类型';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.fin_permit_no
+  is '金融许可证号';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.pbc_no
+  is '人行支付行号';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.fin_org_id
+  is '金融机构编号';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.ent_scale
+  is '企业规模';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.ent_hldg_typ
+  is '企业控股类型';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.rsdnt_flg
+  is '居民标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.regd_land_ctry_cd
+  is '注册地国家代码';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.regd_land_area_cd
+  is '注册地行政区划代码';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.regd_addr
+  is '注册地址';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.regd_info_upd_dt
+  is '注册信息更新日期';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.opr_land_ctry_cd
+  is '经营地国家代码';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.opr_land_area_cd
+  is '经营地行政区划代码';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.opr_addr
+  is '经营地址';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.upd_wrk_addr_dt
+  is '更新办公地址日期';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.cust_blng_idy
+  is '客户所属行业';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.grn_loan_idy_cl
+  is '绿色贷款有关行业分类';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.mjr_env_safe_rsk_ent_cl
+  is '重大环境安全风险企业分类';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.open_ebank_flg
+  is '开通网银标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.ent_close_flg
+  is '企业关停标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.ent_gua_sml_micro_ent_flg
+  is '创业担保小微企业标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.fit_sml_micro_ent_flg
+  is '符合条件的小微企业标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.cn_cptl_flg
+  is '中资标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.vil_city_flg
+  is '农村城市标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.family_farm_flg
+  is '家庭农场标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.ent_grow_up_stage
+  is '企业成长阶段';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.spv_sub_cl
+  is 'SPV细类';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.microfin_co_flg
+  is '小额贷款公司标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.tech_mid_sml_ent_flg
+  is '科技型中小企业标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.high_tech_ent_flg
+  is '高新技术企业标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.tech_ent_flg
+  is '科技型企业标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.tech_inno_ent_flg
+  is '科创企业标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.ipo_co_flg
+  is '上市公司标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.big_rsk_exp_cust_flg
+  is '大额风险暴露豁免客户标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.rel_pty_flg
+  is '关联方标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.grp_mbr_cust_flg
+  is '集团成员客户标志';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.opr_scope
+  is '经营范围';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.estb_dt
+  is '设立日期';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.tel
+  is '联系电话(预留手机号码)';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.regd_cptl
+  is '注册资本';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.regd_cptl_cur
+  is '注册资本币种';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.paid_in_cptl
+  is '实收资本';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.paid_in_cptl_cur
+  is '实收资本币种';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.bsc_dep_acc
+  is '基本存款账号';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.bsc_acc_open_bank_nm
+  is '基本账户开户行名称';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.bsc_acc_open_bank_id
+  is '基本账户开户行编号';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.emp_num
+  is '员工人数';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.rsk_warn_sgnl
+  is '风险预警信号';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.foc_evt
+  is '关注事件';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.pd
+  is '违约概率';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.inr_rtg
+  is '内部评级';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.ext_rtg
+  is '外部评级';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.cust_cr_rtg_tot_grd
+  is '客户信用评级总等级数';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.cust_crdt_rtg
+  is '客户信用评级';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.first_estbl_crdt_rel_dt
+  is '首次建立信贷关系日期';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.loan_cert_no
+  is '贷款证号';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.opr_stat
+  is '营业状态';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.opr_stat_end_dt
+  is '营业状态结束日期';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.cust_stat
+  is '客户状态';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.data_src
+  is '数据来源（参见[字典:AML0045]）';
+comment on column RRP_MDL.B_CUST_CORP_INFO_BAK.tech_ent_idtfy_dt
+  is '科技型企业认定日期';
+

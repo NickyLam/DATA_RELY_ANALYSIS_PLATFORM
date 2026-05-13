@@ -1,0 +1,15 @@
+﻿create table RRP_MDL.LOAN_WSD
+(
+  data_dt             VARCHAR2(100),
+  rcpt_id             VARCHAR2(100),
+  cust_id             VARCHAR2(100),
+  loan_amt            NUMBER(30,2),
+  ff_opr_crdt_tot_amt NUMBER(30,2),
+  ff_con_crdt_tot_amt NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

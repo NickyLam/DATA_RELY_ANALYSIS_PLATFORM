@@ -1,0 +1,129 @@
+﻿create table RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL
+(
+  evt_id                          VARCHAR2(250),
+  lp_id                           VARCHAR2(60),
+  main_instr_seq_num              VARCHAR2(150),
+  parent_fin_instm_market_type_id VARCHAR2(100),
+  parent_fin_instm_asset_type_id  VARCHAR2(100),
+  parent_fin_instm_id             VARCHAR2(100),
+  parent_instr_id                 VARCHAR2(100),
+  intnal_tran_flow_num            VARCHAR2(150),
+  tran_type_cd                    VARCHAR2(30),
+  stl_way_cd                      VARCHAR2(30),
+  theory_clear_dt                 DATE,
+  actl_stl_dt                     DATE,
+  cntpty_id                       VARCHAR2(100),
+  cntpty_name                     VARCHAR2(750),
+  apv_form_id                     VARCHAR2(100),
+  ext_bag_id                      VARCHAR2(100),
+  exec_market_id                  VARCHAR2(100),
+  theory_stl_dt                   DATE,
+  cap_instr_id                    VARCHAR2(100),
+  vch_instr_id                    VARCHAR2(100),
+  effect_tm                       TIMESTAMP(6),
+  mender_name                     VARCHAR2(750),
+  mender_id                       VARCHAR2(100),
+  instr_status_cd                 VARCHAR2(30),
+  not_price_flg                   VARCHAR2(30),
+  intnal_cap_acct_id              VARCHAR2(100),
+  tran_dt                         DATE,
+  stl_type_cd                     VARCHAR2(30),
+  clear_cmplt_flg                 VARCHAR2(30),
+  surviv_term_instr_flg           VARCHAR2(30),
+  operr_id                        VARCHAR2(100),
+  operr_name                      VARCHAR2(750),
+  start_dt                        DATE,
+  end_dt                          DATE,
+  id_mark                         VARCHAR2(10),
+  job_cd                          VARCHAR2(10),
+  src_table_name                  VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL
+  is '同业主指令明细';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.main_instr_seq_num
+  is '主指令序号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.parent_fin_instm_market_type_id
+  is '父金融工具市场类型编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.parent_fin_instm_asset_type_id
+  is '父金融工具资产类型编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.parent_fin_instm_id
+  is '父金融工具编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.parent_instr_id
+  is '父指令编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.intnal_tran_flow_num
+  is '内部交易流水号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.tran_type_cd
+  is '交易类型代码';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.stl_way_cd
+  is '结算方式代码';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.theory_clear_dt
+  is '理论清算日期';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.actl_stl_dt
+  is '实际结算日期';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.cntpty_name
+  is '交易对手名称';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.apv_form_id
+  is '审批单编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.ext_bag_id
+  is '外部成交编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.exec_market_id
+  is '执行市场编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.theory_stl_dt
+  is '理论结算日期';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.cap_instr_id
+  is '资金指令编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.vch_instr_id
+  is '券指令编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.effect_tm
+  is '生效时间';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.mender_name
+  is '修改人名称';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.mender_id
+  is '修改人编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.instr_status_cd
+  is '指令状态代码';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.not_price_flg
+  is '未知价格标志';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.intnal_cap_acct_id
+  is '内部资金账户编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.stl_type_cd
+  is '结算类型代码';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.clear_cmplt_flg
+  is '清算完成标志';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.surviv_term_instr_flg
+  is '存续期指令标志';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.operr_id
+  is '经办人编号';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.operr_name
+  is '经办人名称';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_EVT_IBANK_TRAN_MAIN_INSTR_DTL.src_table_name
+  is '源表名称';
+

@@ -1,0 +1,132 @@
+﻿create table RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825
+(
+  rid        VARCHAR2(50) not null,
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  yhjgmc     VARCHAR2(450),
+  jrgjbh     VARCHAR2(60) not null,
+  jrgjmc     VARCHAR2(450),
+  zclx       VARCHAR2(120),
+  bz         VARCHAR2(3),
+  fxjg       NUMBER(20,2),
+  fxzgm      NUMBER(20,2),
+  fxjgmc     VARCHAR2(450),
+  fxjgdm     VARCHAR2(40),
+  fxgb       VARCHAR2(3),
+  fxrq       VARCHAR2(8),
+  dqrq       VARCHAR2(8),
+  lllx       VARCHAR2(6),
+  sjll       NUMBER(20,6),
+  hqbs       VARCHAR2(3),
+  zjpgjg     NUMBER(20,2),
+  pgjgrq     VARCHAR2(8),
+  jczcbh     VARCHAR2(60),
+  jczcmc     VARCHAR2(120),
+  jczcgm     NUMBER(20,2),
+  jczczb     NUMBER(20,2),
+  jczcpj     VARCHAR2(30),
+  jczcpjjg   VARCHAR2(450),
+  jczckhmc   VARCHAR2(450),
+  jczckhgj   VARCHAR2(60),
+  jczckhpj   VARCHAR2(30),
+  jczckhpjjg VARCHAR2(450),
+  jczchkhhy  VARCHAR2(90),
+  zztxlx     VARCHAR2(150),
+  zztxhy     VARCHAR2(90),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8) not null,
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  address    VARCHAR2(500),
+  gsfzjg     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.yhjgmc
+  is '银行机构名称';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jrgjbh
+  is '金融工具编号';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jrgjmc
+  is '金融工具名称';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.zclx
+  is '金融资产类型';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.bz
+  is '申请控制金额币种';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.fxjg
+  is '发行价格';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.fxzgm
+  is '发行总规模';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.fxjgmc
+  is '发行机构';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.fxjgdm
+  is '发行机构代码';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.fxgb
+  is '发行国别';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.fxrq
+  is '发行日期';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.dqrq
+  is '到期日期';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.lllx
+  is '利率类型';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.sjll
+  is '实际利率';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.hqbs
+  is '含权标识';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.zjpgjg
+  is '最近评估价格';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.pgjgrq
+  is '评估价格日期';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczcbh
+  is '基础资产编号';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczcmc
+  is '基础资产名称';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczcgm
+  is '基础资产规模';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczczb
+  is '基础资产占比';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczcpj
+  is '基础资产评级';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczcpjjg
+  is '基础资产评级机构';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczckhmc
+  is '基础资产客户名称';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczckhgj
+  is '基础资产客户国家';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczckhpj
+  is '基础资产客户评级';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczckhpjjg
+  is '基础资产客户评级机构';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.jczchkhhy
+  is '基础资产客户行业';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.zztxlx
+  is '最终投向类型';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.zztxhy
+  is '最终投向行业';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_1002_JRGJXXB_BAK_202207041825.gsfzjg
+  is '归属分支机构';
+

@@ -1,0 +1,54 @@
+﻿create table RRP_MDL.T_COM_RRP_CRRS_CRRS_SINGLE_CORPORATION
+(
+  rid                           VARCHAR2(100) not null,
+  customer_name                 VARCHAR2(100),
+  customer_code                 VARCHAR2(100) not null,
+  organization_code             VARCHAR2(40),
+  organization_update_date      VARCHAR2(40),
+  register_code                 VARCHAR2(100),
+  register_update_date          VARCHAR2(40),
+  register_nation               VARCHAR2(100),
+  nationality_code              VARCHAR2(40),
+  register_address              VARCHAR2(200),
+  administrative_code           VARCHAR2(40),
+  warning_signal                VARCHAR2(500),
+  attention_event               VARCHAR2(500),
+  default_probability           NUMBER(16,4),
+  credit_rating                 VARCHAR2(40),
+  general_assets                NUMBER(16,2),
+  total_liabilities             NUMBER(16,2),
+  pretax_profit                 NUMBER(16,2),
+  business_income               NUMBER(16,2),
+  inventory                     NUMBER(16,2),
+  accounts_receivable           NUMBER(16,2),
+  other_accounts_receivable     NUMBER(16,2),
+  total_current_assets          NUMBER(16,2),
+  total_current_liabilities     NUMBER(16,2),
+  financial_statementtype       VARCHAR2(20),
+  financial_statementdate       VARCHAR2(40),
+  customer_type                 CHAR(1),
+  industry_code                 VARCHAR2(100),
+  loan_cardnumber               VARCHAR2(100),
+  environmental_and_social_risk VARCHAR2(100),
+  inst_no                       VARCHAR2(100),
+  staff_name                    VARCHAR2(100),
+  attention_event_name          VARCHAR2(3000),
+  warning_signal_name           VARCHAR2(3000),
+  staff_code                    VARCHAR2(100),
+  data_dt                       VARCHAR2(40),
+  customer_class                VARCHAR2(20),
+  inst_name                     VARCHAR2(200),
+  status                        VARCHAR2(40),
+  register_nation_name          VARCHAR2(200),
+  listed_company1               VARCHAR2(100),
+  listed_company2               VARCHAR2(100),
+  listed_company3               VARCHAR2(100),
+  issued_no                     VARCHAR2(100),
+  rpt_org_no                    VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

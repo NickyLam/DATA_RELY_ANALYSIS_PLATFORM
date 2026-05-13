@@ -1,0 +1,57 @@
+﻿create table RRP_MDL.T_COM_RRP_EAST_EAST5_803_XYKSXQKB
+(
+  jrxkzh     VARCHAR2(30),
+  nbjgh      VARCHAR2(30),
+  yhjgmc     VARCHAR2(450),
+  khtybh     VARCHAR2(70),
+  khmc_oth   VARCHAR2(5),
+  khmc_orig  VARCHAR2(400),
+  khmc       VARCHAR2(450),
+  zjlb       VARCHAR2(60),
+  zjhm_orig  VARCHAR2(70),
+  zjhm       VARCHAR2(70),
+  xykzh      VARCHAR2(60),
+  zhzt       VARCHAR2(30),
+  bz         VARCHAR2(3),
+  zhye       NUMBER(20,2),
+  zsxedsx    NUMBER(20,2),
+  yjxjsxed   NUMBER(20,2),
+  zjsxpgrq   VARCHAR2(8),
+  dqsxed     NUMBER(20,2),
+  qzlsed     NUMBER(20,2),
+  tzje       NUMBER(20,2),
+  qzfqye     NUMBER(20,2),
+  djye       NUMBER(20,2),
+  dqsxye     NUMBER(20,2),
+  yqje       NUMBER(20,2),
+  yqrq       VARCHAR2(8),
+  ysxf       NUMBER(20,2),
+  wjfl       VARCHAR2(6),
+  dyljjybs   NUMBER(20),
+  dyljtzje   NUMBER(20,2),
+  byljxfje   NUMBER(20,2),
+  byljqxzzje NUMBER(20,2),
+  byljfqjyje NUMBER(20,2),
+  byljsr     NUMBER(20,2),
+  zxzjcxrq   VARCHAR2(8),
+  yyxykfkhs  NUMBER(20),
+  yythsxje   NUMBER(20,2),
+  zjxzsxrq   VARCHAR2(8),
+  xzsxlx     VARCHAR2(60),
+  csbz       VARCHAR2(3),
+  csfs       VARCHAR2(60),
+  bbz        VARCHAR2(600),
+  cjrq       VARCHAR2(8),
+  issued_no  VARCHAR2(50),
+  org_no     VARCHAR2(20),
+  dept_no    VARCHAR2(10),
+  src_sys_id VARCHAR2(10),
+  address    VARCHAR2(500),
+  rid        VARCHAR2(50) not null
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

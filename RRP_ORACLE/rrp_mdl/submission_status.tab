@@ -1,0 +1,20 @@
+﻿create table RRP_MDL.SUBMISSION_STATUS
+(
+  data_dt         VARCHAR2(20 CHAR),
+  not_fill_report VARCHAR2(10 CHAR),
+  fail_report     VARCHAR2(10 CHAR)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.SUBMISSION_STATUS
+  is '报送区提交情况';
+comment on column RRP_MDL.SUBMISSION_STATUS.data_dt
+  is '报告期';
+comment on column RRP_MDL.SUBMISSION_STATUS.not_fill_report
+  is '未填报审核强制提交报表数量';
+comment on column RRP_MDL.SUBMISSION_STATUS.fail_report
+  is '强制校验未通过强制提交报表数量';
+

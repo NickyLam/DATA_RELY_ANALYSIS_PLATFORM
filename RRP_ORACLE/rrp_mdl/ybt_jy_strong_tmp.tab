@@ -1,0 +1,23 @@
+﻿create table RRP_MDL.YBT_JY_STRONG_TMP
+(
+  dept_name   VARCHAR2(100 CHAR),
+  qjyzs       VARCHAR2(100 CHAR),
+  qjytgs      VARCHAR2(100 CHAR),
+  qjytgs_rate VARCHAR2(100 CHAR)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.YBT_JY_STRONG_TMP
+  is '强校验通过数临时表';
+comment on column RRP_MDL.YBT_JY_STRONG_TMP.dept_name
+  is '部门名称';
+comment on column RRP_MDL.YBT_JY_STRONG_TMP.qjyzs
+  is '总数';
+comment on column RRP_MDL.YBT_JY_STRONG_TMP.qjytgs
+  is '通过数';
+comment on column RRP_MDL.YBT_JY_STRONG_TMP.qjytgs_rate
+  is '通过率';
+

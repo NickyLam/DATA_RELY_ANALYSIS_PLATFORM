@@ -1,0 +1,78 @@
+﻿create table RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE
+(
+  datadate               VARCHAR2(8),
+  seqitem                NUMBER(22),
+  customertype           VARCHAR2(100),
+  customername           VARCHAR2(200),
+  customercode           VARCHAR2(60),
+  sumexpse               NUMBER(38,6),
+  unexemptriskexpse      NUMBER(38,6),
+  sumexpseratio          NUMBER(38,6),
+  unexemptriskexpseratio NUMBER(38,6),
+  afcomnriskexpse        NUMBER(38,6),
+  afspecriskexpse        NUMBER(38,6),
+  aftradeacctriskexpse   NUMBER(38,6),
+  aftradecpcrdtriskexpse NUMBER(38,6),
+  afptentriskexpse       NUMBER(38,6),
+  afothriskexpse         NUMBER(38,6),
+  moveriskexpse          NUMBER(38,6),
+  sumunexeriskexpse      NUMBER(38,6),
+  sumunexpseratio        NUMBER(38,6),
+  prjbal                 NUMBER(38,6),
+  etl_dt                 DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE
+  is '大额风险暴露客户信息表';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.datadate
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.seqitem
+  is '序号';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.customertype
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.customername
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.customercode
+  is '客户代码';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.sumexpse
+  is '风险暴露总和-合计';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.unexemptriskexpse
+  is '风险暴露总和-其中：不可豁免风险暴露';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.sumexpseratio
+  is '占一级资本净额比例-合计';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.unexemptriskexpseratio
+  is '占一级资本净额比例-其中：不可豁免风险暴露';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.afcomnriskexpse
+  is '一般风险暴露';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.afspecriskexpse
+  is '特定风险暴露';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.aftradeacctriskexpse
+  is '交易账簿风险暴露';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.aftradecpcrdtriskexpse
+  is '交易对手信用风险暴露';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.afptentriskexpse
+  is '潜在风险暴露';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.afothriskexpse
+  is '其他风险暴露';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.moveriskexpse
+  is '风险缓释转出的风险暴露（转入为负数）';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.sumunexeriskexpse
+  is '不考虑风险缓释作用的风险暴露-风险暴露总和';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.sumunexpseratio
+  is '不考虑风险缓释作用的风险暴露-占一级资本净额比例';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.prjbal
+  is '一级资本净额';
+comment on column RRP_MDL.O_IOL_LESS_LES_CUSTOMER_STATE.etl_dt
+  is 'etl处理日期';
+

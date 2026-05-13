@@ -1,0 +1,77 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501
+(
+  seq_id                NUMBER,
+  sysordid              VARCHAR2(20),
+  ref_sysordid          VARCHAR2(20),
+  i_code                VARCHAR2(30),
+  a_type                VARCHAR2(20),
+  m_type                VARCHAR2(20),
+  issue_type            VARCHAR2(1),
+  partyid               NUMBER,
+  partyname             VARCHAR2(100),
+  bid_price             NUMBER(31,4),
+  bid_amount            NUMBER(31,4),
+  bidding_price         NUMBER(31,4),
+  bidding_amount        NUMBER(31,4),
+  bid_time              VARCHAR2(19),
+  username              VARCHAR2(50),
+  bidding_actual_amount NUMBER(31,4),
+  memo                  VARCHAR2(200),
+  sales_organization    VARCHAR2(100),
+  cost_calculate_rule   VARCHAR2(200),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501
+  is '同业存单发行结果明细表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.seq_id
+  is '序列号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.sysordid
+  is '交易单号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.ref_sysordid
+  is '子交易单号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.i_code
+  is '存单代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.a_type
+  is '存单资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.m_type
+  is '存单市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.issue_type
+  is '发行方式(1-报价发行,2-招标发行,3-浮息发行)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.partyid
+  is '认购人ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.partyname
+  is '认购人名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.bid_price
+  is '投标价位(元)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.bid_amount
+  is '投标量(亿元)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.bidding_price
+  is '中标价位(元)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.bidding_amount
+  is '中标量(亿元)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.bid_time
+  is '认购时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.username
+  is '提交用户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.bidding_actual_amount
+  is '实际认购量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.sales_organization
+  is '销售机构';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.cost_calculate_rule
+  is '费用计算规则';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_NCD_RESULT_DETAILS_BAK_20230501.id_mark
+  is '增删标志';
+

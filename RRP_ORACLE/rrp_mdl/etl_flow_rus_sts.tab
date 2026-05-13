@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.ETL_FLOW_RUS_STS
+(
+  sys_id     VARCHAR2(4) not null,
+  cd_id      VARCHAR2(10) not null,
+  cd_val     DATE not null,
+  cd_cn_name VARCHAR2(100),
+  cd_en_name VARCHAR2(100),
+  memo       VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ETL_FLOW_RUS_STS
+  is '统一调度参数表';
+comment on column RRP_MDL.ETL_FLOW_RUS_STS.sys_id
+  is '业务系统编号';
+comment on column RRP_MDL.ETL_FLOW_RUS_STS.cd_id
+  is '参数编号';
+comment on column RRP_MDL.ETL_FLOW_RUS_STS.cd_val
+  is '参数值';
+comment on column RRP_MDL.ETL_FLOW_RUS_STS.cd_cn_name
+  is '参数名称';
+comment on column RRP_MDL.ETL_FLOW_RUS_STS.cd_en_name
+  is '参数英文名';
+comment on column RRP_MDL.ETL_FLOW_RUS_STS.memo
+  is '备注';
+alter table RRP_MDL.ETL_FLOW_RUS_STS
+  add constraint PK_ETL_FLOW_RUS_STS primary key (SYS_ID)
+  using index 
+  tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 2
+  maxtrans 255;
+

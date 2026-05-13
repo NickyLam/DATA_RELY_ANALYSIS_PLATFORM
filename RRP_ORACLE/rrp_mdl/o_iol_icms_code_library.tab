@@ -1,0 +1,117 @@
+﻿create table RRP_MDL.O_IOL_ICMS_CODE_LIBRARY
+(
+  etl_dt        DATE,
+  codeno        VARCHAR2(64),
+  itemno        VARCHAR2(64),
+  inputuser     VARCHAR2(64),
+  relativecode  VARCHAR2(4000),
+  attribute6    VARCHAR2(1000),
+  updatetime    VARCHAR2(64),
+  sortno        VARCHAR2(64),
+  isinuse       VARCHAR2(64),
+  attribute8    VARCHAR2(1000),
+  attribute3    VARCHAR2(1000),
+  helptext      VARCHAR2(1000),
+  updateuser    VARCHAR2(64),
+  attribute9    VARCHAR2(1000),
+  updateorg     VARCHAR2(64),
+  itemdescribe  VARCHAR2(2000),
+  bankno        VARCHAR2(64),
+  itemattribute VARCHAR2(2000),
+  updatedate    DATE,
+  itemname      VARCHAR2(1000),
+  remark        VARCHAR2(1000),
+  inputorg      VARCHAR2(64),
+  parentitemno  VARCHAR2(64),
+  attribute1    VARCHAR2(2000),
+  inputdate     DATE,
+  attribute7    VARCHAR2(1000),
+  inputtime     VARCHAR2(64),
+  attribute2    VARCHAR2(1000),
+  attribute5    VARCHAR2(1000),
+  attribute4    VARCHAR2(1000),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_CODE_LIBRARY
+  is '代码表;代码库';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.codeno
+  is '代码编号';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.itemno
+  is '代码项编号';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.inputuser
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.relativecode
+  is '关联代码';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.attribute6
+  is '属性6';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.updatetime
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.sortno
+  is '排序号';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.isinuse
+  is '是否使用';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.attribute8
+  is '属性8';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.attribute3
+  is '属性3';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.helptext
+  is '帮助';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.updateuser
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.attribute9
+  is '屬性9';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.updateorg
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.itemdescribe
+  is '项目描述';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.bankno
+  is '征信代码';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.itemattribute
+  is '项目属性';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.itemname
+  is '代码项名称';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.inputorg
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.parentitemno
+  is '关联上级编号';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.attribute1
+  is '属性1';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.attribute7
+  is '属性7';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.inputtime
+  is '录入时间';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.attribute2
+  is '属性2';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.attribute5
+  is '属性5';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.attribute4
+  is '属性4';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_ICMS_CODE_LIBRARY.id_mark
+  is '删除标识';
+

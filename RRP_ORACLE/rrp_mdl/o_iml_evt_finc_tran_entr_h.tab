@@ -1,0 +1,219 @@
+﻿create table RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H
+(
+  evt_id                  VARCHAR2(100),
+  lp_id                   VARCHAR2(60),
+  entr_flow_num           VARCHAR2(60),
+  intior_flow_num         VARCHAR2(60),
+  cont_id                 VARCHAR2(60),
+  tran_dt                 DATE,
+  tran_tm                 VARCHAR2(10),
+  tran_sys_dt             DATE,
+  seller_cd               VARCHAR2(10),
+  tran_cd                 VARCHAR2(100),
+  tran_org_id             VARCHAR2(60),
+  tran_acct_open_org_id   VARCHAR2(100),
+  ta_cd                   VARCHAR2(30),
+  finc_acct_num           VARCHAR2(20),
+  intnal_cust_id          VARCHAR2(60),
+  cust_type_cd            VARCHAR2(10),
+  bank_id                 VARCHAR2(60),
+  party_id                VARCHAR2(60),
+  bank_acct_id            VARCHAR2(100),
+  ec_idf_cd               VARCHAR2(10),
+  tran_med_type_cd        VARCHAR2(10),
+  tran_med_id             VARCHAR2(60),
+  tran_chn_cd             VARCHAR2(10),
+  tran_teller_id          VARCHAR2(60),
+  auth_teller_id          VARCHAR2(60),
+  prod_id                 VARCHAR2(60),
+  curr_cd                 VARCHAR2(10),
+  prod_cate_cd            VARCHAR2(10),
+  prod_way_cd             VARCHAR2(10),
+  rela_dt                 DATE,
+  rela_flow_num           VARCHAR2(60),
+  tran_amt                NUMBER(30,2),
+  cust_grouping_cd        VARCHAR2(10),
+  acct_status_cd          VARCHAR2(10),
+  init_flow_tran_chn      VARCHAR2(15),
+  init_flow_tran_org_id   VARCHAR2(60),
+  tran_lot                NUMBER(30,8),
+  huge_redem_proc_flg     VARCHAR2(10),
+  redem_mode_cd           VARCHAR2(10),
+  divd_way_cd             VARCHAR2(10),
+  froz_rs_cd              VARCHAR2(10),
+  target_bank_acct_id     VARCHAR2(60),
+  cust_risk_level_cd      VARCHAR2(10),
+  prod_risk_level_cd      VARCHAR2(10),
+  send_host_flow_num      VARCHAR2(60),
+  host_check_entry_dt     DATE,
+  init_tran_host_entry_dt DATE,
+  host_tran_cd            VARCHAR2(15),
+  host_dt                 DATE,
+  host_flow_id            VARCHAR2(60),
+  supv_nomal_flg          VARCHAR2(10),
+  cust_mgr_id             VARCHAR2(60),
+  err_descb               VARCHAR2(1000),
+  tran_status_cd          VARCHAR2(10),
+  accpt_way_cd            VARCHAR2(10),
+  memo_descb              VARCHAR2(375),
+  buy_acct_id             VARCHAR2(60),
+  redem_acct_id           VARCHAR2(100),
+  stdby_amt               NUMBER(30,2),
+  remark_field_1          VARCHAR2(375),
+  remark_field_2          VARCHAR2(375),
+  start_dt                DATE,
+  end_dt                  DATE,
+  id_mark                 VARCHAR2(10),
+  src_table_name          VARCHAR2(100),
+  job_cd                  VARCHAR2(10),
+  etl_timestamp           TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H
+  is '理财交易委托历史';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.entr_flow_num
+  is '委托流水号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.intior_flow_num
+  is '发起方流水号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.cont_id
+  is '合约编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_sys_dt
+  is '交易系统日期';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.seller_cd
+  is '销售商代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_cd
+  is '交易代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_acct_open_org_id
+  is '交易账户开户机构编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.ta_cd
+  is 'TA代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.finc_acct_num
+  is '理财账号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.intnal_cust_id
+  is '内部客户编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.bank_id
+  is '银行编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.bank_acct_id
+  is '银行账户编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.ec_idf_cd
+  is '钞汇标识代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_med_type_cd
+  is '交易介质类型代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_med_id
+  is '交易介质编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_chn_cd
+  is '交易渠道代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.auth_teller_id
+  is '授权柜员编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.prod_cate_cd
+  is '产品类别代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.prod_way_cd
+  is '产品方式代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.rela_dt
+  is '关联日期';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.rela_flow_num
+  is '关联流水号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.cust_grouping_cd
+  is '客户分组代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.acct_status_cd
+  is '账务状态代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.init_flow_tran_chn
+  is '原流水交易渠道';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.init_flow_tran_org_id
+  is '原流水交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_lot
+  is '交易份额';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.huge_redem_proc_flg
+  is '巨额赎回处理标志';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.redem_mode_cd
+  is '赎回模式代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.divd_way_cd
+  is '分红方式代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.froz_rs_cd
+  is '冻结原因代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.target_bank_acct_id
+  is '目标银行账户编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.cust_risk_level_cd
+  is '客户风险等级代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.prod_risk_level_cd
+  is '产品风险等级代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.send_host_flow_num
+  is '发送主机流水号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.host_check_entry_dt
+  is '主机对账日期';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.init_tran_host_entry_dt
+  is '原交易主机对账日期';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.host_tran_cd
+  is '主机交易代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.host_dt
+  is '主机日期';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.host_flow_id
+  is '主机流水编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.supv_nomal_flg
+  is '监管正常标志';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.err_descb
+  is '错误描述';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.accpt_way_cd
+  is '受理方式代码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.memo_descb
+  is '摘要描述';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.buy_acct_id
+  is '购买账户编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.redem_acct_id
+  is '赎回账户编号';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.stdby_amt
+  is '备用金额';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.remark_field_1
+  is '备注字段1';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.remark_field_2
+  is '备注字段2';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_FINC_TRAN_ENTR_H.etl_timestamp
+  is 'ETL处理时间戳';
+

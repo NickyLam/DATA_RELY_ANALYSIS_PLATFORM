@@ -1,0 +1,131 @@
+﻿create table RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE
+(
+  trans_seq_no    VARCHAR2(40),
+  global_seq_no   VARCHAR2(32),
+  product_no      VARCHAR2(20),
+  apply_no        VARCHAR2(32),
+  iou_no          VARCHAR2(32),
+  contract_no     VARCHAR2(32),
+  customer_no     VARCHAR2(24),
+  from_acct_no    VARCHAR2(24),
+  from_acct_num   VARCHAR2(32),
+  from_acct_name  VARCHAR2(60),
+  to_acct_no      VARCHAR2(24),
+  to_acct_num     VARCHAR2(32),
+  to_acct_name    VARCHAR2(60),
+  to_acct_bank    VARCHAR2(40),
+  cash_type       VARCHAR2(3),
+  channel_code    VARCHAR2(20),
+  branch_code     VARCHAR2(20),
+  trans_amt       NUMBER(17,2),
+  remark          VARCHAR2(200),
+  route_way       VARCHAR2(20),
+  pay_method      VARCHAR2(20),
+  trans_date      DATE,
+  trans_code      VARCHAR2(20),
+  trans_status    NUMBER(1),
+  hostcr_seq_no   VARCHAR2(32),
+  hostdr_seq_no   VARCHAR2(32),
+  group_id        NUMBER(10),
+  create_user     VARCHAR2(32),
+  create_time     DATE,
+  update_user     VARCHAR2(32),
+  update_time     DATE,
+  trans_msg       VARCHAR2(500),
+  frozen_seq_no   VARCHAR2(40),
+  frozen_date     DATE,
+  biz_flow        VARCHAR2(8),
+  trans_order_id  VARCHAR2(32),
+  rollback_seq_no VARCHAR2(32),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE
+  is '转账记录表';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.trans_seq_no
+  is '转账流水号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.global_seq_no
+  is '全局交易流水';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.product_no
+  is '产品编号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.apply_no
+  is '申请编号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.iou_no
+  is '借据编号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.contract_no
+  is '合同编号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.customer_no
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.from_acct_no
+  is '来源账户编号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.from_acct_num
+  is '来源银行账号(卡号)';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.from_acct_name
+  is '来源户名';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.to_acct_no
+  is '转入账户编号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.to_acct_num
+  is '转入银行账号(卡号)';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.to_acct_name
+  is '转入户名';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.to_acct_bank
+  is '转入开户行名';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.cash_type
+  is '币种';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.channel_code
+  is '渠道码';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.branch_code
+  is '银行机构码';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.trans_amt
+  is '转账金额';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.remark
+  is '交易附言';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.route_way
+  is '转账通道';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.pay_method
+  is '支付工具类型';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.trans_date
+  is '转账记账日';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.trans_code
+  is '转账返回代码';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.trans_status
+  is '转账状态(0-未处理,1-处理中,2-已成功,3-已冲正,4-失败,6-冲正中,7-冲正失败,9-已失效)';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.hostcr_seq_no
+  is '主机贷记流水(入账操作)';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.hostdr_seq_no
+  is '主机借记流水(出账操作)';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.group_id
+  is '所属用户组';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.create_user
+  is '创建用户';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.update_user
+  is '更新用户';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.trans_msg
+  is '转账返回消息';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.frozen_seq_no
+  is '入账冻结流水号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.frozen_date
+  is '冻结日期';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.biz_flow
+  is '转帐业务流程';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.trans_order_id
+  is '转帐订单号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.rollback_seq_no
+  is '冲正流水号';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IOL_ILSS_WL_ACCOUNT_TRANS_NOTE.id_mark
+  is '删除标识';
+

@@ -1,0 +1,39 @@
+﻿create table RRP_MDL.JGSY_ZBGCYLGX
+(
+  mk       VARCHAR2(30),
+  bbbh     VARCHAR2(60),
+  qdzbbh   VARCHAR2(200),
+  htzbbh   VARCHAR2(200),
+  zbmc     VARCHAR2(500),
+  ccgc     VARCHAR2(200),
+  sfbjqszb VARCHAR2(2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.JGSY_ZBGCYLGX
+  is '监管朔源_指标过程依赖关系';
+comment on column RRP_MDL.JGSY_ZBGCYLGX.mk
+  is '模块';
+comment on column RRP_MDL.JGSY_ZBGCYLGX.bbbh
+  is '报表编号';
+comment on column RRP_MDL.JGSY_ZBGCYLGX.qdzbbh
+  is '前端指标编号';
+comment on column RRP_MDL.JGSY_ZBGCYLGX.htzbbh
+  is '后台指标编号';
+comment on column RRP_MDL.JGSY_ZBGCYLGX.zbmc
+  is '指标名称';
+comment on column RRP_MDL.JGSY_ZBGCYLGX.ccgc
+  is '存储过程';
+comment on column RRP_MDL.JGSY_ZBGCYLGX.sfbjqszb
+  is '是否表间取数指标';
+

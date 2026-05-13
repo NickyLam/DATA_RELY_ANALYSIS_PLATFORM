@@ -1,0 +1,1630 @@
+﻿create table RRP_MDL.M_DEP_ACC_INFO
+(
+  data_dt                  CHAR(8) not null,
+  lgl_rep_id               VARCHAR2(200),
+  acc_id                   VARCHAR2(200) not null,
+  cust_id                  VARCHAR2(200),
+  org_id                   VARCHAR2(200),
+  cur                      CHAR(3),
+  dep_prod_cd              VARCHAR2(200),
+  dep_prod_typ             VARCHAR2(20),
+  val_dt                   CHAR(8),
+  dep_bal                  NUMBER(30,2),
+  dep_exp_dt               CHAR(8),
+  corp_ind_flg             CHAR(1),
+  subj_id                  VARCHAR2(200),
+  rate                     NUMBER(20,6),
+  open_acc_dt              CHAR(8),
+  open_acc_tlr_no          VARCHAR2(30),
+  cnl_acc_dt               CHAR(8),
+  dep_acc_stat             VARCHAR2(10),
+  last_acc_chg_dt          CHAR(8),
+  cash_remit_typ           VARCHAR2(10),
+  agrt_dep_psn_typ         VARCHAR2(10),
+  rate_re_prc_dt           CHAR(8),
+  innr_adv_exp_option_flg  CHAR(1),
+  adv_draw_flg             CHAR(1),
+  ntc_wd_dt                CHAR(8),
+  ntc_wd_amt               NUMBER(30,2),
+  cr_crd_ex_pay_flg        CHAR(1),
+  pbl_int                  NUMBER(30,2),
+  co_dep_typ               VARCHAR2(10),
+  dep_ins_amt              NUMBER(30,2),
+  biz_rel_dep_amt          NUMBER(30,2),
+  td_apvl_acc_flg          CHAR(1),
+  int_calc_flg             CHAR(1),
+  spcl_dep_typ             VARCHAR2(10),
+  entrs_loan_fund_sum_cl   VARCHAR2(15),
+  consr_typ                VARCHAR2(10),
+  ind_dmd_dep_acc_typ      VARCHAR2(10),
+  pbc_acc_typ              VARCHAR2(10),
+  time_dmd_flg             CHAR(1),
+  open_acc_chan            VARCHAR2(15),
+  prc_base_typ             VARCHAR2(10),
+  rate_typ                 VARCHAR2(10),
+  base_rate                NUMBER(20,6),
+  rate_flt_freq            VARCHAR2(15),
+  gua_yld                  NUMBER(18,4),
+  high_yld_rto             NUMBER(18,4),
+  dif_plc_dep_flg          CHAR(1),
+  dep_rsv_mode             VARCHAR2(15),
+  act_end_dt               CHAR(8),
+  biz_occur_tmpnt_act_rate NUMBER(20,6),
+  biz_tmpnt_base_rate      NUMBER(20,6),
+  dept_line                VARCHAR2(750),
+  data_src                 VARCHAR2(500),
+  bank_crd_med_flg         CHAR(1),
+  rec_poor_dep_typ         VARCHAR2(10),
+  crn_prd_accrd_int        NUMBER(30,8),
+  intday_accrd_int         NUMBER(30,8),
+  approval_id              VARCHAR2(100),
+  cust_typ                 VARCHAR2(10),
+  core_acc_typ             VARCHAR2(10),
+  vtual_acct_flg           VARCHAR2(200),
+  intnal_prod_id           VARCHAR2(200),
+  sub_acc_id               VARCHAR2(200),
+  dep_prod_typ_diis        VARCHAR2(300),
+  acc_id_east              VARCHAR2(300),
+  ear_m_bal                NUMBER(20,2),
+  next_int_set_dt          VARCHAR2(10),
+  std_prod_id              VARCHAR2(60),
+  dep_term                 VARCHAR2(45),
+  ibank_dep_flg            VARCHAR2(30),
+  agree_dep_exp_dt         CHAR(8),
+  agree_dep_flg            VARCHAR2(10),
+  agree_dep_init_amt       NUMBER(30,2),
+  agree_dep_value_dt       CHAR(8),
+  agree_int_rat            NUMBER(18,8),
+  agree_dep_rels_dt        CHAR(8),
+  gd_prov_int_flg          VARCHAR2(10),
+  acct_char_cd             VARCHAR2(60),
+  dep_acct_status_cd       VARCHAR2(100),
+  froz_flg                 VARCHAR2(10),
+  acct_card_no             VARCHAR2(200),
+  stop_pay_status_cd       VARCHAR2(10),
+  froz_dt                  VARCHAR2(8),
+  unfrz_dt                 VARCHAR2(8),
+  init_open_acct_dt        CHAR(8),
+  init_exp_dt              CHAR(8),
+  c_deposit_type           VARCHAR2(100),
+  over_term_exec_int_rat   NUMBER(18,8),
+  acct_med                 VARCHAR2(150),
+  lg_froz_flg              VARCHAR2(10),
+  cust_acct_sub_acct_num   VARCHAR2(200),
+  base_rate_imas           NUMBER(20,6),
+  max_int_rate             NUMBER(20,6),
+  int_rat_type_cd          VARCHAR2(10),
+  agree_base_rate          NUMBER(20,6),
+  agree_max_int_rate       NUMBER(20,6),
+  base_rat_id              VARCHAR2(100),
+  old_acct_id              VARCHAR2(200),
+  dep_cash_bal             NUMBER(30,2),
+  heat_insu_acct_flg       VARCHAR2(10),
+  cash_manage_flg          VARCHAR2(10),
+  dep_ped_freq_cd          VARCHAR2(100),
+  cap_char_cd              VARCHAR2(10)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220930 values ('20220930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20220901 values ('20220901')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20231231 values ('20231231')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_19000102 values ('19000102')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230502 values ('20230502')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230501 values ('20230501')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230503 values ('20230503')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230504 values ('20230504')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230505 values ('20230505')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230506 values ('20230506')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230507 values ('20230507')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230508 values ('20230508')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230509 values ('20230509')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230430 values ('20230430')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230510 values ('20230510')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230511 values ('20230511')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230512 values ('20230512')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230513 values ('20230513')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230514 values ('20230514')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230515 values ('20230515')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230516 values ('20230516')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230517 values ('20230517')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230518 values ('20230518')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230519 values ('20230519')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230520 values ('20230520')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230521 values ('20230521')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230522 values ('20230522')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230523 values ('20230523')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230524 values ('20230524')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230525 values ('20230525')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230526 values ('20230526')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230527 values ('20230527')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230528 values ('20230528')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230529 values ('20230529')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230530 values ('20230530')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230531 values ('20230531')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20230601 values ('20230601')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230602 values ('20230602')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230603 values ('20230603')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230604 values ('20230604')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230605 values ('20230605')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230606 values ('20230606')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230607 values ('20230607')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230608 values ('20230608')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230609 values ('20230609')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230610 values ('20230610')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230611 values ('20230611')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230612 values ('20230612')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230613 values ('20230613')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20230614 values ('20230614')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240422 values ('20240422')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20230620 values ('20230620')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20231120 values ('20231120')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20231130 values ('20231130')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240723 values ('20240723')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240821 values ('20240821')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20261204 values ('20261204')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20261031 values ('20261031')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20270531 values ('20270531')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20281204 values ('20281204')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20281205 values ('20281205')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20271101 values ('20271101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240101 values ('20240101')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240102 values ('20240102')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240103 values ('20240103')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240104 values ('20240104')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240105 values ('20240105')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240106 values ('20240106')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240107 values ('20240107')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240108 values ('20240108')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240109 values ('20240109')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240110 values ('20240110')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240111 values ('20240111')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240112 values ('20240112')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240113 values ('20240113')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240114 values ('20240114')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240115 values ('20240115')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240116 values ('20240116')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240117 values ('20240117')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240118 values ('20240118')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240119 values ('20240119')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240120 values ('20240120')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240121 values ('20240121')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240122 values ('20240122')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240123 values ('20240123')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240124 values ('20240124')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240125 values ('20240125')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240126 values ('20240126')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240127 values ('20240127')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240128 values ('20240128')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240129 values ('20240129')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240130 values ('20240130')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240131 values ('20240131')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240201 values ('20240201')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240202 values ('20240202')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240203 values ('20240203')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240204 values ('20240204')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240205 values ('20240205')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240206 values ('20240206')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240207 values ('20240207')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240208 values ('20240208')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240209 values ('20240209')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240210 values ('20240210')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240211 values ('20240211')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240212 values ('20240212')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240213 values ('20240213')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240214 values ('20240214')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240215 values ('20240215')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240216 values ('20240216')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240217 values ('20240217')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240218 values ('20240218')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240219 values ('20240219')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240220 values ('20240220')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240221 values ('20240221')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240222 values ('20240222')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240223 values ('20240223')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240224 values ('20240224')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240225 values ('20240225')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240226 values ('20240226')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240227 values ('20240227')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240228 values ('20240228')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240229 values ('20240229')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240301 values ('20240301')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240302 values ('20240302')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240303 values ('20240303')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240304 values ('20240304')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240305 values ('20240305')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240306 values ('20240306')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240307 values ('20240307')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240308 values ('20240308')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240309 values ('20240309')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240310 values ('20240310')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240311 values ('20240311')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240312 values ('20240312')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240313 values ('20240313')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240314 values ('20240314')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240315 values ('20240315')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240316 values ('20240316')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240317 values ('20240317')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240318 values ('20240318')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240319 values ('20240319')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240320 values ('20240320')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240321 values ('20240321')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240322 values ('20240322')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240323 values ('20240323')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240324 values ('20240324')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240325 values ('20240325')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240326 values ('20240326')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240327 values ('20240327')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240328 values ('20240328')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240329 values ('20240329')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240330 values ('20240330')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240331 values ('20240331')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240401 values ('20240401')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240402 values ('20240402')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240403 values ('20240403')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240404 values ('20240404')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240405 values ('20240405')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240406 values ('20240406')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240407 values ('20240407')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240408 values ('20240408')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240409 values ('20240409')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240410 values ('20240410')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240411 values ('20240411')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240412 values ('20240412')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240413 values ('20240413')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240414 values ('20240414')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240415 values ('20240415')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240416 values ('20240416')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240417 values ('20240417')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240418 values ('20240418')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240419 values ('20240419')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240420 values ('20240420')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240421 values ('20240421')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240423 values ('20240423')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240424 values ('20240424')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240425 values ('20240425')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240426 values ('20240426')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240427 values ('20240427')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240428 values ('20240428')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240429 values ('20240429')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240430 values ('20240430')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240501 values ('20240501')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240502 values ('20240502')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240503 values ('20240503')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240504 values ('20240504')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240505 values ('20240505')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240506 values ('20240506')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240507 values ('20240507')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240508 values ('20240508')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240509 values ('20240509')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240510 values ('20240510')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240511 values ('20240511')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240512 values ('20240512')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240513 values ('20240513')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240514 values ('20240514')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240515 values ('20240515')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240516 values ('20240516')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240517 values ('20240517')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240518 values ('20240518')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20281020 values ('20281020')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20281222 values ('20281222')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20290721 values ('20290721')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240531 values ('20240531')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240801 values ('20240801')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20240831 values ('20240831')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20300822 values ('20300822')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20300922 values ('20300922')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20310221 values ('20310221')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20241231 values ('20241231')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20310522 values ('20310522')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20330321 values ('20330321')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20330422 values ('20330422')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20300831 values ('20300831')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20301222 values ('20301222')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20280223 values ('20280223')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20250930 values ('20250930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20320121 values ('20320121')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    )
+);
+comment on table RRP_MDL.M_DEP_ACC_INFO
+  is '存款账户信息';
+comment on column RRP_MDL.M_DEP_ACC_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.acc_id
+  is '账户编号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.cust_id
+  is '客户编号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.cur
+  is '币种';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_prod_cd
+  is '存款产品代码';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_prod_typ
+  is '存款产品类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.val_dt
+  is '起息日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_bal
+  is '存款余额';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_exp_dt
+  is '存款到期日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.corp_ind_flg
+  is '对公对私标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.subj_id
+  is '科目编号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.rate
+  is '利率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.open_acc_dt
+  is '开户日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.open_acc_tlr_no
+  is '开户柜员号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.cnl_acc_dt
+  is '销户日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_acc_stat
+  is '存款账户状态';
+comment on column RRP_MDL.M_DEP_ACC_INFO.last_acc_chg_dt
+  is '上次动户日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.cash_remit_typ
+  is '钞汇类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.agrt_dep_psn_typ
+  is '协议存款人类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.rate_re_prc_dt
+  is '利率重新定价日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.innr_adv_exp_option_flg
+  is '内嵌提前到期期权标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.adv_draw_flg
+  is '可提前支取标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.ntc_wd_dt
+  is '通知取款日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.ntc_wd_amt
+  is '通知取款金额';
+comment on column RRP_MDL.M_DEP_ACC_INFO.cr_crd_ex_pay_flg
+  is '信用卡溢缴款标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.pbl_int
+  is '应付利息';
+comment on column RRP_MDL.M_DEP_ACC_INFO.co_dep_typ
+  is '单位存款类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_ins_amt
+  is '被存款保险制度覆盖的金额';
+comment on column RRP_MDL.M_DEP_ACC_INFO.biz_rel_dep_amt
+  is '有业务关系存款金额';
+comment on column RRP_MDL.M_DEP_ACC_INFO.td_apvl_acc_flg
+  is '待核准账户标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.int_calc_flg
+  is '计息标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.spcl_dep_typ
+  is '专项存款类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.entrs_loan_fund_sum_cl
+  is '委托贷款基金细类';
+comment on column RRP_MDL.M_DEP_ACC_INFO.consr_typ
+  is '委托人类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.ind_dmd_dep_acc_typ
+  is '个人活期存款账户类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.pbc_acc_typ
+  is '人行账户类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.time_dmd_flg
+  is '定活标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.open_acc_chan
+  is '开户渠道';
+comment on column RRP_MDL.M_DEP_ACC_INFO.prc_base_typ
+  is '定价基准类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.rate_typ
+  is '利率类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.base_rate
+  is '基准利率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.rate_flt_freq
+  is '利率浮动频率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.gua_yld
+  is '保底收益率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.high_yld_rto
+  is '最高收益率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dif_plc_dep_flg
+  is '异地存款标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_rsv_mode
+  is '缴存准备金方式';
+comment on column RRP_MDL.M_DEP_ACC_INFO.act_end_dt
+  is '实际终止日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.biz_occur_tmpnt_act_rate
+  is '业务发生时点实际利率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.biz_tmpnt_base_rate
+  is '业务发生时点基准利率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_DEP_ACC_INFO.data_src
+  is '数据来源';
+comment on column RRP_MDL.M_DEP_ACC_INFO.bank_crd_med_flg
+  is '银行卡介质标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.rec_poor_dep_typ
+  is '建档立卡贫困户存款类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.crn_prd_accrd_int
+  is '当期应计利息';
+comment on column RRP_MDL.M_DEP_ACC_INFO.intday_accrd_int
+  is '当日应计利息';
+comment on column RRP_MDL.M_DEP_ACC_INFO.approval_id
+  is '核准件编号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.cust_typ
+  is '客户类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.core_acc_typ
+  is '核心账户类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.vtual_acct_flg
+  is '虚拟账户标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.intnal_prod_id
+  is '内部产品编号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.sub_acc_id
+  is '子账户编号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_prod_typ_diis
+  is '存款产品类别（DIIS）';
+comment on column RRP_MDL.M_DEP_ACC_INFO.acc_id_east
+  is '账户编号_EAST';
+comment on column RRP_MDL.M_DEP_ACC_INFO.ear_m_bal
+  is '月初余额';
+comment on column RRP_MDL.M_DEP_ACC_INFO.next_int_set_dt
+  is '下次结息日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.std_prod_id
+  is '标准产品代码';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_term
+  is '存期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.ibank_dep_flg
+  is '同业存款标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.agree_dep_exp_dt
+  is '协定存款到期日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.agree_dep_flg
+  is '协定存款标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.agree_dep_init_amt
+  is '协定存款起存金额';
+comment on column RRP_MDL.M_DEP_ACC_INFO.agree_dep_value_dt
+  is '协定存款起息日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.agree_int_rat
+  is '协定利率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.agree_dep_rels_dt
+  is '协定存款解约日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.gd_prov_int_flg
+  is '广东省内标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.acct_char_cd
+  is '账户属性代码';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_acct_status_cd
+  is '账户状态原码值';
+comment on column RRP_MDL.M_DEP_ACC_INFO.froz_flg
+  is '冻结标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.acct_card_no
+  is '客户账户卡号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.stop_pay_status_cd
+  is '止付状态代码';
+comment on column RRP_MDL.M_DEP_ACC_INFO.froz_dt
+  is '冻结日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.unfrz_dt
+  is '解冻日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.init_open_acct_dt
+  is '原始开户日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.init_exp_dt
+  is '原始到期日期';
+comment on column RRP_MDL.M_DEP_ACC_INFO.c_deposit_type
+  is '大集中单位存款类型';
+comment on column RRP_MDL.M_DEP_ACC_INFO.over_term_exec_int_rat
+  is '超期执行利率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.acct_med
+  is '账户介质';
+comment on column RRP_MDL.M_DEP_ACC_INFO.lg_froz_flg
+  is '司法冻结标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.cust_acct_sub_acct_num
+  is '客户账户子户号_新一代';
+comment on column RRP_MDL.M_DEP_ACC_INFO.base_rate_imas
+  is '基准利率_IMAS';
+comment on column RRP_MDL.M_DEP_ACC_INFO.max_int_rate
+  is '最大利率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.int_rat_type_cd
+  is '利率类型代码';
+comment on column RRP_MDL.M_DEP_ACC_INFO.agree_base_rate
+  is '协定存款基准利率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.agree_max_int_rate
+  is '协定存款最大利率';
+comment on column RRP_MDL.M_DEP_ACC_INFO.base_rat_id
+  is '基准利率编号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.old_acct_id
+  is '旧账户编号';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_cash_bal
+  is '存款余额_含电子现金';
+comment on column RRP_MDL.M_DEP_ACC_INFO.heat_insu_acct_flg
+  is '是否医保账户标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.cash_manage_flg
+  is '现金管理类产品标志';
+comment on column RRP_MDL.M_DEP_ACC_INFO.dep_ped_freq_cd
+  is '存款期限';
+comment on column RRP_MDL.M_DEP_ACC_INFO.cap_char_cd
+  is '资金性质代码';
+

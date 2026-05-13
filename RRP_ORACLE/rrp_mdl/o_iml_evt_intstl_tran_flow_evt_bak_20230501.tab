@@ -1,0 +1,101 @@
+﻿create table RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501
+(
+  evt_id            VARCHAR2(250),
+  lp_id             VARCHAR2(60),
+  src_evt_id        VARCHAR2(100),
+  tran_tm           TIMESTAMP(6),
+  tran_code         VARCHAR2(30),
+  rgst_teller_id    VARCHAR2(60),
+  tran_name         VARCHAR2(250),
+  tran_id           VARCHAR2(60),
+  bus_table_name    VARCHAR2(250),
+  bus_tab_flow_num  VARCHAR2(60),
+  tran_descb        VARCHAR2(250),
+  bus_teller_id     VARCHAR2(60),
+  tran_cmplt_tm     TIMESTAMP(6),
+  remark            VARCHAR2(500),
+  auth_status_cd    VARCHAR2(30),
+  submit_status_cd  VARCHAR2(30),
+  check_dt          DATE,
+  auth_curr_cd      VARCHAR2(30),
+  auth_amt          NUMBER(30,8),
+  curr_cd           VARCHAR2(30),
+  tran_amt          NUMBER(30,8),
+  modif_teller_id   VARCHAR2(60),
+  ord_tab_flow_num  VARCHAR2(60),
+  org_id            VARCHAR2(60),
+  entry_org_id      VARCHAR2(60),
+  bus_belong_org_id VARCHAR2(60),
+  org_idf_cd        VARCHAR2(30),
+  etl_dt            DATE,
+  src_table_name    VARCHAR2(100),
+  job_cd            VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501
+  is '国结交易流水事件';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.src_evt_id
+  is '源事件编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.tran_code
+  is '交易码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.tran_name
+  is '交易名称';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.tran_id
+  is '交易编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.bus_table_name
+  is '业务表名称';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.bus_tab_flow_num
+  is '业务表流水号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.tran_descb
+  is '交易描述';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.bus_teller_id
+  is '业务柜员编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.tran_cmplt_tm
+  is '交易完成时间';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.remark
+  is '备注';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.auth_status_cd
+  is '授权状态代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.submit_status_cd
+  is '提交状态代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.check_dt
+  is '复核日期';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.auth_curr_cd
+  is '授权币种代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.auth_amt
+  is '授权金额';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.modif_teller_id
+  is '修改柜员编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.ord_tab_flow_num
+  is 'ORD表流水号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.entry_org_id
+  is '记账机构编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.bus_belong_org_id
+  is '业务所属机构编号';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.org_idf_cd
+  is '机构标识代码';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_INTSTL_TRAN_FLOW_EVT_BAK_20230501.job_cd
+  is '任务编码';
+

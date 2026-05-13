@@ -1,0 +1,600 @@
+﻿create table RRP_MDL.S_LOAN_20250630
+(
+  data_dt                            CHAR(8),
+  lgl_rep_id                         VARCHAR2(200),
+  cont_id                            VARCHAR2(200),
+  rcpt_id                            VARCHAR2(200),
+  loan_biz_typ                       VARCHAR2(20),
+  cust_id                            VARCHAR2(500),
+  cur                                CHAR(3),
+  rcpt_stat                          VARCHAR2(10),
+  org_id                             VARCHAR2(200),
+  loan_act_dstr_dt                   CHAR(8),
+  loan_amt                           NUMBER(30,2),
+  loan_orig_exp_dt                   CHAR(8),
+  lvl5_cl                            VARCHAR2(15),
+  loan_term                          VARCHAR2(15),
+  loan_dir_idy                       VARCHAR2(15),
+  bio_loan_flg                       CHAR(1),
+  loan_bal                           NUMBER(30,2),
+  int_adj                            NUMBER(18,4),
+  fair_val_chg                       NUMBER(30,2),
+  extn_flg                           CHAR(1),
+  rcmb_loan_flg                      CHAR(1),
+  ovd_prin_bal                       NUMBER(30,2),
+  ovd_days                           INTEGER,
+  idy_trnst_upg_flg                  CHAR(1),
+  strtg_emer_idy_typ                 VARCHAR2(10),
+  rl_est_loan_flg                    CHAR(1),
+  agr_rel_loan_flg                   CHAR(1),
+  spcl_loan_flg                      CHAR(1),
+  rate_typ                           VARCHAR2(10),
+  act_rate                           NUMBER(20,6),
+  base_rate                          NUMBER(20,6),
+  ov_sea_mrg_loan_flg                CHAR(1),
+  cbrc_flg                           CHAR(1),
+  pboc_flg                           CHAR(1),
+  gua_mode                           VARCHAR2(15),
+  syn_loan_flg                       CHAR(1),
+  disc_int_loan_flg                  CHAR(1),
+  ent_gua_loan_typ                   VARCHAR2(10),
+  campus_cnsmp_loan_flg              CHAR(1),
+  bank_tax_coop_loan_flg             CHAR(1),
+  non_repy_prin_renew_flg            CHAR(1),
+  pro_impt                           NUMBER(30,2),
+  cust_lrg_cl                        VARCHAR2(15),
+  corp_cust_typ                      VARCHAR2(10),
+  ent_close_flg                      CHAR(1),
+  rsdnt_flg                          CHAR(1),
+  fin_org_typ                        VARCHAR2(10),
+  cust_blng_idy                      VARCHAR2(15),
+  ent_scale                          VARCHAR2(15),
+  ent_hldg_typ                       VARCHAR2(10),
+  sgl_crdt_amt                       NUMBER(30,2),
+  opr_cust_typ                       VARCHAR2(10),
+  tech_innov_ent_flg                 CHAR(1),
+  ent_gua_sml_micro_ent_flg          CHAR(1),
+  disabled_flg                       CHAR(1),
+  farm_flg                           CHAR(1),
+  family_farm_cust_flg               CHAR(1),
+  low_incm_flg                       CHAR(1),
+  high_tech_idy_cl                   VARCHAR2(15),
+  dsr                                NUMBER(18,4),
+  rev_loan_flg                       CHAR(1),
+  rel_psn_gua_loan_flg               CHAR(1),
+  repy_mode                          VARCHAR2(15),
+  high_tech_idy                      VARCHAR2(15),
+  digi_econ_core_idy                 VARCHAR2(75),
+  ip_conc_idy                        VARCHAR2(15),
+  age                                INTEGER,
+  prcn_cust_flg                      CHAR(1),
+  bear_or_red_amt                    NUMBER(30,2),
+  prcn_lg_cust_flg                   CHAR(1),
+  high_tech_ent_flg                  CHAR(1),
+  tech_ent_flg                       CHAR(1),
+  tech_inno_ent_flg                  CHAR(1),
+  dept_line                          VARCHAR2(750),
+  data_src                           VARCHAR2(500),
+  fin_gua_org_loan_flg               CHAR(1),
+  gov_fin_gua_loan_flg               CHAR(1),
+  cnty_dmn_rgn_flg                   CHAR(1),
+  aldy_off_pov_rgn_flg               CHAR(1),
+  pov_alle_cnty_flg                  CHAR(1),
+  bth_coor_dev_flg                   CHAR(1),
+  yeb_flg                            CHAR(1),
+  gba_flg                            CHAR(1),
+  yrd_area_flg                       CHAR(1),
+  fta_flg                            CHAR(1),
+  loan_dir_fta_typ                   VARCHAR2(10),
+  bill_typ                           VARCHAR2(20),
+  tech_mid_sml_ent_flg               CHAR(1),
+  high_tech_idy_mfg_cl               VARCHAR2(15),
+  gender                             VARCHAR2(15),
+  ind_opr_loan_flg                   CHAR(1),
+  fst_loan_flg                       CHAR(1),
+  prc_base_typ                       VARCHAR2(10),
+  pboc_grn_loan_flg                  CHAR(1),
+  cbrc_grn_loan_flg                  CHAR(1),
+  acurt_pov_alle_loan_flg            CHAR(1),
+  microfin_co_flg                    CHAR(1),
+  curr_dstr_amt                      NUMBER(20,2),
+  norm_retrv_amt                     NUMBER(20,2),
+  adv_repy_amt                       NUMBER(20,2),
+  dsbr_mode                          VARCHAR2(300),
+  prod_cl                            VARCHAR2(15),
+  invest_biz_vrty                    VARCHAR2(300),
+  loan_net_val                       NUMBER(30,2),
+  net_loan_flg                       CHAR(1),
+  net_loan_prod_typ                  VARCHAR2(10),
+  coop_agrt_id                       VARCHAR2(200),
+  subj_id                            VARCHAR2(200),
+  loan_biz_nm                        VARCHAR2(300),
+  loan_flg                           CHAR(1),
+  gxh_pay_type                       VARCHAR2(200),
+  gxh_pay_freq                       VARCHAR2(300),
+  std_prod_id                        VARCHAR2(200),
+  loan_dir_bio_flg                   CHAR(1),
+  asset_tran_dt                      CHAR(8),
+  ovd_int_bal                        NUMBER(20,2),
+  distr_sgl_crdt_amt                 NUMBER(20,2),
+  lp_org_cust_id                     VARCHAR2(100),
+  orig_term_code                     VARCHAR2(30),
+  sub_gua_mode                       VARCHAR2(15),
+  loan_useage                        VARCHAR2(3000),
+  pboc_cust_cl                       VARCHAR2(75),
+  is_pboc_ent                        VARCHAR2(15),
+  cbrc_cust_cl                       VARCHAR2(75),
+  is_cbrc_ent                        VARCHAR2(15),
+  income_annual                      NUMBER(20,4),
+  bear_or_red_type                   VARCHAR2(100),
+  high_tech_flg                      VARCHAR2(10),
+  intel_prop_flg                     VARCHAR2(10),
+  digit_econ_type                    VARCHAR2(100),
+  cul_property_flg                   VARCHAR2(10),
+  rev_guar_flg                       VARCHAR2(10),
+  fin_sup_way_type                   VARCHAR2(50),
+  lead_agri_flg                      VARCHAR2(10),
+  deline_flg                         VARCHAR2(10),
+  fin_sub_cor_flg                    VARCHAR2(10),
+  opr_crdt_tot_amt                   NUMBER(30,2),
+  con_crdt_tot_amt                   NUMBER(30,2),
+  dsbr_farm_flg                      CHAR(1),
+  oper_org_id                        VARCHAR2(500),
+  strate_new_indus_flg               VARCHAR2(10),
+  strate_new_indus_type_cd           VARCHAR2(10),
+  tjdbfs                             VARCHAR2(15),
+  qtgrfnh                            VARCHAR2(15),
+  cntpty_id                          VARCHAR2(60),
+  g19_dir_idy                        VARCHAR2(90),
+  loan_type_cd                       VARCHAR2(20),
+  std_prod_nm                        VARCHAR2(225),
+  sfwjy                              VARCHAR2(12),
+  sfzfzdxm                           VARCHAR2(96),
+  sfsqqy                             VARCHAR2(12),
+  gylrzqy                            VARCHAR2(96),
+  sftxhsfdcy                         VARCHAR2(12),
+  sftxxxcncy                         VARCHAR2(12),
+  wjhymc                             VARCHAR2(96),
+  regroup_loan_flg                   VARCHAR2(10),
+  regroup_loan_type_cd               VARCHAR2(64),
+  regroup_loan_type_name             VARCHAR2(96),
+  fkssnbz                            VARCHAR2(96),
+  fkskhlx                            VARCHAR2(96),
+  sfjsgzxmdk                         VARCHAR2(12),
+  sfjgmdzdzjtxzxqy                   VARCHAR2(8),
+  sfylcy                             VARCHAR2(12),
+  regd_land_area_cd                  VARCHAR2(10),
+  city_size                          VARCHAR2(12),
+  lmt_cont_id                        VARCHAR2(200),
+  lmt_cont_amt                       NUMBER(30,2),
+  sftxzfhshzbhz_ppp_xm               VARCHAR2(45),
+  sfxjzffdk                          VARCHAR2(45),
+  renew_flg_wdq                      VARCHAR2(10),
+  s63_csh_flg                        VARCHAR2(8),
+  sfyzlldlyqwjfxm                    VARCHAR2(10),
+  seed_loan_flg                      VARCHAR2(10),
+  county_loan_flg                    VARCHAR2(10),
+  cul_and_rela_ppty_type_cd          VARCHAR2(100),
+  fksqygm                            VARCHAR2(100),
+  sfyzlldlyqwjfxmkfrz                VARCHAR2(10),
+  sfyzlldlyqwjfxmkfrzdk              VARCHAR2(10),
+  loan_act_exp_dt                    CHAR(8),
+  opr_cust_typ_djz                   VARCHAR2(10),
+  cust_nm_wsd                        VARCHAR2(1000),
+  opr_cust_typ_wsd_rh                VARCHAR2(10),
+  ovd_loan_term                      VARCHAR2(15),
+  suit_fee_bal                       NUMBER(30,6),
+  inovt_med_side_enter_flg           VARCHAR2(10),
+  cty_corp_tech_center_flg           VARCHAR2(10),
+  each_class_scen_tech_list_corp_flg VARCHAR2(10),
+  sys_in_flg                         VARCHAR2(10),
+  cty_tech_inovt_corp_flg            VARCHAR2(10),
+  item_corp_flg                      VARCHAR2(10),
+  yjdlkpkh                           VARCHAR2(8),
+  corp_name                          VARCHAR2(500),
+  corp_cert_no                       VARCHAR2(100),
+  old_cont_id                        VARCHAR2(100),
+  fk_org_id                          VARCHAR2(10),
+  ex_servsm_flg                      VARCHAR2(10),
+  no_buslics_prc_flg                 VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.S_LOAN_20250630.data_dt
+  is '数据日期';
+comment on column RRP_MDL.S_LOAN_20250630.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.S_LOAN_20250630.cont_id
+  is '合同编号';
+comment on column RRP_MDL.S_LOAN_20250630.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.S_LOAN_20250630.loan_biz_typ
+  is '业务品种';
+comment on column RRP_MDL.S_LOAN_20250630.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.S_LOAN_20250630.cur
+  is '账号币种';
+comment on column RRP_MDL.S_LOAN_20250630.rcpt_stat
+  is '借据状态';
+comment on column RRP_MDL.S_LOAN_20250630.org_id
+  is '银行编号';
+comment on column RRP_MDL.S_LOAN_20250630.loan_act_dstr_dt
+  is '放款日期';
+comment on column RRP_MDL.S_LOAN_20250630.loan_amt
+  is '放款金额';
+comment on column RRP_MDL.S_LOAN_20250630.loan_orig_exp_dt
+  is '贷款原始到期日期';
+comment on column RRP_MDL.S_LOAN_20250630.lvl5_cl
+  is '五级分类代码';
+comment on column RRP_MDL.S_LOAN_20250630.loan_term
+  is '贷款期限';
+comment on column RRP_MDL.S_LOAN_20250630.loan_dir_idy
+  is '贷款投向行业';
+comment on column RRP_MDL.S_LOAN_20250630.bio_loan_flg
+  is '境内外贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.loan_bal
+  is '贷款余额';
+comment on column RRP_MDL.S_LOAN_20250630.int_adj
+  is '利息调增金额';
+comment on column RRP_MDL.S_LOAN_20250630.fair_val_chg
+  is '公允价值变动';
+comment on column RRP_MDL.S_LOAN_20250630.extn_flg
+  is '展期标志';
+comment on column RRP_MDL.S_LOAN_20250630.rcmb_loan_flg
+  is '重组贷款标识';
+comment on column RRP_MDL.S_LOAN_20250630.ovd_prin_bal
+  is '逾期本金余额（单位分）';
+comment on column RRP_MDL.S_LOAN_20250630.ovd_days
+  is '逾期天数';
+comment on column RRP_MDL.S_LOAN_20250630.idy_trnst_upg_flg
+  is '工业转型升级标志';
+comment on column RRP_MDL.S_LOAN_20250630.strtg_emer_idy_typ
+  is '战略新兴产业类型';
+comment on column RRP_MDL.S_LOAN_20250630.rl_est_loan_flg
+  is '房地产贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.agr_rel_loan_flg
+  is '涉农贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.spcl_loan_flg
+  is '专项贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.rate_typ
+  is '利率类型';
+comment on column RRP_MDL.S_LOAN_20250630.act_rate
+  is '实际利率';
+comment on column RRP_MDL.S_LOAN_20250630.base_rate
+  is '基准利率';
+comment on column RRP_MDL.S_LOAN_20250630.ov_sea_mrg_loan_flg
+  is '境外并购贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.cbrc_flg
+  is '银监标志';
+comment on column RRP_MDL.S_LOAN_20250630.pboc_flg
+  is 'pboc标志';
+comment on column RRP_MDL.S_LOAN_20250630.gua_mode
+  is '担保方式';
+comment on column RRP_MDL.S_LOAN_20250630.syn_loan_flg
+  is '银团贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.disc_int_loan_flg
+  is '贴息贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.ent_gua_loan_typ
+  is '创业担保贷款类型';
+comment on column RRP_MDL.S_LOAN_20250630.campus_cnsmp_loan_flg
+  is '校园消费贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.bank_tax_coop_loan_flg
+  is '银税合作贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.non_repy_prin_renew_flg
+  is '无还本续贷标志';
+comment on column RRP_MDL.S_LOAN_20250630.pro_impt
+  is '减值准备';
+comment on column RRP_MDL.S_LOAN_20250630.cust_lrg_cl
+  is '客户大类';
+comment on column RRP_MDL.S_LOAN_20250630.corp_cust_typ
+  is '对公客户类型';
+comment on column RRP_MDL.S_LOAN_20250630.ent_close_flg
+  is '企业关停标志';
+comment on column RRP_MDL.S_LOAN_20250630.rsdnt_flg
+  is '居民标志';
+comment on column RRP_MDL.S_LOAN_20250630.fin_org_typ
+  is '金融机构类型';
+comment on column RRP_MDL.S_LOAN_20250630.cust_blng_idy
+  is '客户所属行业';
+comment on column RRP_MDL.S_LOAN_20250630.ent_scale
+  is '企业规模';
+comment on column RRP_MDL.S_LOAN_20250630.ent_hldg_typ
+  is '企业控股类型';
+comment on column RRP_MDL.S_LOAN_20250630.sgl_crdt_amt
+  is '单户授信金额';
+comment on column RRP_MDL.S_LOAN_20250630.opr_cust_typ
+  is '经营性客户类型';
+comment on column RRP_MDL.S_LOAN_20250630.tech_innov_ent_flg
+  is '科技创新型企业标志';
+comment on column RRP_MDL.S_LOAN_20250630.ent_gua_sml_micro_ent_flg
+  is '创业担保小微企业标志';
+comment on column RRP_MDL.S_LOAN_20250630.disabled_flg
+  is '残疾人标志';
+comment on column RRP_MDL.S_LOAN_20250630.farm_flg
+  is '农户标志';
+comment on column RRP_MDL.S_LOAN_20250630.family_farm_cust_flg
+  is '家庭农场客户标志';
+comment on column RRP_MDL.S_LOAN_20250630.low_incm_flg
+  is '低保户标志';
+comment on column RRP_MDL.S_LOAN_20250630.high_tech_idy_cl
+  is '高技术产业（制造业）分类';
+comment on column RRP_MDL.S_LOAN_20250630.dsr
+  is 'DSR';
+comment on column RRP_MDL.S_LOAN_20250630.rev_loan_flg
+  is '循环贷贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.rel_psn_gua_loan_flg
+  is '关系人保证贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.repy_mode
+  is '还款方式';
+comment on column RRP_MDL.S_LOAN_20250630.high_tech_idy
+  is '高技术产业';
+comment on column RRP_MDL.S_LOAN_20250630.digi_econ_core_idy
+  is '数字经济核心产业';
+comment on column RRP_MDL.S_LOAN_20250630.ip_conc_idy
+  is '知识产权密集型产业';
+comment on column RRP_MDL.S_LOAN_20250630.age
+  is '年龄';
+comment on column RRP_MDL.S_LOAN_20250630.prcn_cust_flg
+  is '专精特新客户标志';
+comment on column RRP_MDL.S_LOAN_20250630.bear_or_red_amt
+  is '承担或减免的信贷费用金额';
+comment on column RRP_MDL.S_LOAN_20250630.prcn_lg_cust_flg
+  is '专精特新小巨人客户标志';
+comment on column RRP_MDL.S_LOAN_20250630.high_tech_ent_flg
+  is '高新技术企业标志';
+comment on column RRP_MDL.S_LOAN_20250630.tech_ent_flg
+  is '科技型企业标志';
+comment on column RRP_MDL.S_LOAN_20250630.tech_inno_ent_flg
+  is '科创企业标志';
+comment on column RRP_MDL.S_LOAN_20250630.dept_line
+  is '部门条线';
+comment on column RRP_MDL.S_LOAN_20250630.data_src
+  is '数据来源（参见[字典:AML0045]）';
+comment on column RRP_MDL.S_LOAN_20250630.fin_gua_org_loan_flg
+  is '融资担保机构担保贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.gov_fin_gua_loan_flg
+  is '政府性融资担保机构担保贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.cnty_dmn_rgn_flg
+  is '县域地区标志';
+comment on column RRP_MDL.S_LOAN_20250630.aldy_off_pov_rgn_flg
+  is '已脱贫地区标志';
+comment on column RRP_MDL.S_LOAN_20250630.pov_alle_cnty_flg
+  is '重点帮扶县标志';
+comment on column RRP_MDL.S_LOAN_20250630.bth_coor_dev_flg
+  is '京津冀协同发展地区';
+comment on column RRP_MDL.S_LOAN_20250630.yeb_flg
+  is '长江经济带地区';
+comment on column RRP_MDL.S_LOAN_20250630.gba_flg
+  is '粤港澳大湾区标志';
+comment on column RRP_MDL.S_LOAN_20250630.yrd_area_flg
+  is '长三角区域一体化地区';
+comment on column RRP_MDL.S_LOAN_20250630.fta_flg
+  is '自由贸易区标志';
+comment on column RRP_MDL.S_LOAN_20250630.loan_dir_fta_typ
+  is '贷款投向自贸区类型';
+comment on column RRP_MDL.S_LOAN_20250630.bill_typ
+  is '汇票类型';
+comment on column RRP_MDL.S_LOAN_20250630.tech_mid_sml_ent_flg
+  is '科技型中小企业标志';
+comment on column RRP_MDL.S_LOAN_20250630.high_tech_idy_mfg_cl
+  is '高新技术企业(制造业)分类';
+comment on column RRP_MDL.S_LOAN_20250630.gender
+  is '性别1：男2：女0：NONE（空）';
+comment on column RRP_MDL.S_LOAN_20250630.ind_opr_loan_flg
+  is '个人经营性贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.fst_loan_flg
+  is '首贷户贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.prc_base_typ
+  is '定价基准类型';
+comment on column RRP_MDL.S_LOAN_20250630.pboc_grn_loan_flg
+  is 'PBOC绿色贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.cbrc_grn_loan_flg
+  is 'CBRC绿色贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.acurt_pov_alle_loan_flg
+  is '精准扶贫贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.microfin_co_flg
+  is '小额贷款公司标志';
+comment on column RRP_MDL.S_LOAN_20250630.curr_dstr_amt
+  is '本期发放金额';
+comment on column RRP_MDL.S_LOAN_20250630.norm_retrv_amt
+  is '正常回收金额';
+comment on column RRP_MDL.S_LOAN_20250630.adv_repy_amt
+  is '提前还款金额';
+comment on column RRP_MDL.S_LOAN_20250630.dsbr_mode
+  is '放款方式';
+comment on column RRP_MDL.S_LOAN_20250630.prod_cl
+  is '产品分类';
+comment on column RRP_MDL.S_LOAN_20250630.invest_biz_vrty
+  is '投资业务品种';
+comment on column RRP_MDL.S_LOAN_20250630.loan_net_val
+  is '贷款净值';
+comment on column RRP_MDL.S_LOAN_20250630.net_loan_flg
+  is '互联网贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.net_loan_prod_typ
+  is '网贷产品类别';
+comment on column RRP_MDL.S_LOAN_20250630.coop_agrt_id
+  is '主合作协议编号';
+comment on column RRP_MDL.S_LOAN_20250630.subj_id
+  is '科目编号';
+comment on column RRP_MDL.S_LOAN_20250630.loan_biz_nm
+  is '贷款业务名称';
+comment on column RRP_MDL.S_LOAN_20250630.loan_flg
+  is '贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.gxh_pay_type
+  is '还款方式';
+comment on column RRP_MDL.S_LOAN_20250630.gxh_pay_freq
+  is '还款频率';
+comment on column RRP_MDL.S_LOAN_20250630.std_prod_id
+  is '行内标准产品编号';
+comment on column RRP_MDL.S_LOAN_20250630.loan_dir_bio_flg
+  is '境内外标志';
+comment on column RRP_MDL.S_LOAN_20250630.asset_tran_dt
+  is '资产转移日期';
+comment on column RRP_MDL.S_LOAN_20250630.ovd_int_bal
+  is '逾期利息余额（单位分）';
+comment on column RRP_MDL.S_LOAN_20250630.distr_sgl_crdt_amt
+  is '贷款发放时单户授信额度';
+comment on column RRP_MDL.S_LOAN_20250630.lp_org_cust_id
+  is '交易对手对应法人核心客户号';
+comment on column RRP_MDL.S_LOAN_20250630.orig_term_code
+  is '原始期限类型';
+comment on column RRP_MDL.S_LOAN_20250630.sub_gua_mode
+  is '担保方式2';
+comment on column RRP_MDL.S_LOAN_20250630.loan_useage
+  is '贷款用途';
+comment on column RRP_MDL.S_LOAN_20250630.pboc_cust_cl
+  is 'PBOC客户分类';
+comment on column RRP_MDL.S_LOAN_20250630.is_pboc_ent
+  is '是否企业（人行）';
+comment on column RRP_MDL.S_LOAN_20250630.cbrc_cust_cl
+  is 'CBRC客户分类';
+comment on column RRP_MDL.S_LOAN_20250630.is_cbrc_ent
+  is '是否企业（银监）';
+comment on column RRP_MDL.S_LOAN_20250630.income_annual
+  is '年化收益';
+comment on column RRP_MDL.S_LOAN_20250630.bear_or_red_type
+  is '本行承担/减免费用类別';
+comment on column RRP_MDL.S_LOAN_20250630.high_tech_flg
+  is '是否投向高技术产业';
+comment on column RRP_MDL.S_LOAN_20250630.intel_prop_flg
+  is '是否投向知识产权密集型产业';
+comment on column RRP_MDL.S_LOAN_20250630.digit_econ_type
+  is '投向数字经济核心产业大类';
+comment on column RRP_MDL.S_LOAN_20250630.cul_property_flg
+  is '文化产业标志';
+comment on column RRP_MDL.S_LOAN_20250630.rev_guar_flg
+  is '反担保标志';
+comment on column RRP_MDL.S_LOAN_20250630.fin_sup_way_type
+  is '贷款财政扶持方式';
+comment on column RRP_MDL.S_LOAN_20250630.lead_agri_flg
+  is '是否农业产业化龙头企业';
+comment on column RRP_MDL.S_LOAN_20250630.deline_flg
+  is '是否延期';
+comment on column RRP_MDL.S_LOAN_20250630.fin_sub_cor_flg
+  is '是否为理财子公司产品';
+comment on column RRP_MDL.S_LOAN_20250630.opr_crdt_tot_amt
+  is '经营授信总额';
+comment on column RRP_MDL.S_LOAN_20250630.con_crdt_tot_amt
+  is '消费授信总额';
+comment on column RRP_MDL.S_LOAN_20250630.dsbr_farm_flg
+  is '放款时农户标志';
+comment on column RRP_MDL.S_LOAN_20250630.oper_org_id
+  is '经办机构编号';
+comment on column RRP_MDL.S_LOAN_20250630.strate_new_indus_flg
+  is '战略性新兴产业标志';
+comment on column RRP_MDL.S_LOAN_20250630.strate_new_indus_type_cd
+  is '战略性新兴产业类型代码';
+comment on column RRP_MDL.S_LOAN_20250630.tjdbfs
+  is '统计担保方式';
+comment on column RRP_MDL.S_LOAN_20250630.qtgrfnh
+  is '其他个人非农户标识';
+comment on column RRP_MDL.S_LOAN_20250630.cntpty_id
+  is '交易对手编号';
+comment on column RRP_MDL.S_LOAN_20250630.g19_dir_idy
+  is 'G19专属投向行业';
+comment on column RRP_MDL.S_LOAN_20250630.loan_type_cd
+  is '贷款类型';
+comment on column RRP_MDL.S_LOAN_20250630.std_prod_nm
+  is '标准产品名称';
+comment on column RRP_MDL.S_LOAN_20250630.sfwjy
+  is '是否玩具业';
+comment on column RRP_MDL.S_LOAN_20250630.sfzfzdxm
+  is '是否政府重点项目';
+comment on column RRP_MDL.S_LOAN_20250630.sfsqqy
+  is '是否涉侨企业';
+comment on column RRP_MDL.S_LOAN_20250630.gylrzqy
+  is '供应链融资企业';
+comment on column RRP_MDL.S_LOAN_20250630.sftxhsfdcy
+  is '是否投向海上风电产业';
+comment on column RRP_MDL.S_LOAN_20250630.sftxxxcncy
+  is '是否投向新型储能产业';
+comment on column RRP_MDL.S_LOAN_20250630.wjhymc
+  is '玩具业行业名称';
+comment on column RRP_MDL.S_LOAN_20250630.regroup_loan_flg
+  is '重组贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.regroup_loan_type_cd
+  is '重组贷款类型代码';
+comment on column RRP_MDL.S_LOAN_20250630.regroup_loan_type_name
+  is '重组贷款类型名称';
+comment on column RRP_MDL.S_LOAN_20250630.fkssnbz
+  is '放款时涉农标志';
+comment on column RRP_MDL.S_LOAN_20250630.fkskhlx
+  is '放款时客户类型';
+comment on column RRP_MDL.S_LOAN_20250630.sfjsgzxmdk
+  is '技术改造项目贷款';
+comment on column RRP_MDL.S_LOAN_20250630.sfjgmdzdzjtxzxqy
+  is '是否监管名单中的专精特新中小企业';
+comment on column RRP_MDL.S_LOAN_20250630.sfylcy
+  is '是否养老产业';
+comment on column RRP_MDL.S_LOAN_20250630.regd_land_area_cd
+  is '注册地行政区划代码';
+comment on column RRP_MDL.S_LOAN_20250630.city_size
+  is '城市规模';
+comment on column RRP_MDL.S_LOAN_20250630.lmt_cont_id
+  is '额度合同编号';
+comment on column RRP_MDL.S_LOAN_20250630.lmt_cont_amt
+  is '额度合同金额';
+comment on column RRP_MDL.S_LOAN_20250630.sftxzfhshzbhz_ppp_xm
+  is '是否投向政府和社会资本合作（PPP）项目';
+comment on column RRP_MDL.S_LOAN_20250630.sfxjzffdk
+  is '是否新机制发放贷款';
+comment on column RRP_MDL.S_LOAN_20250630.renew_flg_wdq
+  is '展期未到期标志';
+comment on column RRP_MDL.S_LOAN_20250630.s63_csh_flg
+  is 'S63_贴现垫款过路垫款标志';
+comment on column RRP_MDL.S_LOAN_20250630.sfyzlldlyqwjfxm
+  is '是否因资金链断裂导致的逾期未交付项目';
+comment on column RRP_MDL.S_LOAN_20250630.seed_loan_flg
+  is '种业振兴贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.county_loan_flg
+  is '县城城区贷款标志';
+comment on column RRP_MDL.S_LOAN_20250630.cul_and_rela_ppty_type_cd
+  is '文化及相关产业类型代码';
+comment on column RRP_MDL.S_LOAN_20250630.fksqygm
+  is '放款时企业规模';
+comment on column RRP_MDL.S_LOAN_20250630.sfyzlldlyqwjfxmkfrz
+  is '是否因资金链断裂导致的逾期未交付项目_开发融资';
+comment on column RRP_MDL.S_LOAN_20250630.sfyzlldlyqwjfxmkfrzdk
+  is '是否因资金链断裂导致的逾期未交付项目_开发融资';
+comment on column RRP_MDL.S_LOAN_20250630.loan_act_exp_dt
+  is '实际到期日期';
+comment on column RRP_MDL.S_LOAN_20250630.opr_cust_typ_djz
+  is '经营性客户类型';
+comment on column RRP_MDL.S_LOAN_20250630.cust_nm_wsd
+  is '客户名称_网商贷';
+comment on column RRP_MDL.S_LOAN_20250630.opr_cust_typ_wsd_rh
+  is '时点客户类型_人行';
+comment on column RRP_MDL.S_LOAN_20250630.ovd_loan_term
+  is '逾期期限';
+comment on column RRP_MDL.S_LOAN_20250630.suit_fee_bal
+  is '诉讼费余额';
+comment on column RRP_MDL.S_LOAN_20250630.inovt_med_side_enter_flg
+  is '创新型中小企业标志';
+comment on column RRP_MDL.S_LOAN_20250630.cty_corp_tech_center_flg
+  is '国家企业技术中心标志';
+comment on column RRP_MDL.S_LOAN_20250630.each_class_scen_tech_list_corp_flg
+  is '各类科技名单企业标志';
+comment on column RRP_MDL.S_LOAN_20250630.sys_in_flg
+  is '系统内标志';
+comment on column RRP_MDL.S_LOAN_20250630.cty_tech_inovt_corp_flg
+  is '国家技术创新示范企业标志';
+comment on column RRP_MDL.S_LOAN_20250630.item_corp_flg
+  is '制造业单项冠军企业标志';
+comment on column RRP_MDL.S_LOAN_20250630.yjdlkpkh
+  is '原建档立卡贫困户标志';
+comment on column RRP_MDL.S_LOAN_20250630.corp_name
+  is '公司名称';
+comment on column RRP_MDL.S_LOAN_20250630.corp_cert_no
+  is '企业证件号码';
+comment on column RRP_MDL.S_LOAN_20250630.old_cont_id
+  is '原合同号';
+comment on column RRP_MDL.S_LOAN_20250630.fk_org_id
+  is '累放层机构号';
+comment on column RRP_MDL.S_LOAN_20250630.ex_servsm_flg
+  is '退役军人标志';
+comment on column RRP_MDL.S_LOAN_20250630.no_buslics_prc_flg
+  is '无营业执照负责人标志';
+

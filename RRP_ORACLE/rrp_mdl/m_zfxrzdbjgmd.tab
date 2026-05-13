@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.M_ZFXRZDBJGMD
+(
+  region         VARCHAR2(30),
+  guartor_name   VARCHAR2(200),
+  guartor_name_k VARCHAR2(200),
+  guartor_id_k   VARCHAR2(45),
+  flg            VARCHAR2(45),
+  add_time       VARCHAR2(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_ZFXRZDBJGMD
+  is 'GD04_13政府性融资担保机构名单';
+comment on column RRP_MDL.M_ZFXRZDBJGMD.region
+  is '地区';
+comment on column RRP_MDL.M_ZFXRZDBJGMD.guartor_name
+  is '政府性融资担保机构名称（政府公布名单）';
+comment on column RRP_MDL.M_ZFXRZDBJGMD.guartor_name_k
+  is '政府性融资担保机构名称（系统登记名称）';
+comment on column RRP_MDL.M_ZFXRZDBJGMD.guartor_id_k
+  is '政府性融资担保机构编号';
+comment on column RRP_MDL.M_ZFXRZDBJGMD.flg
+  is '标记';
+comment on column RRP_MDL.M_ZFXRZDBJGMD.add_time
+  is '添加时间';
+

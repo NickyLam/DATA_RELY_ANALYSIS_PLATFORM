@@ -1,0 +1,28 @@
+﻿create table RRP_MDL.ADJ_DT_TMP
+(
+  rcpt_id  VARCHAR2(200),
+  data_src VARCHAR2(200),
+  start_dt VARCHAR2(200),
+  end_dt   VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on column RRP_MDL.ADJ_DT_TMP.rcpt_id
+  is '借据号';
+comment on column RRP_MDL.ADJ_DT_TMP.data_src
+  is '数据来源';
+comment on column RRP_MDL.ADJ_DT_TMP.start_dt
+  is '开始日期';
+comment on column RRP_MDL.ADJ_DT_TMP.end_dt
+  is '结束日期';
+

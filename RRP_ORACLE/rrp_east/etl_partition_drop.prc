@@ -1,0 +1,75 @@
+﻿CREATE OR REPLACE PROCEDURE RRP_EAST.ETL_PARTITION_DROP(I_DATADATE   IN INTEGER, --跑批日期
+                                               I_TABLE_NAME IN VARCHAR2, --表名称
+                                               O_ERRCODE    OUT INTEGER --错误代码
+                                               )
+/***********************************************************************
+    **  存储过程详细说明：分区删除
+    **  存储过程名称:  ETL_PARTITION_DROP
+    **  存储过程创建日期:2022-03-22
+    **  存储过程创建人:蔡正伟
+    **  调用方法:
+         DECLARE
+           I_DATADATE INTEGER;
+           O_ERRCODE  CHAR(1);
+         BEGIN
+           I_DATADATE := '20220101';
+           ETL_PARTITION_DROP(I_DATADATE, O_ERRCODE);
+         END;
+    **  输入参数:   I_DATADATE
+    **  输出参数:   O_ERRCODE
+    **  返回值:     O_ERRCODE
+    **  修改日期          修改项目        修改原因           修改人
+    **
+  ***********************************************************************/
+IS
+  V_DATEID          CHAR(8);            --数据日期
+  V_START_DATE      DATE;               --跑批开始时间
+  V_END_DATE        DATE;               --跑批结束时间
+  V_PROC_NAME       VARCHAR2(50);       --存储过程名称
+  V_TABLE_NAME      VARCHAR2(100);      --表名称
+  V_STEP_ID         INTEGER := 1;       --任务号
+  V_STEP_DESC       VARCHAR2(1000);     --任务描述
+  V_PARTITION_NAME  VARCHAR2(100);      --分区名称
+  V_PARTITION_COUNT INTEGER;            --分区记录
+  V_COUNT           INTEGER := 0;       --数据记录条数
+  V_SQL             VARCHAR2(1000);     --删除分区脚本
+   V_SQLMSG         VARCHAR2(300);      --SQL执行描述信息
+  V_SYSTEM          VARCHAR2(30) := '监管报送'; --来源系统 --默认写监管报送系统，有真实来源的按实际写
+BEGIN
+  V_DATEID     := TO_CHAR(I_DATADATE);
+  V_START_DATE := SYSDATE;
+  V_PROC_NAME  := UPPER('ETL_'||I_TABLE_NAME);
+  V_TABLE_NAME := UPPER(I_TABLE_NAME);
+  O_ERRCODE    := 0;
+  V_STEP_DESC  := '删除' || V_TABLE_NAME || '分区' || V_PARTITION_NAME;
+  V_PARTITION_NAME := 'PARTITION_' || V_DATEID;
+
+  --查看当日分区是否已存在
+  SELECT COUNT(0)
+    INTO V_PARTITION_COUNT
+    FROM USER_TAB_PARTITIONS T
+   WHERE T.TABLE_NAME = V_TABLE_NAME
+     AND T.PARTITION_NAME = V_PARTITION_NAME;
+
+  --删除当日已存在分区
+  IF V_PARTITION_COUNT = 1 THEN
+    V_SQL := 'ALTER TABLE ' || V_TABLE_NAME || ' DROP PARTITION ' || V_PARTITION_NAME;
+    /*V_SQL := 'ALTER TABLE ' || V_TABLE_NAME || ' TRUNCATE PARTITION ' ||V_PARTITION_NAME;*/
+    EXECUTE IMMEDIATE V_SQL;
+  END IF;
+
+  --记录正常日志
+  V_END_DATE := SYSDATE;
+  ETL_YUSYS_LOG(V_DATEID,V_SYSTEM,V_PROC_NAME,V_START_DATE,V_END_DATE,V_STEP_ID,V_STEP_DESC,V_COUNT,O_ERRCODE,'');
+
+EXCEPTION
+  WHEN OTHERS THEN
+    O_ERRCODE   := 1; --将SQL错误编号赋植给O_ERRCODE
+    V_STEP_DESC := '发生异常！详细信息为： ' || SUBSTR(SQLERRM, 1, 280);
+    V_END_DATE  := SYSDATE;
+    RAISE;
+    ETL_YUSYS_LOG(V_DATEID,V_SYSTEM,V_PROC_NAME,V_START_DATE,V_END_DATE,V_STEP_ID,V_STEP_DESC,V_COUNT,O_ERRCODE,V_SQLMSG);
+
+END ETL_PARTITION_DROP;
+/
+

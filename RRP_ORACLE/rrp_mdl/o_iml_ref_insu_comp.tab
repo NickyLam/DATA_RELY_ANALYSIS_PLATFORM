@@ -1,0 +1,51 @@
+﻿create table RRP_MDL.O_IML_REF_INSU_COMP
+(
+  etl_dt            DATE,
+  ta_cd             VARCHAR2(30),
+  lp_id             VARCHAR2(60),
+  insure_bank_cd    VARCHAR2(30),
+  corp_name         VARCHAR2(150),
+  corp_abbr         VARCHAR2(150),
+  insu_comp_type_cd VARCHAR2(30),
+  lmt_ctrl_type_cd  VARCHAR2(30),
+  create_dt         DATE,
+  update_dt         DATE,
+  id_mark           VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_REF_INSU_COMP
+  is '保险公司';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.ta_cd
+  is 'TA代码';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.insure_bank_cd
+  is '保险银行代码';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.corp_name
+  is '公司名称';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.corp_abbr
+  is '公司简称';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.insu_comp_type_cd
+  is '保险公司类型代码';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.lmt_ctrl_type_cd
+  is '额度控制类型代码';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.create_dt
+  is '创建日期';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.update_dt
+  is '更新日期';
+comment on column RRP_MDL.O_IML_REF_INSU_COMP.id_mark
+  is '删除标识';
+

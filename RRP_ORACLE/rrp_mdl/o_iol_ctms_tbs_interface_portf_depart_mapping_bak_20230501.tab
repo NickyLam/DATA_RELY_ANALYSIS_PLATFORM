@@ -1,0 +1,32 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING_BAK_20230501
+(
+  keepfolder_id   VARCHAR2(20),
+  keepfolder_name VARCHAR2(200),
+  departmentname  VARCHAR2(200),
+  departmentid    VARCHAR2(20),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING_BAK_20230501
+  is '账户部门编号映射表';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING_BAK_20230501.keepfolder_id
+  is '账户ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING_BAK_20230501.keepfolder_name
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING_BAK_20230501.departmentname
+  is '部门名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING_BAK_20230501.departmentid
+  is '部门编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_INTERFACE_PORTF_DEPART_MAPPING_BAK_20230501.id_mark
+  is '增删标志';
+

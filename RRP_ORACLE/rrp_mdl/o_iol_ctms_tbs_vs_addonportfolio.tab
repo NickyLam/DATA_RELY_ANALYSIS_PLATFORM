@@ -1,0 +1,78 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO
+(
+  addonportfolio_id     NUMBER,
+  aspclient_id          NUMBER,
+  owner_number          NUMBER,
+  owner_code            VARCHAR2(192),
+  owner_name            VARCHAR2(192),
+  portfolio_id          NUMBER,
+  portfolioname         VARCHAR2(120),
+  keepfolder_id_default NUMBER,
+  assettype_id_default  NUMBER,
+  lastmodified          TIMESTAMP(6),
+  datasymbol_id         NUMBER,
+  buztype_id_default    NUMBER,
+  status                VARCHAR2(2),
+  nstd_id_default       NUMBER,
+  pntt_type             VARCHAR2(2),
+  asset_code            VARCHAR2(24),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO
+  is '投组账户信息';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.addonportfolio_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.aspclient_id
+  is '部门代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.owner_number
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.owner_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.owner_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.portfolio_id
+  is '交易组别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.portfolioname
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.keepfolder_id_default
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.assettype_id_default
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.lastmodified
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.datasymbol_id
+  is '数据源ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.buztype_id_default
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.status
+  is '状态;1草稿2审核中3审核完成4退回';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.nstd_id_default
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.pntt_type
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.asset_code
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_VS_ADDONPORTFOLIO.etl_timestamp
+  is 'etl处理时间';
+

@@ -1,0 +1,84 @@
+﻿create table RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO
+(
+  serialno       VARCHAR2(64),
+  putoutserialno VARCHAR2(64),
+  deptorname     VARCHAR2(200),
+  bankname       VARCHAR2(384),
+  depttype       VARCHAR2(2),
+  certtype       VARCHAR2(4),
+  certid         VARCHAR2(60),
+  platformloan   VARCHAR2(1),
+  depttoken      VARCHAR2(200),
+  currency       VARCHAR2(3),
+  rmbamount      NUMBER(24,6),
+  executerate    NUMBER(24,8),
+  inputuserid    VARCHAR2(64),
+  inputorgid     VARCHAR2(64),
+  inputdate      DATE,
+  updateuserid   VARCHAR2(64),
+  updateorgid    VARCHAR2(64),
+  updatedate     DATE,
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO
+  is '非同业单位贷款置换旧债表';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.serialno
+  is '流水号';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.putoutserialno
+  is '出账流水号';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.deptorname
+  is '被置换贷款借款人名称';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.bankname
+  is '被置换贷款发放行名称';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.depttype
+  is '被置换债务类型';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.certtype
+  is '被置换债务债权人证件类型';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.certid
+  is '被置换债务债权人证件代码';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.platformloan
+  is '是否置换地方政府融资平台债务';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.depttoken
+  is '被置换债务凭证编码';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.currency
+  is '被置换债务币种';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.rmbamount
+  is '被置换债务金额折人民币';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.executerate
+  is '被置换债务利率水平';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.inputdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_DEPT_REPLACEMENT_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

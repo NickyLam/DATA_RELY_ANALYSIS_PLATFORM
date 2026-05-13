@@ -1,0 +1,298 @@
+﻿create table RRP_MDL.O_IOL_NHRS_BD_PSNDOC
+(
+  addr           VARCHAR2(30),
+  birthdate      VARCHAR2(15),
+  code           VARCHAR2(75),
+  creationtime   VARCHAR2(29),
+  creator        VARCHAR2(30),
+  dataoriginflag NUMBER(38),
+  def1           VARCHAR2(152),
+  def10          VARCHAR2(152),
+  def11          VARCHAR2(152),
+  def12          VARCHAR2(152),
+  def13          VARCHAR2(152),
+  def14          VARCHAR2(152),
+  def15          VARCHAR2(152),
+  def16          VARCHAR2(152),
+  def17          VARCHAR2(152),
+  def18          VARCHAR2(152),
+  def19          VARCHAR2(152),
+  def2           VARCHAR2(152),
+  def20          VARCHAR2(152),
+  def3           VARCHAR2(152),
+  def4           VARCHAR2(152),
+  def5           VARCHAR2(152),
+  def6           VARCHAR2(152),
+  def7           VARCHAR2(152),
+  def8           VARCHAR2(152),
+  def9           VARCHAR2(152),
+  dr             NUMBER(10),
+  email          VARCHAR2(75),
+  enablestate    NUMBER(38),
+  homephone      VARCHAR2(45),
+  id             VARCHAR2(42),
+  idtype         NUMBER(38),
+  isshopassist   VARCHAR2(2),
+  joinworkdate   VARCHAR2(15),
+  mnecode        VARCHAR2(75),
+  mobile         VARCHAR2(45),
+  modifiedtime   VARCHAR2(29),
+  modifier       VARCHAR2(30),
+  name           VARCHAR2(450),
+  name2          VARCHAR2(450),
+  name3          VARCHAR2(450),
+  name4          VARCHAR2(450),
+  name5          VARCHAR2(450),
+  name6          VARCHAR2(450),
+  officephone    VARCHAR2(45),
+  pk_group       VARCHAR2(30),
+  pk_org         VARCHAR2(30),
+  pk_psndoc      VARCHAR2(30),
+  sex            NUMBER(38),
+  ts             VARCHAR2(29),
+  usedname       VARCHAR2(450),
+  bloodtype      VARCHAR2(30),
+  censusaddr     VARCHAR2(576),
+  characterrpr   VARCHAR2(30),
+  country        VARCHAR2(30),
+  die_date       VARCHAR2(15),
+  die_remark     VARCHAR2(4000),
+  edu            VARCHAR2(30),
+  fax            VARCHAR2(45),
+  fileaddress    VARCHAR2(288),
+  health         VARCHAR2(30),
+  ishiskeypsn    VARCHAR2(2),
+  joinpolitydate VARCHAR2(15),
+  marital        VARCHAR2(30),
+  marriagedate   VARCHAR2(15),
+  nationality    VARCHAR2(30),
+  nativeplace    VARCHAR2(30),
+  penelauth      VARCHAR2(30),
+  permanreside   VARCHAR2(30),
+  photo          VARCHAR2(4000),
+  pk_degree      VARCHAR2(30),
+  pk_hrorg       VARCHAR2(30),
+  polity         VARCHAR2(30),
+  postalcode     VARCHAR2(30),
+  previewphoto   VARCHAR2(4000),
+  prof           VARCHAR2(30),
+  retiredate     VARCHAR2(15),
+  secret_email   VARCHAR2(75),
+  shortname      VARCHAR2(300),
+  titletechpost  VARCHAR2(30),
+  glbdef1        VARCHAR2(192),
+  glbdef2        VARCHAR2(30),
+  glbdef3        VARCHAR2(30),
+  glbdef4        VARCHAR2(30),
+  glbdef5        VARCHAR2(30),
+  glbdef6        VARCHAR2(30),
+  glbdef7        VARCHAR2(15),
+  glbdef8        VARCHAR2(15),
+  glbdef9        VARCHAR2(30),
+  glbdef10       NUMBER(22),
+  glbdef11       VARCHAR2(150),
+  glbdef12       VARCHAR2(15),
+  glbdef13       VARCHAR2(192),
+  glbdef14       VARCHAR2(192),
+  glbdef15       VARCHAR2(30),
+  glbdef16       VARCHAR2(29),
+  glbdef17       NUMBER(22),
+  glbdef18       VARCHAR2(30),
+  glbdef19       VARCHAR2(30),
+  glbdef20       VARCHAR2(192),
+  glbdef21       NUMBER(22),
+  glbdef22       VARCHAR2(30),
+  glbdef23       VARCHAR2(1500),
+  glbdef24       NUMBER(22),
+  glbdef25       NUMBER(22),
+  glbdef26       NUMBER(22),
+  glbdef27       VARCHAR2(1500),
+  glbdef28       VARCHAR2(1500),
+  glbdef29       VARCHAR2(1500),
+  glbdef30       VARCHAR2(768),
+  glbdef31       VARCHAR2(450),
+  glbdef32       VARCHAR2(192),
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_NHRS_BD_PSNDOC
+  is '人员基本信息';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.addr
+  is '地址';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.birthdate
+  is '出生日期';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.code
+  is '流水号';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.creationtime
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.creator
+  is '创建人';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.dataoriginflag
+  is '数据来源';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def1
+  is '自定义项';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def10
+  is '自定义项';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def11
+  is '自定义项11';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def12
+  is '自定义项12';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def13
+  is '自定义项13';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def14
+  is '自定义项14';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def15
+  is '自定义项15';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def16
+  is '自定义项16';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def17
+  is '自定义项17';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def18
+  is '自定义项18';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def19
+  is '自定义项19';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def2
+  is '自定义项';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def20
+  is '自定义项20';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def3
+  is '自定义项3';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def4
+  is '自定义项';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def5
+  is '自定义项';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def6
+  is '自定义项6';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def7
+  is '自定义项';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def8
+  is '自定义项8';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.def9
+  is '自定义项9';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.dr
+  is '删除标志';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.email
+  is '邮箱.';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.enablestate
+  is '启用状态';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.homephone
+  is '住宅电话';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.id
+  is '主键ID';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.idtype
+  is '账户证件类型';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.mnecode
+  is '助记码';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.mobile
+  is '手机';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.modifiedtime
+  is '最后修改时间';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.modifier
+  is '修改人员';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.name
+  is '用户姓名';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.name2
+  is '科目名称2';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.name3
+  is '备用字段3';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.name4
+  is '收支项目名称4';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.name5
+  is '业务机构编号';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.name6
+  is '币种名称6';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.officephone
+  is '单位电话';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.pk_group
+  is '集团';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.pk_org
+  is '组织';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.pk_psndoc
+  is '身份_人员信息';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.sex
+  is '性别';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.ts
+  is '时间戳';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.country
+  is '国家';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.fax
+  is '传真.';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.health
+  is '健康状况: 1 良好 2 一般 3 差';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.marriagedate
+  is '婚姻登记日期';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.nationality
+  is '民族民族（代码：1-汉族2-其他少数名族）';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.nativeplace
+  is '籍贯  籍贯- gb/t 2260文化程度- gb/t 4658';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.photo
+  is '照片流';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.pk_degree
+  is '学位';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.pk_hrorg
+  is '人力资源组织';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.postalcode
+  is '邮政编码';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.shortname
+  is '开户银行英文简称';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef1
+  is '备用GLBDEF1';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef2
+  is '出国（境）事由';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef3
+  is '最高学位';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef4
+  is '考核所在单位';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef5
+  is '考核所在部门';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef6
+  is '申请出国（境）时间（开始）';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef7
+  is '备用GLBDEF7';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef8
+  is '学历及学位';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef9
+  is '备用GLBDEF9';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef10
+  is '是否进行背景调查';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef11
+  is '登记类型';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef12
+  is '证件类型';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef13
+  is '证件号码';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef14
+  is '证件领用日期';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef15
+  is '证件预计归还日期';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef16
+  is '证件实际归还日期';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef17
+  is '最近证件入库日期';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef18
+  is '证件是否在有效期内';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.glbdef19
+  is '在库状态';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_NHRS_BD_PSNDOC.etl_timestamp
+  is 'ETL处理时间戳';
+

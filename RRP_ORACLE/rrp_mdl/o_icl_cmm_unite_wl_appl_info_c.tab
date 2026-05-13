@@ -1,0 +1,48 @@
+﻿create table RRP_MDL.O_ICL_CMM_UNITE_WL_APPL_INFO_C
+(
+  etl_dt                        DATE,
+  lp_id                         VARCHAR2(60),
+  loan_appl_flow_num            VARCHAR2(100),
+  partner_appl_flow_num         VARCHAR2(100),
+  prod_id                       VARCHAR2(60),
+  prod_name                     VARCHAR2(500),
+  belong_org_id                 VARCHAR2(60),
+  cust_id                       VARCHAR2(60),
+  cust_name                     VARCHAR2(750),
+  cert_type_cd                  VARCHAR2(10),
+  cert_id                       VARCHAR2(60),
+  cont_num                      VARCHAR2(90),
+  hxb_blklist_flg               VARCHAR2(10),
+  crdtc_que_flg                 VARCHAR2(10),
+  score_val                     NUMBER(10),
+  anti_fraud_check_flg          VARCHAR2(10),
+  solv_rating_flg               VARCHAR2(10),
+  partner_apv_rest_flg          VARCHAR2(10),
+  other_acp_lmt_flg             VARCHAR2(10),
+  appl_dt                       DATE,
+  appl_amt                      NUMBER(30,2),
+  apv_start_tm                  TIMESTAMP(6),
+  apv_status_cd                 VARCHAR2(30),
+  apv_amt                       NUMBER(30,2),
+  apv_end_tm                    TIMESTAMP(6),
+  final_jud_end_tm              TIMESTAMP(6),
+  advise_sucs_flg               VARCHAR2(10),
+  refuse_rs                     VARCHAR2(2000),
+  rela_appl_flow_num            VARCHAR2(100),
+  job_cd                        VARCHAR2(10),
+  custs_mang_lab_pbc_cali       VARCHAR2(100),
+  custs_mang_lab_bank_supv_cali VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

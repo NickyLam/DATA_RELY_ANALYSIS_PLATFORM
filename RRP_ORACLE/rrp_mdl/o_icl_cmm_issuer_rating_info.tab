@@ -1,0 +1,57 @@
+﻿create table RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO
+(
+  etl_dt              DATE,
+  lp_id               VARCHAR2(60),
+  issuer_id           VARCHAR2(60),
+  issuer_cust_id      VARCHAR2(60),
+  issuer_cn_name      VARCHAR2(375),
+  issuer_en_name      VARCHAR2(375),
+  rating_corp_id      VARCHAR2(60),
+  rating_corp_cn_name VARCHAR2(375),
+  rating_rest_cd      VARCHAR2(10),
+  rating_type_cd      VARCHAR2(10),
+  rating_dt           DATE,
+  sorc_sys_cd         VARCHAR2(60),
+  job_cd              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO
+  is '发行人评级信息';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.issuer_id
+  is '发行人编号';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.issuer_cust_id
+  is '发行人客户编号';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.issuer_cn_name
+  is '发行人中文名称';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.issuer_en_name
+  is '发行人英文名称';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.rating_corp_id
+  is '评级公司编号';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.rating_corp_cn_name
+  is '评级公司中文名称';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.rating_rest_cd
+  is '评级结果代码';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.rating_type_cd
+  is '评级类型代码';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.rating_dt
+  is '评级日期';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.sorc_sys_cd
+  is '源系统代码';
+comment on column RRP_MDL.O_ICL_CMM_ISSUER_RATING_INFO.job_cd
+  is '任务代码';
+

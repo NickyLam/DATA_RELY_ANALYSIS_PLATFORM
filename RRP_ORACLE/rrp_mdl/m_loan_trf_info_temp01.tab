@@ -1,0 +1,33 @@
+﻿create table RRP_MDL.M_LOAN_TRF_INFO_TEMP01
+(
+  objectno           VARCHAR2(200),
+  objecttype         VARCHAR2(200),
+  oper_user_id       VARCHAR2(200),
+  check_user_id      VARCHAR2(200),
+  last_check_user_id VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_LOAN_TRF_INFO_TEMP01
+  is '资产转让审批员工信息表';
+comment on column RRP_MDL.M_LOAN_TRF_INFO_TEMP01.objectno
+  is '方案编号';
+comment on column RRP_MDL.M_LOAN_TRF_INFO_TEMP01.objecttype
+  is '对象类型';
+comment on column RRP_MDL.M_LOAN_TRF_INFO_TEMP01.oper_user_id
+  is '经办员工ID';
+comment on column RRP_MDL.M_LOAN_TRF_INFO_TEMP01.check_user_id
+  is '审查员工ID';
+comment on column RRP_MDL.M_LOAN_TRF_INFO_TEMP01.last_check_user_id
+  is '审批员工ID';
+

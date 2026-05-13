@@ -1,0 +1,60 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION
+(
+  id            NUMBER(22),
+  i_code        VARCHAR2(75),
+  a_type        VARCHAR2(30),
+  m_type        VARCHAR2(30),
+  risk_id       NUMBER(22),
+  proportion    NUMBER(14,6),
+  status        VARCHAR2(2),
+  is_current    VARCHAR2(2),
+  remark        VARCHAR2(300),
+  grade         VARCHAR2(2),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION
+  is '最终投向类型详细信息（华兴）';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.id
+  is '主键';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.i_code
+  is '金融工具代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.m_type
+  is '市场类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.risk_id
+  is '风险占比表id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.proportion
+  is '占比';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.status
+  is '状态';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.is_current
+  is '是否为最新数据';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.remark
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.grade
+  is '评级';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_RISK_GRADE_PROPORTION.etl_timestamp
+  is 'etl处理时间戳';
+

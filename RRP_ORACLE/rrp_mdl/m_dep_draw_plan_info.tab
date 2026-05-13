@@ -1,0 +1,41 @@
+﻿create table RRP_MDL.M_DEP_DRAW_PLAN_INFO
+(
+  data_dt       CHAR(8) not null,
+  lgl_rep_id    VARCHAR2(200),
+  org_id        VARCHAR2(200),
+  acc_id        VARCHAR2(200) not null,
+  draw_prd_num  INTEGER,
+  prin_draw_dt  CHAR(8),
+  prin_draw_amt NUMBER(30,2),
+  act_draw_prin NUMBER(30,2),
+  dept_line     VARCHAR2(500),
+  data_src      VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.M_DEP_DRAW_PLAN_INFO
+  is '存款支取计划信息';
+comment on column RRP_MDL.M_DEP_DRAW_PLAN_INFO.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_DEP_DRAW_PLAN_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.M_DEP_DRAW_PLAN_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_DEP_DRAW_PLAN_INFO.acc_id
+  is '账户编号';
+comment on column RRP_MDL.M_DEP_DRAW_PLAN_INFO.draw_prd_num
+  is '支取期数';
+comment on column RRP_MDL.M_DEP_DRAW_PLAN_INFO.prin_draw_dt
+  is '本金支取日期';
+comment on column RRP_MDL.M_DEP_DRAW_PLAN_INFO.prin_draw_amt
+  is '本金支取金额';
+comment on column RRP_MDL.M_DEP_DRAW_PLAN_INFO.act_draw_prin
+  is '实际支取本金';
+comment on column RRP_MDL.M_DEP_DRAW_PLAN_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_DEP_DRAW_PLAN_INFO.data_src
+  is '数据来源';
+

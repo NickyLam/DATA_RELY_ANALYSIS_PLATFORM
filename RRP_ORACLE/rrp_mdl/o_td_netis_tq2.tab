@@ -1,0 +1,39 @@
+﻿create table RRP_MDL.O_TD_NETIS_TQ2
+(
+  ts          NUMBER(20) not null,
+  spv         VARCHAR2(10) not null,
+  cap         VARCHAR2(12) not null,
+  trans_count NUMBER,
+  duration    NUMBER,
+  succ_rate   NUMBER,
+  rr_rate     NUMBER
+)
+tablespace TBS_RRPS_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_TD_NETIS_TQ2
+  is '天旦接口表';
+comment on column RRP_MDL.O_TD_NETIS_TQ2.ts
+  is 'UNIX绝对时间戳，分钟颗粒度';
+comment on column RRP_MDL.O_TD_NETIS_TQ2.spv
+  is '天旦路径图，有APP1，APP2等等';
+comment on column RRP_MDL.O_TD_NETIS_TQ2.cap
+  is '对应的节点编号，有CAP1，CAP2等等';
+comment on column RRP_MDL.O_TD_NETIS_TQ2.trans_count
+  is '对应交易量';
+comment on column RRP_MDL.O_TD_NETIS_TQ2.duration
+  is '响应时间';
+comment on column RRP_MDL.O_TD_NETIS_TQ2.succ_rate
+  is '成功率';
+comment on column RRP_MDL.O_TD_NETIS_TQ2.rr_rate
+  is '响应率';
+

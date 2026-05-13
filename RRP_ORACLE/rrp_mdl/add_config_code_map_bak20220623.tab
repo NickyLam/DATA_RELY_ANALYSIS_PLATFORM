@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.ADD_CONFIG_CODE_MAP_BAK20220623
+(
+  edw_class_code VARCHAR2(10) not null,
+  edw_class_name VARCHAR2(100),
+  edw_value_code VARCHAR2(10) not null,
+  edw_value_name VARCHAR2(200),
+  rrp_class_code VARCHAR2(10) not null,
+  rrp_class_name VARCHAR2(100),
+  rrp_value_code VARCHAR2(10),
+  rrp_value_name VARCHAR2(200),
+  spec_desc      VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.ADD_CONFIG_CODE_MAP_BAK20220623.edw_class_code
+  is '数仓码值编码';
+comment on column RRP_MDL.ADD_CONFIG_CODE_MAP_BAK20220623.edw_class_name
+  is '数仓码值名称';
+comment on column RRP_MDL.ADD_CONFIG_CODE_MAP_BAK20220623.edw_value_code
+  is '数仓代码值';
+comment on column RRP_MDL.ADD_CONFIG_CODE_MAP_BAK20220623.edw_value_name
+  is '数仓代码描述';
+comment on column RRP_MDL.ADD_CONFIG_CODE_MAP_BAK20220623.rrp_class_code
+  is '监管码值编码';
+comment on column RRP_MDL.ADD_CONFIG_CODE_MAP_BAK20220623.rrp_class_name
+  is '监管码值名称';
+comment on column RRP_MDL.ADD_CONFIG_CODE_MAP_BAK20220623.rrp_value_code
+  is '监管代码值';
+comment on column RRP_MDL.ADD_CONFIG_CODE_MAP_BAK20220623.rrp_value_name
+  is '监管代码描述';
+comment on column RRP_MDL.ADD_CONFIG_CODE_MAP_BAK20220623.spec_desc
+  is '特殊说明';
+

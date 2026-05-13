@@ -1,0 +1,18 @@
+﻿create table RRP_MDL.XZY_VARCHAR
+(
+  va VARCHAR2(160),
+  vb VARCHAR2(40)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

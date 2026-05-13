@@ -1,0 +1,75 @@
+﻿create table RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501
+(
+  ta_code            VARCHAR2(9),
+  prd_code           VARCHAR2(20),
+  bank_no            VARCHAR2(2),
+  open_bank_ver      VARCHAR2(32),
+  open_bank_up       VARCHAR2(32),
+  bank_acc_up        VARCHAR2(32),
+  bank_acc_down      VARCHAR2(32),
+  bank_acc_ver       VARCHAR2(32),
+  asso_code          VARCHAR2(20),
+  square_way         VARCHAR2(1),
+  bank_name          VARCHAR2(60),
+  branch_name        VARCHAR2(250),
+  prd_name           VARCHAR2(250),
+  bank_acc_up_name   VARCHAR2(250),
+  bank_acc_down_name VARCHAR2(250),
+  bank_acc_ver_name  VARCHAR2(250),
+  reserve1           VARCHAR2(250),
+  reserve2           VARCHAR2(250),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501
+  is '产品账号表';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.ta_code
+  is 'TA代码';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.prd_code
+  is '产品代码';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.bank_no
+  is '银行编号';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.open_bank_ver
+  is '验资户开户行';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.open_bank_up
+  is '注册登记账户开户行';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.bank_acc_up
+  is '上帐银行帐号';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.bank_acc_down
+  is '下帐银行帐号';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.bank_acc_ver
+  is '募集验资账户';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.asso_code
+  is '基金公司产品代码';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.square_way
+  is '结算方式';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.bank_name
+  is '托管银行名称';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.branch_name
+  is '托管机构名称';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.prd_name
+  is '外部产品名称';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.bank_acc_up_name
+  is '上帐银行帐号名称';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.bank_acc_down_name
+  is '下账银行帐号名称';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.bank_acc_ver_name
+  is '募集验资户账户名称';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.reserve1
+  is '备用1';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.reserve2
+  is '备用字段2';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_NFSS_TBPRDBANKACC_BAK_20230501.id_mark
+  is '增删标志';
+

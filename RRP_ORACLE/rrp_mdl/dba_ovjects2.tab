@@ -1,0 +1,42 @@
+﻿create table RRP_MDL.DBA_OVJECTS2
+(
+  owner             VARCHAR2(128),
+  object_name       VARCHAR2(128),
+  subobject_name    VARCHAR2(128),
+  object_id         NUMBER,
+  data_object_id    NUMBER,
+  object_type       VARCHAR2(23),
+  created           DATE,
+  last_ddl_time     DATE,
+  timestamp         VARCHAR2(19),
+  status            VARCHAR2(7),
+  temporary         VARCHAR2(1),
+  generated         VARCHAR2(1),
+  secondary         VARCHAR2(1),
+  namespace         NUMBER,
+  edition_name      VARCHAR2(128),
+  sharing           VARCHAR2(18),
+  editionable       VARCHAR2(1),
+  oracle_maintained VARCHAR2(1),
+  application       VARCHAR2(1),
+  default_collation VARCHAR2(100),
+  duplicated        VARCHAR2(1),
+  sharded           VARCHAR2(1),
+  created_appid     NUMBER,
+  created_vsnid     NUMBER,
+  modified_appid    NUMBER,
+  modified_vsnid    NUMBER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

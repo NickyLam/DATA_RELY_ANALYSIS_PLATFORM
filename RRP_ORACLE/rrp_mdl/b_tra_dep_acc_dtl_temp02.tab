@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP02
+(
+  etl_dt          DATE,
+  tra_seq_no      VARCHAR2(100),
+  tran_flow_num   VARCHAR2(60),
+  main_acct_id    VARCHAR2(60),
+  cust_acct_id    VARCHAR2(60),
+  cust_name       VARCHAR2(500),
+  pbc_pay_bank_no VARCHAR2(60),
+  org_name        VARCHAR2(500),
+  data_src        VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP02.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP02.tra_seq_no
+  is '交易流水号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP02.tran_flow_num
+  is '转移流水号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP02.main_acct_id
+  is '主账号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP02.cust_acct_id
+  is '客户账户编号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP02.cust_name
+  is '客户名称';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP02.pbc_pay_bank_no
+  is '人行支付行号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP02.org_name
+  is '所属机构名称';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP02.data_src
+  is '数据来源（参见[字典:AML0045]）';
+

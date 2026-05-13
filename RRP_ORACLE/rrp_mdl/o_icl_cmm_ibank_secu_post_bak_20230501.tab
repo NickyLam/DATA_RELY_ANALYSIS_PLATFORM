@@ -1,0 +1,333 @@
+﻿create table RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501
+(
+  etl_dt                                   DATE,
+  lp_id                                    VARCHAR2(60),
+  ext_secu_acct_id                         VARCHAR2(60),
+  intnal_secu_acct_id                      VARCHAR2(60),
+  intnal_secu_acct_status_cd               VARCHAR2(10),
+  fin_instm_id                             VARCHAR2(100),
+  asset_type_id                            VARCHAR2(60),
+  std_prod_id                              VARCHAR2(60),
+  market_type_id                           VARCHAR2(60),
+  bus_id                                   VARCHAR2(60),
+  comb_tran_num                            VARCHAR2(60),
+  cntpty_acct_id                           VARCHAR2(60),
+  obj_id                                   VARCHAR2(60),
+  apv_form_num                             VARCHAR2(60),
+  prod_type_cd                             VARCHAR2(30),
+  asset_type_name                          VARCHAR2(250),
+  level5_cls_cd                            VARCHAR2(10),
+  subj_id                                  VARCHAR2(60),
+  int_subj_id                              VARCHAR2(100),
+  int_adj_subj_id                          VARCHAR2(100),
+  evha_val_chag_subj_id                    VARCHAR2(100),
+  acru_int_inco_subj_id                    VARCHAR2(100),
+  amort_int_income_subj_id                 VARCHAR2(100),
+  evha_val_chag_pl_subj_id                 VARCHAR2(100),
+  spd_pl_subj_id                           VARCHAR2(100),
+  acru_int_inco_vat_subj_id                VARCHAR2(100),
+  amort_int_income_vat_subj_id             VARCHAR2(100),
+  spd_pl_vat_subj_id                       VARCHAR2(100),
+  acct_name                                VARCHAR2(500),
+  tran_market_id                           VARCHAR2(60),
+  exchg_acct_id                            VARCHAR2(60),
+  issuer_id                                VARCHAR2(60),
+  issuer_name                              VARCHAR2(250),
+  stl_site_id                              VARCHAR2(60),
+  stl_site_name                            VARCHAR2(250),
+  tran_num                                 VARCHAR2(60),
+  extra_dimen_cd                           VARCHAR2(10),
+  curr_cd                                  VARCHAR2(10),
+  actl_qtty                                NUMBER(30,8),
+  actl_bal                                 NUMBER(30,8),
+  currt_bal                                NUMBER(30,8),
+  net_price_cost                           NUMBER(30,8),
+  currt_acru_int                           NUMBER(30,8),
+  acru_int                                 NUMBER(30,8),
+  int_recvbl                               NUMBER(30,8),
+  int_cost                                 NUMBER(30,8),
+  evha_val_chag                            NUMBER(30,8),
+  recvbl_uncol_bal                         NUMBER(30,8),
+  recvbl_uncol_net_price_cost              NUMBER(30,8),
+  recvbl_uncol_acru_int                    NUMBER(30,8),
+  int_adj_amt                              NUMBER(30,8),
+  actl_int_rat                             NUMBER(18,8),
+  invest_yld_rat                           NUMBER(18,8),
+  open_yld_rat                             NUMBER(18,8),
+  td_nv                                    NUMBER(30,8),
+  amort_dt                                 DATE,
+  fir_stl_dt                               DATE,
+  tran_dt                                  DATE,
+  stl_dt                                   DATE,
+  open_dt                                  DATE,
+  value_dt                                 DATE,
+  exp_dt                                   DATE,
+  last_update_dt                           DATE,
+  cap_type_cd                              VARCHAR2(10),
+  asset_four_cls_cd                        VARCHAR2(10),
+  asset_thd_cls_cd                         VARCHAR2(30),
+  belong_org_id                            VARCHAR2(60),
+  tran_amt                                 NUMBER(30,8),
+  evha_val_chag_pl                         NUMBER(30,8),
+  spd_pl                                   NUMBER(30,8),
+  int_income                               NUMBER(30,8),
+  acru_int_inco                            NUMBER(30,8),
+  amort_int_inco                           NUMBER(30,8),
+  acru_int_inco_should_tax_flg             NUMBER(30,8),
+  amort_int_income_should_tax_flg          NUMBER(30,8),
+  spd_pl_should_tax_flg                    NUMBER(30,8),
+  acru_int_inco_tax_rat                    NUMBER(30,8),
+  amort_int_income_tax_rat                 NUMBER(30,8),
+  spd_pl_tax_rat                           NUMBER(30,8),
+  acru_int_inco_tax_lmt                    NUMBER(30,8),
+  amort_int_income_tax_lmt                 NUMBER(30,8),
+  spd_pl_tax_lmt                           NUMBER(30,8),
+  ftp_prop_cate                            VARCHAR2(100),
+  ftp_spread                               NUMBER(16,2),
+  ncds_issue_org_id                        VARCHAR2(60),
+  ncds_issue_org_name                      VARCHAR2(1000),
+  ovdue_status                             VARCHAR2(300),
+  ovdue_flg                                VARCHAR2(10),
+  pric_ovdue_dt                            DATE,
+  pric_ovdue_days                          NUMBER(10),
+  int_ovdue_dt                             DATE,
+  int_ovdue_days                           NUMBER(10),
+  is_th_ssn_redem                          VARCHAR2(10),
+  curr_issue_build_up_pos_dt               DATE,
+  expe_redem_dt                            DATE,
+  tran_hold_idf                            VARCHAR2(10),
+  apot_tenor_dep_flg                       VARCHAR2(10),
+  apot_tenor_start_dt                      DATE,
+  apot_tenor_end_dt                        DATE,
+  tran_cost_accti_method_cd                VARCHAR2(30),
+  job_cd                                   VARCHAR2(10),
+  etl_timestamp                            TIMESTAMP(6),
+  cross_bor_depo_takof_inter_flg           VARCHAR2(10),
+  cross_bor_depo_takof_inter_sign_value_dt DATE,
+  cross_bor_depo_takof_inter_sign_exp_dt   DATE,
+  apot_tenor_amt                           NUMBER(30,8),
+  fac_val_int_rat                          NUMBER(18,8),
+  ref_int_rat                              NUMBER(30,8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.ext_secu_acct_id
+  is '外部证券账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.intnal_secu_acct_id
+  is '内部证券账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.intnal_secu_acct_status_cd
+  is '内部证券账户状态代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.fin_instm_id
+  is '金融工具编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.asset_type_id
+  is '资产类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.market_type_id
+  is '市场类型编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.bus_id
+  is '业务编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.comb_tran_num
+  is '组合交易号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.cntpty_acct_id
+  is '交易对手账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.obj_id
+  is '对象编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.apv_form_num
+  is '审批单号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.prod_type_cd
+  is '产品类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.asset_type_name
+  is '资产类型名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.level5_cls_cd
+  is '五级分类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.int_subj_id
+  is '利息科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.int_adj_subj_id
+  is '利息调整科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.evha_val_chag_subj_id
+  is '公允价值变动科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.acru_int_inco_subj_id
+  is '应计利息收入科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.amort_int_income_subj_id
+  is '摊销利息收入科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.evha_val_chag_pl_subj_id
+  is '公允价值变动损益科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.spd_pl_subj_id
+  is '价差损益科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.acru_int_inco_vat_subj_id
+  is '应计利息收入增值税科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.amort_int_income_vat_subj_id
+  is '摊销利息收入增值税科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.spd_pl_vat_subj_id
+  is '价差损益增值税科目编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.tran_market_id
+  is '交易市场编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.exchg_acct_id
+  is '交易所账户编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.issuer_id
+  is '发行人编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.issuer_name
+  is '发行人名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.stl_site_id
+  is '结算场所编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.stl_site_name
+  is '结算场所名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.tran_num
+  is '交易号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.extra_dimen_cd
+  is '额外维度代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.actl_qtty
+  is '实际数量';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.actl_bal
+  is '实际余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.currt_bal
+  is '当期余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.net_price_cost
+  is '净价成本';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.currt_acru_int
+  is '当期应计利息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.acru_int
+  is '应计利息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.int_recvbl
+  is '应收利息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.int_cost
+  is '利息成本';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.evha_val_chag
+  is '公允价值变动';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.recvbl_uncol_bal
+  is '应收未收余额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.recvbl_uncol_net_price_cost
+  is '应收未收净价成本';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.recvbl_uncol_acru_int
+  is '应收未收应计利息';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.int_adj_amt
+  is '利息调整金额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.actl_int_rat
+  is '参考利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.invest_yld_rat
+  is '实际利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.open_yld_rat
+  is '投资收益率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.td_nv
+  is '开仓收益率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.amort_dt
+  is '当日净值';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.fir_stl_dt
+  is '摊销日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.tran_dt
+  is '首次结算日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.stl_dt
+  is '交易日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.open_dt
+  is '结算日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.value_dt
+  is '开仓日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.exp_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.last_update_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.cap_type_cd
+  is '上次更新日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.asset_four_cls_cd
+  is '资金类型代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.asset_thd_cls_cd
+  is '资产四分类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.belong_org_id
+  is '资产三分类代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.tran_amt
+  is '所属机构编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.evha_val_chag_pl
+  is '交易金额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.spd_pl
+  is '公允价值变动损益';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.int_income
+  is '价差损益';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.acru_int_inco
+  is '利息收入';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.amort_int_inco
+  is '应计利息收入';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.acru_int_inco_should_tax_flg
+  is '摊销利息收入';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.amort_int_income_should_tax_flg
+  is '应计利息收入应税标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.spd_pl_should_tax_flg
+  is '摊销利息收入应税标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.acru_int_inco_tax_rat
+  is '价差损益应税标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.amort_int_income_tax_rat
+  is '应计利息收入税率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.spd_pl_tax_rat
+  is '摊销利息收入税率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.acru_int_inco_tax_lmt
+  is '价差损益税率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.amort_int_income_tax_lmt
+  is '应计利息收入税额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.spd_pl_tax_lmt
+  is '摊销利息收入税额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.ftp_prop_cate
+  is '价差损益税额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.ftp_spread
+  is 'FTP方案类别';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.ncds_issue_org_id
+  is 'FTP点差';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.ncds_issue_org_name
+  is '同业存单发行机构编号';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.ovdue_status
+  is '同业存单发行机构名称';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.ovdue_flg
+  is '逾期状态';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.pric_ovdue_dt
+  is '逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.pric_ovdue_days
+  is '本金逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.int_ovdue_dt
+  is '本金逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.int_ovdue_days
+  is '利息逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.is_th_ssn_redem
+  is '利息逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.curr_issue_build_up_pos_dt
+  is '是否当季赎回';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.expe_redem_dt
+  is '本期建仓日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.tran_hold_idf
+  is '预期赎回日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.apot_tenor_dep_flg
+  is '交易持有标识';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.apot_tenor_start_dt
+  is '约期存款标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.apot_tenor_end_dt
+  is '约期开始日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.tran_cost_accti_method_cd
+  is '约期结束日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.job_cd
+  is '约期金额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.etl_timestamp
+  is '交易成本核算方法代码';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.cross_bor_depo_takof_inter_flg
+  is '跨境同存标志';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.cross_bor_depo_takof_inter_sign_value_dt
+  is '跨境同存签约起息日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.cross_bor_depo_takof_inter_sign_exp_dt
+  is '跨境同存签约到期日期';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.apot_tenor_amt
+  is '约期金额';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.fac_val_int_rat
+  is '票面利率';
+comment on column RRP_MDL.O_ICL_CMM_IBANK_SECU_POST_BAK_20230501.ref_int_rat
+  is '参考利率';
+

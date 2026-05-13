@@ -1,0 +1,12 @@
+﻿create table RRP_MDL.B_GL_BAL_T
+(
+  accting_date DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.B_GL_BAL_T
+  is '总账会计科目余额表';
+

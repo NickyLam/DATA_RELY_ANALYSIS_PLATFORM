@@ -1,0 +1,105 @@
+﻿create table RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN
+(
+  evt_id              VARCHAR2(60),
+  lp_id               VARCHAR2(60),
+  ser_num             VARCHAR2(90),
+  batch_doc_name      VARCHAR2(150),
+  batch_dt            DATE,
+  grouping_seq_num    VARCHAR2(90),
+  evt_tran_code       VARCHAR2(45),
+  core_tran_flow      VARCHAR2(90),
+  tran_descb          VARCHAR2(375),
+  perds               NUMBER(10),
+  card_no             VARCHAR2(90),
+  curr_cd             VARCHAR2(10),
+  enter_acct_amt      NUMBER(30,2),
+  debit_crdt_flg      VARCHAR2(10),
+  enter_acct_way_cd   VARCHAR2(10),
+  subrch_id           VARCHAR2(60),
+  subj_id             VARCHAR2(60),
+  loan_prod_id        VARCHAR2(60),
+  crdt_plan_id        VARCHAR2(60),
+  syn_id              VARCHAR2(60),
+  bank_id             VARCHAR2(60),
+  rb_w_flg            VARCHAR2(10),
+  tran_ref_no         VARCHAR2(90),
+  aging_group_cd      VARCHAR2(10),
+  bal_compnt_group_cd VARCHAR2(10),
+  etl_dt              DATE,
+  src_table_name      VARCHAR2(100),
+  job_cd              VARCHAR2(10),
+  etl_timestamp       TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN
+  is '微粒贷会计分录交易事件';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.ser_num
+  is '序列号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.batch_doc_name
+  is '批量文件名称';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.batch_dt
+  is '批量日期';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.grouping_seq_num
+  is '分组序号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.evt_tran_code
+  is '事件交易码';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.core_tran_flow
+  is '核心交易流水';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.tran_descb
+  is '交易描述';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.perds
+  is '期数';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.card_no
+  is '卡号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.enter_acct_amt
+  is '入账金额';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.debit_crdt_flg
+  is '借贷标志';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.enter_acct_way_cd
+  is '入账方式代码';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.subrch_id
+  is '支行编号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.loan_prod_id
+  is '贷款产品编号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.crdt_plan_id
+  is '信用计划编号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.syn_id
+  is '银团编号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.bank_id
+  is '银行编号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.rb_w_flg
+  is '冲补抹标志';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.tran_ref_no
+  is '交易参考号';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.aging_group_cd
+  is '账龄组代码';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.bal_compnt_group_cd
+  is '余额成分组代码';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_WLD_ACCT_ETY_TRAN.etl_timestamp
+  is 'etl处理时间戳';
+

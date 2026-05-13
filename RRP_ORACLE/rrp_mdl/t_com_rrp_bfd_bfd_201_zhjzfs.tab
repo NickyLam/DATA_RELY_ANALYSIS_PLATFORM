@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.T_COM_RRP_BFD_BFD_201_ZHJZFS
+(
+  rid             VARCHAR2(50) not null,
+  fin_org_no      VARCHAR2(18),
+  id_type         VARCHAR2(3),
+  id_no           VARCHAR2(60),
+  cntr_no         VARCHAR2(100),
+  loan_no         VARCHAR2(100),
+  curr_cd         VARCHAR2(3),
+  cny_amt         NUMBER(20,2),
+  int_rate        NUMBER(10,5),
+  tr_no           VARCHAR2(60),
+  debt_type       VARCHAR2(2),
+  debt_id_type    VARCHAR2(3),
+  debt_id_no      VARCHAR2(60),
+  is_local        VARCHAR2(1),
+  debt_cd         VARCHAR2(100),
+  debt_curr_cd    VARCHAR2(3),
+  debt_cny_amt    NUMBER(20,2),
+  debt_int_rate   NUMBER(10,5),
+  data_dt         VARCHAR2(10),
+  dept_no         VARCHAR2(20),
+  issued_no       VARCHAR2(20),
+  rpt_org_no      VARCHAR2(64),
+  data_ources     VARCHAR2(2),
+  data_modify     VARCHAR2(2),
+  cust_id         VARCHAR2(200),
+  departmentd     VARCHAR2(500),
+  orig_debt_id_no VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

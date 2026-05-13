@@ -1,0 +1,58 @@
+﻿create table RRP_MDL.M_PUM_ORG_INFO_YBT
+(
+  data_dt    CHAR(8) not null,
+  org_id     VARCHAR2(200) not null,
+  f_org_id   VARCHAR2(200),
+  fin_org_no VARCHAR2(100),
+  ybt_flg    VARCHAR2(10)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250930 values ('20250930')
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    ),
+  partition PARTITION_20251130 values ('20251130')
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20300922 values ('20300922')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+    storage
+    (
+      initial 8M
+      next 1M
+      minextents 1
+      maxextents unlimited
+    )
+);
+comment on table RRP_MDL.M_PUM_ORG_INFO_YBT
+  is '一表通机构转换表';
+comment on column RRP_MDL.M_PUM_ORG_INFO_YBT.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_PUM_ORG_INFO_YBT.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_PUM_ORG_INFO_YBT.f_org_id
+  is '所属报送机构编号';
+comment on column RRP_MDL.M_PUM_ORG_INFO_YBT.fin_org_no
+  is '金融许可证号拼接报送机构号';
+comment on column RRP_MDL.M_PUM_ORG_INFO_YBT.ybt_flg
+  is '一表通标识';
+

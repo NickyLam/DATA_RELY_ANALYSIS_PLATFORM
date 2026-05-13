@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.ADD_FUND_INVESTL_SUPPLEMENT_TMP
+(
+  ibank_no      VARCHAR2(60),
+  bank_fname    VARCHAR2(250),
+  path_org      VARCHAR2(60),
+  lv            NUMBER,
+  top_bank_no   VARCHAR2(60),
+  top_bank_name VARCHAR2(375)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.ADD_FUND_INVESTL_SUPPLEMENT_TMP
+  is '开户行与顶级联行号关系表';
+comment on column RRP_MDL.ADD_FUND_INVESTL_SUPPLEMENT_TMP.ibank_no
+  is '开户行行号';
+comment on column RRP_MDL.ADD_FUND_INVESTL_SUPPLEMENT_TMP.bank_fname
+  is '开户行银行全称';
+comment on column RRP_MDL.ADD_FUND_INVESTL_SUPPLEMENT_TMP.path_org
+  is '开户行上级参与行';
+comment on column RRP_MDL.ADD_FUND_INVESTL_SUPPLEMENT_TMP.lv
+  is '开户行节点序号';
+comment on column RRP_MDL.ADD_FUND_INVESTL_SUPPLEMENT_TMP.top_bank_no
+  is '开户行顶级节点行号';
+comment on column RRP_MDL.ADD_FUND_INVESTL_SUPPLEMENT_TMP.top_bank_name
+  is '开户行顶级节点银行全称';
+

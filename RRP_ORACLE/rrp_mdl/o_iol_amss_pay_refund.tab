@@ -1,0 +1,268 @@
+﻿create table RRP_MDL.O_IOL_AMSS_PAY_REFUND
+(
+  refund_no                  VARCHAR2(32),
+  order_no                   VARCHAR2(32),
+  mch_id                     NUMBER(11),
+  total_fee                  NUMBER(11),
+  refund_fee                 NUMBER(11),
+  add_time                   TIMESTAMP(6),
+  refund_state               NUMBER(4),
+  order_state                NUMBER(4),
+  trade_type                 VARCHAR2(32),
+  trade_name                 VARCHAR2(64),
+  refundid                   VARCHAR2(64),
+  transaction_id             VARCHAR2(64),
+  out_refund_no              VARCHAR2(32),
+  out_trade_no               VARCHAR2(32),
+  refund_channel             VARCHAR2(32),
+  refund_user                VARCHAR2(32),
+  update_version             NUMBER(11),
+  mch_audit                  NUMBER(11),
+  daemon_audit               NUMBER(11),
+  refund_time                TIMESTAMP(6),
+  refuse_reason              VARCHAR2(256),
+  mch_refuse_reason          VARCHAR2(256),
+  refund_source              NUMBER(1),
+  mch_no                     VARCHAR2(32),
+  mch_name                   VARCHAR2(64),
+  fee_type                   VARCHAR2(6),
+  group_id                   NUMBER(11),
+  groupno                    VARCHAR2(32),
+  center_id                  NUMBER(11),
+  risk_ctr                   NUMBER(4),
+  risk_info                  VARCHAR2(64),
+  mch_audit_user             VARCHAR2(32),
+  pt_audit_user              VARCHAR2(32),
+  bank_no                    VARCHAR2(32),
+  agentno                    VARCHAR2(32),
+  deparno                    VARCHAR2(32),
+  termtype                   VARCHAR2(16),
+  termno                     VARCHAR2(32),
+  operno                     VARCHAR2(32),
+  shopno                     VARCHAR2(32),
+  mch_review_time            TIMESTAMP(6),
+  pt_review_time             TIMESTAMP(6),
+  agentid                    VARCHAR2(32),
+  group_no                   VARCHAR2(32),
+  client_ip                  VARCHAR2(32),
+  data_sign                  VARCHAR2(128),
+  modify_time                TIMESTAMP(6),
+  mdiscount                  NUMBER(11),
+  union_id                   VARCHAR2(32),
+  bank_type                  VARCHAR2(32),
+  openid                     VARCHAR2(255),
+  sub_openid                 VARCHAR2(255),
+  fld_s1                     VARCHAR2(255),
+  fld_s2                     VARCHAR2(255),
+  fld_s3                     VARCHAR2(255),
+  bs_discount                NUMBER(11),
+  bs_discount_type           VARCHAR2(16),
+  sign_agentno               VARCHAR2(32),
+  fld_s4                     VARCHAR2(255),
+  fld_s5                     VARCHAR2(255),
+  fld_s6                     VARCHAR2(255),
+  fld_s7                     VARCHAR2(255),
+  fld_s8                     VARCHAR2(255),
+  mch_discount_amount        NUMBER(13,2),
+  plat_discount_amount       NUMBER(13,2),
+  mch_rate_type              NUMBER(1),
+  mch_rate                   NUMBER(11),
+  cost_rate                  NUMBER(11),
+  mch_theory_procedure_fee   NUMBER(13,2),
+  mch_real_procedure_fee     NUMBER(13,2),
+  mch_discount_fee           NUMBER(13,2),
+  debit_card_brokerage_limit NUMBER(13,2),
+  ori_mch_theory_fee         NUMBER(13,2),
+  ori_mch_real_fee           NUMBER(13,2),
+  calc_state                 NUMBER(1),
+  api_provider               NUMBER(11),
+  pay_center_id              VARCHAR2(32),
+  quick_serial_no            VARCHAR2(256),
+  acc_way_period             NUMBER(5),
+  acct_dt                    VARCHAR2(32),
+  start_dt                   DATE,
+  end_dt                     DATE,
+  id_mark                    VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_AMSS_PAY_REFUND
+  is '退款单表';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.refund_no
+  is '退款单号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.order_no
+  is '订单号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_id
+  is '商户ID';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.total_fee
+  is '订单总额';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.refund_fee
+  is '退款总额';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.add_time
+  is '添加时间';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.refund_state
+  is '退款状态';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.order_state
+  is '订单状态';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.trade_type
+  is '支付类型';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.trade_name
+  is '支付名称';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.refundid
+  is '第三方退款单号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.transaction_id
+  is '第三方订单号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.out_refund_no
+  is '商户退款单号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.out_trade_no
+  is '商户订单号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.refund_channel
+  is '退款渠道';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.refund_user
+  is '退款用户';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.update_version
+  is '版本号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_audit
+  is '商户退款审核状态.0：初始，1：待审核，2：转入退款,3:审核不通过';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.daemon_audit
+  is '支付退款审核状态.0：初始，1：退回，2：审核通过';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.refund_time
+  is '退款时间';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.refuse_reason
+  is '支付退款理由';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_refuse_reason
+  is '商户退款理由';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.refund_source
+  is '退款来源';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_no
+  is '商户编号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_name
+  is '商户名称';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.fee_type
+  is '币种';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.group_id
+  is '组织编号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.groupno
+  is '组织编号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.center_id
+  is '支付中心';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.risk_ctr
+  is '风控状态.0初始化、1风控正常，2没设分控,3:分控异常';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.risk_info
+  is '分控信息';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_audit_user
+  is '商户审核用户';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.pt_audit_user
+  is '平台审核用户';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.bank_no
+  is '银行编码';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.agentno
+  is '代理商编号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.deparno
+  is '门店部门编号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.termtype
+  is '终端类型.POS,SPAY,ADMIN';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.termno
+  is '终端编号.如果是ADMIN退款终端编号填写用户操作IP';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.operno
+  is '操作员编号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.shopno
+  is '操作门店编号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_review_time
+  is '商户审核时间';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.pt_review_time
+  is '平台审核时间';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.agentid
+  is '代理商编号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.group_no
+  is '集团客户号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.client_ip
+  is '客户端IP';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.data_sign
+  is '数据签名.';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.modify_time
+  is '上次修改日期（YYYY-MM-DD）';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.union_id
+  is '联行号(银行客户用)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.bank_type
+  is '银行类型.1:总行;2:分行';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.openid
+  is '受理商户OPENID';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.sub_openid
+  is '子商户OPENID';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.fld_s1
+  is '(inviteCode)业务员邀请码';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.fld_s2
+  is '商户经营类型中文名';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.fld_s3
+  is '字符型保留字段3';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.bs_discount
+  is '银联自定义优惠退款金额';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.bs_discount_type
+  is '银联自定义优惠类型';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.sign_agentno
+  is '授权机构号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.fld_s4
+  is '字符备用4';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.fld_s5
+  is '(contacts)保存联系人';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.fld_s6
+  is '(agentCode)翼支付机构号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.fld_s7
+  is '(actualBusinessAddress)实际经营地址';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.fld_s8
+  is '(expenseAccountCode)成都农商行支出账号卡号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_discount_amount
+  is '商家优惠金额，单位:分(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.plat_discount_amount
+  is '平台优惠金额，单位:分(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_rate_type
+  is '费率类型，1.按比列;2.按阶梯(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_rate
+  is '商户费率，百万单位存储(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.cost_rate
+  is '通道费率，百万单位存储(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_theory_procedure_fee
+  is '商户理论手续费，单位:分(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_real_procedure_fee
+  is '商户实际手续费，单位:分(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.mch_discount_fee
+  is '商户手续费减免金额，单位:分(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.debit_card_brokerage_limit
+  is '商户封顶手续费，单位:分(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.ori_mch_theory_fee
+  is '原交易订单商户理论手续费，单位:分(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.ori_mch_real_fee
+  is '原交易订单商户实际手续费，单位:分(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.calc_state
+  is '手续费计算状态，0:初始,1.计算中,2.计算成功,3.计算失败(计费字段，后续拆分)';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.api_provider
+  is '接口提供方，数据来源：cms_sys_type，type_class = API_PROVIDER';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.pay_center_id
+  is '支付通道ID，对应通道表主键';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.quick_serial_no
+  is '快捷支付流水号';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.acc_way_period
+  is '结算周期';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.acct_dt
+  is '会计日，格式20240808';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_AMSS_PAY_REFUND.etl_timestamp
+  is 'ETL处理时间戳';
+

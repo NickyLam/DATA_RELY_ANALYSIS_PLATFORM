@@ -1,0 +1,18 @@
+﻿create table RRP_MDL.TMP_PAMS
+(
+  zhdh VARCHAR2(60),
+  zzh  VARCHAR2(60),
+  hydh VARCHAR2(18)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.TMP_PAMS.zhdh
+  is '账户代号';
+comment on column RRP_MDL.TMP_PAMS.zzh
+  is '子户号';
+comment on column RRP_MDL.TMP_PAMS.hydh
+  is '行员代号';
+

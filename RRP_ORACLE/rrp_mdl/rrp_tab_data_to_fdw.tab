@@ -1,0 +1,69 @@
+﻿create table RRP_MDL.RRP_TAB_DATA_TO_FDW
+(
+  sys_no         VARCHAR2(25),
+  sys_str        VARCHAR2(150),
+  org_num        VARCHAR2(20),
+  org_name       VARCHAR2(300),
+  up_org_num     VARCHAR2(20),
+  up_org_name    VARCHAR2(300),
+  report_date    VARCHAR2(10),
+  report_id      VARCHAR2(30),
+  report_name    VARCHAR2(300),
+  report_caliber VARCHAR2(150),
+  report_freq    VARCHAR2(15),
+  curr_code      VARCHAR2(30),
+  index_id       VARCHAR2(100),
+  index_str      VARCHAR2(300),
+  index_iv       NUMBER(31,6),
+  etl_date       VARCHAR2(10),
+  status_id      VARCHAR2(30)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.RRP_TAB_DATA_TO_FDW
+  is '监管报送供数给财务集市明细表';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.sys_no
+  is '子系统编号';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.sys_str
+  is '子系统描述';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.org_num
+  is '机构编号';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.org_name
+  is '机构名称';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.up_org_num
+  is '上级机构编号';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.up_org_name
+  is '上级机构名称';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.report_date
+  is '报表日期';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.report_id
+  is '报表编号';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.report_name
+  is '报表名称';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.report_caliber
+  is '报表制度';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.report_freq
+  is '报表频率';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.curr_code
+  is '报表币种';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.index_id
+  is '指标编号';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.index_str
+  is '指标描述';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.index_iv
+  is '指标值';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.etl_date
+  is '供数日期';
+comment on column RRP_MDL.RRP_TAB_DATA_TO_FDW.status_id
+  is '报表状态 AUDITPASS-审核通过 END -完成';
+

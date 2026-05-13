@@ -1,0 +1,30 @@
+﻿create table RRP_MDL.M_LOAN_TRF_INFO_TEMP02
+(
+  rcpt_id       VARCHAR2(100),
+  asset_tran_dt VARCHAR2(8),
+  trf_loan_prin NUMBER(38,8),
+  trf_loan_int  NUMBER(38,8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_LOAN_TRF_INFO_TEMP02
+  is '资产转让表转让金额临时表';
+comment on column RRP_MDL.M_LOAN_TRF_INFO_TEMP02.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.M_LOAN_TRF_INFO_TEMP02.asset_tran_dt
+  is '转让日期';
+comment on column RRP_MDL.M_LOAN_TRF_INFO_TEMP02.trf_loan_prin
+  is '转让贷款本金';
+comment on column RRP_MDL.M_LOAN_TRF_INFO_TEMP02.trf_loan_int
+  is '转让贷款利息';
+

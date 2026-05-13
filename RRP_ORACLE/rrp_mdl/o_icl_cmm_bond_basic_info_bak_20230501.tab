@@ -1,0 +1,216 @@
+﻿create table RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501
+(
+  etl_dt                      DATE,
+  lp_id                       VARCHAR2(60),
+  bond_id                     VARCHAR2(60),
+  asset_type_id               VARCHAR2(60),
+  bond_name                   VARCHAR2(500),
+  bond_abbr                   VARCHAR2(100),
+  bond_type_cd                VARCHAR2(10),
+  bond_cls_name               VARCHAR2(100),
+  trust_org_id                VARCHAR2(60),
+  mgmt_mode_cd                VARCHAR2(60),
+  issuer_cust_id              VARCHAR2(60),
+  issuer_cd                   VARCHAR2(60),
+  issuer_name                 VARCHAR2(250),
+  issue_main_belong_cty_rg_cd VARCHAR2(60),
+  issue_rg_cd                 VARCHAR2(60),
+  actl_mang_land_nation_cd    VARCHAR2(60),
+  curr_cd                     VARCHAR2(10),
+  issue_corp                  NUMBER(30),
+  issue_price                 NUMBER(18,12),
+  issue_int_rat               NUMBER(18,12),
+  issue_size                  NUMBER(38,8),
+  fac_val_int_rat             NUMBER(18,12),
+  fac_val                     NUMBER(30,2),
+  int_rat_adj_way_cd          VARCHAR2(10),
+  base_rat_id                 VARCHAR2(100),
+  int_rat_float_point         NUMBER(18,12),
+  int_rat_float_dir_cd        VARCHAR2(10),
+  int_rat_float_uplmi         NUMBER(18,12),
+  int_rat_float_lolmi         NUMBER(18,12),
+  int_accr_base_cd            VARCHAR2(10),
+  int_accr_curr_cd            VARCHAR2(10),
+  int_accr_ped_cd             VARCHAR2(10),
+  pay_int_ped_cd              VARCHAR2(10),
+  comp_int_ped_cd             VARCHAR2(10),
+  reval_ped_cd                VARCHAR2(10),
+  fir_reval_dt                DATE,
+  reval_way_cd                VARCHAR2(10),
+  last_reval_dt               DATE,
+  next_reval_dt               DATE,
+  reval_start_dt              DATE,
+  reval_end_dt                DATE,
+  reval_int_rat               NUMBER(18,12),
+  exp_yld_rat                 NUMBER(18,12),
+  issue_dt                    DATE,
+  value_dt                    DATE,
+  exp_dt                      DATE,
+  tenor                       VARCHAR2(10),
+  list_dt                     DATE,
+  fir_pay_int_dt              DATE,
+  last_pay_int_dt             DATE,
+  next_pay_int_dt             DATE,
+  next_rpp_amt                NUMBER(30,2),
+  next_pay_int_amt            NUMBER(30,2),
+  stop_circlt_dt              DATE,
+  tranbl_bond_flg             VARCHAR2(10),
+  discnt_debt_vch_flg         VARCHAR2(10),
+  acru_int_flg                VARCHAR2(10),
+  subtn_bond_flg              VARCHAR2(10),
+  ex_choice_type_cd           VARCHAR2(10),
+  bond_market_type_cd         VARCHAR2(10),
+  guar_type_cd                VARCHAR2(10),
+  guartor_name                VARCHAR2(500),
+  inpwned_ratio               NUMBER(18,6),
+  caption_type_cd             VARCHAR2(30),
+  valuation_way_cd            VARCHAR2(10),
+  data_src_sys_idf            VARCHAR2(60),
+  job_cd                      VARCHAR2(10),
+  etl_timestamp               TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501
+  is '债券基本信息';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.bond_id
+  is '债券编号';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.asset_type_id
+  is '资产类型编号';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.bond_name
+  is '债券名称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.bond_abbr
+  is '债券简称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.bond_type_cd
+  is '债券类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.bond_cls_name
+  is '债券分类名称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.trust_org_id
+  is '托管机构编号';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.mgmt_mode_cd
+  is '管理模式代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.issuer_cust_id
+  is '发行人客户编号';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.issuer_cd
+  is '发行人代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.issuer_name
+  is '发行人名称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.issue_main_belong_cty_rg_cd
+  is '发行主体所属国家地区代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.issue_rg_cd
+  is '发行地区代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.actl_mang_land_nation_cd
+  is '实际经营地国别代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.issue_corp
+  is '发行单位';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.issue_price
+  is '发行价格';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.issue_int_rat
+  is '发行利率';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.issue_size
+  is '发行规模';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.fac_val_int_rat
+  is '票面利率';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.fac_val
+  is '票面面值';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.int_rat_adj_way_cd
+  is '利率调整方式代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.base_rat_id
+  is '基准利率编号';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.int_rat_float_point
+  is '利率浮动点数';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.int_rat_float_dir_cd
+  is '利率浮动方向代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.int_rat_float_uplmi
+  is '利率浮动上限';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.int_rat_float_lolmi
+  is '利率浮动下限';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.int_accr_base_cd
+  is '计息基准代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.int_accr_curr_cd
+  is '计息币种代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.int_accr_ped_cd
+  is '计息周期代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.pay_int_ped_cd
+  is '付息周期代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.comp_int_ped_cd
+  is '复利周期代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.reval_ped_cd
+  is '重定价周期代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.fir_reval_dt
+  is '首次重定价日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.reval_way_cd
+  is '重定价方式代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.last_reval_dt
+  is '上次重定价日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.next_reval_dt
+  is '下次重定价日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.reval_start_dt
+  is '重定价开始日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.reval_end_dt
+  is '重定价结束日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.reval_int_rat
+  is '重定价利率';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.exp_yld_rat
+  is '到期收益率';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.issue_dt
+  is '发行日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.tenor
+  is '期限';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.list_dt
+  is '上市日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.fir_pay_int_dt
+  is '首次付息日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.last_pay_int_dt
+  is '上次付息日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.next_pay_int_dt
+  is '下次付息日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.next_rpp_amt
+  is '下次还本金额';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.next_pay_int_amt
+  is '下次付息金额';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.stop_circlt_dt
+  is '停止流通日期';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.tranbl_bond_flg
+  is '可转换债券标志';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.discnt_debt_vch_flg
+  is '贴现债券标志';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.acru_int_flg
+  is '应计利息标志';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.subtn_bond_flg
+  is '永续债标志';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.ex_choice_type_cd
+  is '行权选择类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.bond_market_type_cd
+  is '债券市场类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.guar_type_cd
+  is '担保类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.guartor_name
+  is '担保人名称';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.inpwned_ratio
+  is '可质押比例';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.caption_type_cd
+  is '资产化类型代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.valuation_way_cd
+  is '计价方式代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.data_src_sys_idf
+  is '数据来源系统标识';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_BOND_BASIC_INFO_BAK_20230501.etl_timestamp
+  is '数据处理时间';
+

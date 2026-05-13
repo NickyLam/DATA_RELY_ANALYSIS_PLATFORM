@@ -1,0 +1,288 @@
+﻿create table RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H
+(
+  agt_id                     VARCHAR2(100),
+  out_acct_flow_num          VARCHAR2(100),
+  cont_id                    VARCHAR2(100),
+  cust_id                    VARCHAR2(100),
+  cust_name                  VARCHAR2(500),
+  prod_id                    VARCHAR2(100),
+  curr_cd                    VARCHAR2(30),
+  cont_amt                   NUMBER(30,2),
+  ths_tm_distr_amt           NUMBER(30,2),
+  loan_distr_type_cd         VARCHAR2(30),
+  happ_dt                    DATE,
+  distr_dt                   DATE,
+  exp_dt                     DATE,
+  int_rat_mode_cd            VARCHAR2(30),
+  fix_int_rat                NUMBER(18,8),
+  base_rat_type_cd           VARCHAR2(30),
+  base_rat                   NUMBER(18,8),
+  int_rat_float_type_cd      VARCHAR2(30),
+  int_rat_adj_way_cd         VARCHAR2(30),
+  int_rat_flo_val            NUMBER(18,6),
+  exec_int_rat               NUMBER(18,8),
+  stl_acct_id                VARCHAR2(100),
+  enter_id                   VARCHAR2(100),
+  secd_repay_acct_id         VARCHAR2(100),
+  distr_mode_pay_cd          VARCHAR2(30),
+  appl_way_cd                VARCHAR2(30),
+  apv_status_cd              VARCHAR2(30),
+  belong_strip_line_cd       VARCHAR2(30),
+  off_bs_flg                 VARCHAR2(10),
+  low_risk_flg               VARCHAR2(10),
+  lmt_id                     VARCHAR2(100),
+  spec_ped_corp_cd           VARCHAR2(30),
+  spec_ped_cd                VARCHAR2(30),
+  repay_way_cd               VARCHAR2(30),
+  repay_ped                  VARCHAR2(10),
+  repay_ped_cd               VARCHAR2(30),
+  deflt_repay_day            NUMBER(22),
+  ovdue_exec_int_rat         NUMBER(18,8),
+  ovdue_int_rat_float_way_cd VARCHAR2(30),
+  ovdue_int_rat_flo_val      NUMBER(18,6),
+  oper_org_id                VARCHAR2(100),
+  bus_oper_teller_id         VARCHAR2(100),
+  oper_dt                    DATE,
+  rgst_teller_id             VARCHAR2(100),
+  rgst_org_id                VARCHAR2(100),
+  rgst_dt                    DATE,
+  update_teller_id           VARCHAR2(100),
+  update_org_id              VARCHAR2(100),
+  modif_dt                   DATE,
+  lp_id                      VARCHAR2(100),
+  text_cont_id               VARCHAR2(500),
+  margin_acct_id             VARCHAR2(100),
+  margin_tran_out_acct_id    VARCHAR2(100),
+  margin_curr_cd             VARCHAR2(30),
+  margin_ratio               NUMBER(18,6),
+  margin_sub_acct_num        VARCHAR2(60),
+  margin_amt                 NUMBER(30,2),
+  dubil_id                   VARCHAR2(100),
+  subj_id                    VARCHAR2(100),
+  out_acct_org_id            VARCHAR2(100),
+  loan_org_id                VARCHAR2(100),
+  int_accr_way_cd            VARCHAR2(30),
+  enter_open_acct_org_id     VARCHAR2(100),
+  enter_name                 VARCHAR2(500),
+  enter_sub_acct_num         VARCHAR2(60),
+  comm_fee_collect_way_cd    VARCHAR2(30),
+  comm_fee_deduct_acct_id    VARCHAR2(100),
+  comm_fee_amort_flg         VARCHAR2(10),
+  comm_fee_rat               NUMBER(18,6),
+  comm_fee_amt               NUMBER(30,2),
+  loan_usage_cd              VARCHAR2(30),
+  entr_pay_amt               NUMBER(30,2),
+  entr_pay_stop_pay_flow_num VARCHAR2(100),
+  file_dt                    DATE,
+  major_guar_way_cd          VARCHAR2(30),
+  mon_tenor                  NUMBER(22),
+  day_tenor                  NUMBER(22),
+  tran_status_cd             VARCHAR2(30),
+  tran_tm                    TIMESTAMP(6),
+  core_tran_dt               DATE,
+  core_tran_flow_num         VARCHAR2(100),
+  stl_acct_name              VARCHAR2(500),
+  int_rat_adj_ped_cd         VARCHAR2(30),
+  move_remark                VARCHAR2(500),
+  start_dt                   DATE,
+  end_dt                     DATE,
+  id_mark                    VARCHAR2(10),
+  src_table_name             VARCHAR2(100),
+  job_cd                     VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H
+  is '贷款出账申请历史';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.agt_id
+  is '申请编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.out_acct_flow_num
+  is '出账流水号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.cont_id
+  is '合同编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.cont_amt
+  is '合同金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.ths_tm_distr_amt
+  is '本次放款金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.loan_distr_type_cd
+  is '贷款发放类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.happ_dt
+  is '发生日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.distr_dt
+  is '发放日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.int_rat_mode_cd
+  is '利率模式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.fix_int_rat
+  is '固定利率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.base_rat_type_cd
+  is '基准利率类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.base_rat
+  is '基准利率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.int_rat_float_type_cd
+  is '利率浮动类型代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.int_rat_adj_way_cd
+  is '利率调整方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.int_rat_flo_val
+  is '利率浮动值';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.stl_acct_id
+  is '结算账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.enter_id
+  is '入账账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.secd_repay_acct_id
+  is '第二还款账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.distr_mode_pay_cd
+  is '放款支付方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.appl_way_cd
+  is '申请方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.apv_status_cd
+  is '审批状态代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.belong_strip_line_cd
+  is '所属条线代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.off_bs_flg
+  is '表外标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.low_risk_flg
+  is '低风险标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.lmt_id
+  is '额度编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.spec_ped_corp_cd
+  is '指定周期单位代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.spec_ped_cd
+  is '指定周期代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.repay_way_cd
+  is '还款方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.repay_ped
+  is '还款周期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.repay_ped_cd
+  is '还款周期单位代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.deflt_repay_day
+  is '默认还款日';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.ovdue_exec_int_rat
+  is '逾期执行利率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.ovdue_int_rat_float_way_cd
+  is '逾期利率浮动方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.ovdue_int_rat_flo_val
+  is '逾期利率浮动值';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.oper_org_id
+  is '经办机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.bus_oper_teller_id
+  is '业务经办人编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.oper_dt
+  is '经办日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.rgst_teller_id
+  is '登记柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.rgst_org_id
+  is '登记机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.rgst_dt
+  is '登记日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.update_teller_id
+  is '更新柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.update_org_id
+  is '更新机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.modif_dt
+  is '变更日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.text_cont_id
+  is '文本合同编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.margin_acct_id
+  is '保证金账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.margin_tran_out_acct_id
+  is '保证金转出账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.margin_curr_cd
+  is '保证金币种代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.margin_ratio
+  is '保证金比例';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.margin_sub_acct_num
+  is '保证金子账号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.margin_amt
+  is '保证金金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.subj_id
+  is '科目编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.out_acct_org_id
+  is '出账机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.loan_org_id
+  is '贷款机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.int_accr_way_cd
+  is '计息方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.enter_open_acct_org_id
+  is '入账账户开户机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.enter_name
+  is '入账账户名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.enter_sub_acct_num
+  is '入账账户子账号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.comm_fee_collect_way_cd
+  is '手续费计收方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.comm_fee_deduct_acct_id
+  is '手续费扣费账户编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.comm_fee_amort_flg
+  is '手续费摊销标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.comm_fee_rat
+  is '手续费率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.comm_fee_amt
+  is '手续费金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.loan_usage_cd
+  is '贷款用途代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.entr_pay_amt
+  is '受托支付金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.entr_pay_stop_pay_flow_num
+  is '受托支付止付流水号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.file_dt
+  is '归档日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.major_guar_way_cd
+  is '主要担保方式代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.mon_tenor
+  is '月期限';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.day_tenor
+  is '日期限';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.core_tran_dt
+  is '核心交易日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.core_tran_flow_num
+  is '核心交易流水号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.stl_acct_name
+  is '结算账户名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.int_rat_adj_ped_cd
+  is '利率调整周期代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.move_remark
+  is '迁移备注';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_OUT_ACCT_APPL_H.etl_timestamp
+  is 'etl处理时间戳';
+

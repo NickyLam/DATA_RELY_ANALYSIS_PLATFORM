@@ -1,0 +1,144 @@
+﻿create table RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN
+(
+  etl_dt                    DATE,
+  lp_id                     VARCHAR2(60),
+  dubil_id                  VARCHAR2(100),
+  acct_id                   VARCHAR2(60),
+  cust_id                   VARCHAR2(60),
+  tot_perds                 NUMBER(10),
+  repay_perds               NUMBER(10),
+  repay_sub_perds           VARCHAR2(150),
+  value_dt                  DATE,
+  repaybl_dt                DATE,
+  exec_status_flg           VARCHAR2(10),
+  ovdue_flg                 VARCHAR2(10),
+  irr_repay_plan_flg        VARCHAR2(10),
+  repay_flg                 VARCHAR2(10),
+  is_int_set_flg            VARCHAR2(10),
+  repay_cate_cd             VARCHAR2(10),
+  repay_way_cd              VARCHAR2(10),
+  curr_cd                   VARCHAR2(10),
+  exec_int_rat              NUMBER(18,8),
+  acru_nomal_pric           NUMBER(30,2),
+  curr_issue_recvbl_pric    NUMBER(30,2),
+  curr_issue_int_recvbl     NUMBER(30,2),
+  curr_issue_recvbl_fee     NUMBER(30,2),
+  curr_issue_int_sub_amt    NUMBER(30,2),
+  payoff_dt                 DATE,
+  curr_issue_pric_ovdue_dt  DATE,
+  curr_issue_int_ovdue_dt   DATE,
+  curr_issue_ovdue_days     NUMBER(10),
+  curr_issue_ovdue_pric     NUMBER(30,2),
+  curr_issue_ovdue_int      NUMBER(30,2),
+  curr_issue_ovdue_comp_int NUMBER(30,2),
+  curr_issue_over_int_bal   NUMBER(30,2),
+  curr_issue_pnlt_bal       NUMBER(30,2),
+  curr_issue_idle_bal       NUMBER(30,2),
+  curr_issue_bad_debt_bal   NUMBER(30,2),
+  int_ovdue_days            NUMBER(10),
+  pric_bal                  NUMBER(30,2),
+  curr_issue_recvbl_amt     NUMBER(30,2),
+  job_cd                    VARCHAR2(10),
+  repay_amt_type_cd         VARCHAR2(10),
+  pd_h_ovdue_flg            VARCHAR2(10),
+  curr_doc_bal              NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN
+  is '对公贷款还款计划';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.etl_dt
+  is '数据日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.tot_perds
+  is '贷款期数';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.repay_perds
+  is '还款期数';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.repay_sub_perds
+  is '还款子期数';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.value_dt
+  is '起息日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.repaybl_dt
+  is '应还款日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.exec_status_flg
+  is '执行状态标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.ovdue_flg
+  is '逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.irr_repay_plan_flg
+  is '不规则还款计划标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.repay_flg
+  is '偿还标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.is_int_set_flg
+  is '是否结息标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.repay_cate_cd
+  is '还款类别代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.repay_way_cd
+  is '还款方式代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_cd
+  is '币种代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.acru_nomal_pric
+  is '应计正常本金';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_recvbl_pric
+  is '本期应收本金';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_int_recvbl
+  is '本期应收利息';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_recvbl_fee
+  is '本期应收费用';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_int_sub_amt
+  is '本期贴息金额';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.payoff_dt
+  is '结清日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_pric_ovdue_dt
+  is '本期本金逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_int_ovdue_dt
+  is '本期利息逾期日期';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_ovdue_days
+  is '本期贷款逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_ovdue_pric
+  is '本期逾期本金';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_ovdue_int
+  is '本期逾期利息';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_ovdue_comp_int
+  is '本期逾期复利';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_over_int_bal
+  is '本期欠息余额';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_pnlt_bal
+  is '本期罚息余额';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_idle_bal
+  is '本期呆滞余额';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_bad_debt_bal
+  is '本期呆账余额';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.int_ovdue_days
+  is '利息逾期天数';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.pric_bal
+  is '本金余额';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_issue_recvbl_amt
+  is '本期应收金额';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.repay_amt_type_cd
+  is '还款金额类型代码';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.pd_h_ovdue_flg
+  is '期次历史逾期标志';
+comment on column RRP_MDL.O_ICL_CMM_CORP_LOAN_REPAY_PLAN.curr_doc_bal
+  is '本期单据余额';
+

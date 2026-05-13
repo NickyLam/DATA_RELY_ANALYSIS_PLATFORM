@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP04
+(
+  tran_dt            DATE,
+  tran_flow_num      VARCHAR2(200),
+  acct_bill_flow_num VARCHAR2(200),
+  curr_cd            VARCHAR2(200),
+  amt                NUMBER(30,2),
+  invo_acct_id       VARCHAR2(200),
+  main_acct_id       VARCHAR2(200),
+  cntpty_acct_id     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress
+nologging;
+comment on table RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP04
+  is '核心流水付息对手方信息';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP04.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP04.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP04.acct_bill_flow_num
+  is '账单流水号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP04.curr_cd
+  is '币种代码CD1728';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP04.amt
+  is '金额';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP04.invo_acct_id
+  is '涉及账户编号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP04.main_acct_id
+  is '主账户编号';
+comment on column RRP_MDL.B_TRA_DEP_ACC_DTL_TEMP04.cntpty_acct_id
+  is '对手方账户编号';
+

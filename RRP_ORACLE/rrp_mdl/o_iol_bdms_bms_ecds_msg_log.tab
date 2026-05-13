@@ -1,0 +1,93 @@
+﻿create table RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG
+(
+  id             VARCHAR2(60),
+  cre_dt         VARCHAR2(12),
+  cre_tm         VARCHAR2(9),
+  idnb           VARCHAR2(45),
+  deal_mk        VARCHAR2(15),
+  draft_content  VARCHAR2(4000),
+  sendorrecv_mk  VARCHAR2(15),
+  orgnl_id       VARCHAR2(53),
+  orgnl_draft_no VARCHAR2(15),
+  sender         VARCHAR2(18),
+  receiver       VARCHAR2(18),
+  msg_id         VARCHAR2(45),
+  draft_no       VARCHAR2(15),
+  process_result VARCHAR2(768),
+  update_date    TIMESTAMP(6),
+  trans_id       VARCHAR2(60),
+  exec_status    VARCHAR2(3),
+  ip             VARCHAR2(96),
+  his_orgnl_id   VARCHAR2(96),
+  txn_status     VARCHAR2(3),
+  buss_flag      VARCHAR2(3),
+  start_dt       DATE,
+  end_dt         DATE,
+  id_mark        VARCHAR2(10),
+  etl_timestamp  TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG
+  is 'ECDS报文日志信息表';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.id
+  is '主键id';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.cre_dt
+  is '报文日期';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.cre_tm
+  is '报文时间';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.idnb
+  is '电子票据号码';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.deal_mk
+  is '是否处理成功： 0 报文处理失败 1 报文处理成功 2 报文处理中';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.draft_content
+  is '报文内容';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.sendorrecv_mk
+  is '是否发送/接收： 0 报文接收 1 报文发出';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.orgnl_id
+  is '源报文id';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.orgnl_draft_no
+  is '原报文号';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.sender
+  is '报文发送方';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.receiver
+  is '报文接受方';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.msg_id
+  is '报文标识号';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.draft_no
+  is '报文编号';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.process_result
+  is '处理结果';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.update_date
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.trans_id
+  is '交易id';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.exec_status
+  is '业务处理状态： 0 待处理 1 处理中 2 已完成';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.ip
+  is '处理机器ip';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.his_orgnl_id
+  is '修正前orgnl_id';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.txn_status
+  is '交易状态对于发送方';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.buss_flag
+  is '业务标记';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_BDMS_BMS_ECDS_MSG_LOG.etl_timestamp
+  is 'etl处理时间戳';
+

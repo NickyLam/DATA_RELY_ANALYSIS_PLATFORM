@@ -1,0 +1,12 @@
+﻿create table RRP_MDL.XZY_DB_ALL
+(
+  ysjl    VARCHAR2(200),
+  re_ysjl VARCHAR2(200),
+  ves     VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+

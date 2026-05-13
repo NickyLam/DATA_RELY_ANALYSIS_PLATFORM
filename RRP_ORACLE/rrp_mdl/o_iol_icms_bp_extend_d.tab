@@ -1,0 +1,570 @@
+﻿create table RRP_MDL.O_IOL_ICMS_BP_EXTEND_D
+(
+  serialno               VARCHAR2(64),
+  billtype               VARCHAR2(16),
+  careflag               VARCHAR2(1),
+  paybankname            VARCHAR2(100),
+  keyno                  VARCHAR2(40),
+  tradesum1              NUMBER(24,6),
+  chaggeaddress          VARCHAR2(200),
+  tradesum2              NUMBER(24,6),
+  resumeinttype          VARCHAR2(18),
+  linkname               VARCHAR2(10),
+  aboutbankname          VARCHAR2(100),
+  bailpdrifm             VARCHAR2(1),
+  bfintg                 VARCHAR2(1),
+  accountopenbankname    VARCHAR2(80),
+  bailmaturity           VARCHAR2(10),
+  capitalreturnflag      VARCHAR2(1),
+  migtflag               VARCHAR2(80),
+  fbsnumber              VARCHAR2(50),
+  assureorgid            VARCHAR2(64),
+  invoicenumber          VARCHAR2(50),
+  tradetype1             VARCHAR2(18),
+  bailexchangestate      VARCHAR2(2),
+  cdexchangedate         VARCHAR2(10),
+  acptdate               VARCHAR2(10),
+  loantype               VARCHAR2(18),
+  czflag                 VARCHAR2(1),
+  paymode                VARCHAR2(10),
+  acceptorname           VARCHAR2(180),
+  othertxbalance         NUMBER(24,6),
+  accountnocustomer      VARCHAR2(80),
+  tradedate1             VARCHAR2(20),
+  acceptorbankname       VARCHAR2(180),
+  compoundintratio       NUMBER(15,8),
+  textno                 VARCHAR2(60),
+  instrt                 NUMBER(11,7),
+  tradecurrecy2          VARCHAR2(18),
+  repaymentplanflag      VARCHAR2(1),
+  chargephone            VARCHAR2(40),
+  tradetermmonth2        NUMBER(22),
+  ratestartmode          VARCHAR2(1),
+  autocontrolflag        VARCHAR2(1),
+  loantermthing          VARCHAR2(2),
+  bailfxfltp             VARCHAR2(1),
+  gatheringname          VARCHAR2(200),
+  principalaccountno     VARCHAR2(50),
+  openbankname           VARCHAR2(80),
+  aboutbankname2         VARCHAR2(150),
+  preinttype             VARCHAR2(18),
+  loantermcontrolflag    VARCHAR2(1),
+  acceptancebank         VARCHAR2(200),
+  tradedate2             VARCHAR2(20),
+  otherdraweracctno      VARCHAR2(40),
+  principalsubaccountno  VARCHAR2(5),
+  continuepayflag        VARCHAR2(1),
+  billno                 VARCHAR2(32),
+  approveorgid           VARCHAR2(32),
+  clientaccountno        VARCHAR2(40),
+  repayexchangestate     VARCHAR2(2),
+  chargename             VARCHAR2(40),
+  commercetype           VARCHAR2(3),
+  tradetermmonth1        NUMBER(22),
+  dprinpaymethod         VARCHAR2(18),
+  lprtype                VARCHAR2(10),
+  loanaccountnoorgname   VARCHAR2(80),
+  isrz                   VARCHAR2(2),
+  period                 NUMBER(10),
+  approveuserid          VARCHAR2(32),
+  traderate1             NUMBER(10,6),
+  repurchaseflag         VARCHAR2(1),
+  deposittermtype        VARCHAR2(1),
+  linkphone              VARCHAR2(40),
+  termtype               VARCHAR2(5),
+  loanaccountnocustomer  VARCHAR2(80),
+  pdgpaypercent2         NUMBER(6,2),
+  bailinterestrate       NUMBER(24,6),
+  cdexchangeno           VARCHAR2(32),
+  businesssubtype        VARCHAR2(18),
+  tradeserialno1         VARCHAR2(40),
+  txregister             VARCHAR2(2),
+  amlresult              VARCHAR2(1),
+  compoundintfloatvalue  NUMBER(12,2),
+  paysum                 NUMBER(24,6),
+  name1                  VARCHAR2(100),
+  fundsource             VARCHAR2(4),
+  stopintflag            VARCHAR2(1),
+  lnbal                  NUMBER(18,2),
+  acceptorbankno         VARCHAR2(12),
+  confirmingbank         VARCHAR2(200),
+  chargefax              VARCHAR2(40),
+  pdgsum2                NUMBER(24,6),
+  depositbaserate        NUMBER(15,8),
+  lcsum                  NUMBER(24,6),
+  traderate2             NUMBER(10,6),
+  tradecurrecy1          VARCHAR2(18),
+  isfinanceguarantee     VARCHAR2(1),
+  putoutno               VARCHAR2(40),
+  bailpdrifd             VARCHAR2(3),
+  depositterm            NUMBER(10),
+  billclass              VARCHAR2(16),
+  tradesum3              NUMBER(24,6),
+  tradecurrecy3          VARCHAR2(18),
+  queryabnormitything    VARCHAR2(2),
+  creditaggreement       VARCHAR2(32),
+  exchangetype           VARCHAR2(18),
+  bailterm               VARCHAR2(4),
+  bailpdrifv             NUMBER(11,7),
+  interestreturnflag     VARCHAR2(1),
+  compoundintflag        VARCHAR2(1),
+  chargepost             VARCHAR2(100),
+  isbankaccount          VARCHAR2(1),
+  fixcyc                 NUMBER(22),
+  ordinaryormonthly      VARCHAR2(18),
+  unpaidbankname         VARCHAR2(200),
+  approvedate            VARCHAR2(10),
+  linkemail              VARCHAR2(40),
+  discountsum            NUMBER(24,6),
+  loanaccountno2         VARCHAR2(64),
+  abnormitything         VARCHAR2(1000),
+  tradeserialno2         VARCHAR2(40),
+  bailinterestmethod     VARCHAR2(10),
+  trantp                 VARCHAR2(2),
+  poolfinancingflag      VARCHAR2(1),
+  isbelongterm           VARCHAR2(2),
+  contractsignfee        NUMBER(24,6),
+  aboutbankid            VARCHAR2(64),
+  isfixedrate            VARCHAR2(10),
+  opencustomer           VARCHAR2(200),
+  sellstatus             VARCHAR2(10),
+  otherreceivedbankno    VARCHAR2(14),
+  otherreceivedname      VARCHAR2(32),
+  otherreceivedaccname   VARCHAR2(128),
+  otherreceivedbankname  VARCHAR2(128),
+  creditbeneficiary      VARCHAR2(200),
+  actualloanaccountno    VARCHAR2(64),
+  replaceolddept         VARCHAR2(1),
+  isproxydp              VARCHAR2(4),
+  sqdkze                 NUMBER(18,2),
+  socialcreditcode       VARCHAR2(100),
+  buychannel             VARCHAR2(4),
+  islinkoutpay           VARCHAR2(4),
+  post                   VARCHAR2(256),
+  payinterestcustomer    VARCHAR2(10),
+  purchasercustflag      VARCHAR2(10),
+  othercustomerid        VARCHAR2(64),
+  othercustomername      VARCHAR2(200),
+  finalmerger            VARCHAR2(10),
+  lcsumrate              NUMBER(15,8),
+  linkchargeintflag      VARCHAR2(10),
+  isactualddamtflag      VARCHAR2(2),
+  maxpdrifv              NUMBER(11,7),
+  ismergeentrpayment     VARCHAR2(10),
+  ownfunds               NUMBER(24,6),
+  ownfundsacctno         VARCHAR2(64),
+  ownfundsacctname       VARCHAR2(64),
+  ownfundsacctccy        VARCHAR2(10),
+  arrivalnumbers         VARCHAR2(32),
+  claimamount            NUMBER(24,6),
+  businessamount         NUMBER(24,6),
+  marketflows            VARCHAR2(6),
+  servicecontent         VARCHAR2(600),
+  scanstatus             VARCHAR2(10),
+  priceorderno           VARCHAR2(128),
+  priceapprovestatus     VARCHAR2(10),
+  priceenddate           VARCHAR2(10),
+  pledgetype             VARCHAR2(10),
+  submitputoutcentertime DATE,
+  iscentralizedaccount   VARCHAR2(5),
+  issuedbusinessno       VARCHAR2(100),
+  bhstartdate            DATE,
+  bhmaturity             DATE,
+  guaranteebusinessno    VARCHAR2(100),
+  guaranteesum           NUMBER(24,6),
+  issuedate              DATE,
+  guaranteeputoutstatus  VARCHAR2(4),
+  isreplenishment        VARCHAR2(10),
+  scanuserid             VARCHAR2(8),
+  scanusername           VARCHAR2(200),
+  bizuniqueno            VARCHAR2(200),
+  isxdapprove            VARCHAR2(2),
+  isignoreresult         VARCHAR2(2),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_BP_EXTEND_D
+  is '对公传统信贷业务出账附表';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.serialno
+  is '出账流水号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.billtype
+  is '票据类型';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.careflag
+  is '是否托管';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.paybankname
+  is '代付行';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.keyno
+  is '票据唯一标识号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradesum1
+  is '贸易融资相关金额1';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.chaggeaddress
+  is '地址（福费廷用）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradesum2
+  is '贸易融资相关金额2';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.resumeinttype
+  is '计复息标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.linkname
+  is '联系人（福费廷用）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.aboutbankname
+  is '受益人、收款人开户行行名';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bailpdrifm
+  is '保证金利率浮动方式';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bfintg
+  is '是否预收息or先付利息摊销标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.accountopenbankname
+  is '结算帐号开户行名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bailmaturity
+  is '保证金到期日';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.capitalreturnflag
+  is '本金自动归还标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.migtflag
+  is '迁移标志：crs rcr ilc upl';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.fbsnumber
+  is '信用证编号\业务编号FBS';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.assureorgid
+  is '担保机构编号(我行分支机构)';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.invoicenumber
+  is '发票号码';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradetype1
+  is '代收或托收类型';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bailexchangestate
+  is '保证金交易状态';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.cdexchangedate
+  is '承兑记账交易日期';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.acptdate
+  is '出票日';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.loantype
+  is '贷款类型';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.czflag
+  is '冲账标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.paymode
+  is '保函支付方式';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.acceptorname
+  is '承兑人名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.othertxbalance
+  is '买方付息金额';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.accountnocustomer
+  is '结算帐号客户名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradedate1
+  is '贸易融资相关日期1';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.acceptorbankname
+  is '承兑人开户行名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.compoundintratio
+  is '复利利率';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.textno
+  is '总合同文本编号（福费廷用）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.instrt
+  is '同业代付计提利率（%）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradecurrecy2
+  is '贸易融资相关币种2';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.repaymentplanflag
+  is '信贷发放还款计划标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.chargephone
+  is '电话（福费廷用）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradetermmonth2
+  is '贸易融资相关期限2';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.ratestartmode
+  is '利率启用方式';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.autocontrolflag
+  is '自动回收控制开关';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.loantermthing
+  is '放款条件是否落实';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bailfxfltp
+  is '保证金利率类型';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.gatheringname
+  is '收票人全称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.principalaccountno
+  is '委托存款账号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.openbankname
+  is '出口信用证开证行名称、开证行ID';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.aboutbankname2
+  is '保函受益人';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.preinttype
+  is '预收息标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.loantermcontrolflag
+  is '出账详情页面贷款类型和期限是否进行系统校验标识,1进行校验,0或者空值不进行校验';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.acceptancebank
+  is '承兑行行号（福费廷）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradedate2
+  is '贸易融资相关日期2';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.otherdraweracctno
+  is '买方付息账户号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.principalsubaccountno
+  is '委托存款子户号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.continuepayflag
+  is '持续扣款标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.billno
+  is '票据号码';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.approveorgid
+  is '复核机构';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.clientaccountno
+  is '委托人存款账号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.repayexchangestate
+  is '还款计划交易状态';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.chargename
+  is '负责人（福费廷用）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.commercetype
+  is '贸易融资类型';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradetermmonth1
+  is '贸易融资相关期限1';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.dprinpaymethod
+  is '代付本金还款方式';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.lprtype
+  is 'LPR参照方式';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.loanaccountnoorgname
+  is '贷款帐号开户行名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.isrz
+  is '是否融资系统出账1是0否';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.period
+  is '分期贷款总期数';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.approveuserid
+  is '复核人';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.traderate1
+  is '福费廷年贴现率、出口退税帐户托管融资业务退税比例、短期出口信用保险项下押汇业务押汇利率、国际贸易融资项下同业代付代付利率（代付行价格）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.repurchaseflag
+  is '是否回购（赎回）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.deposittermtype
+  is '保证金期限类型';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.linkphone
+  is '联系人手机号（福费廷用）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.termtype
+  is '期限类型';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.loanaccountnocustomer
+  is '贷款帐号客户名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.pdgpaypercent2
+  is '手续费率(委托贷款)';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bailinterestrate
+  is '保证金协议利率';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.cdexchangeno
+  is '承兑记账交易流水号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.businesssubtype
+  is '保函类型';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradeserialno1
+  is '贸易融资业务编号1';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.txregister
+  is '票据登记状态';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.amlresult
+  is '反洗钱评级结果';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.compoundintfloatvalue
+  is '复利利率浮动比例';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.paysum
+  is '工本费';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.name1
+  is '汇票承兑人名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.fundsource
+  is '资金来源';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.stopintflag
+  is '是否停息';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.lnbal
+  is '同业代付本金';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.acceptorbankno
+  is '承兑人开户行行号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.confirmingbank
+  is '保兑行行号（福费廷）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.chargefax
+  is '传真（福费廷用）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.pdgsum2
+  is '手续费金额(元)(承兑汇票)';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.depositbaserate
+  is '存款基准利率';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.lcsum
+  is '信用证金额（元）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.traderate2
+  is '贸易融资相关比例或利率2';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradecurrecy1
+  is '贸易融资相关币种1';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.isfinanceguarantee
+  is '是否融资性保函';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.putoutno
+  is '出账号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bailpdrifd
+  is '保证金利率浮动类型';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.depositterm
+  is '存期期限';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.billclass
+  is '票据种类';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradesum3
+  is '贸易融资相关金额3';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradecurrecy3
+  is '贸易融资相关币种3';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.queryabnormitything
+  is '贷款卡当日查询是否有异常情况';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.creditaggreement
+  is '使用授信额度协议号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.exchangetype
+  is '出帐交易代码';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bailterm
+  is '保证金利率档次';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bailpdrifv
+  is '保证金浮动值';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.interestreturnflag
+  is '利息自动归还标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.compoundintflag
+  is '是否收复息标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.chargepost
+  is '职务（福费廷用）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.isbankaccount
+  is '受益人账号是否本行';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.fixcyc
+  is '计息天数';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.ordinaryormonthly
+  is '普通分期还款标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.unpaidbankname
+  is '代付行名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.approvedate
+  is '复核日期';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.linkemail
+  is '联系人电子邮箱（福费廷用）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.discountsum
+  is '利息金额';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.loanaccountno2
+  is '贷款帐号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.abnormitything
+  is '贷款卡异常情况说明';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.tradeserialno2
+  is '贸易融资业务编号2';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bailinterestmethod
+  is '保证金计息方法';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.trantp
+  is '手续费收费方式(票据)';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.poolfinancingflag
+  is '是否已签订池融资协议';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.isbelongterm
+  is '是否靠档计息';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.contractsignfee
+  is '签约手续费';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.aboutbankid
+  is '信用证受益人客户号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.isfixedrate
+  is '利率是否固定';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.opencustomer
+  is '信用证开证人';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.sellstatus
+  is '卖出状态';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.otherreceivedbankno
+  is '对方收款行号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.otherreceivedname
+  is '对方收款账号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.otherreceivedaccname
+  is '对方收款户名';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.otherreceivedbankname
+  is '对方收款行名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.creditbeneficiary
+  is '信用证收益人名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.actualloanaccountno
+  is '贷款实际入账账号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.replaceolddept
+  is '是否置换旧债';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.isproxydp
+  is '是否代理交单';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.sqdkze
+  is '申请银团贷款总额';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.socialcreditcode
+  is '统一社会信用代码';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.buychannel
+  is '买入渠道';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.islinkoutpay
+  is '是否联动对外支付';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.post
+  is '附言';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.payinterestcustomer
+  is '付息客户';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.purchasercustflag
+  is '买方是否为我行客户';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.othercustomerid
+  is '买方客户号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.othercustomername
+  is '买方客户名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.finalmerger
+  is '是否末期合并：0否，1是';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.lcsumrate
+  is '信用证金额上浮比例';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.linkchargeintflag
+  is '是否联动扣收利息';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.isactualddamtflag
+  is '是否按实际放款金额冻结标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.maxpdrifv
+  is '保证金浮动上限';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.ismergeentrpayment
+  is '是否合并受托支付';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.ownfunds
+  is '自有资金';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.ownfundsacctno
+  is '自有资金账号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.ownfundsacctname
+  is '自有资金账户名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.ownfundsacctccy
+  is '自有资金账户币种';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.arrivalnumbers
+  is '到单编号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.claimamount
+  is '索偿金额';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.businessamount
+  is '业务金额';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.marketflows
+  is '市场流转次数，含到我行';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.servicecontent
+  is '货物/服务品种';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.scanstatus
+  is '扫描任务状态(0-扫描中、1-扫描完成、2-撤销)';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.priceorderno
+  is '定价单号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.priceapprovestatus
+  is '定价单审批状态';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.priceenddate
+  is '定价单生效截止日';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.pledgetype
+  is '质押类型';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.submitputoutcentertime
+  is '提交放款中心时间';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.iscentralizedaccount
+  is '是否集中出账';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.issuedbusinessno
+  is '代开保函业务编号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bhstartdate
+  is '保函生效日期';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bhmaturity
+  is '保函失效日期';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.guaranteebusinessno
+  is '保函业务编号';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.guaranteesum
+  is '保函金额';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.issuedate
+  is '开立日期';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.guaranteeputoutstatus
+  is '保函信息状态(code:guaranteeputoutstatus)';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.isreplenishment
+  is '是否补录完成';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.scanuserid
+  is '扫描人';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.scanusername
+  is '扫描人名称';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.bizuniqueno
+  is '业务唯一流水号（票据/供应链）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.isxdapprove
+  is '是否信贷审批（票据/供应链推送流程）';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.isignoreresult
+  is '是否忽略不动产查册策略结果';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ICMS_BP_EXTEND_D.etl_timestamp
+  is 'ETL处理时间戳';
+

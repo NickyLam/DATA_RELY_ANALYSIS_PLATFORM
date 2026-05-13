@@ -1,0 +1,47 @@
+﻿create table RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501
+(
+  asset_id            VARCHAR2(60),
+  lp_id               VARCHAR2(60),
+  dubil_id            VARCHAR2(60),
+  loan_assign_bal     NUMBER(30,2),
+  dubil_bal           NUMBER(30,2),
+  splt_col_latest_val NUMBER(30,2),
+  splt_col_insto_val  NUMBER(30,2),
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  src_table_name      VARCHAR2(100),
+  job_cd              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501
+  is '资产借据分配历史';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.asset_id
+  is '资产编号';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.dubil_id
+  is '借据编号';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.loan_assign_bal
+  is '贷款分配余额';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.dubil_bal
+  is '借据余额';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.splt_col_latest_val
+  is '拆分押品最新价值';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.splt_col_insto_val
+  is '拆分押品入库价值';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AST_DUBIL_ASSIGN_H_BAK_20230501.job_cd
+  is '任务代码';
+

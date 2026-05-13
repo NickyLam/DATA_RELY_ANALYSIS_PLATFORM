@@ -1,0 +1,62 @@
+﻿create table RRP_MDL.M_ADD_LS_010_INTERNET_G09
+(
+  data_date    VARCHAR2(10),
+  acct_org_num VARCHAR2(20),
+  hzfwym       VARCHAR2(60),
+  shxydm       VARCHAR2(30),
+  hzfs         VARCHAR2(100),
+  hzfmc        VARCHAR2(100),
+  hlwdkytlb    VARCHAR2(50),
+  hlwdkhzjglb  VARCHAR2(50),
+  bhczbl       NUMBER(10,2),
+  hzjgczbl     NUMBER(10,2),
+  hzjgtgfwlx   VARCHAR2(10),
+  zxlb         VARCHAR2(50),
+  sys_source   VARCHAR2(100),
+  ywpzbh       VARCHAR2(60),
+  ywpzmc       VARCHAR2(100),
+  tjye         NUMBER(20,6),
+  sfsc         VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.M_ADD_LS_010_INTERNET_G09
+  is '补录表-零售-互联网小基表（G09合作方模型）';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.data_date
+  is '数据日期';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.acct_org_num
+  is '账务机构编号';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.hzfwym
+  is '合作方唯一码';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.shxydm
+  is '社会信用代码';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.hzfs
+  is '合作方式';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.hzfmc
+  is '合作方名称';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.hlwdkytlb
+  is '互联网贷款用途类别';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.hlwdkhzjglb
+  is '互联网贷款合作机构类别';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.bhczbl
+  is '本行出资比例';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.hzjgczbl
+  is '合作机构出资比例';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.hzjgtgfwlx
+  is '合作机构提供服务类型';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.zxlb
+  is '增信类别';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.sys_source
+  is '来源系统';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.ywpzbh
+  is '业务品种编号';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.ywpzmc
+  is '业务品种名称';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.tjye
+  is '统计余额（元）';
+comment on column RRP_MDL.M_ADD_LS_010_INTERNET_G09.sfsc
+  is '是否删除';
+

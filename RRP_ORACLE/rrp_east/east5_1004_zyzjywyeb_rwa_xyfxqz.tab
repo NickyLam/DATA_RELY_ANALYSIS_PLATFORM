@@ -1,0 +1,31 @@
+﻿create table RRP_EAST.EAST5_1004_ZYZJYWYEB_RWA_XYFXQZ
+(
+  loan_ref_no          VARCHAR2(150),
+  specific_risk_charge NUMBER(20,6),
+  tzl_risk_charge      NUMBER(20,6),
+  num                  INTEGER
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress
+nologging;
+comment on table RRP_EAST.EAST5_1004_ZYZJYWYEB_RWA_XYFXQZ
+  is '自营资金业务余额表_信用风险权重';
+comment on column RRP_EAST.EAST5_1004_ZYZJYWYEB_RWA_XYFXQZ.loan_ref_no
+  is '借据号';
+comment on column RRP_EAST.EAST5_1004_ZYZJYWYEB_RWA_XYFXQZ.specific_risk_charge
+  is '信用风险权重';
+comment on column RRP_EAST.EAST5_1004_ZYZJYWYEB_RWA_XYFXQZ.tzl_risk_charge
+  is '调整后信用风险权重';
+comment on column RRP_EAST.EAST5_1004_ZYZJYWYEB_RWA_XYFXQZ.num
+  is '序号';
+

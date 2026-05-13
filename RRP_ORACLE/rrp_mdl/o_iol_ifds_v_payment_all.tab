@@ -1,0 +1,174 @@
+﻿create table RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL
+(
+  payment_id                  VARCHAR2(30),
+  payment_type_id             VARCHAR2(30),
+  payment_method_type_id      VARCHAR2(30),
+  payment_method_id           VARCHAR2(30),
+  payment_gateway_response_id VARCHAR2(30),
+  payment_preference_id       VARCHAR2(30),
+  party_id_from               VARCHAR2(30),
+  party_id_to                 VARCHAR2(30),
+  role_type_id_to             VARCHAR2(30),
+  status_id                   VARCHAR2(30),
+  effective_date              TIMESTAMP(6),
+  payment_ref_num             VARCHAR2(96),
+  amount                      NUMBER(18,2),
+  currency_uom_id             VARCHAR2(30),
+  comments                    VARCHAR2(1500),
+  fin_account_trans_id        VARCHAR2(30),
+  override_gl_account_id      VARCHAR2(30),
+  actual_currency_amount      NUMBER(18,2),
+  actual_currency_uom_id      VARCHAR2(30),
+  last_updated_stamp          TIMESTAMP(6),
+  last_updated_tx_stamp       TIMESTAMP(6),
+  created_stamp               TIMESTAMP(6),
+  created_tx_stamp            TIMESTAMP(6),
+  opp_account_num             VARCHAR2(90),
+  opp_account_name            VARCHAR2(383),
+  opp_bank_num                VARCHAR2(90),
+  opp_bank_name               VARCHAR2(383),
+  fin_account_id              VARCHAR2(30),
+  acc_name                    VARCHAR2(383),
+  trade_party_id              VARCHAR2(30),
+  all_receive_date            TIMESTAMP(6),
+  parent_payment_id           VARCHAR2(30),
+  summary_info                VARCHAR2(383),
+  postscript                  VARCHAR2(383),
+  num                         VARCHAR2(30),
+  re_type                     VARCHAR2(30),
+  payment_trans_kind          VARCHAR2(30),
+  actual_balance              NUMBER(18,2),
+  available_balance           NUMBER(18,2),
+  is_show                     VARCHAR2(2),
+  transaction_type            VARCHAR2(90),
+  transaction_serial          VARCHAR2(90),
+  merchant_code               VARCHAR2(90),
+  merchant_name               VARCHAR2(450),
+  transaction_address         VARCHAR2(450),
+  check_bill_product_id       VARCHAR2(45),
+  check_bill_date             TIMESTAMP(6),
+  customer_id                 VARCHAR2(30),
+  etl_dt                      DATE,
+  etl_timestamp               TIMESTAMP(6)
+)
+partition by list (ETL_DT)
+(
+  partition PARTITION_19000101 values (TO_DATE(' 1900-01-01 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240630 values (TO_DATE(' 2024-06-30 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250930 values (TO_DATE(' 2025-09-30 00:00:00', 'SYYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL
+  is '账户交易支付明细';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.payment_id
+  is '支付编号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.payment_type_id
+  is '支付类型编号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.payment_method_type_id
+  is '支付方式类型编号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.payment_method_id
+  is '支付方式标识';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.payment_gateway_response_id
+  is '支付网关响应号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.payment_preference_id
+  is '支付优先标识';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.party_id_from
+  is '自会员标识';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.party_id_to
+  is '到会员表示';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.role_type_id_to
+  is '角色类型标识到';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.status_id
+  is '状态';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.effective_date
+  is '账务日期';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.payment_ref_num
+  is '前台流水号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.amount
+  is '交易金额';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.currency_uom_id
+  is '币种';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.comments
+  is '备注';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.fin_account_trans_id
+  is '金融账户交易明细编号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.override_gl_account_id
+  is '覆盖总账账户标识';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.actual_currency_amount
+  is '实际金额';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.actual_currency_uom_id
+  is '实际币种';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.last_updated_stamp
+  is '最后更新时间';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.last_updated_tx_stamp
+  is '最后更新事务时间';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.created_stamp
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.created_tx_stamp
+  is '创建事务时间';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.opp_account_num
+  is '对方账号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.opp_account_name
+  is '对方户名';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.opp_bank_num
+  is '对方账户开户行';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.opp_bank_name
+  is '对方账户开户行名称';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.fin_account_id
+  is '金融账户编号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.acc_name
+  is '账户名';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.trade_party_id
+  is '交易机构';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.all_receive_date
+  is '交易日期';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.parent_payment_id
+  is '原支付编号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.summary_info
+  is '摘要';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.postscript
+  is '附言';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.num
+  is '序列号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.re_type
+  is '类型';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.payment_trans_kind
+  is '交易种类';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.actual_balance
+  is '实际余额';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.available_balance
+  is '可用余额';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.is_show
+  is '是否对外展示';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.transaction_type
+  is '交易类型';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.transaction_serial
+  is '交易流水号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.merchant_code
+  is '商户号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.merchant_name
+  is '商户名称.';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.transaction_address
+  is '交易发生地';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.check_bill_product_id
+  is '对账产品编号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.check_bill_date
+  is '对账日期';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.customer_id
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_IFDS_V_PAYMENT_ALL.etl_timestamp
+  is 'ETL处理时间戳';
+

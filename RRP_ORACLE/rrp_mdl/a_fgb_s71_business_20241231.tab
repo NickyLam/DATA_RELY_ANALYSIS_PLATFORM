@@ -1,0 +1,46 @@
+﻿create table RRP_MDL.A_FGB_S71_BUSINESS_20241231
+(
+  bgrq          VARCHAR2(8) not null,
+  jywym         VARCHAR2(90) not null,
+  khwym         VARCHAR2(750),
+  zwjgbh        VARCHAR2(18),
+  zwjgmc        VARCHAR2(300),
+  dklb          VARCHAR2(45),
+  dgkhatjfl     VARCHAR2(45),
+  sndkfl        VARCHAR2(45),
+  tjdbfs        VARCHAR2(45),
+  sfwhbxd       VARCHAR2(14),
+  sxzed         NUMBER(20,4),
+  sxqj_3000     VARCHAR2(90),
+  tjxwqylb      VARCHAR2(90),
+  sfphxwqy      VARCHAR2(14),
+  tjye          NUMBER(20,4),
+  wjfl          VARCHAR2(14),
+  sfbl          VARCHAR2(14),
+  ysqsrq        VARCHAR2(12),
+  ysdqrq        VARCHAR2(12),
+  ysqxlb        VARCHAR2(45),
+  sfkcqy        VARCHAR2(14),
+  fkssxed       NUMBER(20,4),
+  fkje          NUMBER(20,4),
+  zxll          NUMBER(20,6),
+  nhlxsy        NUMBER(20,4),
+  zhwym         VARCHAR2(53),
+  cust_nam      VARCHAR2(300),
+  fkssfphxwqy   VARCHAR2(14),
+  departmentd   VARCHAR2(96),
+  fksxqj_3000   VARCHAR2(90),
+  sxqj_1000     VARCHAR2(90),
+  fksxqj_1000   VARCHAR2(90),
+  bzcpmc        VARCHAR2(300),
+  icms_khwym    VARCHAR2(45),
+  icms_cust_nam VARCHAR2(300),
+  ywhtje        NUMBER(20,4),
+  fksqygm       VARCHAR2(45)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+compress;
+

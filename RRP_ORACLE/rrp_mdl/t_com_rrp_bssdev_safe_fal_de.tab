@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.T_COM_RRP_BSSDEV_SAFE_FAL_DE
+(
+  rid                    VARCHAR2(100) not null,
+  actiontype             VARCHAR2(1),
+  actiondesc             VARCHAR2(128),
+  snocode                VARCHAR2(72),
+  objcode                VARCHAR2(36),
+  buocmonth              NUMBER(6),
+  exdebtcode             VARCHAR2(56),
+  d0510                  NUMBER(22,2),
+  d0511                  NUMBER(22,2),
+  t8_dp_bal              NUMBER(22,2),
+  d0514                  NUMBER(22,2),
+  remark                 VARCHAR2(512),
+  data_dt                VARCHAR2(40),
+  org_no                 VARCHAR2(40),
+  data_status            VARCHAR2(1),
+  xf_status              VARCHAR2(1),
+  task_id                VARCHAR2(100),
+  report_type            VARCHAR2(200),
+  bw_status              VARCHAR2(1),
+  approval_status        VARCHAR2(1),
+  approval_refuse_reason VARCHAR2(128),
+  child_data_status      VARCHAR2(1),
+  custno                 VARCHAR2(15),
+  curr_code              VARCHAR2(3),
+  originalperiod         VARCHAR2(1),
+  acctno                 VARCHAR2(50),
+  ntlycd                 VARCHAR2(4)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

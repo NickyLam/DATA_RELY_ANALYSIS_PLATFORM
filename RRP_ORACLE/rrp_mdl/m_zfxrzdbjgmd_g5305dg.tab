@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.M_ZFXRZDBJGMD_G5305DG
+(
+  region       VARCHAR2(30),
+  guartor_name VARCHAR2(200),
+  tyshxydm     VARCHAR2(200),
+  guartor_id_k VARCHAR2(45),
+  bz           VARCHAR2(300),
+  dt           VARCHAR2(8)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_ZFXRZDBJGMD_G5305DG
+  is 'G5305对公政府性融资担保机构名单';
+comment on column RRP_MDL.M_ZFXRZDBJGMD_G5305DG.region
+  is '地区';
+comment on column RRP_MDL.M_ZFXRZDBJGMD_G5305DG.guartor_name
+  is '政府性融资担保机构名称（政府公布名单）';
+comment on column RRP_MDL.M_ZFXRZDBJGMD_G5305DG.tyshxydm
+  is '统一社会信用代码';
+comment on column RRP_MDL.M_ZFXRZDBJGMD_G5305DG.guartor_id_k
+  is '政府性融资担保机构编号';
+comment on column RRP_MDL.M_ZFXRZDBJGMD_G5305DG.bz
+  is '备注';
+comment on column RRP_MDL.M_ZFXRZDBJGMD_G5305DG.dt
+  is '日期';
+

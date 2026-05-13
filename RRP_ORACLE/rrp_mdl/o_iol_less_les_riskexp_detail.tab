@@ -1,0 +1,135 @@
+﻿create table RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL
+(
+  datadate             VARCHAR2(20),
+  srcsysid             VARCHAR2(60),
+  expseid              VARCHAR2(100),
+  relbusnsid           VARCHAR2(60),
+  srccustomerid        VARCHAR2(60),
+  srccustomername      VARCHAR2(500),
+  collcertnum          VARCHAR2(100),
+  collcustomername     VARCHAR2(500),
+  isbank               VARCHAR2(60),
+  issupvsexptlistcust  VARCHAR2(20),
+  subjnum              VARCHAR2(32),
+  subjname             VARCHAR2(200),
+  expsecls             VARCHAR2(32),
+  currency             VARCHAR2(18),
+  bfriskexpse          NUMBER(38,6),
+  afriskexpse          NUMBER(38,6),
+  isbond               VARCHAR2(32),
+  anyloanbal           NUMBER(38,6),
+  balance              NUMBER(38,6),
+  tdprodtype           VARCHAR2(60),
+  srcorgid             VARCHAR2(32),
+  srcorgname           VARCHAR2(100),
+  paratborgid          VARCHAR2(60),
+  isproduct            VARCHAR2(60),
+  etltaskname          VARCHAR2(100),
+  etlupddate           VARCHAR2(20),
+  nonperformloanbal    NUMBER(38,6),
+  overdueloanbal       NUMBER(38,6),
+  collrelacertnum      VARCHAR2(60),
+  collrelacustomername VARCHAR2(500),
+  customertype         VARCHAR2(60),
+  busnsbal             NUMBER(38,6),
+  assetimpairment      NUMBER(38,6),
+  balsum               NUMBER(38,6),
+  marketval            NUMBER(38,6),
+  collval              NUMBER(38,6),
+  duebillno            VARCHAR2(64),
+  etl_dt               DATE,
+  etl_timestamp        TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL
+  is '风险暴露明细表';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.datadate
+  is '数据日期';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.srcsysid
+  is '源系统编号';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.expseid
+  is '暴露编号';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.relbusnsid
+  is '关联业务编号';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.srccustomerid
+  is '源系统暴露主体编号';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.srccustomername
+  is '源系统暴露主体名称';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.collcertnum
+  is '归集证件号码';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.collcustomername
+  is '归集暴露主体名称';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.isbank
+  is '是否同业';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.issupvsexptlistcust
+  is '是否监管豁免清单客户';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.subjnum
+  is '科目号';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.subjname
+  is '科目名称';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.expsecls
+  is '暴露分类';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.bfriskexpse
+  is '缓释前风险暴露';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.afriskexpse
+  is '缓释后风险暴露';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.isbond
+  is '是否为债券';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.anyloanbal
+  is '各项贷款余额';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.balance
+  is '业务余额';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.tdprodtype
+  is '特定产品类型（ProductType）';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.srcorgid
+  is '源机构id';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.srcorgname
+  is '源机构名称';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.paratborgid
+  is '暴露业务并表机构编号';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.isproduct
+  is '是否产品';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.etltaskname
+  is 'etl作业名称';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.etlupddate
+  is 'etl更新日期';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.nonperformloanbal
+  is '不良贷款余额';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.overdueloanbal
+  is '逾期贷款余额';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.collrelacertnum
+  is '集团编号';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.collrelacustomername
+  is '集团名称';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.customertype
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.busnsbal
+  is '账面价值';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.assetimpairment
+  is '减值';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.balsum
+  is '业务余额';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.marketval
+  is '市场价值';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.collval
+  is '缓释';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.duebillno
+  is '借据编号';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_LESS_LES_RISKEXP_DETAIL.etl_timestamp
+  is 'ETL处理时间戳';
+

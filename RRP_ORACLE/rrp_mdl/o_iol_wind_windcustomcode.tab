@@ -1,0 +1,102 @@
+﻿create table RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE
+(
+  object_id                 VARCHAR2(150),
+  s_info_windcode           VARCHAR2(60),
+  s_info_asharecode         VARCHAR2(15),
+  s_info_compcode           VARCHAR2(15),
+  s_info_securitiestypes    VARCHAR2(15),
+  s_info_sectypename        VARCHAR2(150),
+  s_info_countryname        VARCHAR2(150),
+  s_info_countrycode        VARCHAR2(15),
+  s_info_exchmarketname     VARCHAR2(60),
+  s_info_exchmarket         VARCHAR2(20),
+  crncy_name                VARCHAR2(60),
+  crncy_code                VARCHAR2(15),
+  s_info_isincode           VARCHAR2(60),
+  s_info_code               VARCHAR2(60),
+  s_info_name               VARCHAR2(300),
+  exchmarket                VARCHAR2(20),
+  security_status           NUMBER(9),
+  s_info_org_code           VARCHAR2(30),
+  s_info_typecode           NUMBER(9),
+  s_info_min_price_chg_unit NUMBER(24,8),
+  s_info_lot_size           NUMBER(20,4),
+  s_info_ename              VARCHAR2(300),
+  opdate                    DATE,
+  opmode                    VARCHAR2(2),
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE
+  is 'Wind兼容代码';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.object_id
+  is '对象ID';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_windcode
+  is 'Wind代码';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_asharecode
+  is '证券ID';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_compcode
+  is '公司ID';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_securitiestypes
+  is '证券类型';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_sectypename
+  is '类型名称';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_countryname
+  is '国别';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_countrycode
+  is '国别编号';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_exchmarketname
+  is '交易所';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_exchmarket
+  is '交易所编号';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.crncy_name
+  is '币种';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.crncy_code
+  is '币种编号';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_isincode
+  is 'ISIN代码';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_code
+  is '交易代码';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_name
+  is '证券中文简称';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.exchmarket
+  is '交易所';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.security_status
+  is '存续状态';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_org_code
+  is '组织机构代码';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_typecode
+  is '分类代码';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_min_price_chg_unit
+  is '最小价格变动单位';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_lot_size
+  is '每手数量';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.s_info_ename
+  is '证券英文简称';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.opdate
+  is '未知';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.opmode
+  is '未知';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_WIND_WINDCUSTOMCODE.etl_timestamp
+  is 'etl处理时间';
+

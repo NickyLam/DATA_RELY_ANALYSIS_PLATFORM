@@ -1,0 +1,36 @@
+﻿create table RRP_MDL.B_PUB_EXRT_INFO_BAK20220430
+(
+  data_dt    CHAR(8) not null,
+  lgl_rep_id VARCHAR2(200),
+  org_id     VARCHAR2(200) not null,
+  base_cur   CHAR(3) not null,
+  cnv_cur    CHAR(3) not null,
+  mdl_prc    NUMBER(30,2) not null,
+  base_prc   NUMBER(30,2),
+  dept_line  VARCHAR2(500),
+  data_src   VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.B_PUB_EXRT_INFO_BAK20220430.data_dt
+  is '数据日期';
+comment on column RRP_MDL.B_PUB_EXRT_INFO_BAK20220430.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.B_PUB_EXRT_INFO_BAK20220430.org_id
+  is '银行编号';
+comment on column RRP_MDL.B_PUB_EXRT_INFO_BAK20220430.base_cur
+  is '来源币种';
+comment on column RRP_MDL.B_PUB_EXRT_INFO_BAK20220430.cnv_cur
+  is '折算币种';
+comment on column RRP_MDL.B_PUB_EXRT_INFO_BAK20220430.mdl_prc
+  is '中间价';
+comment on column RRP_MDL.B_PUB_EXRT_INFO_BAK20220430.base_prc
+  is '基准价';
+comment on column RRP_MDL.B_PUB_EXRT_INFO_BAK20220430.dept_line
+  is '部门条线';
+comment on column RRP_MDL.B_PUB_EXRT_INFO_BAK20220430.data_src
+  is '数据来源（参见[字典:AML0045]）';
+

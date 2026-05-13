@@ -1,0 +1,114 @@
+﻿create table RRP_MDL.EAST5_703_XDZCZRB_BAK20220604
+(
+  rid         VARCHAR2(50) not null,
+  jrxkzh      VARCHAR2(30),
+  nbjgh       VARCHAR2(30),
+  zrhth       VARCHAR2(100) not null,
+  zczrfx      VARCHAR2(30),
+  zczrfs      VARCHAR2(60),
+  zrjkrzzh    VARCHAR2(60),
+  zrjkrzmc    VARCHAR2(450),
+  jydsmc      VARCHAR2(450),
+  jydszzzh    VARCHAR2(60),
+  jydskhhmc   VARCHAR2(450),
+  bz          VARCHAR2(3),
+  zrdkbjze    NUMBER(20,2),
+  zrdklxze    NUMBER(20,2),
+  zrzj        NUMBER(20,2),
+  zrhtqsrq    VARCHAR2(8),
+  zrhtdqrq    VARCHAR2(8),
+  jydszrrq    VARCHAR2(8),
+  jydsyzfje   NUMBER(20,2),
+  bzjbl       NUMBER(20,2),
+  bzjbz       VARCHAR2(3),
+  bzjje       NUMBER(20,2),
+  zrjypt      VARCHAR2(450),
+  sfzydzxdj   VARCHAR2(3),
+  zrhtzt      VARCHAR2(30),
+  bbz         VARCHAR2(600),
+  cjrq        VARCHAR2(8) not null,
+  dept_no     VARCHAR2(10),
+  src_sys_id  VARCHAR2(10),
+  issued_no   VARCHAR2(50),
+  org_no      VARCHAR2(20),
+  address     VARCHAR2(500),
+  jydsmc_orig VARCHAR2(200),
+  jydsmc_oth  VARCHAR2(5),
+  gsfzjg      VARCHAR2(200)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.rid
+  is '数据主键';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.jrxkzh
+  is '金融许可证号';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.nbjgh
+  is '内部机构号';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zrhth
+  is '转让合同号';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zczrfx
+  is '资产转让方向';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zczrfs
+  is '资产转让方式';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zrjkrzzh
+  is '转让价款入账账号';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zrjkrzmc
+  is '转让价款入账账户名称';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.jydsmc
+  is '交易对手名称';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.jydszzzh
+  is '交易对手账号';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.jydskhhmc
+  is '交易对手开户行名称';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.bz
+  is '申请控制金额币种';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zrdkbjze
+  is '转让贷款本金总额';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zrdklxze
+  is '转让贷款利息总额';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zrzj
+  is '转让总价';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zrhtqsrq
+  is '转让合同起始日期';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zrhtdqrq
+  is '转让合同到期日期';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.jydszrrq
+  is '交易对手转账日期';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.jydsyzfje
+  is '交易对手已支付金额';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.bzjbl
+  is '保证金比例';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.bzjbz
+  is '保证金标志';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.bzjje
+  is '保证金金额';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zrjypt
+  is '转让交易平台';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.sfzydzxdj
+  is '是否在银登中心登记';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.zrhtzt
+  is '转让合同状态';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.bbz
+  is '备注';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.cjrq
+  is '创建日期';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.dept_no
+  is '部门编号';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.src_sys_id
+  is '来源系统ID';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.issued_no
+  is '填报机构';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.org_no
+  is '所属机构';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.address
+  is '用户地址';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.jydsmc_orig
+  is '交易对手名称脱敏（前）';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.jydsmc_oth
+  is '交易对手是否个人';
+comment on column RRP_MDL.EAST5_703_XDZCZRB_BAK20220604.gsfzjg
+  is '归属分支机构';
+

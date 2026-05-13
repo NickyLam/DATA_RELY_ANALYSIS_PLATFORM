@@ -1,0 +1,75 @@
+﻿create table RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL
+(
+  evt_id             VARCHAR2(250),
+  lp_id              VARCHAR2(60),
+  tran_dt            DATE,
+  tran_flow_num      VARCHAR2(150),
+  batch_id           VARCHAR2(100),
+  deduct_seq_num     VARCHAR2(90),
+  acct_id            VARCHAR2(100),
+  acct_name          VARCHAR2(150),
+  amt                NUMBER(30,2),
+  acct_num_resp_code VARCHAR2(45),
+  acct_num_resp_info VARCHAR2(150),
+  host_flow_num      VARCHAR2(150),
+  host_tran_dt       DATE,
+  host_return_code   VARCHAR2(45),
+  host_return_info   VARCHAR2(1500),
+  etl_dt             DATE,
+  src_table_name     VARCHAR2(100),
+  job_cd             VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL
+  is '代发代扣签约信息历史';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.tran_flow_num
+  is '交易流水号';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.batch_id
+  is '批次编号';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.deduct_seq_num
+  is '扣款序号';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.amt
+  is '金额';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.acct_num_resp_code
+  is '账号响应码';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.acct_num_resp_info
+  is '账号响应信息';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.host_flow_num
+  is '主机流水号';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.host_tran_dt
+  is '主机交易日期';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.host_return_code
+  is '主机返回码';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.host_return_info
+  is '主机返回信息';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_PAYOFF_WITHHOLD_BATCH_DTL.etl_timestamp
+  is 'etl处理时间戳';
+

@@ -1,0 +1,33 @@
+﻿create table RRP_MDL.T_COM_RRP_IMAS_IMAS_333_TZYWZD
+(
+  rid                   VARCHAR2(50) not null,
+  data_dt               VARCHAR2(10) not null,
+  org_no                VARCHAR2(30),
+  cust_no               VARCHAR2(30),
+  acct_no               VARCHAR2(100),
+  bill_no               VARCHAR2(30),
+  issue_dt              VARCHAR2(10),
+  curr_cd               VARCHAR2(3),
+  bill_amt              NUMBER(22,2),
+  pre_bill_amt          NUMBER(22,2),
+  stag_amt              NUMBER(22,2),
+  prin_amt              NUMBER(22,2),
+  bill_due_dt           VARCHAR2(10),
+  int_bear_int_rate     NUMBER(15,5),
+  stag_mark             VARCHAR2(1),
+  total_int             NUMBER(22,2),
+  pre_new_mini_bill_amt NUMBER(22,2),
+  repay_amt             NUMBER(22,2),
+  overdue_amt           NUMBER(22,2),
+  dept_no               VARCHAR2(30),
+  issued_no             VARCHAR2(20),
+  rpt_org_no            VARCHAR2(20),
+  data_ources           VARCHAR2(20),
+  data_modify           VARCHAR2(2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

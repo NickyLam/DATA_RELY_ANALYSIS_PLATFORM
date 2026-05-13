@@ -1,0 +1,66 @@
+﻿create table RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO
+(
+  draftid       VARCHAR2(75),
+  draftnumber   VARCHAR2(75),
+  cdrange       VARCHAR2(75),
+  srctype       VARCHAR2(75),
+  contractid    VARCHAR2(75),
+  productno     VARCHAR2(75),
+  busidate      VARCHAR2(12),
+  innerflag     VARCHAR2(2),
+  rate          NUMBER(9,6),
+  firstsource   VARCHAR2(2),
+  remainterest  NUMBER(18,2),
+  acctbranchno  VARCHAR2(75),
+  dealid        VARCHAR2(75),
+  seq           VARCHAR2(2),
+  etl_dt        DATE,
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO
+  is '买入来源查询视图';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.draftid
+  is '票据id';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.draftnumber
+  is '票据号码';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.cdrange
+  is '子票区间';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.srctype
+  is '票据来源';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.contractid
+  is '买入批次id';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.productno
+  is '产品号';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.busidate
+  is '业务日期';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.innerflag
+  is '系统内外标识';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.rate
+  is '买入利率';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.firstsource
+  is '买入来源';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.remainterest
+  is '剩余摊销金额';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.acctbranchno
+  is '记账机构';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.dealid
+  is '成交单编号';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.seq
+  is '排序序号';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IOL_BDMS_BUY_SOURCE_INFO.etl_timestamp
+  is 'etl处理时间戳';
+

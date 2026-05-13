@@ -1,0 +1,252 @@
+﻿create table RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT
+(
+  evt_id                   VARCHAR2(250),
+  lp_id                    VARCHAR2(60),
+  ta_cd                    VARCHAR2(30),
+  cfm_dt                   DATE,
+  ta_cfm_flow_num          VARCHAR2(100),
+  init_cfm_flow_num        VARCHAR2(100),
+  intior_type_cd           VARCHAR2(30),
+  tran_dt                  DATE,
+  tran_tm                  VARCHAR2(10),
+  clear_dt                 DATE,
+  flow_num                 VARCHAR2(100),
+  tran_cd                  VARCHAR2(30),
+  bus_cd                   VARCHAR2(30),
+  tran_org_id              VARCHAR2(60),
+  open_acct_org_id         VARCHAR2(60),
+  tran_chn_cd              VARCHAR2(30),
+  termn_id                 VARCHAR2(50),
+  tran_teller_id           VARCHAR2(60),
+  finc_cust_id             VARCHAR2(60),
+  cust_type_cd             VARCHAR2(30),
+  finc_acct_id             VARCHAR2(60),
+  cust_id                  VARCHAR2(60),
+  bank_acct_id             VARCHAR2(60),
+  ta_tran_acct_id          VARCHAR2(60),
+  tran_med_type_cd         VARCHAR2(30),
+  tran_med_id              VARCHAR2(60),
+  ec_idf_cd                VARCHAR2(30),
+  prod_id                  VARCHAR2(60),
+  charge_way_cd            VARCHAR2(30),
+  prod_nv                  NUMBER(18,8),
+  tran_price               NUMBER(18,6),
+  tran_amt                 NUMBER(18,6),
+  stl_curr_cd              VARCHAR2(30),
+  cfm_amt                  NUMBER(30,2),
+  tran_lot                 NUMBER(18,6),
+  cfm_lot                  NUMBER(18,6),
+  need_huge_redem_proc_flg VARCHAR2(30),
+  force_redem_rs           VARCHAR2(150),
+  comm_discnt              NUMBER(18,6),
+  tot_cost                 NUMBER(18,6),
+  comm_fee                 NUMBER(18,6),
+  stamp_tax                NUMBER(18,6),
+  int_tax                  NUMBER(18,6),
+  tran_fee                 NUMBER(18,6),
+  agent_fee                NUMBER(18,6),
+  back_end_charge          NUMBER(18,6),
+  other_fee_1              NUMBER(18,6),
+  other_fee_2              NUMBER(18,6),
+  cfm_prft                 NUMBER(18,6),
+  mgmt_fee                 NUMBER(18,6),
+  cotin_froz_amt           NUMBER(18,6),
+  dtl_flg                  VARCHAR2(30),
+  end_type_cd              VARCHAR2(30),
+  froz_rs_cd               VARCHAR2(30),
+  tran_dir_cd              VARCHAR2(30),
+  int_amt                  NUMBER(18,6),
+  int_turn_lot             NUMBER(18,6),
+  divd_way_cd              VARCHAR2(30),
+  memo_comnt               VARCHAR2(375),
+  return_code              VARCHAR2(45),
+  err_info                 VARCHAR2(375),
+  tran_status_cd           VARCHAR2(30),
+  cust_mgr_id              VARCHAR2(60),
+  rela_dt                  DATE,
+  rela_flow_num            VARCHAR2(60),
+  bank_comm_fee            NUMBER(18,6),
+  intior_flow_num          VARCHAR2(60),
+  cont_id                  VARCHAR2(60),
+  host_tran_cd             VARCHAR2(30),
+  host_dt                  DATE,
+  host_flow_num            VARCHAR2(60),
+  tran_post_lot            NUMBER(18,6),
+  start_dt                 DATE,
+  end_dt                   DATE,
+  id_mark                  VARCHAR2(10),
+  src_table_name           VARCHAR2(100),
+  job_cd                   VARCHAR2(10),
+  etl_timestamp            TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT
+  is '信托交易确认事件';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.ta_cd
+  is 'TA代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.cfm_dt
+  is '确认日期';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.ta_cfm_flow_num
+  is 'TA确认流水号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.init_cfm_flow_num
+  is '原确认流水号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.intior_type_cd
+  is '发起方类型代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.clear_dt
+  is '清算日期';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.flow_num
+  is '流水号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_cd
+  is '交易代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.bus_cd
+  is '业务代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.open_acct_org_id
+  is '开户机构编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_chn_cd
+  is '交易渠道编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.termn_id
+  is '交易终端编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.finc_cust_id
+  is '理财客户编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.finc_acct_id
+  is '理财账户编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.cust_id
+  is '交易客户编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.bank_acct_id
+  is '银行账户编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.ta_tran_acct_id
+  is 'TA交易账户编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_med_type_cd
+  is '交易介质类型代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_med_id
+  is '交易介质编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.ec_idf_cd
+  is '钞汇标识代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.charge_way_cd
+  is '收费方式代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.prod_nv
+  is '产品净值';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_price
+  is '交易价格';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.stl_curr_cd
+  is '结算币种代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.cfm_amt
+  is '确认金额';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_lot
+  is '交易份额';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.cfm_lot
+  is '确认份额';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.need_huge_redem_proc_flg
+  is '需要巨额赎回处理标志';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.force_redem_rs
+  is '强行赎回原因';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.comm_discnt
+  is '佣金折扣';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tot_cost
+  is '总费用';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.comm_fee
+  is '手续费';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.stamp_tax
+  is '印花税';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.int_tax
+  is '利息税';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_fee
+  is '过户费';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.agent_fee
+  is '代理费';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.back_end_charge
+  is '后端收费';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.other_fee_1
+  is '其他费用1';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.other_fee_2
+  is '其他费用2';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.cfm_prft
+  is '确认收益';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.mgmt_fee
+  is '管理费';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.cotin_froz_amt
+  is '继续冻结金额';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.dtl_flg
+  is '明细标志';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.end_type_cd
+  is '结束类型代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.froz_rs_cd
+  is '冻结原因代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_dir_cd
+  is '转换方向代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.int_amt
+  is '利息金额';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.int_turn_lot
+  is '利息转份额';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.divd_way_cd
+  is '分红方式代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.memo_comnt
+  is '摘要说明';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.return_code
+  is '返回码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.err_info
+  is '错误信息';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.rela_dt
+  is '关联日期';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.rela_flow_num
+  is '关联流水号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.bank_comm_fee
+  is '银行手续费';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.intior_flow_num
+  is '发起方流水号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.cont_id
+  is '合约编号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.host_tran_cd
+  is '主机交易代码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.host_dt
+  is '主机日期';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.host_flow_num
+  is '主机流水号';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.tran_post_lot
+  is '交易后份额';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_TRUST_TRAN_CFM_EVT.etl_timestamp
+  is 'ETL处理时间戳';
+

@@ -1,0 +1,185 @@
+﻿create table RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526
+(
+  evt_id                VARCHAR2(250),
+  lp_id                 VARCHAR2(100),
+  seq_num               VARCHAR2(60),
+  acct_id               VARCHAR2(100),
+  int_cls_cd            VARCHAR2(30),
+  tran_dt               DATE,
+  tran_org_id           VARCHAR2(100),
+  cust_acct_num         VARCHAR2(60),
+  prod_id               VARCHAR2(100),
+  acct_curr_cd          VARCHAR2(30),
+  sub_acct_num          VARCHAR2(60),
+  open_acct_org_id      VARCHAR2(100),
+  open_acct_dt          DATE,
+  cust_id               VARCHAR2(100),
+  dep_redt_type_cd      VARCHAR2(30),
+  int_rat_type_cd       VARCHAR2(30),
+  bank_int_int_rat      NUMBER(18,8),
+  float_int_rat         NUMBER(18,8),
+  float_point           NUMBER(18,8),
+  exec_int_rat          NUMBER(18,8),
+  acm_int_adj_amt       NUMBER(30,2),
+  provi_day_int_adj_amt NUMBER(30,2),
+  base_int_rat          NUMBER(18,8),
+  tot_int_amt           NUMBER(30,2),
+  int_accr_amt          NUMBER(30,2),
+  last_int_set_dt       DATE,
+  cap_flg               VARCHAR2(10),
+  dep_term_tenor        NUMBER(10),
+  tenor_type_cd         VARCHAR2(30),
+  exp_dt                DATE,
+  amt_type_cd           VARCHAR2(30),
+  tran_happ_pric        NUMBER(30,2),
+  tran_amt              NUMBER(30,2),
+  wdraw_int_rat         NUMBER(18,8),
+  net_int               NUMBER(30,2),
+  int_accr_days         NUMBER(10),
+  tax_rat               NUMBER(18,6),
+  tax_category_cd       VARCHAR2(30),
+  tax_amt               NUMBER(30,2),
+  dep_vouch_cate_cd     VARCHAR2(30),
+  vouch_no              VARCHAR2(60),
+  redt_seq_num          VARCHAR2(60),
+  tran_ref_no           VARCHAR2(60),
+  post_flg              VARCHAR2(10),
+  tran_revs_dt          DATE,
+  accti_status_cd       VARCHAR2(30),
+  sob_cate_cd           VARCHAR2(30),
+  tran_memo_descb       VARCHAR2(500),
+  src_module_type_cd    VARCHAR2(30),
+  bus_proc_status_cd    VARCHAR2(30),
+  check_entry_cd        VARCHAR2(30),
+  tran_teller_id        VARCHAR2(100),
+  tran_tm               TIMESTAMP(6),
+  bus_flow_num          VARCHAR2(100),
+  etl_dt                DATE,
+  src_table_name        VARCHAR2(100),
+  job_cd                VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526
+  is '存款计提流水';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.seq_num
+  is '序号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.int_cls_cd
+  is '利息分类代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tran_org_id
+  is '交易机构编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.cust_acct_num
+  is '客户账号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.acct_curr_cd
+  is '账户币种代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.sub_acct_num
+  is '子账号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.open_acct_org_id
+  is '开户机构编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.open_acct_dt
+  is '开户日期';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.dep_redt_type_cd
+  is '存款转存类型代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.int_rat_type_cd
+  is '利率类型代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.bank_int_int_rat
+  is '行内利率';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.float_int_rat
+  is '浮动利率';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.float_point
+  is '浮动点数';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.exec_int_rat
+  is '执行利率';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.acm_int_adj_amt
+  is '累计利息调整金额';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.provi_day_int_adj_amt
+  is '计提日利息调整金额';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.base_int_rat
+  is '基础利率';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tot_int_amt
+  is '总利息金额';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.int_accr_amt
+  is '计息金额';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.last_int_set_dt
+  is '上一结息日期';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.cap_flg
+  is '资本化标志';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.dep_term_tenor
+  is '存期期限';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tenor_type_cd
+  is '期限类型代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.exp_dt
+  is '到期日期';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.amt_type_cd
+  is '金额类型代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tran_happ_pric
+  is '交易发生本金';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.wdraw_int_rat
+  is '支取利率';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.net_int
+  is '净利息';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.int_accr_days
+  is '计息天数';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tax_rat
+  is '税率';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tax_category_cd
+  is '税种代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tax_amt
+  is '税金';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.dep_vouch_cate_cd
+  is '存款凭证类别代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.vouch_no
+  is '凭证号码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.redt_seq_num
+  is '转存序号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tran_ref_no
+  is '交易参考号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.post_flg
+  is '过账标志';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tran_revs_dt
+  is '交易冲正日期';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.accti_status_cd
+  is '核算状态代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.sob_cate_cd
+  is '账套类别代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tran_memo_descb
+  is '交易摘要描述';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.src_module_type_cd
+  is '源模块类型代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.bus_proc_status_cd
+  is '业务处理状态代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.check_entry_cd
+  is '对账代码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tran_teller_id
+  is '交易柜员编号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.tran_tm
+  is '交易时间';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.bus_flow_num
+  is '业务流水号';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.etl_dt
+  is 'etl处理日期';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_DEP_ACCT_IMP_EVT_RGST_B_BAK_20230526.etl_timestamp
+  is 'etl处理时间戳';
+

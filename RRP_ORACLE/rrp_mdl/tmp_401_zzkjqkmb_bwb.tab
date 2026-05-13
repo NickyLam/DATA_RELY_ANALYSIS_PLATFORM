@@ -1,0 +1,44 @@
+﻿create table RRP_MDL.TMP_401_ZZKJQKMB_BWB
+(
+  nbjgh  VARCHAR2(30) not null,
+  kjkmbh VARCHAR2(60) not null,
+  bz     VARCHAR2(3) not null,
+  qcjfye NUMBER(20,2),
+  qcdfye NUMBER(20,2),
+  jffse  NUMBER(20,2),
+  dffse  NUMBER(20,2),
+  qmjfye NUMBER(20,2),
+  qmdfye NUMBER(20,2),
+  cjrq   VARCHAR2(8),
+  bszq   VARCHAR2(20)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.TMP_401_ZZKJQKMB_BWB
+  is '临时表';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.nbjgh
+  is '临时表字段';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.kjkmbh
+  is '临时表字段';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.bz
+  is '币种';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.qcjfye
+  is '临时表字段';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.qcdfye
+  is '临时表字段';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.jffse
+  is '临时表字段';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.dffse
+  is '临时表字段';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.qmjfye
+  is '临时表字段';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.qmdfye
+  is '临时表字段';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.cjrq
+  is '临时表字段';
+comment on column RRP_MDL.TMP_401_ZZKJQKMB_BWB.bszq
+  is '临时表字段';
+

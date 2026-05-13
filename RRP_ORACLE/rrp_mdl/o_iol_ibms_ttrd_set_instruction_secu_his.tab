@@ -1,0 +1,297 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS
+(
+  secu_inst_id           NUMBER(16),
+  secu_inst_grp_id       NUMBER(16),
+  inst_id                NUMBER(16),
+  biz_type               VARCHAR2(45),
+  direction              VARCHAR2(15),
+  trade_grp_id           VARCHAR2(45),
+  secu_acct_id           VARCHAR2(45),
+  ext_secu_acct_id       VARCHAR2(45),
+  i_code                 VARCHAR2(75),
+  a_type                 VARCHAR2(30),
+  m_type                 VARCHAR2(30),
+  currency               VARCHAR2(15),
+  real_fee               NUMBER(31,4),
+  estd_ai                NUMBER(31,4),
+  received_ai            NUMBER(31,4),
+  estd_cp                NUMBER(31,4),
+  real_ai                NUMBER(31,4),
+  real_cp                NUMBER(31,4),
+  due_ai                 NUMBER(38,4),
+  due_cp                 NUMBER(38,4),
+  prft_fee               NUMBER(38,4),
+  is_remain_due_ai       NUMBER(4),
+  is_remain_due_cp       NUMBER(4),
+  volume                 NUMBER(38,4),
+  freeze_volume          NUMBER(38,4),
+  is_fixed               NUMBER,
+  cal_date               VARCHAR2(15),
+  set_date               VARCHAR2(15),
+  set_finish_date        VARCHAR2(15),
+  i_name                 VARCHAR2(300),
+  p_class                VARCHAR2(150),
+  cost                   NUMBER(31,4),
+  cost_ai_his_real       NUMBER(31,4),
+  zzd_acct_code          VARCHAR2(150),
+  party_zzd_acct_code    VARCHAR2(150),
+  create_time            VARCHAR2(29),
+  update_time            VARCHAR2(35),
+  update_user            VARCHAR2(150),
+  confirm_time           VARCHAR2(29),
+  confirm_user           VARCHAR2(30),
+  account_time           VARCHAR2(29),
+  account_user           VARCHAR2(30),
+  memo                   VARCHAR2(750),
+  amount                 NUMBER(31,4),
+  close_trade_id         VARCHAR2(45),
+  blc_state              NUMBER,
+  acctg_state            NUMBER,
+  estd_fee               NUMBER(31,4),
+  fee                    NUMBER(31,4),
+  opr_state              NUMBER,
+  secu_inst_setgrp_id    NUMBER(16),
+  his_flag               NUMBER,
+  his_secu_inst_id       NUMBER(16),
+  his_set_finish_date    VARCHAR2(15),
+  acctg_inst_id          NUMBER(16),
+  cancel_flag            VARCHAR2(2),
+  volume_termcur         NUMBER(31,4),
+  amount_termcur         NUMBER(31,4),
+  estd_cp_termcur        NUMBER(31,4),
+  real_cp_termcur        NUMBER(31,4),
+  amrt_method            NUMBER,
+  real_margin            NUMBER(31,8),
+  fpml                   VARCHAR2(4000),
+  is_impair              VARCHAR2(2),
+  is_theory_acct         VARCHAR2(2),
+  is_theory_blc          VARCHAR2(2),
+  cl_status              NUMBER(3),
+  party_pset             VARCHAR2(17),
+  party_pset_country     VARCHAR2(3),
+  party_agent_code_type  VARCHAR2(2),
+  party_agent_code_dss   VARCHAR2(270),
+  party_agent_code       VARCHAR2(210),
+  party_agent_account    VARCHAR2(75),
+  party_code_type        VARCHAR2(2),
+  party_code_dss         VARCHAR2(270),
+  party_code             VARCHAR2(210),
+  party_account          VARCHAR2(75),
+  si_id                  NUMBER(16),
+  cal_start_date         VARCHAR2(15),
+  ord_limit_secu_inst_id NUMBER(31),
+  is_calc_tax_4_prft_trd NUMBER,
+  estd_volume            NUMBER(38,4),
+  estd_amount            NUMBER(31,4),
+  module_type            NUMBER,
+  party_pset_name        VARCHAR2(75),
+  volume_geninst         NUMBER(31,8),
+  custom_dim1            VARCHAR2(300),
+  xcc_module_type        NUMBER,
+  is_editable            VARCHAR2(2),
+  memo_secu              VARCHAR2(750),
+  dtl_due_type           VARCHAR2(45),
+  etl_dt                 DATE,
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS
+  is '主指令表';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.secu_inst_id
+  is '证券结算指令序号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.secu_inst_grp_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.inst_id
+  is '产品id-管控平台内部';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.biz_type
+  is '业务种类01-出票人保证 02-承兑人保证 03-背书保证';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.direction
+  is '投向(代码：ndustryType)';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.trade_grp_id
+  is '组合交易号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.secu_acct_id
+  is '内部券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.ext_secu_acct_id
+  is '外部券账户';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.i_code
+  is '交易代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.a_type
+  is '资产类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.m_type
+  is '市场';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.real_fee
+  is '实收(付)费用';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.estd_ai
+  is '应计利息成本变动';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.received_ai
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.estd_cp
+  is '净价金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.real_ai
+  is '实际应计利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.real_cp
+  is '实际净价金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.due_ai
+  is '应收未收利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.due_cp
+  is '应收未收净价成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.prft_fee
+  is '损益费用';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.is_remain_due_ai
+  is '是否保留剩余收益';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.is_remain_due_cp
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.volume
+  is '发行量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.freeze_volume
+  is '冻结余额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.is_fixed
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.cal_date
+  is '理论结算日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.set_date
+  is '缴款日';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.set_finish_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.i_name
+  is '方案编号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.p_class
+  is '产品分类';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.cost
+  is '源值';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.cost_ai_his_real
+  is '应收未收利息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.zzd_acct_code
+  is '本方中债登托管账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_zzd_acct_code
+  is '对手中债登托管账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.create_time
+  is '创建时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.update_time
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.update_user
+  is '更新者id';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.confirm_time
+  is '非首期指令确认时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.confirm_user
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.account_time
+  is '记账时间';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.account_user
+  is '复核人员';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.memo
+  is '备注';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.amount
+  is '交易金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.close_trade_id
+  is '清算所估值';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.blc_state
+  is '0: 初始状态;50: 权责业务余额开始;51: 权责业务余额完成;52: 收付业务余额开始;53: 收付业务余额完成';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.acctg_state
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.estd_fee
+  is '理论费用';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.fee
+  is '费用';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.opr_state
+  is '-1:新建;0:待确认;1:待经办;2:待复核;9:已复核;99:结束';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.secu_inst_setgrp_id
+  is '合并收付号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.his_flag
+  is '历史交易表示0.普通交易（默认）1.补录 2.撤销 3.反冲 4。修改';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.his_secu_inst_id
+  is '历史券指令号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.his_set_finish_date
+  is '历史实际结算日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.acctg_inst_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.cancel_flag
+  is '1:表示限额反向指令，其它：正向指令';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.volume_termcur
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.amount_termcur
+  is '未知';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.estd_cp_termcur
+  is '货币对反向预计净价金额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.real_cp_termcur
+  is '货币对反向实际成本';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.amrt_method
+  is '摊销算法';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.real_margin
+  is '期货保证金';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.fpml
+  is 'fpml';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.is_impair
+  is '计价货币中间行swift代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.is_theory_acct
+  is '是否已做过理论核算';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.is_theory_blc
+  is '是否已做权责业务';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.cl_status
+  is '占用状态-20代表冻结或者实占-30代表冻结转实占';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_pset
+  is '结算场所代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_pset_country
+  is '国家代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_agent_code_type
+  is '代理行代码类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_agent_code_dss
+  is '代理行代码编码集合名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_agent_code
+  is '代理行代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_agent_account
+  is '代理行账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_code_type
+  is '交易主体代码类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_code_dss
+  is '交易主体代码编码集合名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_code
+  is '交易主体代码';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_account
+  is '交易主体账号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.si_id
+  is '证券结算要素ID';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.cal_start_date
+  is '计息开始日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.ord_limit_secu_inst_id
+  is '审批单限额券指令号';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.is_calc_tax_4_prft_trd
+  is '卖出时买卖损益是否拆税。枚举值：0此字段无效，向前兼容，老项目使用。1拆税，2不拆税';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.estd_volume
+  is '预计数量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.estd_amount
+  is '预计面额';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.module_type
+  is '核算模块类型,0：做业务余额核算；1：只做业务余额；2：只做核算';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.party_pset_name
+  is '结算场所名称';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.volume_geninst
+  is '生成指令时持仓数量';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.custom_dim1
+  is '扩展维度1';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.xcc_module_type
+  is '核算模块类型,0：做业务余额核算；1：只做业务余额；2：只做核算';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.is_editable
+  is '前台是否可修改';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.memo_secu
+  is '理论实收付备注信息';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.dtl_due_type
+  is '明细due类型';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_IBMS_TTRD_SET_INSTRUCTION_SECU_HIS.etl_timestamp
+  is 'ETL处理时间戳';
+

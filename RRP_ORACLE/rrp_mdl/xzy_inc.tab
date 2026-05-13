@@ -1,0 +1,11 @@
+﻿create table RRP_MDL.XZY_INC
+(
+  i_id INTEGER,
+  val  VARCHAR2(80)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

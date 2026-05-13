@@ -1,0 +1,111 @@
+﻿create table RRP_MDL.O_IOL_ICMS_FINA_REPORT
+(
+  reportno        VARCHAR2(32),
+  reporttypeno    VARCHAR2(32),
+  customerid      VARCHAR2(32),
+  accountingmonth VARCHAR2(18),
+  reportscope     VARCHAR2(18),
+  reportperiod    VARCHAR2(18),
+  currency        VARCHAR2(3),
+  monetaryunit    VARCHAR2(200),
+  reportstatus    VARCHAR2(18),
+  auditflag       VARCHAR2(1),
+  auditingagency  VARCHAR2(200),
+  auditopinion    VARCHAR2(1000),
+  deleteflag      VARCHAR2(1),
+  warningresult   VARCHAR2(18),
+  remark          VARCHAR2(500),
+  inputuserid     VARCHAR2(32),
+  inputorgid      VARCHAR2(32),
+  inputdate       DATE,
+  updateuserid    VARCHAR2(32),
+  updateorgid     VARCHAR2(32),
+  updatedate      DATE,
+  auditdate       DATE,
+  corporgid       VARCHAR2(32),
+  reportflag      VARCHAR2(1),
+  reportopinion   VARCHAR2(300),
+  accordingflag   VARCHAR2(10),
+  islock          VARCHAR2(1),
+  hxtyzlsource    VARCHAR2(1000),
+  start_dt        DATE,
+  end_dt          DATE,
+  id_mark         VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ICMS_FINA_REPORT
+  is '财报簿;财报,财报簿(每位客户可以拥有多个财报簿;每个财报簿拥有多个财报表,如资产负债表,现金流量表)原表名:customer_report';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.reportno
+  is '财报号';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.reporttypeno
+  is '财报类型编号';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.customerid
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.accountingmonth
+  is '会计月';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.reportscope
+  is '报表口径';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.reportperiod
+  is '报表周期';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.currency
+  is '币种';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.monetaryunit
+  is '货币单位在code_library拥有码值,即(千元,万元等)同时外部取值时将基数与本值相乘,再返回.';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.reportstatus
+  is '状态';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.auditflag
+  is '审计标志';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.auditingagency
+  is '审计机构';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.auditopinion
+  is '审计意见';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.deleteflag
+  is '删除标志';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.warningresult
+  is '预警结果';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.remark
+  is '注释';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.inputuserid
+  is '登记人';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.inputorgid
+  is '登记机构';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.inputdate
+  is '登记日期登记日期时间';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.updateuserid
+  is '更新人';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.updateorgid
+  is '更新机构';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.updatedate
+  is '更新日期';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.auditdate
+  is '审计时间';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.corporgid
+  is '法人机构编号';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.reportflag
+  is '报表检查标志';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.reportopinion
+  is '报表注释';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.accordingflag
+  is '依据标志';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.islock
+  is '是否内评系统锁定：0-锁定 1-正常';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.hxtyzlsource
+  is '资料来源';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ICMS_FINA_REPORT.id_mark
+  is '增删标志';
+

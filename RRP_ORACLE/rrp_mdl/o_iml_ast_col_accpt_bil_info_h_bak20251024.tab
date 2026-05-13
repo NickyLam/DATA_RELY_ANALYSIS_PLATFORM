@@ -1,0 +1,102 @@
+﻿create table RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024
+(
+  asset_id             VARCHAR2(100),
+  lp_id                VARCHAR2(60),
+  bill_num             VARCHAR2(150),
+  bill_type_cd         VARCHAR2(30),
+  drawer_name          VARCHAR2(150),
+  drawer_orgnz_cd      VARCHAR2(30),
+  drawer_type_cd       VARCHAR2(30),
+  drawer_open_bank_no  VARCHAR2(150),
+  drawer_acct_num      VARCHAR2(150),
+  accptor_name         VARCHAR2(150),
+  accptor_type_cd      VARCHAR2(30),
+  recver_name          VARCHAR2(150),
+  recver_type_cd       VARCHAR2(30),
+  bill_rher_flg        VARCHAR2(10),
+  bill_rher_name       VARCHAR2(150),
+  bill_rher_type_cd    VARCHAR2(30),
+  fac_val_amt          NUMBER(30,2),
+  curr_cd              VARCHAR2(30),
+  bill_issue_dt        DATE,
+  bill_exp_dt          DATE,
+  drawer_cty_or_rg_cd  VARCHAR2(30),
+  accptor_cty_or_rg_cd VARCHAR2(30),
+  remark               VARCHAR2(4000),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10),
+  job_cd               VARCHAR2(10),
+  src_table_name       VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024
+  is '押品承兑汇票信息历史';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.asset_id
+  is '资产ID';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.bill_num
+  is '票据号';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.bill_type_cd
+  is '票据类型代码';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.drawer_name
+  is '出票方名称';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.drawer_orgnz_cd
+  is '出票人组织机构代码';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.drawer_type_cd
+  is '出票人类型代码';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.drawer_open_bank_no
+  is '出票人开户行行号';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.drawer_acct_num
+  is '出票人账号';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.accptor_name
+  is '承兑人名称';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.accptor_type_cd
+  is '承兑人类型代码';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.recver_name
+  is '收款人姓名';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.recver_type_cd
+  is '收款人类型代码';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.bill_rher_flg
+  is '票据前手标志';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.bill_rher_name
+  is '票据前手名称';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.bill_rher_type_cd
+  is '票据前手类型代码';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.fac_val_amt
+  is '票面金额';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.curr_cd
+  is '币种';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.bill_issue_dt
+  is '票据签发日期';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.bill_exp_dt
+  is '票据到期日期';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.drawer_cty_or_rg_cd
+  is '出票人所在国家或地区代码';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.accptor_cty_or_rg_cd
+  is '承兑人所在国家或地区代码';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.remark
+  is '描述';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_AST_COL_ACCPT_BIL_INFO_H_BAK20251024.src_table_name
+  is '源表名称';
+

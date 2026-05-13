@@ -1,0 +1,138 @@
+﻿create table RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO
+(
+  etl_dt                        DATE,
+  lp_id                         VARCHAR2(60),
+  acct_id                       VARCHAR2(60),
+  acct_name                     VARCHAR2(150),
+  cust_id                       VARCHAR2(60),
+  src_agt_id                    VARCHAR2(100),
+  fx_acct_char_cd               VARCHAR2(10),
+  agt_dep_type_cd               VARCHAR2(30),
+  acct_lics_num                 VARCHAR2(60),
+  acct_lics_issue_dt            DATE,
+  cap_char_cd                   VARCHAR2(10),
+  acct_close_rs_descb           VARCHAR2(500),
+  init_open_acct_dt             DATE,
+  init_exp_dt                   DATE,
+  job_cd                        VARCHAR2(10),
+  etl_timestamp                 TIMESTAMP(6),
+  txy_main_agt_files_int_rat    NUMBER(30,8),
+  txy_sub_agt_agree_int_rat     NUMBER(30,8),
+  remote_open_acct_flg          VARCHAR2(10),
+  open_acct_prov                VARCHAR2(100),
+  open_acct_city                VARCHAR2(100),
+  supv_type_cd                  VARCHAR2(30),
+  l_six_m_no_tran_flg           VARCHAR2(10),
+  xhc_flg                       VARCHAR2(10),
+  cert_print_flg                VARCHAR2(10),
+  travel_card_acct_flg          VARCHAR2(10),
+  travel_card_valid_dt          DATE,
+  precon_wdraw_flg              VARCHAR2(10),
+  precon_wdraw_dt               DATE,
+  precon_payoff_dt              DATE,
+  heat_insu_acct_flg            VARCHAR2(10),
+  sub_acct_int_rat_float_ratio  VARCHAR2(30),
+  sub_acct_int_rat_float_point  VARCHAR2(30),
+  delay_pay_int_int_float_point NUMBER(30,8),
+  cap_pool_agt_rat              NUMBER(30,8),
+  long_hang_amt                 NUMBER(18,2),
+  apot_tenor_amt                NUMBER(30,8),
+  apot_tenor_start_dt           DATE,
+  apot_tenor_end_dt             DATE,
+  cash_manage_flg               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO
+  is '存款分户补充信息           ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.etl_dt
+  is '数据日期           ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.lp_id
+  is '法人编号           ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.acct_id
+  is '账户编号           ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.acct_name
+  is '账户名称           ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.cust_id
+  is '客户编号           ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.src_agt_id
+  is '源协议编号         ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.fx_acct_char_cd
+  is '外汇账户性质代码   ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.agt_dep_type_cd
+  is '协议存款类型代码   ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.acct_lics_num
+  is '账户许可证号       ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.acct_lics_issue_dt
+  is '账户许可证签发日期 ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.cap_char_cd
+  is '资金性质代码       ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.acct_close_rs_descb
+  is '账户关闭原因描述   ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.init_open_acct_dt
+  is '原始开户日期       ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.init_exp_dt
+  is '原始到期日期       ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.job_cd
+  is '任务代码           ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.etl_timestamp
+  is '数据处理时间       ';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.txy_main_agt_files_int_rat
+  is '同兴赢主协议超档利率';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.txy_sub_agt_agree_int_rat
+  is '同兴赢子协议协定利率';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.remote_open_acct_flg
+  is '异地开户标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.open_acct_prov
+  is '开户省份';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.open_acct_city
+  is '开户城市';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.supv_type_cd
+  is '监管类型代码';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.l_six_m_no_tran_flg
+  is '六个月无交易标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.xhc_flg
+  is '兴惠存标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.cert_print_flg
+  is '证实书打印标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.travel_card_acct_flg
+  is '旅行通账户标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.travel_card_valid_dt
+  is '旅行通卡有效期';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.precon_wdraw_flg
+  is '预约支取标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.precon_wdraw_dt
+  is '预约支取日期';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.precon_payoff_dt
+  is '预约结清日期';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.heat_insu_acct_flg
+  is '医保账户标志';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.sub_acct_int_rat_float_ratio
+  is '协定存款利率浮动比例';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.sub_acct_int_rat_float_point
+  is '协定存款利率浮动点数';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.delay_pay_int_int_float_point
+  is '延期付息利息浮动点';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.cap_pool_agt_rat
+  is '资金池协议利率';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.long_hang_amt
+  is '久悬金额';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.apot_tenor_amt
+  is '约期金额';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.apot_tenor_start_dt
+  is '约期开始日期';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.apot_tenor_end_dt
+  is '约期结束日期';
+comment on column RRP_MDL.O_ICL_CMM_DEP_ACCT_ATTACH_INFO.cash_manage_flg
+  is '现金管理类产品标志';
+

@@ -1,0 +1,15 @@
+﻿create table RRP_MDL.CONFIG_ETL_FREQ_BAK_20230501
+(
+  proc_name VARCHAR2(100),
+  freq_typ  VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on column RRP_MDL.CONFIG_ETL_FREQ_BAK_20230501.proc_name
+  is '程序名称';
+comment on column RRP_MDL.CONFIG_ETL_FREQ_BAK_20230501.freq_typ
+  is '频率类型';
+

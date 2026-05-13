@@ -1,0 +1,81 @@
+﻿create table RRP_MDL.O_IML_PTY_PARTY_RATING_H
+(
+  party_id             VARCHAR2(60),
+  lp_id                VARCHAR2(60),
+  sorc_sys_cd          VARCHAR2(10),
+  party_rating_type_cd VARCHAR2(10),
+  seq_num              VARCHAR2(90),
+  rating_org_id        VARCHAR2(60),
+  rating_org_name      VARCHAR2(300),
+  rating_dt            DATE,
+  rating_score_val     NUMBER(10),
+  rating_effect_dt     DATE,
+  rating_invalid_dt    DATE,
+  rating_result_cd     VARCHAR2(10),
+  irs_task_flow_num    VARCHAR2(90),
+  rating_level_cd      VARCHAR2(100),
+  lmt                  NUMBER(30,2),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10),
+  src_table_name       VARCHAR2(100),
+  job_cd               VARCHAR2(10),
+  etl_timestamp        TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_PTY_PARTY_RATING_H
+  is '当事人';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.party_id
+  is '当事人编号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.sorc_sys_cd
+  is '源系统代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.party_rating_type_cd
+  is '当事人评级类型代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.seq_num
+  is '序号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.rating_org_id
+  is '评级机构编号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.rating_org_name
+  is '评级机构名称';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.rating_dt
+  is '评级日期';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.rating_score_val
+  is '评级分值';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.rating_effect_dt
+  is '评级生效日期';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.rating_invalid_dt
+  is '评级失效日期';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.rating_result_cd
+  is '评级结果代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.irs_task_flow_num
+  is '内评系统任务流水号';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.rating_level_cd
+  is '评级等级代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.lmt
+  is '限额';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_PTY_PARTY_RATING_H.etl_timestamp
+  is 'etl处理时间';
+

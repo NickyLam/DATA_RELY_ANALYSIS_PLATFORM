@@ -1,0 +1,35 @@
+﻿create table RRP_MDL.ADD_LOAN_TRF_REL_INFO
+(
+  lgl_rep_id    VARCHAR2(200),
+  org_id        VARCHAR2(200),
+  trf_cont_id   VARCHAR2(200),
+  rcpt_id       VARCHAR2(200),
+  trf_loan_prin NUMBER(30,2),
+  trf_loan_int  NUMBER(30,2),
+  dept_line     VARCHAR2(500),
+  data_src      VARCHAR2(500)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_LOAN_TRF_REL_INFO
+  is '信贷资产转让关系信息';
+comment on column RRP_MDL.ADD_LOAN_TRF_REL_INFO.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.ADD_LOAN_TRF_REL_INFO.org_id
+  is '机构编号';
+comment on column RRP_MDL.ADD_LOAN_TRF_REL_INFO.trf_cont_id
+  is '转让合同号';
+comment on column RRP_MDL.ADD_LOAN_TRF_REL_INFO.rcpt_id
+  is '借据编号';
+comment on column RRP_MDL.ADD_LOAN_TRF_REL_INFO.trf_loan_prin
+  is '转让贷款本金';
+comment on column RRP_MDL.ADD_LOAN_TRF_REL_INFO.trf_loan_int
+  is '转让贷款利息';
+comment on column RRP_MDL.ADD_LOAN_TRF_REL_INFO.dept_line
+  is '部门条线';
+comment on column RRP_MDL.ADD_LOAN_TRF_REL_INFO.data_src
+  is '数据来源';
+

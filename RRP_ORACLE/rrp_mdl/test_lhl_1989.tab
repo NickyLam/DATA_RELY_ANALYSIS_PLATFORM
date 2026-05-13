@@ -1,0 +1,191 @@
+﻿create table RRP_MDL.TEST_LHL_1989
+(
+  data_dt                   CHAR(8) not null,
+  lgl_rep_id                VARCHAR2(200),
+  org_id                    VARCHAR2(200),
+  cust_id                   VARCHAR2(200) not null,
+  cust_nm                   VARCHAR2(500),
+  cust_eng_nm               VARCHAR2(500),
+  ctry_cd                   VARCHAR2(10),
+  rsdnt_flg                 CHAR(1),
+  cust_blng_land_area_cd    VARCHAR2(10),
+  crdl_typ                  VARCHAR2(10),
+  crdl_no                   VARCHAR2(100),
+  isu_cert_off_area_cd      VARCHAR2(10),
+  crdl_eff_dt               CHAR(8),
+  crdl_exp_dt               CHAR(8),
+  crdl_addr                 VARCHAR2(500),
+  phone_num                 VARCHAR2(30),
+  ethnic                    VARCHAR2(10),
+  gender                    VARCHAR2(10),
+  birth_dt                  CHAR(8),
+  marriage_stat             VARCHAR2(10),
+  high_degree               VARCHAR2(10),
+  cust_blng_idy             VARCHAR2(10),
+  occup                     VARCHAR2(10),
+  title                     VARCHAR2(10),
+  job                       VARCHAR2(150),
+  ind_year_income           NUMBER(30,2),
+  family_year_income        NUMBER(30,2),
+  co_nm                     VARCHAR2(500),
+  co_char                   VARCHAR2(10),
+  co_addr                   VARCHAR2(500),
+  co_tel                    VARCHAR2(30),
+  rsdnc_ctry_cd             VARCHAR2(10),
+  rsdnc_addr                VARCHAR2(500),
+  rsdnc_area_cd             VARCHAR2(10),
+  opr_cust_typ              VARCHAR2(10),
+  bank_emp_flg              CHAR(1),
+  farm_flg                  CHAR(1),
+  cont_side_farm_flg        CHAR(1),
+  blist_flg                 CHAR(1),
+  blist_dt                  CHAR(8),
+  bank_senior_flg           CHAR(1),
+  rel_pty_flg               CHAR(1),
+  agr_rel_loan_cert_isu_num INTEGER,
+  econ_arch_flg             CHAR(1),
+  crdt_flg                  CHAR(1),
+  jur_flg                   CHAR(1),
+  open_ebank_flg            CHAR(1),
+  disabled_flg              CHAR(1),
+  low_incm_flg              CHAR(1),
+  cust_crdt_rtg             INTEGER,
+  cust_cr_rtg_tot_grd       INTEGER,
+  cust_stat                 VARCHAR2(10),
+  first_estbl_crdt_rel_dt   CHAR(8),
+  dept_line                 VARCHAR2(500),
+  data_src                  VARCHAR2(500),
+  cust_nm_desen             VARCHAR2(500),
+  crdl_no_desen             VARCHAR2(100),
+  phone_num_desen           VARCHAR2(70),
+  bio_flg                   CHAR(1),
+  age                       INTEGER
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.TEST_LHL_1989
+  is '过程临时表4';
+comment on column RRP_MDL.TEST_LHL_1989.data_dt
+  is '数据时间';
+comment on column RRP_MDL.TEST_LHL_1989.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.TEST_LHL_1989.org_id
+  is '机构编号';
+comment on column RRP_MDL.TEST_LHL_1989.cust_id
+  is '客户号';
+comment on column RRP_MDL.TEST_LHL_1989.cust_nm
+  is '客户名称';
+comment on column RRP_MDL.TEST_LHL_1989.cust_eng_nm
+  is '客户英文名称';
+comment on column RRP_MDL.TEST_LHL_1989.ctry_cd
+  is '国家代码';
+comment on column RRP_MDL.TEST_LHL_1989.rsdnt_flg
+  is '居民标志';
+comment on column RRP_MDL.TEST_LHL_1989.cust_blng_land_area_cd
+  is '客户所属地行政区划代码';
+comment on column RRP_MDL.TEST_LHL_1989.crdl_typ
+  is '证件类型';
+comment on column RRP_MDL.TEST_LHL_1989.crdl_no
+  is '证件号码';
+comment on column RRP_MDL.TEST_LHL_1989.isu_cert_off_area_cd
+  is '发证机关行政区划代码';
+comment on column RRP_MDL.TEST_LHL_1989.crdl_eff_dt
+  is '证件生效日期';
+comment on column RRP_MDL.TEST_LHL_1989.crdl_exp_dt
+  is '证件失效日期';
+comment on column RRP_MDL.TEST_LHL_1989.crdl_addr
+  is '证件地址';
+comment on column RRP_MDL.TEST_LHL_1989.phone_num
+  is '手机号码';
+comment on column RRP_MDL.TEST_LHL_1989.ethnic
+  is '民族';
+comment on column RRP_MDL.TEST_LHL_1989.gender
+  is '性别';
+comment on column RRP_MDL.TEST_LHL_1989.birth_dt
+  is '出生日期';
+comment on column RRP_MDL.TEST_LHL_1989.marriage_stat
+  is '婚姻状况';
+comment on column RRP_MDL.TEST_LHL_1989.high_degree
+  is '最高学历';
+comment on column RRP_MDL.TEST_LHL_1989.cust_blng_idy
+  is '客户所属行业';
+comment on column RRP_MDL.TEST_LHL_1989.occup
+  is '职业';
+comment on column RRP_MDL.TEST_LHL_1989.title
+  is '职称';
+comment on column RRP_MDL.TEST_LHL_1989.job
+  is '职务';
+comment on column RRP_MDL.TEST_LHL_1989.ind_year_income
+  is '个人年收入';
+comment on column RRP_MDL.TEST_LHL_1989.family_year_income
+  is '家庭年收入';
+comment on column RRP_MDL.TEST_LHL_1989.co_nm
+  is '单位名称';
+comment on column RRP_MDL.TEST_LHL_1989.co_char
+  is '单位性质';
+comment on column RRP_MDL.TEST_LHL_1989.co_addr
+  is '单位地址';
+comment on column RRP_MDL.TEST_LHL_1989.co_tel
+  is '单位电话';
+comment on column RRP_MDL.TEST_LHL_1989.rsdnc_ctry_cd
+  is '居住地国家代码';
+comment on column RRP_MDL.TEST_LHL_1989.rsdnc_addr
+  is '居住地址';
+comment on column RRP_MDL.TEST_LHL_1989.rsdnc_area_cd
+  is '居住地行政区划代码';
+comment on column RRP_MDL.TEST_LHL_1989.opr_cust_typ
+  is '经营性客户类型';
+comment on column RRP_MDL.TEST_LHL_1989.bank_emp_flg
+  is '本行员工标志';
+comment on column RRP_MDL.TEST_LHL_1989.farm_flg
+  is '农户标志';
+comment on column RRP_MDL.TEST_LHL_1989.cont_side_farm_flg
+  is '承包方农户标志';
+comment on column RRP_MDL.TEST_LHL_1989.blist_flg
+  is '上黑名单标志';
+comment on column RRP_MDL.TEST_LHL_1989.blist_dt
+  is '上黑名单日期';
+comment on column RRP_MDL.TEST_LHL_1989.bank_senior_flg
+  is '银行高管标志';
+comment on column RRP_MDL.TEST_LHL_1989.rel_pty_flg
+  is '关联方标志';
+comment on column RRP_MDL.TEST_LHL_1989.agr_rel_loan_cert_isu_num
+  is '发放支农贷款证数量';
+comment on column RRP_MDL.TEST_LHL_1989.econ_arch_flg
+  is '经济档案标志';
+comment on column RRP_MDL.TEST_LHL_1989.crdt_flg
+  is '信用户标志';
+comment on column RRP_MDL.TEST_LHL_1989.jur_flg
+  is '辖内标志';
+comment on column RRP_MDL.TEST_LHL_1989.open_ebank_flg
+  is '开通网银标志';
+comment on column RRP_MDL.TEST_LHL_1989.disabled_flg
+  is '残疾人标志';
+comment on column RRP_MDL.TEST_LHL_1989.low_incm_flg
+  is '低保户标志';
+comment on column RRP_MDL.TEST_LHL_1989.cust_crdt_rtg
+  is '客户信用评级';
+comment on column RRP_MDL.TEST_LHL_1989.cust_cr_rtg_tot_grd
+  is '客户信用评级总等级数';
+comment on column RRP_MDL.TEST_LHL_1989.cust_stat
+  is '客户状态';
+comment on column RRP_MDL.TEST_LHL_1989.first_estbl_crdt_rel_dt
+  is '首次建立信贷关系日期';
+comment on column RRP_MDL.TEST_LHL_1989.dept_line
+  is '部门条线';
+comment on column RRP_MDL.TEST_LHL_1989.data_src
+  is '数据来源';
+comment on column RRP_MDL.TEST_LHL_1989.cust_nm_desen
+  is '客户名称脱敏';
+comment on column RRP_MDL.TEST_LHL_1989.crdl_no_desen
+  is '证件号码脱敏';
+comment on column RRP_MDL.TEST_LHL_1989.phone_num_desen
+  is '手机号码脱敏';
+comment on column RRP_MDL.TEST_LHL_1989.bio_flg
+  is '境内外标志';
+comment on column RRP_MDL.TEST_LHL_1989.age
+  is '借款人年龄';
+

@@ -1,0 +1,68 @@
+﻿create table RRP_MDL.ADD_LS_G09_PRO_HZF
+(
+  hzfs      VARCHAR2(30),
+  cpmc      VARCHAR2(100),
+  ywpzbh    VARCHAR2(60) not null,
+  ywpzmc    VARCHAR2(100),
+  ywlx      VARCHAR2(30),
+  ywxt      VARCHAR2(100),
+  hzjgmc    VARCHAR2(200),
+  shxydm    VARCHAR2(60),
+  hzjglb    VARCHAR2(30),
+  tgfwlx    VARCHAR2(10),
+  bhczbl    NUMBER(20,4),
+  hzfczbl   NUMBER(20,4),
+  sfzcjy    VARCHAR2(9),
+  hzxz      VARCHAR2(60),
+  dsfhzjgmc VARCHAR2(200),
+  dsfshxydm VARCHAR2(60),
+  dsfhzjglb VARCHAR2(30),
+  dsftgfwlx VARCHAR2(10),
+  dsfhzxz   VARCHAR2(60)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.ADD_LS_G09_PRO_HZF
+  is 'G09互联网贷款产品信息静态表';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.hzfs
+  is '合作方式';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.cpmc
+  is '产品名称';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.ywpzbh
+  is '业务品种编号';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.ywpzmc
+  is '业务品种名称';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.ywlx
+  is '业务类型';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.ywxt
+  is '业务系统';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.hzjgmc
+  is '合作机构名称';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.shxydm
+  is '社会信用代码';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.hzjglb
+  is '合作机构类别';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.tgfwlx
+  is '提供服务类型';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.bhczbl
+  is '本行出资比例';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.hzfczbl
+  is '合作方出资比例';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.sfzcjy
+  is '是否正常经营';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.hzxz
+  is '合作性质';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.dsfhzjgmc
+  is '第三方合作机构名称';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.dsfshxydm
+  is '第三方社会信用代码';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.dsfhzjglb
+  is '第三方合作机构类别';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.dsftgfwlx
+  is '第三方提供服务类型';
+comment on column RRP_MDL.ADD_LS_G09_PRO_HZF.dsfhzxz
+  is '第三方合作性质';
+

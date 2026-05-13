@@ -1,0 +1,81 @@
+﻿create table RRP_MDL.O_IML_AGT_WL_ACCT
+(
+  acct_id            VARCHAR2(60),
+  lp_id              VARCHAR2(60),
+  acct_name          VARCHAR2(250),
+  acct_type_cd       VARCHAR2(30),
+  cap_acct_id        VARCHAR2(60),
+  open_bank_name     VARCHAR2(500),
+  open_bank_num      VARCHAR2(60),
+  open_acct_name     VARCHAR2(250),
+  acct_status_cd     VARCHAR2(30),
+  teller_id          VARCHAR2(60),
+  asset_acct_type_cd VARCHAR2(30),
+  bd_card_no         VARCHAR2(60),
+  bind_mobile_no     VARCHAR2(60),
+  pbc_fin_inst_code  VARCHAR2(60),
+  obank_card_flg     VARCHAR2(30),
+  cust_id            VARCHAR2(60),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  src_table_name     VARCHAR2(100),
+  job_cd             VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_WL_ACCT
+  is '网贷账户';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.acct_id
+  is '账户编号';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.acct_name
+  is '账户名称';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.acct_type_cd
+  is '账户类型代码CD1986';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.cap_acct_id
+  is '资金账户编号';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.open_bank_name
+  is '开户行名称';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.open_bank_num
+  is '开户行号';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.open_acct_name
+  is '开户名称';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.acct_status_cd
+  is '账户状态代码CD1253';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.teller_id
+  is '柜员编号';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.asset_acct_type_cd
+  is '资产账户类型代码CD2076';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.bd_card_no
+  is '绑定卡卡号';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.bind_mobile_no
+  is '绑定手机号码';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.pbc_fin_inst_code
+  is '人行金融机构编码';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.obank_card_flg
+  is '他行卡标志';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_WL_ACCT.job_cd
+  is '任务代码';
+

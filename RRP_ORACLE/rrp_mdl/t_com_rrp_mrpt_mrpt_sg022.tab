@@ -1,0 +1,13 @@
+﻿create table RRP_MDL.T_COM_RRP_MRPT_MRPT_SG022
+(
+  data_dt   VARCHAR2(10),
+  type_desc VARCHAR2(100),
+  curr_dnum NUMBER(30,2),
+  per_dnum  NUMBER(30,2)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+

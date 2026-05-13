@@ -1,0 +1,129 @@
+﻿create table RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND
+(
+  id                  VARCHAR2(24),
+  main_id             VARCHAR2(24),
+  own_org             VARCHAR2(48),
+  cust_id             VARCHAR2(48),
+  sch_result          VARCHAR2(3),
+  match_level_id      VARCHAR2(48),
+  risk_level          VARCHAR2(3),
+  list_scope          VARCHAR2(300),
+  confirm_result      VARCHAR2(3),
+  last_confirm_result VARCHAR2(3),
+  crt_date            VARCHAR2(12),
+  crt_datetime        VARCHAR2(21),
+  last_datetime       VARCHAR2(21),
+  last_user_id        VARCHAR2(48),
+  last_user_code      VARCHAR2(96),
+  system_id           VARCHAR2(48),
+  cust_code           VARCHAR2(48),
+  cust_type           VARCHAR2(8),
+  cust_kind           VARCHAR2(2),
+  cust_name           VARCHAR2(180),
+  cust_eng_name       VARCHAR2(180),
+  cust_addr           VARCHAR2(360),
+  cust_eng_addr       VARCHAR2(360),
+  cust_id_type        VARCHAR2(24),
+  cust_id_no          VARCHAR2(48),
+  cust_country        VARCHAR2(72),
+  crt_user_code       VARCHAR2(96),
+  crt_branch_code     VARCHAR2(96),
+  last_branch_id      VARCHAR2(48),
+  last_txn            VARCHAR2(48),
+  sch_kind            VARCHAR2(12),
+  backfiels1          VARCHAR2(75),
+  backfiels2          VARCHAR2(75),
+  backfiels3          VARCHAR2(75),
+  confirm_desc        VARCHAR2(768),
+  cust_check_pass     VARCHAR2(3),
+  check_pass_flag     VARCHAR2(3),
+  etl_dt              DATE,
+  etl_timestamp       TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND
+  is '增量客户命中表';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.id
+  is '表主键';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.main_id
+  is '表主键';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.own_org
+  is '归属组织';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_id
+  is '客户表主键';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.sch_result
+  is '检索命中结果：00-检索通过；02-中黑名单；03-中白名单；01-中高风险国家地区；99-检索异常。';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.match_level_id
+  is '命中后的侦测等级ID，对应匹配等级参数表的值。';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.risk_level
+  is '风险等级（1-一级，2-二级，3-三级，4-四级，5-五级），该值从枚举表中定义，后面会变化';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.list_scope
+  is '检索名单范围，登记该次检索用到的名单范围，多个用半角逗号分隔。';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.confirm_result
+  is '确认结果';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.last_confirm_result
+  is '上次确认结果：0-未确认；1-确认命中；2-确认误中。';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.crt_date
+  is '创建日期(YYYYMMDD)';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.crt_datetime
+  is '创建时间(YYYYMMDDHHMMSS)';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.last_datetime
+  is '最后操作时间(YYYYMMDDHHMMSS)';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.last_user_id
+  is '最后操作用户ID';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.last_user_code
+  is '最后操作用户代码';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.system_id
+  is '对接系统';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_code
+  is '客户编号';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_type
+  is '客户类型';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_kind
+  is '客户种类';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_name
+  is '客户名称';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_eng_name
+  is '客户英文名称';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_addr
+  is '客户地址';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_eng_addr
+  is '客户英文地址';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_id_type
+  is '客户证件类型';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_id_no
+  is '客户证件号';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.cust_country
+  is '客户国家';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.crt_user_code
+  is '创建用户代码';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.crt_branch_code
+  is '创建用户机构代码';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.last_branch_id
+  is '业务机构ID';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.last_txn
+  is '交易码';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.sch_kind
+  is '增量回溯类型';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.backfiels1
+  is '备用字段1';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.backfiels2
+  is '备用字段2';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.backfiels3
+  is '备用字段3';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IOL_ALBS_BPS_RSH_CUST_HIT_FUND.etl_timestamp
+  is 'ETL处理时间戳';
+

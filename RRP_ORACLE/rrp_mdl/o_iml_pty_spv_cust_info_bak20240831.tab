@@ -1,0 +1,28 @@
+﻿create table RRP_MDL.O_IML_PTY_SPV_CUST_INFO_BAK20240831
+(
+  party_id             VARCHAR2(60),
+  lp_id                VARCHAR2(60),
+  spv_cust_id          VARCHAR2(100),
+  spv_id               VARCHAR2(60),
+  spv_name             VARCHAR2(250),
+  spv_type_cd          VARCHAR2(30),
+  am_prod_stat_type_id VARCHAR2(100),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10),
+  src_table_name       VARCHAR2(100),
+  job_cd               VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

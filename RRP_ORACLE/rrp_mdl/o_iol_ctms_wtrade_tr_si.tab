@@ -1,0 +1,141 @@
+﻿create table RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI
+(
+  aspclient_id              NUMBER,
+  serial_number             VARCHAR2(23),
+  bs                        VARCHAR2(10),
+  cash_acc_ename            VARCHAR2(384),
+  cash_acc_cname            VARCHAR2(384),
+  cash_acc_bank             VARCHAR2(384),
+  cash_acc_no               VARCHAR2(384),
+  cash_acc_bank_ex          VARCHAR2(384),
+  bond_acc_name             VARCHAR2(384),
+  bond_acc_bank             VARCHAR2(384),
+  bond_acc_no               VARCHAR2(384),
+  g_cash_amt                VARCHAR2(384),
+  g_bond_id                 VARCHAR2(384),
+  g_bond_name               VARCHAR2(384),
+  g_bond_amt                VARCHAR2(384),
+  g_bond_total_amt          VARCHAR2(384),
+  g_ca_name                 VARCHAR2(384),
+  g_ca_bank                 VARCHAR2(384),
+  g_ca_no                   VARCHAR2(384),
+  g_ca_bank_ex              VARCHAR2(384),
+  g_ba_name                 VARCHAR2(384),
+  g_ba_bank                 VARCHAR2(384),
+  g_ba_no                   VARCHAR2(384),
+  g_stl_date                VARCHAR2(384),
+  g_mgr_bank                VARCHAR2(384),
+  lastmodified              TIMESTAMP(6),
+  datasymbol_id             NUMBER,
+  start_dt                  DATE,
+  end_dt                    DATE,
+  id_mark                   VARCHAR2(10),
+  etl_timestamp             TIMESTAMP(6),
+  settle_instr_name         VARCHAR2(768),
+  swift_code                VARCHAR2(768),
+  bond_owner                VARCHAR2(768),
+  custody_institution_type  VARCHAR2(384),
+  bond_settle_instr_name    VARCHAR2(768),
+  bond_escrow_opening_bank  VARCHAR2(768),
+  escrow_agency             VARCHAR2(768),
+  bond_acc_ename            VARCHAR2(768),
+  bond_escrow_manage_agency VARCHAR2(768),
+  bond_swift_code           VARCHAR2(192)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI
+  is '清算账户信息表';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.aspclient_id
+  is '部门代码';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.serial_number
+  is '交易号';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.bs
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.cash_acc_ename
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.cash_acc_cname
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.cash_acc_bank
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.cash_acc_no
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.cash_acc_bank_ex
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.bond_acc_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.bond_acc_bank
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.bond_acc_no
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_cash_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_bond_id
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_bond_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_bond_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_bond_total_amt
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_ca_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_ca_bank
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_ca_no
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_ca_bank_ex
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_ba_name
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_ba_bank
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_ba_no
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_stl_date
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.g_mgr_bank
+  is '未知';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.lastmodified
+  is '更新时间';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.datasymbol_id
+  is '数据源ID';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.etl_timestamp
+  is 'etl处理时间';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.settle_instr_name
+  is '清算路径名称';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.swift_code
+  is 'Swift Code编码';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.bond_owner
+  is '托管账号开户人';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.custody_institution_type
+  is '托管机构类型';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.bond_settle_instr_name
+  is '托管清算路径名称';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.bond_escrow_opening_bank
+  is '债券托管开户行';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.escrow_agency
+  is '托管机构';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.bond_acc_ename
+  is '债券托管账户英文户名';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.bond_escrow_manage_agency
+  is '债券托管管理机构';
+comment on column RRP_MDL.O_IOL_CTMS_WTRADE_TR_SI.bond_swift_code
+  is '托管机构SWIFT CODE';
+

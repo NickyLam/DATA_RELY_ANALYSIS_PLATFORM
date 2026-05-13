@@ -1,0 +1,242 @@
+﻿create table RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501
+(
+  deal_id              NUMBER,
+  deal_tablename       CHAR(10),
+  aspclient_id         NUMBER,
+  portfolio_id         NUMBER(5),
+  portfolio_name       VARCHAR2(80),
+  serial_number        CHAR(15),
+  user_number          NUMBER(5),
+  branch_number        NUMBER(5),
+  currency             CHAR(3),
+  buyorsell            CHAR(1),
+  amount               NUMBER(17,2),
+  trade_rate           NUMBER(17,8),
+  market_rate          NUMBER(17,8),
+  value_date           CHAR(8),
+  maturity_date        CHAR(8),
+  trade_date           CHAR(8),
+  trade_time           DATE,
+  ref_number           CHAR(32),
+  link_serial_number   CHAR(15),
+  status               CHAR(1),
+  dealer               NUMBER(5),
+  account              CHAR(30),
+  maturity_amount      NUMBER(17,2),
+  lend_id              CHAR(16),
+  bondscode            VARCHAR2(340),
+  lendbondscode        VARCHAR2(20),
+  fee                  NUMBER(17,2),
+  tax_amt              NUMBER(17,2),
+  broker_amt           NUMBER(17,2),
+  interest             NUMBER(17,2),
+  note                 VARCHAR2(400),
+  day_count            CHAR(1),
+  process_status       CHAR(1),
+  realized_pl          NUMBER(17,2),
+  unrealized_pl        NUMBER(17,2),
+  total_pl             NUMBER(17,2),
+  daily_pl             NUMBER(17,2),
+  interest_pl          NUMBER(17,2),
+  realized_days        NUMBER(5),
+  ori_trade_date       CHAR(8),
+  security_face_amount VARCHAR2(340),
+  collateral_type      CHAR(1),
+  lend_rate            VARCHAR2(256),
+  settle_type          CHAR(1),
+  settle_type2         CHAR(1),
+  deal_time            DATE,
+  modify_user          NUMBER(5),
+  keepfolder_id        NUMBER,
+  keepfolder_shortname VARCHAR2(50),
+  cptys_short_name     VARCHAR2(128),
+  cptys_id             NUMBER,
+  ref_deal_sn          CHAR(15),
+  valid_source_sn      CHAR(15),
+  cancel_reason        VARCHAR2(256),
+  source               CHAR(1),
+  input_from           CHAR(2),
+  cstp_serial          CHAR(15),
+  cfets_from           CHAR(1),
+  lend_days            NUMBER,
+  inv_type             CHAR(1),
+  inv_short            CHAR(1),
+  auto_import          CHAR(1),
+  price_flag           CHAR(1),
+  match_flag           CHAR(1),
+  is_trans_quote       CHAR(1),
+  wtrade_lend_id_grand NUMBER(38),
+  datasymbol_id        NUMBER(38),
+  orig_serial_number   VARCHAR2(15),
+  impstatus            CHAR(1),
+  prostatus            CHAR(1),
+  spotfwd              CHAR(1),
+  lastmodified         TIMESTAMP(6),
+  dn_dealer            VARCHAR2(600),
+  dealer_name          VARCHAR2(20),
+  start_dt             DATE,
+  end_dt               DATE,
+  id_mark              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+compress;
+comment on table RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501
+  is '债券借贷交易';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.deal_id
+  is '引用表ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.deal_tablename
+  is '引用表名';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.aspclient_id
+  is '部门编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.portfolio_id
+  is '交易组别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.portfolio_name
+  is '交易组别名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.serial_number
+  is '交易序号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.user_number
+  is '操作员';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.branch_number
+  is '分支机构号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.currency
+  is '币别';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.buyorsell
+  is '交易方向';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.amount
+  is '面额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.trade_rate
+  is '借贷费率';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.market_rate
+  is '市值';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.value_date
+  is '首期结算日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.maturity_date
+  is '到期结算日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.trade_date
+  is '交易录入日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.trade_time
+  is '交易时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.ref_number
+  is '成交编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.link_serial_number
+  is '删除或修改的原始交易';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.status
+  is '状态';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.dealer
+  is '交易员ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.account
+  is '账户id';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.maturity_amount
+  is '到期结算金额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.lend_id
+  is '交易品种';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.bondscode
+  is '质押券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.lendbondscode
+  is '标的券代码';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.fee
+  is '首期费用';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.tax_amt
+  is '首期税金';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.broker_amt
+  is '首期佣金';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.interest
+  is '应计利息';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.note
+  is '备注';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.day_count
+  is '日计息基准';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.process_status
+  is '处理状态';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.realized_pl
+  is '已实现损益';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.unrealized_pl
+  is '未实现损益';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.total_pl
+  is '总损益';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.daily_pl
+  is '每日损益';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.interest_pl
+  is '利息损益';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.realized_days
+  is '实际天数';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.ori_trade_date
+  is '原始交易日';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.security_face_amount
+  is '抵押品每张券面总额';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.collateral_type
+  is '抵押品种类';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.lend_rate
+  is '抵押比例';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.settle_type
+  is '首次结算方式';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.settle_type2
+  is '到期结算方式';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.deal_time
+  is '交易时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.modify_user
+  is '修改人';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.keepfolder_id
+  is '账户ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.keepfolder_shortname
+  is '账户名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.cptys_short_name
+  is '交易对手名';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.cptys_id
+  is '交易对手序号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.ref_deal_sn
+  is '参考编号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.valid_source_sn
+  is '连结的审批序号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.cancel_reason
+  is '审批单被撤销理由';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.source
+  is '交易来源';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.input_from
+  is '输入来源';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.cstp_serial
+  is '原始交易序号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.cfets_from
+  is '是否是CFETS交易';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.lend_days
+  is '借贷期限';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.inv_type
+  is '库存方式';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.inv_short
+  is '库存是否短仓';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.auto_import
+  is '是否自动导入';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.price_flag
+  is '金额标识';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.match_flag
+  is '是否匹配';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.is_trans_quote
+  is '审批单是否转成报价';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.wtrade_lend_id_grand
+  is '原始交易ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.datasymbol_id
+  is '数据源ID';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.orig_serial_number
+  is '原始交易序号';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.impstatus
+  is '导入状态';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.prostatus
+  is '处理状态';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.spotfwd
+  is '远期/即期';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.lastmodified
+  is '最后修改时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.dn_dealer
+  is '本币交易员';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.dealer_name
+  is '交易员名称';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_CTMS_TBS_V_WTRADE_LEND_BAK_20230501.id_mark
+  is '增删标志';
+

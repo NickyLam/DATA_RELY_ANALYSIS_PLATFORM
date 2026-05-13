@@ -1,0 +1,72 @@
+﻿create table RRP_MDL.O_IOL_ISBS_RPTCOD
+(
+  inr           VARCHAR2(24),
+  trninr        VARCHAR2(24),
+  ownref        VARCHAR2(48),
+  djdate        DATE,
+  djtime        TIMESTAMP(6),
+  fincod        VARCHAR2(96),
+  docid         VARCHAR2(90),
+  creextkey     VARCHAR2(48),
+  doccur        VARCHAR2(9),
+  docamt        NUMBER(18,3),
+  doctyp        VARCHAR2(36),
+  bchkeyinr     VARCHAR2(36),
+  crefrm        VARCHAR2(18),
+  intyp         VARCHAR2(15),
+  start_dt      DATE,
+  end_dt        DATE,
+  id_mark       VARCHAR2(10),
+  etl_timestamp TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IOL_ISBS_RPTCOD
+  is '商业单据信息表';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.inr
+  is '主键';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.trninr
+  is 'TRN表关联主键';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.ownref
+  is '业务编号';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.djdate
+  is '登记日期';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.djtime
+  is '登记时间';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.fincod
+  is '借据号';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.docid
+  is '单据ID';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.creextkey
+  is '创建客户ID';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.doccur
+  is '币种';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.docamt
+  is '金额';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.doctyp
+  is '单据类型';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.bchkeyinr
+  is '经办机构INR';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.crefrm
+  is '创建交易';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.intyp
+  is '导入方式';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IOL_ISBS_RPTCOD.etl_timestamp
+  is 'ETL处理时间戳';
+

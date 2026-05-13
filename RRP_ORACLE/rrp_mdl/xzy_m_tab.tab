@@ -1,0 +1,21 @@
+﻿create table RRP_MDL.XZY_M_TAB
+(
+  owner     VARCHAR2(512),
+  name      VARCHAR2(512),
+  tab_owner VARCHAR2(512),
+  tab       VARCHAR2(512),
+  col       VARCHAR2(512) not null
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

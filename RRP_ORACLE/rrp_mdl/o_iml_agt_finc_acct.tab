@@ -1,0 +1,78 @@
+﻿create table RRP_MDL.O_IML_AGT_FINC_ACCT
+(
+  agt_id           VARCHAR2(60),
+  intnal_cust_acct VARCHAR2(90),
+  lp_id            VARCHAR2(60),
+  ta_cd            VARCHAR2(30),
+  finc_acct_id     VARCHAR2(60),
+  belong_org_id    VARCHAR2(100),
+  ta_tran_acct_id  VARCHAR2(60),
+  cust_mgr_id      VARCHAR2(60),
+  open_acct_way_cd VARCHAR2(10),
+  cust_type_cd     VARCHAR2(10),
+  bus_cate_cd      VARCHAR2(10),
+  acct_status_cd   VARCHAR2(10),
+  open_dt          DATE,
+  sign_acct_id     VARCHAR2(60),
+  start_dt         DATE,
+  end_dt           DATE,
+  id_mark          VARCHAR2(10),
+  src_table_name   VARCHAR2(100),
+  job_cd           VARCHAR2(10),
+  etl_timestamp    TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_FINC_ACCT
+  is '理财账户';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.intnal_cust_acct
+  is '内部客户账户';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.ta_cd
+  is 'ta代码';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.finc_acct_id
+  is '理财账户编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.ta_tran_acct_id
+  is 'ta交易账户编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.open_acct_way_cd
+  is '开户方式代码';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.cust_type_cd
+  is '客户类型代码';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.bus_cate_cd
+  is '业务类别代码';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.acct_status_cd
+  is '账户状态代码';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.open_dt
+  is '开通日期';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.sign_acct_id
+  is '签约账户编号';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_FINC_ACCT.etl_timestamp
+  is 'etl处理时间戳';
+

@@ -1,0 +1,126 @@
+﻿create table RRP_MDL.M_DEP_INTL_ACC_INFO_YBT
+(
+  data_dt           CHAR(8) not null,
+  lgl_rep_id        VARCHAR2(200),
+  acc_id            VARCHAR2(200) not null,
+  org_id            VARCHAR2(200),
+  subj_id           VARCHAR2(200),
+  acc_nm            VARCHAR2(750),
+  dr_cr_flg         CHAR(1),
+  cur               CHAR(3),
+  stats_subj_id     VARCHAR2(200),
+  dr_bal            NUMBER(30,2),
+  cr_bal            NUMBER(30,2),
+  int_calc_flg      CHAR(1),
+  int_calc_mode     VARCHAR2(15),
+  rate              NUMBER(20,6),
+  open_acc_dt       CHAR(8),
+  cnl_acc_dt        CHAR(8),
+  acc_stat          VARCHAR2(10),
+  dept_line         VARCHAR2(750),
+  data_src          VARCHAR2(500),
+  sub_acc_id        VARCHAR2(200),
+  separate_acct_flg VARCHAR2(1),
+  acct_status_cd    VARCHAR2(10),
+  acc_bal           NUMBER(30,2),
+  main_acct_id      VARCHAR2(200)
+)
+partition by list (DATA_DT)
+(
+  partition PARTITION_19000101 values ('19000101')
+    tablespace TBS_EAST_DATA
+    pctfree 0
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250930 values ('20250930')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20240630 values ('20240630')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20250929 values ('20250929')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20280223 values ('20280223')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20251231 values ('20251231')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20261001 values ('20261001')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20260921 values ('20260921')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255,
+  partition PARTITION_20261121 values ('20261121')
+    tablespace TBS_EAST_DATA
+    pctfree 10
+    initrans 1
+    maxtrans 255
+);
+comment on table RRP_MDL.M_DEP_INTL_ACC_INFO_YBT
+  is '内部分户账信息_总账数据_一表通';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.lgl_rep_id
+  is '法人编号';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.acc_id
+  is '账户编号';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.org_id
+  is '机构编号';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.subj_id
+  is '科目编号';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.acc_nm
+  is '账户名称';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.dr_cr_flg
+  is '借贷标志';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.cur
+  is '币种';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.stats_subj_id
+  is '统计科目编号';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.dr_bal
+  is '借方余额';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.cr_bal
+  is '贷方余额';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.int_calc_flg
+  is '计息标志';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.int_calc_mode
+  is '计息方式';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.rate
+  is '利率';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.open_acc_dt
+  is '开户日期';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.cnl_acc_dt
+  is '销户日期';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.acc_stat
+  is '账户状态';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.dept_line
+  is '部门条线';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.data_src
+  is '数据来源';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.sub_acc_id
+  is '子账户编号';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.separate_acct_flg
+  is '是否单列账标志1报送0不报送';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.acct_status_cd
+  is '存款账户状态原码值';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.acc_bal
+  is '账户余额';
+comment on column RRP_MDL.M_DEP_INTL_ACC_INFO_YBT.main_acct_id
+  is '主账号';
+

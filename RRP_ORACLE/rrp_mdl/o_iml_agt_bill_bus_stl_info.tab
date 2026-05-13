@@ -1,0 +1,127 @@
+﻿create table RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO
+(
+  bus_stl_id             VARCHAR2(60),
+  lp_id                  VARCHAR2(60),
+  mem_org_cd             VARCHAR2(10),
+  stl_req_id             VARCHAR2(60),
+  stl_tm                 TIMESTAMP(6),
+  bus_type_cd            VARCHAR2(10),
+  stl_way_cd             VARCHAR2(10),
+  stl_bus_type_cd        VARCHAR2(10),
+  clear_type_cd          VARCHAR2(10),
+  bag_dir_cd             VARCHAR2(10),
+  stl_amt                NUMBER(30,2),
+  int_paybl              NUMBER(30,8),
+  bill_cnt               NUMBER(10),
+  ctr_nt_id              VARCHAR2(60),
+  lg_pay_sys_msg_ind_no  VARCHAR2(90),
+  bill_num               VARCHAR2(90),
+  recver_org_cd          VARCHAR2(10),
+  recver_trust_acct_num  VARCHAR2(90),
+  recver_trust_acct_name VARCHAR2(750),
+  recver_cap_acct_num    VARCHAR2(90),
+  recver_cap_acct_name   VARCHAR2(750),
+  payer_org_cd           VARCHAR2(10),
+  payer_trust_acct_num   VARCHAR2(90),
+  payer_trust_acct_name  VARCHAR2(750),
+  payer_cap_acct_num     VARCHAR2(90),
+  payer_cap_acct_name    VARCHAR2(750),
+  stl_status_cd          VARCHAR2(10),
+  stl_rest_code          VARCHAR2(90),
+  stl_fail_rs            VARCHAR2(150),
+  bill_sub_intrv_id      VARCHAR2(60),
+  start_dt               DATE,
+  end_dt                 DATE,
+  id_mark                VARCHAR2(10),
+  src_table_name         VARCHAR2(100),
+  job_cd                 VARCHAR2(10),
+  etl_timestamp          TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress
+nologging;
+comment on table RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO
+  is '票据业务结算信息';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.bus_stl_id
+  is '业务结算编号';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.mem_org_cd
+  is '会员机构代码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.stl_req_id
+  is '结算请求编号';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.stl_tm
+  is '结算时间';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.bus_type_cd
+  is '业务类型代码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.stl_way_cd
+  is '结算方式代码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.stl_bus_type_cd
+  is '结算业务类型代码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.clear_type_cd
+  is '清算类型代码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.bag_dir_cd
+  is '成交方向代码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.stl_amt
+  is '结算金额';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.int_paybl
+  is '应付利息';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.bill_cnt
+  is '票据张数';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.ctr_nt_id
+  is '成交单编号';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.lg_pay_sys_msg_ind_no
+  is '大额支付系统报文标识号';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.bill_num
+  is '票据号码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.recver_org_cd
+  is '收款方机构代码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.recver_trust_acct_num
+  is '收款方托管账号';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.recver_trust_acct_name
+  is '收款方托管账户名称';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.recver_cap_acct_num
+  is '收款方资金账号';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.recver_cap_acct_name
+  is '收款方资金账户名称';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.payer_org_cd
+  is '付款方机构代码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.payer_trust_acct_num
+  is '付款方托管账号';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.payer_trust_acct_name
+  is '付款方托管账户名称';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.payer_cap_acct_num
+  is '付款方资金账号';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.payer_cap_acct_name
+  is '付款方资金账户名称';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.stl_status_cd
+  is '结算状态代码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.stl_rest_code
+  is '结算结果编码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.stl_fail_rs
+  is '结算失败原因';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.bill_sub_intrv_id
+  is '子票据区间编号';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_BILL_BUS_STL_INFO.etl_timestamp
+  is 'ETL处理时间戳';
+

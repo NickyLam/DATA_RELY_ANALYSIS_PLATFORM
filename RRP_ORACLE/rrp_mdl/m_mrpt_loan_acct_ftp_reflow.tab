@@ -1,0 +1,45 @@
+﻿create table RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW
+(
+  data_dt                VARCHAR2(10),
+  acct_no                VARCHAR2(100),
+  sub_acct_no            VARCHAR2(100),
+  curr_cd                VARCHAR2(10),
+  final_ftp_rate         NUMBER(10,6),
+  final_ftp_accint_day   NUMBER(24,6),
+  final_ftp_accint_year  NUMBER(24,6),
+  accint_day             NUMBER(24,6),
+  exercise_interest_rate NUMBER(10,6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW
+  is '贷款账户-FTP回流-手工报表专用';
+comment on column RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW.data_dt
+  is '数据日期';
+comment on column RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW.acct_no
+  is '账号';
+comment on column RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW.sub_acct_no
+  is '子账号';
+comment on column RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW.curr_cd
+  is '币种';
+comment on column RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW.final_ftp_rate
+  is '最终FTP利率';
+comment on column RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW.final_ftp_accint_day
+  is '最终FTP利息日累计';
+comment on column RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW.final_ftp_accint_year
+  is '最终FTP利息年累计';
+comment on column RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW.accint_day
+  is '利息收支日累计';
+comment on column RRP_MDL.M_MRPT_LOAN_ACCT_FTP_REFLOW.exercise_interest_rate
+  is '执行利率';
+

@@ -1,0 +1,102 @@
+﻿create table RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H
+(
+  agt_id            VARCHAR2(250),
+  lp_id             VARCHAR2(100),
+  renew_flow_num    VARCHAR2(100),
+  precon_id         VARCHAR2(100),
+  rela_dubil_id     VARCHAR2(100),
+  out_acct_flow_num VARCHAR2(100),
+  renew_status_cd   VARCHAR2(30),
+  happ_dt           DATE,
+  init_int_rat      NUMBER(18,8),
+  init_exp_dt       DATE,
+  renew_amt         NUMBER(30,2),
+  b_renew_amt       NUMBER(30,2),
+  renew_year_tenor  NUMBER(10),
+  renew_mon_tenor   NUMBER(10),
+  renew_day_tenor   NUMBER(10),
+  a_renew_int_rat   NUMBER(18,8),
+  a_renew_exp_dt    DATE,
+  entr_pay_dt       DATE,
+  org_id            VARCHAR2(100),
+  oper_teller_id    VARCHAR2(100),
+  update_flg        VARCHAR2(10),
+  remark            VARCHAR2(2000),
+  start_dt          DATE,
+  end_dt            DATE,
+  id_mark           VARCHAR2(10),
+  src_table_name    VARCHAR2(100),
+  job_cd            VARCHAR2(10),
+  etl_timestamp     TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H
+  is '贷款展期信息历史';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.renew_flow_num
+  is '展期流水号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.precon_id
+  is '预约编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.rela_dubil_id
+  is '关联借据编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.out_acct_flow_num
+  is '出账流水号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.renew_status_cd
+  is '展期状态代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.happ_dt
+  is '发生日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.init_int_rat
+  is '原利率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.init_exp_dt
+  is '原到期日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.renew_amt
+  is '展期金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.b_renew_amt
+  is '展期前金额';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.renew_year_tenor
+  is '展期年期限';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.renew_mon_tenor
+  is '展期月期限';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.renew_day_tenor
+  is '展期日期限';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.a_renew_int_rat
+  is '展期后利率';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.a_renew_exp_dt
+  is '展期后到期日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.entr_pay_dt
+  is '受托支付日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.oper_teller_id
+  is '操作柜员编号';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.update_flg
+  is '更新标志';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.remark
+  is '备注';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.start_dt
+  is '开始日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.end_dt
+  is '结束日期';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.id_mark
+  is '删除标识';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.job_cd
+  is '任务代码';
+comment on column RRP_MDL.O_IML_AGT_LOAN_RENEW_INFO_H.etl_timestamp
+  is '数据处理时间';
+

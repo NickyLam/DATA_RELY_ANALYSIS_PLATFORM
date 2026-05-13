@@ -1,0 +1,135 @@
+﻿create table RRP_MDL.O_IML_AGT_INSURE_PL
+(
+  agt_id              VARCHAR2(250),
+  lp_id               VARCHAR2(60),
+  insure_pl_id        VARCHAR2(100),
+  ta_cd               VARCHAR2(30),
+  prod_id             VARCHAR2(100),
+  std_prod_id         VARCHAR2(100),
+  bank_id             VARCHAR2(100),
+  cust_mgr_id         VARCHAR2(100),
+  cust_id             VARCHAR2(100),
+  insure_print_id     VARCHAR2(100),
+  org_id              VARCHAR2(100),
+  teller_id           VARCHAR2(100),
+  tran_dt             DATE,
+  seq_num             VARCHAR2(150),
+  policy_dt           DATE,
+  cfm_dt              DATE,
+  policy_effect_dt    DATE,
+  pay_ped             VARCHAR2(45),
+  insure_ped_type_cd  VARCHAR2(30),
+  insure_ped          VARCHAR2(45),
+  mode_pay_cd         VARCHAR2(30),
+  pay_ped_type_cd     VARCHAR2(30),
+  tran_amt            NUMBER(30,2),
+  insure_fee          NUMBER(30,2),
+  lot                 NUMBER(30,2),
+  bank_acct_id        VARCHAR2(100),
+  tran_status_cd      VARCHAR2(30),
+  holder_name         VARCHAR2(150),
+  holder_cert_type_cd VARCHAR2(30),
+  holder_cert_no      VARCHAR2(150),
+  rela_type_cd        VARCHAR2(30),
+  insrt_name          VARCHAR2(150),
+  insrt_cert_type_cd  VARCHAR2(30),
+  insrt_cert_no       VARCHAR2(150),
+  start_dt            DATE,
+  end_dt              DATE,
+  id_mark             VARCHAR2(10),
+  src_table_name      VARCHAR2(100),
+  job_cd              VARCHAR2(10)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_INSURE_PL
+  is '保险单';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.agt_id
+  is '交易账户编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.insure_pl_id
+  is '保险单编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.ta_cd
+  is 'TA代码';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.prod_id
+  is '产品编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.std_prod_id
+  is '标准产品编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.bank_id
+  is '银行编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.cust_mgr_id
+  is '客户经理编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.cust_id
+  is '客户号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.insure_print_id
+  is '保险打印单编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.org_id
+  is '机构编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.teller_id
+  is '柜员编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.tran_dt
+  is '交易日期';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.seq_num
+  is '序号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.policy_dt
+  is '保单日期';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.cfm_dt
+  is '确认日期';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.policy_effect_dt
+  is 'VLOOKUP(E9245,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.pay_ped
+  is '支付周期';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.insure_ped_type_cd
+  is 'VLOOKUP(E9243,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.insure_ped
+  is 'VLOOKUP(E9271,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.mode_pay_cd
+  is '支付方式代码';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.pay_ped_type_cd
+  is '支付周期类型代码';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.tran_amt
+  is '交易金额';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.insure_fee
+  is '保险费用';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.lot
+  is '份额';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.bank_acct_id
+  is '银行账户编号';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.tran_status_cd
+  is '交易状态代码';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.holder_name
+  is '持有人';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.holder_cert_type_cd
+  is '持有人证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.holder_cert_no
+  is 'VLOOKUP(E9246,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.rela_type_cd
+  is '关联类型代码';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.insrt_name
+  is 'VLOOKUP(E9250,Sheet2!A:C,3,FALSE)';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.insrt_cert_type_cd
+  is '被保险人证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.insrt_cert_no
+  is '被保险人证件号码';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.start_dt
+  is '起始日期';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.end_dt
+  is '截止日期';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_INSURE_PL.job_cd
+  is '任务代码';
+

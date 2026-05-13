@@ -1,0 +1,144 @@
+﻿create table RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW
+(
+  evt_id                     VARCHAR2(250),
+  lp_id                      VARCHAR2(100),
+  modif_flow_num             VARCHAR2(100),
+  modif_dt                   DATE,
+  unify_info_que_flow_num    VARCHAR2(100),
+  init_tran_dt               DATE,
+  init_tran_bus_flow_num     VARCHAR2(100),
+  init_tran_ova_flow_num     VARCHAR2(100),
+  blip_batch_no              VARCHAR2(500),
+  agent_flg                  VARCHAR2(10),
+  public_agent_type_cd       VARCHAR2(30),
+  public_agent_name          VARCHAR2(500),
+  agent_reason_descb         VARCHAR2(500),
+  cert_type_cd               VARCHAR2(30),
+  cert_no                    VARCHAR2(100),
+  cont_num                   VARCHAR2(60),
+  nation_cd                  VARCHAR2(30),
+  gender_cd                  VARCHAR2(30),
+  career_cd_one              VARCHAR2(30),
+  career_descb_one           VARCHAR2(500),
+  career_cd_two              VARCHAR2(30),
+  career_descb_two           VARCHAR2(500),
+  career_dtl_comnt           VARCHAR2(500),
+  cont_addr_prov_cd          VARCHAR2(30),
+  cont_addr_prov_name        VARCHAR2(500),
+  cont_addr_city_cd          VARCHAR2(30),
+  cont_addr_city_name        VARCHAR2(500),
+  cont_addr_rg_cd            VARCHAR2(30),
+  cont_addr_rg_name          VARCHAR2(500),
+  cont_addr                  VARCHAR2(500),
+  licen_issue_autho_addr     VARCHAR2(1000),
+  cert_start_dt              DATE,
+  cert_exp_dt                DATE,
+  netw_vrfction_flow_num     VARCHAR2(100),
+  netw_vrfction_rest_cd      VARCHAR2(30),
+  netw_vrfction_rule_rest_cd VARCHAR2(30),
+  face_recn_rest_cd          VARCHAR2(30),
+  face_recn_score            VARCHAR2(10),
+  etl_dt                     DATE,
+  src_table_name             VARCHAR2(100),
+  job_cd                     VARCHAR2(10),
+  etl_timestamp              TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW
+  is '代办人信息修改登记流水';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.evt_id
+  is '事件编号';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.modif_flow_num
+  is '修改流水号';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.modif_dt
+  is '修改日期';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.unify_info_que_flow_num
+  is '统一信息查询流水号';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.init_tran_dt
+  is '原交易日期';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.init_tran_bus_flow_num
+  is '原交易业务流水号';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.init_tran_ova_flow_num
+  is '原交易全局流水号';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.blip_batch_no
+  is '影像批次号';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.agent_flg
+  is '代办标志';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.public_agent_type_cd
+  is '代办人类型代码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.public_agent_name
+  is '代办人名称';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.agent_reason_descb
+  is '代办理由描述';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cert_type_cd
+  is '证件类型代码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cert_no
+  is '证件号码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cont_num
+  is '联系号码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.nation_cd
+  is '国籍代码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.gender_cd
+  is '性别代码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.career_cd_one
+  is '职业代码一';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.career_descb_one
+  is '职业描述一';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.career_cd_two
+  is '职业代码二';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.career_descb_two
+  is '职业描述二';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.career_dtl_comnt
+  is '职业详细说明';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cont_addr_prov_cd
+  is '联系地址-省级代码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cont_addr_prov_name
+  is '联系地址-省级名称';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cont_addr_city_cd
+  is '联系地址-市级代码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cont_addr_city_name
+  is '联系地址-市级名称';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cont_addr_rg_cd
+  is '联系地址-区级代码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cont_addr_rg_name
+  is '联系地址-区级名称';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cont_addr
+  is '联系地址';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.licen_issue_autho_addr
+  is '发证机关地址';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cert_start_dt
+  is '证件开始日期';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.cert_exp_dt
+  is '证件到期日期';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.netw_vrfction_flow_num
+  is '联网核查流水号';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.netw_vrfction_rest_cd
+  is '联网核查结果代码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.netw_vrfction_rule_rest_cd
+  is '联网核查手工审定结果代码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.face_recn_rest_cd
+  is '人脸识别结果代码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.face_recn_score
+  is '人脸识别分数';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.etl_dt
+  is 'ETL处理日期';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_EVT_PUBLIC_AGENT_MODIF_FLOW.etl_timestamp
+  is 'ETL处理时间戳';
+

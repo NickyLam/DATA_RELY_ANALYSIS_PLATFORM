@@ -1,0 +1,67 @@
+﻿create table RRP_MDL.O_IOL_IBMS_TTRD_EQUITY_20250630
+(
+  i_code             VARCHAR2(75),
+  a_type             VARCHAR2(30),
+  m_type             VARCHAR2(30),
+  l_code             VARCHAR2(113),
+  i_name             VARCHAR2(300),
+  currency           VARCHAR2(5),
+  country            VARCHAR2(3),
+  q_type             VARCHAR2(3),
+  p_type             VARCHAR2(45),
+  p_class            VARCHAR2(150),
+  list_date          VARCHAR2(15),
+  open_date          VARCHAR2(15),
+  issuer             VARCHAR2(300),
+  risk_rating        NUMBER(22),
+  trustee            VARCHAR2(383),
+  imp_date           VARCHAR2(15),
+  pipe_id            NUMBER(22),
+  chinesespell       VARCHAR2(150),
+  update_user        VARCHAR2(150),
+  update_time        VARCHAR2(35),
+  account_user       VARCHAR2(45),
+  account_time       VARCHAR2(30),
+  issuer_id          NUMBER(22),
+  trustee_id         NUMBER(22),
+  usable_flag        NUMBER(22),
+  product_rate       VARCHAR2(150),
+  rate_institution   VARCHAR2(150),
+  open_type          VARCHAR2(30),
+  start_open_date    VARCHAR2(30),
+  end_open_date      VARCHAR2(30),
+  guarantee_way      VARCHAR2(3),
+  guarantee_infor    VARCHAR2(450),
+  ctrct_id           VARCHAR2(75),
+  platform           VARCHAR2(3),
+  invest_direction   VARCHAR2(750),
+  final_invest       VARCHAR2(15),
+  five_class         VARCHAR2(3),
+  contract_version   VARCHAR2(3),
+  extordid           VARCHAR2(75),
+  mitigation_freq    VARCHAR2(15),
+  manager_id         NUMBER(16),
+  manager_value      VARCHAR2(383),
+  risk_proportion    NUMBER(14,6),
+  middle_classify    VARCHAR2(75),
+  small_classify     VARCHAR2(75),
+  closing_start_date VARCHAR2(15),
+  closing_end_date   VARCHAR2(15),
+  start_dt           DATE,
+  end_dt             DATE,
+  id_mark            VARCHAR2(10),
+  etl_timestamp      TIMESTAMP(6)
+)
+tablespace TBS_EAST_DATA
+  pctfree 0
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

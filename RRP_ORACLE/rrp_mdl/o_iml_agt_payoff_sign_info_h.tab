@@ -1,0 +1,117 @@
+﻿create table RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H
+(
+  agt_id                VARCHAR2(250),
+  lp_id                 VARCHAR2(60),
+  sign_id               VARCHAR2(100),
+  sign_type_cd          VARCHAR2(30),
+  entr_acct_id          VARCHAR2(100),
+  entr_acct_name        VARCHAR2(750),
+  tel_num               VARCHAR2(90),
+  corp_addr             VARCHAR2(150),
+  intnal_acct_id        VARCHAR2(100),
+  intnal_acct_name      VARCHAR2(750),
+  bus_type_cd           VARCHAR2(30),
+  tran_chn_cd           VARCHAR2(30),
+  sign_dt               DATE,
+  sign_org_id           VARCHAR2(100),
+  sign_teller_id        VARCHAR2(100),
+  agt_status_cd         VARCHAR2(30),
+  cust_id               VARCHAR2(100),
+  obank_flg             VARCHAR2(10),
+  obank_acct_id         VARCHAR2(100),
+  obank_acct_name       VARCHAR2(750),
+  obank_bank_no         VARCHAR2(150),
+  obank_bank_name       VARCHAR2(375),
+  tran_inside_acct_id   VARCHAR2(100),
+  tran_inside_acct_name VARCHAR2(750),
+  rfued_flg             VARCHAR2(10),
+  start_dt              DATE,
+  end_dt                DATE,
+  id_mark               VARCHAR2(10),
+  src_table_name        VARCHAR2(100),
+  job_cd                VARCHAR2(10),
+  etl_timestamp         TIMESTAMP(6),
+  rels_dt               DATE,
+  rels_teller_id        VARCHAR2(100)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H
+  is '代发代扣签约信息历史';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.sign_id
+  is '签约编号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.sign_type_cd
+  is '签约类型代码';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.entr_acct_id
+  is '委托账户编号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.entr_acct_name
+  is '委托账户名称';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.tel_num
+  is '电话号码';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.corp_addr
+  is '公司地址';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.intnal_acct_id
+  is '内部账户编号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.intnal_acct_name
+  is '内部账户名称';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.bus_type_cd
+  is '业务类型代码';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.tran_chn_cd
+  is '交易渠道代码';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.sign_dt
+  is '签约日期';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.sign_org_id
+  is '签约机构编号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.sign_teller_id
+  is '签约柜员编号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.agt_status_cd
+  is '协议状态代码';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.cust_id
+  is '客户编号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.obank_flg
+  is '他行标志';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.obank_acct_id
+  is '他行账户编号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.obank_acct_name
+  is '他行账户名称';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.obank_bank_no
+  is '他行行号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.obank_bank_name
+  is '他行行名';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.tran_inside_acct_id
+  is '过渡内部户账户编号';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.tran_inside_acct_name
+  is '过渡内部户账户名称';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.rfued_flg
+  is '退款中标志';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.etl_timestamp
+  is 'etl处理时间戳';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.rels_dt
+  is '解约日期';
+comment on column RRP_MDL.O_IML_AGT_PAYOFF_SIGN_INFO_H.rels_teller_id
+  is '解约柜员编号';
+

@@ -1,0 +1,186 @@
+﻿create table RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H
+(
+  agt_id                        VARCHAR2(250),
+  lp_id                         VARCHAR2(100),
+  mercht_id                     VARCHAR2(100),
+  mercht_name                   VARCHAR2(500),
+  mercht_type_descb             VARCHAR2(500),
+  wft_org_id                    VARCHAR2(100),
+  corp_cert_type_cd             VARCHAR2(60),
+  corp_cert_type_descb          VARCHAR2(500),
+  corp_cert_no                  VARCHAR2(500),
+  corp_cert_effect_dt           DATE,
+  corp_cert_invalid_dt          DATE,
+  mang_range                    VARCHAR2(4000),
+  rgst_addr                     VARCHAR2(1000),
+  legal_rep_name                VARCHAR2(500),
+  legal_rep_gender_cd           VARCHAR2(60),
+  legal_rep_gender_descb        VARCHAR2(500),
+  legal_rep_cert_type_cd        VARCHAR2(60),
+  legal_rep_cert_type           VARCHAR2(250),
+  legal_rep_cert_no             VARCHAR2(250),
+  legal_rep_cert_effect_dt      DATE,
+  legal_rep_cert_invalid_dt     DATE,
+  legal_rep_mobile_no           VARCHAR2(250),
+  bnft_owner_name               VARCHAR2(500),
+  bnft_owner_cert_type_cd       VARCHAR2(60),
+  bnft_owner_cert_type_descb    VARCHAR2(500),
+  bnft_owner_cert_no            VARCHAR2(250),
+  bnft_owner_cert_effect_dt     DATE,
+  bnft_owner_cert_invalid_dt    DATE,
+  bnft_owner_dtl_addr           VARCHAR2(1000),
+  hold_shard_name               VARCHAR2(500),
+  hold_shard_cert_type_cd       VARCHAR2(60),
+  hold_shard_cert_type_descb    VARCHAR2(500),
+  hold_shard_cert_no            VARCHAR2(250),
+  hold_shard_cert_effect_dt     DATE,
+  hold_shard_cert_invalid_dt    DATE,
+  auth_trast_ps_name            VARCHAR2(500),
+  auth_trast_ps_cert_type_cd    VARCHAR2(60),
+  auth_trast_ps_cert_type_descb VARCHAR2(500),
+  auth_trast_ps_cert_no         VARCHAR2(250),
+  auth_trast_ps_cert_effect_dt  DATE,
+  auth_trast_ps_cert_invalid_dt DATE,
+  belong_org_id                 VARCHAR2(100),
+  mercht_check_status_descb     VARCHAR2(500),
+  mercht_actv_status_descb      VARCHAR2(500),
+  start_dt                      DATE,
+  end_dt                        DATE,
+  id_mark                       VARCHAR2(10),
+  src_table_name                VARCHAR2(100),
+  job_cd                        VARCHAR2(10),
+  etl_timestamp                 TIMESTAMP(6),
+  stl_acct_name                 VARCHAR2(500),
+  stl_acct_type_cd              VARCHAR2(250),
+  stl_acct_id                   VARCHAR2(250),
+  stl_acct_open_bank_name       VARCHAR2(500),
+  init_create_dt                DATE,
+  final_modif_dt                DATE
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+comment on table RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H
+  is '威富通商户信息历史';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.agt_id
+  is '协议编号';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.lp_id
+  is '法人编号';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.mercht_id
+  is '商户编号';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.mercht_name
+  is '商户名称';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.mercht_type_descb
+  is '商户类型描述';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.wft_org_id
+  is '威富通机构编号';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.corp_cert_type_cd
+  is '企业证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.corp_cert_type_descb
+  is '企业证件类型描述';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.corp_cert_no
+  is '企业证件号码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.corp_cert_effect_dt
+  is '企业证件生效日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.corp_cert_invalid_dt
+  is '企业证件失效日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.mang_range
+  is '经营范围';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.rgst_addr
+  is '注册地址';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.legal_rep_name
+  is '法定代表人名称';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.legal_rep_gender_cd
+  is '法定代表人性别代码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.legal_rep_gender_descb
+  is '法定代表人性别描述';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.legal_rep_cert_type_cd
+  is '法定代表人证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.legal_rep_cert_type
+  is '法定代表人证件类型';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.legal_rep_cert_no
+  is '法定代表人证件号码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.legal_rep_cert_effect_dt
+  is '法定代表人证件生效日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.legal_rep_cert_invalid_dt
+  is '法定代表人证件失效日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.legal_rep_mobile_no
+  is '法定代表人手机号码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.bnft_owner_name
+  is '受益所有人名称';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.bnft_owner_cert_type_cd
+  is '受益所有人证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.bnft_owner_cert_type_descb
+  is '受益所有人证件类型描述';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.bnft_owner_cert_no
+  is '受益所有人证件号码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.bnft_owner_cert_effect_dt
+  is '受益所有人证件生效日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.bnft_owner_cert_invalid_dt
+  is '受益所有人证件失效日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.bnft_owner_dtl_addr
+  is '受益所有人详细地址';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.hold_shard_name
+  is '控股股东名称';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.hold_shard_cert_type_cd
+  is '控股股东证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.hold_shard_cert_type_descb
+  is '控股股东证件类型描述';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.hold_shard_cert_no
+  is '控股股东证件号码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.hold_shard_cert_effect_dt
+  is '控股股东证件生效日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.hold_shard_cert_invalid_dt
+  is '控股股东证件失效日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.auth_trast_ps_name
+  is '授权办理人名称';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.auth_trast_ps_cert_type_cd
+  is '授权办理人证件类型代码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.auth_trast_ps_cert_type_descb
+  is '授权办理人证件类型描述';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.auth_trast_ps_cert_no
+  is '授权办理人证件号码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.auth_trast_ps_cert_effect_dt
+  is '授权办理人证件生效日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.auth_trast_ps_cert_invalid_dt
+  is '授权办理人证件失效日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.belong_org_id
+  is '所属机构编号';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.mercht_check_status_descb
+  is '商户审核状态描述';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.mercht_actv_status_descb
+  is '商户激活状态描述';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.start_dt
+  is '开始时间';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.end_dt
+  is '结束时间';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.id_mark
+  is '增删标志';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.src_table_name
+  is '源表名称';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.job_cd
+  is '任务编码';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.etl_timestamp
+  is 'ETL处理时间戳';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.stl_acct_name
+  is '结算账户名称';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.stl_acct_type_cd
+  is '结算账户类型';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.stl_acct_id
+  is '结算账户编号';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.stl_acct_open_bank_name
+  is '结算账户开户行名称';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.init_create_dt
+  is '最初创建日期';
+comment on column RRP_MDL.O_IML_AGT_WFT_MERCHT_INFO_H.final_modif_dt
+  is '最后修改日期';
+

@@ -1,0 +1,32 @@
+﻿create table RRP_MDL.ETL_DATA_CLEANUP_CONF_BAK
+(
+  tab_group     INTEGER,
+  sch_name      VARCHAR2(128),
+  table_name    VARCHAR2(128),
+  table_name_cn VARCHAR2(200),
+  table_lvl     VARCHAR2(32),
+  begin_dt      VARCHAR2(8),
+  end_dt        VARCHAR2(8),
+  cle_type      VARCHAR2(32),
+  keep_num      INTEGER,
+  keep_type     VARCHAR2(20),
+  col_name      VARCHAR2(128),
+  col_type      VARCHAR2(128),
+  col_format    VARCHAR2(128),
+  create_per    VARCHAR2(100),
+  create_dt     VARCHAR2(8),
+  exec_status   VARCHAR2(128)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+

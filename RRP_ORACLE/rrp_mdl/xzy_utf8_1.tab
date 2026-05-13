@@ -1,0 +1,18 @@
+﻿create table RRP_MDL.XZY_UTF8_1
+(
+  owner      VARCHAR2(320),
+  table_name VARCHAR2(320)
+)
+tablespace TBS_EAST_DATA
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  )
+compress;
+
