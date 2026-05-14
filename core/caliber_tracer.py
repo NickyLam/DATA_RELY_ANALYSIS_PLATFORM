@@ -635,6 +635,32 @@ class CaliberTracer:
                             matched = True
 
             if not matched:
+                # 跨表字段名解析：通过 _fm_source_idx 查找源表中有哪些字段
+                # 被映射到了当前目标表的当前字段（解决 KHXM→CUST_NAME 异名字段问题）
+                src_fm_cols = self._fm_source_idx.get(src_short, {})
+                for col_name, fm_entries in src_fm_cols.items():
+                    for fm in fm_entries:
+                        fm_tgt_short = fm.target_table.upper().split(".")[-1]
+                        if fm_tgt_short == short_table and fm.target_column.upper() == field_upper:
+                            ci = self._field_mapping_to_caliber(fm, tl.procedure or fm.procedure or "")
+                            if ci:
+                                results.append(ci)
+                                matched = True
+
+            if not matched:
+                # 再尝试：源表作为 target 出现在 field_mappings 中，
+                # 查找该表有哪些字段最终流向目标表的当前字段
+                src_tgt_cols = self._fm_target_idx.get(src_short, {})
+                for col_name, fm_entries in src_tgt_cols.items():
+                    for fm in fm_entries:
+                        fm_tgt_short = fm.target_table.upper().split(".")[-1]
+                        if fm_tgt_short == short_table and fm.target_column.upper() == field_upper:
+                            ci = self._field_mapping_to_caliber(fm, tl.procedure or fm.procedure or "")
+                            if ci:
+                                results.append(ci)
+                                matched = True
+
+            if not matched:
                 results.append(_CaliberSourceRecord(
                     source_table=tl.source_table,
                     source_column=field_upper,
@@ -740,6 +766,31 @@ class CaliberTracer:
                         if ci:
                             results.append(ci)
                             matched = True
+
+            if not matched:
+                # 跨表字段名解析：通过 _fm_target_idx 查找目标表中有哪些字段
+                # 是由当前源字段映射而来的（解决异名字段问题）
+                tgt_fm_cols = self._fm_target_idx.get(tgt_short, {})
+                for col_name, fm_entries in tgt_fm_cols.items():
+                    for fm in fm_entries:
+                        fm_src_short = fm.source_table.upper().split(".")[-1]
+                        if fm_src_short == short_table and fm.source_column.upper() == field_upper:
+                            ci = self._field_mapping_to_caliber(fm, tl.procedure or fm.procedure or "")
+                            if ci:
+                                results.append(ci)
+                                matched = True
+
+            if not matched:
+                # 再尝试：目标表作为 source 出现在 field_mappings 中
+                tgt_src_cols = self._fm_source_idx.get(tgt_short, {})
+                for col_name, fm_entries in tgt_src_cols.items():
+                    for fm in fm_entries:
+                        fm_src_short = fm.source_table.upper().split(".")[-1]
+                        if fm_src_short == short_table and fm.source_column.upper() == field_upper:
+                            ci = self._field_mapping_to_caliber(fm, tl.procedure or fm.procedure or "")
+                            if ci:
+                                results.append(ci)
+                                matched = True
 
             if not matched:
                 results.append(_CaliberSourceRecord(

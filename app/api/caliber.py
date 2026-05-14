@@ -56,10 +56,10 @@ def query_caliber(
         )
 
 
-@router.get("/summary/{table}/{field}", summary="获取口径摘要文本(Markdown)")
+@router.get("/summary", summary="获取口径摘要文本(Markdown)")
 def get_caliber_summary(
-    table: Annotated[str, Path(description="目标表名")],
-    field: Annotated[str, Path(description="目标字段名")],
+    table: Annotated[str, Query(description="目标表名")],
+    field: Annotated[str, Query(description="目标字段名")],
     depth: Annotated[int, Query(ge=1, le=20)] = 10,
     direction: CaliberQueryMode = CaliberQueryMode.UPSTREAM,
     data_source: Annotated[Optional[str], Query(description="数据源筛选")] = None,
@@ -87,10 +87,10 @@ def get_caliber_summary(
         }
 
 
-@router.get("/sources/{table}/{field}", summary="获取直接上游口径(一层)")
+@router.get("/sources", summary="获取直接上游口径(一层)")
 def get_direct_sources(
-    table: Annotated[str, Path(description="目标表名")],
-    field: Annotated[str, Path(description="目标字段名")],
+    table: Annotated[str, Query(description="目标表名")],
+    field: Annotated[str, Query(description="目标字段名")],
     service: CaliberServiceDep = None,
 ) -> dict:
     try:
@@ -109,10 +109,10 @@ def get_direct_sources(
         }
 
 
-@router.get("/targets/{table}/{field}", summary="获取直接下游去向(一层)")
+@router.get("/targets", summary="获取直接下游去向(一层)")
 def get_direct_targets(
-    table: Annotated[str, Path(description="源表名")],
-    field: Annotated[str, Path(description="源字段名")],
+    table: Annotated[str, Query(description="源表名")],
+    field: Annotated[str, Query(description="源字段名")],
     service: CaliberServiceDep = None,
 ) -> dict:
     try:
@@ -158,6 +158,32 @@ def search_caliber(
         }
 
 
+@router.get("/fields", summary="获取表中有口径数据的字段列表")
+def get_caliber_fields(
+    table: Annotated[str, Query(description="目标表名(支持 schema.table 格式)")],
+    data_source: Annotated[Optional[str], Query(description="数据源筛选")] = None,
+    service: CaliberServiceDep = None,
+) -> dict:
+    try:
+        fields = service.get_fields_with_caliber(table=table, data_source=data_source)
+        return {
+            "success": True,
+            "message": "查询成功",
+            "data": {
+                "table": table,
+                "fields": fields,
+                "total": len(fields),
+            },
+        }
+    except Exception as e:
+        logger.error("口径字段查询失败: %s", e, exc_info=True)
+        return {
+            "success": False,
+            "message": f"查询失败: {str(e)}",
+            "data": {"table": table, "fields": [], "total": 0},
+        }
+
+
 @router.get("/datasources/list", summary="获取数据源列表")
 def get_datasources(
     service: CaliberServiceDep = None,
@@ -178,10 +204,10 @@ def get_datasources(
         }
 
 
-@router.get("/{table}/{field}", summary="快捷口径查询(GET)")
+@router.get("/trace", summary="快捷口径追溯(GET)")
 def get_caliber(
-    table: Annotated[str, Path(description="目标表名")],
-    field: Annotated[str, Path(description="目标字段名")],
+    table: Annotated[str, Query(description="目标表名")],
+    field: Annotated[str, Query(description="目标字段名")],
     depth: Annotated[int, Query(ge=1, le=20, description="追溯深度")] = 10,
     direction: CaliberQueryMode = CaliberQueryMode.UPSTREAM,
     data_source: Annotated[Optional[str], Query(description="数据源筛选")] = None,

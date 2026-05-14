@@ -317,25 +317,27 @@
                 <header class="query-header">
                     <div class="query-inputs-row">
                         <!-- 表名输入 -->
-                        <div class="input-group">
+                        <div class="input-group" style="position:relative;">
                             <label class="input-label">📋 表名</label>
                             <input
                                 type="text"
                                 id="caliberTableInput"
-                                placeholder="如: A_FGB_ACCT_LOAN"
+                                placeholder="输入表名搜索..."
                                 autocomplete="off"
                             >
+                            <div id="caliberTableResults" class="search-results-dropdown" style="display:none;"></div>
                         </div>
 
                         <!-- 字段输入 -->
-                        <div class="input-group">
+                        <div class="input-group" style="position:relative;">
                             <label class="input-label">✏️ 字段名</label>
                             <input
                                 type="text"
                                 id="caliberFieldInput"
-                                placeholder="如: LOAN_BAL"
+                                placeholder="先选择表，再选择字段"
                                 autocomplete="off"
                             >
+                            <div id="caliberFieldResults" class="field-results-dropdown" style="display:none;"></div>
                         </div>
 
                         <!-- 查询方向 -->
@@ -348,9 +350,9 @@
                         </div>
 
                         <!-- 数据源筛选 -->
-                        <div class="input-group">
+                        <div class="input-group" style="min-width:auto;">
                             <label class="input-label">🗄️ 数据源</label>
-                            <select id="caliberDataSource" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;min-width:100px;">
+                            <select id="caliberDataSource" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;width:100px;">
                                 <option value="">全部</option>
                                 <option value="oracle">Oracle</option>
                                 <option value="tdh">TDH星环</option>

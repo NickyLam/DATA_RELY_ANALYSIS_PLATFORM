@@ -29,8 +29,12 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from typing import Any, Optional
 
+from core.caliber_extractor import CaliberExtractor
 from core.lineage_tracer import LineageTracer
 from core.models import (
+    CaliberChain,
+    CaliberInfo,
+    CaliberResult,
     FieldLineageNode,
     TableInfo,
     detect_layer,
@@ -200,6 +204,249 @@ def _serialize_result(result: Any) -> dict[str, Any]:
         "total_procedures": result.total_procedures,
         "max_depth": result.max_depth,
         "query_time_ms": result.query_time_ms,
+    }
+
+
+# ===========================================================================
+# 口径查询辅助函数
+# ===========================================================================
+
+def _find_field_mapping(
+    src_node: FieldLineageNode,
+    tgt_node: FieldLineageNode,
+) -> Any:
+    """在 tracer 的 field_mappings 中查找匹配的血缘映射。"""
+    if _tracer is None:
+        return None
+
+    src_table = src_node.table_name.upper()
+    src_field = src_node.field_name.upper()
+    tgt_table = tgt_node.table_name.upper()
+    tgt_field = tgt_node.field_name.upper()
+
+    for fm in _tracer.field_mappings:
+        if (
+            fm.source_table.upper() == src_table
+            and fm.source_column.upper() == src_field
+            and fm.target_table.upper() == tgt_table
+            and fm.target_column.upper() == tgt_field
+        ):
+            return fm
+
+    # 模糊匹配：允许 schema 前缀差异
+    for fm in _tracer.field_mappings:
+        fm_src_tbl = fm.source_table.upper().split(".")[-1] if "." in fm.source_table else fm.source_table.upper()
+        fm_tgt_tbl = fm.target_table.upper().split(".")[-1] if "." in fm.target_table else fm.target_table.upper()
+        src_tbl_short = src_table.split(".")[-1] if "." in src_table else src_table
+        tgt_tbl_short = tgt_table.split(".")[-1] if "." in tgt_table else tgt_table
+        if (
+            fm_src_tbl == src_tbl_short
+            and fm.source_column.upper() == src_field
+            and fm_tgt_tbl == tgt_tbl_short
+            and fm.target_column.upper() == tgt_field
+        ):
+            return fm
+
+    return None
+
+
+def _extract_sql_block_for_mapping(proc: Any, target_table: str) -> str:
+    """从 .prc 文件中提取对应目标表的 SQL 操作块。"""
+    if not proc or not proc.file_path:
+        return ""
+
+    try:
+        with open(proc.file_path, "r", encoding="utf-8", errors="ignore") as fh:
+            content = fh.read()
+    except OSError:
+        return ""
+
+    parser = EnhancedProcedureParser(tables=_tracer.tables if _tracer else {})
+    try:
+        operations = parser._extract_all_sql_operations(content, proc)
+    except Exception:
+        return ""
+
+    target_short = target_table.split(".")[-1].upper() if "." in target_table else target_table.upper()
+    for op in operations:
+        op_target_short = (
+            op.target_table.split(".")[-1].upper()
+            if "." in op.target_table
+            else op.target_table.upper()
+        )
+        if op_target_short == target_short:
+            return op.sql_block
+
+    return ""
+
+
+def _chains_to_caliber_result(
+    chains: list[Any],
+    table: str,
+    field: str,
+    direction: str = "upstream",
+) -> CaliberResult:
+    """将 FieldLineageChain 列表转换为 CaliberResult。"""
+    caliber_chains: list[CaliberChain] = []
+
+    for chain in chains:
+        steps: list[CaliberInfo] = []
+        nodes = chain.chain
+
+        # 上游追溯：nodes[0]=源头, nodes[-1]=目标
+        # 从目标倒序遍历到源头，构建每步的 CaliberInfo
+        for i in range(len(nodes) - 1, 0, -1):
+            tgt_node = nodes[i]
+            src_node = nodes[i - 1]
+
+            fm = _find_field_mapping(src_node, tgt_node)
+
+            sql_block = ""
+            if tgt_node.procedure and _tracer and _tracer.procedures:
+                proc = _tracer.procedures.get(tgt_node.procedure)
+                if proc:
+                    sql_block = _extract_sql_block_for_mapping(proc, tgt_node.table_name)
+
+            if fm:
+                caliber_info = CaliberExtractor.build_caliber_info(
+                    field_mapping=fm,
+                    sql_block=sql_block,
+                    procedure=tgt_node.procedure,
+                    data_source="oracle",
+                )
+            else:
+                from core.layer_detector import detect_layer as _detect_layer
+
+                caliber_info = CaliberInfo(
+                    target_table=tgt_node.table_name,
+                    target_column=tgt_node.field_name,
+                    source_table=src_node.table_name,
+                    source_column=src_node.field_name,
+                    transform_logic=tgt_node.transform_logic or "",
+                    procedure=tgt_node.procedure,
+                    source_table_layer=_detect_layer(src_node.table_name).value if src_node.table_name else "",
+                    target_table_layer=_detect_layer(tgt_node.table_name).value if tgt_node.table_name else "",
+                )
+
+            steps.append(caliber_info)
+
+        # 反转步骤顺序：从源头到目标
+        steps = steps[::-1]
+        for idx, step in enumerate(steps, 1):
+            step.step_num = idx
+
+        caliber_chain = CaliberChain(
+            target_table=table,
+            target_column=field,
+            steps=steps,
+            depth=len(steps),
+        )
+        caliber_chain.compute_metadata()
+        caliber_chains.append(caliber_chain)
+
+    total_steps = sum(c.depth for c in caliber_chains)
+    total_conditions = sum(c.total_conditions for c in caliber_chains)
+
+    result = CaliberResult(
+        target_table=table,
+        target_column=field,
+        chains=caliber_chains,
+        total_steps=total_steps,
+        total_conditions=total_conditions,
+    )
+    result.build_complete_spec()
+    return result
+
+
+def _serialize_caliber_info(ci: CaliberInfo) -> dict[str, Any]:
+    return {
+        "target_table": ci.target_table,
+        "target_column": ci.target_column,
+        "source_table": ci.source_table,
+        "source_column": ci.source_column,
+        "transform_logic": ci.transform_logic,
+        "where_conditions": [
+            {
+                "condition_type": c.condition_type,
+                "raw_text": c.raw_text,
+                "tables_involved": c.tables_involved,
+                "fields_involved": c.fields_involved,
+            }
+            for c in ci.where_conditions
+        ],
+        "join_conditions": [
+            {
+                "condition_type": c.condition_type,
+                "raw_text": c.raw_text,
+                "tables_involved": c.tables_involved,
+                "fields_involved": c.fields_involved,
+            }
+            for c in ci.join_conditions
+        ],
+        "group_by_clause": ci.group_by_clause,
+        "having_clause": ci.having_clause,
+        "procedure": ci.procedure,
+        "step_num": ci.step_num,
+        "step_desc": ci.step_desc,
+        "data_source": ci.data_source,
+        "raw_sql_fragment": ci.raw_sql_fragment,
+        "confidence": ci.confidence,
+        "operation_type": ci.operation_type,
+        "select_columns": [
+            {
+                "source_expression": sc.source_expression,
+                "target_column": sc.target_column,
+                "alias": sc.alias,
+            }
+            for sc in ci.select_columns
+        ],
+        "distinct_flag": ci.distinct_flag,
+        "order_by_clause": ci.order_by_clause,
+        "set_operation": ci.set_operation,
+        "subqueries": [
+            {
+                "alias": sq.alias,
+                "raw_text": sq.raw_text,
+                "source_tables": sq.source_tables,
+                "where_conditions": [
+                    {"condition_type": wc.condition_type, "raw_text": wc.raw_text}
+                    for wc in sq.where_conditions
+                ],
+            }
+            for sq in ci.subqueries
+        ],
+        "source_table_layer": ci.source_table_layer,
+        "target_table_layer": ci.target_table_layer,
+        "window_functions": ci.window_functions,
+        "sql_operation_sequence": ci.sql_operation_sequence,
+    }
+
+
+def _serialize_caliber_chain(cc: CaliberChain) -> dict[str, Any]:
+    return {
+        "target_table": cc.target_table,
+        "target_column": cc.target_column,
+        "steps": [_serialize_caliber_info(s) for s in cc.steps],
+        "depth": cc.depth,
+        "data_flow_layers": cc.data_flow_layers,
+        "procedures_involved": cc.procedures_involved,
+        "tables_involved": cc.tables_involved,
+        "total_conditions": cc.total_conditions,
+        "complete_caliber_spec": cc.complete_caliber_spec,
+        "accumulated_conditions_text": cc.accumulated_conditions_text,
+    }
+
+
+def _serialize_caliber_result(cr: CaliberResult) -> dict[str, Any]:
+    return {
+        "target_table": cr.target_table,
+        "target_column": cr.target_column,
+        "chains": [_serialize_caliber_chain(c) for c in cr.chains],
+        "total_steps": cr.total_steps,
+        "total_conditions": cr.total_conditions,
+        "query_time_ms": cr.query_time_ms,
+        "data_flow_layers_summary": cr.data_flow_layers_summary,
+        "complete_caliber_spec": cr.complete_caliber_spec,
     }
 
 
@@ -388,6 +635,8 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
         ("GET", r"^/api/tables/(.+)/fields$", True),
         ("POST", r"^/api/lineage/query$", False),
         ("GET", r"^/api/lineage/(.+)/(.+)$", True),
+        ("GET", r"^/api/caliber/fields$", False),
+        ("GET", r"^/api/caliber/trace$", False),
         ("GET", r"^/api/stats$", False),
         ("GET", r"^/$", False),
         ("GET", r"^/static/(.+)$", True),
@@ -457,6 +706,21 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
             self._handle_lineage_query()
         elif re.match(r"^/api/lineage/(.+)/(.+)$", path):
             self._handle_lineage_get(groups[0], groups[1])
+        elif re.match(r"^/api/caliber/fields$", path):
+            query = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            table = query.get("table", [""])[0]
+            self._handle_caliber_fields(table)
+        elif re.match(r"^/api/caliber/trace$", path):
+            query = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            table = query.get("table", [""])[0]
+            field = query.get("field", [""])[0]
+            direction = query.get("direction", ["upstream"])[0]
+            depth_str = query.get("depth", ["10"])[0]
+            try:
+                depth = int(depth_str)
+            except ValueError:
+                depth = 10
+            self._handle_caliber_trace(table, field, direction, depth)
         elif re.match(r"^/static/(.+)$", path):
             self._serve_static_file(groups[0])
 
@@ -657,6 +921,69 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
         except Exception as exc:
             logger.error("血缘查询异常(GET): %s.%s — %s", table_clean, field_clean, exc, exc_info=True)
             self._send_error(f"血缘查询失败: {exc}", status=500)
+
+    def _handle_caliber_fields(self, table: str) -> None:
+        """返回某表中所有有口径数据的字段列表。"""
+        if not table:
+            self._send_error("缺少必要参数: table", status=400)
+            return
+
+        norm_table = table.strip().upper()
+        short_name = norm_table.split(".")[-1] if "." in norm_table else norm_table
+
+        field_set: set[str] = set()
+        caliber_fields: list[dict[str, str]] = []
+
+        # 从 tracer 的 field_mappings 中收集涉及该表的字段
+        if _tracer is not None:
+            for fm in _tracer.field_mappings:
+                fm_tgt_tbl = fm.target_table.upper()
+                fm_tgt_short = fm_tgt_tbl.split(".")[-1] if "." in fm_tgt_tbl else fm_tgt_tbl
+                fm_src_tbl = fm.source_table.upper()
+                fm_src_short = fm_src_tbl.split(".")[-1] if "." in fm_src_tbl else fm_src_tbl
+
+                if fm_tgt_short == short_name or fm_tgt_tbl == norm_table:
+                    field_set.add(fm.target_column.upper())
+                if fm_src_short == short_name or fm_src_tbl == norm_table:
+                    field_set.add(fm.source_column.upper())
+
+        for f in sorted(field_set):
+            caliber_fields.append({"field": f, "has_caliber": True})
+
+        self._send_json({"success": True, "data": {"fields": caliber_fields}})
+
+    def _handle_caliber_trace(
+        self, table: str, field: str, direction: str, depth: int
+    ) -> None:
+        """执行口径追溯查询，返回 CaliberResult。"""
+        if _tracer is None:
+            self._send_error("引擎尚未初始化", status=503)
+            return
+
+        if not table or not field:
+            self._send_error("缺少必要参数: table 和 field", status=400)
+            return
+
+        import time as _time
+
+        t0 = _time.perf_counter()
+
+        try:
+            if direction == "downstream":
+                chains = _tracer.trace_field_downstream(table, field, max_depth=depth)
+            else:
+                chains = _tracer.trace_field(table, field).chains
+
+            caliber_result = _chains_to_caliber_result(
+                chains, table, field, direction=direction
+            )
+            caliber_result.query_time_ms = round((_time.perf_counter() - t0) * 1000, 2)
+
+            data = _serialize_caliber_result(caliber_result)
+            self._send_json({"success": True, "data": data})
+        except Exception as exc:
+            logger.error("口径查询异常: %s.%s — %s", table, field, exc, exc_info=True)
+            self._send_error(f"口径查询失败: {exc}", status=500)
 
     # ==================================================================
     # 工具方法

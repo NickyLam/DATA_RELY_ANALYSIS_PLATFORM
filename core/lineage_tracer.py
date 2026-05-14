@@ -894,6 +894,11 @@ class LineageTracer:
         导致 field_mapping.source_table 为空。但 table_lineages 正确记录了
         表间依赖关系，可据此推断来源表。
 
+        多候选策略：当同一目标表有多个来源表时，按以下优先级选择：
+          1. 同过程的来源表（最可靠）
+          2. 与 field_mapping_idx 中有该目标表字段映射的来源表
+          3. 第一个候选（兜底）
+
         Args:
             target_table: 目标表名
             procedure_name: 存储过程全名
@@ -903,22 +908,38 @@ class LineageTracer:
         """
         norm_target = self._normalize_table_name(target_table)
         candidates: list[str] = []
+        same_proc_candidates: list[str] = []
 
         for tl in self.table_lineages:
             tl_tgt = self._normalize_table_name(tl.target_table)
             tl_src = self._normalize_table_name(tl.source_table)
             if tl_tgt == norm_target and tl_src and tl_src != norm_target:
-                # 优先匹配同过程
                 tl_proc = self._normalize_table_name(tl.procedure or "")
                 if procedure_name and tl_proc == self._normalize_table_name(procedure_name):
-                    return tl_src
+                    same_proc_candidates.append(tl_src)
                 candidates.append(tl_src)
 
-        # 无同过程匹配时，返回唯一候选
+        if same_proc_candidates:
+            if len(same_proc_candidates) == 1:
+                return same_proc_candidates[0]
+            # 多个同过程候选：优先选择在 field_mapping_idx 中有记录的来源表
+            for src in same_proc_candidates:
+                if src in self._field_mapping_idx:
+                    return src
+            return same_proc_candidates[0]
+
+        if not candidates:
+            return ""
+
         if len(candidates) == 1:
             return candidates[0]
 
-        return ""
+        # 多候选无过程匹配：优先选择在 field_mapping_idx 中有记录的来源表
+        for src in candidates:
+            if src in self._field_mapping_idx:
+                return src
+
+        return candidates[0]
 
     def _find_source_fields_in_procedure(
         self, target_table: str, target_field: str, procedure: ProcedureInfo

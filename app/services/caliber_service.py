@@ -287,6 +287,65 @@ class CaliberService:
 
         return results
 
+    def get_fields_with_caliber(
+        self,
+        table: str,
+        data_source: Optional[str] = None,
+    ) -> list[dict]:
+        """获取指定表中有口径数据的字段列表（含上下游数量统计）。
+
+        用于前端"选中表 → 关联展示口径字段"场景，避免用户选到一个
+        无口径数据的字段后查询结果为空。
+
+        Args:
+            table: 表名（支持短名和带 schema 的全名）
+            data_source: 数据源筛选
+
+        Returns:
+            字段列表，每个元素含:
+              - field: 字段名
+              - upstream_count: 作为目标字段的口径记录数（上游来源数）
+              - downstream_count: 作为源字段的口径记录数（下游去向数）
+        """
+        short_table = table.upper().split(".")[-1] if "." in table else table.upper()
+        full_table = table.upper()
+
+        # 收集该表在 _target_caliber_idx 中的所有字段（该字段作为目标被追溯）
+        target_fields: dict[str, int] = {}
+        source_fields: dict[str, int] = {}
+
+        for ci in self._target_caliber_idx:
+            ci_table, ci_col = ci  # (short_table, column)
+            if ci_table != short_table:
+                continue
+            records = self._target_caliber_idx[ci]
+            if data_source:
+                records = [r for r in records if r.get("data_source", "") == data_source]
+            if records:
+                target_fields[ci_col] = len(records)
+
+        for ci in self._source_caliber_idx:
+            ci_table, ci_col = ci
+            if ci_table != short_table:
+                continue
+            records = self._source_caliber_idx[ci]
+            if data_source:
+                records = [r for r in records if r.get("data_source", "") == data_source]
+            if records:
+                source_fields[ci_col] = len(records)
+
+        # 合并：有上游或有下游记录的字段都算
+        all_fields: set[str] = set(target_fields.keys()) | set(source_fields.keys())
+        results: list[dict] = []
+        for field_name in sorted(all_fields):
+            results.append({
+                "field": field_name,
+                "upstream_count": target_fields.get(field_name, 0),
+                "downstream_count": source_fields.get(field_name, 0),
+            })
+
+        return results
+
     def get_datasources(self) -> list[dict]:
         """获取可用的数据源列表。"""
         from app.config import config
