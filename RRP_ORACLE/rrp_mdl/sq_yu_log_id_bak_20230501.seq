@@ -1,8 +1,0 @@
-﻿create sequence RRP_MDL.SQ_YU_LOG_ID_BAK_20230501
-minvalue 1
-maxvalue 9999999999999999999999999999
-start with 194387
-increment by 1
-cache 20
-order;
-

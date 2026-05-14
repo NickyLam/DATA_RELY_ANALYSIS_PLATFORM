@@ -29,6 +29,7 @@ from core.models import (
     CaliberResult,
     FieldMapping,
     ProcedureInfo,
+    SQLCondition,
     TableInfo,
     TableLineage,
 )
@@ -108,6 +109,9 @@ class CaliberTracer:
         self._proc_target_idx: dict[str, list[ProcedureInfo]] = {}
         self._table_proc_idx: dict[str, list[ProcedureInfo]] = {}
         self._fm_target_idx: dict[str, dict[str, list[FieldMapping]]] = {}
+        self._fm_source_idx: dict[str, dict[str, list[FieldMapping]]] = {}
+        self._tl_target_idx: dict[str, list[TableLineage]] = {}
+        self._tl_source_idx: dict[str, list[TableLineage]] = {}
 
         self._build_indexes()
         logger.info(
@@ -148,10 +152,22 @@ class CaliberTracer:
                     tgt_col, []
                 ).append(fm)
 
+                src_tbl = fm.source_table.upper().split(".")[-1]
+                src_col = fm.source_column.upper()
+                self._fm_source_idx.setdefault(src_tbl, {}).setdefault(
+                    src_col, []
+                ).append(fm)
+
             src_tables = set(proc.source_tables)
             for t in src_tables:
                 short_t = t.upper().split(".")[-1]
                 self._table_proc_idx.setdefault(short_t, []).append(proc)
+
+        for tl in self.table_lineages:
+            tgt_short = tl.target_table.upper().split(".")[-1]
+            src_short = tl.source_table.upper().split(".")[-1]
+            self._tl_target_idx.setdefault(tgt_short, []).append(tl)
+            self._tl_source_idx.setdefault(src_short, []).append(tl)
 
     @staticmethod
     def _make_key(table: str, column: str) -> tuple[str, str]:
@@ -217,6 +233,8 @@ class CaliberTracer:
             total_conditions=total_conds,
             query_time_ms=round(elapsed_ms, 2),
         )
+
+        result.build_complete_spec()
 
         logger.info(
             "口径追溯完成: %s.%s → %d 条链路, %d 步, %d 条条件, 耗时 %.2fms",
@@ -511,10 +529,21 @@ class CaliberTracer:
     def _find_upstream_sources(
         self, table: str, field: str, data_source: Optional[str]
     ) -> list[_CaliberSourceRecord]:
-        """查找目标字段的所有上游来源（多策略）。"""
-        results: list[_CaliberSourceRecord] = []
+        """查找目标字段的所有上游来源（多策略逐级回退）。
 
-        key = self._make_key(self._normalize_name(table), field.upper())
+        策略优先级:
+          1. caliber_infos 精确匹配（含完整条件）
+          2. caliber_infos schema 变体匹配
+          3. field_mappings 精确匹配（从 _fm_target_idx，含映射关系）
+          4. field_mappings schema 变体匹配
+          5. procedure field_mappings 回退（按过程查找）
+          6. table_lineages 表级回退（降级到表级血缘，匹配同名字段）
+        """
+        results: list[_CaliberSourceRecord] = []
+        short_table = self._normalize_name(table).split(".")[-1]
+        field_upper = field.upper()
+
+        key = self._make_key(self._normalize_name(table), field_upper)
 
         direct_hits = self._target_idx.get(key, [])
         for ci_dict in direct_hits:
@@ -525,8 +554,6 @@ class CaliberTracer:
         if results:
             return results
 
-        short_table = self._normalize_name(table).split(".")[-1]
-
         schema_variants = [
             f"RRP_MDL.{short_table}",
             f"RRP_EAST.{short_table}",
@@ -534,7 +561,7 @@ class CaliberTracer:
         ]
 
         for variant in schema_variants:
-            vkey = (variant, field.upper())
+            vkey = (variant, field_upper)
             hits = self._target_idx.get(vkey, [])
             for h in hits:
                 if data_source and h.get("data_source", "") != data_source:
@@ -544,25 +571,99 @@ class CaliberTracer:
         if results:
             return results
 
+        fm_cols = self._fm_target_idx.get(short_table, {})
+        fm_list = fm_cols.get(field_upper, [])
+        for fm in fm_list:
+            if not fm.source_table or not fm.source_column:
+                continue
+            ci = self._field_mapping_to_caliber(fm, fm.procedure or "")
+            if ci:
+                results.append(ci)
+
+        if results:
+            return results
+
+        for variant in schema_variants:
+            v_short = variant.split(".")[-1]
+            fm_cols_v = self._fm_target_idx.get(v_short, {})
+            fm_list_v = fm_cols_v.get(field_upper, [])
+            for fm in fm_list_v:
+                if not fm.source_table or not fm.source_column:
+                    continue
+                ci = self._field_mapping_to_caliber(fm, fm.procedure or "")
+                if ci:
+                    results.append(ci)
+
+        if results:
+            return results
+
         proc_list = self._proc_target_idx.get(short_table, [])
         for proc in proc_list:
             for fm in proc.field_mappings:
                 fm_tgt = fm.target_table.upper().split(".")[-1]
                 fm_col = fm.target_column.upper()
-                if fm_tgt == short_table and fm_col == field.upper():
+                if fm_tgt == short_table and fm_col == field_upper:
                     ci = self._field_mapping_to_caliber(fm, proc.full_name)
                     if ci:
                         results.append(ci)
+
+        if results:
+            return results
+
+        tl_list = self._tl_target_idx.get(short_table, [])
+        for tl in tl_list:
+            src_short = tl.source_table.upper().split(".")[-1]
+            src_fm_cols = self._fm_source_idx.get(src_short, {})
+
+            matched = False
+            for col_name, fm_entries in src_fm_cols.items():
+                for fm in fm_entries:
+                    fm_tgt_short = fm.target_table.upper().split(".")[-1]
+                    if fm_tgt_short == short_table and fm.target_column.upper() == field_upper:
+                        ci = self._field_mapping_to_caliber(fm, tl.procedure or fm.procedure or "")
+                        if ci:
+                            results.append(ci)
+                            matched = True
+
+            if not matched:
+                src_cols = self._fm_target_idx.get(src_short, {})
+                if field_upper in src_cols:
+                    for fm in src_cols[field_upper]:
+                        ci = self._field_mapping_to_caliber(fm, tl.procedure or fm.procedure or "")
+                        if ci:
+                            results.append(ci)
+                            matched = True
+
+            if not matched:
+                results.append(_CaliberSourceRecord(
+                    source_table=tl.source_table,
+                    source_column=field_upper,
+                    target_table=tl.target_table,
+                    target_column=field_upper,
+                    transform_logic="TABLE_LINEAGE_FALLBACK",
+                    where_conditions=[],
+                    join_conditions=[],
+                    group_by_clause="",
+                    having_clause="",
+                    procedure=tl.procedure or "",
+                    step_num=0,
+                    step_desc="表级血缘回退(同名字段匹配)",
+                    data_source="oracle",
+                    raw_sql_fragment="",
+                    confidence=0.5,
+                ))
 
         return results
 
     def _find_downstream_targets(
         self, table: str, field: str, data_source: Optional[str]
     ) -> list[_CaliberSourceRecord]:
-        """查找源字段的所有下游目标（多策略）。"""
+        """查找源字段的所有下游目标（多策略逐级回退）。"""
         results: list[_CaliberSourceRecord] = []
+        short_table = self._normalize_name(table).split(".")[-1]
+        field_upper = field.upper()
 
-        key = self._make_key(self._normalize_name(table), field.upper())
+        key = self._make_key(self._normalize_name(table), field_upper)
 
         direct_hits = self._source_idx.get(key, [])
         for ci_dict in direct_hits:
@@ -573,8 +674,6 @@ class CaliberTracer:
         if results:
             return results
 
-        short_table = self._normalize_name(table).split(".")[-1]
-
         schema_variants = [
             f"RRP_MDL.{short_table}",
             f"RRP_EAST.{short_table}",
@@ -582,12 +681,84 @@ class CaliberTracer:
         ]
 
         for variant in schema_variants:
-            vkey = (variant, field.upper())
+            vkey = (variant, field_upper)
             hits = self._source_idx.get(vkey, [])
             for h in hits:
                 if data_source and h.get("data_source", "") != data_source:
                     continue
                 results.append(self._dict_to_record(h))
+
+        if results:
+            return results
+
+        fm_cols = self._fm_source_idx.get(short_table, {})
+        fm_list = fm_cols.get(field_upper, [])
+        for fm in fm_list:
+            if not fm.target_table or not fm.target_column:
+                continue
+            ci = self._field_mapping_to_caliber(fm, fm.procedure or "")
+            if ci:
+                results.append(ci)
+
+        if results:
+            return results
+
+        for variant in schema_variants:
+            v_short = variant.split(".")[-1]
+            fm_cols_v = self._fm_source_idx.get(v_short, {})
+            fm_list_v = fm_cols_v.get(field_upper, [])
+            for fm in fm_list_v:
+                if not fm.target_table or not fm.target_column:
+                    continue
+                ci = self._field_mapping_to_caliber(fm, fm.procedure or "")
+                if ci:
+                    results.append(ci)
+
+        if results:
+            return results
+
+        tl_list = self._tl_source_idx.get(short_table, [])
+        for tl in tl_list:
+            tgt_short = tl.target_table.upper().split(".")[-1]
+            tgt_fm_cols = self._fm_target_idx.get(tgt_short, {})
+
+            matched = False
+            for col_name, fm_entries in tgt_fm_cols.items():
+                for fm in fm_entries:
+                    fm_src_short = fm.source_table.upper().split(".")[-1]
+                    if fm_src_short == short_table and fm.source_column.upper() == field_upper:
+                        ci = self._field_mapping_to_caliber(fm, tl.procedure or fm.procedure or "")
+                        if ci:
+                            results.append(ci)
+                            matched = True
+
+            if not matched:
+                tgt_cols = self._fm_source_idx.get(tgt_short, {})
+                if field_upper in tgt_cols:
+                    for fm in tgt_cols[field_upper]:
+                        ci = self._field_mapping_to_caliber(fm, tl.procedure or fm.procedure or "")
+                        if ci:
+                            results.append(ci)
+                            matched = True
+
+            if not matched:
+                results.append(_CaliberSourceRecord(
+                    source_table=tl.source_table,
+                    source_column=field_upper,
+                    target_table=tl.target_table,
+                    target_column=field_upper,
+                    transform_logic="TABLE_LINEAGE_FALLBACK",
+                    where_conditions=[],
+                    join_conditions=[],
+                    group_by_clause="",
+                    having_clause="",
+                    procedure=tl.procedure or "",
+                    step_num=0,
+                    step_desc="表级血缘回退(同名字段匹配)",
+                    data_source="oracle",
+                    raw_sql_fragment="",
+                    confidence=0.5,
+                ))
 
         return results
 
@@ -614,13 +785,15 @@ class CaliberTracer:
     def _paths_to_chains(
         self, paths: list[list[_CaliberBFSNode]], start_table: str, start_field: str
     ) -> list[CaliberChain]:
-        """将 BFS 路径列表转换为 CaliberChain 列表。"""
+        """将 BFS 路径列表转换为 CaliberChain 列表，并注入层级标注和累积条件。"""
+        from core.layer_detector import detect_layer
+
         chains: list[CaliberChain] = []
         seen_chain_signatures: set[str] = set()
 
         for path in paths:
             steps: list[CaliberInfo] = []
-            for node in path[1:]:
+            for i, node in enumerate(path[1:], start=1):
                 key = self._make_key(node.table_name, node.field_name)
                 records = self._get_records_for_node(key, node)
                 if records:
@@ -630,19 +803,36 @@ class CaliberTracer:
                         ci.step_num = node.step_num
                     if node.procedure:
                         ci.procedure = node.procedure
+
+                    if not ci.source_table_layer and ci.source_table:
+                        ci.source_table_layer = detect_layer(ci.source_table).value
+                    if not ci.target_table_layer and ci.target_table:
+                        ci.target_table_layer = detect_layer(ci.target_table).value
+
                     steps.append(ci)
                 else:
+                    src_layer = detect_layer(node.table_name).value if node.table_name else ""
+
+                    prev_node = path[i - 1] if i > 0 else None
+                    tgt_table = prev_node.table_name if prev_node else start_table
+                    tgt_field = prev_node.field_name if prev_node else start_field
+
                     steps.append(CaliberInfo(
                         source_table=node.table_name,
                         source_column=node.field_name,
-                        target_table="",
-                        target_column="",
+                        target_table=tgt_table,
+                        target_column=tgt_field,
                         procedure=node.procedure or "",
                         confidence=0.5,
+                        source_table_layer=src_layer,
+                        target_table_layer=detect_layer(tgt_table).value if tgt_table else "",
+                        step_desc="表级血缘回退(同名字段匹配)" if node.procedure == "TABLE_LINEAGE_FALLBACK" else "",
                     ))
 
             if not steps:
                 continue
+
+            self._inject_accumulated_conditions(steps)
 
             signature = "|".join(
                 f"{s.source_table}.{s.source_column}->{s.target_table}.{s.target_column}"
@@ -662,6 +852,33 @@ class CaliberTracer:
 
         chains.sort(key=lambda c: c.depth)
         return chains
+
+    @staticmethod
+    def _inject_accumulated_conditions(steps: list[CaliberInfo]) -> None:
+        """将上游步骤的 WHERE/JOIN 条件逐层累积到每个步骤的 accumulated_where/accumulated_join 中。"""
+        acc_where: list[SQLCondition] = []
+        acc_join: list[SQLCondition] = []
+
+        for step in steps:
+            acc_where.extend(step.where_conditions)
+            acc_join.extend(step.join_conditions)
+
+            seen_where = set()
+            deduped_where: list[SQLCondition] = []
+            for w in acc_where:
+                if w.raw_text not in seen_where:
+                    seen_where.add(w.raw_text)
+                    deduped_where.append(w)
+
+            seen_join = set()
+            deduped_join: list[SQLCondition] = []
+            for j in acc_join:
+                if j.raw_text not in seen_join:
+                    seen_join.add(j.raw_text)
+                    deduped_join.append(j)
+
+            step.accumulated_where = deduped_where
+            step.accumulated_join = deduped_join
 
     def _get_records_for_node(
         self, key: tuple[str, str], node: _CaliberBFSNode

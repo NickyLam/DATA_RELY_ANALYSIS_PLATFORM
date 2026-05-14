@@ -306,7 +306,7 @@ class CaliberService:
 
     @staticmethod
     def _result_to_dict(result: CaliberResult) -> dict[str, Any]:
-        """将 CaliberResult 转换为 API 响应字典。"""
+        """将 CaliberResult 转换为 API 响应字典（含增强字段）。"""
         chains_data = []
         for chain in result.chains:
             steps_data = []
@@ -343,6 +343,49 @@ class CaliberService:
                     "data_source": step.data_source,
                     "raw_sql_fragment": step.raw_sql_fragment,
                     "confidence": step.confidence,
+                    "operation_type": step.operation_type,
+                    "select_columns": [
+                        {
+                            "source_expression": sc.source_expression,
+                            "target_column": sc.target_column,
+                            "alias": sc.alias,
+                        }
+                        for sc in step.select_columns
+                    ],
+                    "distinct_flag": step.distinct_flag,
+                    "order_by_clause": step.order_by_clause,
+                    "set_operation": step.set_operation,
+                    "subqueries": [
+                        {
+                            "alias": sq.alias,
+                            "raw_text": sq.raw_text,
+                            "source_tables": sq.source_tables,
+                        }
+                        for sq in step.subqueries
+                    ],
+                    "source_table_layer": step.source_table_layer,
+                    "target_table_layer": step.target_table_layer,
+                    "window_functions": step.window_functions,
+                    "sql_operation_sequence": step.sql_operation_sequence,
+                    "accumulated_where": [
+                        {
+                            "condition_type": c.condition_type,
+                            "raw_text": c.raw_text,
+                            "tables_involved": c.tables_involved,
+                            "fields_involved": c.fields_involved,
+                        }
+                        for c in step.accumulated_where
+                    ],
+                    "accumulated_join": [
+                        {
+                            "condition_type": c.condition_type,
+                            "raw_text": c.raw_text,
+                            "tables_involved": c.tables_involved,
+                            "fields_involved": c.fields_involved,
+                        }
+                        for c in step.accumulated_join
+                    ],
+                    "caliber_spec": step.generate_caliber_spec(),
                 })
 
             chains_data.append({
@@ -351,6 +394,12 @@ class CaliberService:
                 "steps": steps_data,
                 "depth": chain.depth,
                 "summary": chain.summary,
+                "data_flow_layers": chain.data_flow_layers,
+                "procedures_involved": chain.procedures_involved,
+                "tables_involved": chain.tables_involved,
+                "total_conditions": chain.total_conditions,
+                "complete_caliber_spec": chain.complete_caliber_spec,
+                "accumulated_conditions_text": chain.accumulated_conditions_text,
             })
 
         return {
@@ -360,6 +409,8 @@ class CaliberService:
             "total_steps": result.total_steps,
             "total_conditions": result.total_conditions,
             "query_time_ms": result.query_time_ms,
+            "data_flow_layers_summary": result.data_flow_layers_summary,
+            "complete_caliber_spec": result.complete_caliber_spec,
         }
 
     @staticmethod

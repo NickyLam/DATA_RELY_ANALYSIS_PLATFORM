@@ -38,3 +38,6 @@ build/
 Thumbs.db
 .idea/
 .vscode/
+
+# Data source files (sensitive business data)
+RRP_ORACLE/

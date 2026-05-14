@@ -12,18 +12,12 @@ from typing import Any, Optional
 from pydantic import BaseModel, Field
 
 
-# ===========================================================================
-# 枚举类型定义
-# ===========================================================================
-
 class ParseMode(str, Enum):
-    """解析模式"""
     INCREMENTAL = "incremental"
     FULL = "full"
 
 
 class ParseStatus(str, Enum):
-    """任务状态"""
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -31,14 +25,12 @@ class ParseStatus(str, Enum):
 
 
 class QueryMode(str, Enum):
-    """查询模式"""
     UPSTREAM = "upstream"
     DOWNSTREAM = "downstream"
     BOTH = "both"
 
 
 class ProgressEventType(str, Enum):
-    """进度事件类型"""
     PROGRESS = "progress"
     LOG = "log"
     COMPLETE = "complete"
@@ -46,18 +38,12 @@ class ProgressEventType(str, Enum):
 
 
 class CaliberQueryMode(str, Enum):
-    """口径查询方向"""
     UPSTREAM = "upstream"
     DOWNSTREAM = "downstream"
     BOTH = "both"
 
 
-# ===========================================================================
-# 请求模型 (Request Models)
-# ===========================================================================
-
 class FileUploadRequest(BaseModel):
-    """文件上传请求参数"""
     parse_mode: ParseMode = Field(
         default=ParseMode.INCREMENTAL,
         description="解析模式: incremental(增量) | full(全量)",
@@ -69,8 +55,7 @@ class FileUploadRequest(BaseModel):
 
 
 class LineageQueryRequest(BaseModel):
-    """血缘查询请求"""
-    table: str = Field(..., min_length=2, description="表名")
+    table: str = Field(min_length=2, description="表名")
     field: Optional[str] = Field(default=None, description="字段名(可选)")
     depth: int = Field(default=3, ge=1, le=20, description="查询深度(1-20)")
     mode: QueryMode = Field(default=QueryMode.BOTH, description="查询方向")
@@ -78,55 +63,43 @@ class LineageQueryRequest(BaseModel):
 
 
 class LineageQueryOptions(BaseModel):
-    """血缘查询高级选项"""
     include_fields: bool = Field(default=True, description="是否包含字段信息")
     limit: int = Field(default=1000, ge=1, le=10000, description="结果数量限制")
     use_cache: bool = Field(default=True, description="是否使用缓存")
 
 
 class TableSearchRequest(BaseModel):
-    """表搜索请求"""
-    keyword: str = Field(..., min_length=1, description="搜索关键词")
+    keyword: str = Field(min_length=1, description="搜索关键词")
     limit: int = Field(default=50, ge=1, le=500, description="返回数量限制")
 
 
-# ===========================================================================
-# 响应模型 (Response Models)
-# ===========================================================================
-
 class BaseResponse(BaseModel):
-    """通用响应基类"""
     success: bool = True
     message: str = "操作成功"
     timestamp: datetime = Field(default_factory=datetime.now)
 
 
 class FileUploadResponse(BaseResponse):
-    """文件上传响应"""
     data: FileUploadData
 
 
 class FileUploadData(BaseModel):
-    task_id: str = Field(..., description="任务ID(SSE查询用)")
-    status: ParseStatus = Field(..., description="当前状态")
-    files_received: int = Field(..., description="接收到的文件数")
-    estimated_time_sec: float = Field(..., description="预估耗时(秒)")
+    task_id: str = Field(description="任务ID(SSE查询用)")
+    status: ParseStatus = Field(description="当前状态")
+    files_received: int = Field(description="接收到的文件数")
+    estimated_time_sec: float = Field(description="预估耗时(秒)")
 
 
 class ProgressEvent(BaseModel):
-    """SSE 进度事件"""
-    event_type: ProgressEventType = Field(..., alias="type")
+    event_type: ProgressEventType = Field(alias="type")
     data: ProgressEventData
 
 
 class ProgressEventData(BaseModel):
-    """进度事件数据"""
     percent: float = Field(default=0, ge=0, le=100)
     current_file: Optional[str] = None
     message: str = ""
     level: str = "info"
-
-    # 完成时的额外字段
     tables_parsed: Optional[int] = None
     procedures_parsed: Optional[int] = None
     lineages_found: Optional[int] = None
@@ -137,58 +110,47 @@ class ProgressEventData(BaseModel):
 
 
 class LineageQueryResponse(BaseModel):
-    """血缘查询响应"""
     data: LineageResultData
 
 
 class LineageResultData(BaseModel):
-    """血缘查询结果数据"""
-    query_time_ms: float = Field(..., description="查询耗时(毫秒)")
+    query_time_ms: float = Field(description="查询耗时(毫秒)")
     nodes_count: int = Field(default=0, description="节点数")
     edges_count: int = Field(default=0, description="边数")
     nodes: list[dict[str, Any]] = Field(default_factory=list)
     edges: list[dict[str, Any]] = Field(default_factory=list)
     has_more: bool = Field(default=False, description="是否有更多数据")
     cache_hit: bool = Field(default=False, description="是否命中缓存")
-
-    # 统计信息
     tables_involved: Optional[int] = None
     procedures_involved: Optional[int] = None
     max_depth_reached: Optional[int] = None
-
-    # 新增: 查询目标与字段映射 (v2.1)
     query_target: Optional[dict[str, Optional[str]]] = Field(default=None, description="查询目标(表+字段)")
     field_mappings: list[dict[str, Any]] = Field(default_factory=list, description="字段级血缘映射")
     field_mapping_count: int = Field(default=0, description="字段映射数量")
 
 
 class TableInfoResponse(BaseModel):
-    """表列表响应"""
     data: list[TableListItem]
 
 
 class SingleTableInfoResponse(BaseModel):
-    """单表信息响应"""
     data: dict[str, Any]
 
 
 class TableListItem(BaseModel):
-    """表列表项"""
     full_name: str
     short_name: str
     field_count: int = 0
     layer: str = "other"
     comment: str = ""
-    columns: Optional[list[str]] = None  # 字段列表（v2.2新增）
+    columns: Optional[list[str]] = None
 
 
 class SystemStatsResponse(BaseModel):
-    """系统统计响应"""
     data: SystemStatsData
 
 
 class SystemStatsData(BaseModel):
-    """系统统计数据"""
     total_tables: int = 0
     total_procedures: int = 0
     total_table_lineages: int = 0
@@ -199,14 +161,9 @@ class SystemStatsData(BaseModel):
     uptime_seconds: float = 0.0
 
 
-# ===========================================================================
-# 口径查询模型 (Caliber Models)
-# ===========================================================================
-
 class CaliberQueryRequest(BaseModel):
-    """指标口径查询请求"""
-    table: str = Field(..., min_length=2, description="表名")
-    field: str = Field(..., min_length=1, description="字段名")
+    table: str = Field(min_length=2, description="表名")
+    field: str = Field(min_length=1, description="字段名")
     depth: int = Field(default=10, ge=1, le=20, description="追溯深度(1-20)")
     direction: CaliberQueryMode = Field(
         default=CaliberQueryMode.UPSTREAM,
@@ -216,27 +173,89 @@ class CaliberQueryRequest(BaseModel):
 
 
 class CaliberSearchRequest(BaseModel):
-    """指标口径搜索请求"""
-    keyword: str = Field(..., min_length=1, description="搜索关键词(表名或字段名)")
+    keyword: str = Field(min_length=1, description="搜索关键词(表名或字段名)")
     limit: int = Field(default=50, ge=1, le=500, description="返回数量限制")
     data_source: Optional[str] = Field(default=None, description="数据源筛选")
 
 
+class SQLConditionData(BaseModel):
+    condition_type: str = ""
+    raw_text: str = ""
+    tables_involved: list[str] = Field(default_factory=list)
+    fields_involved: list[str] = Field(default_factory=list)
+
+
+class SelectColumnData(BaseModel):
+    source_expression: str = ""
+    target_column: str = ""
+    alias: str = ""
+
+
+class SubqueryData(BaseModel):
+    alias: str = ""
+    raw_text: str = ""
+    source_tables: list[str] = Field(default_factory=list)
+
+
+class CaliberStepData(BaseModel):
+    target_table: str = ""
+    target_column: str = ""
+    source_table: str = ""
+    source_column: str = ""
+    transform_logic: str = ""
+    where_conditions: list[SQLConditionData] = Field(default_factory=list)
+    join_conditions: list[SQLConditionData] = Field(default_factory=list)
+    group_by_clause: str = ""
+    having_clause: str = ""
+    procedure: str = ""
+    step_num: int = 0
+    step_desc: str = ""
+    data_source: str = "oracle"
+    raw_sql_fragment: str = ""
+    confidence: float = 1.0
+    operation_type: str = ""
+    select_columns: list[SelectColumnData] = Field(default_factory=list)
+    distinct_flag: bool = False
+    order_by_clause: str = ""
+    set_operation: str = ""
+    subqueries: list[SubqueryData] = Field(default_factory=list)
+    source_table_layer: str = ""
+    target_table_layer: str = ""
+    window_functions: list[str] = Field(default_factory=list)
+    sql_operation_sequence: int = 0
+    accumulated_where: list[SQLConditionData] = Field(default_factory=list)
+    accumulated_join: list[SQLConditionData] = Field(default_factory=list)
+    caliber_spec: str = ""
+
+
+class CaliberChainData(BaseModel):
+    target_table: str = ""
+    target_column: str = ""
+    steps: list[CaliberStepData] = Field(default_factory=list)
+    depth: int = 0
+    summary: str = ""
+    data_flow_layers: list[str] = Field(default_factory=list)
+    procedures_involved: list[str] = Field(default_factory=list)
+    tables_involved: list[str] = Field(default_factory=list)
+    total_conditions: int = 0
+    complete_caliber_spec: str = ""
+    accumulated_conditions_text: str = ""
+
+
 class CaliberQueryResponse(BaseResponse):
-    """口径查询响应"""
     data: CaliberResultData
 
 
 class CaliberResultData(BaseModel):
-    """口径查询结果数据"""
     target_table: str = ""
     target_column: str = ""
-    chains: list[dict[str, Any]] = Field(default_factory=list, description="口径链路列表")
+    chains: list[CaliberChainData] = Field(default_factory=list, description="口径链路列表")
     total_steps: int = Field(default=0, description="总步骤数")
     total_conditions: int = Field(default=0, description="总条件数")
     query_time_ms: float = Field(default=0.0, description="查询耗时(毫秒)")
+    data_flow_layers_summary: list[str] = Field(default_factory=list, description="数据分层汇总")
+    complete_caliber_spec: str = Field(default="", description="完整口径规格")
 
 
 class CaliberSearchResponse(BaseResponse):
-    """口径搜索响应"""
     data: list[dict[str, Any]] = Field(default_factory=list)

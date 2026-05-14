@@ -580,6 +580,20 @@ class LineageTracer:
         results: list[_TargetRecord] = []
         seen_keys: set[str] = set()  # 用于去重：(target_table, target_field)
 
+        def _bare_table(table_name: str) -> str:
+            """获取裸表名并处理 O_ICL_*/ICL.*/ICL.V_* 同义词映射。"""
+            parts = table_name.split(".")
+            bare = parts[-1].upper()
+            schema = parts[0].upper() if len(parts) > 1 else ""
+
+            if bare.startswith("O_ICL_"):
+                return bare[2:]
+            if schema == "ICL" and bare.startswith("V_"):
+                return f"ICL_{bare[2:]}"
+            if schema == "ICL" and not bare.startswith("ICL_"):
+                return f"ICL_{bare}"
+            return bare
+
         def _collect_from_idx(tbl_key: str) -> None:
             """从反向索引中收集指定 key 的映射，去重后追加到 results。"""
             tbl_idx = self._source_field_mapping_idx.get(tbl_key)
@@ -591,7 +605,8 @@ class LineageTracer:
                 tgt_col = self._normalize_table_name(fm.target_column)
                 if not tgt_tbl or not tgt_col:
                     continue
-                dedup_key = f"{tgt_tbl}.{tgt_col}"
+                # 使用同义裸表名去重
+                dedup_key = f"{_bare_table(tgt_tbl)}.{tgt_col}"
                 if dedup_key in seen_keys:
                     continue
                 seen_keys.add(dedup_key)
@@ -617,10 +632,8 @@ class LineageTracer:
         # 策略3: 合并所有同裸表名的 schema 变体
         bare_name = norm_table.split(".")[-1] if "." in norm_table else norm_table
         if bare_name != norm_table:
-            # 查询的是带 schema 的表名，也收集裸表名的结果
             _collect_from_idx(bare_name)
         else:
-            # 查询的是裸表名，收集所有带 schema 变体的结果
             for key in self._source_field_mapping_idx:
                 if "." in key:
                     key_bare = key.split(".")[-1]
@@ -682,6 +695,32 @@ class LineageTracer:
         # 同时收集所有同裸表名的 schema 变体结果
         seen_keys: set[str] = set()  # 用于去重：(source_table, source_field)
 
+        def _bare_table(table_name: str) -> str:
+            """获取裸表名并处理 O_ICL_*/ICL.* 同义词映射。
+
+            O_ICL_* → 去掉 O_ 前缀（O_ICL_CMM_XXX → ICL_CMM_XXX）
+            ICL.V_* → 去掉 V_ 视图前缀后加 ICL_ 前缀（ICL.V_CMM_XXX → ICL_CMM_XXX）
+            ICL.XXX → 加 ICL_ 前缀（ICL.CMM_XXX → ICL_CMM_XXX）
+            这样 O_ICL_CMM_XXX / ICL.V_CMM_XXX / ICL.CMM_XXX 都映射到 ICL_CMM_XXX，实现同义去重。
+            """
+            parts = table_name.split(".")
+            bare = parts[-1].upper()
+            schema = parts[0].upper() if len(parts) > 1 else ""
+
+            # O_ICL_* → ICL_*
+            if bare.startswith("O_ICL_"):
+                return bare[2:]  # O_ICL_ → ICL_
+
+            # ICL.V_* → ICL_* (视图前缀去掉 V_)
+            if schema == "ICL" and bare.startswith("V_"):
+                return f"ICL_{bare[2:]}"
+
+            # ICL.XXX → ICL_XXX
+            if schema == "ICL" and not bare.startswith("ICL_"):
+                return f"ICL_{bare}"
+
+            return bare
+
         def _collect_source_from_idx(tbl_key: str) -> None:
             tbl_idx = self._field_mapping_idx.get(tbl_key)
             if not tbl_idx:
@@ -698,9 +737,9 @@ class LineageTracer:
                     )
                 if not src_table:
                     continue
-                # 使用裸表名去重，避免 schema 前缀差异导致同一来源被重复收集
-                bare_src = src_table.split(".")[-1] if "." in src_table else src_table
-                dedup_key = f"{bare_src}.{src_col}"
+                # 使用同义裸表名去重，O_ICL_*/ICL.* 映射到相同 key，
+                # 避免同一逻辑来源被重复收集
+                dedup_key = f"{_bare_table(src_table)}.{src_col}"
                 if dedup_key in seen_keys:
                     continue
                 seen_keys.add(dedup_key)
@@ -724,6 +763,7 @@ class LineageTracer:
                 _collect_source_from_idx(fuzzy_table)
 
         # 1c) 合并所有同裸表名的 schema 变体
+        # 当精确匹配无结果时，尝试从不同 schema 前缀的索引 key 中查找
         bare_name = norm_table.split(".")[-1] if "." in norm_table else norm_table
         if bare_name != norm_table:
             _collect_source_from_idx(bare_name)

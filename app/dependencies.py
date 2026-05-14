@@ -1,12 +1,14 @@
 """
 FastAPI 依赖注入模块
-管理数据库连接、缓存实例、服务实例等共享资源
+管理缓存实例、服务实例等共享资源
+
+遵循 FastAPI 最佳实践: 使用 Annotated 类型别名声明依赖
 """
 
 from __future__ import annotations
 
 from functools import lru_cache
-from typing import AsyncGenerator
+from typing import Annotated
 
 from fastapi import Depends
 
@@ -20,7 +22,6 @@ from app.utils.cache_manager import CacheManager
 
 @lru_cache
 def get_cache_manager() -> CacheManager:
-    """获取缓存管理器单例"""
     return CacheManager(
         max_size=config.max_cache_size,
         ttl=config.cache_ttl_seconds,
@@ -29,7 +30,6 @@ def get_cache_manager() -> CacheManager:
 
 @lru_cache
 def get_parser_service() -> ParserService:
-    """获取解析服务单例"""
     return ParserService(
         data_dir=str(config.data_path),
         schema_dirs=config.schema_dirs,
@@ -39,7 +39,6 @@ def get_parser_service() -> ParserService:
 
 @lru_cache
 def get_lineage_service() -> LineageService:
-    """获取血缘服务单例"""
     parser = get_parser_service()
     cache = get_cache_manager()
     return LineageService(
@@ -50,7 +49,6 @@ def get_lineage_service() -> LineageService:
 
 @lru_cache
 def get_caliber_service() -> CaliberService:
-    """获取口径查询服务单例"""
     parser = get_parser_service()
     cache = get_cache_manager()
     return CaliberService(
@@ -61,7 +59,13 @@ def get_caliber_service() -> CaliberService:
 
 @lru_cache
 def get_progress_service() -> ProgressService:
-    """获取进度服务单例"""
     return ProgressService(
         keepalive_sec=config.progress_keepalive_sec,
     )
+
+
+CacheManagerDep = Annotated[CacheManager, Depends(get_cache_manager)]
+ParserServiceDep = Annotated[ParserService, Depends(get_parser_service)]
+LineageServiceDep = Annotated[LineageService, Depends(get_lineage_service)]
+CaliberServiceDep = Annotated[CaliberService, Depends(get_caliber_service)]
+ProgressServiceDep = Annotated[ProgressService, Depends(get_progress_service)]

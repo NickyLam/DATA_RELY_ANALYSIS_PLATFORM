@@ -218,8 +218,10 @@ def _result_to_graph(result: Any) -> dict[str, Any]:
         """获取裸表名（去掉 schema 前缀），用于去重。
 
         特殊处理：
-        - RRP_MDL.O_ICL_* 和 O_ICL_* 视为 ICL.* 的同义词
-        - ICL.<table> 统一加上 ICL_ 前缀，确保与 O_ICL_* 去重一致
+        - RRP_MDL.O_ICL_* → 去掉 O_ 前缀（O_ICL_CMM_XXX → ICL_CMM_XXX）
+        - ICL.V_* → 去掉 V_ 视图前缀后加 ICL_ 前缀（ICL.V_CMM_XXX → ICL_CMM_XXX）
+        - ICL.<table> → 加 ICL_ 前缀（ICL.CMM_XXX → ICL_CMM_XXX）
+        这样 O_ICL_CMM_XXX / ICL.V_CMM_XXX / ICL.CMM_XXX 都映射到 ICL_CMM_XXX，实现同义去重。
         """
         parts = table_name.split(".")
         schema = parts[0].upper() if len(parts) > 1 else ""
@@ -229,6 +231,11 @@ def _result_to_graph(result: Any) -> dict[str, Any]:
         if bare.startswith("O_ICL_"):
             bare = bare[2:]  # O_ICL_ -> ICL_
             return bare
+
+        # ICL.V_* -> ICL_* (视图前缀去掉 V_)
+        if schema == "ICL" and bare.startswith("V_"):
+            bare = bare[2:]  # V_CMM_XXX -> CMM_XXX
+            return f"ICL_{bare}"
 
         # ICL.XXX -> ICL_XXX（与 O_ICL_* 统一前缀）
         if schema == "ICL" and not bare.startswith("ICL_"):
@@ -280,6 +287,7 @@ def _result_to_graph(result: Any) -> dict[str, Any]:
     field_mappings: list[dict[str, str]] = []
     edge_keys: set[str] = set()
     fm_keys: set[str] = set()
+    fm_dedup_keys: set[str] = set()  # (逻辑源表|逻辑目标表.目标字段) 三元组去重
 
     for chain in result.chains:
         chain_nodes = chain.chain if hasattr(chain, "chain") else []
@@ -300,25 +308,42 @@ def _result_to_graph(result: Any) -> dict[str, Any]:
             _ensure_node(src_table, src_layer)
             _ensure_node(tgt_table, tgt_layer)
 
-            # 去重 edge（按裸表名+target_table，避免 schema 前缀差异导致重复边）
-            edge_key = f"{_bare(src_table)}|{_bare(tgt_table)}"
+            # 跳过 schema 变体自环边：源和目标映射到同一个逻辑节点，且原始表名不同
+            # 例如 ICL.V_CMM_XXX → RRP_MDL.O_ICL_CMM_XXX（_bare 相同，但原始表名不同，是搬运不是转换）
+            # 但同表内不同字段的映射（如 CUST_NM → CUST_NM_DESEN）应保留
+            src_bare = _bare(src_table)
+            tgt_bare = _bare(tgt_table)
+            if src_bare == tgt_bare and src_table != tgt_table:
+                continue
+
+            # 使用合并后的逻辑表名作为 edge 和 field_mapping 的显示名
+            # 优先使用 node_map 中已合并的 id（如 RRP_MDL.O_ICL_* 而非 ICL.V_*）
+            display_src = node_map[src_bare]["id"] if src_bare in node_map else src_table
+            display_tgt = node_map[tgt_bare]["id"] if tgt_bare in node_map else tgt_table
+
+            # 去重 edge（按逻辑裸表名，避免 schema 前缀差异导致重复边）
+            edge_key = f"{src_bare}|{tgt_bare}"
             if edge_key not in edge_keys:
                 edge_keys.add(edge_key)
                 edges.append({
-                    "source_table": src_table,
-                    "target_table": tgt_table,
+                    "source_table": display_src,
+                    "target_table": display_tgt,
                     "source_field": src_field,
                     "target_field": tgt_field,
                 })
 
-            # 去重 field_mapping（按裸表名+字段名，避免 schema 前缀差异导致重复映射）
-            fm_key = f"{_bare(src_table)}.{src_field.upper()}|{_bare(tgt_table)}.{tgt_field.upper()}"
-            if fm_key not in fm_keys and src_field and tgt_field:
+            # 去重 field_mapping（按逻辑裸表名+字段名，避免 schema 前缀差异导致重复映射）
+            # 同时对同一 (逻辑源表, 逻辑目标表, 目标字段) 三元组去重，
+            # 避免同一目标字段出现多个语义等价的源字段（如 CUST_NAME vs CUST_NM）
+            fm_key = f"{src_bare}.{src_field.upper()}|{tgt_bare}.{tgt_field.upper()}"
+            fm_dedup_key = f"{src_bare}|{tgt_bare}.{tgt_field.upper()}"
+            if fm_key not in fm_keys and src_field and tgt_field and fm_dedup_key not in fm_dedup_keys:
                 fm_keys.add(fm_key)
+                fm_dedup_keys.add(fm_dedup_key)
                 fm_entry: dict[str, str] = {
-                    "source_table": src_table,
+                    "source_table": display_src,
                     "source_column": src_field,
-                    "target_table": tgt_table,
+                    "target_table": display_tgt,
                     "target_column": tgt_field,
                 }
                 if transform:

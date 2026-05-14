@@ -1,7 +1,8 @@
 """
 指标口径条件提取器
 从 SQL 操作块中提取 WHERE / JOIN / GROUP BY / HAVING 条件，
-构建 CaliberInfo 对象。设计为无状态工具类，被各数据源解析器复用。
+以及操作类型、SELECT列映射、DISTINCT、ORDER BY、窗口函数、集合运算、子查询等，
+构建增强版 CaliberInfo 对象。设计为无状态工具类，被各数据源解析器复用。
 """
 
 from __future__ import annotations
@@ -10,7 +11,15 @@ import re
 import logging
 from typing import Optional
 
-from core.models import CaliberInfo, FieldMapping, SQLCondition
+from core.models import (
+    CaliberInfo,
+    FieldMapping,
+    SelectColumnMapping,
+    SQLCondition,
+    SQLOperationType,
+    SubqueryInfo,
+)
+from core.layer_detector import detect_layer
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +55,56 @@ _FIELD_REF_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
+_INSERT_SELECT_PATTERN = re.compile(
+    r"\bINSERT\s+(?:INTO\s+)?([\w.]+)\s*(?:\(([^)]*)\))?\s*SELECT\b",
+    re.IGNORECASE | re.DOTALL,
+)
+
+_MERGE_PATTERN = re.compile(
+    r"\bMERGE\s+INTO\s+([\w.]+)",
+    re.IGNORECASE,
+)
+
+_UPDATE_PATTERN = re.compile(
+    r"\bUPDATE\s+([\w.]+)\s+SET\b",
+    re.IGNORECASE,
+)
+
+_CTAS_PATTERN = re.compile(
+    r"\bCREATE\s+(?:OR\s+REPLACE\s+)?(?:GLOBAL\s+)?(?:TEMPORARY\s+)?TABLE\s+([\w.]+)\s+AS\s+SELECT\b",
+    re.IGNORECASE | re.DOTALL,
+)
+
+_DISTINCT_PATTERN = re.compile(
+    r"\bSELECT\s+DISTINCT\b",
+    re.IGNORECASE,
+)
+
+_ORDER_BY_PATTERN = re.compile(
+    r"\bORDER\s+BY\s+(.*?)(?:\bUNION\b|;|$)",
+    re.IGNORECASE | re.DOTALL,
+)
+
+_SET_OPERATION_PATTERN = re.compile(
+    r"\b(UNION\s+ALL|UNION|INTERSECT|MINUS)\b",
+    re.IGNORECASE,
+)
+
+_WINDOW_FUNCTION_PATTERN = re.compile(
+    r"(\w+\s*\(\s*[^)]*\s*\)\s*OVER\s*\([^)]*\))",
+    re.IGNORECASE,
+)
+
+_SELECT_COLUMNS_PATTERN = re.compile(
+    r"\bSELECT\s+(?:DISTINCT\s+)?(.*?)(?:\bFROM\b)",
+    re.IGNORECASE | re.DOTALL,
+)
+
+_SUBQUERY_PATTERN = re.compile(
+    r"\(\s*SELECT\s+(.*?)\)\s+(?:AS\s+)?(\w+)",
+    re.IGNORECASE | re.DOTALL,
+)
+
 
 class CaliberExtractor:
     """指标口径条件提取器（无状态工具类）"""
@@ -55,16 +114,35 @@ class CaliberExtractor:
         sql_block: str,
         dialect: str = "oracle",
     ) -> tuple[list[SQLCondition], list[SQLCondition], str, str]:
-        """从一条 SQL 操作块中提取所有条件信息
-
-        Returns:
-            (where_conditions, join_conditions, group_by_clause, having_clause)
-        """
         where_conditions = CaliberExtractor._extract_where(sql_block)
         join_conditions = CaliberExtractor._extract_joins(sql_block)
         group_by_clause = CaliberExtractor._extract_group_by(sql_block)
         having_clause = CaliberExtractor._extract_having(sql_block)
         return where_conditions, join_conditions, group_by_clause, having_clause
+
+    @staticmethod
+    def extract_enhanced_metadata(sql_block: str) -> dict:
+        """从SQL块提取增强版元数据
+
+        Returns:
+            dict 包含以下键:
+              - operation_type: SQL操作类型
+              - distinct_flag: 是否DISTINCT
+              - order_by_clause: ORDER BY子句
+              - set_operation: 集合运算类型
+              - select_columns: SELECT列映射列表
+              - window_functions: 窗口函数列表
+              - subqueries: 子查询信息列表
+        """
+        return {
+            "operation_type": CaliberExtractor._detect_operation_type(sql_block),
+            "distinct_flag": CaliberExtractor._detect_distinct(sql_block),
+            "order_by_clause": CaliberExtractor._extract_order_by(sql_block),
+            "set_operation": CaliberExtractor._detect_set_operation(sql_block),
+            "select_columns": CaliberExtractor._extract_select_columns(sql_block),
+            "window_functions": CaliberExtractor._extract_window_functions(sql_block),
+            "subqueries": CaliberExtractor._extract_subqueries(sql_block),
+        }
 
     @staticmethod
     def build_caliber_info(
@@ -74,10 +152,18 @@ class CaliberExtractor:
         step_num: int = 0,
         step_desc: str = "",
         data_source: str = "oracle",
+        sql_operation_sequence: int = 0,
     ) -> CaliberInfo:
-        """从 FieldMapping + SQL 块构建完整的 CaliberInfo"""
         where_conds, join_conds, group_by, having = CaliberExtractor.extract_conditions(
             sql_block, dialect=data_source
+        )
+        enhanced = CaliberExtractor.extract_enhanced_metadata(sql_block)
+
+        source_layer = detect_layer(field_mapping.source_table).value if field_mapping.source_table else ""
+        target_layer = detect_layer(field_mapping.target_table).value if field_mapping.target_table else ""
+
+        select_cols_for_field = CaliberExtractor._filter_select_columns_for_field(
+            enhanced["select_columns"], field_mapping
         )
 
         return CaliberInfo(
@@ -96,6 +182,16 @@ class CaliberExtractor:
             data_source=data_source,
             raw_sql_fragment=_truncate_sql(sql_block, max_len=2000),
             confidence=field_mapping.confidence,
+            operation_type=enhanced["operation_type"],
+            select_columns=select_cols_for_field,
+            distinct_flag=enhanced["distinct_flag"],
+            order_by_clause=enhanced["order_by_clause"],
+            set_operation=enhanced["set_operation"],
+            subqueries=enhanced["subqueries"],
+            source_table_layer=source_layer,
+            target_table_layer=target_layer,
+            window_functions=enhanced["window_functions"],
+            sql_operation_sequence=sql_operation_sequence,
         )
 
     @staticmethod
@@ -106,17 +202,25 @@ class CaliberExtractor:
         step_num: int = 0,
         step_desc: str = "",
         data_source: str = "oracle",
+        sql_operation_sequence: int = 0,
     ) -> list[CaliberInfo]:
-        """批量构建 CaliberInfo（同一 SQL 块产出多个字段映射时复用条件提取）"""
         if not mappings:
             return []
 
         where_conds, join_conds, group_by, having = CaliberExtractor.extract_conditions(
             sql_block, dialect=data_source
         )
+        enhanced = CaliberExtractor.extract_enhanced_metadata(sql_block)
 
         results: list[CaliberInfo] = []
         for fm in mappings:
+            source_layer = detect_layer(fm.source_table).value if fm.source_table else ""
+            target_layer = detect_layer(fm.target_table).value if fm.target_table else ""
+
+            select_cols_for_field = CaliberExtractor._filter_select_columns_for_field(
+                enhanced["select_columns"], fm
+            )
+
             results.append(CaliberInfo(
                 target_table=fm.target_table,
                 target_column=fm.target_column,
@@ -133,8 +237,135 @@ class CaliberExtractor:
                 data_source=data_source,
                 raw_sql_fragment=_truncate_sql(sql_block, max_len=2000),
                 confidence=fm.confidence,
+                operation_type=enhanced["operation_type"],
+                select_columns=select_cols_for_field,
+                distinct_flag=enhanced["distinct_flag"],
+                order_by_clause=enhanced["order_by_clause"],
+                set_operation=enhanced["set_operation"],
+                subqueries=enhanced["subqueries"],
+                source_table_layer=source_layer,
+                target_table_layer=target_layer,
+                window_functions=enhanced["window_functions"],
+                sql_operation_sequence=sql_operation_sequence,
             ))
         return results
+
+    @staticmethod
+    def _detect_operation_type(sql_block: str) -> str:
+        upper = sql_block.upper().strip()
+        if _CTAS_PATTERN.search(upper):
+            return SQLOperationType.CREATE_TABLE_AS_SELECT
+        if _MERGE_PATTERN.search(upper):
+            return SQLOperationType.MERGE
+        if _INSERT_SELECT_PATTERN.search(upper):
+            return SQLOperationType.INSERT_SELECT
+        if re.match(r"\s*INSERT\b", upper):
+            return SQLOperationType.INSERT_VALUES
+        if _UPDATE_PATTERN.search(upper):
+            return SQLOperationType.UPDATE
+        if re.match(r"\s*DELETE\b", upper):
+            return SQLOperationType.DELETE
+        return ""
+
+    @staticmethod
+    def _detect_distinct(sql_block: str) -> bool:
+        return bool(_DISTINCT_PATTERN.search(sql_block))
+
+    @staticmethod
+    def _detect_set_operation(sql_block: str) -> str:
+        match = _SET_OPERATION_PATTERN.search(sql_block)
+        if match:
+            return match.group(1).upper()
+        return ""
+
+    @staticmethod
+    def _extract_order_by(sql_block: str) -> str:
+        match = _ORDER_BY_PATTERN.search(sql_block)
+        if match:
+            return match.group(1).strip()
+        return ""
+
+    @staticmethod
+    def _extract_select_columns(sql_block: str) -> list[SelectColumnMapping]:
+        match = _SELECT_COLUMNS_PATTERN.search(sql_block)
+        if not match:
+            return []
+
+        raw_select = match.group(1).strip()
+        if not raw_select or raw_select == "*":
+            return []
+
+        columns: list[SelectColumnMapping] = []
+        depth = 0
+        current = ""
+
+        for ch in raw_select:
+            if ch == "(":
+                depth += 1
+                current += ch
+            elif ch == ")":
+                depth -= 1
+                current += ch
+            elif ch == "," and depth == 0:
+                col = _parse_single_select_column(current.strip())
+                if col:
+                    columns.append(col)
+                current = ""
+            else:
+                current += ch
+
+        if current.strip():
+            col = _parse_single_select_column(current.strip())
+            if col:
+                columns.append(col)
+
+        return columns
+
+    @staticmethod
+    def _extract_window_functions(sql_block: str) -> list[str]:
+        return [m.group(1).strip() for m in _WINDOW_FUNCTION_PATTERN.finditer(sql_block)]
+
+    @staticmethod
+    def _extract_subqueries(sql_block: str) -> list[SubqueryInfo]:
+        results: list[SubqueryInfo] = []
+        for match in _SUBQUERY_PATTERN.finditer(sql_block):
+            raw = match.group(0).strip()
+            alias = match.group(2).strip() if match.group(2) else ""
+            inner_sql = match.group(1).strip()
+            source_tables = _extract_table_refs(inner_sql)
+            where_conds: list[SQLCondition] = []
+            inner_where = _WHERE_PATTERN.search(inner_sql)
+            if inner_where:
+                where_conds.append(SQLCondition(
+                    condition_type="WHERE",
+                    raw_text=inner_where.group(1).strip(),
+                    tables_involved=_extract_table_refs(inner_where.group(1)),
+                    fields_involved=_extract_field_refs(inner_where.group(1)),
+                ))
+            results.append(SubqueryInfo(
+                alias=alias,
+                raw_text=raw[:200],
+                source_tables=source_tables,
+                where_conditions=where_conds,
+            ))
+        return results
+
+    @staticmethod
+    def _filter_select_columns_for_field(
+        all_columns: list[SelectColumnMapping],
+        field_mapping: FieldMapping,
+    ) -> list[SelectColumnMapping]:
+        if not all_columns:
+            return []
+
+        target_col = field_mapping.target_column.upper()
+        for col in all_columns:
+            alias = col.alias.upper() if col.alias else ""
+            tgt = col.target_column.upper() if col.target_column else ""
+            if alias == target_col or tgt == target_col:
+                return [col]
+
+        return all_columns[:5]
 
     @staticmethod
     def _extract_where(sql_block: str) -> list[SQLCondition]:
@@ -189,7 +420,6 @@ class CaliberExtractor:
 
     @staticmethod
     def to_dict(caliber_info: CaliberInfo) -> dict:
-        """将 CaliberInfo 序列化为字典"""
         return {
             "target_table": caliber_info.target_table,
             "target_column": caliber_info.target_column,
@@ -222,11 +452,41 @@ class CaliberExtractor:
             "data_source": caliber_info.data_source,
             "raw_sql_fragment": caliber_info.raw_sql_fragment,
             "confidence": caliber_info.confidence,
+            "operation_type": caliber_info.operation_type,
+            "select_columns": [
+                {
+                    "source_expression": sc.source_expression,
+                    "target_column": sc.target_column,
+                    "alias": sc.alias,
+                }
+                for sc in caliber_info.select_columns
+            ],
+            "distinct_flag": caliber_info.distinct_flag,
+            "order_by_clause": caliber_info.order_by_clause,
+            "set_operation": caliber_info.set_operation,
+            "subqueries": [
+                {
+                    "alias": sq.alias,
+                    "raw_text": sq.raw_text,
+                    "source_tables": sq.source_tables,
+                    "where_conditions": [
+                        {
+                            "condition_type": wc.condition_type,
+                            "raw_text": wc.raw_text,
+                        }
+                        for wc in sq.where_conditions
+                    ],
+                }
+                for sq in caliber_info.subqueries
+            ],
+            "source_table_layer": caliber_info.source_table_layer,
+            "target_table_layer": caliber_info.target_table_layer,
+            "window_functions": caliber_info.window_functions,
+            "sql_operation_sequence": caliber_info.sql_operation_sequence,
         }
 
     @staticmethod
     def from_dict(data: dict) -> CaliberInfo:
-        """从字典反序列化为 CaliberInfo"""
         where_conditions = [
             SQLCondition(
                 condition_type=c.get("condition_type", ""),
@@ -245,6 +505,29 @@ class CaliberExtractor:
             )
             for c in data.get("join_conditions", [])
         ]
+        select_columns = [
+            SelectColumnMapping(
+                source_expression=sc.get("source_expression", ""),
+                target_column=sc.get("target_column", ""),
+                alias=sc.get("alias", ""),
+            )
+            for sc in data.get("select_columns", [])
+        ]
+        subqueries = [
+            SubqueryInfo(
+                alias=sq.get("alias", ""),
+                raw_text=sq.get("raw_text", ""),
+                source_tables=sq.get("source_tables", []),
+                where_conditions=[
+                    SQLCondition(
+                        condition_type=wc.get("condition_type", ""),
+                        raw_text=wc.get("raw_text", ""),
+                    )
+                    for wc in sq.get("where_conditions", [])
+                ],
+            )
+            for sq in data.get("subqueries", [])
+        ]
         return CaliberInfo(
             target_table=data.get("target_table", ""),
             target_column=data.get("target_column", ""),
@@ -261,7 +544,66 @@ class CaliberExtractor:
             data_source=data.get("data_source", "oracle"),
             raw_sql_fragment=data.get("raw_sql_fragment", ""),
             confidence=data.get("confidence", 1.0),
+            operation_type=data.get("operation_type", ""),
+            select_columns=select_columns,
+            distinct_flag=data.get("distinct_flag", False),
+            order_by_clause=data.get("order_by_clause", ""),
+            set_operation=data.get("set_operation", ""),
+            subqueries=subqueries,
+            source_table_layer=data.get("source_table_layer", ""),
+            target_table_layer=data.get("target_table_layer", ""),
+            window_functions=data.get("window_functions", []),
+            sql_operation_sequence=data.get("sql_operation_sequence", 0),
         )
+
+
+def _parse_single_select_column(raw: str) -> SelectColumnMapping | None:
+    if not raw:
+        return None
+
+    alias_match = re.search(
+        r"\bAS\s+([\w]+)\s*$",
+        raw,
+        re.IGNORECASE,
+    )
+    if alias_match:
+        alias = alias_match.group(1)
+        source_expr = raw[:alias_match.start()].strip()
+        return SelectColumnMapping(
+            source_expression=source_expr,
+            target_column=alias,
+            alias=alias,
+        )
+
+    bare_alias_match = re.search(
+        r"^([\w.]+)\s+([\w]+)\s*$",
+        raw.strip(),
+    )
+    if bare_alias_match:
+        expr = bare_alias_match.group(1)
+        alias = bare_alias_match.group(2)
+        if alias.upper() not in ("AS", "FROM", "WHERE", "AND", "OR", "ON"):
+            return SelectColumnMapping(
+                source_expression=expr,
+                target_column=alias,
+                alias=alias,
+            )
+
+    simple_col_match = re.match(r"^([\w.]+)$", raw.strip())
+    if simple_col_match:
+        col = simple_col_match.group(1)
+        short = col.split(".")[-1] if "." in col else col
+        return SelectColumnMapping(
+            source_expression=col,
+            target_column=short,
+            alias="",
+        )
+
+    return SelectColumnMapping(
+        source_expression=raw.strip(),
+        target_column="",
+        alias="",
+    )
 
 
 def _truncate_sql(sql: str, max_len: int = 2000) -> str:

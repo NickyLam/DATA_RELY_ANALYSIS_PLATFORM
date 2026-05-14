@@ -1,30 +1,33 @@
 """
 解析相关 API 接口
 文件上传、任务状态查询、SSE 进度推送
+
+遵循 FastAPI 最佳实践:
+  - 使用 Annotated 类型别名声明依赖
+  - 同步服务调用使用 def（非 async def）
+  - SSE 端点使用 async def（因其为异步生成器）
 """
 
 from __future__ import annotations
 
 import logging
-import time
+from typing import Annotated, Optional
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
 
 from app.dependencies import (
-    get_lineage_service,
-    get_parser_service,
-    get_progress_service,
+    LineageServiceDep,
+    ParserServiceDep,
+    ProgressServiceDep,
 )
 from app.models import (
     BaseResponse,
     FileUploadData,
-    FileUploadRequest,
     FileUploadResponse,
     ParseMode,
     ParseStatus,
 )
-from typing import Optional
 from app.services.progress_service import TaskStatus
 from app.utils.file_handler import FileHandler
 
@@ -40,12 +43,12 @@ router = APIRouter(prefix="/api/parse", tags=["解析管理"])
     description="支持批量上传 .tab/.prc 文件，返回任务ID用于查询进度",
 )
 async def upload_files(
-    files: list[UploadFile] = File(...),
-    parse_mode: ParseMode = Form(default=ParseMode.INCREMENTAL),
-    schema_name: Optional[str] = Form(default=None),
-    parser_service=Depends(get_parser_service),
-    progress_service=Depends(get_progress_service),
-):
+    files: list[UploadFile] = File(description="上传的文件列表"),
+    parse_mode: ParseMode = Form(default=ParseMode.INCREMENTAL, description="解析模式"),
+    schema_name: Annotated[Optional[str], Form(description="Schema名称")] = None,
+    parser_service: ParserServiceDep = None,
+    progress_service: ProgressServiceDep = None,
+) -> FileUploadResponse:
     if not files:
         raise HTTPException(status_code=400, detail="请至少上传一个文件")
 
@@ -100,7 +103,6 @@ async def upload_files(
                     errors=result.errors[-5:],
                 )
 
-            # 返回本次上传文件的解析结果，而不是合并后的总数
             final_result = result.to_dict()
             progress_service.complete_task(task.task_id, result=final_result)
 
@@ -139,7 +141,7 @@ async def upload_files(
 )
 async def get_progress(
     task_id: str,
-    progress_service=Depends(get_progress_service),
+    progress_service: ProgressServiceDep = None,
 ):
     task = progress_service.get_task(task_id)
 
@@ -162,10 +164,10 @@ async def get_progress(
     summary="查询任务状态",
     description="获取指定任务的当前状态和结果（非实时）",
 )
-async def get_task_status(
+def get_task_status(
     task_id: str,
-    progress_service=Depends(get_progress_service),
-):
+    progress_service: ProgressServiceDep = None,
+) -> dict:
     task = progress_service.get_task(task_id)
 
     if not task:
@@ -198,11 +200,11 @@ async def get_task_status(
     summary="列出所有任务",
     description="获取最近的任务列表（分页）",
 )
-async def list_tasks(
-    limit: int = 20,
-    status: str = None,
-    progress_service=Depends(get_progress_service),
-):
+def list_tasks(
+    limit: Annotated[int, Query(ge=1, le=100)] = 20,
+    status: Annotated[Optional[str], Query(description="任务状态筛选")] = None,
+    progress_service: ProgressServiceDep = None,
+) -> dict:
     all_tasks_info = progress_service.list_tasks(limit=None, status=status)
     paginated = all_tasks_info[:limit]
 
@@ -221,10 +223,10 @@ async def list_tasks(
     summary="触发全量解析",
     description="重新解析 RRP_ORACLE 目录下的所有现有文件",
 )
-async def trigger_full_parse(
-    parser_service=Depends(get_parser_service),
-    progress_service=Depends(get_progress_service),
-):
+def trigger_full_parse(
+    parser_service: ParserServiceDep = None,
+    progress_service: ProgressServiceDep = None,
+) -> dict:
     task = progress_service.create_task(files_count=0)
     progress_service.start_task(task.task_id)
 

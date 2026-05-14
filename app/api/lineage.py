@@ -1,15 +1,21 @@
 """
 血缘查询 API 接口
 表搜索、血缘关系查询、系统统计
+
+遵循 FastAPI 最佳实践:
+  - 使用 Annotated 类型别名声明依赖
+  - 同步服务调用使用 def（非 async def）
+  - 声明返回类型
 """
 
 from __future__ import annotations
 
 import logging
+from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query
 
-from app.dependencies import get_caliber_service, get_lineage_service, get_parser_service
+from app.dependencies import CaliberServiceDep, LineageServiceDep, ParserServiceDep
 from app.models import (
     LineageQueryOptions,
     LineageQueryRequest,
@@ -20,7 +26,6 @@ from app.models import (
     SystemStatsResponse,
     TableInfoResponse,
     TableListItem,
-    TableSearchRequest,
 )
 
 logger = logging.getLogger(__name__)
@@ -34,11 +39,11 @@ router = APIRouter(prefix="/api", tags=["血缘查询"])
     summary="搜索表列表",
     description="通过关键词搜索表名，支持模糊匹配和倒排索引加速",
 )
-async def search_tables(
-    keyword: str = Query("", min_length=1, description="搜索关键词"),
-    limit: int = Query(50, ge=1, le=500, description="返回数量限制"),
-    lineage_service=Depends(get_lineage_service),
-):
+def search_tables(
+    keyword: Annotated[str, Query(min_length=1, description="搜索关键词")],
+    limit: Annotated[int, Query(ge=1, le=500, description="返回数量限制")] = 50,
+    lineage_service: LineageServiceDep = None,
+) -> TableInfoResponse:
     if not keyword.strip():
         raise HTTPException(status_code=400, detail="请提供搜索关键词")
 
@@ -56,11 +61,11 @@ async def search_tables(
     summary="搜索存储过程",
     description="通过关键词搜索存储过程名称",
 )
-async def search_procedures(
-    keyword: str = Query("", min_length=1, description="搜索关键词"),
-    limit: int = Query(50, ge=1, le=500, description="返回数量限制"),
-    lineage_service=Depends(get_lineage_service),
-):
+def search_procedures(
+    keyword: Annotated[str, Query(min_length=1, description="搜索关键词")],
+    limit: Annotated[int, Query(ge=1, le=500, description="返回数量限制")] = 50,
+    lineage_service: LineageServiceDep = None,
+) -> dict:
     if not keyword.strip():
         raise HTTPException(status_code=400, detail="请提供搜索关键词")
 
@@ -78,10 +83,10 @@ async def search_procedures(
     summary="查询血缘关系",
     description="查询指定表/字段的上下游血缘关系，支持深度控制和缓存优化",
 )
-async def query_lineage(
+def query_lineage(
     request: LineageQueryRequest,
-    lineage_service=Depends(get_lineage_service),
-):
+    lineage_service: LineageServiceDep = None,
+) -> LineageQueryResponse:
     options = request.options or LineageQueryOptions()
 
     result = lineage_service.query_lineage(
@@ -103,10 +108,10 @@ async def query_lineage(
     summary="获取表详细信息",
     description="根据表名获取表的详细结构信息",
 )
-async def get_table_info(
+def get_table_info(
     table: str,
-    parser_service=Depends(get_parser_service),
-):
+    parser_service: ParserServiceDep = None,
+) -> SingleTableInfoResponse:
     data = parser_service.get_current_data()
     if not data:
         raise HTTPException(status_code=404, detail="无可用数据")
@@ -123,12 +128,12 @@ async def get_table_info(
     summary="快捷血缘查询(GET)",
     description="GET 方式快速查询字段级血缘",
 )
-async def query_lineage_get(
+def query_lineage_get(
     table: str,
     field: str,
-    depth: int = Query(3, ge=1, le=20),
-    lineage_service=Depends(get_lineage_service),
-):
+    depth: Annotated[int, Query(ge=1, le=20)] = 3,
+    lineage_service: LineageServiceDep = None,
+) -> LineageQueryResponse:
     result = lineage_service.query_lineage(
         table=table,
         field=field,
@@ -145,10 +150,9 @@ async def query_lineage_get(
     summary="系统统计信息",
     description="获取当前系统的数据统计和缓存状态",
 )
-async def get_system_stats(
-    lineage_service=Depends(get_lineage_service),
-    progress_service=None,
-):
+def get_system_stats(
+    lineage_service: LineageServiceDep = None,
+) -> SystemStatsResponse:
     stats = lineage_service.get_system_stats()
 
     return SystemStatsResponse(data=SystemStatsData(**stats))
@@ -159,10 +163,10 @@ async def get_system_stats(
     summary="重建缓存索引",
     description="强制清空并重建内存索引和图预处理数据",
 )
-async def rebuild_cache(
-    lineage_service=Depends(get_lineage_service),
-    caliber_service=Depends(get_caliber_service),
-):
+def rebuild_cache(
+    lineage_service: LineageServiceDep = None,
+    caliber_service: CaliberServiceDep = None,
+) -> dict:
     lineage_service.rebuild_indexes()
     caliber_service.rebuild_indexes()
 
