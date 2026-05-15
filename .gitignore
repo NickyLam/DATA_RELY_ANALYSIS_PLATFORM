@@ -41,3 +41,6 @@ Thumbs.db
 
 # Data source files (sensitive business data)
 RRP_ORACLE/
+
+# 财务集市数据目录
+财务集市指标血缘分析/

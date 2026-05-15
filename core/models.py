@@ -217,6 +217,18 @@ class CaliberInfo:
     accumulated_where: list[SQLCondition] = field(default_factory=list)
     accumulated_join: list[SQLCondition] = field(default_factory=list)
     caliber_spec: str = ""
+    # 批次A新增：行号定位字段（向后兼容，带默认值）
+    file_path: str = ""          # 来源.prc文件路径
+    start_line: int = 0          # SQL操作在文件中的起始行号（1-based）
+    end_line: int = 0            # SQL操作在文件中的结束行号（1-based）
+    # 批次B新增：步骤级隔离条件字段（向后兼容，带默认值）
+    step_isolated_where: list[SQLCondition] = field(default_factory=list)  # 步骤级隔离WHERE条件（非累积）
+    step_isolated_join: list[SQLCondition] = field(default_factory=list)   # 步骤级隔离JOIN条件（非累积）
+    # 批次C新增：CTE/函数/表达式字段（向后兼容，带默认值）
+    cte_definitions: list[str] = field(default_factory=list)           # WITH子句CTE定义列表
+    custom_functions: list[str] = field(default_factory=list)          # 自定义函数调用列表
+    full_expression: str = ""                                          # 完整字段表达式（含函数嵌套、CASE WHEN等）
+    is_custom_function_call: bool = False                              # 是否为自定义函数调用
 
     @property
     def target_key(self) -> str:
@@ -271,11 +283,12 @@ class CaliberInfo:
         if self.distinct_flag:
             parts.append("  去重方式: DISTINCT")
 
-        if self.join_conditions:
-            join_descs = [f"JOIN {j.raw_text}" for j in self.join_conditions]
+        all_join = self.step_isolated_join or self.accumulated_join or self.join_conditions
+        if all_join:
+            join_descs = [f"JOIN {j.raw_text}" for j in all_join]
             parts.append(f"  关联条件: {'; '.join(join_descs)}")
 
-        all_where = self.accumulated_where if self.accumulated_where else self.where_conditions
+        all_where = self.step_isolated_where or self.accumulated_where or self.where_conditions
         if all_where:
             where_descs = [w.raw_text for w in all_where]
             parts.append(f"  筛选条件: {' AND '.join(where_descs)}")
@@ -302,6 +315,20 @@ class CaliberInfo:
         if self.subqueries:
             sq_descs = [f"({sq.alias}: {sq.raw_text[:80]})" for sq in self.subqueries]
             parts.append(f"  子查询: {'; '.join(sq_descs)}")
+
+        # Batch C 新增渲染
+        if self.cte_definitions:
+            cte_descs = [cte[:100] for cte in self.cte_definitions]
+            parts.append(f"  CTE定义: {'; '.join(cte_descs)}")
+
+        if self.custom_functions:
+            parts.append(f"  自定义函数: {', '.join(self.custom_functions)}")
+
+        if self.full_expression and self.full_expression.upper() != self.source_column.upper():
+            parts.append(f"  完整表达式: {self.full_expression}")
+
+        if self.is_custom_function_call:
+            parts.append(f"  函数调用标记: 是")
 
         return "\n".join(parts)
 

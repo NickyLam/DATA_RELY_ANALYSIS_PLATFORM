@@ -250,8 +250,32 @@ def _find_field_mapping(
     return None
 
 
+def _bare_table(table_name: str) -> str:
+    """获取裸表名并处理 O_ICL_*/ICL.*/ICL.V_* 同义词映射。
+
+    与 lineage_tracer.LineageTracer._bare_table 保持一致。
+    """
+    parts = table_name.split(".")
+    bare = parts[-1].upper()
+    schema = parts[0].upper() if len(parts) > 1 else ""
+
+    if bare.startswith("O_ICL_"):
+        return bare[2:]
+    if schema == "ICL" and bare.startswith("V_"):
+        return f"ICL_{bare[2:]}"
+    if schema == "ICL" and not bare.startswith("ICL_"):
+        return f"ICL_{bare}"
+    return bare
+
+
 def _extract_sql_block_for_mapping(proc: Any, target_table: str) -> str:
-    """从 .prc 文件中提取对应目标表的 SQL 操作块。"""
+    """从 .prc 文件中提取对应目标表的 SQL 操作块。
+
+    匹配策略：
+      1. 精确短名匹配（target_table 的短名 == operation 的短名）
+      2. 裸表名归一化匹配（_bare_table 归一化后比较，处理 schema 变体）
+      3. 首个 INSERT/merge 操作兜底（当目标表不在操作列表中时）
+    """
     if not proc or not proc.file_path:
         return ""
 
@@ -267,7 +291,13 @@ def _extract_sql_block_for_mapping(proc: Any, target_table: str) -> str:
     except Exception:
         return ""
 
+    if not operations:
+        return ""
+
     target_short = target_table.split(".")[-1].upper() if "." in target_table else target_table.upper()
+    target_bare = _bare_table(target_table)
+
+    # 策略1: 精确短名匹配
     for op in operations:
         op_target_short = (
             op.target_table.split(".")[-1].upper()
@@ -276,6 +306,21 @@ def _extract_sql_block_for_mapping(proc: Any, target_table: str) -> str:
         )
         if op_target_short == target_short:
             return op.sql_block
+
+    # 策略2: 裸表名归一化匹配（处理 O_ICL_*/ICL.*/ICL.V_* 等变体）
+    for op in operations:
+        op_bare = _bare_table(op.target_table)
+        if op_bare == target_bare and op_bare != op.target_table.split(".")[-1].upper():
+            # 只在归一化后才匹配的情况使用（即原始短名不匹配但归一化后匹配）
+            return op.sql_block
+
+    # 策略3: 首个 INSERT/MERGE 操作兜底（当目标表不在操作列表中时，
+    # 可能是因为 .prc 解析时 target_table 记录为不同 schema 变体）
+    if target_bare:
+        for op in operations:
+            op_upper = (op.sql_block or "").strip().upper()
+            if op_upper.startswith("INSERT") or op_upper.startswith("MERGE"):
+                return op.sql_block
 
     return ""
 
@@ -302,30 +347,76 @@ def _chains_to_caliber_result(
             fm = _find_field_mapping(src_node, tgt_node)
 
             sql_block = ""
-            if tgt_node.procedure and _tracer and _tracer.procedures:
-                proc = _tracer.procedures.get(tgt_node.procedure)
+            proc = None
+            procedure_name = tgt_node.procedure or ""
+
+            # 策略1: 从 tgt_node.procedure 直接获取过程
+            if procedure_name and _tracer and _tracer.procedures:
+                proc = _tracer.procedures.get(procedure_name)
+
+            # 策略1b: 当 tgt_node.procedure 为空时，回退使用 src_node.procedure
+            # BFS 中目标节点（追溯起点）的 procedure 为空，但其上游节点记录了加工过程
+            if proc is None and not procedure_name and src_node.procedure and _tracer and _tracer.procedures:
+                proc = _tracer.procedures.get(src_node.procedure)
                 if proc:
-                    sql_block = _extract_sql_block_for_mapping(proc, tgt_node.table_name)
+                    procedure_name = src_node.procedure
+
+            # 策略2: 当 procedure 为空或未找到时，通过 tracer 索引查找加工该表的过程
+            if proc is None and _tracer:
+                tgt_bare = _bare_table(tgt_node.table_name)
+                # 从 _proc_target_idx 查找加工了该表的过程
+                norm_tgt = _tracer._normalize_table_name(tgt_node.table_name)
+                procs_for_table = _tracer._proc_target_idx.get(norm_tgt, [])
+                if not procs_for_table:
+                    # 尝试裸表名查找
+                    procs_for_table = _tracer._proc_target_idx.get(tgt_bare, [])
+                # 还尝试 schema.裸名 组合
+                if not procs_for_table:
+                    for key in _tracer._proc_target_idx:
+                        key_bare = _bare_table(key)
+                        if key_bare == tgt_bare:
+                            procs_for_table = _tracer._proc_target_idx[key]
+                            break
+                if procs_for_table:
+                    # 取第一个有 file_path 的过程
+                    for p in procs_for_table:
+                        if p.file_path:
+                            proc = p
+                            procedure_name = procedure_name or p.full_name
+                            break
+
+            # 提取 sql_block
+            if proc:
+                sql_block = _extract_sql_block_for_mapping(proc, tgt_node.table_name)
 
             if fm:
                 caliber_info = CaliberExtractor.build_caliber_info(
                     field_mapping=fm,
                     sql_block=sql_block,
-                    procedure=tgt_node.procedure,
+                    procedure=procedure_name,
                     data_source="oracle",
                 )
             else:
+                # 即使没有精确匹配的 FieldMapping，仍然尝试用 sql_block 提取口径信息
                 from core.layer_detector import detect_layer as _detect_layer
+                from core.models import FieldMapping as _FM
 
-                caliber_info = CaliberInfo(
-                    target_table=tgt_node.table_name,
-                    target_column=tgt_node.field_name,
+                # 构造一个最小化的 FieldMapping 传给 build_caliber_info
+                # 这样 build_caliber_info 仍能从 sql_block 中提取 WHERE/JOIN/CTE 等
+                fallback_fm = _FM(
                     source_table=src_node.table_name,
                     source_column=src_node.field_name,
+                    target_table=tgt_node.table_name,
+                    target_column=tgt_node.field_name,
                     transform_logic=tgt_node.transform_logic or "",
-                    procedure=tgt_node.procedure,
-                    source_table_layer=_detect_layer(src_node.table_name).value if src_node.table_name else "",
-                    target_table_layer=_detect_layer(tgt_node.table_name).value if tgt_node.table_name else "",
+                    procedure=procedure_name or "",
+                    confidence=0.4,
+                )
+                caliber_info = CaliberExtractor.build_caliber_info(
+                    field_mapping=fallback_fm,
+                    sql_block=sql_block,
+                    procedure=procedure_name,
+                    data_source="oracle",
                 )
 
             steps.append(caliber_info)
@@ -343,6 +434,52 @@ def _chains_to_caliber_result(
         )
         caliber_chain.compute_metadata()
         caliber_chains.append(caliber_chain)
+
+    # 口径链语义去重：基于公共前缀检测
+    # 策略1：如果两条链完全相同签名，保留一条
+    # 策略2：如果一条链是另一条链的"前缀子链"（深度更小且前n步完全相同），丢弃子链
+    if len(caliber_chains) > 1:
+        # 计算每条链的完整签名
+        chain_sigs: list[tuple[int, str, CaliberChain]] = []
+        for cc in caliber_chains:
+            sig_parts = []
+            for step in cc.steps:
+                tgt_bare = _bare_table(step.target_table)
+                sig_parts.append(f"{tgt_bare}.{step.target_column}")
+            sig = "→".join(sig_parts)
+            chain_sigs.append((cc.depth, sig, cc))
+
+        # 按深度降序排序（优先保留最长链）
+        chain_sigs.sort(key=lambda x: x[0], reverse=True)
+
+        kept_sigs: set[str] = set()
+        deduped_chains: list[CaliberChain] = []
+
+        for depth, sig, cc in chain_sigs:
+            # 检查是否已被保留的链包含（公共前缀检测）
+            is_prefix_of_existing = False
+            for kept_sig in kept_sigs:
+                # 如果当前签是已保留签名的前缀（即前n步相同但深度更小），则丢弃
+                if kept_sig.startswith(sig) and kept_sig != sig:
+                    is_prefix_of_existing = True
+                    logger.debug(
+                        "丢弃冗余子链（前缀重复）: depth=%d, sig=%s",
+                        depth,
+                        sig,
+                    )
+                    break
+
+            if not is_prefix_of_existing and sig not in kept_sigs:
+                kept_sigs.add(sig)
+                deduped_chains.append(cc)
+
+        if len(deduped_chains) < len(caliber_chains):
+            logger.info(
+                "口径链公共前缀去重: %d → %d (按深度优先保留最长链)",
+                len(caliber_chains),
+                len(deduped_chains),
+            )
+        caliber_chains = deduped_chains
 
     total_steps = sum(c.depth for c in caliber_chains)
     total_conditions = sum(c.total_conditions for c in caliber_chains)
@@ -419,6 +556,31 @@ def _serialize_caliber_info(ci: CaliberInfo) -> dict[str, Any]:
         "target_table_layer": ci.target_table_layer,
         "window_functions": ci.window_functions,
         "sql_operation_sequence": ci.sql_operation_sequence,
+        "file_path": ci.file_path,
+        "start_line": ci.start_line,
+        "end_line": ci.end_line,
+        "step_isolated_where": [
+            {
+                "condition_type": c.condition_type,
+                "raw_text": c.raw_text,
+                "tables_involved": c.tables_involved,
+                "fields_involved": c.fields_involved,
+            }
+            for c in ci.step_isolated_where
+        ],
+        "step_isolated_join": [
+            {
+                "condition_type": c.condition_type,
+                "raw_text": c.raw_text,
+                "tables_involved": c.tables_involved,
+                "fields_involved": c.fields_involved,
+            }
+            for c in ci.step_isolated_join
+        ],
+        "cte_definitions": ci.cte_definitions,
+        "custom_functions": ci.custom_functions,
+        "full_expression": ci.full_expression,
+        "is_custom_function_call": ci.is_custom_function_call,
     }
 
 
@@ -779,41 +941,61 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
     def _handle_list_tables(self, keyword: str) -> None:
         keyword_upper = keyword.strip().upper()
         results: list[dict[str, Any]] = []
-        seen: set = set()
+        seen_full: set = set()  # 用 full_name 去重，允许不同 schema 同名表共存
 
         # 1. 从 .tab 解析的表（如果有）
         for tbl_info in _tables.values():
             name = tbl_info.table_name or ""
             full_name = tbl_info.full_name or name
-            if keyword_upper and keyword_upper not in name.upper():
+            if keyword_upper and keyword_upper not in full_name.upper():
                 continue
+            if full_name.upper() in seen_full:
+                continue
+            schema_name = tbl_info.schema or (full_name.split(".")[0] if "." in full_name else "")
             layer_val = detect_layer(tbl_info.full_name).value if tbl_info.full_name else "other"
             results.append({
                 "full_name": full_name,
                 "short_name": name,
+                "schema": schema_name,
                 "field_count": len(tbl_info.columns),
                 "layer": layer_val,
             })
-            seen.add(name.upper())
+            seen_full.add(full_name.upper())
 
         # 2. 从存储过程提取的表（补充 .tab 未覆盖的）
         for proc_tbl_upper in _proc_table_names:
-            short_name = proc_tbl_upper.split(".")[-1] if "." in proc_tbl_upper else proc_tbl_upper
-            if short_name in seen:
+            if proc_tbl_upper in seen_full:
                 continue
+            short_name = proc_tbl_upper.split(".")[-1] if "." in proc_tbl_upper else proc_tbl_upper
             if keyword_upper and keyword_upper not in proc_tbl_upper:
                 continue
+            schema_name = proc_tbl_upper.split(".")[0] if "." in proc_tbl_upper else ""
             fields = _proc_table_names.get(proc_tbl_upper, set())
             layer_val = detect_layer(proc_tbl_upper).value
             results.append({
                 "full_name": proc_tbl_upper,
                 "short_name": short_name,
+                "schema": schema_name,
                 "field_count": len(fields),
                 "layer": layer_val,
             })
-            seen.add(short_name)
+            seen_full.add(proc_tbl_upper)
 
-        results.sort(key=lambda x: x["short_name"])
+        # 排序：优先匹配 schema/短名前缀，再按 short_name 排序
+        # 例：搜 EAST5_201 → RRP_EAST.EAST5_201_GRJCXXB 排在 RRP_MDL.EAST5_201_GRJCXXB 前面
+        def _sort_key(item: dict) -> tuple:
+            sn = item["short_name"].upper()
+            fn = item["full_name"].upper()
+            schema = (item.get("schema") or "").upper()
+            # 精确匹配 short_name 的排在最前
+            exact_short = 0 if sn == keyword_upper else 1
+            # schema 前缀与 keyword 有重叠的优先（如 RRP_EAST 匹配 EAST5_）
+            schema_match = 0 if keyword_upper in schema else 1
+            # short_name 开头匹配的优先
+            prefix_match = 0 if sn.startswith(keyword_upper) else 1
+            return (exact_short, schema_match, prefix_match, sn, fn)
+
+        results.sort(key=_sort_key)
         self._send_json({"success": True, "data": results})
 
     def _handle_table_fields(self, table_name: str) -> None:

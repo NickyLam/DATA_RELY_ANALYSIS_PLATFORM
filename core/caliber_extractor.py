@@ -81,8 +81,8 @@ _DISTINCT_PATTERN = re.compile(
 )
 
 _ORDER_BY_PATTERN = re.compile(
-    r"\bORDER\s+BY\s+(.*?)(?:\bUNION\b|;|$)",
-    re.IGNORECASE | re.DOTALL,
+    r"\bORDER\s+BY\s+([^\n;]+?)(?:\s*$|\s*;|\s+UNION)",
+    re.IGNORECASE,
 )
 
 _SET_OPERATION_PATTERN = re.compile(
@@ -153,6 +153,11 @@ class CaliberExtractor:
         step_desc: str = "",
         data_source: str = "oracle",
         sql_operation_sequence: int = 0,
+        file_path: str = "",
+        start_line: int = 0,
+        end_line: int = 0,
+        accumulated_where: list[SQLCondition] | None = None,
+        accumulated_join: list[SQLCondition] | None = None,
     ) -> CaliberInfo:
         where_conds, join_conds, group_by, having = CaliberExtractor.extract_conditions(
             sql_block, dialect=data_source
@@ -166,7 +171,7 @@ class CaliberExtractor:
             enhanced["select_columns"], field_mapping
         )
 
-        return CaliberInfo(
+        info = CaliberInfo(
             target_table=field_mapping.target_table,
             target_column=field_mapping.target_column,
             source_table=field_mapping.source_table,
@@ -192,7 +197,28 @@ class CaliberExtractor:
             target_table_layer=target_layer,
             window_functions=enhanced["window_functions"],
             sql_operation_sequence=sql_operation_sequence,
+            file_path=file_path,
+            start_line=start_line,
+            end_line=end_line,
         )
+
+        # 步骤级隔离条件提取（Batch B）
+        info.step_isolated_where = CaliberExtractor._extract_step_isolated_where(
+            sql_block, accumulated_where=accumulated_where
+        )
+        info.step_isolated_join = CaliberExtractor._extract_step_isolated_join(
+            sql_block, accumulated_join=accumulated_join
+        )
+
+        # CTE / 自定义函数 / 完整表达式提取（Batch C）
+        info.cte_definitions = CaliberExtractor._extract_cte_definitions(sql_block)
+        info.custom_functions = CaliberExtractor._extract_custom_functions(sql_block)
+        info.full_expression = CaliberExtractor._extract_full_expression(
+            sql_block, field_mapping.target_column
+        )
+        info.is_custom_function_call = bool(info.custom_functions)
+
+        return info
 
     @staticmethod
     def build_caliber_infos(
@@ -203,6 +229,11 @@ class CaliberExtractor:
         step_desc: str = "",
         data_source: str = "oracle",
         sql_operation_sequence: int = 0,
+        file_path: str = "",
+        start_line: int = 0,
+        end_line: int = 0,
+        accumulated_where: list[SQLCondition] | None = None,
+        accumulated_join: list[SQLCondition] | None = None,
     ) -> list[CaliberInfo]:
         if not mappings:
             return []
@@ -221,7 +252,7 @@ class CaliberExtractor:
                 enhanced["select_columns"], fm
             )
 
-            results.append(CaliberInfo(
+            info = CaliberInfo(
                 target_table=fm.target_table,
                 target_column=fm.target_column,
                 source_table=fm.source_table,
@@ -247,7 +278,25 @@ class CaliberExtractor:
                 target_table_layer=target_layer,
                 window_functions=enhanced["window_functions"],
                 sql_operation_sequence=sql_operation_sequence,
-            ))
+                file_path=file_path,
+                start_line=start_line,
+                end_line=end_line,
+            )
+            # 步骤级隔离条件提取（Batch B）
+            info.step_isolated_where = CaliberExtractor._extract_step_isolated_where(
+                sql_block, accumulated_where=accumulated_where
+            )
+            info.step_isolated_join = CaliberExtractor._extract_step_isolated_join(
+                sql_block, accumulated_join=accumulated_join
+            )
+            # CTE / 自定义函数 / 完整表达式提取（Batch C）
+            info.cte_definitions = CaliberExtractor._extract_cte_definitions(sql_block)
+            info.custom_functions = CaliberExtractor._extract_custom_functions(sql_block)
+            info.full_expression = CaliberExtractor._extract_full_expression(
+                sql_block, fm.target_column
+            )
+            info.is_custom_function_call = bool(info.custom_functions)
+            results.append(info)
         return results
 
     @staticmethod
@@ -411,11 +460,225 @@ class CaliberExtractor:
             return match.group(1).strip()
         return ""
 
+    # ------------------------------------------------------------------
+    # 步骤级隔离条件提取（Batch B）
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _extract_step_isolated_where(
+        sql_block: str,
+        accumulated_where: list[SQLCondition] | None = None,
+    ) -> list[SQLCondition]:
+        """提取步骤级隔离 WHERE 条件（非累积）。
+
+        核心逻辑：
+          1. 从当前 SQL 块提取 WHERE 条件
+          2. 与已知的累积条件做差集，得到当前步骤独有的条件
+          3. 如果没有累积条件，则当前块的全部 WHERE 条件即为隔离条件
+
+        Args:
+            sql_block: 当前步骤的 SQL 文本
+            accumulated_where: 截至当前步骤的累积 WHERE 条件（可为空）
+
+        Returns:
+            当前步骤独有的 WHERE 条件列表
+        """
+        current_where = CaliberExtractor._extract_where(sql_block)
+        if not current_where:
+            return []
+
+        if not accumulated_where:
+            # 无累积条件，当前全部 WHERE 即为隔离条件
+            return current_where
+
+        # 通过 raw_text 去重：累积条件中已存在的条件不再重复
+        accumulated_texts = {c.raw_text.strip().upper() for c in accumulated_where}
+        isolated: list[SQLCondition] = []
+        for cond in current_where:
+            if cond.raw_text.strip().upper() not in accumulated_texts:
+                isolated.append(cond)
+        return isolated
+
+    @staticmethod
+    def _extract_step_isolated_join(
+        sql_block: str,
+        accumulated_join: list[SQLCondition] | None = None,
+    ) -> list[SQLCondition]:
+        """提取步骤级隔离 JOIN 条件（非累积）。
+
+        核心逻辑与 _extract_step_isolated_where 类似：
+          1. 从当前 SQL 块提取 JOIN 条件
+          2. 与已知的累积条件做差集
+          3. 如果没有累积条件，则当前块的全部 JOIN 即为隔离条件
+
+        Args:
+            sql_block: 当前步骤的 SQL 文本
+            accumulated_join: 截至当前步骤的累积 JOIN 条件（可为空）
+
+        Returns:
+            当前步骤独有的 JOIN 条件列表
+        """
+        current_join = CaliberExtractor._extract_joins(sql_block)
+        if not current_join:
+            return []
+
+        if not accumulated_join:
+            return current_join
+
+        accumulated_texts = {c.raw_text.strip().upper() for c in accumulated_join}
+        isolated: list[SQLCondition] = []
+        for cond in current_join:
+            if cond.raw_text.strip().upper() not in accumulated_texts:
+                isolated.append(cond)
+        return isolated
+
     @staticmethod
     def _extract_having(sql_block: str) -> str:
         match = _HAVING_PATTERN.search(sql_block)
         if match:
             return match.group(1).strip()
+        return ""
+
+    # ------------------------------------------------------------------
+    # CTE / 自定义函数 / 完整表达式提取（Batch C）
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _extract_cte_definitions(sql_block: str) -> list[str]:
+        """提取 WITH ... AS (...) CTE 定义。
+
+        支持多个 CTE 定义：
+          - WITH a AS (...), b AS (...) — 逗号分隔
+          - WITH a AS (...) — 单 CTE
+
+        Args:
+            sql_block: SQL 文本
+
+        Returns:
+            CTE 定义字符串列表，格式为 "cte_name: body_preview"
+        """
+        cte_defs: list[str] = []
+
+        # 策略1：匹配 WITH name AS ( 模式（第一个CTE）
+        # 策略2：匹配逗号后的 name AS ( 模式（后续CTE）
+        cte_name_pattern = re.compile(
+            r'(?:\bWITH\s+|,\s*)(\w+)\s+AS\s*\(',
+            re.IGNORECASE,
+        )
+
+        for match in cte_name_pattern.finditer(sql_block):
+            cte_name = match.group(1)
+            paren_start = match.end() - 1  # '(' 的位置
+            paren_end = _find_matching_paren_in_text(sql_block, paren_start)
+            if paren_end > paren_start:
+                body = sql_block[paren_start + 1:paren_end].strip()
+                preview = body[:200] + "..." if len(body) > 200 else body
+                cte_defs.append(f"{cte_name}: {preview}")
+            else:
+                cte_defs.append(f"{cte_name}: <unparsed>")
+        return cte_defs
+
+    @staticmethod
+    def _extract_custom_functions(sql_block: str) -> list[str]:
+        """检测 Oracle 自定义函数调用。
+
+        匹配规则：
+          - PKG_ 开头的标识符 + 左括号（包内函数调用）
+          - FN_ 开头的标识符 + 左括号（独立函数调用）
+          - FUNC_ 开头的标识符 + 左括号（独立函数调用）
+
+        Args:
+            sql_block: SQL 文本
+
+        Returns:
+            去重后的自定义函数名列表
+        """
+        custom_funcs: list[str] = []
+        pattern = re.compile(
+            r'((?:PKG_\w+|FN_\w+|FUNC_\w+)\s*\.)?\s*(PKG_\w+|FN_\w+|FUNC_\w+)\s*\(',
+            re.IGNORECASE,
+        )
+        seen: set[str] = set()
+        for match in pattern.finditer(sql_block):
+            # 取最具体的函数引用
+            pkg_part = match.group(1)
+            func_part = match.group(2)
+            if pkg_part:
+                full_name = f"{pkg_part.strip()}.{func_part}"
+            else:
+                full_name = func_part
+            upper_name = full_name.upper()
+            if upper_name not in seen:
+                seen.add(upper_name)
+                custom_funcs.append(full_name)
+        return custom_funcs
+
+    @staticmethod
+    def _extract_full_expression(sql_block: str, target_column: str) -> str:
+        """提取 SELECT 中目标字段对应的完整表达式。
+
+        支持以下场景：
+          - 简单列引用: SELECT A -> "A"
+          - AS 别名: SELECT EXPR AS A -> "EXPR"
+          - 函数嵌套: SELECT FN(X) AS A -> "FN(X)"
+          - CASE WHEN: SELECT CASE WHEN ... END AS A -> "CASE WHEN ... END"
+          - 无别名: SELECT FN(X) -> "FN(X)"
+
+        Args:
+            sql_block: SQL 文本
+            target_column: 目标字段名
+
+        Returns:
+            完整表达式文本，未找到返回空字符串
+        """
+        if not target_column:
+            return ""
+
+        # 提取 SELECT ... FROM 之间的列列表
+        select_match = _SELECT_COLUMNS_PATTERN.search(sql_block)
+        if not select_match:
+            return ""
+
+        raw_select = select_match.group(1).strip()
+        if not raw_select or raw_select == "*":
+            return ""
+
+        # 按逗号拆分列（考虑括号深度）
+        columns = _split_select_columns(raw_select)
+
+        target_upper = target_column.upper().strip()
+
+        for col_text in columns:
+            col_text = col_text.strip()
+            if not col_text:
+                continue
+
+            # 尝试匹配 AS alias
+            as_match = re.search(r'\bAS\s+([\w]+)\s*$', col_text, re.IGNORECASE)
+            if as_match:
+                alias = as_match.group(1).upper()
+                if alias == target_upper:
+                    expr = col_text[:as_match.start()].strip()
+                    return expr
+
+            # 尝试匹配裸别名（expr alias，无 AS）
+            bare_match = re.match(r'^(.+?)\s+([\w]+)\s*$', col_text)
+            if bare_match:
+                expr_candidate = bare_match.group(1).strip()
+                alias_candidate = bare_match.group(2).upper()
+                if alias_candidate == target_upper and alias_candidate not in (
+                    "AS", "FROM", "WHERE", "AND", "OR", "ON", "CASE", "WHEN", "THEN", "ELSE", "END"
+                ):
+                    return expr_candidate
+
+            # 无别名：如果列名本身匹配目标字段
+            simple_match = re.match(r'^([\w.]+)$', col_text)
+            if simple_match:
+                col_name = simple_match.group(1)
+                short = col_name.split(".")[-1] if "." in col_name else col_name
+                if short.upper() == target_upper:
+                    return col_text
+
         return ""
 
     @staticmethod
@@ -483,6 +746,31 @@ class CaliberExtractor:
             "target_table_layer": caliber_info.target_table_layer,
             "window_functions": caliber_info.window_functions,
             "sql_operation_sequence": caliber_info.sql_operation_sequence,
+            "file_path": caliber_info.file_path,
+            "start_line": caliber_info.start_line,
+            "end_line": caliber_info.end_line,
+            "step_isolated_where": [
+                {
+                    "condition_type": c.condition_type,
+                    "raw_text": c.raw_text,
+                    "tables_involved": c.tables_involved,
+                    "fields_involved": c.fields_involved,
+                }
+                for c in caliber_info.step_isolated_where
+            ],
+            "step_isolated_join": [
+                {
+                    "condition_type": c.condition_type,
+                    "raw_text": c.raw_text,
+                    "tables_involved": c.tables_involved,
+                    "fields_involved": c.fields_involved,
+                }
+                for c in caliber_info.step_isolated_join
+            ],
+            "cte_definitions": caliber_info.cte_definitions,
+            "custom_functions": caliber_info.custom_functions,
+            "full_expression": caliber_info.full_expression,
+            "is_custom_function_call": caliber_info.is_custom_function_call,
         }
 
     @staticmethod
@@ -554,6 +842,31 @@ class CaliberExtractor:
             target_table_layer=data.get("target_table_layer", ""),
             window_functions=data.get("window_functions", []),
             sql_operation_sequence=data.get("sql_operation_sequence", 0),
+            file_path=data.get("file_path", ""),
+            start_line=data.get("start_line", 0),
+            end_line=data.get("end_line", 0),
+            step_isolated_where=[
+                SQLCondition(
+                    condition_type=c.get("condition_type", ""),
+                    raw_text=c.get("raw_text", ""),
+                    tables_involved=c.get("tables_involved", []),
+                    fields_involved=c.get("fields_involved", []),
+                )
+                for c in data.get("step_isolated_where", [])
+            ],
+            step_isolated_join=[
+                SQLCondition(
+                    condition_type=c.get("condition_type", ""),
+                    raw_text=c.get("raw_text", ""),
+                    tables_involved=c.get("tables_involved", []),
+                    fields_involved=c.get("fields_involved", []),
+                )
+                for c in data.get("step_isolated_join", [])
+            ],
+            cte_definitions=data.get("cte_definitions", []),
+            custom_functions=data.get("custom_functions", []),
+            full_expression=data.get("full_expression", ""),
+            is_custom_function_call=data.get("is_custom_function_call", False),
         )
 
 
@@ -628,3 +941,73 @@ def _extract_field_refs(text: str) -> list[str]:
         if field_name and not field_name.startswith(("SELECT", "FROM", "WHERE", "AND", "OR")):
             fields.append(field_name)
     return list(dict.fromkeys(fields))
+
+
+def _find_matching_paren_in_text(text: str, start: int) -> int:
+    """从 start 位置（必须是左括号）开始，找到匹配的右括号位置。
+
+    处理字符串中的引号转义。
+
+    Returns:
+        匹配的右括号字符偏移，未找到返回 start
+    """
+    if start >= len(text) or text[start] != '(':
+        return start
+
+    depth = 0
+    in_single_quote = False
+    i = start
+
+    while i < len(text):
+        ch = text[i]
+        if ch == "'" and not in_single_quote:
+            in_single_quote = True
+        elif ch == "'" and in_single_quote:
+            if i + 1 < len(text) and text[i + 1] == "'":
+                i += 2
+                continue
+            in_single_quote = False
+        elif not in_single_quote:
+            if ch == '(':
+                depth += 1
+            elif ch == ')':
+                depth -= 1
+                if depth == 0:
+                    return i
+        i += 1
+
+    return start
+
+
+def _split_select_columns(raw_select: str) -> list[str]:
+    """按顶层逗号拆分 SELECT 列列表。
+
+    考虑括号深度，不拆分函数参数内的逗号。
+
+    Args:
+        raw_select: SELECT ... FROM 之间的原始文本
+
+    Returns:
+        拆分后的列表达式列表
+    """
+    columns: list[str] = []
+    depth = 0
+    current = ""
+
+    for ch in raw_select:
+        if ch == "(":
+            depth += 1
+            current += ch
+        elif ch == ")":
+            depth -= 1
+            current += ch
+        elif ch == "," and depth == 0:
+            columns.append(current.strip())
+            current = ""
+        else:
+            current += ch
+
+    if current.strip():
+        columns.append(current.strip())
+
+    return columns

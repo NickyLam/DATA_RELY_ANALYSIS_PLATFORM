@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数据血缘分析系统 v2.2</title>
-    <link rel="stylesheet" href="/static/css/style.css?v=2.4">
+    <title>数据血缘分析系统 v3.0</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=3.0">
 </head>
 <body>
     <!-- 顶部导航栏 -->
@@ -15,7 +15,7 @@
                 <span class="version-badge">v2.0</span>
             </div>
 
-            <!-- 三TAB 切换 -->
+            <!-- 四TAB 切换 -->
             <nav class="tab-navigation">
                 <button class="tab-btn" data-tab="parse" onclick="switchTab('parse')">
                     <span class="tab-icon">📂</span>
@@ -28,6 +28,10 @@
                 <button class="tab-btn" data-tab="caliber" onclick="switchTab('caliber')">
                     <span class="tab-icon">🎯</span>
                     <span class="tab-text">指标口径</span>
+                </button>
+                <button class="tab-btn" data-tab="indicator" onclick="switchTab('indicator')">
+                    <span class="tab-icon">📈</span>
+                    <span class="tab-text">指标血缘</span>
                 </button>
             </nav>
 
@@ -377,16 +381,21 @@
                 <!-- 口径结果区域 -->
                 <main class="content-area">
                     <div id="caliberResults" class="caliber-results" style="display:none;">
-                        <!-- 查询统计 -->
-                        <div id="caliberStats" class="stats-grid" style="margin-bottom:16px;"></div>
+                        <!-- 第一层：概览卡 -->
+                        <div id="caliberOverview" class="caliber-overview"></div>
 
-                        <!-- 口径链路列表 -->
-                        <div id="caliberChainList" class="caliber-chain-list"></div>
+                        <!-- 第二层：Pipeline 链路图（水平滚动） -->
+                        <div class="pipeline-container">
+                            <div id="caliberPipeline" class="pipeline-scroll"></div>
 
-                        <!-- 原始 SQL 展示 -->
-                        <div id="caliberRawSql" class="raw-sql-section" style="display:none;">
-                            <h3 style="margin-bottom:8px;color:#1e293b;">📝 原始 SQL</h3>
-                            <pre id="caliberRawSqlContent" class="raw-sql-content"></pre>
+                            <!-- 第三层：详情抽屉 -->
+                            <div id="caliberDetailDrawer" class="caliber-detail-drawer">
+                                <div class="drawer-header">
+                                    <h3 id="drawerTitle">步骤详情</h3>
+                                    <button class="drawer-close" onclick="closeCaliberDrawer()">&times;</button>
+                                </div>
+                                <div id="drawerBody" class="drawer-body"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -405,6 +414,45 @@
             </div>
         </section>
 
+        <!-- ========== 指标血缘 TAB ========== -->
+        <section id="indicator-tab" class="tab-content">
+            <div class="indicator-layout">
+                <!-- 左侧：搜索与流水线 -->
+                <div class="indicator-left-panel">
+                    <div class="panel-header">
+                        <h2>🔍 指标搜索</h2>
+                    </div>
+                    <div class="indicator-search-box">
+                        <input type="text" id="indicatorSearchInput" placeholder="输入指标编号 (如 FM0100011)" class="search-input">
+                        <button class="btn btn-primary" onclick="searchIndicator()">搜索</button>
+                    </div>
+                    <div id="indicatorSearchResults" class="indicator-results-list"></div>
+
+                    <!-- 加工流水线 -->
+                    <div class="pipeline-section">
+                        <h3>⚙️ 加工流水线</h3>
+                        <div id="indicatorPipeline" class="pipeline-container"></div>
+                    </div>
+                </div>
+
+                <!-- 右侧：血缘图谱 -->
+                <div class="indicator-right-panel">
+                    <div class="panel-header">
+                        <h2>📈 指标血缘图谱</h2>
+                        <div class="view-switcher">
+                            <button class="view-btn active" data-view="dag" onclick="switchIndicatorView('dag')">DAG</button>
+                            <button class="view-btn" data-view="pipeline" onclick="switchIndicatorView('pipeline')">流水线</button>
+                        </div>
+                    </div>
+                    <div id="indicatorGraphContainer" class="graph-container">
+                        <svg id="indicatorSvg"></svg>
+                    </div>
+                    <!-- 指标详情面板 -->
+                    <div id="indicatorDetailPanel" class="indicator-detail-panel" style="display:none;"></div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- 底部状态栏 -->
@@ -418,12 +466,14 @@
 
     <!-- 脚本引入 -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="/static/js/app.js?v=2.5"></script>
-    <script src="/static/js/parse-tab.js?v=2.5"></script>
-    <script src="/static/js/caliber-tab.js?v=2.5"></script>
+    <script src="/static/js/app.js?v=3.0"></script>
+    <script src="/static/js/parse-tab.js?v=3.0"></script>
+    <script src="/static/js/caliber-tab.js?v=3.0"></script>
     <!-- 展示层模块化拆分 -->
-    <script src="/static/js/detail-panel.js?v=2.5"></script>
-    <script src="/static/js/search-panel.js?v=2.5"></script>
-    <script src="/static/js/lineage-graph.js?v=2.5"></script>
+    <script src="/static/js/detail-panel.js?v=3.0"></script>
+    <script src="/static/js/search-panel.js?v=3.0"></script>
+    <script src="/static/js/lineage-graph.js?v=3.0"></script>
+    <!-- 指标血缘模块 -->
+    <script src="/static/js/indicator-tab.js?v=3.0"></script>
 </body>
 </html>

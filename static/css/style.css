@@ -1223,6 +1223,552 @@ body {
     transform: scale(1.05);
 }
 
+/* ========== 口径 Pipeline 可视化样式 ========== */
+
+/* 口径结果容器 — 三层结构：概览卡 + 链路图 + 详情抽屉 */
+.caliber-results {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* 概览卡区域 */
+.caliber-overview {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    flex-wrap: wrap;
+    align-items: stretch;
+    flex-shrink: 0;  /* 概览卡不会被压缩 */
+}
+
+.caliber-overview .ov-card {
+    flex: 1;
+    min-width: 120px;
+    background: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    padding: 14px 16px;
+    text-align: center;
+    border-left: 4px solid var(--primary-color);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.caliber-overview .ov-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.caliber-overview .ov-card .ov-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1.2;
+}
+
+.caliber-overview .ov-card .ov-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+}
+
+.caliber-overview .ov-card.ov-flow {
+    flex: 2;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-left-color: #0891b2;
+}
+
+.caliber-overview .ov-flow-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.caliber-overview .ov-flow-arrow {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* Pipeline 链路图容器 */
+.pipeline-container {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    background: var(--bg-primary);
+    min-height: 0;  /* 确保flex子项可收缩 */
+}
+
+.pipeline-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 24px 32px;
+    overflow-x: auto;
+    overflow-y: auto;
+    min-height: 200px;
+    flex: 1;
+}
+
+/* 链路轨道（单条链路） */
+.pipeline-track {
+    display: flex;
+    flex-direction: column;
+    min-width: max-content;
+}
+
+.pipeline-track-header {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 0 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pipeline-track-header .track-depth {
+    font-size: 11px;
+    padding: 2px 8px;
+    background: #dbeafe;
+    color: #1d4ed8;
+    border-radius: 10px;
+}
+
+/* 节点行（水平排列） */
+.pipeline-nodes {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 0 12px 0;
+}
+
+/* Pipeline 节点卡片 */
+.pipeline-node {
+    position: relative;
+    min-width: 240px;
+    max-width: 320px;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.pipeline-node:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.pipeline-node.node-active {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* 节点顶部层级色条 */
+.pipeline-node .node-layer-bar {
+    height: 4px;
+    width: 100%;
+}
+
+/* 节点头部 */
+.pipeline-node .node-header {
+    padding: 10px 14px 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pipeline-node .node-step-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pipeline-node .node-op-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.pipeline-node .node-fn-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+/* 节点字段映射区 */
+.pipeline-node .node-fields {
+    padding: 0 14px 8px;
+    font-size: 12px;
+    color: var(--text-primary);
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+}
+
+.pipeline-node .node-fields .field-arrow {
+    color: var(--primary-color);
+    margin: 0 4px;
+}
+
+.pipeline-node .node-fields .field-table {
+    color: var(--text-secondary);
+    font-size: 11px;
+}
+
+.pipeline-node .node-fields .field-name {
+    font-weight: 600;
+    color: #4338ca;
+}
+
+/* 节点条件摘要区 */
+.pipeline-node .node-conditions {
+    padding: 0 14px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.pipeline-node .cond-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #fff7ed;
+    color: #c2410c;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.pipeline-node .cond-tag.cond-join {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+.pipeline-node .cond-tag.cond-group {
+    background: #f0fdf4;
+    color: #166534;
+}
+
+.pipeline-node .cond-tag.cond-having {
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.pipeline-node .cond-tag.cond-cte {
+    background: #ecfeff;
+    color: #0891b2;
+}
+
+.pipeline-node .cond-tag.cond-func {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.pipeline-node .cond-tag.cond-distinct {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.pipeline-node .cond-tag.cond-setop {
+    background: #fce7f3;
+    color: #be185d;
+}
+
+/* 节点底部：存储过程+行号 */
+.pipeline-node .node-footer {
+    padding: 6px 14px;
+    background: var(--bg-tertiary);
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 连接箭头 */
+.pipeline-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.pipeline-connector .connector-line {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    position: relative;
+}
+
+.pipeline-connector .connector-arrow {
+    position: absolute;
+    right: -1px;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 8px solid #8b5cf6;
+}
+
+.pipeline-connector .connector-label {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    background: var(--bg-primary);
+    padding: 0 4px;
+}
+
+/* 详情抽屉（覆盖在右侧） */
+.caliber-detail-drawer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 480px;
+    max-width: 50%;
+    height: 100%;
+    background: white;
+    border-left: 1px solid var(--border-color);
+    box-shadow: -4px 0 16px rgba(0,0,0,0.08);
+    z-index: 20;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    animation: slideInRight 0.25s ease;
+}
+
+.caliber-detail-drawer.drawer-open {
+    display: flex;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.drawer-header {
+    padding: 16px 20px;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.drawer-header h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.drawer-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 2px 6px;
+    line-height: 1;
+}
+
+.drawer-close:hover {
+    color: var(--text-primary);
+}
+
+.drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+}
+
+.drawer-body .detail-section {
+    margin-bottom: 16px;
+}
+
+.drawer-body .detail-section .ds-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--bg-tertiary);
+}
+
+.drawer-body .detail-section .ds-content {
+    font-size: 13px;
+    color: var(--text-primary);
+}
+
+.drawer-body .ds-content code {
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 12px;
+}
+
+.drawer-body .cond-block {
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 13px;
+}
+
+.drawer-body .cond-block.cond-where {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+}
+
+.drawer-body .cond-block.cond-join {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+}
+
+.drawer-body .cond-block.cond-group {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+.drawer-body .cond-block.cond-having {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+}
+
+.drawer-body .cond-block.cond-where-isolated {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+}
+
+.drawer-body .cond-block.cond-join-isolated {
+    background: #eff6ff;
+    border: 1px solid #93c5fd;
+}
+
+.drawer-body .cond-block .cond-label {
+    font-weight: 600;
+    margin-right: 6px;
+}
+
+.drawer-body .sql-pre {
+    padding: 12px;
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    margin: 0;
+}
+
+/* 多链路分隔 */
+.pipeline-chain-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border-color);
+    margin: 16px 0 8px;
+}
+
+.pipeline-chain-divider-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    padding-left: 4px;
+}
+
+/* 空链路提示 */
+.pipeline-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.pipeline-empty .empty-icon {
+    font-size: 48px;
+    opacity: 0.3;
+    margin-bottom: 12px;
+}
+
+.pipeline-empty p {
+    font-size: 14px;
+}
+
+/* 层级颜色变量 */
+.layer-east { background: #7c3aed; }
+.layer-mdl { background: #2563eb; }
+.layer-dws { background: #059669; }
+.layer-ads { background: #ea580c; }
+.layer-ods { background: #0891b2; }
+.layer-diis { background: #64748b; }
+.layer-other { background: #6b7280; }
+
+.layer-east-text { color: #7c3aed; }
+.layer-mdl-text { color: #2563eb; }
+.layer-dws-text { color: #059669; }
+.layer-ads-text { color: #ea580c; }
+.layer-ods-text { color: #0891b2; }
+.layer-diis-text { color: #64748b; }
+
+/* 响应式适配 */
+@media (max-width: 1200px) {
+    .caliber-detail-drawer {
+        width: 100%;
+        max-width: 100%;
+        height: 50%;
+        top: auto;
+        bottom: 0;
+        border-left: none;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .pipeline-node {
+        min-width: 200px;
+    }
+}
+
 /* 响应式适配 */
 @media (max-width: 1200px) {
     .parse-layout {
@@ -1263,4 +1809,263 @@ body {
     .graph-area {
         height: 600px;
     }
+}
+
+/* ========== 指标血缘 TAB ========== */
+.indicator-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    height: calc(100vh - var(--header-height) - 60px);
+    gap: 0;
+}
+
+.indicator-left-panel {
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.indicator-right-panel {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-primary);
+    position: relative;
+}
+
+.indicator-search-box {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.indicator-search-box .search-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 14px;
+}
+
+.indicator-results-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.indicator-result-item {
+    padding: 12px;
+    background: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.indicator-result-item:hover {
+    background: #e0e7ff;
+}
+
+.indicator-no {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 14px;
+}
+
+.indicator-meta {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    font-size: 12px;
+}
+
+.indicator-type {
+    color: var(--text-secondary);
+}
+
+.indicator-tag {
+    background: #f3e8ff;
+    color: #7c3aed;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.pipeline-section {
+    margin-top: 24px;
+}
+
+.pipeline-section h3 {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.pipeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pipeline-step {
+    padding: 12px;
+    background: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--border-color);
+}
+
+.pipeline-step.involved {
+    border-left-color: var(--success-color);
+    background: #ecfdf5;
+}
+
+.pipeline-step.not-involved {
+    opacity: 0.5;
+}
+
+.step-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.step-order {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.step-name {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.step-detail {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+.step-target {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.view-switcher {
+    display: flex;
+    gap: 4px;
+}
+
+.view-btn {
+    padding: 6px 12px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.view-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.indicator-detail-panel {
+    position: absolute;
+    right: 20px;
+    top: 80px;
+    width: 300px;
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.detail-header h3 {
+    font-size: 16px;
+    color: var(--primary-color);
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.detail-content {
+    padding: 16px;
+}
+
+.detail-section {
+    margin-bottom: 16px;
+}
+
+.detail-section h4 {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.measure-list, .gl-mapping-list, .relation-list {
+    font-size: 13px;
+}
+
+.measure-item, .gl-mapping-item {
+    padding: 8px;
+    background: var(--bg-tertiary);
+    border-radius: 4px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.measure-code {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.measure-label {
+    color: var(--text-secondary);
+}
+
+.algo-type {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.message-hint {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.loading-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.loading-overlay .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }

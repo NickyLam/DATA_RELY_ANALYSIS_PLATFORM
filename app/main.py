@@ -22,6 +22,7 @@ from fastapi.staticfiles import StaticFiles
 from app.api.parse import router as parse_router
 from app.api.lineage import router as lineage_router
 from app.api.caliber import router as caliber_router
+from app.api.indicator import router as indicator_router
 from app.api.system import router as system_router
 from app.config import config
 from app.dependencies import (
@@ -140,6 +141,7 @@ app.add_middleware(
 app.include_router(parse_router)
 app.include_router(lineage_router)
 app.include_router(caliber_router)
+app.include_router(indicator_router)
 app.include_router(system_router)
 
 

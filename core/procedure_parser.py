@@ -40,6 +40,10 @@ class SQLOperation:
     step_num: int = 0
     step_desc: str = ""
     raw_text: str = ""
+    # 批次A新增：行号定位字段（向后兼容，带默认值）
+    start_line: int = 0    # SQL操作在文件中的起始行号（1-based）
+    end_line: int = 0      # SQL操作在文件中的结束行号（1-based）
+    file_path: str = ""    # 来源.prc文件路径
 
 
 # ---------------------------------------------------------------------------
@@ -132,6 +136,10 @@ class EnhancedProcedureParser:
 
         # 提取所有 SQL 操作（核心增强点：全局查找而非仅第一个）
         operations = self._extract_all_sql_operations(content, proc_info)
+
+        # A3：将文件路径传递到每个 SQLOperation
+        for op in operations:
+            op.file_path = file_path
         logger.info(
             "[%s] 共检测到 %d 条 SQL 操作 (insert/merge/update)",
             proc_info.full_name,
@@ -257,6 +265,9 @@ class EnhancedProcedureParser:
             op = op_by_step.get(step_num)
             sql_block = op.sql_block if op else ""
             step_desc = op.step_desc if op else ""
+            fp = op.file_path if op else ""
+            sl = op.start_line if op else 0
+            el = op.end_line if op else 0
 
             batch = CaliberExtractor.build_caliber_infos(
                 mappings=mappings,
@@ -265,6 +276,9 @@ class EnhancedProcedureParser:
                 step_num=step_num,
                 step_desc=step_desc,
                 data_source=data_source,
+                file_path=fp,
+                start_line=sl,
+                end_line=el,
             )
             caliber_infos.extend(batch)
 
@@ -278,6 +292,9 @@ class EnhancedProcedureParser:
                     step_num=op.step_num if op.step_num > 0 else 0,
                     step_desc=op.step_desc if op.step_desc else "",
                     data_source=data_source,
+                    file_path=op.file_path,
+                    start_line=op.start_line,
+                    end_line=op.end_line,
                 )
                 caliber_infos.extend(batch)
             if not ops:
@@ -362,6 +379,9 @@ class EnhancedProcedureParser:
         Returns:
             按 V_STEP 排序的操作列表，每个元素包含 op_type / target_table /
             sql_block / step_num / step_desc。
+
+        增强点：sql_block 会自动向前扩展包含 WITH/CTE 子句（如果存在），
+        使得 CaliberExtractor 能够提取 CTE 定义信息。
         """
         operations: list[SQLOperation] = []
 
@@ -372,16 +392,22 @@ class EnhancedProcedureParser:
                 continue
 
             raw_block = match.group(0)
+            # 尝试向前扩展 WITH/CTE 子句
+            extended_block, ext_start = self._extend_with_cte(content, match.start(), raw_block)
             step_num, step_desc = self._find_step_context(match.start(), content)
+            start_line = content[:ext_start].count('\n') + 1
+            end_line = content[:match.end()].count('\n') + 1
 
             operations.append(
                 SQLOperation(
                     op_type="insert",
                     target_table=target_table,
-                    sql_block=raw_block,
+                    sql_block=extended_block,
                     step_num=step_num,
                     step_desc=step_desc,
-                    raw_text=raw_block,
+                    raw_text=extended_block,
+                    start_line=start_line,
+                    end_line=end_line,
                 )
             )
 
@@ -392,16 +418,21 @@ class EnhancedProcedureParser:
                 continue
 
             raw_block = match.group(0)
+            extended_block, ext_start = self._extend_with_cte(content, match.start(), raw_block)
             step_num, step_desc = self._find_step_context(match.start(), content)
+            start_line = content[:ext_start].count('\n') + 1
+            end_line = content[:match.end()].count('\n') + 1
 
             operations.append(
                 SQLOperation(
                     op_type="merge",
                     target_table=target_table,
-                    sql_block=raw_block,
+                    sql_block=extended_block,
                     step_num=step_num,
                     step_desc=step_desc,
-                    raw_text=raw_block,
+                    raw_text=extended_block,
+                    start_line=start_line,
+                    end_line=end_line,
                 )
             )
 
@@ -412,22 +443,81 @@ class EnhancedProcedureParser:
                 continue
 
             raw_block = match.group(0)
+            extended_block, ext_start = self._extend_with_cte(content, match.start(), raw_block)
             step_num, step_desc = self._find_step_context(match.start(), content)
+            start_line = content[:ext_start].count('\n') + 1
+            end_line = content[:match.end()].count('\n') + 1
 
             operations.append(
                 SQLOperation(
                     op_type="update",
                     target_table=target_table,
-                    sql_block=raw_block,
+                    sql_block=extended_block,
                     step_num=step_num,
                     step_desc=step_desc,
-                    raw_text=raw_block,
+                    raw_text=extended_block,
+                    start_line=start_line,
+                    end_line=end_line,
                 )
             )
 
         # 按 step_num 排序（未识别到 step 的排最后）
         operations.sort(key=lambda op: (op.step_num if op.step_num > 0 else 9999))
         return operations
+
+    def _extend_with_cte(
+        self, content: str, dml_start: int, raw_block: str
+    ) -> tuple[str, int]:
+        """向前扩展 sql_block 以包含 WITH/CTE 子句。
+
+        Oracle CTE 语法：WITH alias AS (subquery) [, alias2 AS (subquery2)] INSERT INTO ...
+
+        策略：
+          1. 在 DML 关键字之前查找独立的 WITH 关键字
+          2. 从 WITH 开始截取到 DML 关键字之前，拼接到 raw_block 前面
+          3. 处理嵌套括号以确保 CTE 完整
+
+        Args:
+            content: 存储过程完整文本
+            dml_start: DML 语句（INSERT/MERGE/UPDATE）在 content 中的起始位置
+            raw_block: 原始匹配的 SQL 块
+
+        Returns:
+            (extended_sql_block, extended_start_position)
+        """
+        # 在 DML 关键字前的文本中查找 WITH
+        prefix_region = content[:dml_start]
+
+        # 找到最后一个独立的 WITH 关键字（不是子查询内部的 WITH）
+        # 使用反向搜索策略：从 dml_start 位置向前查找
+        with_match = None
+        for m in re.finditer(r'\bWITH\b', prefix_region, re.IGNORECASE):
+            # 检查这个 WITH 是否独立（前面不是字母/数字/下划线/点号）
+            pos = m.start()
+            if pos > 0 and content[pos - 1].isalnum():
+                continue
+            with_match = m
+
+        if with_match is None:
+            return raw_block, dml_start
+
+        # 从 WITH 到 DML 起始位置之间的文本
+        cte_prefix = content[with_match.start():dml_start]
+
+        # 验证：这段文本和 DML 语句之间不应有其他完整的 SQL 语句
+        # （如另一个 INSERT/UPDATE/DELETE/MERGE/COMMIT/ROLLBACK）
+        intervening_dml = re.search(
+            r'\b(?:INSERT\s|UPDATE\s|DELETE\s|MERGE\s|COMMIT|ROLLBACK)',
+            cte_prefix,
+            re.IGNORECASE,
+        )
+        if intervening_dml:
+            # WITH 属于更前面的语句，不属于当前 DML
+            return raw_block, dml_start
+
+        # 拼接完整的 sql_block
+        extended_block = cte_prefix + raw_block
+        return extended_block, with_match.start()
 
     # ===================================================================
     # 步骤上下文定位

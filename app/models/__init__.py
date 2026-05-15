@@ -257,5 +257,136 @@ class CaliberResultData(BaseModel):
     complete_caliber_spec: str = Field(default="", description="完整口径规格")
 
 
+class IndicatorQueryMode(str, Enum):
+    UPSTREAM = "upstream"
+    DOWNSTREAM = "downstream"
+    BOTH = "both"
+
+
+class IndicatorLineageRequest(BaseModel):
+    index_no: str = Field(min_length=2, description="指标编号")
+    measure: Optional[str] = Field(default=None, description="度量(可选)")
+    depth: int = Field(default=10, ge=1, le=20, description="查询深度(1-20)")
+    direction: IndicatorQueryMode = Field(default=IndicatorQueryMode.UPSTREAM, description="查询方向")
+
+
+class IndicatorSearchRequest(BaseModel):
+    keyword: str = Field(min_length=1, description="搜索关键词")
+    limit: int = Field(default=50, ge=1, le=500, description="返回数量限制")
+
+
+class IndicatorNodeData(BaseModel):
+    id: str = Field(description="节点ID")
+    type: str = Field(description="节点类型")
+    label: str = Field(description="节点标签")
+    index_no: str = Field(default="", description="指标编号")
+    index_measure: str = Field(default="", description="指标度量")
+    index_type: str = Field(default="", description="指标类型")
+    algo_type: str = Field(default="", description="算法类型")
+    layer: str = Field(default="", description="数据层")
+    brch_type: str = Field(default="", description="分支类型")
+    detail: dict[str, Any] = Field(default_factory=dict, description="详细信息")
+
+
+class IndicatorEdgeData(BaseModel):
+    id: str = Field(description="边ID")
+    source: str = Field(description="源节点ID")
+    target: str = Field(description="目标节点ID")
+    type: str = Field(description="边类型")
+    procedure: str = Field(default="", description="存储过程名")
+    transform_logic: str = Field(default="", description="转换逻辑")
+    algo_type: str = Field(default="", description="算法类型")
+    condition_sql: str = Field(default="", description="条件SQL")
+    measure_sql: str = Field(default="", description="度量SQL")
+
+
+class IndicatorGraphData(BaseModel):
+    nodes: list[IndicatorNodeData] = Field(default_factory=list, description="节点列表")
+    edges: list[IndicatorEdgeData] = Field(default_factory=list, description="边列表")
+    stats: dict[str, Any] = Field(default_factory=dict, description="统计信息")
+
+
+class IndicatorChainStepData(BaseModel):
+    step_num: int = Field(description="步骤序号")
+    index_no: str = Field(description="指标编号")
+    index_measure: str = Field(description="指标度量")
+    index_type: str = Field(description="指标类型")
+    algo_type: str = Field(description="算法类型")
+    procedure: str = Field(description="存储过程名")
+    source_tables: list[str] = Field(default_factory=list, description="源表列表")
+    target_table: str = Field(default="", description="目标表")
+    transform_logic: str = Field(default="", description="转换逻辑")
+    condition_sql: str = Field(default="", description="条件SQL")
+    measure_sql: str = Field(default="", description="度量SQL")
+    brch_type: str = Field(default="", description="分支类型")
+    gl_subj_no: str = Field(default="", description="总账科目号")
+    gl_amt_val: str = Field(default="", description="总账金额值")
+    gl_sign_no: int = Field(default=0, description="总账符号号")
+    algo_label: str = Field(default="", description="算法标签")
+    measure_label: str = Field(default="", description="度量标签")
+    index_type_label: str = Field(default="", description="指标类型标签")
+
+
+class IndicatorChainData(BaseModel):
+    target_index_no: str = Field(description="目标指标编号")
+    target_measure: str = Field(description="目标度量")
+    steps: list[IndicatorChainStepData] = Field(default_factory=list, description="步骤列表")
+    depth: int = Field(description="深度")
+    step_count: int = Field(default=0, description="步骤数")
+    procedures_involved: list[str] = Field(default_factory=list, description="涉及的存储过程")
+    tables_involved: list[str] = Field(default_factory=list, description="涉及的表")
+
+
+class IndicatorLineageResultData(BaseModel):
+    target_index_no: str = Field(description="目标指标编号")
+    target_measure: str = Field(description="目标度量")
+    graph: IndicatorGraphData = Field(description="图数据")
+    chains: list[IndicatorChainData] = Field(default_factory=list, description="链路列表")
+    query_time_ms: float = Field(description="查询耗时(毫秒)")
+    chain_count: int = Field(default=0, description="链路数")
+    max_depth: int = Field(default=0, description="最大深度")
+    measure_label: str = Field(default="", description="度量标签")
+
+
+class IndicatorDetailData(BaseModel):
+    index_no: str = Field(description="指标编号")
+    measures: list[dict[str, Any]] = Field(default_factory=list, description="度量列表")
+    gl_mappings: list[dict[str, Any]] = Field(default_factory=list, description="总账映射")
+    upstream_indices: list[str] = Field(default_factory=list, description="上游指标")
+    downstream_indices: list[str] = Field(default_factory=list, description="下游指标")
+    is_base: bool = Field(description="是否基础指标")
+    is_derived: bool = Field(description="是否衍生指标")
+    is_gl: bool = Field(description="是否总账指标")
+
+
+class IndicatorPipelineStepData(BaseModel):
+    step_order: int = Field(description="步骤顺序")
+    proc_name: str = Field(description="存储过程名")
+    description: str = Field(description="描述")
+    involved: bool = Field(description="是否涉及")
+    detail: str = Field(description="详情")
+    target_table: str = Field(default="", description="目标表")
+
+
+class IndicatorLineageResponse(BaseResponse):
+    data: IndicatorLineageResultData
+
+
+class IndicatorDetailResponse(BaseResponse):
+    data: IndicatorDetailData
+
+
+class IndicatorSearchResponse(BaseResponse):
+    data: list[dict[str, Any]] = Field(default_factory=list)
+
+
+class IndicatorPipelineResponse(BaseResponse):
+    data: list[IndicatorPipelineStepData] = Field(default_factory=list)
+
+
+class IndicatorStatsResponse(BaseResponse):
+    data: dict[str, Any] = Field(default_factory=dict)
+
+
 class CaliberSearchResponse(BaseResponse):
     data: list[dict[str, Any]] = Field(default_factory=list)

@@ -46,12 +46,14 @@
                 return;
             }
 
-            let html = tables.map((table, idx) => `
+            let html = tables.map((table, idx) => {
+                const schemaLabel = table.schema ? `<span style="color:#6366f1;font-weight:600;">${table.schema}</span>.` : '';
+                return `
                 <div class="search-result-item" onclick="selectTable('${table.full_name}', ${idx})">
-                    <div class="result-name">${table.short_name || table.full_name}</div>
+                    <div class="result-name">${schemaLabel}${table.short_name || table.full_name}</div>
                     <div class="result-type">表 · ${table.layer || 'unknown'} · ${table.field_count || 0} 字段</div>
                 </div>
-            `).join('');
+            `}).join('');
 
             // 缓存搜索结果，供 selectTable 使用
             _lastSearchResults = tables;
@@ -294,19 +296,34 @@
 
             if (!fullTableName.includes('.')) {
                 try {
-                    const searchResult = await apiRequest(`/api/tables?keyword=${encodeURIComponent(tableName)}&limit=5`);
+                    const searchResult = await apiRequest(`/api/tables?keyword=${encodeURIComponent(tableName)}&limit=10`);
 
                     if (searchResult.data && searchResult.data.length > 0) {
-                        let bestMatch = searchResult.data[0];
-
-                        for (const table of searchResult.data) {
-                            const short = table.full_name.split('.').pop();
-                            if (short === tableName || short.toUpperCase() === tableName.toUpperCase()) {
-                                bestMatch = table;
-                                break;
-                            }
+                        const shortName = tableName.toUpperCase();
+                        const exactMatches = searchResult.data.filter(t => {
+                            const short = t.full_name.split('.').pop().toUpperCase();
+                            return short === shortName;
+                        });
+                        let bestMatch;
+                        if (exactMatches.length === 1) {
+                            bestMatch = exactMatches[0];
+                        } else if (exactMatches.length > 1) {
+                            // 多个 schema 同名表：优先选择 schema 与表名前缀重叠的
+                            bestMatch = exactMatches.reduce((best, t) => {
+                                const schema = (t.schema || '').toUpperCase();
+                                const prefixMatch = (name, kw) => {
+                                    const namePrefix = name.replace(/[0-9]/g, '').replace(/_+$/, '');
+                                    const kwPrefix = kw.replace(/[0-9]/g, '').replace(/_+$/, '');
+                                    return namePrefix.includes(kwPrefix) || kwPrefix.includes(namePrefix);
+                                };
+                                const bestSchema = (best.schema || '').toUpperCase();
+                                const curScore = prefixMatch(schema, shortName) ? 1 : 0;
+                                const bestScore = prefixMatch(bestSchema, shortName) ? 1 : 0;
+                                return curScore > bestScore ? t : best;
+                            }, exactMatches[0]);
+                        } else {
+                            bestMatch = searchResult.data[0];
                         }
-
                         fullTableName = bestMatch.full_name;
                     }
                 } catch (e) {
