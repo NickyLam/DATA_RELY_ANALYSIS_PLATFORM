@@ -97,10 +97,10 @@ class IndicatorService:
             return {"success": False, "message": "字段血缘服务未初始化", "data": {}}
 
         try:
-            lineage_result = self._lineage_service.trace_lineage(
-                target_table=table_name,
-                direction="upstream",
+            lineage_result = self._lineage_service.query_lineage(
+                table=table_name,
                 depth=5,
+                mode="upstream",
             )
             return {
                 "success": True,

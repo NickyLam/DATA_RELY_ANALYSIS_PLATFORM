@@ -70,6 +70,9 @@ class IndicatorGraphBuilder:
         self._base_calc_idx: dict[str, list[IndicatorCalcBase]] = {}
         self._gl_calc_idx: dict[str, list[IndicatorCalcGL]] = {}
         self._rel_idx: dict[str, IndicatorRel] = {}
+        self._edge_by_id: dict[str, IndicatorLineageEdge] = {}
+        self._edges_by_source: dict[str, list[IndicatorLineageEdge]] = {}
+        self._edges_by_target: dict[str, list[IndicatorLineageEdge]] = {}
         self._built = False
 
     def build_full_graph(self) -> IndicatorLineageGraph:
@@ -570,9 +573,8 @@ class IndicatorGraphBuilder:
         edge_type: str = "data_flow", **kwargs: object,
     ) -> None:
         edge_id = f"{source_id}->{target_id}"
-        for existing in self._edges:
-            if existing.edge_id == edge_id:
-                return
+        if edge_id in self._edge_by_id:
+            return
 
         edge = IndicatorLineageEdge(
             edge_id=edge_id,
@@ -582,6 +584,9 @@ class IndicatorGraphBuilder:
             **kwargs,  # type: ignore[arg-type]
         )
         self._edges.append(edge)
+        self._edge_by_id[edge_id] = edge
+        self._edges_by_source.setdefault(source_id, []).append(edge)
+        self._edges_by_target.setdefault(target_id, []).append(edge)
 
         self._adjacency.setdefault(source_id, []).append(target_id)
         self._reverse_adjacency.setdefault(target_id, []).append(source_id)
@@ -610,6 +615,7 @@ class IndicatorGraphBuilder:
         reached_edges: list[IndicatorLineageEdge] = []
 
         adj = self._reverse_adjacency if reverse else self._adjacency
+        edge_lookup = self._edges_by_target if reverse else self._edges_by_source
         queue: deque[tuple[str, int]] = deque([(start_id, 0)])
         visited.add(start_id)
 
@@ -625,15 +631,14 @@ class IndicatorGraphBuilder:
                 visited.add(neighbor_id)
                 reached_nodes.add(neighbor_id)
 
-                for edge in self._edges:
-                    if reverse:
-                        if (edge.target_id == current_id
-                                and edge.source_id == neighbor_id):
+                if reverse:
+                    for edge in edge_lookup.get(current_id, []):
+                        if edge.source_id == neighbor_id:
                             reached_edges.append(edge)
                             break
-                    else:
-                        if (edge.source_id == current_id
-                                and edge.target_id == neighbor_id):
+                else:
+                    for edge in edge_lookup.get(current_id, []):
+                        if edge.target_id == neighbor_id:
                             reached_edges.append(edge)
                             break
 
@@ -664,9 +669,7 @@ class IndicatorGraphBuilder:
                 if not node:
                     continue
 
-                incoming_edges = [
-                    e for e in self._edges if e.target_id == node_id
-                ]
+                incoming_edges = self._edges_by_target.get(node_id, [])
                 edge = incoming_edges[0] if incoming_edges else None
 
                 step = IndicatorChainStep(

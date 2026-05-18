@@ -27,6 +27,7 @@ from app.api.system import router as system_router
 from app.config import config
 from app.dependencies import (
     get_caliber_service,
+    get_indicator_service,
     get_lineage_service,
     get_parser_service,
     get_progress_service,
@@ -68,6 +69,7 @@ async def lifespan(app: FastAPI):
         logger.info("步骤 2/3: 构建性能优化索引...")
         lineage_service = get_lineage_service()
         caliber_service = get_caliber_service()
+        indicator_service = get_indicator_service()
         logger.info("✅ 索引构建完成")
 
         logger.info("步骤 3/3: 启动 HTTP 服务...")
