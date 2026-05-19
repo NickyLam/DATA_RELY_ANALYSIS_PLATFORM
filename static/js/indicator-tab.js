@@ -387,6 +387,17 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         initIndicatorGraph();
+
+        // 搜索输入框 Enter 键触发搜索
+        const searchInput = document.getElementById('indicatorSearchInput');
+        if (searchInput) {
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    window.searchIndicator();
+                }
+            });
+        }
     });
 
 })();

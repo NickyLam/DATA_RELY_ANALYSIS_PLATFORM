@@ -32,31 +32,43 @@ def get_cache_manager() -> CacheManager:
 
 @lru_cache
 def get_parser_service() -> ParserService:
-    return ParserService(
-        data_dir=str(config.data_path),
-        schema_dirs=config.schema_dirs,
-        output_dir=str(config.output_path),
-    )
+    try:
+        return ParserService(
+            data_dir=str(config.data_path),
+            schema_dirs=config.schema_dirs,
+            output_dir=str(config.output_path),
+        )
+    except Exception:
+        get_parser_service.cache_clear()
+        raise
 
 
 @lru_cache
 def get_lineage_service() -> LineageService:
-    parser = get_parser_service()
-    cache = get_cache_manager()
-    return LineageService(
-        parser_service=parser,
-        cache_manager=cache,
-    )
+    try:
+        parser = get_parser_service()
+        cache = get_cache_manager()
+        return LineageService(
+            parser_service=parser,
+            cache_manager=cache,
+        )
+    except Exception:
+        get_lineage_service.cache_clear()
+        raise
 
 
 @lru_cache
 def get_caliber_service() -> CaliberService:
-    parser = get_parser_service()
-    cache = get_cache_manager()
-    return CaliberService(
-        parser_service=parser,
-        cache_manager=cache,
-    )
+    try:
+        parser = get_parser_service()
+        cache = get_cache_manager()
+        return CaliberService(
+            parser_service=parser,
+            cache_manager=cache,
+        )
+    except Exception:
+        get_caliber_service.cache_clear()
+        raise
 
 
 @lru_cache
@@ -72,11 +84,16 @@ def get_indicator_service() -> IndicatorService:
     indicator_data_path = base_dir / "财务集市指标血缘分析" / "指标"
     cache = get_cache_manager()
     lineage = get_lineage_service()
-    return IndicatorService(
-        indicator_data_path=str(indicator_data_path),
-        cache_manager=cache,
-        lineage_service=lineage,
-    )
+    try:
+        return IndicatorService(
+            indicator_data_path=str(indicator_data_path),
+            cache_manager=cache,
+            lineage_service=lineage,
+        )
+    except Exception:
+        # 初始化失败时清除缓存，下次请求可重试
+        get_indicator_service.cache_clear()
+        raise
 
 
 CacheManagerDep = Annotated[CacheManager, Depends(get_cache_manager)]

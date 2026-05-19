@@ -161,15 +161,20 @@ for i in $(seq 1 10); do
     fi
 done
 
-echo -e "${YELLOW}[2/3] 正在解析数据 (可能需要 5-8 分钟)...${NC}"
+echo -e "${YELLOW}[2/3] 正在加载数据（缓存优先）...${NC}"
 while ! grep -q "系统就绪" "$LOG_FILE" 2>/dev/null; do
-    sleep 3
+    sleep 2
     
     # 显示进度提示
-    if grep -q "数据加载完成" "$LOG_FILE" 2>/dev/null; then
-        if [ "$LAST_PROGRESS" != "data" ]; then
-            echo -e "${GREEN}  ✅ 数据加载完成${NC}"
-            LAST_PROGRESS="data"
+    if grep -q "缓存加载完成" "$LOG_FILE" 2>/dev/null; then
+        if [ "$LAST_PROGRESS" != "cache" ]; then
+            echo -e "${GREEN}  ✅ 缓存加载完成${NC}"
+            LAST_PROGRESS="cache"
+        fi
+    elif grep -q "全量解析完成" "$LOG_FILE" 2>/dev/null; then
+        if [ "$LAST_PROGRESS" != "parse" ]; then
+            echo -e "${GREEN}  ✅ 全量解析完成${NC}"
+            LAST_PROGRESS="parse"
         fi
     elif grep -q "索引构建完成" "$LOG_FILE" 2>/dev/null; then
         if [ "$LAST_PROGRESS" != "index" ]; then
@@ -191,7 +196,7 @@ echo -e "${GREEN}  ✅ 系统就绪${NC}"
 echo ""
 
 # 等待端口就绪
-echo -e "${GREEN}✅ 解析完成！等待服务启动...${NC}"
+echo -e "${GREEN}✅ 数据加载完成！等待服务启动...${NC}"
 for i in $(seq 1 30); do
     sleep 2
     if lsof -i :$PORT -sTCP:LISTEN &>/dev/null; then
@@ -212,5 +217,5 @@ for i in $(seq 1 30); do
 done
 
 echo ""
-echo -e "${YELLOW}服务仍在初始化中（解析存储过程耗时较长），请稍后访问...${NC}"
+echo -e "${YELLOW}服务仍在初始化中，请稍后访问...${NC}"
 echo -e "查看日志: ${YELLOW}tail -f $LOG_FILE${NC}"
