@@ -496,3 +496,160 @@ class FieldLineageResult:
             "total_procedures": self.total_procedures,
             "max_depth": self.max_depth,
         }
+
+
+# ===================================================================
+# Phase 1: Summary Card 数据模型
+# ===================================================================
+
+
+@dataclass
+class CaliberSummaryCard:
+    """指标概览卡数据模型 — 提供宏观视角的口径摘要
+
+    用于前端 Summary Card 组件，展示:
+      - 指标标识与短标识
+      - 业务口径描述
+      - 技术口径摘要 (一行文字链路)
+      - 每步转换描述列表
+      - 统计信息 (路径数/步骤数/涉及表和过程)
+      - 数据质量标记
+    """
+    indicator: str = ""                    # 完整标识 (SCHEMA.TABLE.FIELD)
+    indicator_short: str = ""              # 短标识 (TABLE.FIELD)
+    business_caliber: str = ""             # 业务口径描述
+    technical_caliber_summary: str = ""    # 技术口径摘要 (一行文字链路)
+    caliber_chain_text: list[str] = field(default_factory=list)  # 每步转换描述
+    stats: dict = field(default_factory=dict)  # 统计信息
+    data_quality_flags: dict = field(default_factory=dict)  # 数据质量标记
+    query_time_ms: float = 0.0
+
+
+# ===================================================================
+# Phase 2: Pipeline 数据模型
+# ===================================================================
+
+
+@dataclass
+class PipelineNode:
+    """Pipeline 视图节点 — 代表链路中的一个表或表.字段"""
+    id: str = ""                           # 唯一标识 (SHORT_TABLE.FIELD)
+    layer: str = ""                        # 数据分层 (ODS/DWD/DWS/ADS/EAST)
+    layer_label: str = ""                  # 分层显示标签
+    label: str = ""                        # 显示标签 (短表名)
+    field: str = ""                        # 关联字段名
+    is_source: bool = False                # 是否为源头节点
+    is_target: bool = False                # 是否为目标节点
+    is_internal_transform: bool = False    # 是否为同表内字段转换
+    transform_note: str = ""               # 转换说明 (如 "同表内脱敏处理")
+
+
+@dataclass
+class PipelineEdge:
+    """Pipeline 视图边 — 代表一个加工步骤"""
+    id: str = ""                           # 步骤 ID (如 "step_1")
+    source: str = ""                       # 源节点 ID
+    target: str = ""                       # 目标节点 ID
+    source_field: str = ""                 # 源字段名
+    target_field: str = ""                 # 目标字段名
+    expression: str = ""                   # 完整加工表达式
+    procedure: str = ""                    # 所属存储过程
+    step_num: int = 0                      # 步骤编号
+    operation_type: str = ""               # 操作类型 (INSERT_SELECT/MERGE/UPDATE)
+    has_detail: bool = True                # 是否有详情可展开
+    file_path: str = ""                    # 源文件路径
+    start_line: int = 0                    # 起始行号
+
+
+@dataclass
+class PipelineBranch:
+    """Pipeline 视图中的分支 (并行路径)"""
+    merge_point: str = ""                  # 汇聚节点 ID
+    source_node: str = ""                  # 分支来源节点 ID
+    label: str = ""                        # 分支标签
+
+
+@dataclass
+class PipelineView:
+    """Pipeline 完整视图 — 横向 DAG 结构"""
+    target_table: str = ""
+    target_field: str = ""
+    nodes: list[PipelineNode] = field(default_factory=list)
+    edges: list[PipelineEdge] = field(default_factory=list)
+    branches: list[PipelineBranch] = field(default_factory=list)
+    layer_order: list[str] = field(default_factory=list)  # 从左到右的分层顺序
+
+
+# ===================================================================
+# Phase 3: Step Detail 数据模型
+# ===================================================================
+
+
+@dataclass
+class TargetFieldExpression:
+    """单个目标字段的完整表达式"""
+    target_column: str = ""
+    expression: str = ""                   # 完整表达式
+    source_columns: list[str] = field(default_factory=list)
+    source_tables: list[str] = field(default_factory=list)
+    is_custom_function: bool = False
+    custom_function_name: str = ""
+
+
+@dataclass
+class CTEDetail:
+    """CTE 详情 (展示用)"""
+    name: str = ""
+    definition: str = ""                   # CTE 完整定义体
+    source_tables: list[str] = field(default_factory=list)
+    consumed_in_step: int = 0
+
+
+@dataclass
+class CustomFunctionDetail:
+    """自定义函数详情"""
+    name: str = ""                         # 函数全名 (如 PKG_DESEN.ENCRYPT_NAME)
+    is_custom: bool = True
+    migration_risk: str = "LOW"            # LOW / MEDIUM / HIGH
+    risk_note: str = ""                    # 风险说明
+
+
+@dataclass
+class StepDetail:
+    """单步详情面板完整数据"""
+    step_num: int = 0
+    step_desc: str = ""
+    procedure: str = ""
+    source_table: str = ""
+    target_table: str = ""
+    operation_type: str = ""               # INSERT_SELECT / MERGE / UPDATE
+
+    # 源码锚定
+    source_code_location: dict = field(default_factory=dict)  # {file_path, start_line, end_line}
+
+    # 目标字段表达式 (核心)
+    target_field_expressions: list[TargetFieldExpression] = field(default_factory=list)
+
+    # 步骤级隔离条件 (非累积)
+    step_isolated_where: list[dict] = field(default_factory=list)
+    step_isolated_join: list[dict] = field(default_factory=list)
+
+    # 聚合/窗口
+    window_functions: list[str] = field(default_factory=list)
+    group_by_clause: str = ""
+    having_clause: str = ""
+    distinct_flag: bool = False
+    set_operation: str = ""
+    order_by_clause: str = ""
+
+    # CTE
+    cte_definitions: list[CTEDetail] = field(default_factory=list)
+
+    # 自定义函数
+    custom_functions: list[CustomFunctionDetail] = field(default_factory=list)
+
+    # 原始 SQL
+    raw_sql: str = ""
+
+    # 元数据
+    confidence: float = 1.0

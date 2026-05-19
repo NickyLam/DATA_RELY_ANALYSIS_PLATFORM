@@ -204,3 +204,30 @@ async function checkSystemHealth() {
         document.getElementById('systemStatus').style.color = '#ef4444';
     }
 }
+
+// ============================================
+// 强制重新解析
+// ============================================
+async function forceReparse() {
+    if (!confirm('⚠️ 确定要重新全量解析吗？\n\n这将清除缓存并重新解析所有数据文件，耗时约6-10分钟。\n期间服务仍可用（使用旧数据），解析完成后自动刷新。')) {
+        return;
+    }
+
+    showNotification('🔄 开始全量重新解析，请耐心等待...', 'info');
+
+    try {
+        const response = await apiRequest('/api/system/reparse', { method: 'POST' });
+
+        if (response.success) {
+            const data = response.data;
+            showNotification(
+                `✅ 重新解析完成！${data.tables} 张表, ${data.procedures} 个过程, 耗时 ${data.parse_time_sec}s`,
+                'success'
+            );
+        } else {
+            showNotification('❌ 重新解析失败: ' + (response.error || '未知错误'), 'error');
+        }
+    } catch (error) {
+        showNotification('❌ 重新解析请求失败: ' + error.message, 'error');
+    }
+}

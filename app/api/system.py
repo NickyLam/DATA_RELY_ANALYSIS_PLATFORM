@@ -159,3 +159,44 @@ async def system_stats():
             "uptime_seconds": round(uptime, 2),
         },
     }
+
+
+@router.post(
+    "/api/system/reparse",
+    summary="强制重新解析",
+    description="清除缓存并重新全量解析所有数据文件（耗时约6-10分钟）",
+)
+async def force_reparse():
+    """强制重新全量解析，覆盖缓存"""
+    from app.dependencies import get_parser_service, get_lineage_service
+
+    try:
+        parser = get_parser_service()
+
+        # 清除旧的 LineageTracer 缓存
+        parser._lineage_tracer = None
+        parser._cached_procedures = {}
+
+        # 强制全量解析
+        result = parser.parse_existing_data(force=True)
+
+        # 重建 LineageService 索引
+        lineage_svc = get_lineage_service()
+        lineage_svc.rebuild_indexes()
+
+        return {
+            "success": True,
+            "data": {
+                "tables": len(result.tables),
+                "procedures": len(result.procedures),
+                "table_lineages": len(result.table_lineages),
+                "field_mappings": len(result.field_mappings),
+                "parse_time_sec": round(result.parse_time_sec, 2),
+            },
+        }
+    except Exception as e:
+        logger.error("强制重新解析失败: %s", e, exc_info=True)
+        return {
+            "success": False,
+            "error": str(e),
+        }

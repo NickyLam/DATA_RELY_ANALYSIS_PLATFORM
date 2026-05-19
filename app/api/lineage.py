@@ -85,7 +85,7 @@ def search_procedures(
 )
 def query_lineage(
     request: LineageQueryRequest,
-    lineage_service: LineageServiceDep = None,
+    lineage_service: LineageServiceDep,
 ) -> LineageQueryResponse:
     options = request.options or LineageQueryOptions()
 
@@ -103,6 +103,59 @@ def query_lineage(
 
 
 @router.get(
+    "/tables/{table}/fields",
+    summary="获取表字段名列表",
+    description="根据表名获取字段名列表，兼容旧版 api_server 端点",
+)
+def get_table_fields(
+    table: str,
+    parser_service: ParserServiceDep,
+) -> dict:
+    """获取指定表的字段名列表。
+
+    查找策略（与旧版 api_server.py 一致）：
+    1. 精确匹配 .tab 表（table_name 或 full_name）
+    2. 从字段映射中查找过程表（短名或全名）
+    3. 模糊匹配过程表
+    """
+    data = parser_service.get_current_data()
+    if not data:
+        raise HTTPException(status_code=404, detail="无可用数据")
+
+    norm_name = table.strip().upper()
+
+    # 1. 精确匹配 .tab 表
+    for t in data.get("tables", []):
+        tbl_name = (t.get("table_name") or "").upper()
+        full_name = (t.get("full_name") or "").upper()
+        if tbl_name == norm_name or full_name == norm_name:
+            columns = t.get("columns", [])
+            field_names = [c.get("name", "") for c in columns if c.get("name")]
+            return {"success": True, "data": field_names}
+
+    # 2. 从字段映射中查找过程表（按 target_table 聚合字段名）
+    field_mappings = data.get("field_mappings", [])
+    proc_fields: dict[str, set[str]] = {}
+    for fm in field_mappings:
+        tgt_table = (fm.get("target_table") or "").upper()
+        tgt_col = fm.get("target_column", "")
+        if tgt_table and tgt_col:
+            proc_fields.setdefault(tgt_table, set()).add(tgt_col)
+
+    for proc_tbl, fields in proc_fields.items():
+        short = proc_tbl.split(".")[-1] if "." in proc_tbl else proc_tbl
+        if short == norm_name or proc_tbl == norm_name:
+            return {"success": True, "data": sorted(fields)}
+
+    # 3. 模糊匹配过程表
+    for proc_tbl, fields in proc_fields.items():
+        if norm_name in proc_tbl or proc_tbl.endswith(norm_name):
+            return {"success": True, "data": sorted(fields)}
+
+    raise HTTPException(status_code=404, detail=f"未找到表: {table}")
+
+
+@router.get(
     "/tables/{table}",
     response_model=SingleTableInfoResponse,
     summary="获取表详细信息",
@@ -110,7 +163,7 @@ def query_lineage(
 )
 def get_table_info(
     table: str,
-    parser_service: ParserServiceDep = None,
+    parser_service: ParserServiceDep,
 ) -> SingleTableInfoResponse:
     data = parser_service.get_current_data()
     if not data:
@@ -151,7 +204,7 @@ def query_lineage_get(
     description="获取当前系统的数据统计和缓存状态",
 )
 def get_system_stats(
-    lineage_service: LineageServiceDep = None,
+    lineage_service: LineageServiceDep,
 ) -> SystemStatsResponse:
     stats = lineage_service.get_system_stats()
 
@@ -164,8 +217,8 @@ def get_system_stats(
     description="强制清空并重建内存索引和图预处理数据",
 )
 def rebuild_cache(
-    lineage_service: LineageServiceDep = None,
-    caliber_service: CaliberServiceDep = None,
+    lineage_service: LineageServiceDep,
+    caliber_service: CaliberServiceDep,
 ) -> dict:
     lineage_service.rebuild_indexes()
     caliber_service.rebuild_indexes()

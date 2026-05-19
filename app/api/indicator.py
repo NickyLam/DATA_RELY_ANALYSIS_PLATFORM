@@ -123,7 +123,7 @@ def get_indicator_pipeline(
 
 @router.get("/stats", summary="获取指标体系统计信息")
 def get_indicator_stats(
-    service: IndicatorServiceDep = None,
+    service: IndicatorServiceDep,
 ) -> dict:
     try:
         stats = service.get_stats()

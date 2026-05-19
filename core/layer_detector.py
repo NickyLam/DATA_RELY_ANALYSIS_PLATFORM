@@ -44,9 +44,15 @@ def detect_layer(table_name: str) -> LayerType:
     short_name = name.split(".")[-1] if "." in name else name
 
     # 1. ODS 源系统层（优先检测，避免被 schema 名干扰）
-    if short_name.startswith("O_ICL_") or short_name.startswith("O_IML_") or \
-       short_name.startswith("O_IOL_") or short_name.startswith("O_FDW_") or \
-       short_name.startswith("O_RDW_"):
+    #    O_ICL_*: 核心账务系统(ICL)源数据，是真正的外部源系统 → ODS
+    #    O_IML_*: 中间层(IML)操作表，有上游 V_* 视图 → BASE（非 ODS）
+    #    O_IOL_*: 同理待定，目前暂归 BASE
+    #    O_FDW_* / O_RDW_*: 外部数据源 → ODS
+    if short_name.startswith("O_ICL_"):
+        return LayerType.ODS
+    if short_name.startswith("O_IML_") or short_name.startswith("O_IOL_"):
+        return LayerType.BASE
+    if short_name.startswith("O_FDW_") or short_name.startswith("O_RDW_"):
         return LayerType.ODS
 
     # 2. EAST 报送层（只检查短名中的 EAST，避免 RRP_EAST schema 误判）

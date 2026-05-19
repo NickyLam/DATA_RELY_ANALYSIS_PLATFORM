@@ -77,7 +77,10 @@ class TableLineageTracer:
         Returns:
             (节点集合, 边列表)
         """
+        from core.layer_detector import detect_layer_str
+
         resolved_start = self.resolve_table_name(start_table, data)
+        start_layer = detect_layer_str(resolved_start)
         visited: set[str] = {resolved_start}
         edges: list[dict] = []
         queue: list[tuple[str, int]] = [(resolved_start, 0)]
@@ -92,6 +95,17 @@ class TableLineageTracer:
 
             for neighbor in adjacency.get(current, set()):
                 if neighbor not in visited:
+                    # 层级兼容性过滤：过滤掉 ICL 分支
+                    neighbor_layer = detect_layer_str(neighbor)
+                    if start_layer == "east" and neighbor_layer in ("other",):
+                        # 对于 OTHER 层，检查是否是 ICL 相关表
+                        neighbor_upper = neighbor.upper()
+                        bare = self._resolver.bare_table(neighbor_upper)
+                        if bare.startswith("ICL_") or neighbor_upper.startswith("ICL."):
+                            continue
+                    if start_layer == "east" and neighbor_layer in ("ods", "diis"):
+                        continue
+
                     visited.add(neighbor)
                     queue.append((neighbor, depth + 1))
 
@@ -112,28 +126,78 @@ class TableLineageTracer:
         return visited, edges
 
     def resolve_table_name(self, table_name: str, data: dict) -> str:
-        """将短名或部分表名解析为完整表名。"""
-        table_upper = table_name.upper()
+        """将短名或部分表名解析为完整表名。
 
-        if table_upper in self._adjacency_up or table_upper in self._adjacency_down:
-            return table_upper
+        解析策略（按优先级）：
+          0. 实际表定义精确匹配（权威来源优先）
+          1. 显式 schema 严格校验：用户输入带 schema 前缀时，必须匹配实际表定义
+          2. 短名邻接表匹配：无 schema 时，在邻接表中查找实际存在的表
+          3. 短名智能解析：按业务规则排序候选表
+        """
+        table_upper = table_name.upper().strip()
+        if not table_upper:
+            return table_name
 
+        # ---- 步骤0: 优先从实际表定义中查找（权威来源）----
+        # 构建实际表定义的索引，用于严格校验
+        actual_tables_by_full: dict[str, dict] = {}
+        actual_tables_by_short: dict[str, dict] = {}
+        for t in data.get("tables", []):
+            full = t.get("full_name", "").upper()
+            short = t.get("table_name", "").upper()
+            if full:
+                actual_tables_by_full[full] = t
+            if short:
+                actual_tables_by_short[short] = t
+
+        # 精确匹配实际表定义（全名或短名）
+        if table_upper in actual_tables_by_full:
+            return actual_tables_by_full[table_upper].get("full_name", table_name)
+        if table_upper in actual_tables_by_short:
+            return actual_tables_by_short[table_upper].get("full_name", table_name)
+
+        # ---- 步骤1: 显式 schema 前缀的严格校验 ----
+        # 用户输入了 schema.table 格式（如 RRP_MDL.EAST5_201_GRJCXXB）
+        # 如果未在实际表定义中找到，直接返回原输入（后续会自然失败）
+        # 注意：不再接受邻接表中的 schema+表名，因为邻接表可能包含派生的中间节点
+        if "." in table_upper:
+            return table_name
+
+        # ---- 步骤3: 短名模糊匹配（无 schema 前缀）----
+        # 从邻接表中收集候选
         candidates: list[str] = []
         all_keys = set(list(self._adjacency_up.keys()) + list(self._adjacency_down.keys()))
 
         for full_name in all_keys:
-            if full_name.upper() == table_upper:
-                return full_name
             if full_name.upper().endswith("." + table_upper):
                 candidates.append(full_name)
 
-        if candidates:
-            return min(candidates, key=len)
+        if not candidates:
+            return table_name
 
-        for t in data.get("tables", []):
-            full = t.get("full_name", "")
-            short = t.get("table_name", "")
-            if full.upper() == table_upper or short.upper() == table_upper:
-                return full
+        # 3a) 优先选择在实际表定义中真实存在的候选
+        real_candidates = [c for c in candidates if c.upper() in actual_tables_by_full]
 
-        return table_name
+        if real_candidates:
+            # 3b) 业务规则：EAST5_ 表优先匹配 RRP_EAST schema
+            if table_upper.startswith("EAST5_"):
+                east_candidates = [c for c in real_candidates if c.upper().startswith("RRP_EAST.")]
+                if east_candidates:
+                    return east_candidates[0]
+
+            # 3c) 多个真实候选时，按 schema 优先级排序（而非简单取最短）
+            # 优先级：RRP_EAST > RRP_MDL > ICL > 其他
+            schema_priority = {"RRP_EAST.": 0, "RRP_MDL.": 1, "ICL.": 2}
+
+            def _schema_sort_key(c: str) -> tuple:
+                c_upper = c.upper()
+                for prefix, priority in schema_priority.items():
+                    if c_upper.startswith(prefix):
+                        return (priority, len(c))
+                return (99, len(c))
+
+            real_candidates.sort(key=_schema_sort_key)
+            return real_candidates[0]
+
+        # 3d) 无真实表候选时，回退到邻接表候选（最短匹配）
+        return min(candidates, key=len)

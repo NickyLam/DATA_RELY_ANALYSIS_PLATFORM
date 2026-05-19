@@ -66,11 +66,6 @@ echo -e "  ${GREEN}使用 $PYTHON_CMD (版本 $PY_VER)${NC}"
 
 if [ "$PY_MAJOR" -lt 3 ] || { [ "$PY_MAJOR" -eq 3 ] && [ "$PY_MINOR" -lt 11 ]; }; then
     echo -e "${RED}错误: Python 版本过低 ($PY_VER)，需要 3.11+${NC}"
-    echo -e "${YELLOW}提示: Python 3.9 已于 2025年10月停止维护，推荐使用 3.11 或 3.12${NC}"
-    echo -e "${YELLOW}解决方案:${NC}"
-    echo -e "  1. 安装 Python 3.11+: brew install python@3.11 (macOS) 或 apt install python3.11 (Linux)"
-    echo -e "  2. 设置环境变量: export PATH=\"/opt/homebrew/opt/python@3.11/bin:\$PATH\""
-    echo -e "  3. 使用 pyenv: pyenv install 3.11 && pyenv global 3.11"
     exit 1
 fi
 echo -e "  ${GREEN}python 版本符合要求${NC}"

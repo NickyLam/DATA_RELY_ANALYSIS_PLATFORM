@@ -22,9 +22,20 @@ _MIGRATIONS: dict[int, list] = {}
 
 
 def search_table_dicts(tables: list[dict], keyword: str, limit: int = 50) -> list[dict]:
-    """搜索表名（智能排序 - 精确匹配优先）。"""
+    """搜索表名（智能排序 - 精确匹配优先，schema 语义优先）。"""
     keyword_upper = keyword.upper()
     matched: list[tuple[dict, float]] = []
+
+    # schema 与短名前缀的语义关联映射
+    # 当短名以特定前缀开头时，对应的 schema 应获得加分
+    _SCHEMA_PREFIX_PRIORITY: dict[str, list[str]] = {
+        "EAST5_": ["RRP_EAST"],   # EAST5_ 表应优先属于 RRP_EAST
+        "EAST1_": ["RRP_EAST"],
+        "EAST2_": ["RRP_EAST"],
+        "EAST3_": ["RRP_EAST"],
+        "EAST4_": ["RRP_EAST"],
+        "ICL_":   ["ICL", "RRP_MDL"],  # ICL_ 表优先属于 ICL 或 RRP_MDL
+    }
 
     for table in tables:
         full_name = table.get("full_name", "").upper()
@@ -42,7 +53,20 @@ def search_table_dicts(tables: list[dict], keyword: str, limit: int = 50) -> lis
         else:
             score = 40.0
 
+        # 名字越短越相关
         score -= len(full_name) * 0.1
+
+        # schema 语义加分：当短名前缀与 schema 存在语义关联时，匹配的 schema 加 5 分
+        schema = ""
+        if "." in full_name:
+            schema = full_name.split(".")[0]
+
+        for prefix, preferred_schemas in _SCHEMA_PREFIX_PRIORITY.items():
+            if short_name.startswith(prefix):
+                if schema in preferred_schemas:
+                    score += 5.0
+                break
+
         matched.append((table, score))
 
     matched.sort(key=lambda x: x[1], reverse=True)

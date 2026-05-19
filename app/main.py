@@ -54,15 +54,18 @@ async def lifespan(app: FastAPI):
         parser_service = get_parser_service()
         progress_service = get_progress_service()
 
-        logger.info("步骤 1/3: 初始化解析引擎...")
+        logger.info("步骤 1/3: 加载数据（缓存优先）...")
         if config.data_path.exists():
             result = parser_service.parse_existing_data()
-            logger.info(
-                "✅ 数据加载完成: %d 张表, %d 个过程, 耗时 %.2fs",
-                len(result.tables),
-                len(result.procedures),
-                result.parse_time_sec,
-            )
+            if result and result.parse_time_sec == 0.0:
+                logger.info("✅ 缓存加载完成: %d 张表, %d 个过程", len(result.tables), len(result.procedures))
+            else:
+                logger.info(
+                    "✅ 全量解析完成: %d 张表, %d 个过程, 耗时 %.2fs",
+                    len(result.tables),
+                    len(result.procedures),
+                    result.parse_time_sec,
+                )
         else:
             logger.warning("⚠️ 数据目录不存在: %s", config.data_path)
 

@@ -13,7 +13,7 @@ from __future__ import annotations
 import logging
 from typing import Annotated, Optional
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import StreamingResponse
 
 from app.dependencies import (
@@ -141,7 +141,7 @@ async def upload_files(
 )
 async def get_progress(
     task_id: str,
-    progress_service: ProgressServiceDep = None,
+    progress_service: ProgressServiceDep,
 ):
     task = progress_service.get_task(task_id)
 
@@ -166,7 +166,7 @@ async def get_progress(
 )
 def get_task_status(
     task_id: str,
-    progress_service: ProgressServiceDep = None,
+    progress_service: ProgressServiceDep,
 ) -> dict:
     task = progress_service.get_task(task_id)
 
@@ -201,9 +201,9 @@ def get_task_status(
     description="获取最近的任务列表（分页）",
 )
 def list_tasks(
+    progress_service: ProgressServiceDep,
     limit: Annotated[int, Query(ge=1, le=100)] = 20,
     status: Annotated[Optional[str], Query(description="任务状态筛选")] = None,
-    progress_service: ProgressServiceDep = None,
 ) -> dict:
     all_tasks_info = progress_service.list_tasks(limit=None, status=status)
     paginated = all_tasks_info[:limit]
@@ -224,8 +224,8 @@ def list_tasks(
     description="重新解析 RRP_ORACLE 目录下的所有现有文件",
 )
 def trigger_full_parse(
-    parser_service: ParserServiceDep = None,
-    progress_service: ProgressServiceDep = None,
+    parser_service: ParserServiceDep,
+    progress_service: ProgressServiceDep,
 ) -> dict:
     task = progress_service.create_task(files_count=0)
     progress_service.start_task(task.task_id)

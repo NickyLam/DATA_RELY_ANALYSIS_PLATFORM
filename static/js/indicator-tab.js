@@ -29,6 +29,14 @@
         const container = document.getElementById('indicatorGraphContainer');
         if (!container) return;
 
+        // 确保SVG元素存在
+        let svgEl = document.getElementById('indicatorSvg');
+        if (!svgEl) {
+            svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svgEl.setAttribute('id', 'indicatorSvg');
+            container.appendChild(svgEl);
+        }
+
         const width = container.clientWidth || 800;
         const height = container.clientHeight || 500;
 
@@ -36,6 +44,8 @@
             .attr('width', width)
             .attr('height', height);
 
+        // 移除旧的g元素，避免重复叠加
+        indicatorSvg.selectAll('g').remove();
         indicatorG = indicatorSvg.append('g');
 
         const zoom = d3.zoom()
@@ -185,6 +195,19 @@
     }
 
     function renderIndicatorGraph(graphData) {
+        // 清除残留的loading覆盖层
+        const container = document.getElementById('indicatorGraphContainer');
+        const overlay = container ? container.querySelector('.loading-overlay') : null;
+        if (overlay) overlay.remove();
+
+        // 确保SVG存在
+        let svgEl = document.getElementById('indicatorSvg');
+        if (!svgEl && container) {
+            svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svgEl.setAttribute('id', 'indicatorSvg');
+            container.appendChild(svgEl);
+        }
+
         if (!indicatorG) initIndicatorGraph();
         indicatorG.selectAll('*').remove();
 
@@ -313,8 +336,21 @@
     function showIndicatorLoading(show) {
         const container = document.getElementById('indicatorGraphContainer');
         if (show) {
-            container.innerHTML = '<div class="loading-overlay"><div class="spinner"></div><p>加载中...</p></div><svg id="indicatorSvg"></svg>';
-            initIndicatorGraph();
+            // 保留已有的SVG，在上方覆盖loading层
+            let overlay = container.querySelector('.loading-overlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'loading-overlay';
+                overlay.innerHTML = '<div class="spinner"></div><p>加载中...</p>';
+                container.appendChild(overlay);
+            }
+            overlay.style.display = '';
+        } else {
+            // 移除loading覆盖层
+            const overlay = container.querySelector('.loading-overlay');
+            if (overlay) {
+                overlay.remove();
+            }
         }
     }
 

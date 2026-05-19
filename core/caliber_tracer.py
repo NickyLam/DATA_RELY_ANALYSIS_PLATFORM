@@ -23,6 +23,7 @@ from dataclasses import dataclass, field as dc_field
 from typing import Any, Optional
 
 from core.caliber_extractor import CaliberExtractor
+from core.layer_detector import LayerType, detect_layer
 from core.models import (
     CaliberChain,
     CaliberInfo,
@@ -370,6 +371,14 @@ class CaliberTracer:
         while queue:
             current = queue.popleft()
 
+            # ODS/CONFIG 层节点视为叶子，不再继续追溯上游
+            # （ODS是源头层，继续追溯只会产生冗余链路和脏数据）
+            current_layer = detect_layer(current.table_name)
+            if current_layer in (LayerType.ODS, LayerType.CONFIG):
+                path = self._reconstruct_path(bfs_tree, current)
+                leaf_paths.append(path)
+                continue
+
             sources = self._find_upstream_sources(
                 current.table_name, current.field_name, data_source
             )
@@ -380,21 +389,10 @@ class CaliberTracer:
                 continue
 
             if current.depth >= max_depth:
-                for src in sources[:3]:
-                    src_node = _CaliberBFSNode(
-                        table_name=src.source_table,
-                        field_name=src.source_column,
-                        depth=current.depth + 1,
-                        procedure=src.procedure,
-                        step_num=src.step_num,
-                        parent_key=self._make_key(current.table_name, current.field_name),
-                    )
-                    src_key = self._make_key(src_node.table_name, src_node.field_name)
-                    if src_key not in visited:
-                        visited.add(src_key)
-                        bfs_tree[src_key] = src_node
-                    path = self._reconstruct_path(bfs_tree, src_node)
-                    leaf_paths.append(path)
+                # 达到最大深度，不再继续追溯上游
+                # 将当前节点作为叶子节点，不添加子节点
+                path = self._reconstruct_path(bfs_tree, current)
+                leaf_paths.append(path)
                 continue
 
             added_in_this_level = 0
@@ -406,6 +404,18 @@ class CaliberTracer:
                     src.source_column.upper(),
                 )
                 if src_key in visited or bare_src_key in visited:
+                    continue
+
+                # ---- 层级兼容性过滤（上游方向） ----
+                if not self._is_upstream_layer_compatible(src.source_table, current.table_name):
+                    src_layer_type = detect_layer(src.source_table)
+                    tgt_layer_type = detect_layer(current.table_name)
+                    logger.debug(
+                        "口径BFS层级不兼容，跳过上游: %s (层级=%s, 目标层级=%s)",
+                        src.source_table,
+                        src_layer_type.value,
+                        tgt_layer_type.value,
+                    )
                     continue
 
                 visited.add(src_key)
@@ -462,6 +472,14 @@ class CaliberTracer:
         while queue:
             current = queue.popleft()
 
+            # EAST 层节点视为下游叶子，不再继续追溯
+            # （EAST是报送层，继续追溯下游通常没有意义）
+            current_layer = detect_layer(current.table_name)
+            if current_layer == LayerType.EAST:
+                path = self._reconstruct_path(bfs_tree, current)
+                leaf_paths.append(path)
+                continue
+
             targets = self._find_downstream_targets(
                 current.table_name, current.field_name, data_source
             )
@@ -473,6 +491,9 @@ class CaliberTracer:
 
             if current.depth >= max_depth:
                 for tgt in targets[:3]:
+                    # 层级兼容性过滤
+                    if not self._is_downstream_layer_compatible(tgt.target_table, current.table_name):
+                        continue
                     tgt_node = _CaliberBFSNode(
                         table_name=tgt.target_table,
                         field_name=tgt.target_column,
@@ -498,6 +519,18 @@ class CaliberTracer:
                     tgt.target_column.upper(),
                 )
                 if tgt_key in visited or bare_tgt_key in visited:
+                    continue
+
+                # ---- 层级兼容性过滤（下游方向） ----
+                if not self._is_downstream_layer_compatible(tgt.target_table, current.table_name):
+                    tgt_layer_type = detect_layer(tgt.target_table)
+                    src_layer_type = detect_layer(current.table_name)
+                    logger.debug(
+                        "口径BFS层级不兼容，跳过下游: %s (层级=%s, 源层级=%s)",
+                        tgt.target_table,
+                        tgt_layer_type.value,
+                        src_layer_type.value,
+                    )
                     continue
 
                 visited.add(tgt_key)
@@ -836,41 +869,133 @@ class CaliberTracer:
     def _paths_to_chains(
         self, paths: list[list[_CaliberBFSNode]], start_table: str, start_field: str
     ) -> list[CaliberChain]:
-        """将 BFS 路径列表转换为 CaliberChain 列表，并注入层级标注和累积条件。"""
-        from core.layer_detector import detect_layer
+        """将 BFS 路径列表转换为 CaliberChain 列表，并注入层级标注和累积条件。
 
+        路径方向（从叶子到根）: [leaf, ..., intermediate, root]
+        口径步骤方向（数据流）:   source → target (上游 → 下游)
+
+        对于路径中第 i 个节点 (i>=1)，步骤描述的是:
+          path[i] (source/上游) → path[i-1] (target/下游)
+
+        因此需要查找 prev_node (path[i-1]) 作为 target 的记录中，
+        source 匹配当前 node (path[i]) 的那条。
+        """
         chains: list[CaliberChain] = []
         seen_chain_signatures: set[str] = set()
 
         for path in paths:
             steps: list[CaliberInfo] = []
             for i, node in enumerate(path[1:], start=1):
-                key = self._make_key(node.table_name, node.field_name)
-                records = self._get_records_for_node(key, node)
-                if records:
-                    best = records[0]
+                prev_node = path[i - 1]
+
+                # 步骤方向: node(source/上游) → prev_node(target/下游)
+                src_table = node.table_name
+                src_field = node.field_name
+                tgt_table = prev_node.table_name
+                tgt_field = prev_node.field_name
+
+                # 查找描述此步骤的 caliber_info：
+                # prev_node 作为 target 的记录中，source 匹配当前 node 的
+                tgt_key = self._make_key(tgt_table, tgt_field)
+                records = self._target_idx.get(tgt_key, [])
+
+                # 筛选 source 匹配当前 node 的记录
+                src_short = src_table.split(".")[-1].upper() if src_table else ""
+                matching_records = [
+                    r for r in records
+                    if r.get("source_table", "").upper().split(".")[-1] == src_short
+                    and r.get("source_column", "").upper() == src_field.upper()
+                ]
+
+                if not matching_records:
+                    # 回退：尝试 schema 变体匹配
+                    src_variants = [
+                        src_table,
+                        f"RRP_MDL.{src_short}",
+                        f"RRP_EAST.{src_short}",
+                        src_short,
+                    ]
+                    for variant in src_variants:
+                        v_short = variant.split(".")[-1].upper()
+                        matching_records = [
+                            r for r in records
+                            if r.get("source_table", "").upper().split(".")[-1] == v_short
+                            and r.get("source_column", "").upper() == src_field.upper()
+                        ]
+                        if matching_records:
+                            break
+
+                if matching_records:
+                    best = matching_records[0]
                     ci = CaliberExtractor.from_dict(best) if isinstance(best, dict) else best
                     if node.step_num > 0:
                         ci.step_num = node.step_num
                     if node.procedure:
                         ci.procedure = node.procedure
 
+                    # 过滤空源表/目标表步骤
+                    ci_src_short = ci.source_table.split(".")[-1] if ci.source_table and "." in ci.source_table else (ci.source_table or "")
+                    ci_tgt_short = ci.target_table.split(".")[-1] if ci.target_table and "." in ci.target_table else (ci.target_table or "")
+                    if not ci_src_short.strip() or not ci_tgt_short.strip():
+                        continue
+
                     if not ci.source_table_layer and ci.source_table:
                         ci.source_table_layer = detect_layer(ci.source_table).value
                     if not ci.target_table_layer and ci.target_table:
                         ci.target_table_layer = detect_layer(ci.target_table).value
 
+                    # 步骤级别层级兼容性检查
+                    if not self._is_upstream_layer_compatible(ci.source_table, ci.target_table):
+                        logger.debug(
+                            "口径步骤层级不兼容，跳过: %s → %s",
+                            ci.source_table, ci.target_table,
+                        )
+                        continue
+
+                    # 过滤与上一步完全重复的步骤
+                    if steps:
+                        prev_step = steps[-1]
+                        prev_s = prev_step.source_table.split(".")[-1] if prev_step.source_table and "." in prev_step.source_table else (prev_step.source_table or "")
+                        prev_t = prev_step.target_table.split(".")[-1] if prev_step.target_table and "." in prev_step.target_table else (prev_step.target_table or "")
+                        if (ci_src_short == prev_s and ci_tgt_short == prev_t
+                                and ci.source_column.upper() == prev_step.source_column.upper()
+                                and ci.target_column.upper() == prev_step.target_column.upper()):
+                            continue
+
                     steps.append(ci)
                 else:
-                    src_layer = detect_layer(node.table_name).value if node.table_name else ""
+                    # 无 caliber_info 记录，构建回退步骤
+                    src_short_name = src_table.split(".")[-1] if src_table and "." in src_table else (src_table or "")
+                    if not src_short_name.strip():
+                        continue
 
-                    prev_node = path[i - 1] if i > 0 else None
-                    tgt_table = prev_node.table_name if prev_node else start_table
-                    tgt_field = prev_node.field_name if prev_node else start_field
+                    src_layer = detect_layer(src_table).value if src_table else ""
+                    tgt_short_name = tgt_table.split(".")[-1] if tgt_table and "." in tgt_table else (tgt_table or "")
+
+                    if not tgt_short_name.strip():
+                        continue
+
+                    # 步骤级别层级兼容性检查
+                    if not self._is_upstream_layer_compatible(src_table, tgt_table):
+                        logger.debug(
+                            "口径步骤层级不兼容(回退)，跳过: %s → %s",
+                            src_table, tgt_table,
+                        )
+                        continue
+
+                    # 过滤与上一步完全重复的步骤
+                    if steps:
+                        prev_step = steps[-1]
+                        prev_s = prev_step.source_table.split(".")[-1] if prev_step.source_table and "." in prev_step.source_table else (prev_step.source_table or "")
+                        prev_t = prev_step.target_table.split(".")[-1] if prev_step.target_table and "." in prev_step.target_table else (prev_step.target_table or "")
+                        if (src_short_name == prev_s and tgt_short_name == prev_t
+                                and src_field.upper() == prev_step.source_column.upper()
+                                and tgt_field.upper() == prev_step.target_column.upper()):
+                            continue
 
                     steps.append(CaliberInfo(
-                        source_table=node.table_name,
-                        source_column=node.field_name,
+                        source_table=src_table,
+                        source_column=src_field,
                         target_table=tgt_table,
                         target_column=tgt_field,
                         procedure=node.procedure or "",
@@ -949,6 +1074,68 @@ class CaliberTracer:
                 return filtered
 
         return records
+
+    # ===================================================================
+    # 工具方法
+    # ===================================================================
+
+    # ===================================================================
+    # 层级兼容性过滤
+    # ===================================================================
+
+    def _is_upstream_layer_compatible(self, src_table: str, tgt_table: str) -> bool:
+        """判断上游来源表是否与目标表层级兼容（上游追溯方向）。
+
+        规则与 LineageTracer._is_layer_compatible 保持一致：
+          - EAST 表不应直接追溯到 ODS/DIIS 层（应经过 MDL 中转）
+          - ICL schema 的表作为 EAST 来源通常不正确
+          - OTHER 层中 bare_table 以 ICL_ 开头的表，作为 EAST 来源也不正确
+        """
+        tgt_layer = detect_layer(tgt_table)
+        src_layer = detect_layer(src_table)
+
+        # EAST 表不应直接追溯到 ODS/DIIS 层
+        if tgt_layer == LayerType.EAST and src_layer in (LayerType.ODS, LayerType.DIIS):
+            return False
+
+        # ICL schema 的表作为 EAST 表的来源通常不正确
+        if tgt_layer == LayerType.EAST and src_table.upper().startswith("ICL."):
+            return False
+
+        # 对于 OTHER 层，做进一步检查
+        if src_layer == LayerType.OTHER:
+            bare = self._resolver.bare_table(src_table)
+            if bare.startswith("ICL_") and tgt_layer == LayerType.EAST:
+                return False
+
+        return True
+
+    def _is_downstream_layer_compatible(self, tgt_table: str, src_table: str) -> bool:
+        """判断下游目标表是否与源表层级兼容（下游追溯方向）。
+
+        规则与 LineageTracer._is_downstream_layer_compatible 保持一致：
+          - EAST 表的下游不应出现 ICL 层
+          - ODS/DIIS 层不应出现在 EAST 表的下游
+          - OTHER 层中 bare_table 以 ICL_ 开头的表，作为 EAST 下游也不正确
+        """
+        src_layer = detect_layer(src_table)
+        tgt_layer = detect_layer(tgt_table)
+
+        # EAST 表的下游不应是 ICL 层
+        if src_layer == LayerType.EAST and tgt_table.upper().startswith("ICL."):
+            return False
+
+        # ODS/DIIS 层不应出现在 EAST 表的下游
+        if src_layer == LayerType.EAST and tgt_layer in (LayerType.ODS, LayerType.DIIS):
+            return False
+
+        # 对于 OTHER 层，做进一步检查
+        if tgt_layer == LayerType.OTHER:
+            bare = self._resolver.bare_table(tgt_table)
+            if bare.startswith("ICL_") and src_layer == LayerType.EAST:
+                return False
+
+        return True
 
     # ===================================================================
     # 工具方法

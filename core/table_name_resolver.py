@@ -136,6 +136,42 @@ class TableNameResolver:
         return False
 
     @staticmethod
+    def bare_table(table_name: str) -> str:
+        """获取裸表名并处理 O_ICL_*/ICL.*/ICL.V_* 同义词映射。
+
+        统一实现，供 lineage_tracer / api_server 等模块共同调用，消除重复。
+
+        映射规则：
+          - RRP_MDL.O_ICL_* → ICL_*（去掉 O_ 前缀）
+          - ICL.V_* → ICL_*（去掉 V_ 视图前缀，加 ICL_ 前缀）
+          - ICL.XXX → ICL_XXX（加 ICL_ 前缀）
+        这样 O_ICL_CMM_XXX / ICL.V_CMM_XXX / ICL.CMM_XXX 都映射到 ICL_CMM_XXX。
+
+        Args:
+            table_name: 原始表名（可能含 schema 前缀）
+
+        Returns:
+            归一化后的裸表名。
+        """
+        parts = table_name.split(".")
+        bare = parts[-1].upper()
+        schema = parts[0].upper() if len(parts) > 1 else ""
+
+        # O_ICL_* → ICL_*
+        if bare.startswith("O_ICL_"):
+            return bare[2:]  # O_ICL_ → ICL_
+
+        # ICL.V_* → ICL_* (视图前缀去掉 V_)
+        if schema == "ICL" and bare.startswith("V_"):
+            return f"ICL_{bare[2:]}"
+
+        # ICL.XXX → ICL_XXX
+        if schema == "ICL" and not bare.startswith("ICL_"):
+            return f"ICL_{bare}"
+
+        return bare
+
+    @staticmethod
     def is_valid_table(table_name: str) -> bool:
         """判断是否为有效表名（排除 DUAL/ETL_/FUN_ 等系统对象）。"""
         if not table_name:

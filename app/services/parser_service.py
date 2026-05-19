@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import pickle
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -169,13 +170,135 @@ class ParserService:
             self._proc_parser = EnhancedProcedureParser(tables=tables)
             logger.info("存储过程解析器初始化完成 (Enhanced)")
 
-    def parse_existing_data(self) -> ParseResult:
+    def load_from_cache(self) -> Optional[ParseResult]:
+        """
+        从缓存文件加载数据（优先 pickle，回退 JSON）
+
+        pickle 缓存约 10 秒加载，JSON 约 2 分钟。
+        pickle 不存在时自动回退到 JSON 并生成 pickle。
+
+        Returns:
+            ParseResult 如果缓存有效，否则返回 None
+        """
+        pkl_file = self.output_dir / "lineage_data.pkl"
+        json_file = self.output_dir / "lineage_data.json"
+
+        # 策略 1：优先加载 pickle（快速）
+        if pkl_file.exists():
+            try:
+                start_time = time.time()
+                logger.info("正在加载 pickle 缓存: %s (大小: %.1f MB)",
+                            pkl_file, pkl_file.stat().st_size / 1024 / 1024)
+
+                with open(pkl_file, "rb") as f:
+                    data = pickle.load(f)
+
+                metadata = data.get("metadata", {})
+                if not metadata or not metadata.get("total_tables"):
+                    logger.warning("pickle 缓存元数据无效，删除后重试")
+                    pkl_file.unlink(missing_ok=True)
+                else:
+                    result = self._populate_result_from_data(data)
+                    elapsed = time.time() - start_time
+                    logger.info(
+                        "✅ pickle 缓存加载完成: %d 张表, %d 个过程, %d 条血缘, 耗时 %.2fs",
+                        len(result.tables),
+                        len(result.procedures),
+                        len(result.table_lineages),
+                        elapsed,
+                    )
+                    return result
+
+            except Exception as e:
+                logger.warning("pickle 缓存加载失败: %s，尝试 JSON", e)
+                pkl_file.unlink(missing_ok=True)
+
+        # 策略 2：回退到 JSON（慢但可靠）
+        if not json_file.exists():
+            logger.info("缓存文件不存在 (pickle 和 JSON 均无)")
+            return None
+
+        try:
+            start_time = time.time()
+            logger.info("正在加载 JSON 缓存: %s (大小: %.1f MB)",
+                        json_file, json_file.stat().st_size / 1024 / 1024)
+
+            with open(json_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            metadata = data.get("metadata", {})
+            if not metadata or not metadata.get("total_tables"):
+                logger.warning("JSON 缓存元数据无效，跳过缓存加载")
+                return None
+
+            result = self._populate_result_from_data(data)
+            elapsed = time.time() - start_time
+            logger.info(
+                "✅ JSON 缓存加载完成: %d 张表, %d 个过程, %d 条血缘, 耗时 %.2fs",
+                len(result.tables),
+                len(result.procedures),
+                len(result.table_lineages),
+                elapsed,
+            )
+
+            # 自动生成 pickle 缓存以加速下次启动
+            self._save_pickle_cache(data)
+
+            return result
+
+        except Exception as e:
+            logger.error("JSON 缓存加载失败: %s", e, exc_info=True)
+            return None
+
+    def _populate_result_from_data(self, data: dict) -> ParseResult:
+        """从字典数据填充 ParseResult 并初始化 Repository"""
+        result = ParseResult()
+        result.tables = data.get("tables", [])
+        result.procedures = data.get("procedures", [])
+        result.table_lineages = data.get("table_lineages", [])
+        result.field_mappings = data.get("field_mappings", [])
+        result.caliber_infos = data.get("caliber_infos", [])
+        result.parse_time_sec = 0.0
+
+        self._current_result = result
+
+        # 初始化 Repository 并直接用内存数据填充（避免重复加载 JSON）
+        json_file = self.output_dir / "lineage_data.json"
+        self._repository = DataRepository(json_file)
+        # 不调用 repository.load()（会重复读 JSON），直接 update 内存数据
+        self._repository.update(data)
+
+        return result
+
+    def _save_pickle_cache(self, data: dict) -> None:
+        """将数据保存为 pickle 格式以加速后续启动"""
+        pkl_file = self.output_dir / "lineage_data.pkl"
+        try:
+            start_time = time.time()
+            with open(pkl_file, "wb") as f:
+                pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
+            elapsed = time.time() - start_time
+            logger.info("pickle 缓存已保存: %s (大小: %.1f MB, 耗时 %.2fs)",
+                        pkl_file, pkl_file.stat().st_size / 1024 / 1024, elapsed)
+        except Exception as e:
+            logger.warning("pickle 缓存保存失败: %s", e)
+
+    def parse_existing_data(self, force: bool = False) -> ParseResult:
         """
         解析已有的 RRP_ORACLE 目录下的所有文件
+        
+        Args:
+            force: 是否强制全量解析（忽略缓存）
         
         Returns:
             ParseResult 包含完整的解析结果
         """
+        # 缓存优先：非强制模式时先尝试加载缓存
+        if not force:
+            cached = self.load_from_cache()
+            if cached is not None:
+                return cached
+
         start_time = time.time()
         result = ParseResult()
 
@@ -360,42 +483,152 @@ class ParserService:
         return []
 
     def get_lineage_tracer(self) -> Optional[Any]:
-        """获取或构建 LineageTracer 实例（基于当前解析器的 dataclass 对象）"""
+        """获取或构建 LineageTracer 实例（支持从缓存重建 dataclass 对象）"""
         if self._lineage_tracer is not None:
             return self._lineage_tracer
 
-        if not self._table_parser or not self._proc_parser:
-            return None
-
         try:
             from core.lineage_tracer import LineageTracer
-            from core.models import TableLineage, FieldMapping
+            from core.models import TableLineage, FieldMapping, TableInfo, ColumnInfo, ProcedureInfo
 
-            tables = self._table_parser.tables
-            procedures: dict = {}
+            # 策略 1：从已解析的 dataclass 对象构建（全量解析后）
+            if self._table_parser and self._proc_parser and self._cached_procedures:
+                tables = self._table_parser.tables
+                procedures: dict = {}
 
-            all_table_lineages: list[TableLineage] = []
-            all_field_mappings: list[FieldMapping] = []
+                all_table_lineages: list[TableLineage] = []
+                all_field_mappings: list[FieldMapping] = []
 
-            # 优先使用已缓存的 ProcedureInfo 对象，避免重新解析
-            if self._cached_procedures:
                 for proc_info in self._cached_procedures.values():
                     procedures[proc_info.full_name] = proc_info
                     all_table_lineages.extend(proc_info.table_lineages)
                     all_field_mappings.extend(proc_info.field_mappings)
-            else:
-                for proc_info in self._proc_parser.parse_directory(str(self.data_dir)).values():
-                    procedures[proc_info.full_name] = proc_info
-                    all_table_lineages.extend(proc_info.table_lineages)
-                    all_field_mappings.extend(proc_info.field_mappings)
 
-            self._lineage_tracer = LineageTracer(
-                tables=tables,
-                procedures=procedures,
-                table_lineages=all_table_lineages,
-                field_mappings=all_field_mappings,
-            )
-            return self._lineage_tracer
+                self._lineage_tracer = LineageTracer(
+                    tables=tables,
+                    procedures=procedures,
+                    table_lineages=all_table_lineages,
+                    field_mappings=all_field_mappings,
+                )
+                return self._lineage_tracer
+
+            # 策略 2：从缓存数据重建 dataclass 对象（缓存启动时）
+            if self._current_result is not None:
+                logger.info("从缓存数据重建 LineageTracer dataclass 对象...")
+                t0 = time.time()
+
+                # 重建 TableInfo 对象
+                tables = {}
+                for t in self._current_result.tables:
+                    full_name = t.get("full_name", "")
+                    schema = t.get("schema", "")
+                    table_name = t.get("table_name", "")
+                    columns = [
+                        ColumnInfo(
+                            name=c.get("name", ""),
+                            data_type=c.get("data_type", ""),
+                            comment=c.get("comment", ""),
+                        )
+                        for c in t.get("columns", [])
+                    ]
+                    tables[full_name] = TableInfo(
+                        schema=schema,
+                        table_name=table_name,
+                        full_name=full_name,
+                        comment=t.get("comment", ""),
+                        columns=columns,
+                        primary_keys=t.get("primary_keys", []),
+                    )
+
+                # 重建 TableLineage + FieldMapping 对象
+                # 先按 procedure 分组 field_mappings
+                fm_by_proc: dict[str, list[FieldMapping]] = {}
+                for fm in self._current_result.field_mappings:
+                    proc_name = fm.get("procedure", "")
+                    fm_obj = FieldMapping(
+                        source_table=fm.get("source_table", ""),
+                        source_column=fm.get("source_column", ""),
+                        target_table=fm.get("target_table", ""),
+                        target_column=fm.get("target_column", ""),
+                        transform_logic=fm.get("transform_logic", ""),
+                        procedure=proc_name,
+                        confidence=fm.get("confidence", 1.0),
+                    )
+                    fm_by_proc.setdefault(proc_name, []).append(fm_obj)
+
+                # 重建 ProcedureInfo 对象
+                procedures = {}
+                for p in self._current_result.procedures:
+                    full_name = p.get("full_name", "")
+                    proc_name = p.get("proc_name", "")
+                    schema = p.get("schema", "")
+
+                    # 该过程的字段映射
+                    proc_field_mappings = fm_by_proc.get(full_name, [])
+
+                    # 该过程的表级血缘
+                    proc_table_lineages = [
+                        TableLineage(
+                            source_table=tl.get("source_table", ""),
+                            target_table=tl.get("target_table", ""),
+                            procedure=tl.get("procedure", ""),
+                        )
+                        for tl in self._current_result.table_lineages
+                        if tl.get("procedure", "") == full_name
+                    ]
+
+                    proc_info = ProcedureInfo(
+                        schema=schema,
+                        proc_name=proc_name,
+                        full_name=full_name,
+                        description=p.get("description", ""),
+                        source_tables=p.get("source_tables", []),
+                        target_tables=p.get("target_tables", []),
+                        config_tables=p.get("config_tables", []),
+                        table_lineages=proc_table_lineages,
+                        field_mappings=proc_field_mappings,
+                    )
+                    procedures[full_name] = proc_info
+                    self._cached_procedures[full_name] = proc_info
+
+                # 合并所有字段映射和表级血缘
+                all_field_mappings = [
+                    FieldMapping(
+                        source_table=fm.get("source_table", ""),
+                        source_column=fm.get("source_column", ""),
+                        target_table=fm.get("target_table", ""),
+                        target_column=fm.get("target_column", ""),
+                        transform_logic=fm.get("transform_logic", ""),
+                        procedure=fm.get("procedure", ""),
+                        confidence=fm.get("confidence", 1.0),
+                    )
+                    for fm in self._current_result.field_mappings
+                ]
+
+                all_table_lineages = [
+                    TableLineage(
+                        source_table=tl.get("source_table", ""),
+                        target_table=tl.get("target_table", ""),
+                        procedure=tl.get("procedure", ""),
+                    )
+                    for tl in self._current_result.table_lineages
+                ]
+
+                self._lineage_tracer = LineageTracer(
+                    tables=tables,
+                    procedures=procedures,
+                    table_lineages=all_table_lineages,
+                    field_mappings=all_field_mappings,
+                )
+                elapsed = time.time() - t0
+                logger.info(
+                    "LineageTracer 从缓存重建完成: %d 表, %d 过程, 耗时 %.2fs",
+                    len(tables), len(procedures), elapsed,
+                )
+                return self._lineage_tracer
+
+            logger.warning("无可用的解析数据或缓存，无法构建 LineageTracer")
+            return None
 
         except Exception as e:
             logger.error("构建 LineageTracer 失败: %s", e, exc_info=True)
@@ -553,7 +786,7 @@ class ParserService:
             result.errors.append(f"文件 {file_path.name}: {str(e)}")
 
     def _save_result_to_cache(self, result: ParseResult) -> None:
-        """将结果保存到 JSON 缓存文件"""
+        """将结果保存到缓存文件（JSON + pickle 双格式）"""
         try:
             data = {
                 "metadata": {
@@ -572,6 +805,10 @@ class ParserService:
                 "caliber_infos": result.caliber_infos,
             }
 
+            # 保存 pickle 缓存（快速加载）
+            self._save_pickle_cache(data)
+
+            # 保存 JSON 缓存（人可读备份）
             cache_file = self.output_dir / "lineage_data.json"
             with open(cache_file, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
@@ -579,7 +816,7 @@ class ParserService:
             if self._repository:
                 self._repository.update(data)
 
-            logger.info("数据缓存已保存: %s", cache_file)
+            logger.info("JSON 数据缓存已保存: %s", cache_file)
 
         except Exception as e:
             logger.error("保存缓存数据失败: %s", e)

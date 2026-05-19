@@ -99,6 +99,22 @@ class LineageService:
         # 将短名解析为完整表名，确保 query_target 和边中的表名统一
         resolved_table = self._table_tracer.resolve_table_name(table_upper, data)
 
+        # ---- 显式 schema 严格校验 ----
+        # 如果用户输入了 schema.table 格式，但实际表定义中不存在该表，直接返回空结果
+        if "." in table_upper:
+            # 业务规则校验：EAST5_ 表必须属于 RRP_EAST 用户
+            parts = table_upper.split(".")
+            if len(parts) == 2:
+                schema, table_short = parts
+                if table_short.startswith("EAST5_") and schema != "RRP_EAST":
+                    logger.warning("EAST5_ 表必须使用 RRP_EAST schema: 输入=%s", table_upper)
+                    return self._empty_result(start_time)
+
+            actual_tables = {t.get("full_name", "").upper() for t in data.get("tables", [])}
+            if resolved_table.upper() not in actual_tables:
+                logger.warning("显式 schema 表不存在: 输入=%s, 解析=%s", table_upper, resolved_table)
+                return self._empty_result(start_time)
+
         all_nodes = set()
         all_edges = []
         all_field_mappings = []
@@ -467,6 +483,54 @@ class LineageService:
             target_map.setdefault(tgt_key, []).append(fm)
             source_map.setdefault(src_key, []).append(fm)
 
+        # 方案C：基于数据流向过滤
+        # 核心思想：只保留与查询目标表在同一数据流中的映射
+        # 实现方式：
+        # 1. 从目标表出发，向上游追溯时，只保留"映射的目标表是目标表的祖先"的映射
+        # 2. 这意味着我们只关心那些"最终到达目标表"的数据流
+        # 3. 即：数据从映射的源表 -> 映射的目标表 -> ... -> 查询目标表
+
+        # 预计算：构建表级血缘图，用于判断数据流方向
+        # table_to_upstream: {table: set(upstream_tables)}
+        # 即：对于每个表，记录哪些表是它的上游（数据从这些表流向它）
+        table_to_upstream = {}
+        for fm in all_field_mappings:
+            src_tbl = fm.get("source_table", "").upper()
+            tgt_tbl = fm.get("target_table", "").upper()
+            if src_tbl and tgt_tbl:
+                table_to_upstream.setdefault(tgt_tbl, set()).add(src_tbl)
+
+        # 判断一个表是否在目标表的上游（即数据从该表流向目标表）
+        def is_upstream_of_target(table: str) -> bool:
+            """判断表是否在目标表的上游（数据从该表流向目标表）"""
+            table_upper = table.upper()
+            target_upper = resolved_target.upper()
+            if table_upper == target_upper:
+                return True
+            # BFS检查该表是否能到达目标表（即该表是否在目标表的上游）
+            visited = {table_upper}
+            queue_bfs = [table_upper]
+            while queue_bfs:
+                current = queue_bfs.pop(0)
+                for upstream in table_to_upstream.get(current, set()):
+                    if upstream == target_upper:
+                        return True
+                    if upstream not in visited:
+                        visited.add(upstream)
+                        queue_bfs.append(upstream)
+            return False
+
+        # 判断一个映射是否与目标表在同一数据流中
+        # 条件：映射的目标表必须在目标表的上游（包括目标表本身）
+        # 即：映射的目标表是目标表的祖先，数据从映射的源表 -> 映射的目标表 -> ... -> 查询目标表
+        def is_mapping_in_target_flow(fm: dict) -> bool:
+            """判断映射是否与目标表在同一数据流中"""
+            tgt_tbl = fm.get("target_table", "").upper()
+            src_tbl = fm.get("source_table", "").upper()
+            # 如果映射的目标表在目标表的上游，则认为在同一数据流
+            # 这意味着数据从映射的源表 -> 映射的目标表 -> ... -> 查询目标表
+            return is_upstream_of_target(tgt_tbl)
+
         while queue:
             current_table, current_field, depth = queue.pop(0)
 
@@ -495,6 +559,10 @@ class LineageService:
                             MAX_FIELD_NODES,
                         )
                         break
+
+                    # 方案C过滤：只保留与目标表在同一数据流中的映射
+                    if not is_mapping_in_target_flow(fm):
+                        continue  # 跳过不在目标数据流中的映射
 
                     src_tbl = fm.get("source_table", "").upper()
                     src_col = fm.get("source_column", "").upper()
@@ -546,6 +614,10 @@ class LineageService:
                             MAX_FIELD_NODES,
                         )
                         break
+
+                    # 方案C过滤：只保留与目标表在同一数据流中的映射
+                    if not is_mapping_in_target_flow(fm):
+                        continue  # 跳过不在目标数据流中的映射
 
                     tgt_tbl = fm.get("target_table", "").upper()
                     tgt_col = fm.get("target_column", "").upper()
@@ -684,8 +756,9 @@ class LineageService:
                 # 短名匹配（表名的最后一部分）
                 elif tgt_tbl.endswith("." + target_table_short) or src_tbl.endswith("." + target_table_short):
                     matches_target = True
-                # 包含匹配
-                elif target_table_short in tgt_tbl or target_table_short in src_tbl:
+                # 严格包含匹配：只匹配目标表作为源或目标的映射
+                # 避免将其他存储过程中同名/相似表的映射错误关联
+                elif (tgt_tbl == target_table_short or src_tbl == target_table_short):
                     matches_target = True
 
             # 检查是否匹配目标字段

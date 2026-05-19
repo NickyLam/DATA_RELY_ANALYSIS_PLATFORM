@@ -22,11 +22,13 @@ from core.models import (
     FieldLineageNode,
     FieldLineageResult,
     FieldMapping,
+    LayerType,
     ProcedureInfo,
     TableInfo,
     TableLineage,
     detect_layer,
 )
+from core.table_name_resolver import TableNameResolver
 
 logger = logging.getLogger(__name__)
 
@@ -362,7 +364,56 @@ class LineageTracer:
                 )
                 continue
 
+            # Fix B: 折叠同表字段变换（如脱敏 CUST_NM → CUST_NM_DESEN）
+            # 同一表内的字段变换不应创建独立 BFS 节点，而应"看穿"到真正的跨表上游
+            cur_bare = self._bare_table(current.table_name)
+            final_sources: list[_SourceRecord] = []
+            same_table_transform_note = ""  # 记录同表变换注解，稍后附加到当前节点
+            for src in sources:
+                src_norm_t = self._normalize_table_name(src.source_table)
+                src_bare = self._bare_table(src_norm_t)
+                if src_bare == cur_bare:
+                    # 同表字段变换 — 查找其真正的跨表上游
+                    transform_note = src.transform_logic or "同表字段转换"
+                    same_table_transform_note = transform_note  # 保存注解
+                    inner_sources = self._find_source_fields(
+                        src.source_table, src.source_field
+                    )
+                    if inner_sources:
+                        found_cross_table = False
+                        for inner in inner_sources:
+                            inner_bare = self._bare_table(
+                                self._normalize_table_name(inner.source_table)
+                            )
+                            if inner_bare != cur_bare:
+                                # 找到跨表上游 — 保持 inner 原始 transform_logic 不变
+                                # 同表变换注解将附加到当前节点（通过 same_table_transform_note）
+                                final_sources.append(inner)
+                                found_cross_table = True
+                        if not found_cross_table:
+                            # 内部来源也是同表变换 — 保留原始来源但标注变换
+                            src.transform_logic = transform_note
+                            final_sources.append(src)
+                    else:
+                        # 无更上游 — 保留原始来源但标注变换
+                        src.transform_logic = transform_note
+                        final_sources.append(src)
+                else:
+                    final_sources.append(src)
+            sources = final_sources
+
             current_key = f"{current.table_name}.{current.field_name}"
+
+            # Fix B 续: 将同表变换注解附加到当前节点（而非源节点），
+            # 这样在 _result_to_graph() 中注解会出现在正确的边上
+            if same_table_transform_note and current_key in bfs_tree:
+                existing_logic = bfs_tree[current_key].transform_logic
+                if existing_logic and existing_logic != "(目标字段)":
+                    bfs_tree[current_key].transform_logic = (
+                        f"{existing_logic}; {same_table_transform_note}"
+                    )
+                else:
+                    bfs_tree[current_key].transform_logic = same_table_transform_note
 
             for src in sources:
                 src_norm_table = self._normalize_table_name(src.source_table)
@@ -385,6 +436,41 @@ class LineageTracer:
                         current_key,
                         src_key,
                         bare_key,
+                    )
+                    continue
+
+                # ---- 层级兼容性过滤 ----
+                # 根据目标表的层级，过滤掉不兼容的来源表层级
+                target_layer = detect_layer(current.table_name)
+
+                def _is_layer_compatible(src_table: str) -> bool:
+                    """判断来源表是否与目标表层级兼容"""
+                    src_layer = detect_layer(src_table)
+                    src_upper = src_table.upper()
+                    # Fix C: 全局过滤 ICL.V_* 视图 — 它们是 O_ICL_* 的 Oracle 同义词，
+                    # 不代表真实数据处理，出现在 BFS 结果中会造成重复节点和幽灵链路
+                    if src_upper.startswith("ICL.V_"):
+                        return False
+                    # EAST 表不应直接追溯到 ODS/DIIS 层（应经过 MDL 中转）
+                    if target_layer == LayerType.EAST and src_layer in (LayerType.ODS, LayerType.DIIS):
+                        return False
+                    # ICL schema 的表作为 EAST 表的来源通常不正确
+                    if target_layer == LayerType.EAST and src_upper.startswith("ICL."):
+                        return False
+                    # 对于 OTHER 层，做进一步检查
+                    if src_layer.value == "other":
+                        bare = self._bare_table(src_table)
+                        if bare.startswith("ICL_"):
+                            return target_layer != LayerType.EAST
+                    return True
+
+                if not _is_layer_compatible(src_norm_table):
+                    src_layer_type = detect_layer(src_norm_table)
+                    logger.debug(
+                        "层级不兼容，跳过: %s (层级=%s, 目标层级=%s)",
+                        src_norm_table,
+                        src_layer_type.value,
+                        target_layer.value,
                     )
                     continue
 
@@ -530,6 +616,39 @@ class LineageTracer:
                         current_key,
                         tgt_key,
                         bare_key,
+                    )
+                    continue
+
+                # ---- 层级兼容性过滤（下游方向） ----
+                source_layer = detect_layer(current.table_name)
+
+                def _is_downstream_layer_compatible(tgt_table: str) -> bool:
+                    """判断下游目标表是否与源表层级兼容"""
+                    tgt_layer = detect_layer(tgt_table)
+                    tgt_upper = tgt_table.upper()
+                    # Fix C: 全局过滤 ICL.V_* 视图（同上游方向）
+                    if tgt_upper.startswith("ICL.V_"):
+                        return False
+                    # EAST 表的下游不应是 ICL 层（ICL 通常在上游或无关）
+                    if source_layer == LayerType.EAST and tgt_upper.startswith("ICL."):
+                        return False
+                    # 对于 OTHER 层，做进一步检查
+                    if tgt_layer.value == "other":
+                        bare = self._bare_table(tgt_table)
+                        if bare.startswith("ICL_"):
+                            return source_layer != LayerType.EAST
+                    # ODS/DIIS 层不应出现在 EAST 表的下游
+                    if source_layer == LayerType.EAST and tgt_layer in (LayerType.ODS, LayerType.DIIS):
+                        return False
+                    return True
+
+                if not _is_downstream_layer_compatible(tgt_norm_table):
+                    tgt_layer_type = detect_layer(tgt_norm_table)
+                    logger.debug(
+                        "层级不兼容（下游），跳过: %s (层级=%s, 源层级=%s)",
+                        tgt_norm_table,
+                        tgt_layer_type.value,
+                        source_layer.value,
                     )
                     continue
 
@@ -702,10 +821,9 @@ class LineageTracer:
                 if not src_col:
                     continue
                 if not src_table:
-                    src_table = self._infer_source_table_from_lineage(
-                        norm_table, fm.procedure
-                    )
-                if not src_table:
+                    # Fix A: 跳过 source_table 为空的映射 — 推断的来源表不可靠，
+                    # 会导致幽灵链路（如 O_ICL_*.CUST_NM 实际应为 CUST_NAME）。
+                    # 这些映射由策略三（过程级搜索）更可靠地处理。
                     continue
                 # 使用同义裸表名去重，O_ICL_*/ICL.* 映射到相同 key，
                 # 避免同一逻辑来源被重复收集
@@ -885,7 +1003,8 @@ class LineageTracer:
         多候选策略：当同一目标表有多个来源表时，按以下优先级选择：
           1. 同过程的来源表（最可靠）
           2. 与 field_mapping_idx 中有该目标表字段映射的来源表
-          3. 第一个候选（兜底）
+          3. 层级兼容的来源表（避免 EAST 表直接追溯到 ODS/ICL）
+          4. 第一个候选（兜底）
 
         Args:
             target_table: 目标表名
@@ -906,6 +1025,35 @@ class LineageTracer:
                 if procedure_name and tl_proc == self._normalize_table_name(procedure_name):
                     same_proc_candidates.append(tl_src)
                 candidates.append(tl_src)
+
+        # ---- 层级兼容性过滤 ----
+        # EAST 报送层表不应直接追溯到 ODS/ICL 源系统层，
+        # 这种跨层血缘通常是错误解析或遗留数据导致的
+        target_layer = detect_layer(norm_target)
+
+        def _is_layer_compatible(src: str) -> bool:
+            """检查来源表层级是否与目标表兼容。"""
+            src_layer = detect_layer(src)
+            # Fix C: 全局过滤 ICL.V_* 视图 — 它们是 O_ICL_* 的 Oracle 同义词
+            if src.upper().startswith("ICL.V_"):
+                return False
+            # EAST 表（层级5）不应直接追溯到 ODS/DIIS（层级0-1）
+            if target_layer == LayerType.EAST and src_layer in (LayerType.ODS, LayerType.DIIS):
+                return False
+            # ICL schema 的表作为 EAST 表的来源通常不正确
+            if target_layer == LayerType.EAST and src.upper().startswith("ICL."):
+                return False
+            # 来源层级应低于目标层级（上游方向）
+            if src_layer.value == "other":
+                # OTHER 层需要进一步检查：ICL 相关表视为 ODS
+                bare = self._bare_table(src)
+                if bare.startswith("ICL_"):
+                    return target_layer != LayerType.EAST
+                return True
+            return True
+
+        same_proc_candidates = [c for c in same_proc_candidates if _is_layer_compatible(c)]
+        candidates = [c for c in candidates if _is_layer_compatible(c)]
 
         if same_proc_candidates:
             if len(same_proc_candidates) == 1:
@@ -959,11 +1107,8 @@ class LineageTracer:
                 src_col = self._normalize_field_name(fm.source_column)
                 if not src_col:
                     continue
-                # 兜底：source_table 为空时，从 table_lineages 推断
-                if not src_table:
-                    src_table = self._infer_source_table_from_lineage(
-                        norm_table, procedure.full_name
-                    )
+                # Fix A: 跳过 source_table 为空的映射 — 推断来源不可靠
+                # 会导致幽灵链路（推断的 O_ICL_* 表搭配错误的字段名）
                 if not src_table:
                     continue
                 results.append(
@@ -1121,35 +1266,9 @@ class LineageTracer:
     def _bare_table(table_name: str) -> str:
         """获取裸表名并处理 O_ICL_*/ICL.*/ICL.V_* 同义词映射。
 
-        映射规则（与 api_server.py _bare() 保持一致）：
-          - RRP_MDL.O_ICL_* → ICL_*（去掉 O_ 前缀）
-          - ICL.V_* → ICL_*（去掉 V_ 视图前缀，加 ICL_ 前缀）
-          - ICL.XXX → ICL_XXX（加 ICL_ 前缀）
-        这样 O_ICL_CMM_XXX / ICL.V_CMM_XXX / ICL.CMM_XXX 都映射到 ICL_CMM_XXX。
-
-        Args:
-            table_name: 原始表名（可能含 schema 前缀）
-
-        Returns:
-            归一化后的裸表名。
+        委托给 TableNameResolver.bare_table() 的统一实现，保留此方法名以兼容已有调用。
         """
-        parts = table_name.split(".")
-        bare = parts[-1].upper()
-        schema = parts[0].upper() if len(parts) > 1 else ""
-
-        # O_ICL_* → ICL_*
-        if bare.startswith("O_ICL_"):
-            return bare[2:]  # O_ICL_ → ICL_
-
-        # ICL.V_* → ICL_* (视图前缀去掉 V_)
-        if schema == "ICL" and bare.startswith("V_"):
-            return f"ICL_{bare[2:]}"
-
-        # ICL.XXX → ICL_XXX
-        if schema == "ICL" and not bare.startswith("ICL_"):
-            return f"ICL_{bare}"
-
-        return bare
+        return TableNameResolver.bare_table(table_name)
 
     # ===================================================================
     # 工具方法

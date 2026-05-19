@@ -40,6 +40,7 @@ from core.models import (
     detect_layer,
 )
 from core.procedure_parser import EnhancedProcedureParser
+from core.table_name_resolver import TableNameResolver
 from core.table_parser import OracleTableParser
 
 
@@ -84,6 +85,8 @@ _table_lineages_count: int = 0
 _field_mappings_count: int = 0
 _static_dir: str = "static"
 _start_time: float = 0.0  # 服务启动时间（Unix 时间戳）
+_indicator_graph_builder: Optional[Any] = None  # 指标图构建器
+_indicator_config_result: Optional[Any] = None   # 指标配置结果
 
 
 def _init_engine(prc_dir: str) -> None:
@@ -164,6 +167,38 @@ def _init_engine(prc_dir: str) -> None:
         _field_mappings_count,
         len(_tables),
     )
+
+    # 步骤 4: 初始化指标血缘服务
+    _init_indicator_service()
+
+
+def _init_indicator_service() -> None:
+    """初始化指标血缘服务（从财务集市指标血缘分析/指标目录加载配置）"""
+    global _indicator_graph_builder, _indicator_config_result
+
+    base_dir = get_base_dir()
+    indicator_data_path = base_dir / "财务集市指标血缘分析" / "指标"
+
+    if not indicator_data_path.exists():
+        logger.warning("指标数据目录不存在: %s，跳过指标服务初始化", indicator_data_path)
+        return
+
+    try:
+        from core.indicator_config_parser import IndicatorConfigParser
+        from core.indicator_graph_builder import IndicatorGraphBuilder
+
+        logger.info("步骤 4: 初始化指标血缘服务...")
+        parser = IndicatorConfigParser(indicator_data_path)  # Path 对象
+        _indicator_config_result = parser.parse_all()
+        _indicator_graph_builder = IndicatorGraphBuilder(_indicator_config_result)
+        _indicator_graph_builder.build_full_graph()
+        logger.info(
+            "指标血缘服务初始化完成: %d 基础指标, %d 总账指标",
+            _indicator_config_result.base_calc_count,
+            _indicator_config_result.gl_calc_count,
+        )
+    except Exception as exc:
+        logger.error("指标血缘服务初始化失败: %s", exc, exc_info=True)
 
 
 # ===========================================================================
@@ -253,19 +288,9 @@ def _find_field_mapping(
 def _bare_table(table_name: str) -> str:
     """获取裸表名并处理 O_ICL_*/ICL.*/ICL.V_* 同义词映射。
 
-    与 lineage_tracer.LineageTracer._bare_table 保持一致。
+    委托给 TableNameResolver.bare_table() 的统一实现，保留此函数名以兼容已有调用。
     """
-    parts = table_name.split(".")
-    bare = parts[-1].upper()
-    schema = parts[0].upper() if len(parts) > 1 else ""
-
-    if bare.startswith("O_ICL_"):
-        return bare[2:]
-    if schema == "ICL" and bare.startswith("V_"):
-        return f"ICL_{bare[2:]}"
-    if schema == "ICL" and not bare.startswith("ICL_"):
-        return f"ICL_{bare}"
-    return bare
+    return TableNameResolver.bare_table(table_name)
 
 
 def _extract_sql_block_for_mapping(proc: Any, target_table: str) -> str:
@@ -626,31 +651,9 @@ def _result_to_graph(result: Any) -> dict[str, Any]:
     def _bare(table_name: str) -> str:
         """获取裸表名（去掉 schema 前缀），用于去重。
 
-        特殊处理：
-        - RRP_MDL.O_ICL_* → 去掉 O_ 前缀（O_ICL_CMM_XXX → ICL_CMM_XXX）
-        - ICL.V_* → 去掉 V_ 视图前缀后加 ICL_ 前缀（ICL.V_CMM_XXX → ICL_CMM_XXX）
-        - ICL.<table> → 加 ICL_ 前缀（ICL.CMM_XXX → ICL_CMM_XXX）
-        这样 O_ICL_CMM_XXX / ICL.V_CMM_XXX / ICL.CMM_XXX 都映射到 ICL_CMM_XXX，实现同义去重。
+        委托给 TableNameResolver.bare_table() 的统一实现。
         """
-        parts = table_name.split(".")
-        schema = parts[0].upper() if len(parts) > 1 else ""
-        bare = parts[-1].upper()
-
-        # RRP_MDL.O_ICL_* -> ICL_*
-        if bare.startswith("O_ICL_"):
-            bare = bare[2:]  # O_ICL_ -> ICL_
-            return bare
-
-        # ICL.V_* -> ICL_* (视图前缀去掉 V_)
-        if schema == "ICL" and bare.startswith("V_"):
-            bare = bare[2:]  # V_CMM_XXX -> CMM_XXX
-            return f"ICL_{bare}"
-
-        # ICL.XXX -> ICL_XXX（与 O_ICL_* 统一前缀）
-        if schema == "ICL" and not bare.startswith("ICL_"):
-            bare = f"ICL_{bare}"
-
-        return bare
+        return TableNameResolver.bare_table(table_name)
 
     # 1. 收集去重节点（按裸表名去重，避免 schema 前缀差异导致重复节点）
     node_map: dict[str, dict[str, Any]] = {}  # bare_name -> node dict
@@ -799,6 +802,12 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
         ("GET", r"^/api/lineage/(.+)/(.+)$", True),
         ("GET", r"^/api/caliber/fields$", False),
         ("GET", r"^/api/caliber/trace$", False),
+        ("GET", r"^/api/indicator/search$", False),
+        ("GET", r"^/api/indicator/detail$", False),
+        ("GET", r"^/api/indicator/lineage$", False),
+        ("GET", r"^/api/indicator/pipeline$", False),
+        ("GET", r"^/api/indicator/stats$", False),
+        ("GET", r"^/api/indicator/source-tables$", False),
         ("GET", r"^/api/stats$", False),
         ("GET", r"^/$", False),
         ("GET", r"^/static/(.+)$", True),
@@ -883,6 +892,41 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
             except ValueError:
                 depth = 10
             self._handle_caliber_trace(table, field, direction, depth)
+        elif re.match(r"^/api/indicator/search$", path):
+            query = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            keyword = query.get("keyword", [""])[0]
+            limit_str = query.get("limit", ["50"])[0]
+            try:
+                limit = int(limit_str)
+            except ValueError:
+                limit = 50
+            self._handle_indicator_search(keyword, limit)
+        elif re.match(r"^/api/indicator/detail$", path):
+            query = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            index_no = query.get("index_no", [""])[0]
+            self._handle_indicator_detail(index_no)
+        elif re.match(r"^/api/indicator/lineage$", path):
+            query = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            index_no = query.get("index_no", [""])[0]
+            measure = query.get("measure", [""])[0]
+            direction = query.get("direction", ["upstream"])[0]
+            depth_str = query.get("depth", ["10"])[0]
+            try:
+                depth = int(depth_str)
+            except ValueError:
+                depth = 10
+            self._handle_indicator_lineage(index_no, measure, direction, depth)
+        elif re.match(r"^/api/indicator/pipeline$", path):
+            query = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            index_no = query.get("index_no", [""])[0]
+            measure = query.get("measure", [""])[0]
+            self._handle_indicator_pipeline(index_no, measure)
+        elif re.match(r"^/api/indicator/stats$", path):
+            self._handle_indicator_stats()
+        elif re.match(r"^/api/indicator/source-tables$", path):
+            query = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            index_no = query.get("index_no", [""])[0]
+            self._handle_indicator_source_tables(index_no)
         elif re.match(r"^/static/(.+)$", path):
             self._serve_static_file(groups[0])
 
@@ -1166,6 +1210,176 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
         except Exception as exc:
             logger.error("口径查询异常: %s.%s — %s", table, field, exc, exc_info=True)
             self._send_error(f"口径查询失败: {exc}", status=500)
+
+    # ==================================================================
+    # 指标血缘路由处理器
+    # ==================================================================
+
+    def _handle_indicator_search(self, keyword: str, limit: int) -> None:
+        """搜索指标"""
+        if not _indicator_graph_builder:
+            self._send_json({"success": False, "message": "指标服务未初始化", "data": []})
+            return
+        if not keyword:
+            self._send_error("缺少必要参数: keyword", status=400)
+            return
+        try:
+            results = _indicator_graph_builder.search_indicators(keyword, limit)
+            self._send_json({"success": True, "message": "搜索成功", "data": results})
+        except Exception as exc:
+            logger.error("指标搜索异常: %s", exc, exc_info=True)
+            self._send_error(f"指标搜索失败: {exc}", status=500)
+
+    def _handle_indicator_detail(self, index_no: str) -> None:
+        """获取指标详情"""
+        if not _indicator_graph_builder:
+            self._send_json({"success": False, "message": "指标服务未初始化", "data": {}})
+            return
+        if not index_no:
+            self._send_error("缺少必要参数: index_no", status=400)
+            return
+        try:
+            detail = _indicator_graph_builder.get_indicator_detail(index_no)
+            if not detail:
+                self._send_json({"success": False, "message": f"未找到指标: {index_no}", "data": {}})
+                return
+            self._send_json({"success": True, "message": "查询成功", "data": detail})
+        except Exception as exc:
+            logger.error("指标详情查询异常: %s", exc, exc_info=True)
+            self._send_error(f"指标详情查询失败: {exc}", status=500)
+
+    def _handle_indicator_lineage(
+        self, index_no: str, measure: str, direction: str, depth: int
+    ) -> None:
+        """查询指标血缘图"""
+        if not _indicator_graph_builder:
+            self._send_json({
+                "success": False, "message": "指标服务未初始化",
+                "data": {"target_index_no": index_no, "graph": {"nodes": [], "edges": []}, "chains": []},
+            })
+            return
+        if not index_no:
+            self._send_error("缺少必要参数: index_no", status=400)
+            return
+        try:
+            result = _indicator_graph_builder.trace_indicator(
+                index_no=index_no, measure=measure, direction=direction, max_depth=depth,
+            )
+            # 序列化图
+            graph_data = {
+                "nodes": [
+                    {"id": n.node_id, "type": n.node_type, "label": n.display_label,
+                     "index_no": n.index_no, "index_measure": n.index_measure,
+                     "index_type": n.index_type, "algo_type": n.algo_type,
+                     "layer": n.layer, "brch_type": n.brch_type, "detail": n.detail}
+                    for n in result.graph.nodes
+                ],
+                "edges": [
+                    {"id": e.edge_id, "source": e.source_id, "target": e.target_id,
+                     "type": e.edge_type, "procedure": e.procedure,
+                     "transform_logic": e.transform_logic, "algo_type": e.algo_type,
+                     "condition_sql": e.condition_sql, "measure_sql": e.measure_sql}
+                    for e in result.graph.edges
+                ],
+                "stats": result.graph.stats,
+                "node_count": result.graph.node_count,
+                "edge_count": result.graph.edge_count,
+            }
+            # 序列化链路
+            chains_data = [
+                {"target_index_no": c.target_index_no, "target_measure": c.target_measure,
+                 "depth": c.depth, "step_count": c.step_count,
+                 "procedures_involved": c.procedures_involved,
+                 "tables_involved": c.tables_involved, "has_gl_step": c.has_gl_step,
+                 "steps": [
+                     {"step_num": s.step_num, "index_no": s.index_no,
+                      "index_measure": s.index_measure, "measure_label": s.measure_label,
+                      "index_type": s.index_type, "algo_type": s.algo_type,
+                      "algo_label": s.algo_label, "procedure": s.procedure,
+                      "source_tables": s.source_tables, "target_table": s.target_table,
+                      "transform_logic": s.transform_logic, "condition_sql": s.condition_sql,
+                      "measure_sql": s.measure_sql, "brch_type": s.brch_type,
+                      "gl_subj_no": s.gl_subj_no, "gl_amt_val": s.gl_amt_val,
+                      "gl_sign_no": s.gl_sign_no, "is_gl_step": s.is_gl_step}
+                     for s in c.steps
+                 ]}
+                for c in result.chains
+            ]
+            self._send_json({
+                "success": True, "message": "查询成功",
+                "data": {
+                    "target_index_no": result.target_index_no,
+                    "target_measure": result.target_measure,
+                    "measure_label": result.measure_label,
+                    "chain_count": result.chain_count,
+                    "max_depth": result.max_depth,
+                    "query_time_ms": result.query_time_ms,
+                    "graph": graph_data,
+                    "chains": chains_data,
+                },
+            })
+        except Exception as exc:
+            logger.error("指标血缘查询异常: %s — %s", index_no, exc, exc_info=True)
+            self._send_error(f"指标血缘查询失败: {exc}", status=500)
+
+    def _handle_indicator_pipeline(self, index_no: str, measure: str) -> None:
+        """获取指标加工流水线"""
+        if not _indicator_graph_builder:
+            self._send_json({"success": False, "message": "指标服务未初始化",
+                            "data": {"index_no": index_no, "steps": [], "total_steps": 0}})
+            return
+        if not index_no:
+            self._send_error("缺少必要参数: index_no", status=400)
+            return
+        try:
+            steps = _indicator_graph_builder.get_pipeline_steps(index_no, measure)
+            self._send_json({
+                "success": True, "message": "查询成功",
+                "data": {"index_no": index_no, "measure": measure,
+                         "steps": steps, "total_steps": len(steps)},
+            })
+        except Exception as exc:
+            logger.error("指标流水线查询异常: %s", exc, exc_info=True)
+            self._send_error(f"指标流水线查询失败: {exc}", status=500)
+
+    def _handle_indicator_stats(self) -> None:
+        """获取指标体系统计"""
+        if not _indicator_graph_builder:
+            self._send_json({"success": False, "message": "指标服务未初始化", "data": {}})
+            return
+        try:
+            stats = _indicator_graph_builder.get_stats()
+            self._send_json({"success": True, "message": "查询成功", "data": stats})
+        except Exception as exc:
+            logger.error("指标统计查询异常: %s", exc, exc_info=True)
+            self._send_error(f"指标统计查询失败: {exc}", status=500)
+
+    def _handle_indicator_source_tables(self, index_no: str) -> None:
+        """获取指标源表列表"""
+        if not _indicator_graph_builder:
+            self._send_json({"success": False, "message": "指标服务未初始化",
+                            "data": {"index_no": index_no, "tables": [], "count": 0}})
+            return
+        if not index_no:
+            self._send_error("缺少必要参数: index_no", status=400)
+            return
+        try:
+            detail = _indicator_graph_builder.get_indicator_detail(index_no)
+            tables: list[str] = []
+            for m in detail.get("measures", []):
+                src = m.get("src_table", "")
+                if src:
+                    for t in src.split(","):
+                        t = t.strip().upper()
+                        if t and t not in tables:
+                            tables.append(t)
+            self._send_json({
+                "success": True, "message": "查询成功",
+                "data": {"index_no": index_no, "tables": tables, "count": len(tables)},
+            })
+        except Exception as exc:
+            logger.error("获取指标源表异常: %s", exc, exc_info=True)
+            self._send_error(f"获取指标源表失败: {exc}", status=500)
 
     # ==================================================================
     # 工具方法
