@@ -45,5 +45,7 @@ RRP_ORACLE/
 # 财务集市数据目录
 财务集市指标血缘分析/
 
-# 真实业务数据（含敏感数据，不上传）
-SOURCE_DATA/
+# 真实业务数据目录（忽略所有文件，仅保留.gitkeep维持目录结构）
+SOURCE_DATA/*
+!SOURCE_DATA/.gitkeep
+!SOURCE_DATA/**/.gitkeep
