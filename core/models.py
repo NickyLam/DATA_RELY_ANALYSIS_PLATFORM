@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Any
 
 # 从专用模块导入层级检测，保持向后兼容的 re-export
 from core.layer_detector import LayerType, LAYER_CONFIG, LAYER_ORDER, detect_layer  # noqa: F401
@@ -19,6 +19,23 @@ class ColumnInfo:
     data_type: str = ""
     nullable: bool = True
     comment: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "name": self.name,
+            "data_type": self.data_type,
+            "nullable": self.nullable,
+            "comment": self.comment,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> ColumnInfo:
+        return cls(
+            name=data.get("name", ""),
+            data_type=data.get("data_type", ""),
+            nullable=data.get("nullable", True),
+            comment=data.get("comment", ""),
+        )
 
 
 @dataclass
@@ -41,6 +58,33 @@ class TableInfo:
     def column_names(self) -> list[str]:
         return [c.name for c in self.columns]
 
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "schema": self.schema,
+            "table_name": self.table_name,
+            "full_name": self.full_name,
+            "comment": self.comment,
+            "columns": [c.to_dict() for c in self.columns],
+            "primary_keys": self.primary_keys,
+            "is_temp": self.is_temp,
+            "file_path": self.file_path,
+            "partitions": self.partitions,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> TableInfo:
+        return cls(
+            schema=data.get("schema", ""),
+            table_name=data.get("table_name", ""),
+            full_name=data.get("full_name", ""),
+            comment=data.get("comment", ""),
+            columns=[ColumnInfo.from_dict(c) for c in data.get("columns", [])],
+            primary_keys=data.get("primary_keys", []),
+            is_temp=data.get("is_temp", False),
+            file_path=data.get("file_path", ""),
+            partitions=data.get("partitions", []),
+        )
+
 
 @dataclass
 class FieldMapping:
@@ -62,6 +106,60 @@ class FieldMapping:
     def target_key(self) -> str:
         return f"{self.target_table}.{self.target_column}".upper()
 
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "source_schema": self.source_schema,
+            "source_table": self.source_table,
+            "source_column": self.source_column,
+            "target_schema": self.target_schema,
+            "target_table": self.target_table,
+            "target_column": self.target_column,
+            "transform_logic": self.transform_logic,
+            "procedure": self.procedure,
+            "confidence": self.confidence,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> FieldMapping:
+        return cls(
+            source_schema=data.get("source_schema", ""),
+            source_table=data.get("source_table", ""),
+            source_column=data.get("source_column", ""),
+            target_schema=data.get("target_schema", ""),
+            target_table=data.get("target_table", ""),
+            target_column=data.get("target_column", ""),
+            transform_logic=data.get("transform_logic", ""),
+            procedure=data.get("procedure", ""),
+            confidence=data.get("confidence", 1.0),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "source_schema": self.source_schema,
+            "source_table": self.source_table,
+            "source_column": self.source_column,
+            "target_schema": self.target_schema,
+            "target_table": self.target_table,
+            "target_column": self.target_column,
+            "transform_logic": self.transform_logic,
+            "procedure": self.procedure,
+            "confidence": self.confidence,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> FieldMapping:
+        return cls(
+            source_schema=data.get("source_schema", ""),
+            source_table=data.get("source_table", ""),
+            source_column=data.get("source_column", ""),
+            target_schema=data.get("target_schema", ""),
+            target_table=data.get("target_table", ""),
+            target_column=data.get("target_column", ""),
+            transform_logic=data.get("transform_logic", ""),
+            procedure=data.get("procedure", ""),
+            confidence=data.get("confidence", 1.0),
+        )
+
 
 @dataclass
 class TableLineage:
@@ -71,6 +169,27 @@ class TableLineage:
     target_table: str = ""
     procedure: str = ""
     field_mappings: list[FieldMapping] = field(default_factory=list)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "source_schema": self.source_schema,
+            "source_table": self.source_table,
+            "target_schema": self.target_schema,
+            "target_table": self.target_table,
+            "procedure": self.procedure,
+            "field_mappings": [fm.to_dict() for fm in self.field_mappings],
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> TableLineage:
+        return cls(
+            source_schema=data.get("source_schema", ""),
+            source_table=data.get("source_table", ""),
+            target_schema=data.get("target_schema", ""),
+            target_table=data.get("target_table", ""),
+            procedure=data.get("procedure", ""),
+            field_mappings=[FieldMapping.from_dict(fm) for fm in data.get("field_mappings", [])],
+        )
 
 
 @dataclass
@@ -86,6 +205,37 @@ class ProcedureInfo:
     table_lineages: list[TableLineage] = field(default_factory=list)
     field_mappings: list[FieldMapping] = field(default_factory=list)
     file_path: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "schema": self.schema,
+            "proc_name": self.proc_name,
+            "full_name": self.full_name,
+            "description": self.description,
+            "source_tables": self.source_tables,
+            "target_tables": self.target_tables,
+            "config_tables": self.config_tables,
+            "temp_tables": self.temp_tables,
+            "table_lineages": [tl.to_dict() for tl in self.table_lineages],
+            "field_mappings": [fm.to_dict() for fm in self.field_mappings],
+            "file_path": self.file_path,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> ProcedureInfo:
+        return cls(
+            schema=data.get("schema", ""),
+            proc_name=data.get("proc_name", ""),
+            full_name=data.get("full_name", ""),
+            description=data.get("description", ""),
+            source_tables=data.get("source_tables", []),
+            target_tables=data.get("target_tables", []),
+            config_tables=data.get("config_tables", []),
+            temp_tables=data.get("temp_tables", []),
+            table_lineages=[TableLineage.from_dict(tl) for tl in data.get("table_lineages", [])],
+            field_mappings=[FieldMapping.from_dict(fm) for fm in data.get("field_mappings", [])],
+            file_path=data.get("file_path", ""),
+        )
 
 
 @dataclass
@@ -135,6 +285,23 @@ class SQLCondition:
     tables_involved: list[str] = field(default_factory=list)
     fields_involved: list[str] = field(default_factory=list)
 
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "condition_type": self.condition_type,
+            "raw_text": self.raw_text,
+            "tables_involved": self.tables_involved,
+            "fields_involved": self.fields_involved,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> SQLCondition:
+        return cls(
+            condition_type=data.get("condition_type", ""),
+            raw_text=data.get("raw_text", ""),
+            tables_involved=data.get("tables_involved", []),
+            fields_involved=data.get("fields_involved", []),
+        )
+
 
 @dataclass
 class SelectColumnMapping:
@@ -142,6 +309,21 @@ class SelectColumnMapping:
     source_expression: str = ""
     target_column: str = ""
     alias: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "source_expression": self.source_expression,
+            "target_column": self.target_column,
+            "alias": self.alias,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> SelectColumnMapping:
+        return cls(
+            source_expression=data.get("source_expression", ""),
+            target_column=data.get("target_column", ""),
+            alias=data.get("alias", ""),
+        )
 
 
 @dataclass
@@ -152,6 +334,153 @@ class SubqueryInfo:
     source_tables: list[str] = field(default_factory=list)
     where_conditions: list[SQLCondition] = field(default_factory=list)
 
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "alias": self.alias,
+            "raw_text": self.raw_text,
+            "source_tables": self.source_tables,
+            "where_conditions": [wc.to_dict() for wc in self.where_conditions],
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> SubqueryInfo:
+        return cls(
+            alias=data.get("alias", ""),
+            raw_text=data.get("raw_text", ""),
+            source_tables=data.get("source_tables", []),
+            where_conditions=[SQLCondition.from_dict(wc) for wc in data.get("where_conditions", [])],
+        )
+
+
+@dataclass
+class SourceLocation:
+    source_schema: str = ""
+    source_table: str = ""
+    source_column: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "source_schema": self.source_schema,
+            "source_table": self.source_table,
+            "source_column": self.source_column,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> SourceLocation:
+        return cls(
+            source_schema=data.get("source_schema", ""),
+            source_table=data.get("source_table", ""),
+            source_column=data.get("source_column", ""),
+        )
+
+    def __bool__(self) -> bool:
+        return bool(self.source_table or self.source_column)
+
+
+@dataclass
+class StepIsolation:
+    step_name: str = ""
+    step_number: int = 0
+    is_isolated: bool = False
+    isolation_reason: str = ""
+    isolated_expression: str = ""
+    isolated_source_columns: list[str] = field(default_factory=list)
+    isolated_target_columns: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "step_name": self.step_name,
+            "step_number": self.step_number,
+            "is_isolated": self.is_isolated,
+            "isolation_reason": self.isolation_reason,
+            "isolated_expression": self.isolated_expression,
+            "isolated_source_columns": list(self.isolated_source_columns),
+            "isolated_target_columns": list(self.isolated_target_columns),
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> StepIsolation:
+        return cls(
+            step_name=data.get("step_name", ""),
+            step_number=data.get("step_number", 0),
+            is_isolated=data.get("is_isolated", False),
+            isolation_reason=data.get("isolation_reason", ""),
+            isolated_expression=data.get("isolated_expression", ""),
+            isolated_source_columns=list(data.get("isolated_source_columns", [])),
+            isolated_target_columns=list(data.get("isolated_target_columns", [])),
+        )
+
+
+@dataclass
+class ExpressionDetail:
+    expression: str = ""
+    expression_type: str = ""
+    select_columns: list[SelectColumnMapping] = field(default_factory=list)
+    where_conditions: list[SQLCondition] = field(default_factory=list)
+    group_by_columns: list[str] = field(default_factory=list)
+    having_conditions: list[SQLCondition] = field(default_factory=list)
+    order_by_columns: list[str] = field(default_factory=list)
+    subqueries: list[SubqueryInfo] = field(default_factory=list)
+    join_clauses: list[str] = field(default_factory=list)
+    union_queries: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "expression": self.expression,
+            "expression_type": self.expression_type,
+            "select_columns": [c.to_dict() for c in self.select_columns],
+            "where_conditions": [c.to_dict() for c in self.where_conditions],
+            "group_by_columns": list(self.group_by_columns),
+            "having_conditions": [c.to_dict() for c in self.having_conditions],
+            "order_by_columns": list(self.order_by_columns),
+            "subqueries": [sq.to_dict() for sq in self.subqueries],
+            "join_clauses": list(self.join_clauses),
+            "union_queries": list(self.union_queries),
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> ExpressionDetail:
+        return cls(
+            expression=data.get("expression", ""),
+            expression_type=data.get("expression_type", ""),
+            select_columns=[SelectColumnMapping.from_dict(c) for c in data.get("select_columns", [])],
+            where_conditions=[SQLCondition.from_dict(c) for c in data.get("where_conditions", [])],
+            group_by_columns=list(data.get("group_by_columns", [])),
+            having_conditions=[SQLCondition.from_dict(c) for c in data.get("having_conditions", [])],
+            order_by_columns=list(data.get("order_by_columns", [])),
+            subqueries=[SubqueryInfo.from_dict(sq) for sq in data.get("subqueries", [])],
+            join_clauses=list(data.get("join_clauses", [])),
+            union_queries=list(data.get("union_queries", [])),
+        )
+
+
+@dataclass
+class SQLEnhancement:
+    enhanced_sql: str = ""
+    original_sql: str = ""
+    enhancement_notes: list[str] = field(default_factory=list)
+    sql_quality_score: float = 0.0
+    performance_hints: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "enhanced_sql": self.enhanced_sql,
+            "original_sql": self.original_sql,
+            "enhancement_notes": list(self.enhancement_notes),
+            "sql_quality_score": self.sql_quality_score,
+            "performance_hints": list(self.performance_hints),
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> SQLEnhancement:
+        return cls(
+            enhanced_sql=data.get("enhanced_sql", ""),
+            original_sql=data.get("original_sql", ""),
+            enhancement_notes=list(data.get("enhancement_notes", [])),
+            sql_quality_score=float(data.get("sql_quality_score", 0.0)),
+            performance_hints=list(data.get("performance_hints", [])),
+        )
+
 
 class SQLOperationType:
     INSERT_SELECT = "INSERT_SELECT"
@@ -160,6 +489,30 @@ class SQLOperationType:
     UPDATE = "UPDATE"
     DELETE = "DELETE"
     CREATE_TABLE_AS_SELECT = "CREATE_TABLE_AS_SELECT"
+
+
+class ConditionType:
+    WHERE = "WHERE"
+    HAVING = "HAVING"
+    JOIN = "JOIN"
+    ON = "ON"
+    FILTER = "FILTER"
+
+
+class ExpressionType:
+    SELECT = "SELECT"
+    INSERT = "INSERT"
+    UPDATE = "UPDATE"
+    MERGE = "MERGE"
+    CREATE_TABLE = "CREATE_TABLE"
+    UNKNOWN = "UNKNOWN"
+
+
+class DataSource:
+    ORACLE = "oracle"
+    HIVE = "hive"
+    FILE = "file"
+    UNKNOWN = "unknown"
 
 
 class SetOperationType:
@@ -172,44 +525,28 @@ class SetOperationType:
 
 @dataclass
 class CaliberInfo:
-    """指标口径信息 — 描述一个目标字段是如何加工而成的
-
-    增强字段说明:
-      - operation_type: SQL操作类型 (INSERT_SELECT/MERGE/UPDATE等)
-      - select_columns: SELECT列映射列表 (源表达式→目标列)
-      - distinct_flag: 是否使用了DISTINCT去重
-      - order_by_clause: ORDER BY排序子句
-      - set_operation: 集合运算类型 (UNION/UNION ALL/INTERSECT/MINUS)
-      - subqueries: 子查询分解信息
-      - source_table_layer: 来源表数据分层 (ODS/DWD/DWS/ADS)
-      - target_table_layer: 目标表数据分层 (ODS/DWD/DWS/ADS)
-      - window_functions: 窗口函数表达式列表
-      - sql_operation_sequence: 该步骤在存储过程中的执行顺序
-      - accumulated_where: 截至当前步骤累积的所有WHERE条件
-      - accumulated_join: 截至当前步骤累积的所有JOIN条件
-      - caliber_spec: 该步骤的完整口径规格描述（供技术人员直接阅读）
-    """
+    target_schema: str = ""
     target_table: str = ""
     target_column: str = ""
-    source_table: str = ""
-    source_column: str = ""
+    data_source: str = "oracle"
+    confidence: float = 1.0
+    last_updated: str = ""
+    source_location: SourceLocation = field(default_factory=SourceLocation)
+    step_isolation: StepIsolation = field(default_factory=StepIsolation)
+    expression_detail: ExpressionDetail = field(default_factory=ExpressionDetail)
+    sql_enhancement: SQLEnhancement = field(default_factory=SQLEnhancement)
     transform_logic: str = ""
-    where_conditions: list[SQLCondition] = field(default_factory=list)
     join_conditions: list[SQLCondition] = field(default_factory=list)
     group_by_clause: str = ""
     having_clause: str = ""
     procedure: str = ""
     step_num: int = 0
     step_desc: str = ""
-    data_source: str = "oracle"
     raw_sql_fragment: str = ""
-    confidence: float = 1.0
     operation_type: str = ""
-    select_columns: list[SelectColumnMapping] = field(default_factory=list)
     distinct_flag: bool = False
     order_by_clause: str = ""
     set_operation: str = ""
-    subqueries: list[SubqueryInfo] = field(default_factory=list)
     source_table_layer: str = ""
     target_table_layer: str = ""
     window_functions: list[str] = field(default_factory=list)
@@ -217,18 +554,63 @@ class CaliberInfo:
     accumulated_where: list[SQLCondition] = field(default_factory=list)
     accumulated_join: list[SQLCondition] = field(default_factory=list)
     caliber_spec: str = ""
-    # 批次A新增：行号定位字段（向后兼容，带默认值）
-    file_path: str = ""          # 来源.prc文件路径
-    start_line: int = 0          # SQL操作在文件中的起始行号（1-based）
-    end_line: int = 0            # SQL操作在文件中的结束行号（1-based）
-    # 批次B新增：步骤级隔离条件字段（向后兼容，带默认值）
-    step_isolated_where: list[SQLCondition] = field(default_factory=list)  # 步骤级隔离WHERE条件（非累积）
-    step_isolated_join: list[SQLCondition] = field(default_factory=list)   # 步骤级隔离JOIN条件（非累积）
-    # 批次C新增：CTE/函数/表达式字段（向后兼容，带默认值）
-    cte_definitions: list[str] = field(default_factory=list)           # WITH子句CTE定义列表
-    custom_functions: list[str] = field(default_factory=list)          # 自定义函数调用列表
-    full_expression: str = ""                                          # 完整字段表达式（含函数嵌套、CASE WHEN等）
-    is_custom_function_call: bool = False                              # 是否为自定义函数调用
+    file_path: str = ""
+    start_line: int = 0
+    end_line: int = 0
+    step_isolated_where: list[SQLCondition] = field(default_factory=list)
+    step_isolated_join: list[SQLCondition] = field(default_factory=list)
+    cte_definitions: list[str] = field(default_factory=list)
+    custom_functions: list[str] = field(default_factory=list)
+    full_expression: str = ""
+    is_custom_function_call: bool = False
+
+    @property
+    def source_table(self) -> str:
+        return self.source_location.source_table
+
+    @source_table.setter
+    def source_table(self, value: str) -> None:
+        self.source_location.source_table = value
+
+    @property
+    def source_column(self) -> str:
+        return self.source_location.source_column
+
+    @source_column.setter
+    def source_column(self, value: str) -> None:
+        self.source_location.source_column = value
+
+    @property
+    def source_schema(self) -> str:
+        return self.source_location.source_schema
+
+    @source_schema.setter
+    def source_schema(self, value: str) -> None:
+        self.source_location.source_schema = value
+
+    @property
+    def select_columns(self) -> list[SelectColumnMapping]:
+        return self.expression_detail.select_columns
+
+    @select_columns.setter
+    def select_columns(self, value: list[SelectColumnMapping]) -> None:
+        self.expression_detail.select_columns = value
+
+    @property
+    def where_conditions(self) -> list[SQLCondition]:
+        return self.expression_detail.where_conditions
+
+    @where_conditions.setter
+    def where_conditions(self, value: list[SQLCondition]) -> None:
+        self.expression_detail.where_conditions = value
+
+    @property
+    def subqueries(self) -> list[SubqueryInfo]:
+        return self.expression_detail.subqueries
+
+    @subqueries.setter
+    def subqueries(self, value: list[SubqueryInfo]) -> None:
+        self.expression_detail.subqueries = value
 
     @property
     def target_key(self) -> str:
@@ -236,18 +618,18 @@ class CaliberInfo:
 
     @property
     def source_key(self) -> str:
-        return f"{self.source_table}.{self.source_column}".upper()
+        return f"{self.source_location.source_table}.{self.source_location.source_column}".upper()
 
     @property
     def short_source_table(self) -> str:
-        return self.source_table.split(".")[-1] if "." in self.source_table else self.source_table
+        src = self.source_location.source_table
+        return src.split(".")[-1] if "." in src else src
 
     @property
     def short_target_table(self) -> str:
         return self.target_table.split(".")[-1] if "." in self.target_table else self.target_table
 
     def generate_caliber_spec(self) -> str:
-        """生成当前步骤的完整口径规格描述"""
         if self.caliber_spec:
             return self.caliber_spec
 
@@ -261,16 +643,16 @@ class CaliberInfo:
         if self.operation_type:
             parts.append(f"  加工方式: {self.operation_type}")
 
-        if self.source_table:
+        if self.source_location.source_table:
             src_layer = f"[{self.source_table_layer}] " if self.source_table_layer else ""
-            parts.append(f"  数据来源: {src_layer}{self.short_source_table}.{self.source_column}")
+            parts.append(f"  数据来源: {src_layer}{self.short_source_table}.{self.source_location.source_column}")
 
-        if self.transform_logic and self.transform_logic.upper() not in ("DIRECT", self.source_column.upper()):
+        if self.transform_logic and self.transform_logic.upper() not in ("DIRECT", self.source_location.source_column.upper()):
             parts.append(f"  转换逻辑: {self.transform_logic}")
 
-        if self.select_columns:
+        if self.expression_detail.select_columns:
             col_descs = []
-            for sc in self.select_columns[:10]:
+            for sc in self.expression_detail.select_columns[:10]:
                 expr = sc.source_expression
                 alias = sc.alias or sc.target_column
                 if expr.upper() != alias.upper():
@@ -288,7 +670,7 @@ class CaliberInfo:
             join_descs = [f"JOIN {j.raw_text}" for j in all_join]
             parts.append(f"  关联条件: {'; '.join(join_descs)}")
 
-        all_where = self.step_isolated_where or self.accumulated_where or self.where_conditions
+        all_where = self.step_isolated_where or self.accumulated_where or self.expression_detail.where_conditions
         if all_where:
             where_descs = [w.raw_text for w in all_where]
             parts.append(f"  筛选条件: {' AND '.join(where_descs)}")
@@ -312,11 +694,10 @@ class CaliberInfo:
             seq = f" (步骤{self.sql_operation_sequence})" if self.sql_operation_sequence > 0 else ""
             parts.append(f"  加工过程: {self.procedure}{seq}")
 
-        if self.subqueries:
-            sq_descs = [f"({sq.alias}: {sq.raw_text[:80]})" for sq in self.subqueries]
+        if self.expression_detail.subqueries:
+            sq_descs = [f"({sq.alias}: {sq.raw_text[:80]})" for sq in self.expression_detail.subqueries]
             parts.append(f"  子查询: {'; '.join(sq_descs)}")
 
-        # Batch C 新增渲染
         if self.cte_definitions:
             cte_descs = [cte[:100] for cte in self.cte_definitions]
             parts.append(f"  CTE定义: {'; '.join(cte_descs)}")
@@ -324,13 +705,154 @@ class CaliberInfo:
         if self.custom_functions:
             parts.append(f"  自定义函数: {', '.join(self.custom_functions)}")
 
-        if self.full_expression and self.full_expression.upper() != self.source_column.upper():
+        if self.full_expression and self.full_expression.upper() != self.source_location.source_column.upper():
             parts.append(f"  完整表达式: {self.full_expression}")
 
         if self.is_custom_function_call:
             parts.append(f"  函数调用标记: 是")
 
         return "\n".join(parts)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "target_schema": self.target_schema,
+            "target_table": self.target_table,
+            "target_column": self.target_column,
+            "data_source": self.data_source,
+            "confidence": self.confidence,
+            "last_updated": self.last_updated,
+            "source_location": self.source_location.to_dict(),
+            "step_isolation": self.step_isolation.to_dict(),
+            "expression_detail": self.expression_detail.to_dict(),
+            "sql_enhancement": self.sql_enhancement.to_dict(),
+            "transform_logic": self.transform_logic,
+            "join_conditions": [c.to_dict() for c in self.join_conditions],
+            "group_by_clause": self.group_by_clause,
+            "having_clause": self.having_clause,
+            "procedure": self.procedure,
+            "step_num": self.step_num,
+            "step_desc": self.step_desc,
+            "raw_sql_fragment": self.raw_sql_fragment,
+            "operation_type": self.operation_type,
+            "distinct_flag": self.distinct_flag,
+            "order_by_clause": self.order_by_clause,
+            "set_operation": self.set_operation,
+            "source_table_layer": self.source_table_layer,
+            "target_table_layer": self.target_table_layer,
+            "window_functions": list(self.window_functions),
+            "sql_operation_sequence": self.sql_operation_sequence,
+            "accumulated_where": [c.to_dict() for c in self.accumulated_where],
+            "accumulated_join": [c.to_dict() for c in self.accumulated_join],
+            "caliber_spec": self.caliber_spec,
+            "file_path": self.file_path,
+            "start_line": self.start_line,
+            "end_line": self.end_line,
+            "step_isolated_where": [c.to_dict() for c in self.step_isolated_where],
+            "step_isolated_join": [c.to_dict() for c in self.step_isolated_join],
+            "cte_definitions": list(self.cte_definitions),
+            "custom_functions": list(self.custom_functions),
+            "full_expression": self.full_expression,
+            "is_custom_function_call": self.is_custom_function_call,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> CaliberInfo:
+        source_location_data = data.get("source_location")
+        expression_detail_data = data.get("expression_detail")
+        step_isolation_data = data.get("step_isolation")
+        sql_enhancement_data = data.get("sql_enhancement")
+
+        is_legacy = source_location_data is None and (
+            data.get("source_table") is not None or data.get("source_column") is not None
+        )
+
+        if is_legacy:
+            source_location = SourceLocation(
+                source_schema=data.get("source_schema", ""),
+                source_table=data.get("source_table", ""),
+                source_column=data.get("source_column", ""),
+            )
+        elif source_location_data and isinstance(source_location_data, dict):
+            source_location = SourceLocation.from_dict(source_location_data)
+        else:
+            source_location = SourceLocation()
+
+        if is_legacy:
+            select_cols = [SelectColumnMapping.from_dict(c) for c in data.get("select_columns", [])]
+            where_conds = [SQLCondition.from_dict(c) for c in data.get("where_conditions", [])]
+            subqs = [SubqueryInfo.from_dict(sq) for sq in data.get("subqueries", [])]
+            expression_detail = ExpressionDetail(
+                expression=data.get("full_expression", ""),
+                expression_type=data.get("operation_type", ""),
+                select_columns=select_cols,
+                where_conditions=where_conds,
+                group_by_columns=[data.get("group_by_clause", "")] if data.get("group_by_clause") else [],
+                having_conditions=[],
+                order_by_columns=[data.get("order_by_clause", "")] if data.get("order_by_clause") else [],
+                subqueries=subqs,
+                join_clauses=[],
+                union_queries=[data.get("set_operation", "")] if data.get("set_operation") else [],
+            )
+        elif expression_detail_data and isinstance(expression_detail_data, dict):
+            expression_detail = ExpressionDetail.from_dict(expression_detail_data)
+        else:
+            expression_detail = ExpressionDetail()
+
+        if step_isolation_data and isinstance(step_isolation_data, dict):
+            step_isolation = StepIsolation.from_dict(step_isolation_data)
+        else:
+            step_isolation = StepIsolation(
+                step_name=data.get("step_desc", ""),
+                step_number=data.get("step_num", 0),
+            )
+
+        if sql_enhancement_data and isinstance(sql_enhancement_data, dict):
+            sql_enhancement = SQLEnhancement.from_dict(sql_enhancement_data)
+        else:
+            sql_enhancement = SQLEnhancement(
+                original_sql=data.get("raw_sql_fragment", ""),
+            )
+
+        return cls(
+            target_schema=data.get("target_schema", ""),
+            target_table=data.get("target_table", ""),
+            target_column=data.get("target_column", ""),
+            data_source=data.get("data_source", "oracle"),
+            confidence=data.get("confidence", 1.0),
+            last_updated=data.get("last_updated", ""),
+            source_location=source_location,
+            step_isolation=step_isolation,
+            expression_detail=expression_detail,
+            sql_enhancement=sql_enhancement,
+            transform_logic=data.get("transform_logic", ""),
+            join_conditions=[SQLCondition.from_dict(c) for c in data.get("join_conditions", [])],
+            group_by_clause=data.get("group_by_clause", ""),
+            having_clause=data.get("having_clause", ""),
+            procedure=data.get("procedure", ""),
+            step_num=data.get("step_num", 0),
+            step_desc=data.get("step_desc", ""),
+            raw_sql_fragment=data.get("raw_sql_fragment", ""),
+            operation_type=data.get("operation_type", ""),
+            distinct_flag=data.get("distinct_flag", False),
+            order_by_clause=data.get("order_by_clause", ""),
+            set_operation=data.get("set_operation", ""),
+            source_table_layer=data.get("source_table_layer", ""),
+            target_table_layer=data.get("target_table_layer", ""),
+            window_functions=data.get("window_functions", []),
+            sql_operation_sequence=data.get("sql_operation_sequence", 0),
+            accumulated_where=[SQLCondition.from_dict(c) for c in data.get("accumulated_where", [])],
+            accumulated_join=[SQLCondition.from_dict(c) for c in data.get("accumulated_join", [])],
+            caliber_spec=data.get("caliber_spec", ""),
+            file_path=data.get("file_path", ""),
+            start_line=data.get("start_line", 0),
+            end_line=data.get("end_line", 0),
+            step_isolated_where=[SQLCondition.from_dict(c) for c in data.get("step_isolated_where", [])],
+            step_isolated_join=[SQLCondition.from_dict(c) for c in data.get("step_isolated_join", [])],
+            cte_definitions=data.get("cte_definitions", []),
+            custom_functions=data.get("custom_functions", []),
+            full_expression=data.get("full_expression", ""),
+            is_custom_function_call=data.get("is_custom_function_call", False),
+        )
 
 
 @dataclass

@@ -297,20 +297,37 @@ class IndicatorConfigParser:
         return results
 
     def _extract_depend_index_nos(self, calc: IndicatorCalcBase) -> list[str]:
+        deps: set[str] = set()
+
+        # 1. 从 condition_sql 提取（保留原有逻辑）
         cond = calc.condition_sql.strip()
-        if not cond:
-            return []
+        if cond:
+            if calc.algo_type == "1":
+                deps.update(self._split_comma_index_nos(cond))
+            elif calc.algo_type == "3":
+                deps.update(self._split_hash_index_nos(cond))
+            elif calc.algo_type in ("5", "6"):
+                deps.update(self._split_comma_index_nos(cond))
 
-        if calc.algo_type == "1":
-            return self._split_comma_index_nos(cond)
+        # 2. 从 sqlcc 提取硬编码指标编号
+        sqlcc = calc.sqlcc.strip()
+        if sqlcc:
+            pattern = re.compile(r"['\"]([A-Z]{2,3}\d{6,})['\"]", re.IGNORECASE)
+            for match in pattern.finditer(sqlcc):
+                ref_no = match.group(1).upper()
+                if ref_no != calc.index_no.upper():
+                    deps.add(ref_no)
 
-        if calc.algo_type == "3":
-            return self._split_hash_index_nos(cond)
+        # 3. 从 measure_sql 提取硬编码指标编号
+        measure = calc.measure_sql.strip()
+        if measure:
+            pattern = re.compile(r"['\"]([A-Z]{2,3}\d{6,})['\"]", re.IGNORECASE)
+            for match in pattern.finditer(measure):
+                ref_no = match.group(1).upper()
+                if ref_no != calc.index_no.upper():
+                    deps.add(ref_no)
 
-        if calc.algo_type == "5" or calc.algo_type == "6":
-            return self._split_comma_index_nos(cond)
-
-        return []
+        return sorted(deps)
 
     def _split_comma_index_nos(self, condition_sql: str) -> list[str]:
         parts = [p.strip() for p in condition_sql.split(",")]

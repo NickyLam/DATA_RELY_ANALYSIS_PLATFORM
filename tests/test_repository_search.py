@@ -4,6 +4,7 @@ from pathlib import Path
 from app.repository import DataRepository
 from app.services.lineage_service import LineageService
 from app.services.parser_service import ParseResult, ParserService
+from core.models import TableInfo, ColumnInfo
 
 
 def test_search_tables_ranks_exact_short_name_before_contains_match(tmp_path: Path):
@@ -44,6 +45,7 @@ def test_parser_service_search_tables_delegates_to_repository(tmp_path: Path):
         encoding="utf-8",
     )
     parser = ParserService(data_dir=str(tmp_path / "data"), schema_dirs=[], output_dir=str(output_dir))
+    parser._get_repository().load()
 
     results = parser.search_tables("customer")
 
@@ -53,17 +55,19 @@ def test_parser_service_search_tables_delegates_to_repository(tmp_path: Path):
 def test_parser_service_search_tables_uses_current_result_without_loading_repository(tmp_path: Path):
     parser = ParserService(data_dir=str(tmp_path / "data"), schema_dirs=[], output_dir=str(tmp_path / "output"))
     result = ParseResult()
-    exact_table = {
-        "full_name": "LONG_SCHEMA.CUSTOMER",
-        "table_name": "CUSTOMER",
-        "columns": [{"name": "ID"}],
-    }
+    exact_table = TableInfo(
+        schema="LONG_SCHEMA",
+        table_name="CUSTOMER",
+        full_name="LONG_SCHEMA.CUSTOMER",
+        columns=[ColumnInfo(name="ID")],
+    )
     result.tables = [
-        {
-            "full_name": "S.CUSTOMER_ARCHIVE",
-            "table_name": "CUSTOMER_ARCHIVE",
-            "columns": [{"name": "CUSTOMER_ID"}],
-        },
+        TableInfo(
+            schema="S",
+            table_name="CUSTOMER_ARCHIVE",
+            full_name="S.CUSTOMER_ARCHIVE",
+            columns=[ColumnInfo(name="CUSTOMER_ID")],
+        ),
         exact_table,
     ]
     parser._current_result = result
@@ -73,7 +77,7 @@ def test_parser_service_search_tables_uses_current_result_without_loading_reposi
 
     parser._get_repository = fail_if_repository_loads
 
-    assert parser.search_tables("customer", limit=1) == [exact_table]
+    assert parser.search_tables("customer", limit=1) == [exact_table.to_dict()]
 
 
 class _ParserWithRepositorySearch:

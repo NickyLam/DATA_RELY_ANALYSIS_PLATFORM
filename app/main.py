@@ -11,6 +11,7 @@ FastAPI 应用主入口
 from __future__ import annotations
 
 import logging
+import os
 import time
 from contextlib import asynccontextmanager
 
@@ -134,12 +135,18 @@ app = FastAPI(
 )
 
 # CORS 中间件配置
+ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:8080",
+    "http://localhost:8899",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS if os.getenv("PRODUCTION") else ["*"],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 # 注册路由
@@ -170,11 +177,19 @@ if static_dir.exists():
 @app.get("/index.html")
 @app.get("/")
 async def serve_index():
-    """提供前端主页"""
+    """提供前端主页（强制禁用缓存，确保版本更新即时生效）"""
     index_file = static_dir / "index.html"
 
     if index_file.exists():
-        return FileResponse(str(index_file), media_type="text/html")
+        return FileResponse(
+            str(index_file),
+            media_type="text/html",
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0",
+            },
+        )
 
     return {
         "message": "前端页面尚未构建，请访问 /docs 查看 API 文档",

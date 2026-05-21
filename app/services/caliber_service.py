@@ -34,6 +34,8 @@ from core.models import (
 )
 from core.table_name_resolver import TableNameResolver
 from app.services.parser_service import ParserService
+from app.services.tracer_factory import TracerFactory
+from app.services.event_bus import EventType, get_event_bus
 from app.utils.cache_manager import CacheManager
 
 logger = logging.getLogger(__name__)
@@ -54,10 +56,15 @@ class CaliberService:
         self.parser = parser_service
         self.cache = cache_manager
         self._resolver = TableNameResolver()
+        self._tracer_factory = TracerFactory()
 
         self._target_caliber_idx: dict[tuple[str, str], list[dict]] = {}
         self._source_caliber_idx: dict[tuple[str, str], list[dict]] = {}
         self._tracer: Optional[CaliberTracer] = None
+
+        self._event_bus = get_event_bus()
+        self._event_bus.subscribe(EventType.DATA_CHANGED, self._on_data_changed)
+        self._event_bus.subscribe(EventType.CACHE_INVALIDATED, self._on_cache_invalidated)
 
         self._build_indexes()
         self._build_tracer()
@@ -95,7 +102,6 @@ class CaliberService:
         )
 
     def _build_tracer(self) -> None:
-        """构建 CaliberTracer 实例（用于多层追溯）。"""
         data = self.parser.get_current_data()
         if not data:
             return
@@ -151,19 +157,31 @@ class CaliberService:
                 confidence=fm.get("confidence", 1.0),
             ))
 
-        self._tracer = CaliberTracer(
-            tables=tables,
-            procedures=procedures,
-            table_lineages=table_lineages,
-            field_mappings=field_mappings,
-            caliber_infos=caliber_infos_raw,
-        )
-        logger.info("CaliberTracer 构建完成")
+        try:
+            self._tracer = self._tracer_factory.create_caliber_tracer(
+                tables=tables,
+                procedures=procedures,
+                table_lineages=table_lineages,
+                field_mappings=field_mappings,
+                caliber_infos=caliber_infos_raw,
+            )
+            logger.info("CaliberTracer 构建完成")
+        except Exception as e:
+            logger.error("构建 CaliberTracer 失败: %s", e, exc_info=True)
 
     def rebuild_indexes(self) -> None:
         """重建所有索引和 Tracer（数据更新后调用）。"""
         self._build_indexes()
         self._build_tracer()
+
+    def _on_data_changed(self, **kwargs) -> None:
+        self._tracer = None
+        self._tracer_factory.invalidate()
+
+    def _on_cache_invalidated(self, **kwargs) -> None:
+        self._tracer = None
+        self._tracer_factory.invalidate()
+        self.cache.clear()
 
     @staticmethod
     def _make_key(table: str, column: str) -> tuple[str, str]:

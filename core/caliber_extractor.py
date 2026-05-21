@@ -9,14 +9,17 @@ from __future__ import annotations
 
 import re
 import logging
-from typing import Optional
 
 from core.models import (
     CaliberInfo,
+    ExpressionDetail,
     FieldMapping,
     SelectColumnMapping,
+    SourceLocation,
     SQLCondition,
+    SQLEnhancement,
     SQLOperationType,
+    StepIsolation,
     SubqueryInfo,
 )
 from core.layer_detector import detect_layer
@@ -174,10 +177,17 @@ class CaliberExtractor:
         info = CaliberInfo(
             target_table=field_mapping.target_table,
             target_column=field_mapping.target_column,
-            source_table=field_mapping.source_table,
-            source_column=field_mapping.source_column,
+            source_location=SourceLocation(
+                source_schema="",
+                source_table=field_mapping.source_table,
+                source_column=field_mapping.source_column,
+            ),
+            expression_detail=ExpressionDetail(
+                select_columns=select_cols_for_field,
+                where_conditions=where_conds,
+                subqueries=enhanced["subqueries"],
+            ),
             transform_logic=field_mapping.transform_logic,
-            where_conditions=where_conds,
             join_conditions=join_conds,
             group_by_clause=group_by,
             having_clause=having,
@@ -188,11 +198,9 @@ class CaliberExtractor:
             raw_sql_fragment=_truncate_sql(sql_block, max_len=2000),
             confidence=field_mapping.confidence,
             operation_type=enhanced["operation_type"],
-            select_columns=select_cols_for_field,
             distinct_flag=enhanced["distinct_flag"],
             order_by_clause=enhanced["order_by_clause"],
             set_operation=enhanced["set_operation"],
-            subqueries=enhanced["subqueries"],
             source_table_layer=source_layer,
             target_table_layer=target_layer,
             window_functions=enhanced["window_functions"],
@@ -255,10 +263,17 @@ class CaliberExtractor:
             info = CaliberInfo(
                 target_table=fm.target_table,
                 target_column=fm.target_column,
-                source_table=fm.source_table,
-                source_column=fm.source_column,
+                source_location=SourceLocation(
+                    source_schema="",
+                    source_table=fm.source_table,
+                    source_column=fm.source_column,
+                ),
+                expression_detail=ExpressionDetail(
+                    select_columns=select_cols_for_field,
+                    where_conditions=where_conds,
+                    subqueries=enhanced["subqueries"],
+                ),
                 transform_logic=fm.transform_logic,
-                where_conditions=where_conds,
                 join_conditions=join_conds,
                 group_by_clause=group_by,
                 having_clause=having,
@@ -269,11 +284,9 @@ class CaliberExtractor:
                 raw_sql_fragment=_truncate_sql(sql_block, max_len=2000),
                 confidence=fm.confidence,
                 operation_type=enhanced["operation_type"],
-                select_columns=select_cols_for_field,
                 distinct_flag=enhanced["distinct_flag"],
                 order_by_clause=enhanced["order_by_clause"],
                 set_operation=enhanced["set_operation"],
-                subqueries=enhanced["subqueries"],
                 source_table_layer=source_layer,
                 target_table_layer=target_layer,
                 window_functions=enhanced["window_functions"],
@@ -683,191 +696,11 @@ class CaliberExtractor:
 
     @staticmethod
     def to_dict(caliber_info: CaliberInfo) -> dict:
-        return {
-            "target_table": caliber_info.target_table,
-            "target_column": caliber_info.target_column,
-            "source_table": caliber_info.source_table,
-            "source_column": caliber_info.source_column,
-            "transform_logic": caliber_info.transform_logic,
-            "where_conditions": [
-                {
-                    "condition_type": c.condition_type,
-                    "raw_text": c.raw_text,
-                    "tables_involved": c.tables_involved,
-                    "fields_involved": c.fields_involved,
-                }
-                for c in caliber_info.where_conditions
-            ],
-            "join_conditions": [
-                {
-                    "condition_type": c.condition_type,
-                    "raw_text": c.raw_text,
-                    "tables_involved": c.tables_involved,
-                    "fields_involved": c.fields_involved,
-                }
-                for c in caliber_info.join_conditions
-            ],
-            "group_by_clause": caliber_info.group_by_clause,
-            "having_clause": caliber_info.having_clause,
-            "procedure": caliber_info.procedure,
-            "step_num": caliber_info.step_num,
-            "step_desc": caliber_info.step_desc,
-            "data_source": caliber_info.data_source,
-            "raw_sql_fragment": caliber_info.raw_sql_fragment,
-            "confidence": caliber_info.confidence,
-            "operation_type": caliber_info.operation_type,
-            "select_columns": [
-                {
-                    "source_expression": sc.source_expression,
-                    "target_column": sc.target_column,
-                    "alias": sc.alias,
-                }
-                for sc in caliber_info.select_columns
-            ],
-            "distinct_flag": caliber_info.distinct_flag,
-            "order_by_clause": caliber_info.order_by_clause,
-            "set_operation": caliber_info.set_operation,
-            "subqueries": [
-                {
-                    "alias": sq.alias,
-                    "raw_text": sq.raw_text,
-                    "source_tables": sq.source_tables,
-                    "where_conditions": [
-                        {
-                            "condition_type": wc.condition_type,
-                            "raw_text": wc.raw_text,
-                        }
-                        for wc in sq.where_conditions
-                    ],
-                }
-                for sq in caliber_info.subqueries
-            ],
-            "source_table_layer": caliber_info.source_table_layer,
-            "target_table_layer": caliber_info.target_table_layer,
-            "window_functions": caliber_info.window_functions,
-            "sql_operation_sequence": caliber_info.sql_operation_sequence,
-            "file_path": caliber_info.file_path,
-            "start_line": caliber_info.start_line,
-            "end_line": caliber_info.end_line,
-            "step_isolated_where": [
-                {
-                    "condition_type": c.condition_type,
-                    "raw_text": c.raw_text,
-                    "tables_involved": c.tables_involved,
-                    "fields_involved": c.fields_involved,
-                }
-                for c in caliber_info.step_isolated_where
-            ],
-            "step_isolated_join": [
-                {
-                    "condition_type": c.condition_type,
-                    "raw_text": c.raw_text,
-                    "tables_involved": c.tables_involved,
-                    "fields_involved": c.fields_involved,
-                }
-                for c in caliber_info.step_isolated_join
-            ],
-            "cte_definitions": caliber_info.cte_definitions,
-            "custom_functions": caliber_info.custom_functions,
-            "full_expression": caliber_info.full_expression,
-            "is_custom_function_call": caliber_info.is_custom_function_call,
-        }
+        return caliber_info.to_dict()
 
     @staticmethod
     def from_dict(data: dict) -> CaliberInfo:
-        where_conditions = [
-            SQLCondition(
-                condition_type=c.get("condition_type", ""),
-                raw_text=c.get("raw_text", ""),
-                tables_involved=c.get("tables_involved", []),
-                fields_involved=c.get("fields_involved", []),
-            )
-            for c in data.get("where_conditions", [])
-        ]
-        join_conditions = [
-            SQLCondition(
-                condition_type=c.get("condition_type", ""),
-                raw_text=c.get("raw_text", ""),
-                tables_involved=c.get("tables_involved", []),
-                fields_involved=c.get("fields_involved", []),
-            )
-            for c in data.get("join_conditions", [])
-        ]
-        select_columns = [
-            SelectColumnMapping(
-                source_expression=sc.get("source_expression", ""),
-                target_column=sc.get("target_column", ""),
-                alias=sc.get("alias", ""),
-            )
-            for sc in data.get("select_columns", [])
-        ]
-        subqueries = [
-            SubqueryInfo(
-                alias=sq.get("alias", ""),
-                raw_text=sq.get("raw_text", ""),
-                source_tables=sq.get("source_tables", []),
-                where_conditions=[
-                    SQLCondition(
-                        condition_type=wc.get("condition_type", ""),
-                        raw_text=wc.get("raw_text", ""),
-                    )
-                    for wc in sq.get("where_conditions", [])
-                ],
-            )
-            for sq in data.get("subqueries", [])
-        ]
-        return CaliberInfo(
-            target_table=data.get("target_table", ""),
-            target_column=data.get("target_column", ""),
-            source_table=data.get("source_table", ""),
-            source_column=data.get("source_column", ""),
-            transform_logic=data.get("transform_logic", ""),
-            where_conditions=where_conditions,
-            join_conditions=join_conditions,
-            group_by_clause=data.get("group_by_clause", ""),
-            having_clause=data.get("having_clause", ""),
-            procedure=data.get("procedure", ""),
-            step_num=data.get("step_num", 0),
-            step_desc=data.get("step_desc", ""),
-            data_source=data.get("data_source", "oracle"),
-            raw_sql_fragment=data.get("raw_sql_fragment", ""),
-            confidence=data.get("confidence", 1.0),
-            operation_type=data.get("operation_type", ""),
-            select_columns=select_columns,
-            distinct_flag=data.get("distinct_flag", False),
-            order_by_clause=data.get("order_by_clause", ""),
-            set_operation=data.get("set_operation", ""),
-            subqueries=subqueries,
-            source_table_layer=data.get("source_table_layer", ""),
-            target_table_layer=data.get("target_table_layer", ""),
-            window_functions=data.get("window_functions", []),
-            sql_operation_sequence=data.get("sql_operation_sequence", 0),
-            file_path=data.get("file_path", ""),
-            start_line=data.get("start_line", 0),
-            end_line=data.get("end_line", 0),
-            step_isolated_where=[
-                SQLCondition(
-                    condition_type=c.get("condition_type", ""),
-                    raw_text=c.get("raw_text", ""),
-                    tables_involved=c.get("tables_involved", []),
-                    fields_involved=c.get("fields_involved", []),
-                )
-                for c in data.get("step_isolated_where", [])
-            ],
-            step_isolated_join=[
-                SQLCondition(
-                    condition_type=c.get("condition_type", ""),
-                    raw_text=c.get("raw_text", ""),
-                    tables_involved=c.get("tables_involved", []),
-                    fields_involved=c.get("fields_involved", []),
-                )
-                for c in data.get("step_isolated_join", [])
-            ],
-            cte_definitions=data.get("cte_definitions", []),
-            custom_functions=data.get("custom_functions", []),
-            full_expression=data.get("full_expression", ""),
-            is_custom_function_call=data.get("is_custom_function_call", False),
-        )
+        return CaliberInfo.from_dict(data)
 
 
 def _parse_single_select_column(raw: str) -> SelectColumnMapping | None:

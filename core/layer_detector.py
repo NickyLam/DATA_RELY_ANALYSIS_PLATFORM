@@ -1,16 +1,25 @@
 """
-数据架构层级检测
-根据表名模式判断表所属的数据架构层级（ODS/DIIS/BASE/MDL/APP/EAST/CONFIG/OTHER）
+数据架构层级检测（可配置化版本）
+
+根据表名模式判断表所属的数据架构层级（ODS/DIIS/BASE/MDL/APP/EAST/CONFIG/OTHER）。
+支持从 manifest.yml 动态加载层级规则，每个系统可定义独立的层级检测策略。
+
+向后兼容：无 manifest 时回退到 RRP 硬编码规则，确保零回归。
 """
 
 from __future__ import annotations
 
+import logging
+import re
+from dataclasses import dataclass, field
 from enum import Enum
+from pathlib import Path
 from typing import Optional
+
+logger = logging.getLogger(__name__)
 
 
 class LayerType(Enum):
-    """数据架构层级"""
     ODS = "ods"
     DIIS = "diis"
     BASE = "base"
@@ -21,7 +30,66 @@ class LayerType(Enum):
     OTHER = "other"
 
 
-# 架构层级配置（后端权威定义）
+@dataclass
+class LayerRule:
+    pattern: str
+    layer: str
+    label: str
+    _compiled: Optional[re.Pattern] = field(default=None, repr=False)
+
+    @property
+    def compiled(self) -> re.Pattern:
+        if self._compiled is None:
+            object.__setattr__(self, "_compiled", re.compile(self.pattern, re.IGNORECASE))
+        return self._compiled
+
+
+@dataclass
+class SchemaRule:
+    schema: str
+    layer: str = ""
+    default_layer: str = ""
+
+
+@dataclass
+class BareNameRule:
+    pattern: str
+    layer: str
+    label: str
+    _compiled: Optional[re.Pattern] = field(default=None, repr=False)
+
+    @property
+    def compiled(self) -> re.Pattern:
+        if self._compiled is None:
+            object.__setattr__(self, "_compiled", re.compile(self.pattern))
+        return self._compiled
+
+
+@dataclass
+class SynonymRule:
+    pattern: str
+    target: str
+    _compiled: Optional[re.Pattern] = field(default=None, repr=False)
+
+    @property
+    def compiled(self) -> re.Pattern:
+        if self._compiled is None:
+            object.__setattr__(self, "_compiled", re.compile(self.pattern, re.IGNORECASE))
+        return self._compiled
+
+
+@dataclass
+class LayerConfig:
+    rules: list[LayerRule] = field(default_factory=list)
+    schema_rules: list[SchemaRule] = field(default_factory=list)
+    bare_name_rules: list[BareNameRule] = field(default_factory=list)
+    synonym_rules: list[SynonymRule] = field(default_factory=list)
+    default_schema: str = "RRP_MDL"
+    known_schemas: list[str] = field(default_factory=lambda: ["ICL", "IML", "IOL", "RRP_EAST", "RRP_MDL"])
+    layer_order: list[str] = field(default_factory=lambda: ["ods", "diis", "base", "mdl", "app", "east"])
+    layer_colors: dict[str, str] = field(default_factory=dict)
+
+
 LAYER_CONFIG: dict[str, dict] = {
     "ods":    {"label": "ODS源系统层",   "color": "#4ade80", "order": 0},
     "diis":  {"label": "DIIS明细层",     "color": "#38bdf8", "order": 1},
@@ -33,68 +101,165 @@ LAYER_CONFIG: dict[str, dict] = {
     "other":  {"label": "其他",          "color": "#6b7280", "order": 7},
 }
 
-LAYER_ORDER = ["ods", "diis", "base", "mdl", "app", "east"]
+LAYER_ORDER = ["ods", "diis", "base", "mdl", "app", "east", "config"]
+
+
+def _build_rrp_default_config() -> LayerConfig:
+    return LayerConfig(
+        rules=[
+            LayerRule(pattern="^ICL\\.V_", layer="ods", label="ODS 核心账务视图"),
+            LayerRule(pattern="^O_ICL_", layer="ods", label="ODS 核心账务源数据"),
+            LayerRule(pattern="^O_FDW_|^O_RDW_", layer="ods", label="ODS 外部数据源"),
+            LayerRule(pattern="^O_IML_|^O_IOL_", layer="base", label="BASE 中间层操作表"),
+            LayerRule(pattern="^B_", layer="base", label="BASE 基础层"),
+            LayerRule(pattern="^M_", layer="mdl", label="MDL 模型层"),
+            LayerRule(pattern="^A_|^S_", layer="app", label="APP 应用汇总层"),
+            LayerRule(pattern="EAST", layer="east", label="EAST 报送层"),
+            LayerRule(pattern="^ADD_|DIIS", layer="diis", label="DIIS 明细层"),
+            LayerRule(pattern="^ETL_|^CONFIG|^CODE|^TMP|^SQ_|^FUN|^GET|^CHECK|^SP_", layer="config", label="CONFIG 配置/临时表"),
+        ],
+        schema_rules=[
+            SchemaRule(schema="ICL", layer="ods"),
+            SchemaRule(schema="IML", layer="ods"),
+            SchemaRule(schema="IOL", layer="ods"),
+            SchemaRule(schema="IDL", layer="ods"),
+            SchemaRule(schema="ITL", layer="ods"),
+            SchemaRule(schema="RRP_EAST", default_layer="diis"),
+            SchemaRule(schema="RRP_MDL", default_layer="base"),
+        ],
+        bare_name_rules=[
+            BareNameRule(pattern="^[A-Z]{1,10}$", layer="ods", label="ODS 源系统缩写表"),
+        ],
+        synonym_rules=[
+            SynonymRule(pattern="^O_ICL_(.*)", target="ICL_$1"),
+            SynonymRule(pattern="^ICL\\.V_(.*)", target="ICL_$1"),
+            SynonymRule(pattern="^ICL\\.([A-Z].*)", target="ICL_$1"),
+        ],
+        default_schema="RRP_MDL",
+        known_schemas=["ICL", "IML", "IOL", "RRP_EAST", "RRP_MDL"],
+        layer_order=["ods", "diis", "base", "mdl", "app", "east", "config"],
+        layer_colors={
+            "ods": "#4ade80", "diis": "#38bdf8", "base": "#818cf8",
+            "mdl": "#c084fc", "app": "#fb923c", "east": "#f87171",
+            "config": "#6b7280", "other": "#6b7280",
+        },
+    )
+
+
+class LayerDetector:
+    """可配置化的层级检测器。
+
+    支持多系统：每个系统有独立的 LayerConfig，通过 system 参数切换。
+    无 system 参数时回退到 RRP 默认规则，确保向后兼容。
+    """
+
+    def __init__(self, layer_configs: Optional[dict[str, LayerConfig]] = None):
+        self._configs: dict[str, LayerConfig] = layer_configs or {}
+        if "rrp" not in self._configs:
+            self._configs["rrp"] = _build_rrp_default_config()
+
+    def detect_layer(self, table_name: str, system: str = "rrp") -> LayerType:
+        config = self._configs.get(system, self._configs.get("rrp"))
+        if config is None:
+            return LayerType.OTHER
+
+        name = table_name.upper()
+        short_name = name.split(".")[-1] if "." in name else name
+        schema = name.split(".")[0] if "." in name else ""
+
+        for rule in config.rules:
+            if rule.compiled.search(table_name):
+                return LayerType(rule.layer)
+
+        for sr in config.schema_rules:
+            if schema == sr.schema.upper():
+                if sr.layer:
+                    return LayerType(sr.layer)
+                if sr.default_layer and "EAST" not in short_name:
+                    if any(x in short_name for x in ["TMP", "_NEW", "_OLD", "_BAK", "_ORIG"]):
+                        return LayerType("diis")
+                    return LayerType(sr.default_layer)
+
+        for bnr in config.bare_name_rules:
+            if bnr.compiled.match(short_name):
+                return LayerType(bnr.layer)
+
+        return LayerType.OTHER
+
+    def get_layer_config(self, system: str = "rrp") -> LayerConfig:
+        return self._configs.get(system, self._configs.get("rrp", _build_rrp_default_config()))
+
+    def get_all_configs(self) -> dict[str, LayerConfig]:
+        return dict(self._configs)
+
+    @classmethod
+    def from_manifests(cls, source_data_dir: Path) -> "LayerDetector":
+        configs: dict[str, LayerConfig] = {}
+        if not source_data_dir.is_dir():
+            logger.warning("SOURCE_DATA directory not found: %s, using RRP defaults", source_data_dir)
+            return cls()
+
+        for system_dir in sorted(source_data_dir.iterdir()):
+            if not system_dir.is_dir():
+                continue
+            manifest_path = system_dir / "manifest.yml"
+            if not manifest_path.exists():
+                continue
+            try:
+                config = _load_layer_config_from_manifest(manifest_path)
+                if config is not None:
+                    system_name = system_dir.name.lower()
+                    configs[system_name] = config
+                    logger.info("Loaded layer config for system: %s", system_name)
+            except Exception as e:
+                logger.error("Failed to load manifest %s: %s", manifest_path, e)
+
+        return cls(configs)
+
+
+def _load_layer_config_from_manifest(manifest_path: Path) -> Optional[LayerConfig]:
+    try:
+        import yaml
+    except ImportError:
+        logger.error("PyYAML not installed, cannot load manifest")
+        return None
+
+    data = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+    if not data or "layer_rules" not in data:
+        return None
+
+    lr = data["layer_rules"]
+
+    rules = [LayerRule(pattern=r["pattern"], layer=r["layer"], label=r.get("label", r["layer"]))
+             for r in lr.get("rules", [])]
+
+    schema_rules = [SchemaRule(schema=sr["schema"], layer=sr.get("layer", ""),
+                               default_layer=sr.get("default_layer", ""))
+                    for sr in lr.get("schema_rules", [])]
+
+    bare_name_rules = [BareNameRule(pattern=bnr["pattern"], layer=bnr["layer"],
+                                    label=bnr.get("label", bnr["layer"]))
+                       for bnr in lr.get("bare_name_rules", [])]
+
+    synonym_rules = [SynonymRule(pattern=sr["pattern"], target=sr["target"])
+                     for sr in lr.get("synonym_rules", [])]
+
+    return LayerConfig(
+        rules=rules,
+        schema_rules=schema_rules,
+        bare_name_rules=bare_name_rules,
+        synonym_rules=synonym_rules,
+        default_schema=lr.get("default_schema", "RRP_MDL"),
+        known_schemas=lr.get("known_schemas", []),
+        layer_order=lr.get("layer_order", LAYER_ORDER),
+        layer_colors=lr.get("layer_colors", {}),
+    )
 
 
 def detect_layer(table_name: str) -> LayerType:
-    """根据表名模式检测所属层级（增强版：支持 schema.table 全限定名）"""
-    name = table_name.upper()
-
-    # 提取短名（去掉 schema 前缀），用于前缀匹配
-    short_name = name.split(".")[-1] if "." in name else name
-
-    # 1. ODS 源系统层（优先检测，避免被 schema 名干扰）
-    #    O_ICL_*: 核心账务系统(ICL)源数据，是真正的外部源系统 → ODS
-    #    O_IML_*: 中间层(IML)操作表，有上游 V_* 视图 → BASE（非 ODS）
-    #    O_IOL_*: 同理待定，目前暂归 BASE
-    #    O_FDW_* / O_RDW_*: 外部数据源 → ODS
-    if short_name.startswith("O_ICL_"):
-        return LayerType.ODS
-    if short_name.startswith("O_IML_") or short_name.startswith("O_IOL_"):
-        return LayerType.BASE
-    if short_name.startswith("O_FDW_") or short_name.startswith("O_RDW_"):
-        return LayerType.ODS
-
-    # 2. EAST 报送层（只检查短名中的 EAST，避免 RRP_EAST schema 误判）
-    if "EAST" in short_name:
-        return LayerType.EAST
-
-    # 3. M 模型层 / B 基础层 / A/S 应用汇总层（检查短名前缀）
-    if short_name.startswith("M_"):
-        return LayerType.MDL
-    if short_name.startswith("B_"):
-        return LayerType.BASE
-    if short_name.startswith("A_") or short_name.startswith("S_"):
-        return LayerType.APP
-
-    # 4. DIIS 明细层
-    if short_name.startswith("ADD_") or "DIIS" in short_name:
-        return LayerType.DIIS
-
-    # 5. 配置/临时表
-    if short_name.startswith("ETL_") or short_name.startswith("CONFIG") or short_name.startswith("CODE") or \
-       short_name.startswith("TMP") or short_name.startswith("SQ_") or short_name.startswith("FUN") or \
-       short_name.startswith("GET") or short_name.startswith("CHECK") or short_name.startswith("SP_"):
-        return LayerType.CONFIG
-
-    # 6. Schema 感知推断（RRP 项目特有逻辑）
-    #    RRP_EAST schema 的非 EAST 表 → 可能是 staging 层
-    if "RRP_EAST" in name and "EAST" not in short_name:
-        return LayerType.DIIS
-
-    #    RRP_MDL schema 的非 M_/B_ 表 → 可能是引用表或配置表
-    if "RRP_MDL" in name:
-        if any(x in short_name for x in ["TMP", "_NEW", "_OLD", "_BAK", "_ORIG"]):
-            return LayerType.DIIS
-        return LayerType.BASE  # RRP_MDL schema 内的表默认归入基础层
-
-    # 7. 纯大写缩写且无已知前缀 → 归类为 ODS 源表
-    if "_" not in short_name and short_name.isupper() and len(short_name) <= 10:
-        return LayerType.ODS
-
-    return LayerType.OTHER
+    detect_layer._default_detector = getattr(detect_layer, "_default_detector", None) or LayerDetector()
+    return detect_layer._default_detector.detect_layer(table_name, system="rrp")
 
 
 def detect_layer_str(table_name: str) -> str:
-    """返回层级的字符串标识（用于API序列化）"""
     return detect_layer(table_name).value

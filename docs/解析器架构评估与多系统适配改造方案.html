@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>解析器架构评估与多系统适配改造方案</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface2: #334155;
+    --border: #475569;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --accent: #3b82f6;
+    --accent2: #8b5cf6;
+    --green: #10b981;
+    --red: #ef4444;
+    --amber: #f59e0b;
+    --pink: #ec4899;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .meta { color: var(--text2); font-size: 0.875rem; margin-bottom: 40px; }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 48px 0 20px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+  h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 28px 0 14px;
+    color: var(--accent);
+  }
+  h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 20px 0 10px;
+    color: var(--amber);
+  }
+
+  p { margin-bottom: 14px; }
+  strong { color: var(--amber); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .card-sm {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .card-sm h4 { margin-top: 0; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge-red { background: rgba(239,68,68,0.15); color: var(--red); }
+  .badge-amber { background: rgba(245,158,11,0.15); color: var(--amber); }
+  .badge-green { background: rgba(16,185,129,0.15); color: var(--green); }
+  .badge-blue { background: rgba(59,130,246,0.15); color: var(--accent); }
+  .badge-purple { background: rgba(139,92,246,0.15); color: var(--accent2); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.9rem;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    background: var(--surface2);
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  tr:hover td { background: rgba(59,130,246,0.05); }
+
+  pre {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 16px 0;
+  }
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.85em;
+  }
+  p code, li code {
+    background: var(--surface2);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .arch-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+  .arch-diagram pre {
+    border: none;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    color: var(--text);
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .flow-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin: 16px 0;
+  }
+  .flow-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    color: var(--accent);
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .phase-timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+  }
+  .phase-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+  }
+  .phase-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: 12px 12px 0 0;
+  }
+  .phase-1::before { background: var(--green); }
+  .phase-2::before { background: var(--amber); }
+  .phase-3::before { background: var(--accent); }
+  .phase-4::before { background: var(--accent2); }
+  .phase-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .phase-1 .phase-num { color: var(--green); }
+  .phase-2 .phase-num { color: var(--amber); }
+  .phase-3 .phase-num { color: var(--accent); }
+  .phase-4 .phase-num { color: var(--accent2); }
+  .phase-title { font-size: 1rem; font-weight: 600; margin-bottom: 10px; }
+  .phase-list { list-style: none; padding: 0; }
+  .phase-list li {
+    padding: 4px 0;
+    font-size: 0.85rem;
+    color: var(--text2);
+    position: relative;
+    padding-left: 16px;
+  }
+  .phase-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--text2);
+  }
+  .phase-risk {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text2);
+  }
+
+  .parser-matrix {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 20px 0;
+  }
+  .parser-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+  }
+  .parser-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .parser-systems {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  .parser-ext {
+    font-size: 0.75rem;
+    color: var(--text2);
+    margin-top: 6px;
+  }
+
+  .conclusion-box {
+    background: linear-gradient(135deg, rgba(239,68,68,0.1), rgba(245,158,11,0.1));
+    border: 2px solid var(--red);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+  }
+  .conclusion-box h3 {
+    color: var(--red);
+    margin-top: 0;
+  }
+
+  .success-box {
+    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(59,130,246,0.1));
+    border: 2px solid var(--green);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+  }
+  .success-box h3 {
+    color: var(--green);
+    margin-top: 0;
+  }
+
+  .step-flow {
+    display: flex;
+    gap: 0;
+    margin: 20px 0;
+    align-items: stretch;
+  }
+  .step-item {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+  }
+  .step-item:first-child { border-radius: 10px 0 0 10px; }
+  .step-item:last-child { border-radius: 0 10px 10px 0; }
+  .step-num {
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  .step-title { font-weight: 600; margin-bottom: 6px; }
+  .step-desc { font-size: 0.8rem; color: var(--text2); }
+
+  ul, ol { padding-left: 24px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 48px 0;
+  }
+
+  @media (max-width: 768px) {
+    .phase-timeline { grid-template-columns: 1fr; }
+    .step-flow { flex-direction: column; }
+    .step-item:first-child { border-radius: 10px 10px 0 0; }
+    .step-item:last-child { border-radius: 0 0 10px 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>解析器架构评估与多系统适配改造方案</h1>
+<p class="meta">模型: SOLO (Trae) · 上下文 ~200K tokens · 版本 v1.0 · 2026-05-21</p>
+
+<!-- ==================== 一、评估结论 ==================== -->
+<h2>一、评估结论</h2>
+
+<div class="conclusion-box">
+  <h3>⚠️ 核心判断：需要优化改造</h3>
+  <p>当前系统在解析器架构上存在 <strong>5 个结构性问题</strong>，若不改造，每新增一个业务系统都需要大量硬编码修改，无法实现"同一厂商复用解析脚本、不同系统统一血缘输出"的目标。</p>
+</div>
+
+<div class="card">
+  <h4 style="margin-top:0">问题清单</h4>
+  <table>
+    <thead><tr><th>问题</th><th>严重度</th><th>影响</th></tr></thead>
+    <tbody>
+      <tr><td>解析器双路径并存，Oracle 绕过 Registry</td><td><span class="badge badge-red">高</span></td><td>新系统无法走统一路由</td></tr>
+      <tr><td>层级检测硬编码 RRP 规则</td><td><span class="badge badge-red">高</span></td><td>EDW/MCS/FDM 无法正确分层</td></tr>
+      <tr><td>表名解析硬编码 RRP Schema</td><td><span class="badge badge-red">高</span></td><td>跨系统表名无法归一化</td></tr>
+      <tr><td>指标体系与主血缘体系割裂</td><td><span class="badge badge-amber">中</span></td><td>指标血缘无法融入统一图谱</td></tr>
+      <tr><td>前后端层级配置不一致</td><td><span class="badge badge-amber">中</span></td><td>展示层配色错误</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>可行性判断</h3>
+<div class="card-grid">
+  <div class="card-sm">
+    <h4 style="color:var(--green)">✅ 同厂商复用解析脚本</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">WarehouseParser 已具备两阶段解析能力，可复用于所有 SQL 类系统</p>
+  </div>
+  <div class="card-sm">
+    <h4 style="color:var(--green)">✅ 统一血缘输出结构</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">ParseOutput + ParseResult 已定义统一中间格式，需统一所有解析器走此路径</p>
+  </div>
+  <div class="card-sm">
+    <h4 style="color:var(--amber)">🔧 展示层多系统适配</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">层级检测和表名解析需可配置化，前端层级配色需动态加载</p>
+  </div>
+  <div class="card-sm">
+    <h4 style="color:var(--amber)">🔧 指标/口径跨系统</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">口径功能通用性高可跨系统；指标功能与银行监管体系强绑定，需按系统定制</p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ==================== 二、当前问题 ==================== -->
+<h2>二、当前架构问题详细分析</h2>
+
+<h3>2.1 解析器双路径并存</h3>
+<div class="arch-diagram">
+<pre>
+ParserService.parse_existing_data()
+  │
+  ├─ Oracle 数据源 ──→ <span style="color:var(--red)">旧路径</span>（直接调用 OracleTableParser / EnhancedProcedureParser）
+  │                    <span style="color:var(--red)">绕过 ParserRegistry</span>
+  │
+  └─ 其他数据源 ─────→ <span style="color:var(--green)">新路径</span>（Registry.parse_directory() → ParseOutput → _merge_output_to_result）
+</pre>
+</div>
+<p>Oracle 解析器不实现 <code>FileParser</code> Protocol，通过 Adapter 桥接但 ParserService 仍直接调用旧方法。新增系统时必须修改 ParserService 添加新的直接调用逻辑。</p>
+
+<h3>2.2 层级检测硬编码</h3>
+<p><code>layer_detector.py</code> 中 <code>detect_layer()</code> 函数硬编码了 RRP 系统的表名前缀规则：</p>
+<table>
+  <thead><tr><th>前缀</th><th>层级</th><th>适用系统</th></tr></thead>
+  <tbody>
+    <tr><td><code>O_ICL_*</code></td><td>ODS</td><td><span class="badge badge-red">仅 RRP</span></td></tr>
+    <tr><td><code>O_IML_*/O_IOL_*</code></td><td>BASE</td><td><span class="badge badge-red">仅 RRP</span></td></tr>
+    <tr><td><code>M_*</code></td><td>MDL</td><td><span class="badge badge-red">仅 RRP</span></td></tr>
+    <tr><td><code>B_*</code></td><td>BASE</td><td><span class="badge badge-red">仅 RRP</span></td></tr>
+    <tr><td><code>A_*/S_*</code></td><td>APP</td><td><span class="badge badge-red">仅 RRP</span></td></tr>
+    <tr><td><code>EAST*</code></td><td>EAST</td><td><span class="badge badge-red">仅 RRP</span></td></tr>
+  </tbody>
+</table>
+<p>EDW 的 <code>icl/idl/iml/iol</code> 分层、MCS 的 <code>idl/itl</code> 分层、FDM 的指标分层 <strong>完全无法被检测</strong>。</p>
+
+<h3>2.3 表名解析硬编码</h3>
+<p><code>table_name_resolver.py</code> 中：</p>
+<ul>
+  <li><code>KNOWN_SCHEMAS = ["ICL", "IML", "IOL", "RRP_EAST", "RRP_MDL"]</code> — 仅 RRP</li>
+  <li><code>default_schema = "RRP_MDL"</code> — 无 schema 的裸表名默认归入 RRP_MDL</li>
+  <li><code>ICL.V_* → ICL_*</code> 同义词映射 — 仅 RRP</li>
+</ul>
+
+<h3>2.4 指标体系与主体系割裂</h3>
+<div class="arch-diagram">
+<pre>
+<span style="color:var(--accent)">主血缘体系</span>: SQL文件 → Parser → ParseOutput → ParseResult → lineage_data.json → DataRepository → LineageService/CaliberService
+<span style="color:var(--accent2)">指标体系</span>:   Excel+.proc → IndicatorConfigParser → IndicatorConfigResult → IndicatorService (独立内存)
+</pre>
+</div>
+<p>两套体系通过 <code>IndicatorService.bridge_to_field_lineage()</code> 单向桥接，指标血缘无法在统一图谱中展示。</p>
+
+<h3>2.5 前后端层级配置不一致 <span class="badge badge-red">BUG</span></h3>
+<table>
+  <thead><tr><th>位置</th><th>层级名</th></tr></thead>
+  <tbody>
+    <tr><td>后端 <code>layer_detector.py</code></td><td><code>base</code>, <code>app</code></td></tr>
+    <tr><td>前端 <code>caliber-tab.js</code></td><td><code style="color:var(--red)">dws</code>, <code style="color:var(--red)">ads</code></td></tr>
+  </tbody>
+</table>
+<p>基础层和应用层节点在口径 Pipeline 视图中<strong>无法正确着色</strong>。</p>
+
+<div class="section-divider"></div>
+
+<!-- ==================== 三、目标架构 ==================== -->
+<h2>三、目标架构设计</h2>
+
+<h3>3.1 核心设计原则</h3>
+<div class="card-grid">
+  <div class="card-sm">
+    <h4 style="color:var(--accent)">解析器按厂商复用</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">同一厂商实施的系统复用同一套解析脚本</p>
+  </div>
+  <div class="card-sm">
+    <h4 style="color:var(--accent)">统一输出格式</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">所有解析器输出相同的 ParseOutput → ParseResult 结构</p>
+  </div>
+  <div class="card-sm">
+    <h4 style="color:var(--accent)">层级检测可配置</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">每个系统通过 manifest.yml 定义自己的层级规则</p>
+  </div>
+  <div class="card-sm">
+    <h4 style="color:var(--accent)">展示层动态适配</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">前端从后端 API 获取层级配置，动态渲染</p>
+  </div>
+</div>
+
+<h3>3.2 解析器分类与复用矩阵</h3>
+<p>复用判断必须基于<strong>实际数据内容</strong>，而非假设：</p>
+
+<div class="parser-matrix">
+  <div class="parser-card">
+    <div class="parser-name" style="color:var(--red)">OracleParser</div>
+    <div class="parser-systems">
+      <span class="badge badge-red">RRP</span>
+    </div>
+    <div class="parser-ext">.tab · .prc · <span style="color:var(--green)">✅ 已确认独占</span></div>
+  </div>
+  <div class="parser-card" style="border-color:var(--green)">
+    <div class="parser-name" style="color:var(--green)">WarehouseParser</div>
+    <div class="parser-systems">
+      <span class="badge badge-green">EDW</span>
+      <span class="badge badge-green">MCS</span>
+    </div>
+    <div class="parser-ext">.sql · .ctl · <span style="color:var(--green)">✅ 已确认 2 系统复用</span></div>
+  </div>
+  <div class="parser-card">
+    <div class="parser-name" style="color:var(--accent2)">IndicatorParser</div>
+    <div class="parser-systems">
+      <span class="badge badge-purple">FDM</span>
+      <span class="badge badge-purple">RRP</span>
+    </div>
+    <div class="parser-ext">.xlsx · .proc · <span style="color:var(--green)">✅ 已确认</span></div>
+  </div>
+  <div class="parser-card">
+    <div class="parser-name" style="color:var(--amber)">HiveParser</div>
+    <div class="parser-systems">
+      <span class="badge badge-amber">TDH</span>
+    </div>
+    <div class="parser-ext">.hql · .sql · <span style="color:var(--green)">✅ 已确认</span></div>
+  </div>
+  <div class="parser-card">
+    <div class="parser-name" style="color:var(--amber)">GBaseParser</div>
+    <div class="parser-systems">
+      <span class="badge badge-amber">GBASE</span>
+    </div>
+    <div class="parser-ext">.sql · <span style="color:var(--green)">✅ 已确认</span></div>
+  </div>
+  <div class="parser-card" style="border-color:var(--red); border-style: dashed;">
+    <div class="parser-name" style="color:var(--text2)">待定</div>
+    <div class="parser-systems">
+      <span class="badge" style="background:rgba(107,114,128,0.2);color:var(--text2)">PAM</span>
+      <span class="badge" style="background:rgba(107,114,128,0.2);color:var(--text2)">CCR</span>
+      <span class="badge" style="background:rgba(107,114,128,0.2);color:var(--text2)">ICR</span>
+      <span class="badge" style="background:rgba(107,114,128,0.2);color:var(--text2)">BRT</span>
+    </div>
+    <div class="parser-ext" style="color:var(--red)">❌ 无实际数据，无法判断</div>
+  </div>
+</div>
+
+<div class="card" style="border-color:var(--amber); background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(245,158,11,0.02));">
+  <p style="margin:0"><strong>⚠️ 严谨声明</strong>：EDW 和 MCS 可以确认复用 WarehouseParser（已有实际数据且正在使用）。PAM/CCR/ICR/BRT 目前仅为预留目录，<strong style="color:var(--red)">无实际数据和技术栈信息，无法判断能否复用现有解析器</strong>。它们的解析器选择取决于数据库类型、脚本格式、实施厂商、数据加工方式等因素。</p>
+</div>
+
+<h4>新系统接入决策树</h4>
+<div class="arch-diagram">
+<pre>
+新系统数据到达
+  │
+  ├─ 脚本为 .sql 文件 + DDL/DML 分层目录结构？
+  │    └─ 是 → <span style="color:var(--green)">复用 WarehouseParser</span>，配置 manifest.yml 层级规则
+  │
+  ├─ 脚本为 Oracle .tab/.prc 文件？
+  │    └─ 是 → <span style="color:var(--green)">复用 OracleParser</span>，配置 manifest.yml schema 映射
+  │
+  ├─ 数据为 Excel 配置 + .proc 存储过程？
+  │    └─ 是 → <span style="color:var(--green)">复用 IndicatorParser</span>，定制 Excel 模板映射
+  │
+  ├─ 脚本为 .hql Hive 语法？
+  │    └─ 是 → <span style="color:var(--green)">复用 HiveParser</span>（WarehouseParser 扩展）
+  │
+  └─ 全新格式/语法？
+       └─ <span style="color:var(--amber)">实现新 Parser</span>，实现 FileParser Protocol，注册到 Registry
+</pre>
+</div>
+
+<h3>3.3 目标架构图</h3>
+<div class="arch-diagram">
+<pre>
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          SOURCE_DATA/                                    │
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐       │
+│  │ RRP  │ │ EDW  │ │ MCS  │ │ FDM  │ │ PAM  │ │ CCR  │ │ ...  │       │
+│  │manifest│manifest│manifest│manifest│manifest│manifest│manifest│       │
+│  └──┬───┘ └──┬───┘ └──┬───┘ └──┬───┘ └──┬───┘ └──┬───┘ └──┬───┘       │
+└─────┼────────┼────────┼────────┼────────┼────────┼────────┼────────────┘
+      │        │        │        │        │        │        │
+      ▼        ▼        ▼        ▼        ▼        ▼        ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    ParserRegistry (统一路由层)                            │
+│  .tab/.prc → OracleParser    .sql/.ctl → WarehouseParser               │
+│  .xlsx/.proc → IndicatorParser  .hql → HiveParser  .sql → GBaseParser │
+└────────────────────────────────┬────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    统一输出层 (ParseOutput → ParseResult)                 │
+│  tables · procedures · table_lineages · field_mappings · caliber_infos  │
+│  → ParseResult 强类型合并 → lineage_data.json → DataRepository           │
+└────────────────────────────────┬────────────────────────────────────────┘
+                                 │
+                ┌────────────────┼────────────────┐
+                ▼                ▼                ▼
+┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
+│  LineageService  │ │  CaliberService  │ │ IndicatorService │
+│  LayerDetector   │ │  LayerDetector   │ │  按系统定制      │
+│  <span style="color:var(--green)">(可配置)</span>       │ │  <span style="color:var(--green)">(可配置)</span>       │ │  指标模板        │
+└────────┬─────────┘ └────────┬─────────┘ └────────┬─────────┘
+         │                    │                     │
+         ▼                    ▼                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  API 层: /api/lineage/* · /api/caliber/* · /api/indicator/*             │
+│  <span style="color:var(--green)">/api/system/layers (新增: 层级配置API)</span>                              │
+└────────────────────────────────┬────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│  前端展示层: 层级配色从 API 动态加载 · 血缘图/口径Pipeline/指标血缘图     │
+└─────────────────────────────────────────────────────────────────────────┘
+</pre>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ==================== 四、改造方案 ==================== -->
+<h2>四、八项改造方案</h2>
+
+<div class="card-grid">
+  <div class="card-sm">
+    <span class="badge badge-green">基础层</span>
+    <h4>① manifest.yml 扩展</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">增加解析器类型和层级规则定义</p>
+  </div>
+  <div class="card-sm">
+    <span class="badge badge-green">基础层</span>
+    <h4>② LayerDetector 可配置化</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">从 manifest 动态加载层级规则</p>
+  </div>
+  <div class="card-sm">
+    <span class="badge badge-green">基础层</span>
+    <h4>③ TableNameResolver 可配置化</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">schema 列表和默认值从配置获取</p>
+  </div>
+  <div class="card-sm">
+    <span class="badge badge-amber">解析层</span>
+    <h4>④ ParserService 统一路由</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">消除双路径，所有数据源走 Registry</p>
+  </div>
+  <div class="card-sm">
+    <span class="badge badge-amber">解析层</span>
+    <h4>⑤ WarehouseParser 多系统注入</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">接收 system 参数，按配置解析</p>
+  </div>
+  <div class="card-sm">
+    <span class="badge badge-amber">解析层</span>
+    <h4>⑥ IndicatorParser 适配器化</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">融入统一 ParseOutput 体系</p>
+  </div>
+  <div class="card-sm">
+    <span class="badge badge-blue">展示层</span>
+    <h4>⑦ 层级配置 API</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">新增 /api/system/layers 端点</p>
+  </div>
+  <div class="card-sm">
+    <span class="badge badge-blue">展示层</span>
+    <h4>⑧ 前端层级配色动态化</h4>
+    <p style="font-size:0.85rem;color:var(--text2)">消除硬编码，修复 dws/ads 不一致</p>
+  </div>
+</div>
+
+<h3>改造① manifest.yml 扩展示例（EDW）</h3>
+<pre><code>version: "1.0"
+system: edw
+display_name: "企业级数据仓库"
+parser: warehouse
+
+schemas:
+  - name: edw_icl
+    display_name: "ICL 核心账务层"
+    ddl_path: ddl/icl
+    dml_path: dml/icl
+  - name: edw_idl
+    display_name: "IDL 接口明细层"
+    ddl_path: ddl/idl
+    dml_path: dml/idl
+  # ... iml, iol
+
+layer_rules:
+  default_schema: "edw_iml"
+  rules:
+    - pattern: "^O_ICL_.*"
+      layer: ods
+      label: "ODS 源系统层"
+    - pattern: "^B_.*|^O_IML_.*|^O_IOL_.*"
+      layer: base
+      label: "BASE 基础层"
+    - pattern: "^M_.*"
+      layer: mdl
+      label: "MDL 模型层"
+    - pattern: "^A_.*|^S_.*"
+      layer: app
+      label: "APP 应用层"
+  layer_order: [ods, diis, base, mdl, app, config]
+  layer_colors:
+    ods: "#3b82f6"
+    base: "#10b981"
+    mdl: "#f59e0b"
+    app: "#ef4444"</code></pre>
+
+<h3>改造② LayerDetector 可配置化</h3>
+<pre><code>@dataclass
+class LayerRule:
+    pattern: str
+    layer: str
+    label: str
+
+@dataclass
+class LayerConfig:
+    rules: list[LayerRule]
+    default_schema: str
+    known_schemas: list[str]
+    synonym_rules: list[dict]
+    layer_order: list[str]
+    layer_colors: dict[str, str]
+
+class LayerDetector:
+    def __init__(self, layer_configs: dict[str, LayerConfig]):
+        self._configs = layer_configs
+        self._compiled_rules: dict[str, list[tuple[re.Pattern, str, str]]] = {}
+        for system, config in layer_configs.items():
+            self._compiled_rules[system] = [
+                (re.compile(r.pattern, re.IGNORECASE), r.layer, r.label)
+                for r in config.rules
+            ]
+
+    def detect_layer(self, table_name: str, system: str = "rrp") -> str:
+        for pattern, layer, _ in self._compiled_rules.get(system, []):
+            if pattern.search(table_name):
+                return layer
+        return "other"
+
+    @classmethod
+    def from_manifests(cls, source_data_dir: Path) -> "LayerDetector":
+        ...</code></pre>
+
+<h3>改造④ ParserService 统一路由</h3>
+<pre><code>class ParserService:
+    def __init__(self, source_data_dir: str, output_dir: str):
+        self._registry = ParserRegistry()
+        self._layer_detector = LayerDetector.from_manifests(Path(source_data_dir))
+        self._table_name_resolver = TableNameResolver(self._layer_detector)
+        self._datasource_configs = self._load_manifests(Path(source_data_dir))
+        self._register_parsers()
+
+    def _register_parsers(self):
+        oracle_parser = OracleParser(self._layer_detector, self._table_name_resolver)
+        warehouse_parser = WarehouseParser(self._layer_detector, self._table_name_resolver)
+        self._registry.register(".tab", oracle_parser)
+        self._registry.register(".prc", oracle_parser)
+        self._registry.register(".sql", warehouse_parser)
+        self._registry.register(".ctl", warehouse_parser)
+
+    def parse_all(self) -> ParseResult:
+        result = ParseResult()
+        for ds_config in self._datasource_configs:
+            if not ds_config.enabled:
+                continue
+            system_dir = Path(self._source_data_dir) / ds_config.path
+            output = self._registry.parse_directory(system_dir, ds_config.system)
+            result.merge(output)
+        return result</code></pre>
+
+<div class="section-divider"></div>
+
+<!-- ==================== 五、实施路径 ==================== -->
+<h2>五、四阶段实施路径</h2>
+
+<div class="phase-timeline">
+  <div class="phase-card phase-1">
+    <div class="phase-num">阶段一 · 基础层</div>
+    <div class="phase-title">配置与规则层</div>
+    <ul class="phase-list">
+      <li>manifest.yml 扩展层级规则</li>
+      <li>LayerDetector 可配置化</li>
+      <li>TableNameResolver 可配置化</li>
+    </ul>
+    <div class="phase-risk">风险: 低 · 改动: 3 文件</div>
+  </div>
+  <div class="phase-card phase-2">
+    <div class="phase-num">阶段二 · 解析层</div>
+    <div class="phase-title">解析器统一与注入</div>
+    <ul class="phase-list">
+      <li>ParserService 统一路由</li>
+      <li>WarehouseParser 多系统注入</li>
+      <li>IndicatorAdapter 适配器化</li>
+    </ul>
+    <div class="phase-risk">风险: 中 · 改动: 5 文件</div>
+  </div>
+  <div class="phase-card phase-3">
+    <div class="phase-num">阶段三 · 展示层</div>
+    <div class="phase-title">前端动态适配</div>
+    <ul class="phase-list">
+      <li>层级配置 API 新增</li>
+      <li>前端层级配色动态化</li>
+      <li>修复 dws/ads 不一致 BUG</li>
+    </ul>
+    <div class="phase-risk">风险: 低 · 改动: 4 文件</div>
+  </div>
+  <div class="phase-card phase-4">
+    <div class="phase-num">阶段四 · 扩展层</div>
+    <div class="phase-title">新系统零代码接入</div>
+    <ul class="phase-list">
+      <li>PAM/CCR/ICR/BRT 接入</li>
+      <li>TDH/GBase 可选系统接入</li>
+      <li>全量回归测试</li>
+    </ul>
+    <div class="phase-risk">风险: 低 · 改动: 配置为主</div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ==================== 六、新系统接入 ==================== -->
+<h2>六、改造后新增系统接入流程</h2>
+
+<div class="success-box">
+  <h3>✅ 三步零代码接入</h3>
+</div>
+
+<div class="step-flow">
+  <div class="step-item">
+    <div class="step-num">1</div>
+    <div class="step-title">创建目录 + manifest</div>
+    <div class="step-desc">mkdir -p SOURCE_DATA/PAM/{ddl,dml,config}<br>编写 manifest.yml 定义层级规则</div>
+  </div>
+  <div class="step-item">
+    <div class="step-num">2</div>
+    <div class="step-title">放入数据文件</div>
+    <div class="step-desc">将 SQL 脚本按 ddl/ + dml/ 放入对应目录</div>
+  </div>
+  <div class="step-item">
+    <div class="step-num">3</div>
+    <div class="step-title">注册到全局 manifest</div>
+    <div class="step-desc">在 SOURCE_DATA/manifest.yml 的 sources 中添加一条记录</div>
+  </div>
+</div>
+
+<p>完成后，PAM 系统的数据将：</p>
+<ul>
+  <li>自动被 <strong>WarehouseParser</strong> 解析（复用同一套脚本）</li>
+  <li>自动按 manifest.yml 定义的层级规则分层</li>
+  <li>自动在血缘图、口径 Pipeline、指标查询中正确展示</li>
+</ul>
+
+<div class="section-divider"></div>
+
+<!-- ==================== 七、风险 ==================== -->
+<h2>七、风险与回退策略</h2>
+<table>
+  <thead><tr><th>风险</th><th>概率</th><th>影响</th><th>缓解措施</th></tr></thead>
+  <tbody>
+    <tr><td>LayerDetector 重构导致 RRP 回归</td><td><span class="badge badge-amber">中</span></td><td><span class="badge badge-red">高</span></td><td>RRP 的 manifest.yml 与当前硬编码规则完全一致，先验证 RRP 无回归</td></tr>
+    <tr><td>WarehouseParser 多系统注入 Bug</td><td><span class="badge badge-amber">中</span></td><td><span class="badge badge-amber">中</span></td><td>system 参数默认值 "rrp" 保证向后兼容</td></tr>
+    <tr><td>前端动态加载增加延迟</td><td><span class="badge badge-green">低</span></td><td><span class="badge badge-green">低</span></td><td>层级配置 API 响应体 &lt; 1KB，可缓存在 localStorage</td></tr>
+    <tr><td>IndicatorAdapter 转换精度不足</td><td><span class="badge badge-amber">中</span></td><td><span class="badge badge-amber">中</span></td><td>保留 IndicatorService 独立路径，Adapter 仅用于统一图谱展示</td></tr>
+  </tbody>
+</table>
+
+<div class="section-divider"></div>
+
+<!-- ==================== 八、验收标准 ==================== -->
+<h2>八、验收标准</h2>
+<table>
+  <thead><tr><th>验收项</th><th>标准</th></tr></thead>
+  <tbody>
+    <tr><td>RRP 功能无回归</td><td>改造后 RRP 的血缘图、口径 Pipeline、指标查询结果与改造前完全一致</td></tr>
+    <tr><td>EDW 正确解析</td><td>EDW 的 DDL/DML 脚本被正确解析，表级和字段级血缘正确</td></tr>
+    <tr><td>MCS 正确解析</td><td>MCS 的 DDL/DML 脚本被正确解析，层级检测按 manifest 规则执行</td></tr>
+    <tr><td>FDM 指标融入图谱</td><td>FDM 的指标依赖关系在统一血缘图谱中可见</td></tr>
+    <tr><td>前端层级配色正确</td><td>所有系统的节点在血缘图和口径 Pipeline 中正确着色</td></tr>
+    <tr><td>新增系统零代码</td><td>PAM/CCR/ICR/BRT 仅通过 manifest.yml 配置即可接入</td></tr>
+  </tbody>
+</table>
+
+</div>
+</body>
+</html>

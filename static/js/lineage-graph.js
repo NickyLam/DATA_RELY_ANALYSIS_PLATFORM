@@ -11,15 +11,17 @@
     window.currentQuery = window.currentQuery || null;
     window.graphData = window.graphData || null;
 
-    const LAYER_CONFIG = {
-        'ods':   { label: 'ODS源系统层',   color: '#10b981', bg: '#d1fae5', border: '#059669', order: 0 },
-        'diis': { label: 'DIIS明细层',     color: '#0ea5e9', bg: '#e0f2fe', border: '#0284c7', order: 1 },
-        'base': { label: 'B基础层',       color: '#6366f1', bg: '#e0e7ff', border: '#4f46e5', order: 2 },
-        'mdl':  { label: 'M模型层',       color: '#a855f7', bg: '#f3e8ff', border: '#9333ea', order: 3 },
-        'app':  { label: 'A/S应用汇总层', color: '#f97316', bg: '#ffedd5', border: '#ea580c', order: 4 },
-        'east': { label: 'EAST报送层',     color: '#ef4444', bg: '#fee2e2', border: '#dc2626', order: 5 },
-        'config': { label: '配置/临时表',  color: '#64748b', bg: '#f1f5f9', border: '#475569', order: 6 },
-    };
+    /** 检查 D3 是否可用，不可用时在图谱区域显示提示 */
+    function checkD3() {
+        if (typeof d3 === 'undefined') {
+            const container = document.querySelector('.graph-area');
+            if (container) {
+                container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ef4444;font-size:15px;flex-direction:column;gap:8px;"><span style="font-size:32px;">⚠️</span><span>D3.js 未加载，血缘图谱无法渲染</span><span style="font-size:12px;color:#94a3b8;">请检查网络连接或刷新页面（已切换为本地部署）</span></div>';
+            }
+            return false;
+        }
+        return true;
+    }
 
     // 获取节点相关的字段名
     function _getNodeField(node, data) {
@@ -46,8 +48,10 @@
         return null;
     }
 
-    // 根据代际深度生成层级配置
     function getDepthLayerConfig(depth) {
+        if (typeof getDepthLayerConfigShared === 'function') {
+            return getDepthLayerConfigShared(depth);
+        }
         const depthConfigs = [
             { color: '#ef4444', border: '#dc2626', bg: '#fef2f2', label: '目标层' },
             { color: '#f59e0b', border: '#d97706', bg: '#fffbeb', label: '第1层来源' },
@@ -62,6 +66,7 @@
 
     // 垂直流向布局渲染
     window.renderGraphVertical = function(data) {
+        if (!checkD3()) return;
         g.selectAll('*').remove();
 
         if (!data.nodes || data.nodes.length === 0) {
@@ -267,7 +272,7 @@
             const isQueryTarget = node.id === queryTargetTable ||
                                  (queryTargetTable.includes('.') && node.id === queryTargetTable) ||
                                  (!queryTargetTable.includes('.') && node.id.split('.').pop() === queryTargetTable);
-            const config = LAYER_CONFIG[node.layer] || LAYER_CONFIG['config'];
+            const config = getLayerConfig(node.layer, typeof getCurrentSystem === 'function' ? getCurrentSystem() : undefined);
 
             const ng = g.append('g')
                 .attr('transform', `translate(${pos.x},${pos.y})`)
@@ -319,7 +324,9 @@
                     .text(`→ ${relatedField}`);
             }
 
-            const layerLabel = config.label.split(' ')[0];
+            const layerLabel = typeof getLayerShortLabel === 'function'
+                ? getLayerShortLabel(node.layer)
+                : (config.label.split(' ')[0] || config.label).toUpperCase();
             ng.append('rect')
                 .attr('x', nodeW - 55).attr('y', nodeH - 20)
                 .attr('width', 50).attr('height', 16)
@@ -341,12 +348,16 @@
         if (!legendEl) return;
         legendEl.style.display = 'block';
         let html = '';
-        Object.keys(layers).sort((a, b) =>
-            (LAYER_CONFIG[a]?.order || 99) - (LAYER_CONFIG[b]?.order || 99)
-        ).forEach(layer => {
-            const config = LAYER_CONFIG[layer];
-            if (config && layers[layer]) {
-                html += `<div class="legend-item"><div class="legend-dot" style="background:${config.color}"></div>${config.label} (${layers[layer].length})</div>`;
+        Object.keys(layers).sort((a, b) => {
+            const depthA = parseInt(a.split('_')[1]) || 0;
+            const depthB = parseInt(b.split('_')[1]) || 0;
+            return depthA - depthB;
+        }).forEach(layerKey => {
+            const depth = parseInt(layerKey.split('_')[1]) || 0;
+            const config = getDepthLayerConfig(depth);
+            if (config && layers[layerKey]) {
+                const label = depth === 0 ? '目标表' : `第${depth}层来源`;
+                html += `<div class="legend-item"><div class="legend-dot" style="background:${config.color}"></div>${label} (${layers[layerKey].length})</div>`;
             }
         });
         legendEl.innerHTML = html;
@@ -393,6 +404,7 @@
 
     // 初始化 D3 SVG 画布
     window.initDisplayTab = function() {
+        if (!checkD3()) return;
         if (!svg) {
             const container = document.querySelector('.graph-area');
             const width = container.clientWidth;

@@ -2,7 +2,7 @@
 
 import unittest
 from core.caliber_extractor import CaliberExtractor
-from core.models import CaliberInfo, FieldMapping, SQLCondition
+from core.models import CaliberInfo, FieldMapping, SQLCondition, SourceLocation
 
 
 class TestExtractCteDefinitions(unittest.TestCase):
@@ -224,8 +224,7 @@ class TestSerializationBatchC(unittest.TestCase):
         info = CaliberInfo(
             target_table="T1",
             target_column="C1",
-            source_table="S1",
-            source_column="SC1",
+            source_location=SourceLocation(source_table="S1", source_column="SC1"),
             cte_definitions=["tmp: SELECT a FROM x"],
             custom_functions=["FN_CALC"],
             full_expression="FN_CALC(x)",
@@ -280,7 +279,7 @@ class TestCaliberSpecBatchC(unittest.TestCase):
         info = CaliberInfo(
             target_table="T1",
             target_column="C1",
-            source_column="X",
+            source_location=SourceLocation(source_column="X"),
             full_expression="FN_CALC(X)",
         )
         spec = info.generate_caliber_spec()
@@ -292,7 +291,7 @@ class TestCaliberSpecBatchC(unittest.TestCase):
         info = CaliberInfo(
             target_table="T1",
             target_column="C1",
-            source_column="X",
+            source_location=SourceLocation(source_column="X"),
             full_expression="X",
         )
         spec = info.generate_caliber_spec()

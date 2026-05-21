@@ -408,10 +408,8 @@ function renderCaliberResults(data, table, field) {
     CaliberTab._lastCaliberData = data;
 
     // ─── 第一层：概览卡 ───
-    const LAYER_COLORS = { east: '#7c3aed', mdl: '#2563eb', dws: '#059669', ads: '#ea580c', ods: '#0891b2', diis: '#64748b', other: '#6b7280' };
-
     const flowTags = (data.data_flow_layers_summary || []).map(l => {
-        const c = LAYER_COLORS[l] || '#6b7280';
+        const c = getLayerColor(l);
         return `<span class="ov-flow-tag" style="background:${c}20;color:${c};">${l.toUpperCase()}</span>`;
     });
     const flowArrows = flowTags.length > 1
@@ -477,7 +475,7 @@ function renderCaliberResults(data, table, field) {
         const trackHeader = document.createElement('div');
         trackHeader.className = 'pipeline-track-header';
         const layerTags = (chain.data_flow_layers || []).map(l => {
-            const c = LAYER_COLORS[l] || '#6b7280';
+            const c = getLayerColor(l);
             return `<span style="display:inline-block;padding:1px 6px;background:${c}20;color:${c};border-radius:3px;font-size:10px;font-weight:600;">${l.toUpperCase()}</span>`;
         }).join(' → ');
         trackHeader.innerHTML = `
@@ -539,9 +537,6 @@ function createPipelineNode(step, stepIdx, chainIdx) {
     node.setAttribute('data-chain', chainIdx);
     node.setAttribute('data-step', stepIdx);
 
-    const LAYER_COLORS = { east: '#7c3aed', mdl: '#2563eb', dws: '#059669', ads: '#ea580c', ods: '#0891b2', diis: '#64748b', other: '#6b7280' };
-
-    // 层级色条
     const tgtLayer = step.target_table_layer || 'other';
     const layerBarClass = `layer-${tgtLayer}`;
 

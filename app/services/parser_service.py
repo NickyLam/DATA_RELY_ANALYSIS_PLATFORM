@@ -1,6 +1,15 @@
 """
-解析服务
-封装现有的表/存储过程解析逻辑，支持增量解析与异步任务管理
+解析服务（统一路由版本）
+
+封装所有数据源的解析逻辑，通过 ParserRegistry 统一路由，
+支持 Oracle (.tab/.prc)、数仓 (.sql/.ctl)、指标 (.xlsx/.proc) 等多种数据源。
+
+改造要点：
+  - 所有数据源统一走 Registry 路由，消除双路径
+  - Oracle 数据源通过 OracleTabAdapter/OraclePrcAdapter 走 Registry
+  - 数仓数据源通过 WarehouseSQLParser 走 Registry，支持多系统配置注入
+  - 指标数据源通过 IndicatorAdapter 走 Registry
+  - 保留 _parse_tab_directory/_parse_proc_directory 作为兼容回退
 """
 
 from __future__ import annotations
@@ -8,15 +17,17 @@ from __future__ import annotations
 import json
 import logging
 import os
-import pickle
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any, Optional
 
-from app.config import config
+from app.config import config, DataSourceConfig
 from app.repository import DataRepository, search_table_dicts
+from app.services.cache_store import CacheStore
+from app.services.event_bus import EventBus, EventType, get_event_bus
+from app.services.tracer_factory import TracerFactory
 
 logger = logging.getLogger(__name__)
 
@@ -24,22 +35,32 @@ try:
     from core.table_parser import OracleTableParser
     from core.procedure_parser import EnhancedProcedureParser
     from core.caliber_extractor import CaliberExtractor
-    from core.models import FieldMapping, TableLineage
+    from core.models import FieldMapping, TableLineage, TableInfo, ProcedureInfo
+    from core.parser_registry import ParserRegistry
+    from core.adapters import OracleTabAdapter, OraclePrcAdapter, IndicatorAdapter
+    from core.warehouse import WarehouseSQLParser, SchemaResolver
+    from core.layer_detector import LayerDetector
 except ImportError as e:
     logger.warning("无法导入核心解析模块: %s", e)
     OracleTableParser = None
     EnhancedProcedureParser = None
     CaliberExtractor = None
+    ParserRegistry = None
+    OracleTabAdapter = None
+    OraclePrcAdapter = None
+    IndicatorAdapter = None
+    WarehouseSQLParser = None
+    SchemaResolver = None
+    LayerDetector = None
 
 
 class ParseResult:
-    """解析结果数据类"""
 
     def __init__(self):
-        self.tables: list[dict] = []
-        self.procedures: list[dict] = []
-        self.table_lineages: list[dict] = []
-        self.field_mappings: list[dict] = []
+        self.tables: list[TableInfo] = []
+        self.procedures: list[ProcedureInfo] = []
+        self.table_lineages: list[TableLineage] = []
+        self.field_mappings: list[FieldMapping] = []
         self.caliber_infos: list[dict] = []
         self.errors: list[str] = []
         self.parse_time_sec: float = 0.0
@@ -55,18 +76,36 @@ class ParseResult:
             "parse_time_sec": round(self.parse_time_sec, 2),
         }
 
-    def merge(self, other: "ParseResult") -> None:
-        """合并另一个解析结果（增量模式）- 支持存储过程去重更新"""
-        existing_tables = {t["full_name"]: i for i, t in enumerate(self.tables)}
+    def to_serializable(self) -> dict[str, Any]:
+        return {
+            "tables": [t.to_dict() for t in self.tables],
+            "procedures": [p.to_dict() for p in self.procedures],
+            "table_lineages": [tl.to_dict() for tl in self.table_lineages],
+            "field_mappings": [fm.to_dict() for fm in self.field_mappings],
+            "caliber_infos": self.caliber_infos,
+        }
+
+    @classmethod
+    def from_serializable(cls, data: dict[str, Any]) -> ParseResult:
+        result = cls()
+        result.tables = [TableInfo.from_dict(t) for t in data.get("tables", [])]
+        result.procedures = [ProcedureInfo.from_dict(p) for p in data.get("procedures", [])]
+        result.table_lineages = [TableLineage.from_dict(tl) for tl in data.get("table_lineages", [])]
+        result.field_mappings = [FieldMapping.from_dict(fm) for fm in data.get("field_mappings", [])]
+        result.caliber_infos = data.get("caliber_infos", [])
+        return result
+
+    def merge(self, other: ParseResult) -> None:
+        existing_tables = {t.full_name: i for i, t in enumerate(self.tables)}
         for table in other.tables:
-            if table["full_name"] not in existing_tables:
+            if table.full_name not in existing_tables:
                 self.tables.append(table)
             else:
-                idx = existing_tables[table["full_name"]]
+                idx = existing_tables[table.full_name]
                 self.tables[idx] = table
 
-        existing_procs = {p["full_name"]: p for p in self.procedures}
-        new_proc_names = {p["full_name"] for p in other.procedures}
+        existing_procs = {p.full_name: p for p in self.procedures}
+        new_proc_names = {p.full_name for p in other.procedures}
 
         removed_procs = set(existing_procs.keys()) & new_proc_names
         if removed_procs:
@@ -76,39 +115,39 @@ class ParseResult:
 
             for proc_name in removed_procs:
                 old_lineages_to_remove.update(
-                    (tl["source_table"], tl["target_table"], tl.get("procedure", ""))
+                    (tl.source_table, tl.target_table, tl.procedure)
                     for tl in self.table_lineages
-                    if tl.get("procedure", "") == proc_name
+                    if tl.procedure == proc_name
                 )
                 old_mappings_to_remove.update(
-                    (fm["source_table"], fm["source_column"], fm["target_table"], fm["target_column"])
+                    (fm.source_table, fm.source_column, fm.target_table, fm.target_column)
                     for fm in self.field_mappings
-                    if fm.get("procedure", "") == proc_name
+                    if fm.procedure == proc_name
                 )
 
             if old_lineages_to_remove:
                 self.table_lineages = [
                     tl for tl in self.table_lineages
-                    if (tl["source_table"], tl["target_table"], tl.get("procedure", "")) not in old_lineages_to_remove
+                    if (tl.source_table, tl.target_table, tl.procedure) not in old_lineages_to_remove
                 ]
                 logger.info("已清除 %d 条旧血缘关系", len(old_lineages_to_remove))
 
             if old_mappings_to_remove:
                 self.field_mappings = [
                     fm for fm in self.field_mappings
-                    if (fm["source_table"], fm["source_column"], fm["target_table"], fm["target_column"]) not in old_mappings_to_remove
+                    if (fm.source_table, fm.source_column, fm.target_table, fm.target_column) not in old_mappings_to_remove
                 ]
                 logger.info("已清除 %d 条旧字段映射", len(old_mappings_to_remove))
 
         for proc in other.procedures:
-            existing_procs[proc["full_name"]] = proc
+            existing_procs[proc.full_name] = proc
 
         self.procedures = list(existing_procs.values())
 
         seen_lineages = set()
         unique_lineages = []
         for tl in other.table_lineages + self.table_lineages:
-            key = (tl["source_table"], tl["target_table"], tl.get("procedure", ""))
+            key = (tl.source_table, tl.target_table, tl.procedure)
             if key not in seen_lineages:
                 seen_lineages.add(key)
                 unique_lineages.append(tl)
@@ -117,7 +156,7 @@ class ParseResult:
         seen_mappings = set()
         unique_mappings = []
         for fm in other.field_mappings + self.field_mappings:
-            key = (fm["source_table"], fm["source_column"], fm["target_table"], fm["target_column"])
+            key = (fm.source_table, fm.source_column, fm.target_table, fm.target_column)
             if key not in seen_mappings:
                 seen_mappings.add(key)
                 unique_mappings.append(fm)
@@ -138,7 +177,7 @@ class ParseResult:
 
 
 class ParserService:
-    """数据库对象解析服务"""
+    """数据库对象解析服务（统一路由版本）"""
 
     def __init__(self, data_dir: str, schema_dirs: list[str], output_dir: str):
         self.data_dir = Path(data_dir)
@@ -148,16 +187,18 @@ class ParserService:
 
         self._table_parser: Optional[OracleTableParser] = None
         self._proc_parser: Optional[EnhancedProcedureParser] = None
+        self._registry: Optional[ParserRegistry] = None
+        self._layer_detector: Optional[LayerDetector] = None
         self._current_result: Optional[ParseResult] = None
-        self._lineage_tracer: Optional[Any] = None
-        self._repository: Optional[DataRepository] = None
+        self._cache_store = CacheStore(self.output_dir, config=config)
+        self._tracer_factory = TracerFactory()
         self._result_lock = threading.Lock()
         self._cached_procedures: dict[str, Any] = {}
+        self._event_bus = get_event_bus()
 
         self._executor = ThreadPoolExecutor(max_workers=2)
 
     def initialize_parsers(self) -> None:
-        """初始化解析器实例"""
         if OracleTableParser is None:
             raise RuntimeError("核心解析模块未安装，请检查依赖")
 
@@ -170,130 +211,71 @@ class ParserService:
             self._proc_parser = EnhancedProcedureParser(tables=tables)
             logger.info("存储过程解析器初始化完成 (Enhanced)")
 
-    def load_from_cache(self) -> Optional[ParseResult]:
-        """
-        从缓存文件加载数据（优先 pickle，回退 JSON）
+        if self._layer_detector is None and LayerDetector is not None:
+            self._layer_detector = LayerDetector.from_manifests(config.source_data_path)
+            logger.info("LayerDetector 初始化完成 (从 manifest 加载)")
 
-        pickle 缓存约 10 秒加载，JSON 约 2 分钟。
-        pickle 不存在时自动回退到 JSON 并生成 pickle。
+        if self._registry is None and ParserRegistry is not None:
+            self._registry = ParserRegistry()
 
-        Returns:
-            ParseResult 如果缓存有效，否则返回 None
-        """
-        pkl_file = self.output_dir / "lineage_data.pkl"
-        json_file = self.output_dir / "lineage_data.json"
+            if OracleTabAdapter is not None:
+                self._registry.register(OracleTabAdapter(self._table_parser))
+            if OraclePrcAdapter is not None:
+                self._registry.register(OraclePrcAdapter(self._proc_parser))
 
-        # 策略 1：优先加载 pickle（快速）
-        if pkl_file.exists():
-            try:
-                start_time = time.time()
-                logger.info("正在加载 pickle 缓存: %s (大小: %.1f MB)",
-                            pkl_file, pkl_file.stat().st_size / 1024 / 1024)
+            for ds_config in config.datasource_configs:
+                if not ds_config.enabled:
+                    continue
 
-                with open(pkl_file, "rb") as f:
-                    data = pickle.load(f)
+                ds_path = self._resolve_ds_path(ds_config.data_dir)
+                if not ds_path.exists():
+                    continue
 
-                metadata = data.get("metadata", {})
-                if not metadata or not metadata.get("total_tables"):
-                    logger.warning("pickle 缓存元数据无效，删除后重试")
-                    pkl_file.unlink(missing_ok=True)
-                else:
-                    result = self._populate_result_from_data(data)
-                    elapsed = time.time() - start_time
-                    logger.info(
-                        "✅ pickle 缓存加载完成: %d 张表, %d 个过程, %d 条血缘, 耗时 %.2fs",
-                        len(result.tables),
-                        len(result.procedures),
-                        len(result.table_lineages),
-                        elapsed,
+                if ds_config.parser == "warehouse" and WarehouseSQLParser is not None and SchemaResolver is not None:
+                    schema_resolver = SchemaResolver()
+                    warehouse_parser = WarehouseSQLParser(
+                        schema_resolver=schema_resolver,
+                        system=ds_config.name,
                     )
-                    return result
+                    self._registry.register(warehouse_parser)
+                    logger.info(
+                        "数仓脚本解析器注册完成: %s (system=%s)",
+                        ds_config.display_name,
+                        ds_config.name,
+                    )
 
-            except Exception as e:
-                logger.warning("pickle 缓存加载失败: %s，尝试 JSON", e)
-                pkl_file.unlink(missing_ok=True)
+                elif ds_config.parser == "indicator" and IndicatorAdapter is not None:
+                    indicator_adapter = IndicatorAdapter(
+                        layer_detector=self._layer_detector,
+                        system=ds_config.name,
+                    )
+                    self._registry.register(indicator_adapter)
+                    logger.info(
+                        "指标解析器适配器注册完成: %s (system=%s)",
+                        ds_config.display_name,
+                        ds_config.name,
+                    )
 
-        # 策略 2：回退到 JSON（慢但可靠）
-        if not json_file.exists():
-            logger.info("缓存文件不存在 (pickle 和 JSON 均无)")
+            logger.info("解析器注册表初始化完成: %s", self._registry)
+
+    def load_from_cache(self) -> Optional[ParseResult]:
+        data = self._cache_store.load_from_cache()
+        if data is None:
             return None
-
-        try:
-            start_time = time.time()
-            logger.info("正在加载 JSON 缓存: %s (大小: %.1f MB)",
-                        json_file, json_file.stat().st_size / 1024 / 1024)
-
-            with open(json_file, "r", encoding="utf-8") as f:
-                data = json.load(f)
-
-            metadata = data.get("metadata", {})
-            if not metadata or not metadata.get("total_tables"):
-                logger.warning("JSON 缓存元数据无效，跳过缓存加载")
-                return None
-
-            result = self._populate_result_from_data(data)
-            elapsed = time.time() - start_time
-            logger.info(
-                "✅ JSON 缓存加载完成: %d 张表, %d 个过程, %d 条血缘, 耗时 %.2fs",
-                len(result.tables),
-                len(result.procedures),
-                len(result.table_lineages),
-                elapsed,
-            )
-
-            # 自动生成 pickle 缓存以加速下次启动
-            self._save_pickle_cache(data)
-
-            return result
-
-        except Exception as e:
-            logger.error("JSON 缓存加载失败: %s", e, exc_info=True)
-            return None
+        return self._populate_result_from_data(data)
 
     def _populate_result_from_data(self, data: dict) -> ParseResult:
-        """从字典数据填充 ParseResult 并初始化 Repository"""
-        result = ParseResult()
-        result.tables = data.get("tables", [])
-        result.procedures = data.get("procedures", [])
-        result.table_lineages = data.get("table_lineages", [])
-        result.field_mappings = data.get("field_mappings", [])
-        result.caliber_infos = data.get("caliber_infos", [])
+        result = ParseResult.from_serializable(data)
         result.parse_time_sec = 0.0
 
         self._current_result = result
 
-        # 初始化 Repository 并直接用内存数据填充（避免重复加载 JSON）
-        json_file = self.output_dir / "lineage_data.json"
-        self._repository = DataRepository(json_file)
-        # 不调用 repository.load()（会重复读 JSON），直接 update 内存数据
-        self._repository.update(data)
+        repository = self._cache_store.get_repository()
+        repository.update(data)
 
         return result
 
-    def _save_pickle_cache(self, data: dict) -> None:
-        """将数据保存为 pickle 格式以加速后续启动"""
-        pkl_file = self.output_dir / "lineage_data.pkl"
-        try:
-            start_time = time.time()
-            with open(pkl_file, "wb") as f:
-                pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
-            elapsed = time.time() - start_time
-            logger.info("pickle 缓存已保存: %s (大小: %.1f MB, 耗时 %.2fs)",
-                        pkl_file, pkl_file.stat().st_size / 1024 / 1024, elapsed)
-        except Exception as e:
-            logger.warning("pickle 缓存保存失败: %s", e)
-
     def parse_existing_data(self, force: bool = False) -> ParseResult:
-        """
-        解析已有的 RRP_ORACLE 目录下的所有文件
-        
-        Args:
-            force: 是否强制全量解析（忽略缓存）
-        
-        Returns:
-            ParseResult 包含完整的解析结果
-        """
-        # 缓存优先：非强制模式时先尝试加载缓存
         if not force:
             cached = self.load_from_cache()
             if cached is not None:
@@ -303,27 +285,62 @@ class ParserService:
         result = ParseResult()
 
         try:
+            self._event_bus.publish(EventType.PARSE_STARTED)
             self.initialize_parsers()
 
-            logger.info("开始扫描目录: %s", self.data_dir)
-
-            # 解析 .tab 文件 (表结构)
-            for schema_dir in self.schema_dirs:
-                schema_path = self.data_dir / schema_dir
-                if schema_path.exists():
-                    self._parse_tab_directory(schema_path, result)
-
-            # 解析 .prc 文件 (存储过程)
-            if self._proc_parser:
+            # Oracle 数据源：统一走 Registry 路由
+            logger.info("开始扫描 Oracle 目录: %s", self.data_dir)
+            if self._registry is not None:
                 for schema_dir in self.schema_dirs:
                     schema_path = self.data_dir / schema_dir
                     if schema_path.exists():
-                        self._parse_proc_directory(schema_path, result)
+                        try:
+                            output = self._registry.parse_directory(schema_path)
+                            self._merge_output_to_result(output, result)
+                            logger.info(
+                                "Oracle schema %s 解析完成: %d 表, %d 血缘",
+                                schema_dir,
+                                len(output.tables),
+                                len(output.table_lineages),
+                            )
+                        except Exception as e:
+                            logger.error("Oracle schema %s 解析失败: %s", schema_dir, e, exc_info=True)
+                            result.errors.append(f"Oracle schema {schema_dir}: {str(e)}")
+
+            # 其他数据源：统一走 Registry 路由
+            if self._registry is not None:
+                for ds_config in config.datasource_configs:
+                    if ds_config.name == "oracle":
+                        continue
+                    if not ds_config.enabled:
+                        logger.info("数据源 %s 已禁用，跳过", ds_config.display_name)
+                        continue
+
+                    ds_path = self._resolve_ds_path(ds_config.data_dir)
+                    if not ds_path.exists():
+                        logger.info("数据源目录不存在，跳过: %s (%s)", ds_config.name, ds_path)
+                        continue
+
+                    logger.info("开始解析数据源 %s: %s", ds_config.display_name, ds_path)
+                    try:
+                        output = self._registry.parse_directory(ds_path)
+                        self._merge_output_to_result(output, result)
+                        logger.info(
+                            "数据源 %s 解析完成: %d 表, %d 血缘",
+                            ds_config.display_name,
+                            len(output.tables),
+                            len(output.table_lineages),
+                        )
+                    except Exception as e:
+                        logger.error("数据源 %s 解析失败: %s", ds_config.name, e, exc_info=True)
+                        result.errors.append(f"数据源 {ds_config.name}: {str(e)}")
 
             result.parse_time_sec = time.time() - start_time
             self._current_result = result
 
             self._save_result_to_cache(result)
+            self._event_bus.publish(EventType.DATA_CHANGED)
+            self._event_bus.publish(EventType.PARSE_COMPLETED)
             logger.info(
                 "解析完成: %d 张表, %d 个过程, %d 条血缘, 耗时 %.2fs",
                 len(result.tables),
@@ -335,6 +352,7 @@ class ParserService:
         except Exception as e:
             logger.error("解析过程异常: %s", e, exc_info=True)
             result.errors.append(f"解析异常: {str(e)}")
+            self._event_bus.publish(EventType.PARSE_FAILED)
 
         return result
 
@@ -344,36 +362,20 @@ class ParserService:
         mode: str = "incremental",
         progress_callback=None,
     ) -> ParseResult:
-        """
-        解析用户上传的文件列表（串行模式，支持进度回调）
-
-        Args:
-            file_paths: 上传文件的路径列表
-            mode: 解析模式 (incremental | full)
-            progress_callback: 进度回调函数 callback(percent, current_file, message, **stats)
-
-        Returns:
-            ParseResult 上传文件的解析结果
-        """
         start_time = time.time()
         result = ParseResult()
 
         try:
+            self._event_bus.publish(EventType.PARSE_STARTED)
             self.initialize_parsers()
 
-            tab_files = [f for f in file_paths if f.suffix.lower() == ".tab"]
-            prc_files = [f for f in file_paths if f.suffix.lower() == ".prc"]
-            total_files = len(tab_files) + len(prc_files)
-
-            logger.info("开始串行解析上传文件: %d 个 .tab 文件, %d 个 .prc 文件 (共 %d 个)",
-                       len(tab_files), len(prc_files), total_files)
+            total_files = len(file_paths)
+            logger.info("开始串行解析上传文件: 共 %d 个文件", total_files)
 
             if progress_callback:
                 progress_callback(5, "", "初始化解析引擎...")
 
-            all_files = [(f, "tab") for f in tab_files] + [(f, "prc") for f in prc_files]
-
-            for idx, (file_path, file_type) in enumerate(all_files):
+            for idx, file_path in enumerate(file_paths):
                 percent = 5 + int((idx / max(total_files, 1)) * 85)
                 current_file_name = file_path.name
 
@@ -388,10 +390,16 @@ class ParserService:
                     )
 
                 try:
-                    if file_type == "tab":
+                    if self._registry is not None and self._registry.get_parser(file_path) is not None:
+                        output = self._registry.parse_file(file_path)
+                        self._merge_output_to_result(output, result)
+                    elif file_path.suffix.lower() == ".tab":
                         self._parse_single_tab(file_path, result)
-                    elif file_type == "prc":
+                    elif file_path.suffix.lower() == ".prc":
                         self._parse_single_prc(file_path, result)
+                    else:
+                        logger.warning("不支持的文件类型: %s", file_path.suffix)
+                        result.errors.append(f"不支持的文件类型: {file_path.suffix}")
 
                 except Exception as e:
                     logger.error("文件解析异常: %s - %s", file_path, e)
@@ -418,8 +426,11 @@ class ParserService:
                 self._current_result = result
                 self._save_result_to_cache(result)
 
+            self._event_bus.publish(EventType.DATA_CHANGED)
+            self._event_bus.publish(EventType.PARSE_COMPLETED)
+
             if progress_callback:
-                progress_callback(100, "", "✅ 解析完成！")
+                progress_callback(100, "", "解析完成！")
 
             logger.info(
                 "文件解析完成: %d 张表, %d 个过程, 耗时 %.2fs",
@@ -431,30 +442,26 @@ class ParserService:
         except Exception as e:
             logger.error("文件解析异常: %s", e, exc_info=True)
             result.errors.append(f"解析异常: {str(e)}")
+            self._event_bus.publish(EventType.PARSE_FAILED)
             if progress_callback:
-                progress_callback(-1, "", f"❌ 解析失败: {str(e)}")
+                progress_callback(-1, "", f"解析失败: {str(e)}")
 
         return result
 
     def _get_repository(self) -> DataRepository:
-        """获取或创建 DataRepository 实例"""
-        if self._repository is None:
-            cache_file = self.output_dir / "lineage_data.json"
-            self._repository = DataRepository(cache_file)
-            self._repository.load()
-        return self._repository
+        return self._cache_store.get_repository()
 
     def get_current_data(self) -> Optional[dict[str, Any]]:
-        """获取当前缓存的完整数据（优先从内存缓存读取）"""
+        if self._current_result is not None:
+            return self._current_result.to_serializable()
         repo = self._get_repository()
         cached = repo.get_raw_data()
         if cached:
             return cached
-
-        cache_file = self.output_dir / "lineage_data.json"
-        if cache_file.exists():
+        json_file = self._cache_store.get_json_file()
+        if json_file.exists():
             try:
-                with open(cache_file, "r", encoding="utf-8") as f:
+                with open(json_file, "r", encoding="utf-8") as f:
                     data = json.load(f)
                 repo.update(data)
                 return data
@@ -463,169 +470,44 @@ class ParserService:
         return None
 
     def get_table_list(self) -> list[dict]:
-        """获取当前所有表的列表"""
+        if self._current_result is not None:
+            return [t.to_dict() for t in self._current_result.tables]
         data = self.get_current_data()
         if data:
             return data.get("tables", [])
         return []
 
     def search_tables(self, keyword: str, limit: int = 50) -> list[dict]:
-        """通过统一数据仓库搜索表。"""
         if self._current_result is not None:
-            return search_table_dicts(self._current_result.tables, keyword, limit)
+            return search_table_dicts([t.to_dict() for t in self._current_result.tables], keyword, limit)
         return self._get_repository().search_tables(keyword, limit)
 
     def get_procedure_list(self) -> list[dict]:
-        """获取当前所有存储过程的列表"""
+        if self._current_result is not None:
+            return [p.to_dict() for p in self._current_result.procedures]
         data = self.get_current_data()
         if data:
             return data.get("procedures", [])
         return []
 
     def get_lineage_tracer(self) -> Optional[Any]:
-        """获取或构建 LineageTracer 实例（支持从缓存重建 dataclass 对象）"""
-        if self._lineage_tracer is not None:
-            return self._lineage_tracer
+        if self._tracer_factory.lineage_tracer is not None:
+            return self._tracer_factory.lineage_tracer
 
         try:
-            from core.lineage_tracer import LineageTracer
-            from core.models import TableLineage, FieldMapping, TableInfo, ColumnInfo, ProcedureInfo
-
-            # 策略 1：从已解析的 dataclass 对象构建（全量解析后）
-            if self._table_parser and self._proc_parser and self._cached_procedures:
-                tables = self._table_parser.tables
-                procedures: dict = {}
-
-                all_table_lineages: list[TableLineage] = []
-                all_field_mappings: list[FieldMapping] = []
-
-                for proc_info in self._cached_procedures.values():
-                    procedures[proc_info.full_name] = proc_info
-                    all_table_lineages.extend(proc_info.table_lineages)
-                    all_field_mappings.extend(proc_info.field_mappings)
-
-                self._lineage_tracer = LineageTracer(
-                    tables=tables,
-                    procedures=procedures,
-                    table_lineages=all_table_lineages,
-                    field_mappings=all_field_mappings,
-                )
-                return self._lineage_tracer
-
-            # 策略 2：从缓存数据重建 dataclass 对象（缓存启动时）
             if self._current_result is not None:
-                logger.info("从缓存数据重建 LineageTracer dataclass 对象...")
-                t0 = time.time()
-
-                # 重建 TableInfo 对象
-                tables = {}
-                for t in self._current_result.tables:
-                    full_name = t.get("full_name", "")
-                    schema = t.get("schema", "")
-                    table_name = t.get("table_name", "")
-                    columns = [
-                        ColumnInfo(
-                            name=c.get("name", ""),
-                            data_type=c.get("data_type", ""),
-                            comment=c.get("comment", ""),
-                        )
-                        for c in t.get("columns", [])
-                    ]
-                    tables[full_name] = TableInfo(
-                        schema=schema,
-                        table_name=table_name,
-                        full_name=full_name,
-                        comment=t.get("comment", ""),
-                        columns=columns,
-                        primary_keys=t.get("primary_keys", []),
-                    )
-
-                # 重建 TableLineage + FieldMapping 对象
-                # 先按 procedure 分组 field_mappings
-                fm_by_proc: dict[str, list[FieldMapping]] = {}
-                for fm in self._current_result.field_mappings:
-                    proc_name = fm.get("procedure", "")
-                    fm_obj = FieldMapping(
-                        source_table=fm.get("source_table", ""),
-                        source_column=fm.get("source_column", ""),
-                        target_table=fm.get("target_table", ""),
-                        target_column=fm.get("target_column", ""),
-                        transform_logic=fm.get("transform_logic", ""),
-                        procedure=proc_name,
-                        confidence=fm.get("confidence", 1.0),
-                    )
-                    fm_by_proc.setdefault(proc_name, []).append(fm_obj)
-
-                # 重建 ProcedureInfo 对象
+                result = self._current_result
+                tables = {t.full_name: t for t in result.tables}
                 procedures = {}
-                for p in self._current_result.procedures:
-                    full_name = p.get("full_name", "")
-                    proc_name = p.get("proc_name", "")
-                    schema = p.get("schema", "")
-
-                    # 该过程的字段映射
-                    proc_field_mappings = fm_by_proc.get(full_name, [])
-
-                    # 该过程的表级血缘
-                    proc_table_lineages = [
-                        TableLineage(
-                            source_table=tl.get("source_table", ""),
-                            target_table=tl.get("target_table", ""),
-                            procedure=tl.get("procedure", ""),
-                        )
-                        for tl in self._current_result.table_lineages
-                        if tl.get("procedure", "") == full_name
-                    ]
-
-                    proc_info = ProcedureInfo(
-                        schema=schema,
-                        proc_name=proc_name,
-                        full_name=full_name,
-                        description=p.get("description", ""),
-                        source_tables=p.get("source_tables", []),
-                        target_tables=p.get("target_tables", []),
-                        config_tables=p.get("config_tables", []),
-                        table_lineages=proc_table_lineages,
-                        field_mappings=proc_field_mappings,
-                    )
-                    procedures[full_name] = proc_info
-                    self._cached_procedures[full_name] = proc_info
-
-                # 合并所有字段映射和表级血缘
-                all_field_mappings = [
-                    FieldMapping(
-                        source_table=fm.get("source_table", ""),
-                        source_column=fm.get("source_column", ""),
-                        target_table=fm.get("target_table", ""),
-                        target_column=fm.get("target_column", ""),
-                        transform_logic=fm.get("transform_logic", ""),
-                        procedure=fm.get("procedure", ""),
-                        confidence=fm.get("confidence", 1.0),
-                    )
-                    for fm in self._current_result.field_mappings
-                ]
-
-                all_table_lineages = [
-                    TableLineage(
-                        source_table=tl.get("source_table", ""),
-                        target_table=tl.get("target_table", ""),
-                        procedure=tl.get("procedure", ""),
-                    )
-                    for tl in self._current_result.table_lineages
-                ]
-
-                self._lineage_tracer = LineageTracer(
+                for p in result.procedures:
+                    procedures[p.full_name] = p
+                    self._cached_procedures[p.full_name] = p
+                return self._tracer_factory.create_lineage_tracer(
                     tables=tables,
                     procedures=procedures,
-                    table_lineages=all_table_lineages,
-                    field_mappings=all_field_mappings,
+                    table_lineages=result.table_lineages,
+                    field_mappings=result.field_mappings,
                 )
-                elapsed = time.time() - t0
-                logger.info(
-                    "LineageTracer 从缓存重建完成: %d 表, %d 过程, 耗时 %.2fs",
-                    len(tables), len(procedures), elapsed,
-                )
-                return self._lineage_tracer
 
             logger.warning("无可用的解析数据或缓存，无法构建 LineageTracer")
             return None
@@ -634,143 +516,90 @@ class ParserService:
             logger.error("构建 LineageTracer 失败: %s", e, exc_info=True)
             return None
 
+    def get_caliber_tracer(self) -> Optional[Any]:
+        if self._tracer_factory.caliber_tracer is not None:
+            return self._tracer_factory.caliber_tracer
+
+        try:
+            if self._current_result is not None:
+                result = self._current_result
+                tables = {t.full_name: t for t in result.tables}
+                procedures = {}
+                for p in result.procedures:
+                    procedures[p.full_name] = p
+                return self._tracer_factory.create_caliber_tracer(
+                    tables=tables,
+                    procedures=procedures,
+                    table_lineages=result.table_lineages,
+                    field_mappings=result.field_mappings,
+                    caliber_infos=result.caliber_infos,
+                )
+
+            logger.warning("无可用的解析数据或缓存，无法构建 CaliberTracer")
+            return None
+
+        except Exception as e:
+            logger.error("构建 CaliberTracer 失败: %s", e, exc_info=True)
+            return None
+
+    def clear_cache(self) -> None:
+        self._cache_store.clear_cache()
+        self._tracer_factory.invalidate()
+        self._event_bus.publish(EventType.CACHE_INVALIDATED)
+
     def _parse_tab_directory(self, directory: Path, result: ParseResult) -> None:
-        """解析目录下所有 .tab 文件"""
         if not self._table_parser:
             return
-
         for file_path in directory.rglob("*.tab"):
             try:
                 table_info = self._table_parser.parse_tab_file(str(file_path))
                 if table_info:
-                    table_dict = {
-                        "full_name": table_info.full_name,
-                        "schema": table_info.schema,
-                        "table_name": table_info.table_name,
-                        "comment": table_info.comment,
-                        "columns": [
-                            {"name": c.name, "data_type": c.data_type, "comment": c.comment}
-                            for c in table_info.columns
-                        ],
-                        "primary_keys": table_info.primary_keys,
-                    }
-                    result.tables.append(table_dict)
+                    result.tables.append(table_info)
             except Exception as e:
                 logger.warning("解析 .tab 文件失败: %s - %s", file_path, e)
                 result.errors.append(f"文件 {file_path.name}: {str(e)}")
 
     def _parse_proc_directory(self, directory: Path, result: ParseResult) -> None:
-        """解析目录下所有 .prc 文件"""
         if not self._proc_parser:
             return
-
         procedures = self._proc_parser.parse_directory(str(directory))
         self._cached_procedures.update(procedures)
         for proc_info in procedures.values():
             try:
-                proc_dict = {
-                    "full_name": proc_info.full_name,
-                    "schema": proc_info.schema,
-                    "proc_name": proc_info.proc_name,
-                    "description": proc_info.description,
-                    "source_tables": proc_info.source_tables,
-                    "target_tables": proc_info.target_tables,
-                    "config_tables": getattr(proc_info, "config_tables", []),
-                }
-                result.procedures.append(proc_dict)
-
-                for tl in proc_info.table_lineages:
-                    result.table_lineages.append({
-                        "source_table": tl.source_table,
-                        "target_table": tl.target_table,
-                        "procedure": tl.procedure,
-                    })
-
-                for fm in proc_info.field_mappings:
-                    result.field_mappings.append({
-                        "source_table": fm.source_table,
-                        "source_column": fm.source_column,
-                        "target_table": fm.target_table,
-                        "target_column": fm.target_column,
-                        "transform_logic": fm.transform_logic,
-                        "procedure": fm.procedure,
-                        "confidence": fm.confidence,
-                    })
-
-                caliber_infos = self._proc_parser.extract_caliber_from_proc(
-                    proc_info, data_source="oracle"
-                )
+                result.procedures.append(proc_info)
+                result.table_lineages.extend(proc_info.table_lineages)
+                result.field_mappings.extend(proc_info.field_mappings)
+                caliber_infos = self._proc_parser.extract_caliber_from_proc(proc_info, data_source="oracle")
                 for ci in caliber_infos:
                     result.caliber_infos.append(CaliberExtractor.to_dict(ci))
-
             except Exception as e:
                 logger.warning("序列化过程信息失败: %s - %s", proc_info.full_name, e)
                 result.errors.append(f"过程 {proc_info.full_name}: {str(e)}")
 
     def _parse_single_tab(self, file_path: Path, result: ParseResult) -> None:
-        """解析单个 .tab 文件"""
         if not self._table_parser:
             return
-
         try:
             table_info = self._table_parser.parse_tab_file(str(file_path))
             if table_info:
-                table_dict = {
-                    "full_name": table_info.full_name,
-                    "schema": table_info.schema,
-                    "table_name": table_info.table_name,
-                    "comment": table_info.comment,
-                    "columns": [
-                        {"name": c.name, "data_type": c.data_type, "comment": c.comment}
-                        for c in table_info.columns
-                    ],
-                    "primary_keys": table_info.primary_keys,
-                }
-                result.tables.append(table_dict)
+                result.tables.append(table_info)
                 logger.info("成功解析表: %s", table_info.full_name)
         except Exception as e:
             logger.error("解析文件失败: %s - %s", file_path, e)
             result.errors.append(f"文件 {file_path.name}: {str(e)}")
 
     def _parse_single_prc(self, file_path: Path, result: ParseResult) -> None:
-        """解析单个 .prc 文件（直接调用 parse_prc_file，避免扫描整个目录）"""
         if not self._proc_parser:
             return
-
         try:
             proc_info = self._proc_parser.parse_prc_file(str(file_path))
             if not proc_info:
                 logger.warning("文件解析无结果: %s", file_path)
                 return
 
-            proc_dict = {
-                "full_name": proc_info.full_name,
-                "schema": proc_info.schema,
-                "proc_name": proc_info.proc_name,
-                "description": proc_info.description,
-                "source_tables": proc_info.source_tables,
-                "target_tables": proc_info.target_tables,
-                "config_tables": getattr(proc_info, "config_tables", []),
-            }
-            result.procedures.append(proc_dict)
-
-            for tl in proc_info.table_lineages:
-                result.table_lineages.append({
-                    "source_table": tl.source_table,
-                    "target_table": tl.target_table,
-                    "procedure": tl.procedure,
-                })
-
-            for fm in proc_info.field_mappings:
-                result.field_mappings.append({
-                    "source_table": fm.source_table,
-                    "source_column": fm.source_column,
-                    "target_table": fm.target_table,
-                    "target_column": fm.target_column,
-                    "transform_logic": fm.transform_logic,
-                    "procedure": fm.procedure,
-                    "confidence": fm.confidence,
-                })
+            result.procedures.append(proc_info)
+            result.table_lineages.extend(proc_info.table_lineages)
+            result.field_mappings.extend(proc_info.field_mappings)
 
             if self._proc_parser and CaliberExtractor is not None:
                 caliber_infos = self._proc_parser.extract_caliber_from_proc(
@@ -786,8 +615,8 @@ class ParserService:
             result.errors.append(f"文件 {file_path.name}: {str(e)}")
 
     def _save_result_to_cache(self, result: ParseResult) -> None:
-        """将结果保存到缓存文件（JSON + pickle 双格式）"""
         try:
+            serializable = result.to_serializable()
             data = {
                 "metadata": {
                     "total_tables": len(result.tables),
@@ -795,28 +624,31 @@ class ParserService:
                     "total_table_lineages": len(result.table_lineages),
                     "total_field_mappings": len(result.field_mappings),
                     "total_caliber_infos": len(result.caliber_infos),
-                    "parser_version": "enhanced-v2",
-                    "last_updated": time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "parser_version": "unified-v1",
+                    "data_sources": [ds.name for ds in config.datasource_configs] if config else [],
                 },
-                "tables": result.tables,
-                "procedures": result.procedures,
-                "table_lineages": result.table_lineages,
-                "field_mappings": result.field_mappings,
-                "caliber_infos": result.caliber_infos,
+                **serializable,
             }
-
-            # 保存 pickle 缓存（快速加载）
-            self._save_pickle_cache(data)
-
-            # 保存 JSON 缓存（人可读备份）
-            cache_file = self.output_dir / "lineage_data.json"
-            with open(cache_file, "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
-
-            if self._repository:
-                self._repository.update(data)
-
-            logger.info("JSON 数据缓存已保存: %s", cache_file)
-
+            self._cache_store.save_to_cache(data)
         except Exception as e:
             logger.error("保存缓存数据失败: %s", e)
+
+    def _resolve_ds_path(self, data_dir: str) -> Path:
+        path = Path(data_dir)
+        if path.is_absolute():
+            return path
+        return self.data_dir.parent / path
+
+    def _merge_output_to_result(
+        self, output: "ParseOutput", result: ParseResult
+    ) -> None:
+        from core.parser_protocol import ParseOutput
+
+        temp = ParseResult()
+        temp.tables = [TableInfo.from_dict(t) for t in output.tables]
+        temp.procedures = [ProcedureInfo.from_dict(p) for p in output.procedures]
+        temp.table_lineages = [TableLineage.from_dict(tl) for tl in output.table_lineages]
+        temp.field_mappings = [FieldMapping.from_dict(fm) for fm in output.field_mappings]
+        temp.caliber_infos = output.caliber_infos
+        temp.errors = output.errors
+        result.merge(temp)

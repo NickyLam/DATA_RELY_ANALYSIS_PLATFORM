@@ -19,7 +19,12 @@ from app.services.lineage_service import LineageService
 from app.services.parser_service import ParserService
 from app.services.progress_service import ProgressService
 from app.utils.cache_manager import CacheManager
-from app.utils.path_utils import get_base_dir
+from core.layer_detector import LayerDetector
+
+
+@lru_cache
+def get_layer_detector() -> LayerDetector:
+    return LayerDetector.from_manifests(config.source_data_path)
 
 
 @lru_cache
@@ -80,18 +85,24 @@ def get_progress_service() -> ProgressService:
 
 @lru_cache
 def get_indicator_service() -> IndicatorService:
-    base_dir = get_base_dir()
-    indicator_data_path = base_dir / "财务集市指标血缘分析" / "指标"
+    fdm_config = next(
+        (c for c in config.datasource_configs if c.name == "fdm"),
+        None,
+    )
+    if fdm_config and fdm_config.enabled:
+        indicator_data_path = fdm_config.data_dir
+    else:
+        indicator_data_path = str(config.base_dir / "财务集市指标血缘分析" / "指标")
+
     cache = get_cache_manager()
     lineage = get_lineage_service()
     try:
         return IndicatorService(
-            indicator_data_path=str(indicator_data_path),
+            indicator_data_path=indicator_data_path,
             cache_manager=cache,
             lineage_service=lineage,
         )
     except Exception:
-        # 初始化失败时清除缓存，下次请求可重试
         get_indicator_service.cache_clear()
         raise
 
@@ -102,3 +113,4 @@ LineageServiceDep = Annotated[LineageService, Depends(get_lineage_service)]
 CaliberServiceDep = Annotated[CaliberService, Depends(get_caliber_service)]
 ProgressServiceDep = Annotated[ProgressService, Depends(get_progress_service)]
 IndicatorServiceDep = Annotated[IndicatorService, Depends(get_indicator_service)]
+LayerDetectorDep = Annotated[LayerDetector, Depends(get_layer_detector)]

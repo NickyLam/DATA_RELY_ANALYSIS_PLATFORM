@@ -1,6 +1,10 @@
 """
 SQL 解析器抽象基类
-定义多数据源解析的统一接口，Oracle / TDH / GBase 解析器均继承此类。
+
+@deprecated 此模块已被 core.parser_protocol.FileParser Protocol 替代。
+新解析器应实现 FileParser Protocol（鸭子类型，无需继承），
+并通过 core.parser_registry.ParserRegistry 注册路由。
+保留此文件仅为向后兼容。
 """
 
 from __future__ import annotations

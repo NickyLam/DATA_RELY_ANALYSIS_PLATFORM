@@ -1859,6 +1859,9 @@ body {
     margin-bottom: 8px;
     cursor: pointer;
     transition: all 0.2s;
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
 }
 
 .indicator-result-item:hover {

@@ -12,7 +12,7 @@ from datetime import datetime
 from fastapi import APIRouter
 
 from app.config import config
-from app.dependencies import get_lineage_service, get_progress_service
+from app.dependencies import get_lineage_service, get_progress_service, get_layer_detector
 
 logger = logging.getLogger(__name__)
 
@@ -158,6 +158,42 @@ async def system_stats():
             "lineages": lineage_count,
             "uptime_seconds": round(uptime, 2),
         },
+    }
+
+
+@router.get(
+    "/api/system/layers",
+    summary="层级配置",
+    description="获取所有系统的层级检测规则和配色配置，供前端动态渲染",
+)
+async def get_layer_configs():
+    from core.layer_detector import LAYER_CONFIG, LAYER_ORDER
+
+    detector = get_layer_detector()
+    all_configs = detector.get_all_configs()
+
+    result = {}
+    for system, layer_config in all_configs.items():
+        result[system] = {
+            "layer_order": layer_config.layer_order,
+            "layer_colors": layer_config.layer_colors,
+            "default_schema": layer_config.default_schema,
+            "known_schemas": layer_config.known_schemas,
+            "rules": [
+                {"pattern": r.pattern, "layer": r.layer, "label": r.label}
+                for r in layer_config.rules
+            ],
+        }
+
+    result["_default"] = {
+        "layer_order": LAYER_ORDER,
+        "layer_colors": {k: v["color"] for k, v in LAYER_CONFIG.items()},
+        "layer_labels": {k: v["label"] for k, v in LAYER_CONFIG.items()},
+    }
+
+    return {
+        "success": True,
+        "data": result,
     }
 
 

@@ -27,5 +27,8 @@ pyinstaller>=6.0.0
 # Excel 解析（indicator_config_parser 依赖）
 openpyxl>=3.1.0
 
+# YAML 解析（manifest.yml 配置加载依赖）
+pyyaml>=6.0
+
 # 可选依赖（已有项目使用）
 # D3.js 通过 CDN 加载，无需安装

@@ -36,6 +36,14 @@ function switchTab(tabName) {
     if (tabName === 'display') {
         initDisplayTab();
     }
+    if (tabName === 'indicator') {
+        // 延迟初始化，确保 Tab 可见后再获取容器尺寸
+        setTimeout(() => {
+            if (typeof window.initIndicatorGraphTab === 'function') {
+                window.initIndicatorGraphTab();
+            }
+        }, 50);
+    }
 }
 
 function setCaliberMode(mode) {

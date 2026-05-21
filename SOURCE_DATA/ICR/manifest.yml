@@ -1,0 +1,27 @@
+version: "1.0"
+system: icr
+display_name: "同业经营管理平台"
+description: "同业经营管理平台数据脚本（预留，技术栈待确认后更新）"
+
+parser: warehouse
+
+schemas: []
+file_extensions:
+  ddl: [".sql"]
+  dml: [".sql"]
+
+layer_rules:
+  default_schema: "icr"
+  known_schemas: []
+  synonym_rules: []
+  rules: []
+  schema_rules: []
+  bare_name_rules: []
+  layer_order: [ods, base, mdl, app, config]
+  layer_colors:
+    ods: "#4ade80"
+    base: "#818cf8"
+    mdl: "#c084fc"
+    app: "#fb923c"
+    config: "#6b7280"
+    other: "#6b7280"
