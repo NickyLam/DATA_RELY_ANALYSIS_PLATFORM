@@ -20,6 +20,13 @@ from core.layer_detector import LayerDetector
 logger = logging.getLogger(__name__)
 
 
+def _split_comma_separated(name_str: str) -> list[str]:
+    if not name_str:
+        return []
+    parts = [p.strip() for p in name_str.split(",")]
+    return [p for p in parts if p]
+
+
 class IndicatorAdapter:
     """指标解析器适配器 — 将 IndicatorConfigParser 输出转为 ParseOutput
 
@@ -68,24 +75,31 @@ class IndicatorAdapter:
         output = ParseOutput()
 
         seen_tables: set[str] = set()
+        # ★ 优化：维护增量去重集合
+        seen_lineage_keys: set[tuple] = set()
 
         for base_calc in result.base_calcs:
             target_table = getattr(base_calc, "trg_table_name", "")
-            source_table = getattr(base_calc, "src_table_name", "")
+            source_table_raw = getattr(base_calc, "src_table_name", "")
 
             if not target_table:
                 continue
 
             self._register_table(target_table, output, seen_tables)
 
-            if source_table and source_table != target_table:
-                self._register_table(source_table, output, seen_tables)
+            source_tables = _split_comma_separated(source_table_raw)
+            for source_table in source_tables:
+                if source_table and source_table != target_table:
+                    self._register_table(source_table, output, seen_tables)
 
-                output.table_lineages.append({
-                    "source_table": source_table,
-                    "target_table": target_table,
-                    "procedure": getattr(base_calc, "procedure_name", ""),
-                })
+                    key = (source_table, target_table, getattr(base_calc, "procedure_name", ""))
+                    if key not in seen_lineage_keys:
+                        seen_lineage_keys.add(key)
+                        output.table_lineages.append({
+                            "source_table": source_table,
+                            "target_table": target_table,
+                            "procedure": getattr(base_calc, "procedure_name", ""),
+                        })
 
             mappings = getattr(base_calc, "field_mappings", [])
             if mappings:
@@ -95,15 +109,16 @@ class IndicatorAdapter:
                     expression = getattr(mapping, "expression", "")
 
                     if src_col or tgt_col:
-                        output.field_mappings.append({
-                            "source_table": source_table,
-                            "source_column": src_col,
-                            "target_table": target_table,
-                            "target_column": tgt_col,
-                            "transform_logic": expression,
-                            "procedure": getattr(base_calc, "procedure_name", ""),
-                            "confidence": 0.7,
-                        })
+                        for source_table in source_tables:
+                            output.field_mappings.append({
+                                "source_table": source_table,
+                                "source_column": src_col,
+                                "target_table": target_table,
+                                "target_column": tgt_col,
+                                "transform_logic": expression,
+                                "procedure": getattr(base_calc, "procedure_name", ""),
+                                "confidence": 0.7,
+                            })
 
         for rel in result.relations:
             src = getattr(rel, "source_table", "")
@@ -111,11 +126,14 @@ class IndicatorAdapter:
             proc = getattr(rel, "procedure_name", "")
 
             if src and tgt and src != tgt:
-                output.table_lineages.append({
-                    "source_table": src,
-                    "target_table": tgt,
-                    "procedure": proc,
-                })
+                key = (src, tgt, proc)
+                if key not in seen_lineage_keys:
+                    seen_lineage_keys.add(key)
+                    output.table_lineages.append({
+                        "source_table": src,
+                        "target_table": tgt,
+                        "procedure": proc,
+                    })
 
                 self._register_table(src, output, seen_tables)
                 self._register_table(tgt, output, seen_tables)
@@ -128,11 +146,9 @@ class IndicatorAdapter:
                 for tgt in tgt_tables:
                     if src and tgt and src != tgt:
                         key = (src, tgt, proc_name)
-                        existing_keys = {
-                            (tl["source_table"], tl["target_table"], tl["procedure"])
-                            for tl in output.table_lineages
-                        }
-                        if key not in existing_keys:
+                        # ★ 优化：使用 seen set 增量去重
+                        if key not in seen_lineage_keys:
+                            seen_lineage_keys.add(key)
                             output.table_lineages.append({
                                 "source_table": src,
                                 "target_table": tgt,

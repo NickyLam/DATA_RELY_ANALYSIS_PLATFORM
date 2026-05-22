@@ -102,10 +102,41 @@ class LineageService:
         else:
             result = self._query_table_lineage(resolved_table, depth, mode, data, include_fields, field_upper, limit)
 
+        if result.get("nodes_count", 0) == 0 and "." in resolved_table:
+            alt_table = self._find_alternate_schema_table(resolved_table, data)
+            if alt_table:
+                logger.info("同名表重定向: %s → %s", resolved_table, alt_table)
+                if field_upper:
+                    result = self._query_field_lineage(alt_table, field_upper, depth, mode, data, include_fields, limit)
+                else:
+                    result = self._query_table_lineage(alt_table, depth, mode, data, include_fields, field_upper, limit)
+                if result.get("nodes_count", 0) > 0:
+                    result["redirected_from"] = resolved_table
+                    result["resolved_table"] = alt_table
+
         result["query_time_ms"] = round((time.perf_counter() - start_time) * 1000, 2)
         if cache_key:
             self.cache.set(cache_key, result)
         return result
+
+    def _find_alternate_schema_table(self, resolved_table: str, data: dict) -> Optional[str]:
+        if "." not in resolved_table:
+            return None
+        schema, short_name = resolved_table.rsplit(".", 1)
+
+        _SCHEMA_REDIRECT = {
+            "RRP_MDL": "RRP_EAST",
+            "RRP_EAST": "RRP_MDL",
+        }
+        alt_schema = _SCHEMA_REDIRECT.get(schema.upper())
+        if not alt_schema:
+            return None
+
+        alt_full = f"{alt_schema}.{short_name}"
+        actual_tables = {t.get("full_name", "").upper() for t in data.get("tables", [])}
+        if alt_full.upper() in actual_tables:
+            return alt_full
+        return None
 
     def _validate_schema(self, table_upper: str, resolved_table: str, data: dict) -> bool:
         if "." in table_upper:
@@ -113,8 +144,8 @@ class LineageService:
             if len(parts) == 2:
                 schema, table_short = parts
                 if table_short.startswith("EAST5_") and schema != "RRP_EAST":
-                    logger.warning("EAST5_ 表必须使用 RRP_EAST schema: 输入=%s", table_upper)
-                    return False
+                    logger.info("EAST5_ 表自动重定向: %s → RRP_EAST.%s", table_upper, table_short)
+                    return True
             actual_tables = {t.get("full_name", "").upper() for t in data.get("tables", [])}
             if resolved_table.upper() not in actual_tables:
                 logger.warning("显式 schema 表不存在: 输入=%s, 解析=%s", table_upper, resolved_table)
