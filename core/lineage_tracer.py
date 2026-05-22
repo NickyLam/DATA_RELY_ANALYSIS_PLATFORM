@@ -892,10 +892,10 @@ class LineageTracer(BaseTracer):
                     prev_node = chain.chain[i - 1]
 
                     if direction == "upstream":
-                        src_table = node.table_name
-                        tgt_table = prev_node.table_name
-                        src_field = node.field_name
-                        tgt_field = prev_node.field_name
+                        src_table = prev_node.table_name
+                        tgt_table = node.table_name
+                        src_field = prev_node.field_name
+                        tgt_field = node.field_name
                     else:
                         src_table = prev_node.table_name
                         tgt_table = node.table_name

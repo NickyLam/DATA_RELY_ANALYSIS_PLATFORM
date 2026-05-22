@@ -22,7 +22,6 @@ TEMP_SUFFIXES: tuple[str, ...] = (
     "_tm",    # 临时表 (temp)
     "_op",    # 操作表 (operation)
     "_cl",    # 清理表 (clean)
-    "_ex",    # 交换表 (exchange partition 用的临时表)
     "_old",   # 旧表 (旧版本保留)
     "_new",   # 新表 (新版本临时)
 )
@@ -38,8 +37,9 @@ TEMP_PATTERNS: tuple[re.Pattern, ...] = (
     re.compile(r"_\d{8}$", re.IGNORECASE),      # 日期后缀如 _20240101（非分区表）
     re.compile(r"^etl_", re.IGNORECASE),          # ETL 临时表
     re.compile(r"^stg_", re.IGNORECASE),          # staging 临时表
-    re.compile(r"_ex\d*$", re.IGNORECASE),        # 交换表后缀如 _ex, _ex01, _ex02（分区交换临时表）
 )
+
+_EXCHANGE_PATTERN = re.compile(r"_ex\d*$", re.IGNORECASE)
 
 # 白名单：即使匹配临时表规则也不应过滤的表名模式
 WHITELIST_PATTERNS: tuple[re.Pattern, ...] = (
@@ -75,31 +75,69 @@ class TempTableFilter:
         if not table_name:
             return False
 
-        # 去掉 schema 前缀
         short_name = table_name.split(".")[-1] if "." in table_name else table_name
         short_lower = short_name.lower()
 
-        # 白名单优先
         for pattern in self.whitelist:
             if pattern.search(short_name):
                 return False
 
-        # 后缀匹配
         for suffix in self.suffixes:
             if short_lower.endswith(suffix):
                 return True
 
-        # 前缀匹配
         for prefix in self.prefixes:
             if short_lower.startswith(prefix):
                 return True
 
-        # 正则模式匹配
         for pattern in self.patterns:
             if pattern.search(short_name):
                 return True
 
         return False
+
+    def is_exchange_table(self, table_name: str) -> bool:
+        """判断表名是否为分区交换中间表（_ex / _ex01 / _ex02 后缀）
+
+        分区交换中间表是 Oracle 数仓的常见模式：
+        INSERT INTO xxx_ex SELECT ... → ALTER TABLE xxx EXCHANGE PARTITION WITH xxx_ex
+        _ex 表是正式表数据的载体，不应被当作临时表过滤。
+
+        Args:
+            table_name: 表名（可能含 schema 前缀）
+
+        Returns:
+            True 表示是分区交换中间表
+        """
+        if not table_name:
+            return False
+        short_name = table_name.split(".")[-1] if "." in table_name else table_name
+        return bool(_EXCHANGE_PATTERN.search(short_name))
+
+    def resolve_exchange_table(self, table_name: str) -> str:
+        """将分区交换中间表名解析为正式表名
+
+        例如: ICL.CMM_INDV_CUST_BASIC_INFO_EX → ICL.CMM_INDV_CUST_BASIC_INFO
+             IDL.SOME_TABLE_EX01 → IDL.SOME_TABLE
+
+        Args:
+            table_name: 交换表名
+
+        Returns:
+            正式表名（去掉 _ex / _ex01 后缀）
+        """
+        if not self.is_exchange_table(table_name):
+            return table_name
+
+        short_name = table_name.split(".")[-1] if "." in table_name else table_name
+        schema = table_name.rsplit(".", 1)[0] if "." in table_name else ""
+
+        match = _EXCHANGE_PATTERN.search(short_name)
+        if match:
+            formal_name = short_name[:match.start()]
+            return f"{schema}.{formal_name}" if schema else formal_name
+
+        return table_name
 
     def filter_field_mappings(self, mappings: list[dict]) -> list[dict]:
         """过滤掉源表或目标表为临时表的字段映射

@@ -92,12 +92,19 @@ class BaseTracer:
         short = table.split(".")[-1] if "." in table else table
         return (short.upper(), column.upper())
 
+    _WAREHOUSE_LAYERS = frozenset({
+        LayerType.SRC, LayerType.MSL, LayerType.ITL, LayerType.IOL,
+        LayerType.ICL, LayerType.IML, LayerType.IDL, LayerType.IEL,
+        LayerType.DQC,
+    })
+
     def is_layer_compatible(self, src_table: str, tgt_table: str) -> bool:
         tgt_layer = detect_layer(tgt_table)
         src_layer = detect_layer(src_table)
-        src_upper = src_table.upper()
 
         if tgt_layer == LayerType.EAST and src_layer in (LayerType.ODS, LayerType.DIIS):
+            return False
+        if tgt_layer == LayerType.EAST and src_layer in self._WAREHOUSE_LAYERS:
             return False
 
         return True
@@ -110,6 +117,8 @@ class BaseTracer:
         tgt_layer = detect_layer(tgt_table)
 
         if src_layer == LayerType.EAST and tgt_layer in (LayerType.ODS, LayerType.DIIS):
+            return False
+        if src_layer == LayerType.EAST and tgt_layer in self._WAREHOUSE_LAYERS:
             return False
 
         return True

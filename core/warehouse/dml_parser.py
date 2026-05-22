@@ -215,17 +215,26 @@ class DMLParser:
             output.errors.append(f"目录不存在: {dir_path}")
             return output
 
-        file_count = 0
-        for file_path in sorted(dir_path.rglob("*.sql")):
-            if file_path.suffix.lower() != ".sql":
-                continue
-            file_output = self.parse_file(file_path)
-            output.merge(file_output)
-            file_count += 1
+        # ★ 优化：收集所有文件后并行解析
+        sql_files = sorted(f for f in dir_path.rglob("*.sql") if f.suffix.lower() == ".sql")
+        if not sql_files:
+            return output
+
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = {executor.submit(self.parse_file, fp): fp for fp in sql_files}
+            for future in futures:
+                fp = futures[future]
+                try:
+                    file_output = future.result()
+                    output.merge(file_output)
+                except Exception as e:
+                    logger.error("解析 DML 文件失败: %s - %s", fp, e)
+                    output.errors.append(f"文件 {fp.name}: {str(e)}")
 
         logger.info(
             "DMLParser: 解析目录 %s, %d 个文件, %d 条血缘",
-            dir_path, file_count, len(output.table_lineages),
+            dir_path, len(sql_files), len(output.table_lineages),
         )
         return output
 
@@ -274,16 +283,19 @@ class DMLParser:
         target_raw = match.group(1).strip()
         columns_raw = match.group(2).strip()
 
-        # 解析目标表
         target_resolved = self._resolver.resolve_table_name(target_raw)
         if target_resolved is None:
             return None
 
         target_table = target_resolved.full_name
 
-        # 过滤临时目标表
         if self._temp_filter.is_temp_table(target_table):
             return None
+
+        if self._temp_filter.is_exchange_table(target_table):
+            target_table = self._temp_filter.resolve_exchange_table(target_table)
+            logger.debug("INSERT 目标为交换表，映射为正式表: %s → %s",
+                         target_resolved.full_name, target_table)
 
         # 解析目标字段
         target_columns = self._parse_column_list(columns_raw)
@@ -396,14 +408,19 @@ class DMLParser:
         if target_resolved is None or source_resolved is None:
             return None
 
-        # 过滤临时交换表
-        if self._temp_filter.is_temp_table(source_resolved.full_name):
+        source_table = source_resolved.full_name
+        if self._temp_filter.is_temp_table(source_table):
             return None
+
+        if self._temp_filter.is_exchange_table(source_table):
+            source_table = self._temp_filter.resolve_exchange_table(source_table)
+            logger.debug("EXCHANGE 源为交换表，映射为正式表: %s → %s",
+                         source_resolved.full_name, source_table)
 
         return DMLStatement(
             op_type="exchange_partition",
             target_table=target_resolved.full_name,
-            source_tables=[source_resolved.full_name],
+            source_tables=[source_table],
             raw_sql=match.group(0),
             file_path=file_path,
         )
