@@ -21,6 +21,15 @@ logger = logging.getLogger(__name__)
 
 class LayerType(Enum):
     ODS = "ods"
+    SRC = "src"
+    MSL = "msl"
+    ITL = "itl"
+    IOL = "iol"
+    ICL = "icl"
+    IML = "iml"
+    IDL = "idl"
+    IEL = "iel"
+    DQC = "dqc"
     DIIS = "diis"
     BASE = "base"
     MDL = "mdl"
@@ -92,16 +101,25 @@ class LayerConfig:
 
 LAYER_CONFIG: dict[str, dict] = {
     "ods":    {"label": "ODS源系统层",   "color": "#4ade80", "order": 0},
-    "diis":  {"label": "DIIS明细层",     "color": "#38bdf8", "order": 1},
-    "base":  {"label": "B基础层",       "color": "#818cf8", "order": 2},
-    "mdl":   {"label": "M模型层",       "color": "#c084fc", "order": 3},
-    "app":  {"label": "A/S应用汇总层", "color": "#fb923c", "order": 4},
-    "east":  {"label": "EAST报送层",     "color": "#f87171", "order": 5},
-    "config": {"label": "配置/临时表",   "color": "#6b7280", "order": 6},
-    "other":  {"label": "其他",          "color": "#6b7280", "order": 7},
+    "src":    {"label": "SRC原始数据层",  "color": "#34d399", "order": 1},
+    "msl":    {"label": "MSL源系统层",   "color": "#2dd4bf", "order": 2},
+    "itl":    {"label": "ITL接口层",     "color": "#22d3ee", "order": 3},
+    "iol":    {"label": "IOL操作层",     "color": "#38bdf8", "order": 4},
+    "icl":    {"label": "ICL共性加工层", "color": "#818cf8", "order": 5},
+    "iml":    {"label": "IML模型层",     "color": "#a78bfa", "order": 6},
+    "idl":    {"label": "IDL接口层",     "color": "#c084fc", "order": 7},
+    "iel":    {"label": "IEL外部层",     "color": "#e879f9", "order": 8},
+    "dqc":    {"label": "DQC数据质量层", "color": "#f472b6", "order": 9},
+    "diis":  {"label": "DIIS明细层",     "color": "#fb923c", "order": 10},
+    "base":  {"label": "B基础层",       "color": "#818cf8", "order": 11},
+    "mdl":   {"label": "M模型层",       "color": "#c084fc", "order": 12},
+    "app":  {"label": "A/S应用汇总层", "color": "#fb923c", "order": 13},
+    "east":  {"label": "EAST报送层",     "color": "#f87171", "order": 14},
+    "config": {"label": "配置/临时表",   "color": "#6b7280", "order": 15},
+    "other":  {"label": "其他",          "color": "#6b7280", "order": 16},
 }
 
-LAYER_ORDER = ["ods", "diis", "base", "mdl", "app", "east", "config"]
+LAYER_ORDER = ["ods", "src", "msl", "itl", "iol", "icl", "iml", "idl", "iel", "dqc", "diis", "base", "mdl", "app", "east", "config"]
 
 
 def _build_rrp_default_config() -> LayerConfig:
@@ -119,11 +137,15 @@ def _build_rrp_default_config() -> LayerConfig:
             LayerRule(pattern="^ETL_|^CONFIG|^CODE|^TMP|^SQ_|^FUN|^GET|^CHECK|^SP_", layer="config", label="CONFIG 配置/临时表"),
         ],
         schema_rules=[
-            SchemaRule(schema="ICL", layer="ods"),
-            SchemaRule(schema="IML", layer="ods"),
-            SchemaRule(schema="IOL", layer="ods"),
-            SchemaRule(schema="IDL", layer="ods"),
-            SchemaRule(schema="ITL", layer="ods"),
+            SchemaRule(schema="SRC", layer="src"),
+            SchemaRule(schema="MSL", layer="msl"),
+            SchemaRule(schema="ITL", layer="itl"),
+            SchemaRule(schema="IOL", layer="iol"),
+            SchemaRule(schema="ICL", layer="icl"),
+            SchemaRule(schema="IML", layer="iml"),
+            SchemaRule(schema="IDL", layer="idl"),
+            SchemaRule(schema="IEL", layer="iel"),
+            SchemaRule(schema="DQC", layer="dqc"),
             SchemaRule(schema="RRP_EAST", default_layer="diis"),
             SchemaRule(schema="RRP_MDL", default_layer="base"),
         ],
@@ -136,10 +158,13 @@ def _build_rrp_default_config() -> LayerConfig:
             SynonymRule(pattern="^ICL\\.([A-Z].*)", target="ICL_$1"),
         ],
         default_schema="RRP_MDL",
-        known_schemas=["ICL", "IML", "IOL", "RRP_EAST", "RRP_MDL"],
-        layer_order=["ods", "diis", "base", "mdl", "app", "east", "config"],
+        known_schemas=["SRC", "MSL", "ITL", "IOL", "ICL", "IML", "IDL", "IEL", "DQC", "RRP_EAST", "RRP_MDL"],
+        layer_order=["ods", "src", "msl", "itl", "iol", "icl", "iml", "idl", "iel", "dqc", "diis", "base", "mdl", "app", "east", "config"],
         layer_colors={
-            "ods": "#4ade80", "diis": "#38bdf8", "base": "#818cf8",
+            "ods": "#4ade80", "src": "#34d399", "msl": "#2dd4bf",
+            "itl": "#22d3ee", "iol": "#38bdf8", "icl": "#818cf8",
+            "iml": "#a78bfa", "idl": "#c084fc", "iel": "#e879f9",
+            "dqc": "#f472b6", "diis": "#fb923c", "base": "#818cf8",
             "mdl": "#c084fc", "app": "#fb923c", "east": "#f87171",
             "config": "#6b7280", "other": "#6b7280",
         },

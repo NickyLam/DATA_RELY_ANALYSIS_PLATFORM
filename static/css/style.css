@@ -1737,20 +1737,44 @@ body {
 }
 
 /* 层级颜色变量 */
-.layer-east { background: #7c3aed; }
-.layer-mdl { background: #2563eb; }
+.layer-east { background: #f87171; }
+.layer-mdl { background: #c084fc; }
 .layer-dws { background: #059669; }
 .layer-ads { background: #ea580c; }
-.layer-ods { background: #0891b2; }
-.layer-diis { background: #64748b; }
+.layer-ods { background: #4ade80; }
+.layer-diis { background: #fb923c; }
 .layer-other { background: #6b7280; }
+.layer-src { background: #34d399; }
+.layer-msl { background: #2dd4bf; }
+.layer-itl { background: #22d3ee; }
+.layer-iol { background: #38bdf8; }
+.layer-icl { background: #818cf8; }
+.layer-iml { background: #a78bfa; }
+.layer-idl { background: #c084fc; }
+.layer-iel { background: #e879f9; }
+.layer-dqc { background: #f472b6; }
+.layer-base { background: #818cf8; }
+.layer-app { background: #fb923c; }
+.layer-config { background: #6b7280; }
 
-.layer-east-text { color: #7c3aed; }
-.layer-mdl-text { color: #2563eb; }
+.layer-east-text { color: #f87171; }
+.layer-mdl-text { color: #c084fc; }
 .layer-dws-text { color: #059669; }
 .layer-ads-text { color: #ea580c; }
-.layer-ods-text { color: #0891b2; }
-.layer-diis-text { color: #64748b; }
+.layer-ods-text { color: #4ade80; }
+.layer-diis-text { color: #fb923c; }
+.layer-src-text { color: #34d399; }
+.layer-msl-text { color: #2dd4bf; }
+.layer-itl-text { color: #22d3ee; }
+.layer-iol-text { color: #38bdf8; }
+.layer-icl-text { color: #818cf8; }
+.layer-iml-text { color: #a78bfa; }
+.layer-idl-text { color: #c084fc; }
+.layer-iel-text { color: #e879f9; }
+.layer-dqc-text { color: #f472b6; }
+.layer-base-text { color: #818cf8; }
+.layer-app-text { color: #fb923c; }
+.layer-config-text { color: #6b7280; }
 
 /* 响应式适配 */
 @media (max-width: 1200px) {

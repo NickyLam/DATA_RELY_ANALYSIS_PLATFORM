@@ -23,13 +23,22 @@
   --border-light: #f1f5f9;
 
   /* 层级颜色 */
-  --layer-ods: #22c55e;
-  --layer-diis: #0ea5e9;
-  --layer-base: #6366f1;
-  --layer-mdl: #a855f7;
-  --layer-app: #f97316;
-  --layer-east: #ef4444;
-  --layer-config: #64748b;
+  --layer-ods: #4ade80;
+  --layer-src: #34d399;
+  --layer-msl: #2dd4bf;
+  --layer-itl: #22d3ee;
+  --layer-iol: #38bdf8;
+  --layer-icl: #818cf8;
+  --layer-iml: #a78bfa;
+  --layer-idl: #c084fc;
+  --layer-iel: #e879f9;
+  --layer-dqc: #f472b6;
+  --layer-diis: #fb923c;
+  --layer-base: #818cf8;
+  --layer-mdl: #c084fc;
+  --layer-app: #fb923c;
+  --layer-east: #f87171;
+  --layer-config: #6b7280;
   --layer-other: #94a3b8;
 
   /* 特殊节点 */
