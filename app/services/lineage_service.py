@@ -241,13 +241,11 @@ class LineageService:
             data.get("field_mappings", []),
             all_nodes, target_table=table, target_field=field,
         )
-        seen_mappings = {
-            (m.get("source_table"), m.get("source_column"), m.get("target_table"), m.get("target_column"))
-            for m in all_mappings
-        }
+        seen_mappings = {self._field_mapping_dedup_key(m) for m in all_mappings}
         for fm in extra_mappings:
-            key = (fm.get("source_table"), fm.get("source_column"), fm.get("target_table"), fm.get("target_column"))
+            key = self._field_mapping_dedup_key(fm)
             if key not in seen_mappings:
+                seen_mappings.add(key)
                 all_mappings.append(fm)
 
     def _query_table_lineage(
@@ -873,19 +871,31 @@ class LineageService:
         return unique_edges
 
     @staticmethod
-    def _deduplicate_field_mappings(mappings: list[dict]) -> list[dict]:
+    def _field_mapping_dedup_key(mapping: dict) -> tuple:
+        """生成字段映射归一化去重 key（消除 full name vs short name 差异）。
+
+        Why: LineageTracer.to_graph_result() 产出 full name（如 "RRP_MDL.X"），
+        而 data["field_mappings"] 可能是短名（"X"）。直接用原始 table name 比较
+        会把同一逻辑映射当成两条不同记录。
+        """
+        src_bare = TableNameResolver.bare_table(mapping.get("source_table", "")).upper()
+        tgt_bare = TableNameResolver.bare_table(mapping.get("target_table", "")).upper()
+        return (
+            src_bare,
+            mapping.get("source_column", "").upper(),
+            tgt_bare,
+            mapping.get("target_column", "").upper(),
+            mapping.get("procedure", "").upper(),
+        )
+
+    @classmethod
+    def _deduplicate_field_mappings(cls, mappings: list[dict]) -> list[dict]:
         """按展示所需字段去重字段映射，保留首次出现顺序。"""
         seen = set()
         unique_mappings = []
 
         for mapping in mappings:
-            key = (
-                mapping.get("source_table", "").upper(),
-                mapping.get("source_column", "").upper(),
-                mapping.get("target_table", "").upper(),
-                mapping.get("target_column", "").upper(),
-                mapping.get("procedure", "").upper(),
-            )
+            key = cls._field_mapping_dedup_key(mapping)
             if key in seen:
                 continue
             seen.add(key)
