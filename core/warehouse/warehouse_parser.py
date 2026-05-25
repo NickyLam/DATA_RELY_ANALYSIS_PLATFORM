@@ -73,28 +73,37 @@ class WarehouseSQLParser:
         if ext == ".ctl":
             return self._ctl_parser.parse_file(file_path)
 
+        # ★ 优化：先尝试 DDL 解析，如果解析出表结构则直接返回，
+        # 不再单纯依赖路径中的 ddl/dml 关键字路由。
+        # 这解决了 FDM 等数据源的 .sql 文件放在 dml/ 目录下但内容为 DDL 的问题。
         path_str = str(file_path).lower()
+        in_ddl_dir = "/ddl/" in path_str or "\\ddl\\" in path_str
+        in_dml_dir = "/dml/" in path_str or "\\dml\\" in path_str
+        in_ext_dir = "/ext/" in path_str or "\\ext\\" in path_str
 
-        if "/ddl/" in path_str or "\\ddl\\" in path_str:
+        if in_ddl_dir or in_ext_dir:
+            # 明确的 DDL/ext 目录 → 先尝试 DDL，无结果回退 DML
             output = self._ddl_parser.parse_file(file_path)
-            if not output.tables:
-                dml_output = self._dml_parser.parse_file(file_path)
-                if dml_output.table_lineages or dml_output.field_mappings:
-                    return dml_output
-            return self._table_info_to_output(output)
-
-        elif "/dml/" in path_str or "\\dml\\" in path_str:
+            if output and output.columns:
+                return self._table_info_to_output(output)
             return self._dml_parser.parse_file(file_path)
 
-        elif "/ext/" in path_str or "\\ext\\" in path_str:
-            output = self._ddl_parser.parse_file(file_path)
-            return self._table_info_to_output(output)
-
-        else:
+        if in_dml_dir:
+            # dml 目录 → 先尝试 DML（大多数情况），但如果 DML 无产出则回退 DDL
+            dml_output = self._dml_parser.parse_file(file_path)
+            if dml_output and (dml_output.table_lineages or dml_output.field_mappings):
+                return dml_output
+            # ★ 回退尝试 DDL：处理 dml/ 目录下实际为 DDL 的文件
             ddl_output = self._ddl_parser.parse_file(file_path)
             if ddl_output and ddl_output.columns:
                 return self._table_info_to_output(ddl_output)
-            return self._dml_parser.parse_file(file_path)
+            return dml_output
+
+        # 未知路径 → 先 DDL，再 DML
+        ddl_output = self._ddl_parser.parse_file(file_path)
+        if ddl_output and ddl_output.columns:
+            return self._table_info_to_output(ddl_output)
+        return self._dml_parser.parse_file(file_path)
 
     def parse_directory(self, dir_path: Path) -> ParseOutput:
         if not dir_path.exists():
@@ -140,18 +149,53 @@ class WarehouseSQLParser:
         )
 
         # Phase 2: 解析 DML
+        # ★ 优化：DML 目录下的文件如果 DML 解析无产出，回退尝试 DDL
+        # 解决 FDM 等数据源 dml/ 目录下实际为 DDL 文件的问题
         logger.info("Phase 2: 解析 DML 文件...")
         dml_count = 0
+        ddl_fallback_count = 0
         for dml_dir in dir_path.rglob("dml"):
             if dml_dir.is_dir():
                 dml_output = self._dml_parser.parse_directory(dml_dir)
                 total_output.merge(dml_output)
                 dml_count += 1
 
+                # ★ 回退：对 DML 目录下仍无产出的 .sql 文件，并行尝试 DDL 解析
+                if not dml_output.table_lineages and not dml_output.field_mappings:
+                    sql_files = [f for f in dml_dir.rglob("*.sql") if f.is_file()]
+                    if sql_files:
+                        logger.info(
+                            "DML 无产出，回退 DDL 解析 %d 个 .sql 文件...",
+                            len(sql_files),
+                        )
+                        from concurrent.futures import ThreadPoolExecutor, as_completed
+                        with ThreadPoolExecutor(max_workers=4) as pool:
+                            futures = {pool.submit(self._ddl_parser.parse_file, f): f for f in sql_files}
+                            for future in as_completed(futures):
+                                try:
+                                    ddl_result = future.result()
+                                    if ddl_result and ddl_result.columns:
+                                        ddl_tables[ddl_result.table_name] = ddl_result
+                                        total_output.tables.append({
+                                            "full_name": ddl_result.full_name,
+                                            "schema": ddl_result.schema,
+                                            "table_name": ddl_result.table_name,
+                                            "comment": ddl_result.comment,
+                                            "columns": [
+                                                {"name": c.name, "data_type": c.data_type, "comment": c.comment}
+                                                for c in ddl_result.columns
+                                            ],
+                                            "primary_keys": ddl_result.primary_keys,
+                                        })
+                                        ddl_fallback_count += 1
+                                except Exception as e:
+                                    logger.warning("DDL 回退解析失败: %s", e)
+
         logger.info(
-            "Phase 2 完成: DML 解析出 %d 条血缘, %d 条字段映射",
+            "Phase 2 完成: DML 解析出 %d 条血缘, %d 条字段映射, DDL 回退解析 %d 张表",
             len(total_output.table_lineages),
             len(total_output.field_mappings),
+            ddl_fallback_count,
         )
 
         # Phase 3: 解析 CTL

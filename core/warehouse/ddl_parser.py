@@ -115,14 +115,24 @@ class DDLParser:
         if not dir_path.exists() or not dir_path.is_dir():
             return tables
 
-        for file_path in sorted(dir_path.rglob("*.sql")):
-            # 跳过非 SQL 文件
-            if file_path.suffix.lower() != ".sql":
-                continue
+        # ★ 优化：收集所有文件后并行解析
+        sql_files = sorted(f for f in dir_path.rglob("*.sql") if f.suffix.lower() == ".sql")
+        if not sql_files:
+            return tables
 
-            table_info = self.parse_file(file_path)
+        from concurrent.futures import ThreadPoolExecutor
+        import threading
+
+        tables_lock = threading.Lock()
+
+        def _parse_and_collect(fp: Path):
+            table_info = self.parse_file(fp)
             if table_info is not None:
-                tables[table_info.full_name] = table_info
+                with tables_lock:
+                    tables[table_info.full_name] = table_info
+
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            executor.map(_parse_and_collect, sql_files)
 
         logger.info("DDLParser: 解析目录 %s, 共 %d 张表", dir_path, len(tables))
         return tables

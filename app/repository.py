@@ -77,13 +77,13 @@ class DataRepository:
     """统一的数据访问层，提供内存缓存和类型安全的数据接口。
 
     职责：
-      - 从 JSON 文件加载数据到内存
+      - 从内存 dict 或 JSON 文件加载数据
       - 提供按表名/字段名/过程名查询的接口
       - 支持增量更新
       - 线程安全
     """
 
-    def __init__(self, data_path: Path):
+    def __init__(self, data_path: Optional[Path] = None):
         self._data_path = data_path
         self._lock = threading.Lock()
         self._data: Optional[dict[str, Any]] = None
@@ -99,16 +99,32 @@ class DataRepository:
     def loaded_at(self) -> float:
         return self._loaded_at
 
-    def load(self) -> bool:
-        """从 JSON 文件加载数据到内存。"""
+    def load_from_dict(self, data: dict[str, Any]) -> bool:
+        """从内存 dict 加载数据（SQLite 或 legacy 均适用）。"""
         with self._lock:
-            if not self._data_path.exists():
-                logger.warning("数据文件不存在: %s", self._data_path)
+            self._data = data
+            self._migrate_if_needed()
+            self._build_indexes()
+            self._loaded_at = time.time()
+
+            metadata = self._data.get("metadata", {})
+            logger.info(
+                "数据加载完成: %d 张表, %d 个过程",
+                metadata.get("total_tables", 0),
+                metadata.get("total_procedures", 0),
+            )
+            return True
+
+    def load_from_json(self, json_path: Path) -> bool:
+        """从 JSON 文件加载（仅 legacy 模式使用）。"""
+        with self._lock:
+            if not json_path.exists():
+                logger.warning("数据文件不存在: %s", json_path)
                 return False
 
             try:
                 t0 = time.time()
-                with open(self._data_path, "r", encoding="utf-8") as f:
+                with open(json_path, "r", encoding="utf-8") as f:
                     self._data = json.load(f)
 
                 self._migrate_if_needed()
@@ -128,6 +144,13 @@ class DataRepository:
             except Exception as e:
                 logger.error("加载数据失败: %s", e, exc_info=True)
                 return False
+
+    def load(self) -> bool:
+        """从 JSON 文件加载数据到内存（向后兼容）。"""
+        if self._data_path is None:
+            logger.warning("未设置数据文件路径，无法加载")
+            return False
+        return self.load_from_json(self._data_path)
 
     def update(self, data: dict[str, Any]) -> None:
         """用新数据替换内存中的数据（不写文件）。"""

@@ -8,7 +8,7 @@ from core.models import TableInfo, ColumnInfo
 
 
 def test_search_tables_ranks_exact_short_name_before_contains_match(tmp_path: Path):
-    repo = DataRepository(tmp_path / "lineage_data.json")
+    repo = DataRepository()
     exact_table = {
         "full_name": "LONG_SCHEMA.CUSTOMER",
         "table_name": "CUSTOMER",
@@ -45,7 +45,8 @@ def test_parser_service_search_tables_delegates_to_repository(tmp_path: Path):
         encoding="utf-8",
     )
     parser = ParserService(data_dir=str(tmp_path / "data"), schema_dirs=[], output_dir=str(output_dir))
-    parser._get_repository().load()
+    json_path = output_dir / "lineage_data.json"
+    parser._get_repository().load_from_json(json_path)
 
     results = parser.search_tables("customer")
 

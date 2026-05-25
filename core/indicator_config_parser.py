@@ -106,8 +106,8 @@ def _is_skip_table(table_name: str) -> bool:
 
 class IndicatorConfigParser:
 
-    def __init__(self, data_path: Path) -> None:
-        self.data_path = data_path
+    def __init__(self, data_path: Path | str) -> None:
+        self.data_path = Path(data_path)  # ★ 修复：确保 data_path 始终为 Path 对象
         self._sql_parser = IndicatorSQLParser()
 
     def parse_all(self) -> IndicatorConfigResult:
@@ -150,10 +150,20 @@ class IndicatorConfigParser:
         )
         return result
 
+    def _resolve_excel_path(self) -> Path:
+        candidates = [
+            self.data_path / _EXCEL_FILENAME,
+            self.data_path / "config" / _EXCEL_FILENAME,
+        ]
+        for path in candidates:
+            if path.exists():
+                return path
+        return candidates[0]
+
     def _parse_base_calc_excel(self) -> list[IndicatorCalcBase]:
-        excel_path = self.data_path / _EXCEL_FILENAME
+        excel_path = self._resolve_excel_path()
         if not excel_path.exists():
-            logger.warning("Excel 文件不存在: %s", excel_path)
+            logger.warning("Excel 文件不存在: %s (已搜索: %s)", excel_path, ", ".join(str(p) for p in [self.data_path / _EXCEL_FILENAME, self.data_path / "config" / _EXCEL_FILENAME]))
             return []
 
         wb = openpyxl.load_workbook(str(excel_path), read_only=True, data_only=True)
@@ -216,7 +226,7 @@ class IndicatorConfigParser:
             wb.close()
 
     def _parse_gl_calc_excel(self) -> list[IndicatorCalcGL]:
-        excel_path = self.data_path / _EXCEL_FILENAME
+        excel_path = self._resolve_excel_path()
         if not excel_path.exists():
             logger.warning("Excel 文件不存在: %s", excel_path)
             return []
@@ -344,7 +354,8 @@ class IndicatorConfigParser:
             logger.warning("数据目录不存在: %s", self.data_path)
             return results
 
-        for proc_file in sorted(self.data_path.glob("*.proc")):
+        # ★ 优化：递归搜索所有 .proc 文件（不再仅限根目录）
+        for proc_file in sorted(self.data_path.rglob("*.proc")):
             if not _PROC_FILE_PATTERN.search(proc_file.name):
                 continue
 

@@ -30,11 +30,15 @@ class OraclePrcAdapter:
 
     def parse_file(self, file_path: Path) -> ParseOutput:
         """解析单个 .prc 文件"""
-        proc_info = self._parser.parse_prc_file(str(file_path))
+        # ★ 优化：使用 parse_prc_file_with_caliber 一次性获取过程信息 + 口径
+        # 避免两次读取文件和两次正则匹配
+        proc_info, caliber_infos = self._parser.parse_prc_file_with_caliber(
+            str(file_path)
+        )
         if proc_info is None:
             return ParseOutput()
 
-        return self._proc_info_to_output(proc_info)
+        return self._proc_info_to_output(proc_info, caliber_infos)
 
     def parse_directory(self, dir_path: Path) -> ParseOutput:
         """递归解析目录下所有 .prc 文件"""
@@ -48,7 +52,11 @@ class OraclePrcAdapter:
 
         for proc_info in procedures.values():
             try:
-                proc_output = self._proc_info_to_output(proc_info)
+                # ★ 优化：利用缓存直接提取口径，不重复读取文件
+                caliber_infos = self._parser.extract_caliber_from_proc(
+                    proc_info, data_source="oracle"
+                )
+                proc_output = self._proc_info_to_output(proc_info, caliber_infos)
                 output.merge(proc_output)
             except Exception as e:
                 logger.warning("序列化过程信息失败: %s - %s", proc_info.full_name, e)
@@ -60,8 +68,15 @@ class OraclePrcAdapter:
         )
         return output
 
-    def _proc_info_to_output(self, proc_info) -> ParseOutput:
-        """将 ProcedureInfo 转换为 ParseOutput（对齐 ParserService 的序列化逻辑）"""
+    def _proc_info_to_output(
+        self, proc_info, caliber_infos: list | None = None
+    ) -> ParseOutput:
+        """将 ProcedureInfo 转换为 ParseOutput（对齐 ParserService 的序列化逻辑）
+
+        Args:
+            proc_info: 过程信息
+            caliber_infos: 口径信息列表（如果已提取则直接传入，避免重复计算）
+        """
         output = ParseOutput()
 
         # 过程基本信息
@@ -98,9 +113,11 @@ class OraclePrcAdapter:
 
         # 口径信息
         try:
-            caliber_infos = self._parser.extract_caliber_from_proc(
-                proc_info, data_source="oracle"
-            )
+            if caliber_infos is None:
+                # 兜底：未传入时再提取（利用缓存）
+                caliber_infos = self._parser.extract_caliber_from_proc(
+                    proc_info, data_source="oracle"
+                )
             for ci in caliber_infos:
                 output.caliber_infos.append(CaliberExtractor.to_dict(ci))
         except Exception as e:

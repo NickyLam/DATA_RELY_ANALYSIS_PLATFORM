@@ -19,7 +19,7 @@ import logging
 import os
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any, Optional
 
@@ -64,6 +64,10 @@ class ParseResult:
         self.caliber_infos: list[dict] = []
         self.errors: list[str] = []
         self.parse_time_sec: float = 0.0
+        # ★ 优化：增量去重集合，避免每次 merge 重建全量 set
+        self._seen_lineage_keys: set[tuple] = set()
+        self._seen_mapping_keys: set[tuple] = set()
+        self._seen_caliber_keys: set[tuple] = set()
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -96,6 +100,7 @@ class ParseResult:
         return result
 
     def merge(self, other: ParseResult) -> None:
+        # ====== 表去重 ======
         existing_tables = {t.full_name: i for i, t in enumerate(self.tables)}
         for table in other.tables:
             if table.full_name not in existing_tables:
@@ -104,6 +109,7 @@ class ParseResult:
                 idx = existing_tables[table.full_name]
                 self.tables[idx] = table
 
+        # ====== 存储过程去重（旧→新替换，清除关联血缘） ======
         existing_procs = {p.full_name: p for p in self.procedures}
         new_proc_names = {p.full_name for p in other.procedures}
 
@@ -130,6 +136,7 @@ class ParseResult:
                     tl for tl in self.table_lineages
                     if (tl.source_table, tl.target_table, tl.procedure) not in old_lineages_to_remove
                 ]
+                self._seen_lineage_keys -= old_lineages_to_remove
                 logger.info("已清除 %d 条旧血缘关系", len(old_lineages_to_remove))
 
             if old_mappings_to_remove:
@@ -137,6 +144,7 @@ class ParseResult:
                     fm for fm in self.field_mappings
                     if (fm.source_table, fm.source_column, fm.target_table, fm.target_column) not in old_mappings_to_remove
                 ]
+                self._seen_mapping_keys -= old_mappings_to_remove
                 logger.info("已清除 %d 条旧字段映射", len(old_mappings_to_remove))
 
         for proc in other.procedures:
@@ -144,34 +152,26 @@ class ParseResult:
 
         self.procedures = list(existing_procs.values())
 
-        seen_lineages = set()
-        unique_lineages = []
-        for tl in other.table_lineages + self.table_lineages:
+        # ====== ★ 优化：增量去重，避免重建全量 set ======
+        for tl in other.table_lineages:
             key = (tl.source_table, tl.target_table, tl.procedure)
-            if key not in seen_lineages:
-                seen_lineages.add(key)
-                unique_lineages.append(tl)
-        self.table_lineages = unique_lineages
+            if key not in self._seen_lineage_keys:
+                self._seen_lineage_keys.add(key)
+                self.table_lineages.append(tl)
 
-        seen_mappings = set()
-        unique_mappings = []
-        for fm in other.field_mappings + self.field_mappings:
+        for fm in other.field_mappings:
             key = (fm.source_table, fm.source_column, fm.target_table, fm.target_column)
-            if key not in seen_mappings:
-                seen_mappings.add(key)
-                unique_mappings.append(fm)
-        self.field_mappings = unique_mappings
+            if key not in self._seen_mapping_keys:
+                self._seen_mapping_keys.add(key)
+                self.field_mappings.append(fm)
 
-        seen_calibers = set()
-        unique_calibers = []
-        for ci in other.caliber_infos + self.caliber_infos:
+        for ci in other.caliber_infos:
             key = (ci.get("target_table", ""), ci.get("target_column", ""),
                    ci.get("source_table", ""), ci.get("source_column", ""),
                    ci.get("procedure", ""), ci.get("step_num", 0))
-            if key not in seen_calibers:
-                seen_calibers.add(key)
-                unique_calibers.append(ci)
-        self.caliber_infos = unique_calibers
+            if key not in self._seen_caliber_keys:
+                self._seen_caliber_keys.add(key)
+                self.caliber_infos.append(ci)
 
         self.errors.extend(other.errors)
 
@@ -196,7 +196,10 @@ class ParserService:
         self._cached_procedures: dict[str, Any] = {}
         self._event_bus = get_event_bus()
 
-        self._executor = ThreadPoolExecutor(max_workers=2)
+        # 并行解析线程池：数据源级并发 (L1) + 文件级并发 (L3)
+        self._datasource_workers = 6   # 数据源级并行度（Oracle/EDW/BRT/PAM/GBASE/指标）
+        self._file_workers = 4         # 文件级并行度（同类文件内部）
+        self._executor = ThreadPoolExecutor(max_workers=self._datasource_workers)
 
     def initialize_parsers(self) -> None:
         if OracleTableParser is None:
@@ -223,6 +226,12 @@ class ParserService:
             if OraclePrcAdapter is not None:
                 self._registry.register(OraclePrcAdapter(self._proc_parser))
 
+            warehouse_registered = False
+            indicator_registered = False
+
+            # ★ 收集所有需要 warehouse 解析器的系统名（用于 schema 变量映射）
+            warehouse_systems: list[str] = []
+
             for ds_config in config.datasource_configs:
                 if not ds_config.enabled:
                     continue
@@ -231,30 +240,59 @@ class ParserService:
                 if not ds_path.exists():
                     continue
 
-                if ds_config.parser == "warehouse" and WarehouseSQLParser is not None and SchemaResolver is not None:
-                    schema_resolver = SchemaResolver()
-                    warehouse_parser = WarehouseSQLParser(
-                        schema_resolver=schema_resolver,
-                        system=ds_config.name,
-                    )
-                    self._registry.register(warehouse_parser)
-                    logger.info(
-                        "数仓脚本解析器注册完成: %s (system=%s)",
-                        ds_config.display_name,
-                        ds_config.name,
-                    )
+                if ds_config.parser == "warehouse":
+                    if ds_config.name not in warehouse_systems:
+                        warehouse_systems.append(ds_config.name)
 
-                elif ds_config.parser == "indicator" and IndicatorAdapter is not None:
-                    indicator_adapter = IndicatorAdapter(
-                        layer_detector=self._layer_detector,
-                        system=ds_config.name,
-                    )
-                    self._registry.register(indicator_adapter)
-                    logger.info(
-                        "指标解析器适配器注册完成: %s (system=%s)",
-                        ds_config.display_name,
-                        ds_config.name,
-                    )
+                elif ds_config.parser == "indicator":
+                    # ★ 指标数据源也可能含有 .sql 文件（如 FDM 的 DDL 脚本），
+                    # 需要同时注册 warehouse 解析器来处理
+                    if ds_config.name not in warehouse_systems:
+                        warehouse_systems.append(ds_config.name)
+
+            # 注册 WarehouseSQLParser（支持多系统）
+            if warehouse_systems and WarehouseSQLParser is not None and SchemaResolver is not None:
+                schema_resolver = SchemaResolver()
+                # 用第一个系统作为主 system，其他系统通过 parse_directory 时按路径处理
+                primary_system = warehouse_systems[0]
+                warehouse_parser = WarehouseSQLParser(
+                    schema_resolver=schema_resolver,
+                    system=primary_system,
+                )
+                self._registry.register(warehouse_parser)
+                warehouse_registered = True
+                logger.info(
+                    "数仓脚本解析器注册完成: systems=%s (primary=%s)",
+                    warehouse_systems, primary_system,
+                )
+
+            for ds_config in config.datasource_configs:
+                if not ds_config.enabled:
+                    continue
+
+                ds_path = self._resolve_ds_path(ds_config.data_dir)
+                if not ds_path.exists():
+                    continue
+
+                if ds_config.parser == "indicator" and IndicatorAdapter is not None:
+                    if not indicator_registered:
+                        indicator_adapter = IndicatorAdapter(
+                            layer_detector=self._layer_detector,
+                            system=ds_config.name,
+                        )
+                        self._registry.register(indicator_adapter)
+                        indicator_registered = True
+                        logger.info(
+                            "指标解析器适配器注册完成: %s (system=%s)",
+                            ds_config.display_name,
+                            ds_config.name,
+                        )
+                    else:
+                        logger.info(
+                            "指标解析器适配器已注册，跳过重复注册: %s (system=%s)",
+                            ds_config.display_name,
+                            ds_config.name,
+                        )
 
             logger.info("解析器注册表初始化完成: %s", self._registry)
 
@@ -288,52 +326,54 @@ class ParserService:
             self._event_bus.publish(EventType.PARSE_STARTED)
             self.initialize_parsers()
 
-            # Oracle 数据源：统一走 Registry 路由
-            logger.info("开始扫描 Oracle 目录: %s", self.data_dir)
-            if self._registry is not None:
-                for schema_dir in self.schema_dirs:
-                    schema_path = self.data_dir / schema_dir
-                    if schema_path.exists():
+            # ====== 并行解析：收集所有独立数据源任务 ======
+            tasks: list[tuple[str, Path]] = []
+
+            # Oracle schema 目录
+            for schema_dir in self.schema_dirs:
+                schema_path = self.data_dir / schema_dir
+                if schema_path.exists():
+                    tasks.append((f"oracle/{schema_dir}", schema_path))
+
+            # 其他数据源目录
+            for ds_config in config.datasource_configs:
+                if ds_config.name == "oracle":
+                    continue
+                if not ds_config.enabled:
+                    logger.info("数据源 %s 已禁用，跳过", ds_config.display_name)
+                    continue
+                ds_path = self._resolve_ds_path(ds_config.data_dir)
+                if not ds_path.exists():
+                    logger.info("数据源目录不存在，跳过: %s (%s)", ds_config.name, ds_path)
+                    continue
+                tasks.append((ds_config.name, ds_path))
+
+            logger.info(
+                "开始并行解析 %d 个数据源 (workers=%d)",
+                len(tasks), self._datasource_workers,
+            )
+
+            # ====== 数据源级并行执行 ======
+            if self._registry is not None and tasks:
+                with ThreadPoolExecutor(max_workers=self._datasource_workers) as executor:
+                    futures = {
+                        executor.submit(self._registry.parse_directory, path): name
+                        for name, path in tasks
+                    }
+                    for future in as_completed(futures):
+                        name = futures[future]
                         try:
-                            output = self._registry.parse_directory(schema_path)
-                            self._merge_output_to_result(output, result)
+                            output = future.result()
+                            with self._result_lock:
+                                self._merge_output_to_result(output, result)
+                            summary = output.summary()
                             logger.info(
-                                "Oracle schema %s 解析完成: %d 表, %d 血缘",
-                                schema_dir,
-                                len(output.tables),
-                                len(output.table_lineages),
+                                "数据源 %s 解析完成: %d 表, %d 血缘",
+                                name, summary["tables"], summary["table_lineages"],
                             )
                         except Exception as e:
-                            logger.error("Oracle schema %s 解析失败: %s", schema_dir, e, exc_info=True)
-                            result.errors.append(f"Oracle schema {schema_dir}: {str(e)}")
-
-            # 其他数据源：统一走 Registry 路由
-            if self._registry is not None:
-                for ds_config in config.datasource_configs:
-                    if ds_config.name == "oracle":
-                        continue
-                    if not ds_config.enabled:
-                        logger.info("数据源 %s 已禁用，跳过", ds_config.display_name)
-                        continue
-
-                    ds_path = self._resolve_ds_path(ds_config.data_dir)
-                    if not ds_path.exists():
-                        logger.info("数据源目录不存在，跳过: %s (%s)", ds_config.name, ds_path)
-                        continue
-
-                    logger.info("开始解析数据源 %s: %s", ds_config.display_name, ds_path)
-                    try:
-                        output = self._registry.parse_directory(ds_path)
-                        self._merge_output_to_result(output, result)
-                        logger.info(
-                            "数据源 %s 解析完成: %d 表, %d 血缘",
-                            ds_config.display_name,
-                            len(output.tables),
-                            len(output.table_lineages),
-                        )
-                    except Exception as e:
-                        logger.error("数据源 %s 解析失败: %s", ds_config.name, e, exc_info=True)
-                        result.errors.append(f"数据源 {ds_config.name}: {str(e)}")
+                            logger.error("数据源 %s 解析失败: %s", name, e, exc_info=True)
+                            result.errors.append(f"数据源 {name}: {str(e)}")
 
             result.parse_time_sec = time.time() - start_time
             self._current_result = result
@@ -458,15 +498,10 @@ class ParserService:
         cached = repo.get_raw_data()
         if cached:
             return cached
-        json_file = self._cache_store.get_json_file()
-        if json_file.exists():
-            try:
-                with open(json_file, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                repo.update(data)
-                return data
-            except Exception as e:
-                logger.error("读取缓存数据失败: %s", e)
+        # Fallback: 从存储后端加载（SQLite 或 legacy）
+        data = self._cache_store.load_from_cache()
+        if data:
+            return data
         return None
 
     def get_table_list(self) -> list[dict]:

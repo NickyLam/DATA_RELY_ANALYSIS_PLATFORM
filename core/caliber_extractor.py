@@ -246,10 +246,21 @@ class CaliberExtractor:
         if not mappings:
             return []
 
+        # ★ 优化：sql_block 级别的提取结果只计算一次，复用给所有 FieldMapping
         where_conds, join_conds, group_by, having = CaliberExtractor.extract_conditions(
             sql_block, dialect=data_source
         )
         enhanced = CaliberExtractor.extract_enhanced_metadata(sql_block)
+
+        # ★ 优化：sql_block 级别的不变结果只计算一次
+        cte_defs = CaliberExtractor._extract_cte_definitions(sql_block)
+        custom_funcs = CaliberExtractor._extract_custom_functions(sql_block)
+        step_isolated_where = CaliberExtractor._extract_step_isolated_where(
+            sql_block, accumulated_where=accumulated_where
+        )
+        step_isolated_join = CaliberExtractor._extract_step_isolated_join(
+            sql_block, accumulated_join=accumulated_join
+        )
 
         results: list[CaliberInfo] = []
         for fm in mappings:
@@ -295,20 +306,16 @@ class CaliberExtractor:
                 start_line=start_line,
                 end_line=end_line,
             )
-            # 步骤级隔离条件提取（Batch B）
-            info.step_isolated_where = CaliberExtractor._extract_step_isolated_where(
-                sql_block, accumulated_where=accumulated_where
-            )
-            info.step_isolated_join = CaliberExtractor._extract_step_isolated_join(
-                sql_block, accumulated_join=accumulated_join
-            )
-            # CTE / 自定义函数 / 完整表达式提取（Batch C）
-            info.cte_definitions = CaliberExtractor._extract_cte_definitions(sql_block)
-            info.custom_functions = CaliberExtractor._extract_custom_functions(sql_block)
+            # ★ 优化：复用 sql_block 级别缓存的不变结果
+            info.step_isolated_where = step_isolated_where
+            info.step_isolated_join = step_isolated_join
+            info.cte_definitions = cte_defs
+            info.custom_functions = custom_funcs
+            # full_expression 每字段不同，仍需逐个算
             info.full_expression = CaliberExtractor._extract_full_expression(
                 sql_block, fm.target_column
             )
-            info.is_custom_function_call = bool(info.custom_functions)
+            info.is_custom_function_call = bool(custom_funcs)
             results.append(info)
         return results
 

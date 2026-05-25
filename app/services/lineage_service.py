@@ -414,23 +414,24 @@ class LineageService:
         logger.info("索引重建完成")
 
     def _check_and_refresh_cache(self) -> None:
-        """检查数据文件是否已更新，如果更新则自动清除缓存"""
-        import os
-        cache_file = self.parser.output_dir / "lineage_data.json"
-        
-        if not cache_file.exists():
+        """检查数据是否已更新，如果更新则自动清除缓存。
+
+        兼容 SQLite 和 legacy 两种后端：
+        - SQLite 模式: 从 DataRepository metadata 中读取 last_updated 时间戳
+        - Legacy 模式: 从 lineage_data.json 文件 mtime 检测
+        """
+        current_mtime = self._get_data_mtime()
+        if current_mtime is None:
             return
-            
-        current_mtime = cache_file.stat().st_mtime
-        
+
         if self._last_data_mtime == 0:
             # 首次加载，记录时间
             self._last_data_mtime = current_mtime
             return
-            
+
         if current_mtime > self._last_data_mtime:
             logger.info(
-                "检测到数据文件已更新 (%.2f > %.2f)，自动清除缓存",
+                "检测到数据已更新 (%.2f > %.2f)，自动清除缓存",
                 current_mtime,
                 self._last_data_mtime,
             )
@@ -441,13 +442,36 @@ class LineageService:
             self._build_indexes()
             self._last_data_mtime = current_mtime
 
-    def _update_data_mtime(self) -> None:
-        """更新数据文件的最后修改时间"""
+    def _get_data_mtime(self) -> Optional[float]:
+        """获取数据的最后更新时间戳。
+
+        优先从 DataRepository metadata 读取，fallback 到 JSON 文件 mtime。
+        """
+        # 优先从 repository metadata 获取
+        try:
+            repo = self.parser._cache_store.get_repository()
+            metadata = repo.get_metadata()
+            last_updated_str = metadata.get("last_updated", "")
+            if last_updated_str:
+                from datetime import datetime
+                dt = datetime.strptime(str(last_updated_str), "%Y-%m-%d %H:%M:%S")
+                return dt.timestamp()
+        except Exception:
+            pass
+
+        # Fallback: 检测 JSON 文件 mtime（legacy 模式）
         import os
         cache_file = self.parser.output_dir / "lineage_data.json"
-        
         if cache_file.exists():
-            self._last_data_mtime = cache_file.stat().st_mtime
+            return cache_file.stat().st_mtime
+
+        return None
+
+    def _update_data_mtime(self) -> None:
+        """更新数据的最后修改时间。"""
+        current = self._get_data_mtime()
+        if current is not None:
+            self._last_data_mtime = current
 
     def _trace_field_lineage(
         self,

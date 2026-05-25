@@ -92,6 +92,12 @@ class AppConfig:
     cache_ttl_seconds: int = 3600
     max_cache_size: int = 10000
 
+    # SQLite 存储配置
+    storage_backend: str = "sqlite"  # sqlite | legacy
+    sqlite_db_path: str = "output/lineage.db"
+    enable_legacy_cache_write: bool = False  # 是否同时写 pickle/json
+    enable_json_export: bool = True  # 是否允许手动导出 JSON
+
     progress_interval_ms: int = 500
     progress_keepalive_sec: int = 300
 
@@ -117,6 +123,10 @@ class AppConfig:
     @property
     def source_data_path(self) -> Path:
         return self._resolve_path(self.source_data_dir)
+
+    @property
+    def sqlite_db_full_path(self) -> Path:
+        return self._resolve_path(self.sqlite_db_path)
 
     def _resolve_path(self, value: str) -> Path:
         path = Path(value)
@@ -148,6 +158,20 @@ class AppConfig:
 
         if source_data_dir := os.getenv("SOURCE_DATA_DIR"):
             config.source_data_dir = source_data_dir
+
+        # SQLite 存储配置
+        if storage_backend := os.getenv("STORAGE_BACKEND"):
+            if storage_backend in ("sqlite", "legacy"):
+                config.storage_backend = storage_backend
+
+        if sqlite_db_path := os.getenv("SQLITE_DB_PATH"):
+            config.sqlite_db_path = sqlite_db_path
+
+        if os.getenv("ENABLE_LEGACY_CACHE_WRITE", "").lower() in ("1", "true", "yes"):
+            config.enable_legacy_cache_write = True
+
+        if os.getenv("ENABLE_JSON_EXPORT", "").lower() in ("0", "false", "no"):
+            config.enable_json_export = False
 
         manifest_configs = _load_datasource_configs_from_manifest(config.source_data_path)
         if manifest_configs:

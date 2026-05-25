@@ -99,8 +99,9 @@ class ParserRegistry:
     def parse_directory(self, dir_path: Path) -> ParseOutput:
         """递归解析目录下所有支持的文件（自动路由到对应解析器）
 
-        按扩展名分组文件，每组调用对应解析器的 parse_directory。
-        对于解析器不支持批量目录解析的场景，回退到逐文件解析。
+        ★ 优化：对 WarehouseSQLParser 等有特殊两阶段逻辑的解析器，
+        仍调用其 parse_directory；对简单解析器，直接逐文件调用 parse_file，
+        避免让解析器重新扫描目录（浪费 I/O）。
 
         Args:
             dir_path: 目录路径
@@ -116,7 +117,7 @@ class ParserRegistry:
             logger.warning("路径不是目录: %s", dir_path)
             return ParseOutput(errors=[f"路径不是目录: {dir_path}"])
 
-        # 按解析器分组扫描文件
+        # 按解析器分组扫描文件（只扫描一次）
         parser_files: dict[FileParser, list[Path]] = {}
         skipped_extensions: set[str] = set()
 
@@ -140,7 +141,6 @@ class ParserRegistry:
             logger.info("目录 %s 中无支持的文件", dir_path)
             return ParseOutput()
 
-        # 按解析器分别处理（优先使用解析器自身的 parse_directory）
         total_output = ParseOutput()
         total_files = sum(len(files) for files in parser_files.values())
 
@@ -157,21 +157,31 @@ class ParserRegistry:
                 parser_name, exts, len(files),
             )
 
-            try:
-                output = parser.parse_directory(dir_path)
-                total_output.merge(output)
-            except Exception as e:
-                logger.warning(
-                    "解析器 %s.parse_directory 失败，回退逐文件解析: %s",
-                    parser_name, e,
-                )
-                for file_path in files:
-                    try:
-                        output = parser.parse_file(file_path)
-                        total_output.merge(output)
-                    except Exception as fe:
-                        logger.error("解析文件失败: %s - %s", file_path, fe)
-                        total_output.errors.append(f"文件 {file_path.name}: {str(fe)}")
+            # ★ 区分策略：有特殊两阶段逻辑的解析器走 parse_directory，
+            # 简单解析器直接逐文件调用 parse_file
+            needs_directory_parse = parser_name in (
+                "WarehouseSQLParser",  # 两阶段 DDL→DML 依赖
+            )
+
+            if needs_directory_parse:
+                try:
+                    output = parser.parse_directory(dir_path)
+                    total_output.merge(output)
+                    continue
+                except Exception as e:
+                    logger.warning(
+                        "解析器 %s.parse_directory 失败，回退逐文件: %s",
+                        parser_name, e,
+                    )
+
+            # 默认：逐文件解析（避免重复扫描目录）
+            for file_path in files:
+                try:
+                    output = parser.parse_file(file_path)
+                    total_output.merge(output)
+                except Exception as fe:
+                    logger.error("解析文件失败: %s - %s", file_path, fe)
+                    total_output.errors.append(f"文件 {file_path.name}: {str(fe)}")
 
         summary = total_output.summary()
         logger.info(

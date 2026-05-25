@@ -55,13 +55,22 @@ class OracleTabAdapter:
             output.errors.append(f"目录不存在或不是目录: {dir_path}")
             return output
 
-        for file_path in dir_path.rglob("*.tab"):
-            try:
-                file_output = self.parse_file(file_path)
-                output.merge(file_output)
-            except Exception as e:
-                logger.warning("解析 .tab 文件失败: %s - %s", file_path, e)
-                output.errors.append(f"文件 {file_path.name}: {str(e)}")
+        # ★ 优化：收集所有文件后并行解析
+        tab_files = list(dir_path.rglob("*.tab"))
+        if not tab_files:
+            return output
+
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            futures = {executor.submit(self.parse_file, fp): fp for fp in tab_files}
+            for future in futures:
+                fp = futures[future]
+                try:
+                    file_output = future.result()
+                    output.merge(file_output)
+                except Exception as e:
+                    logger.warning("解析 .tab 文件失败: %s - %s", fp, e)
+                    output.errors.append(f"文件 {fp.name}: {str(e)}")
 
         logger.info(
             "OracleTabAdapter: 解析目录 %s, 共 %d 张表",

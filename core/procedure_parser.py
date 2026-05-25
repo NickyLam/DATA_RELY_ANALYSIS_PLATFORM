@@ -113,6 +113,8 @@ class EnhancedProcedureParser:
 
     def __init__(self, tables: dict[str, TableInfo]) -> None:
         self.tables: dict[str, TableInfo] = tables
+        # ★ 优化：缓存最近解析的 operations + content，避免 extract_caliber_from_proc 重复读取
+        self._last_parse_cache: dict[str, tuple[str, list[SQLOperation]]] = {}
 
     # ===================================================================
     # 公开接口
@@ -169,6 +171,9 @@ class EnhancedProcedureParser:
         # 构建表级血缘（含外部 + 内部依赖）
         proc_info.table_lineages = self._build_table_lineages(proc_info, internal_deps)
 
+        # ★ 优化：缓存 operations 和 content，避免 extract_caliber_from_proc 重复读取和解析
+        self._last_parse_cache[proc_info.full_name] = (content, operations)
+
         logger.info(
             "[%s] 解析完成: %d 条字段映射, %d 个源表, %d 个目标表, %d 个临时表",
             proc_info.full_name,
@@ -187,10 +192,24 @@ class EnhancedProcedureParser:
             logger.error("目录不存在或不是目录: %s", directory)
             return results
 
-        for prc_file in sorted(prc_dir.rglob("*.prc")):
-            proc_info = self.parse_prc_file(str(prc_file))
+        # ★ 优化：收集所有文件后并行解析
+        prc_files = sorted(prc_dir.rglob("*.prc"))
+        if not prc_files:
+            return results
+
+        from concurrent.futures import ThreadPoolExecutor
+        import threading
+
+        results_lock = threading.Lock()
+
+        def _parse_and_collect(fp: Path):
+            proc_info = self.parse_prc_file(str(fp))
             if proc_info is not None:
-                results[proc_info.full_name] = proc_info
+                with results_lock:
+                    results[proc_info.full_name] = proc_info
+
+        with ThreadPoolExecutor(max_workers=4) as executor:
+            executor.map(_parse_and_collect, prc_files)
 
         logger.info("目录扫描完成: %s, 共解析 %d 个存储过程", directory, len(results))
         return results
@@ -222,18 +241,26 @@ class EnhancedProcedureParser:
 
         基于 proc_info.field_mappings 和原始文件内容中的 SQL 操作块，
         利用 CaliberExtractor 提取 WHERE/JOIN/GROUP BY 条件。
+
+        ★ 优化：优先使用缓存中的 content/operations，避免重复读取文件和重新解析。
         """
         if not proc_info.field_mappings or not proc_info.file_path:
             return []
 
-        try:
-            with open(proc_info.file_path, "r", encoding="utf-8", errors="ignore") as fh:
-                content = fh.read()
-        except OSError:
-            logger.warning("无法重新读取文件以提取口径: %s", proc_info.file_path)
-            return []
+        # ★ 优先使用缓存
+        cached = self._last_parse_cache.get(proc_info.full_name)
+        if cached is not None:
+            content, operations = cached
+        else:
+            # 回退：缓存未命中时重新读取
+            try:
+                with open(proc_info.file_path, "r", encoding="utf-8", errors="ignore") as fh:
+                    content = fh.read()
+            except OSError:
+                logger.warning("无法重新读取文件以提取口径: %s", proc_info.file_path)
+                return []
 
-        operations = self._extract_all_sql_operations(content, proc_info)
+            operations = self._extract_all_sql_operations(content, proc_info)
 
         op_by_target: dict[str, list["SQLOperation"]] = {}
         op_by_step: dict[int, "SQLOperation"] = {}
