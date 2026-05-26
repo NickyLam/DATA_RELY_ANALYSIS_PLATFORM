@@ -237,16 +237,57 @@ class LineageService:
         self, data: dict, all_nodes: set, all_mappings: list,
         table: str, field: str,
     ) -> None:
-        extra_mappings = self._filter_field_mappings(
+        """补充 tracer 产出的映射中缺少 procedure 信息的版本。
+
+        只补充与已有映射具有相同 (src_bare, src_col, tgt_bare, tgt_col) 的映射，
+        不引入图节点范围外的新映射。
+        """
+        existing_keys_4: set[tuple] = set()
+        for m in all_mappings:
+            src_bare = TableNameResolver.bare_table(m.get("source_table", "")).upper()
+            tgt_bare = TableNameResolver.bare_table(m.get("target_table", "")).upper()
+            existing_keys_4.add((
+                src_bare,
+                m.get("source_column", "").upper(),
+                tgt_bare,
+                m.get("target_column", "").upper(),
+            ))
+
+        node_full_by_bare: dict[str, str] = {}
+        for n in all_nodes:
+            bare = n.split(".")[-1].upper() if "." in n else n.upper()
+            node_full_by_bare.setdefault(bare, n)
+
+        candidates = self._filter_field_mappings(
             data.get("field_mappings", []),
-            all_nodes, target_table=table, target_field=field,
+            all_nodes,
+            target_table=table,
+            target_field=field,
         )
-        seen_mappings = {self._field_mapping_dedup_key(m) for m in all_mappings}
-        for fm in extra_mappings:
-            key = self._field_mapping_dedup_key(fm)
-            if key not in seen_mappings:
-                seen_mappings.add(key)
-                all_mappings.append(fm)
+
+        seen_dedup = {self._field_mapping_dedup_key(m) for m in all_mappings}
+        for fm in candidates:
+            key4 = (
+                TableNameResolver.bare_table(fm.get("source_table", "")).upper(),
+                fm.get("source_column", "").upper(),
+                TableNameResolver.bare_table(fm.get("target_table", "")).upper(),
+                fm.get("target_column", "").upper(),
+            )
+            if key4 not in existing_keys_4:
+                continue
+
+            # Normalize short names to full names
+            nf = dict(fm)
+            for k in ("source_table", "target_table"):
+                val = fm.get(k, "").upper()
+                bare = val.split(".")[-1] if "." in val else val
+                if bare in node_full_by_bare and val != node_full_by_bare[bare]:
+                    nf[k] = node_full_by_bare[bare]
+
+            dedup_key = self._field_mapping_dedup_key(nf)
+            if dedup_key not in seen_dedup:
+                seen_dedup.add(dedup_key)
+                all_mappings.append(nf)
 
     def _query_table_lineage(
         self, table: str, depth: int,
@@ -760,27 +801,33 @@ class LineageService:
         return visited_nodes, edges, collected_mappings
 
     @staticmethod
+    @staticmethod
+    @staticmethod
+    def _is_node_in_set(table_name: str, involved_nodes: set) -> bool:
+        """检查表名是否在节点集合中（支持全名和短名匹配）。"""
+        upper = table_name.upper()
+        if upper in involved_nodes:
+            return True
+        bare = upper.split(".")[-1] if "." in upper else upper
+        for node in involved_nodes:
+            node_bare = node.split(".")[-1] if "." in node else node
+            if node_bare == bare:
+                return True
+        return False
+
+    @staticmethod
     def _filter_field_mappings(
         all_mappings: list[dict],
         involved_nodes: set,
         target_table: str = None,
         target_field: str = None,
     ) -> list[dict]:
-        """
-        过滤字段映射，只返回与查询相关的映射
+        """过滤字段映射，只返回源和目标表都在图节点中的映射。
 
-        Args:
-            all_mappings: 全部字段映射
-            involved_nodes: 涉及的表节点集合
-            target_table: 目标表名
-            target_field: 目标字段名
-
-        Returns:
-            list[dict]: 过滤后的字段映射列表
+        核心约束：field_mappings 是图详情的补充，必须与图节点一致。
+        只有一端在节点中的映射属于其他血缘路径，不应出现在当前图中。
         """
         filtered = []
-        target_upper = (target_table or "").upper()
-        target_table_short = target_upper.split(".")[-1] if "." in target_upper else target_upper
         field_upper = (target_field or "").upper()
 
         for fm in all_mappings:
@@ -789,43 +836,19 @@ class LineageService:
             src_col = fm.get("source_column", "").upper()
             tgt_col = fm.get("target_column", "").upper()
 
-            src_in = src_tbl in involved_nodes
-            tgt_in = tgt_tbl in involved_nodes
-            
-            # 检查是否匹配目标表（支持全名或短名匹配）
-            matches_target = False
-            if target_upper:
-                # 全名匹配
-                if tgt_tbl == target_upper or src_tbl == target_upper:
-                    matches_target = True
-                # 短名匹配（表名的最后一部分）
-                elif tgt_tbl.endswith("." + target_table_short) or src_tbl.endswith("." + target_table_short):
-                    matches_target = True
-                # 严格包含匹配：只匹配目标表作为源或目标的映射
-                # 避免将其他存储过程中同名/相似表的映射错误关联
-                elif (tgt_tbl == target_table_short or src_tbl == target_table_short):
-                    matches_target = True
+            src_in = LineageService._is_node_in_set(src_tbl, involved_nodes)
+            tgt_in = LineageService._is_node_in_set(tgt_tbl, involved_nodes)
 
-            # 检查是否匹配目标字段
-            matches_field = False
+            # 源和目标都必须在图节点中
+            if not (src_in and tgt_in):
+                continue
+
+            # 如果指定了字段，必须匹配
             if field_upper:
-                if tgt_col == field_upper:
-                    matches_field = True
-                elif field_upper in tgt_col or field_upper in src_col:
-                    matches_field = True
-
-            # 过滤条件（满足任一即可）:
-            # 1. 源或目标表在涉及节点中（原有逻辑）
-            # 2. 匹配目标表（新增）
-            # 3. 如果指定了字段，必须匹配字段
-            if (src_in or tgt_in or matches_target):
-                if field_upper:
-                    if matches_field:
-                        filtered.append(fm)
-                else:
-                    # 未指定字段，只要表匹配就保留
-                    if src_in or tgt_in or matches_target:
-                        filtered.append(fm)
+                if tgt_col == field_upper or field_upper in tgt_col or field_upper in src_col:
+                    filtered.append(fm)
+            else:
+                filtered.append(fm)
 
         return filtered
 
@@ -880,12 +903,14 @@ class LineageService:
         """
         src_bare = TableNameResolver.bare_table(mapping.get("source_table", "")).upper()
         tgt_bare = TableNameResolver.bare_table(mapping.get("target_table", "")).upper()
+        proc_raw = mapping.get("procedure", "").upper()
+        proc_bare = proc_raw.split(".")[-1] if "." in proc_raw else proc_raw
         return (
             src_bare,
             mapping.get("source_column", "").upper(),
             tgt_bare,
             mapping.get("target_column", "").upper(),
-            mapping.get("procedure", "").upper(),
+            proc_bare,
         )
 
     @classmethod
