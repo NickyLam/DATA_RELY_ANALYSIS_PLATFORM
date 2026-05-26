@@ -873,8 +873,8 @@ class LineageTracer(BaseTracer):
             return ""
         return name.strip().upper()
 
+    @staticmethod
     def to_graph_result(
-        self,
         chains: list[FieldLineageChain],
         direction: str = "upstream",
     ) -> tuple[set[str], list[dict], list[dict]]:
@@ -913,6 +913,16 @@ class LineageTracer(BaseTracer):
                             "type": "field_mapping",
                         })
 
+                    # 边 src → tgt 的 procedure 取自承载该字段映射的 BFS 节点：
+                    # - upstream BFS：src.procedure 存的是"src 流向其 BFS 父节点（即下游 tgt）的过程"
+                    # - downstream BFS：tgt.procedure 存的是"流入此 tgt 的过程"
+                    edge_procedure = (
+                        prev_node.procedure if direction == "upstream" else node.procedure
+                    )
+                    edge_transform = (
+                        prev_node.transform_logic if direction == "upstream" else node.transform_logic
+                    )
+
                     mapping_key = (src_table, src_field, tgt_table, tgt_field)
                     if mapping_key not in seen_mappings:
                         seen_mappings.add(mapping_key)
@@ -921,8 +931,8 @@ class LineageTracer(BaseTracer):
                             "source_column": src_field,
                             "target_table": tgt_table,
                             "target_column": tgt_field,
-                            "transform_logic": node.transform_logic,
-                            "procedure": node.procedure,
+                            "transform_logic": edge_transform,
+                            "procedure": edge_procedure,
                         })
 
         return node_names, edges, mappings
