@@ -119,7 +119,15 @@
         content.innerHTML = html;
     };
 
-    // 显示节点信息浮窗
+    function _escape(s) {
+        if (s === null || s === undefined) return '';
+        if (typeof escapeHtml === 'function') return escapeHtml(String(s));
+        return String(s).replace(/[&<>"']/g, c => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[c]));
+    }
+
+    // 显示节点信息浮窗（点节点时触发，懒加载 /api/lineage/node-detail）
     window.showInfoPanel = function(node) {
         const panel = document.getElementById('infoPanel');
         const title = document.getElementById('panelTitle');
@@ -139,24 +147,219 @@
         if (node.comment) {
             html += `<div class="info-section">
                 <div class="section-title">说明</div>
-                <div class="section-content">${escapeHtml(node.comment)}</div>
+                <div class="section-content">${_escape(node.comment)}</div>
             </div>`;
         }
 
-        if (node.columns && node.columns.length > 0) {
-            const colsHtml = node.columns.slice(0, 30)
-                .map(c => `<span class="tag">${c}</span>`)
-                .join('');
-
-            html += `<div class="info-section">
-                <div class="section-title">字段 (${node.columns.length})</div>
-                <div class="section-content">${colsHtml}${node.columns.length > 30 ? `...共${node.columns.length}个` : ''}</div>
-            </div>`;
-        }
+        html += `<div id="nodeDetailLazy" class="info-section">
+            <div class="section-title">详情</div>
+            <div class="section-content" style="color:#94a3b8;font-size:12px;">加载中...</div>
+        </div>`;
 
         content.innerHTML = html;
         panel.classList.add('show');
+
+        fetch(`/api/lineage/node-detail?table=${encodeURIComponent(node.id)}`)
+            .then(r => r.ok ? r.json() : Promise.reject(r.status))
+            .then(res => {
+                if (!res || !res.success || !res.data) {
+                    _renderNodeDetailFallback(node);
+                    return;
+                }
+                _renderNodeDetail(res.data);
+            })
+            .catch(() => _renderNodeDetailFallback(node));
     };
+
+    function _renderNodeDetail(d) {
+        const slot = document.getElementById('nodeDetailLazy');
+        if (!slot) return;
+
+        let html = '';
+
+        if (d.comment) {
+            html += `<div class="info-section">
+                <div class="section-title">说明</div>
+                <div class="section-content">${_escape(d.comment)}</div>
+            </div>`;
+        }
+
+        const fields = d.fields || [];
+        if (fields.length > 0) {
+            const fieldsHtml = fields.slice(0, 50).map(f => {
+                const fname = f.name || f;
+                const ftype = f.type ? ` <span style="color:#94a3b8;">(${_escape(f.type)})</span>` : '';
+                return `<span class="tag">${_escape(fname)}${ftype}</span>`;
+            }).join('');
+            html += `<div class="info-section">
+                <div class="section-title">字段 (${fields.length})</div>
+                <div class="section-content">${fieldsHtml}${fields.length > 50 ? `<span style="color:#94a3b8;font-size:11px;">...共${fields.length}个</span>` : ''}</div>
+            </div>`;
+        }
+
+        const ups = d.upstream_tables || [];
+        if (ups.length > 0) {
+            const upsHtml = ups.slice(0, 20).map(t =>
+                `<span class="tag" style="background:#dcfce7;color:#166534;cursor:pointer;" onclick="quickQuery('${_escape(t)}')">${_escape(t.split('.').pop())}</span>`
+            ).join(' ');
+            html += `<div class="info-section">
+                <div class="section-title">↑ 上游表 (${ups.length})</div>
+                <div class="section-content">${upsHtml}</div>
+            </div>`;
+        }
+
+        const downs = d.downstream_tables || [];
+        if (downs.length > 0) {
+            const downsHtml = downs.slice(0, 20).map(t =>
+                `<span class="tag" style="background:#fee2e2;color:#991b1b;cursor:pointer;" onclick="quickQuery('${_escape(t)}')">${_escape(t.split('.').pop())}</span>`
+            ).join(' ');
+            html += `<div class="info-section">
+                <div class="section-title">↓ 下游表 (${downs.length})</div>
+                <div class="section-content">${downsHtml}</div>
+            </div>`;
+        }
+
+        const procs = d.procedures || [];
+        if (procs.length > 0) {
+            const procsHtml = procs.slice(0, 10).map(p =>
+                `<span class="tag" style="background:#fef3c7;color:#92400e;">${_escape(p)}</span>`
+            ).join(' ');
+            html += `<div class="info-section">
+                <div class="section-title">关联过程 (${procs.length})</div>
+                <div class="section-content">${procsHtml}</div>
+            </div>`;
+        }
+
+        slot.outerHTML = html || `<div class="info-section">
+            <div class="section-content" style="color:#94a3b8;font-size:12px;">无更多详情</div>
+        </div>`;
+    }
+
+    function _renderNodeDetailFallback(node) {
+        const slot = document.getElementById('nodeDetailLazy');
+        if (!slot) return;
+
+        if (node.columns && node.columns.length > 0) {
+            const colsHtml = node.columns.slice(0, 30).map(c => `<span class="tag">${_escape(c)}</span>`).join('');
+            slot.outerHTML = `<div class="info-section">
+                <div class="section-title">字段 (${node.columns.length})</div>
+                <div class="section-content">${colsHtml}${node.columns.length > 30 ? `...共${node.columns.length}个` : ''}</div>
+            </div>`;
+        } else {
+            slot.outerHTML = '';
+        }
+    }
+
+    // 显示边的口径详情浮窗（点边时触发，懒加载 /api/lineage/edge-caliber）
+    window.showEdgePanel = function(edge) {
+        const panel = document.getElementById('infoPanel');
+        const title = document.getElementById('panelTitle');
+        const content = document.getElementById('panelContent');
+
+        if (!panel || !title || !content) return;
+
+        const srcTbl = edge.source_table || '';
+        const tgtTbl = edge.target_table || '';
+        const srcCol = edge.source_field || '';
+        const tgtCol = edge.target_field || '';
+
+        const srcShort = srcTbl.split('.').pop();
+        const tgtShort = tgtTbl.split('.').pop();
+        title.textContent = `${srcShort}.${srcCol} → ${tgtShort}.${tgtCol}`;
+
+        content.innerHTML = `<div class="info-section">
+            <div class="section-title">字段映射</div>
+            <div class="section-content" style="font-family:monospace;font-size:12px;">
+                <div><span style="color:#059669;">${_escape(srcTbl)}</span>.<span style="color:#059669;font-weight:600;">${_escape(srcCol)}</span></div>
+                <div style="color:#94a3b8;margin:4px 0;">↓</div>
+                <div><span style="color:#dc2626;">${_escape(tgtTbl)}</span>.<span style="color:#dc2626;font-weight:600;">${_escape(tgtCol)}</span></div>
+            </div>
+        </div>
+        <div id="edgeCaliberLazy" class="info-section">
+            <div class="section-title">加工口径</div>
+            <div class="section-content" style="color:#94a3b8;font-size:12px;">加载中...</div>
+        </div>`;
+
+        panel.classList.add('show');
+
+        if (!srcCol || !tgtCol) {
+            _renderEdgeCaliberEmpty('该边为表级血缘，无字段口径');
+            return;
+        }
+
+        const params = new URLSearchParams({
+            src: srcTbl, src_col: srcCol, tgt: tgtTbl, tgt_col: tgtCol,
+        });
+        if (edge.procedure) params.set('proc', edge.procedure);
+
+        fetch(`/api/lineage/edge-caliber?${params.toString()}`)
+            .then(r => r.ok ? r.json() : Promise.reject(r.status))
+            .then(res => {
+                if (!res || !res.success || !res.data) {
+                    _renderEdgeCaliberEmpty('未找到该边的加工口径');
+                    return;
+                }
+                _renderEdgeCaliber(res.data);
+            })
+            .catch(() => _renderEdgeCaliberEmpty('加载失败，请稍后重试'));
+    };
+
+    function _renderEdgeCaliber(c) {
+        const slot = document.getElementById('edgeCaliberLazy');
+        if (!slot) return;
+
+        let html = '';
+
+        if (c.transform_logic) {
+            html += `<div class="info-section">
+                <div class="section-title">转换逻辑</div>
+                <div class="section-content"><pre style="background:#f8fafc;padding:8px;border-radius:4px;font-size:12px;overflow-x:auto;white-space:pre-wrap;margin:0;">${_escape(c.transform_logic)}</pre></div>
+            </div>`;
+        }
+
+        if (c.procedure) {
+            html += `<div class="info-section">
+                <div class="section-title">加工过程</div>
+                <div class="section-content"><span class="tag" style="background:#fef3c7;color:#92400e;">${_escape(c.procedure)}</span></div>
+            </div>`;
+        }
+
+        const wheres = c.where_conditions || [];
+        if (wheres.length > 0) {
+            const wHtml = wheres.slice(0, 10).map(w => {
+                const txt = (typeof w === 'string') ? w : (w.raw_text || JSON.stringify(w));
+                return `<div style="background:#fef9c3;padding:6px 8px;border-radius:4px;font-family:monospace;font-size:11px;margin-bottom:4px;">${_escape(txt)}</div>`;
+            }).join('');
+            html += `<div class="info-section">
+                <div class="section-title">WHERE 条件 (${wheres.length})</div>
+                <div class="section-content">${wHtml}</div>
+            </div>`;
+        }
+
+        const joins = c.join_conditions || [];
+        if (joins.length > 0) {
+            const jHtml = joins.slice(0, 10).map(j => {
+                const txt = (typeof j === 'string') ? j : (j.raw_text || JSON.stringify(j));
+                return `<div style="background:#dbeafe;padding:6px 8px;border-radius:4px;font-family:monospace;font-size:11px;margin-bottom:4px;">${_escape(txt)}</div>`;
+            }).join('');
+            html += `<div class="info-section">
+                <div class="section-title">JOIN 条件 (${joins.length})</div>
+                <div class="section-content">${jHtml}</div>
+            </div>`;
+        }
+
+        slot.outerHTML = html || `<div class="info-section">
+            <div class="section-content" style="color:#94a3b8;font-size:12px;">该字段为直传，无额外口径</div>
+        </div>`;
+    }
+
+    function _renderEdgeCaliberEmpty(msg) {
+        const slot = document.getElementById('edgeCaliberLazy');
+        if (!slot) return;
+        slot.outerHTML = `<div class="info-section">
+            <div class="section-content" style="color:#94a3b8;font-size:12px;">${_escape(msg)}</div>
+        </div>`;
+    }
 
     // 关闭信息浮窗
     window.closeInfoPanel = function() {

@@ -255,12 +255,35 @@
             }
             const midY = (y1 + y2) / 2;
 
-            g.append('path')
+            const edgePath = g.append('path')
                 .attr('d', `M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}`)
                 .attr('class', 'link-line')
                 .attr('fill', 'none').attr('stroke', strokeColor)
                 .attr('stroke-width', strokeWidth).attr('opacity', opacity)
                 .attr('marker-end', marker);
+
+            // 字段级边可点击查询口径详情（P3 懒加载）
+            if (edge.source_field && edge.target_field) {
+                edgePath.style('cursor', 'pointer')
+                    .on('click', () => {
+                        if (typeof showEdgePanel === 'function') showEdgePanel(edge);
+                    })
+                    .on('mouseover', function() {
+                        d3.select(this).attr('stroke-width', strokeWidth + 1).attr('opacity', 1);
+                    })
+                    .on('mouseout', function() {
+                        d3.select(this).attr('stroke-width', strokeWidth).attr('opacity', opacity);
+                    });
+
+                // 加宽透明热区，提升边的点击命中率
+                g.append('path')
+                    .attr('d', `M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}`)
+                    .attr('fill', 'none').attr('stroke', 'transparent')
+                    .attr('stroke-width', 12).style('cursor', 'pointer')
+                    .on('click', () => {
+                        if (typeof showEdgePanel === 'function') showEdgePanel(edge);
+                    });
+            }
         });
 
         // 绘制节点
