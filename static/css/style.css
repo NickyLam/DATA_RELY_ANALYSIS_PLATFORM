@@ -1138,6 +1138,194 @@ body {
     color: var(--text-primary);
 }
 
+/* === 节点浮窗：紧凑概览卡 === */
+.info-panel .ov-mini {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+.info-panel .ov-mini-card {
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px 4px;
+    text-align: center;
+}
+.info-panel .ov-mini-val {
+    font-size: 18px;
+    font-weight: 700;
+    color: #6366f1;
+    line-height: 1.2;
+}
+.info-panel .ov-mini-lbl {
+    font-size: 10px;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* === 节点浮窗：链路折叠卡 === */
+.info-panel .chain-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.info-panel .chain-card {
+    background: #fafafa;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.info-panel .chain-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    cursor: pointer;
+    user-select: none;
+    background: #ffffff;
+    border-bottom: 1px solid transparent;
+}
+.info-panel .chain-card.expanded .chain-head {
+    border-bottom-color: #e2e8f0;
+}
+.info-panel .chain-card:not(.expanded) .chain-head:hover {
+    background: #f1f5f9;
+}
+.info-panel .chain-toggle {
+    color: #94a3b8;
+    font-size: 10px;
+    width: 12px;
+    flex-shrink: 0;
+}
+.info-panel .chain-name {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 12px;
+}
+.info-panel .chain-meta {
+    font-size: 10px;
+    color: #64748b;
+    margin-left: auto;
+}
+.info-panel .chain-tables {
+    padding: 6px 10px;
+    font-size: 10px;
+    color: #64748b;
+    background: #fafafa;
+    border-bottom: 1px solid #f1f5f9;
+    display: none;
+}
+.info-panel .chain-card.expanded .chain-tables {
+    display: block;
+}
+.info-panel .chain-steps {
+    display: none;
+    padding: 6px 8px;
+}
+.info-panel .chain-card.expanded .chain-steps {
+    display: block;
+}
+
+.info-panel .step-row {
+    display: flex;
+    gap: 8px;
+    padding: 6px 4px;
+    border-bottom: 1px dashed #f1f5f9;
+}
+.info-panel .step-row:last-child { border-bottom: none; }
+.info-panel .step-num {
+    width: 18px;
+    height: 18px;
+    background: #6366f1;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.info-panel .step-body {
+    flex: 1;
+    min-width: 0;
+}
+.info-panel .step-fields {
+    font-family: 'Cascadia Code', monospace;
+    font-size: 11px;
+    word-break: break-all;
+}
+.info-panel .step-transform {
+    margin-top: 3px;
+    font-family: 'Cascadia Code', monospace;
+    font-size: 10px;
+    color: #6366f1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.info-panel .step-tags {
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+.info-panel .step-tag {
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-weight: 600;
+    background: #f1f5f9;
+    color: #475569;
+}
+.info-panel .tag-where { background: #fef3c7; color: #92400e; }
+.info-panel .tag-join { background: #dbeafe; color: #1e40af; }
+.info-panel .tag-group { background: #fce7f3; color: #9f1239; }
+.info-panel .tag-having { background: #fef9c3; color: #854d0e; }
+.info-panel .tag-distinct { background: #ddd6fe; color: #5b21b6; }
+.info-panel .tag-fn { background: #fee2e2; color: #991b1b; }
+
+/* 节点浮窗 — 完整口径规格折叠区 */
+.info-panel .caliber-spec-section .spec-toggle {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.info-panel .caliber-spec-section .spec-arrow {
+    font-size: 10px;
+    color: #64748b;
+    transition: transform 0.15s;
+}
+.info-panel .caliber-step-block {
+    margin-top: 8px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.info-panel .caliber-step-head {
+    padding: 4px 8px;
+    background: #f1f5f9;
+    font-size: 11px;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 1px solid #e2e8f0;
+}
+.info-panel .caliber-step-text {
+    margin: 0;
+    padding: 8px;
+    background: #0f172a;
+    color: #e2e8f0;
+    font-size: 11px;
+    line-height: 1.5;
+    font-family: 'SF Mono', Consolas, monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
 .tag {
     display: inline-block;
     padding: 3px 8px;

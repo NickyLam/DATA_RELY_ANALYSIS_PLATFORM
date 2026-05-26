@@ -315,7 +315,11 @@
                 .attr('fill', isQueryTarget ? (config.color || '#ef4444') : '#ffffff')
                 .attr('stroke', isQueryTarget ? '#ffffff' : (config.border || config.color))
                 .attr('stroke-width', isQueryTarget ? 2 : 1.5).attr('rx', 8)
-                .on('click', () => { if (typeof showInfoPanel === 'function') showInfoPanel(node); })
+                .on('click', () => {
+                    if (typeof showInfoPanel === 'function') {
+                        showInfoPanel(node, _getNodeField(node, data));
+                    }
+                })
                 .on('mouseover', function() { d3.select(this).attr('opacity', 0.85); })
                 .on('mouseout', function() { d3.select(this).attr('opacity', 1); });
 

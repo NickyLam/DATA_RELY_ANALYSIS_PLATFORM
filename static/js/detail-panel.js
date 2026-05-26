@@ -128,20 +128,23 @@
     }
 
     // 显示节点信息浮窗（点节点时触发，懒加载 /api/lineage/node-detail）
-    window.showInfoPanel = function(node) {
+    window.showInfoPanel = function(node, field) {
         const panel = document.getElementById('infoPanel');
         const title = document.getElementById('panelTitle');
         const content = document.getElementById('panelContent');
 
         if (!panel || !title || !content) return;
 
-        title.textContent = node.id;
+        const tableShort = node.id.split('.').pop();
+        title.textContent = field ? `${tableShort}.${field}` : node.id;
 
         const config = LAYER_CONFIG[node.layer] || LAYER_CONFIG['config'];
 
         let html = `<div class="info-section">
-            <div class="section-title">层级</div>
-            <div class="section-content"><span class="tag" style="background:${config.bg};color:${config.border};">${config.label}</span></div>
+            <div class="section-content">
+                <span class="tag" style="background:${config.bg};color:${config.border};">${config.label}</span>
+                ${field ? `<span style="margin-left:8px;color:#64748b;font-size:11px;">字段: <code style="color:#6366f1;">${_escape(field)}</code></span>` : ''}
+            </div>
         </div>`;
 
         if (node.comment) {
@@ -152,13 +155,157 @@
         }
 
         html += `<div id="nodeDetailLazy" class="info-section">
-            <div class="section-title">详情</div>
+            <div class="section-title">${field ? '加工口径' : '详情'}</div>
             <div class="section-content" style="color:#94a3b8;font-size:12px;">加载中...</div>
         </div>`;
 
         content.innerHTML = html;
+        panel.style.display = 'block';
         panel.classList.add('show');
 
+        if (field) {
+            _loadNodeCaliber(node.id, field);
+        } else {
+            _loadNodeDetailFallback(node);
+        }
+    };
+
+    function _loadNodeCaliber(table, field) {
+        const url = `/api/caliber/card-summary?table=${encodeURIComponent(table)}&field=${encodeURIComponent(field)}`;
+
+        fetch(url)
+            .then(r => r.ok ? r.json() : null)
+            .then(res => {
+                const data = res && res.success ? res.data : null;
+                if (!data) {
+                    _renderNodeCaliberEmpty(table, field);
+                    return;
+                }
+                _renderNodeCaliber(data);
+            })
+            .catch(() => _renderNodeCaliberEmpty(table, field));
+    }
+
+    function _renderNodeCaliber(data) {
+        const slot = document.getElementById('nodeDetailLazy');
+        if (!slot) return;
+
+        const stats = data.stats || {};
+        const flags = data.data_quality_flags || {};
+        const indicator = data.indicator_short || data.indicator || '';
+        const tech = data.technical_caliber_summary || '';
+        const chainText = data.caliber_chain_text || [];
+        const tables = stats.tables || [];
+        const procs = stats.procedures || [];
+        const customFns = stats.custom_functions || [];
+        const parallelPaths = stats.parallel_paths ?? 0;
+        const totalSteps = stats.total_steps ?? 0;
+        const ms = data.query_time_ms ? Number(data.query_time_ms).toFixed(0) : '-';
+
+        let html = '';
+
+        // ── 概览：指标 + 技术口径摘要 ──
+        html += `<div class="info-section">
+            <div class="section-title">🎯 指标口径</div>
+            <div style="font-size:12px;color:#0f172a;font-weight:600;margin-bottom:6px;">${_escape(indicator)}</div>`;
+        if (tech) {
+            html += `<div style="font-size:11px;line-height:1.5;color:#334155;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:6px 8px;font-family:monospace;word-break:break-all;">${_escape(tech)}</div>`;
+        }
+        html += `</div>`;
+
+        // ── 数字卡：并行路径 / 步骤 / 表 / 过程 ──
+        html += `<div class="info-section">
+            <div class="section-title">📊 加工统计</div>
+            <div class="ov-mini">
+                <div class="ov-mini-card"><div class="ov-mini-val">${parallelPaths}</div><div class="ov-mini-lbl">并行路径</div></div>
+                <div class="ov-mini-card"><div class="ov-mini-val">${totalSteps}</div><div class="ov-mini-lbl">加工步骤</div></div>
+                <div class="ov-mini-card"><div class="ov-mini-val">${tables.length}</div><div class="ov-mini-lbl">涉及表</div></div>
+                <div class="ov-mini-card"><div class="ov-mini-val">${procs.length}</div><div class="ov-mini-lbl">存储过程</div></div>
+            </div>
+            <div style="margin-top:6px;font-size:11px;color:#94a3b8;text-align:right;">查询耗时 ${ms}ms</div>
+        </div>`;
+
+        // ── 涉及表 ──
+        if (tables.length > 0) {
+            const tableTags = tables.map(t => `<span class="step-tag tag-join">${_escape(t)}</span>`).join(' ');
+            html += `<div class="info-section">
+                <div class="section-title">🗄️ 涉及表 (${tables.length})</div>
+                <div style="line-height:2;">${tableTags}</div>
+            </div>`;
+        }
+
+        // ── 存储过程 ──
+        if (procs.length > 0) {
+            const procTags = procs.map(p => `<span class="step-tag tag-where" title="${_escape(p)}">${_escape(p.split('.').pop())}</span>`).join(' ');
+            html += `<div class="info-section">
+                <div class="section-title">⚙️ 加工过程 (${procs.length})</div>
+                <div style="line-height:2;">${procTags}</div>
+            </div>`;
+        }
+
+        // ── 数据质量标记 ──
+        const qFlags = [];
+        if (flags.has_hardcoded_values) qFlags.push(['硬编码值', 'tag-having']);
+        if (flags.has_cross_schema_join) qFlags.push(['跨库 JOIN', 'tag-join']);
+        if (flags.has_null_branch) qFlags.push(['NULL 分支', 'tag-distinct']);
+        if (flags.has_custom_function) qFlags.push(['自定义函数', 'tag-fn']);
+        if (customFns.length > 0) {
+            qFlags.push([`FN: ${customFns.slice(0, 3).join(', ')}${customFns.length > 3 ? '...' : ''}`, 'tag-fn']);
+        }
+        if (qFlags.length > 0) {
+            const flagTags = qFlags.map(([t, c]) => `<span class="step-tag ${c}">${_escape(t)}</span>`).join(' ');
+            html += `<div class="info-section">
+                <div class="section-title">⚠️ 质量标记</div>
+                <div style="line-height:2;">${flagTags}</div>
+            </div>`;
+        }
+
+        // ── 完整口径规格（折叠：每一步独立细节） ──
+        if (chainText.length > 0) {
+            const chainHtml = chainText.map((step, i) => `<div class="caliber-step-block">
+                <div class="caliber-step-head">步骤 ${i + 1}</div>
+                <pre class="caliber-step-text">${_escape(step)}</pre>
+            </div>`).join('');
+            html += `<div class="info-section caliber-spec-section">
+                <div class="section-title spec-toggle">
+                    <span class="spec-arrow">▶</span> 📋 完整口径规格 (${chainText.length} 步)
+                </div>
+                <div class="section-content spec-body" style="display:none;">${chainHtml}</div>
+            </div>`;
+        }
+
+        slot.outerHTML = html;
+        _bindSpecToggle();
+    }
+
+    function _bindSpecToggle() {
+        document.querySelectorAll('#infoPanel .spec-toggle').forEach(head => {
+            head.style.cursor = 'pointer';
+            head.addEventListener('click', () => {
+                const section = head.closest('.caliber-spec-section');
+                if (!section) return;
+                const body = section.querySelector('.spec-body');
+                const arrow = head.querySelector('.spec-arrow');
+                if (!body) return;
+                const isHidden = body.style.display === 'none';
+                body.style.display = isHidden ? 'block' : 'none';
+                if (arrow) arrow.textContent = isHidden ? '▼' : '▶';
+            });
+        });
+    }
+
+    function _renderNodeCaliberEmpty(table, field) {
+        const slot = document.getElementById('nodeDetailLazy');
+        if (!slot) return;
+        slot.outerHTML = `<div class="info-section">
+            <div class="section-content" style="color:#94a3b8;font-size:12px;">
+                未找到 ${_escape(table.split('.').pop())}.${_escape(field)} 的口径数据，<br>
+                可能该字段未被解析或非加工字段
+            </div>
+        </div>`;
+    }
+
+    function _loadNodeDetailFallback(node) {
         fetch(`/api/lineage/node-detail?table=${encodeURIComponent(node.id)}`)
             .then(r => r.ok ? r.json() : Promise.reject(r.status))
             .then(res => {
@@ -280,6 +427,7 @@
             <div class="section-content" style="color:#94a3b8;font-size:12px;">加载中...</div>
         </div>`;
 
+        panel.style.display = 'block';
         panel.classList.add('show');
 
         if (!srcCol || !tgtCol) {
@@ -364,7 +512,10 @@
     // 关闭信息浮窗
     window.closeInfoPanel = function() {
         const panel = document.getElementById('infoPanel');
-        if (panel) panel.classList.remove('show');
+        if (panel) {
+            panel.style.display = 'none';
+            panel.classList.remove('show');
+        }
     };
 
 })();
