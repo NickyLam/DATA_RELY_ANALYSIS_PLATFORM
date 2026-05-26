@@ -411,6 +411,29 @@ class LineageService:
 
         return procedures
 
+    def get_edge_caliber(
+        self,
+        src_table: str,
+        src_column: str,
+        tgt_table: str,
+        tgt_column: str,
+        procedure: str = "",
+    ) -> Optional[dict]:
+        """懒加载单条边的口径详情，委托给 UnifiedTracer。"""
+        tracer = self.parser.get_unified_tracer()
+        if tracer is None:
+            return None
+        return tracer.get_edge_caliber(
+            src_table, src_column, tgt_table, tgt_column, procedure
+        )
+
+    def get_node_detail(self, table: str) -> Optional[dict]:
+        """懒加载节点详情（表字段 + 上下游 + 关联过程）。"""
+        tracer = self.parser.get_unified_tracer()
+        if tracer is None:
+            return None
+        return tracer.get_node_detail(table)
+
     def get_system_stats(self) -> dict[str, Any]:
         """获取系统统计信息"""
         data = self.parser.get_current_data()

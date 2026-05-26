@@ -577,6 +577,31 @@ class ParserService:
             logger.error("构建 CaliberTracer 失败: %s", e, exc_info=True)
             return None
 
+    def get_unified_tracer(self) -> Optional[Any]:
+        """获取或懒加载 UnifiedTracer（P1 引入，P2 由 API 使用）。"""
+        if self._tracer_factory.unified_tracer is not None:
+            return self._tracer_factory.unified_tracer
+
+        try:
+            if self._current_result is not None:
+                result = self._current_result
+                tables = {t.full_name: t for t in result.tables}
+                procedures = {p.full_name: p for p in result.procedures}
+                return self._tracer_factory.create_unified_tracer(
+                    tables=tables,
+                    procedures=procedures,
+                    table_lineages=result.table_lineages,
+                    field_mappings=result.field_mappings,
+                    caliber_infos=result.caliber_infos,
+                )
+
+            logger.warning("无可用的解析数据或缓存，无法构建 UnifiedTracer")
+            return None
+
+        except Exception as e:
+            logger.error("构建 UnifiedTracer 失败: %s", e, exc_info=True)
+            return None
+
     def clear_cache(self) -> None:
         self._cache_store.clear_cache()
         self._tracer_factory.invalidate()

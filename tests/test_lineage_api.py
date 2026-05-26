@@ -159,3 +159,105 @@ class TestCacheRebuild:
         """TC-108: 缓存重建"""
         response = client.post("/api/cache/rebuild")
         assert response.status_code == 200
+
+
+class TestEdgeCaliber:
+    """P2: 单边口径懒加载 API"""
+
+    @pytest.fixture
+    def override_service(self):
+        from app.dependencies import get_lineage_service
+        service = MagicMock()
+        app.dependency_overrides[get_lineage_service] = lambda: service
+        try:
+            yield service
+        finally:
+            app.dependency_overrides.pop(get_lineage_service, None)
+
+    def test_edge_caliber_hit(self, client, override_service):
+        override_service.get_edge_caliber.return_value = {
+            "target_table": "RRP_MDL.MID_TBL",
+            "target_column": "MID_COL",
+            "source_table": "RRP_ODS.SRC_TBL",
+            "source_column": "SRC_COL",
+            "transform_logic": "NVL(SRC_COL, 0)",
+            "procedure": "RRP_PROC.P_DEMO",
+            "where_conditions": [],
+            "join_conditions": [],
+        }
+        response = client.get(
+            "/api/lineage/edge-caliber"
+            "?src=RRP_ODS.SRC_TBL&src_col=SRC_COL"
+            "&tgt=RRP_MDL.MID_TBL&tgt_col=MID_COL"
+        )
+        assert response.status_code == 200
+        body = response.json()
+        assert body["success"] is True
+        assert body["data"]["transform_logic"] == "NVL(SRC_COL, 0)"
+        override_service.get_edge_caliber.assert_called_once()
+
+    def test_edge_caliber_miss(self, client, override_service):
+        override_service.get_edge_caliber.return_value = None
+        response = client.get(
+            "/api/lineage/edge-caliber"
+            "?src=NO_TBL&src_col=NO_COL&tgt=NA_TBL&tgt_col=NA_COL"
+        )
+        assert response.status_code == 200
+        body = response.json()
+        assert body["success"] is True
+        assert body["data"] is None
+
+    def test_edge_caliber_missing_param(self, client, override_service):
+        response = client.get("/api/lineage/edge-caliber?src=A&src_col=B&tgt=C")
+        assert response.status_code == 422
+
+    def test_edge_caliber_with_procedure(self, client, override_service):
+        override_service.get_edge_caliber.return_value = {"target_column": "X"}
+        response = client.get(
+            "/api/lineage/edge-caliber"
+            "?src=A&src_col=B&tgt=C&tgt_col=D&proc=P.MYPROC"
+        )
+        assert response.status_code == 200
+        args, _ = override_service.get_edge_caliber.call_args
+        assert args[-1] == "P.MYPROC"
+
+
+class TestNodeDetail:
+    """P2: 节点详情懒加载 API"""
+
+    @pytest.fixture
+    def override_service(self):
+        from app.dependencies import get_lineage_service
+        service = MagicMock()
+        app.dependency_overrides[get_lineage_service] = lambda: service
+        try:
+            yield service
+        finally:
+            app.dependency_overrides.pop(get_lineage_service, None)
+
+    def test_node_detail_hit(self, client, override_service):
+        override_service.get_node_detail.return_value = {
+            "table": "RRP_MDL.MID_TBL",
+            "short_name": "MID_TBL",
+            "schema": "RRP_MDL",
+            "comment": "",
+            "fields": [{"name": "MID_COL", "type": "VARCHAR2(10)"}],
+            "upstream_tables": ["RRP_ODS.SRC_TBL"],
+            "downstream_tables": ["RRP_EAST.TGT_TBL"],
+            "procedures": ["RRP_PROC.P_DEMO"],
+        }
+        response = client.get("/api/lineage/node-detail?table=RRP_MDL.MID_TBL")
+        assert response.status_code == 200
+        body = response.json()
+        assert body["success"] is True
+        assert body["data"]["short_name"] == "MID_TBL"
+        assert any(f["name"] == "MID_COL" for f in body["data"]["fields"])
+
+    def test_node_detail_not_found(self, client, override_service):
+        override_service.get_node_detail.return_value = None
+        response = client.get("/api/lineage/node-detail?table=NO_SUCH_TBL")
+        assert response.status_code == 404
+
+    def test_node_detail_missing_param(self, client, override_service):
+        response = client.get("/api/lineage/node-detail")
+        assert response.status_code == 422

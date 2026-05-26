@@ -227,3 +227,47 @@ def rebuild_cache(
         "success": True,
         "message": "索引重建完成",
     }
+
+
+@router.get(
+    "/lineage/edge-caliber",
+    summary="懒加载单条边的口径详情",
+    description=(
+        "用于前端在血缘图上点击某条边时按需拉取该边的 transform_logic / where / join 等口径信息。"
+        "复用 UnifiedTracer 的 O(1) 索引查找，未命中时返回 data=None。"
+    ),
+)
+def get_edge_caliber(
+    src: Annotated[str, Query(min_length=1, description="源表（可带或不带 schema）")],
+    src_col: Annotated[str, Query(min_length=1, description="源字段")],
+    tgt: Annotated[str, Query(min_length=1, description="目标表")],
+    tgt_col: Annotated[str, Query(min_length=1, description="目标字段")],
+    lineage_service: LineageServiceDep,
+    proc: Annotated[str, Query(description="可选：限定过程名以精确匹配")] = "",
+) -> dict:
+    info = lineage_service.get_edge_caliber(src, src_col, tgt, tgt_col, proc or "")
+    return {
+        "success": True,
+        "data": info,
+    }
+
+
+@router.get(
+    "/lineage/node-detail",
+    summary="懒加载单个节点详情",
+    description=(
+        "用于前端在血缘图上点击节点时按需拉取该表的字段列表、上下游表、关联过程，"
+        "避免在 trace 阶段一次性塞入大量字段信息。"
+    ),
+)
+def get_node_detail(
+    table: Annotated[str, Query(min_length=1, description="表名（可带或不带 schema）")],
+    lineage_service: LineageServiceDep,
+) -> dict:
+    detail = lineage_service.get_node_detail(table)
+    if detail is None:
+        raise HTTPException(status_code=404, detail=f"未找到节点: {table}")
+    return {
+        "success": True,
+        "data": detail,
+    }
