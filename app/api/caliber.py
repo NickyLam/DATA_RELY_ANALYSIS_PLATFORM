@@ -27,7 +27,11 @@ from app.dependencies import CaliberServiceDep
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(prefix="/api/caliber", tags=["指标口径查询"])
+router = APIRouter(
+    prefix="/api/caliber",
+    tags=["指标口径查询 (Deprecated)"],
+    deprecated=True,
+)
 
 
 @router.post("/query", summary="查询指标口径", response_model=CaliberQueryResponse)

@@ -132,3 +132,31 @@ class TestCaliberExport:
         }
         response = client.post("/api/caliber/export", json=request_data)
         assert response.status_code in [200, 422]
+
+
+class TestCaliberDeprecation:
+    """P4: /api/caliber/* 弃用头测试"""
+
+    def test_deprecation_headers_on_get(self, client, mock_caliber_service):
+        """GET 路由响应应包含 Deprecation/Sunset/Link/Warning 头"""
+        response = client.get("/api/caliber/datasources/list")
+        assert response.status_code == 200
+        assert response.headers.get("Deprecation") == "true"
+        assert "2026" in response.headers.get("Sunset", "")
+        assert "/api/lineage" in response.headers.get("Link", "")
+        assert "deprecated" in response.headers.get("Warning", "").lower()
+
+    def test_deprecation_headers_on_post(self, client, mock_caliber_service):
+        """POST 路由响应也应包含弃用头"""
+        response = client.post(
+            "/api/caliber/query",
+            json={"table": "T", "field": "F", "depth": 1, "direction": "upstream"},
+        )
+        assert response.headers.get("Deprecation") == "true"
+        assert response.headers.get("Sunset") is not None
+
+    def test_lineage_routes_not_deprecated(self, client):
+        """非 caliber 路由不应有弃用头"""
+        response = client.get("/api/stats")
+        assert response.headers.get("Deprecation") is None
+        assert response.headers.get("Sunset") is None

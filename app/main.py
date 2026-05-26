@@ -149,6 +149,31 @@ app.add_middleware(
     allow_headers=["Content-Type"],
 )
 
+
+# P4: /api/caliber/* 弃用标记
+# 旧路由仍保留功能，但响应头提示客户端迁移到 /api/lineage/*
+# RFC 8594: Sunset HTTP header / draft-ietf-httpapi-deprecation-header
+CALIBER_SUNSET_DATE = "Sun, 30 Aug 2026 00:00:00 GMT"
+CALIBER_DEPRECATION_LINK = (
+    '</docs>; rel="successor-version", '
+    '</api/lineage/edge-caliber>; rel="alternate"'
+)
+
+
+@app.middleware("http")
+async def add_caliber_deprecation_headers(request: Request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith("/api/caliber/"):
+        response.headers["Deprecation"] = "true"
+        response.headers["Sunset"] = CALIBER_SUNSET_DATE
+        response.headers["Link"] = CALIBER_DEPRECATION_LINK
+        response.headers["Warning"] = (
+            '299 - "This endpoint is deprecated; migrate to /api/lineage/* '
+            'before 2026-08-30. See /docs."'
+        )
+    return response
+
+
 # 注册路由
 app.include_router(parse_router)
 app.include_router(lineage_router)
