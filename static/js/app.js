@@ -15,7 +15,6 @@ const AppState = {
     searchTimeout: null,
     queryDepth: 5,
     queryMode: 'upstream',
-    caliberMode: 'upstream',
     systemStats: null,
 };
 
@@ -47,10 +46,7 @@ function switchTab(tabName) {
 }
 
 function setCaliberMode(mode) {
-    AppState.caliberMode = mode;
-    document.querySelectorAll('[data-caliber-mode]').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.caliberMode === mode);
-    });
+    // P5: caliber tab removed; stub kept to avoid breakage if any old handler still binds
 }
 
 // ============================================

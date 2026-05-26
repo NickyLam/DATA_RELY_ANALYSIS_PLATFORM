@@ -25,10 +25,6 @@
                     <span class="tab-icon">📊</span>
                     <span class="tab-text">展示层</span>
                 </button>
-                <button class="tab-btn" data-tab="caliber" onclick="switchTab('caliber')">
-                    <span class="tab-icon">🎯</span>
-                    <span class="tab-text">指标口径</span>
-                </button>
                 <button class="tab-btn" data-tab="indicator" onclick="switchTab('indicator')">
                     <span class="tab-icon">📈</span>
                     <span class="tab-text">指标血缘</span>
@@ -317,106 +313,6 @@
             </div>
         </section>
 
-        <!-- ========== 指标口径 TAB ========== -->
-        <section id="caliber-tab" class="tab-content">
-            <div class="display-layout">
-                <!-- 顶部：搜索与控制栏 -->
-                <header class="query-header">
-                    <div class="query-inputs-row">
-                        <!-- 表名输入 -->
-                        <div class="input-group" style="position:relative;">
-                            <label class="input-label">📋 表名</label>
-                            <input
-                                type="text"
-                                id="caliberTableInput"
-                                placeholder="输入表名搜索..."
-                                autocomplete="off"
-                            >
-                            <div id="caliberTableResults" class="search-results-dropdown" style="display:none;"></div>
-                        </div>
-
-                        <!-- 字段输入 -->
-                        <div class="input-group" style="position:relative;">
-                            <label class="input-label">✏️ 字段名</label>
-                            <input
-                                type="text"
-                                id="caliberFieldInput"
-                                placeholder="先选择表，再选择字段"
-                                autocomplete="off"
-                            >
-                            <div id="caliberFieldResults" class="field-results-dropdown" style="display:none;"></div>
-                        </div>
-
-                        <!-- 查询方向 -->
-                        <div class="input-group mode-group">
-                            <label class="input-label">🧭 方向</label>
-                            <div class="mode-buttons-inline">
-                                <button class="mode-btn active" data-caliber-mode="upstream" onclick="setCaliberMode('upstream')">↑ 上游追溯</button>
-                                <button class="mode-btn" data-caliber-mode="downstream" onclick="setCaliberMode('downstream')">↓ 下游去向</button>
-                            </div>
-                        </div>
-
-                        <!-- 数据源筛选 -->
-                        <div class="input-group" style="min-width:auto;">
-                            <label class="input-label">🗄️ 数据源</label>
-                            <select id="caliberDataSource" style="padding:8px 12px;border:1px solid #e2e8f0;border-radius:6px;font-size:13px;width:100px;">
-                                <option value="">全部</option>
-                                <option value="oracle">Oracle</option>
-                                <option value="tdh">TDH星环</option>
-                                <option value="gbase">GBase</option>
-                            </select>
-                        </div>
-
-                        <!-- 查询按钮 -->
-                        <div class="input-group btn-group">
-                            <label class="input-label">&nbsp;</label>
-                            <button id="caliberQueryBtn" class="btn btn-primary query-btn" onclick="executeCaliberQuery()">
-                                🎯 查询口径
-                            </button>
-                        </div>
-                    </div>
-
-                    <p style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">
-                        💡 输入表名和字段名查询指标口径，查看完整的数据加工链路和筛选条件
-                    </p>
-                </header>
-
-                <!-- 口径结果区域 -->
-                <main class="content-area">
-                    <div id="caliberResults" class="caliber-results" style="display:none;">
-                        <!-- 第一层：概览卡 -->
-                        <div id="caliberOverview" class="caliber-overview"></div>
-
-                        <!-- 第二层：Pipeline 链路图（水平滚动） -->
-                        <div class="pipeline-container">
-                            <div id="caliberPipeline" class="pipeline-scroll"></div>
-
-                            <!-- 第三层：详情抽屉 -->
-                            <div id="caliberDetailDrawer" class="caliber-detail-drawer">
-                                <div class="drawer-header">
-                                    <h3 id="drawerTitle">步骤详情</h3>
-                                    <button class="drawer-close" onclick="closeCaliberDrawer()">&times;</button>
-                                </div>
-                                <div id="drawerBody" class="drawer-body"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 空状态 -->
-                    <div id="caliberEmptyHint" class="empty-hint">
-                        <div class="empty-icon">🎯</div>
-                        <p>输入表名和字段名查询指标口径</p>
-                    </div>
-
-                    <!-- 加载状态 -->
-                    <div id="caliberLoading" class="loading-indicator" style="display:none;">
-                        <div class="spinner"></div>
-                        <p>正在查询口径信息...</p>
-                    </div>
-                </main>
-            </div>
-        </section>
-
         <!-- ========== 指标血缘 TAB ========== -->
         <section id="indicator-tab" class="tab-content">
             <div class="indicator-layout">
@@ -472,9 +368,8 @@
     <script src="/static/js/layer-config.js?v=1"></script>
     <script src="/static/js/app.js?v=0e3a2476"></script>
     <script src="/static/js/parse-tab.js?v=6e355c7a"></script>
-    <script src="/static/js/caliber-tab.js?v=28eee30e"></script>
     <!-- 展示层模块化拆分 -->
-    <script src="/static/js/detail-panel.js?v=p3-node-summary"></script>
+    <script src="/static/js/detail-panel.js?v=p5-node-caliber"></script>
     <script src="/static/js/search-panel.js?v=a7c0dbbd"></script>
     <script src="/static/js/lineage-graph.js?v=p3-node-caliber"></script>
     <!-- 指标血缘模块 -->

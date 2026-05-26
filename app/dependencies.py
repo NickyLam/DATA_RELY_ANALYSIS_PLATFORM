@@ -13,7 +13,6 @@ from typing import Annotated
 from fastapi import Depends
 
 from app.config import config
-from app.services.caliber_service import CaliberService
 from app.services.indicator_service import IndicatorService
 from app.services.lineage_service import LineageService
 from app.services.parser_service import ParserService
@@ -63,20 +62,6 @@ def get_lineage_service() -> LineageService:
 
 
 @lru_cache
-def get_caliber_service() -> CaliberService:
-    try:
-        parser = get_parser_service()
-        cache = get_cache_manager()
-        return CaliberService(
-            parser_service=parser,
-            cache_manager=cache,
-        )
-    except Exception:
-        get_caliber_service.cache_clear()
-        raise
-
-
-@lru_cache
 def get_progress_service() -> ProgressService:
     return ProgressService(
         keepalive_sec=config.progress_keepalive_sec,
@@ -110,7 +95,6 @@ def get_indicator_service() -> IndicatorService:
 CacheManagerDep = Annotated[CacheManager, Depends(get_cache_manager)]
 ParserServiceDep = Annotated[ParserService, Depends(get_parser_service)]
 LineageServiceDep = Annotated[LineageService, Depends(get_lineage_service)]
-CaliberServiceDep = Annotated[CaliberService, Depends(get_caliber_service)]
 ProgressServiceDep = Annotated[ProgressService, Depends(get_progress_service)]
 IndicatorServiceDep = Annotated[IndicatorService, Depends(get_indicator_service)]
 LayerDetectorDep = Annotated[LayerDetector, Depends(get_layer_detector)]

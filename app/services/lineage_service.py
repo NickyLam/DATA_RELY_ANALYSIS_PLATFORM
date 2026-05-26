@@ -434,6 +434,22 @@ class LineageService:
             return None
         return tracer.get_node_detail(table)
 
+    def build_summary_card(
+        self,
+        table: str,
+        field: str,
+        direction: str = "upstream",
+        depth: int = 10,
+        data_source: Optional[str] = None,
+    ) -> dict:
+        """节点浮窗用的指标概览卡（P5 由 caliber_service 迁移而来）。"""
+        from app.services.summary_card_builder import build_summary_card
+        tracer = self.parser.get_unified_tracer()
+        return build_summary_card(
+            tracer, table, field,
+            direction=direction, depth=depth, data_source=data_source,
+        )
+
     def get_system_stats(self) -> dict[str, Any]:
         """获取系统统计信息"""
         data = self.parser.get_current_data()

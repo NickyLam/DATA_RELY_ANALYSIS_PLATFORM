@@ -22,12 +22,10 @@ from fastapi.staticfiles import StaticFiles
 
 from app.api.parse import router as parse_router
 from app.api.lineage import router as lineage_router
-from app.api.caliber import router as caliber_router
 from app.api.indicator import router as indicator_router
 from app.api.system import router as system_router
 from app.config import config
 from app.dependencies import (
-    get_caliber_service,
     get_indicator_service,
     get_lineage_service,
     get_parser_service,
@@ -72,7 +70,6 @@ async def lifespan(app: FastAPI):
 
         logger.info("步骤 2/3: 构建性能优化索引...")
         lineage_service = get_lineage_service()
-        caliber_service = get_caliber_service()
         indicator_service = get_indicator_service()
         logger.info("✅ 索引构建完成")
 
@@ -150,34 +147,9 @@ app.add_middleware(
 )
 
 
-# P4: /api/caliber/* 弃用标记
-# 旧路由仍保留功能，但响应头提示客户端迁移到 /api/lineage/*
-# RFC 8594: Sunset HTTP header / draft-ietf-httpapi-deprecation-header
-CALIBER_SUNSET_DATE = "Sun, 30 Aug 2026 00:00:00 GMT"
-CALIBER_DEPRECATION_LINK = (
-    '</docs>; rel="successor-version", '
-    '</api/lineage/edge-caliber>; rel="alternate"'
-)
-
-
-@app.middleware("http")
-async def add_caliber_deprecation_headers(request: Request, call_next):
-    response = await call_next(request)
-    if request.url.path.startswith("/api/caliber/"):
-        response.headers["Deprecation"] = "true"
-        response.headers["Sunset"] = CALIBER_SUNSET_DATE
-        response.headers["Link"] = CALIBER_DEPRECATION_LINK
-        response.headers["Warning"] = (
-            '299 - "This endpoint is deprecated; migrate to /api/lineage/* '
-            'before 2026-08-30. See /docs."'
-        )
-    return response
-
-
 # 注册路由
 app.include_router(parse_router)
 app.include_router(lineage_router)
-app.include_router(caliber_router)
 app.include_router(indicator_router)
 app.include_router(system_router)
 

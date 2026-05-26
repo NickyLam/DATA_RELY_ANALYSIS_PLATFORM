@@ -171,7 +171,7 @@
     };
 
     function _loadNodeCaliber(table, field) {
-        const url = `/api/caliber/card-summary?table=${encodeURIComponent(table)}&field=${encodeURIComponent(field)}`;
+        const url = `/api/lineage/node-caliber?table=${encodeURIComponent(table)}&field=${encodeURIComponent(field)}`;
 
         fetch(url)
             .then(r => r.ok ? r.json() : null)

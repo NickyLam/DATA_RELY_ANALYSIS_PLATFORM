@@ -15,7 +15,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Query
 
-from app.dependencies import CaliberServiceDep, LineageServiceDep, ParserServiceDep
+from app.dependencies import LineageServiceDep, ParserServiceDep
 from app.models import (
     LineageQueryOptions,
     LineageQueryRequest,
@@ -218,10 +218,8 @@ def get_system_stats(
 )
 def rebuild_cache(
     lineage_service: LineageServiceDep,
-    caliber_service: CaliberServiceDep,
 ) -> dict:
     lineage_service.rebuild_indexes()
-    caliber_service.rebuild_indexes()
 
     return {
         "success": True,
@@ -271,3 +269,28 @@ def get_node_detail(
         "success": True,
         "data": detail,
     }
+
+
+@router.get(
+    "/lineage/node-caliber",
+    summary="节点指标口径概览卡（节点浮窗用）",
+    description=(
+        "返回单个字段的口径概览：指标名、技术口径摘要、统计、质量标记、"
+        "完整加工规格。P5 迁移：原 /api/caliber/card-summary 后续将下线。"
+    ),
+)
+def get_node_caliber(
+    table: Annotated[str, Query(min_length=1, description="表名")],
+    field: Annotated[str, Query(min_length=1, description="字段名")],
+    lineage_service: LineageServiceDep,
+    direction: Annotated[str, Query(description="upstream/downstream/both")] = "upstream",
+    depth: Annotated[int, Query(ge=1, le=20)] = 10,
+    data_source: Annotated[str, Query(description="可选数据源筛选")] = "",
+) -> dict:
+    return lineage_service.build_summary_card(
+        table=table,
+        field=field,
+        direction=direction,
+        depth=depth,
+        data_source=data_source or None,
+    )
