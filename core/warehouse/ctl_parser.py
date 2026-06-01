@@ -9,9 +9,8 @@ from __future__ import annotations
 import logging
 import re
 from pathlib import Path
-from typing import Optional
 
-from core.models import TableInfo, ColumnInfo
+from core.models import ColumnInfo, TableInfo
 from core.parser_protocol import ParseOutput
 from core.warehouse.schema_resolver import SchemaResolver
 
@@ -24,7 +23,7 @@ logger = logging.getLogger(__name__)
 # INTO TABLE ${xxx_schema}.table_name
 _INTO_TABLE_PATTERN = re.compile(
     r"(?:INTO|TRUNCATE\s+INTO)\s+TABLE\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)",       # 目标表名
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)",  # 目标表名
     re.IGNORECASE,
 )
 
@@ -37,11 +36,11 @@ _INFILE_PATTERN = re.compile(
 # 字段定义行：FIELD_NAME type_spec nullif ...
 _CTL_FIELD_PATTERN = re.compile(
     r"^\s*,?\s*"
-    r"(\w+)\s+"                             # 字段名
+    r"(\w+)\s+"  # 字段名
     r"(?:CHAR|DATE|TIMESTAMP|INTEGER|FLOAT|DECIMAL)"  # 类型
-    r"(?:\(\d+\))?"                         # 可选精度
-    r'(?:\s+"[^"]*")?'                      # 可选日期格式
-    r"(?:\s+NULLIF\s+\w+=\w+)?",            # 可选 nullif
+    r"(?:\(\d+\))?"  # 可选精度
+    r'(?:\s+"[^"]*")?'  # 可选日期格式
+    r"(?:\s+NULLIF\s+\w+=\w+)?",  # 可选 nullif
     re.IGNORECASE,
 )
 
@@ -70,7 +69,7 @@ class CTLParser:
     def parse_file(self, file_path: Path) -> ParseOutput:
         """解析单个 CTL 文件"""
         try:
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            with open(file_path, encoding="utf-8", errors="ignore") as f:
                 content = f.read()
         except OSError as e:
             logger.error("读取文件失败: %s - %s", file_path, e)
@@ -95,7 +94,8 @@ class CTLParser:
 
         logger.info(
             "CTLParser: 解析目录 %s, 共 %d 张表",
-            dir_path, len(output.tables),
+            dir_path,
+            len(output.tables),
         )
         return output
 
@@ -138,17 +138,18 @@ class CTLParser:
         )
 
         # 转换为 dict
-        output.tables.append({
-            "full_name": table_info.full_name,
-            "schema": table_info.schema,
-            "table_name": table_info.table_name,
-            "comment": table_info.comment,
-            "columns": [
-                {"name": c.name, "data_type": c.data_type, "comment": c.comment}
-                for c in table_info.columns
-            ],
-            "primary_keys": table_info.primary_keys,
-        })
+        output.tables.append(
+            {
+                "full_name": table_info.full_name,
+                "schema": table_info.schema,
+                "table_name": table_info.table_name,
+                "comment": table_info.comment,
+                "columns": [
+                    {"name": c.name, "data_type": c.data_type, "comment": c.comment} for c in table_info.columns
+                ],
+                "primary_keys": table_info.primary_keys,
+            }
+        )
 
         return output
 
@@ -158,8 +159,8 @@ class CTLParser:
 
         # 找到字段定义区域（括号内）
         # 简化：逐行匹配
-        for line in content.split('\n'):
-            line = line.strip().rstrip(',')
+        for line in content.split("\n"):
+            line = line.strip().rstrip(",")
             if not line:
                 continue
 
@@ -167,9 +168,20 @@ class CTLParser:
             if match:
                 col_name = match.group(1).upper()
                 # 跳过 SQL*Loader 关键字
-                if col_name in ("FIELDS", "TRAILING", "NULLCOLS", "OPTIONALLY",
-                                "ENCLOSED", "TERMINATED", "LOAD", "DATA",
-                                "INFILE", "INTO", "TABLE", "TRUNCATE"):
+                if col_name in (
+                    "FIELDS",
+                    "TRAILING",
+                    "NULLCOLS",
+                    "OPTIONALLY",
+                    "ENCLOSED",
+                    "TERMINATED",
+                    "LOAD",
+                    "DATA",
+                    "INFILE",
+                    "INTO",
+                    "TABLE",
+                    "TRUNCATE",
+                ):
                     continue
 
                 # 提取类型信息
@@ -185,10 +197,12 @@ class CTLParser:
                 elif "DECIMAL" in line.upper():
                     col_type = "NUMBER"
 
-                columns.append(ColumnInfo(
-                    name=col_name,
-                    data_type=col_type,
-                    comment="",
-                ))
+                columns.append(
+                    ColumnInfo(
+                        name=col_name,
+                        data_type=col_type,
+                        comment="",
+                    )
+                )
 
         return columns

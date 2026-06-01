@@ -1,0 +1,315 @@
+/*
+Purpose:    偏源模型层-全量拉链脚本。此脚本由生成引擎自动生成。
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iol_icms_clr_asset_finance_fund
+CreateDate: 20180515
+Logs:
+    zjj 2018-05-15 新建脚本
+*/
+
+set timing on
+
+-- 1 alter parallel
+alter session force parallel query parallel 8;
+alter session force parallel dml parallel 8;
+-- alter session force parallel ddl parallel 8;
+
+-- 2.1 create backup table
+-- if backup table is exists, mean script if failed on last time
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none ;
+create table ${iol_schema}.icms_clr_asset_finance_fund_bk nologging
+compress ${option_switch} for query high
+as
+select *
+from ${iol_schema}.icms_clr_asset_finance_fund
+where start_dt < to_date('${batch_date}','yyyymmdd') and end_dt >=to_date('${batch_date}','yyyymmdd');
+
+-- 2.2 drop temp table
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none ;
+drop table ${iol_schema}.icms_clr_asset_finance_fund_op purge;
+drop table ${iol_schema}.icms_clr_asset_finance_fund_cl purge;
+
+-- 2.3 create temp table
+whenever sqlerror exit sql.sqlcode;
+create table ${iol_schema}.icms_clr_asset_finance_fund_op nologging
+compress ${option_switch} for query high
+as
+select * from ${iol_schema}.icms_clr_asset_finance_fund where 0=1;
+
+create table ${iol_schema}.icms_clr_asset_finance_fund_cl nologging
+compress ${option_switch} for query high
+as
+select * from ${iol_schema}.icms_clr_asset_finance_fund where 0=1;
+
+-- 3.1 get new, alter, delete data and put into temp table
+whenever sqlerror exit sql.sqlcode;
+insert /*+ append */ all
+    when end_dt = to_date('${batch_date}', 'yyyymmdd') then
+        into ${iol_schema}.icms_clr_asset_finance_fund_cl(
+            clrid -- 押品编号
+            ,fundcode -- 基金代码
+            ,account -- 账户号码
+            ,issuername -- 发行人名称
+            ,startdate -- 起始日期
+            ,enddate -- 截止日期
+            ,fundname -- 基金名称
+            ,fundtype -- 基金类型
+            ,iscp -- 是否保本
+            ,istransfer -- 是否可转让
+            ,invest -- 投资标的
+            ,ispublicoffer -- 是否公开报价
+            ,impawnnum -- 质押份数
+            ,netvalue -- 单位净值
+            ,totalvalue -- 质押总价值
+            ,isborrower -- 发行人是否为借款人
+            ,remark -- 其他说明
+            ,tdcurrency -- 币种
+            ,migtflag -- 迁移标识：rs rcr ilc upl mim
+            ,registno -- 质押登记号
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+    else
+        into ${iol_schema}.icms_clr_asset_finance_fund_op(
+            clrid -- 押品编号
+            ,fundcode -- 基金代码
+            ,account -- 账户号码
+            ,issuername -- 发行人名称
+            ,startdate -- 起始日期
+            ,enddate -- 截止日期
+            ,fundname -- 基金名称
+            ,fundtype -- 基金类型
+            ,iscp -- 是否保本
+            ,istransfer -- 是否可转让
+            ,invest -- 投资标的
+            ,ispublicoffer -- 是否公开报价
+            ,impawnnum -- 质押份数
+            ,netvalue -- 单位净值
+            ,totalvalue -- 质押总价值
+            ,isborrower -- 发行人是否为借款人
+            ,remark -- 其他说明
+            ,tdcurrency -- 币种
+            ,migtflag -- 迁移标识：rs rcr ilc upl mim
+            ,registno -- 质押登记号
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+select
+    nvl(n.clrid, o.clrid) as clrid -- 押品编号
+    ,nvl(n.fundcode, o.fundcode) as fundcode -- 基金代码
+    ,nvl(n.account, o.account) as account -- 账户号码
+    ,nvl(n.issuername, o.issuername) as issuername -- 发行人名称
+    ,nvl(n.startdate, o.startdate) as startdate -- 起始日期
+    ,nvl(n.enddate, o.enddate) as enddate -- 截止日期
+    ,nvl(n.fundname, o.fundname) as fundname -- 基金名称
+    ,nvl(n.fundtype, o.fundtype) as fundtype -- 基金类型
+    ,nvl(n.iscp, o.iscp) as iscp -- 是否保本
+    ,nvl(n.istransfer, o.istransfer) as istransfer -- 是否可转让
+    ,nvl(n.invest, o.invest) as invest -- 投资标的
+    ,nvl(n.ispublicoffer, o.ispublicoffer) as ispublicoffer -- 是否公开报价
+    ,nvl(n.impawnnum, o.impawnnum) as impawnnum -- 质押份数
+    ,nvl(n.netvalue, o.netvalue) as netvalue -- 单位净值
+    ,nvl(n.totalvalue, o.totalvalue) as totalvalue -- 质押总价值
+    ,nvl(n.isborrower, o.isborrower) as isborrower -- 发行人是否为借款人
+    ,nvl(n.remark, o.remark) as remark -- 其他说明
+    ,nvl(n.tdcurrency, o.tdcurrency) as tdcurrency -- 币种
+    ,nvl(n.migtflag, o.migtflag) as migtflag -- 迁移标识：rs rcr ilc upl mim
+    ,nvl(n.registno, o.registno) as registno -- 质押登记号
+    ,case when
+            n.clrid is null
+        then o.start_dt
+        else to_date('${batch_date}', 'yyyymmdd')
+    end as start_dt -- 开始时间
+    ,case when
+            n.clrid is null
+        then to_date('${batch_date}', 'yyyymmdd')
+        else to_date('20991231', 'yyyymmdd')
+    end as end_dt -- 结束时间
+    ,case when
+            n.clrid is null
+        then 'D'
+        else 'I'
+    end as id_mark -- 增删标志
+    ,to_timestamp('${batch_timestamp}', 'yyyy-mm-dd hh24:mi:ss.ff6') as etl_timestamp -- ETL处理时间
+from (select * from ${iol_schema}.icms_clr_asset_finance_fund_bk where start_dt < to_date('${batch_date}','yyyymmdd') and end_dt >= to_date('${batch_date}','yyyymmdd')) o
+    full join (select * from ${itl_schema}.icms_clr_asset_finance_fund where etl_dt = to_date('${batch_date}', 'yyyymmdd')) n
+        on
+            o.clrid = n.clrid
+where (
+        o.clrid is null
+    )
+    or (
+        n.clrid is null
+    )
+    or (
+        o.fundcode <> n.fundcode
+        or o.account <> n.account
+        or o.issuername <> n.issuername
+        or o.startdate <> n.startdate
+        or o.enddate <> n.enddate
+        or o.fundname <> n.fundname
+        or o.fundtype <> n.fundtype
+        or o.iscp <> n.iscp
+        or o.istransfer <> n.istransfer
+        or o.invest <> n.invest
+        or o.ispublicoffer <> n.ispublicoffer
+        or o.impawnnum <> n.impawnnum
+        or o.netvalue <> n.netvalue
+        or o.totalvalue <> n.totalvalue
+        or o.isborrower <> n.isborrower
+        or o.remark <> n.remark
+        or o.tdcurrency <> n.tdcurrency
+        or o.migtflag <> n.migtflag
+        or o.registno <> n.registno
+    )
+;
+commit;
+
+-- 3.2 get unchange, alter(close) data and put into temp table
+whenever sqlerror exit sql.sqlcode;
+insert /*+ append */ all
+    when end_dt <= to_date('${batch_date}', 'yyyymmdd') then
+        into ${iol_schema}.icms_clr_asset_finance_fund_cl(
+            clrid -- 押品编号
+            ,fundcode -- 基金代码
+            ,account -- 账户号码
+            ,issuername -- 发行人名称
+            ,startdate -- 起始日期
+            ,enddate -- 截止日期
+            ,fundname -- 基金名称
+            ,fundtype -- 基金类型
+            ,iscp -- 是否保本
+            ,istransfer -- 是否可转让
+            ,invest -- 投资标的
+            ,ispublicoffer -- 是否公开报价
+            ,impawnnum -- 质押份数
+            ,netvalue -- 单位净值
+            ,totalvalue -- 质押总价值
+            ,isborrower -- 发行人是否为借款人
+            ,remark -- 其他说明
+            ,tdcurrency -- 币种
+            ,migtflag -- 迁移标识：rs rcr ilc upl mim
+            ,registno -- 质押登记号
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+    else
+        into ${iol_schema}.icms_clr_asset_finance_fund_op(
+            clrid -- 押品编号
+            ,fundcode -- 基金代码
+            ,account -- 账户号码
+            ,issuername -- 发行人名称
+            ,startdate -- 起始日期
+            ,enddate -- 截止日期
+            ,fundname -- 基金名称
+            ,fundtype -- 基金类型
+            ,iscp -- 是否保本
+            ,istransfer -- 是否可转让
+            ,invest -- 投资标的
+            ,ispublicoffer -- 是否公开报价
+            ,impawnnum -- 质押份数
+            ,netvalue -- 单位净值
+            ,totalvalue -- 质押总价值
+            ,isborrower -- 发行人是否为借款人
+            ,remark -- 其他说明
+            ,tdcurrency -- 币种
+            ,migtflag -- 迁移标识：rs rcr ilc upl mim
+            ,registno -- 质押登记号
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+select
+    o.clrid -- 押品编号
+    ,o.fundcode -- 基金代码
+    ,o.account -- 账户号码
+    ,o.issuername -- 发行人名称
+    ,o.startdate -- 起始日期
+    ,o.enddate -- 截止日期
+    ,o.fundname -- 基金名称
+    ,o.fundtype -- 基金类型
+    ,o.iscp -- 是否保本
+    ,o.istransfer -- 是否可转让
+    ,o.invest -- 投资标的
+    ,o.ispublicoffer -- 是否公开报价
+    ,o.impawnnum -- 质押份数
+    ,o.netvalue -- 单位净值
+    ,o.totalvalue -- 质押总价值
+    ,o.isborrower -- 发行人是否为借款人
+    ,o.remark -- 其他说明
+    ,o.tdcurrency -- 币种
+    ,o.migtflag -- 迁移标识：rs rcr ilc upl mim
+    ,o.registno -- 质押登记号
+    ,o.start_dt -- 开始时间
+    ,case when n.start_dt is not null then to_date('${batch_date}', 'yyyymmdd')
+          when o.end_dt >= to_date('${batch_date}','yyyymmdd') then to_date('20991231','yyyymmdd')
+          else o.end_dt
+     end as end_dt -- 结束时间
+    ,case when n.start_dt is not null
+          then 'I'
+          when o.end_dt >= to_date('${batch_date}','yyyymmdd')
+          then 'I'
+          else o.id_mark
+     end as id_mark  -- 增删标志 
+    ,o.etl_timestamp -- ETL处理时间
+from ${iol_schema}.icms_clr_asset_finance_fund_bk o
+    left join ${iol_schema}.icms_clr_asset_finance_fund_op n
+        on
+            o.clrid = n.clrid
+            and o.end_dt >= to_date('${batch_date}','yyyymmdd')
+    left join ${iol_schema}.icms_clr_asset_finance_fund_cl d
+        on
+            o.clrid = d.clrid
+where o.start_dt < to_date('${batch_date}','yyyymmdd')
+    and (
+        o.start_dt <> d.start_dt
+        or d.start_dt is null
+    )
+;
+commit;
+
+-- 4.1 truncate target table
+--truncate table ${iol_schema}.icms_clr_asset_finance_fund;
+
+-- 4.2 rebuild partition
+declare
+v_sql varchar2(100);
+begin
+for cur in (select partition_name from all_tab_partitions where table_owner=upper('${iol_schema}') and table_name=upper('icms_clr_asset_finance_fund') and substr(partition_name,3) >= '${batch_date}' and substr(partition_name,3) < '20991231') loop
+    v_sql := 'alter table ${iol_schema}.icms_clr_asset_finance_fund drop partition ' || cur.partition_name;
+    dbms_output.put_line(v_sql);
+    execute immediate v_sql;
+end loop;
+end;
+/
+alter table ${iol_schema}.icms_clr_asset_finance_fund add partition p_${batch_date} values(to_date('${batch_date}','YYYYMMDD'));
+
+-- 4.3 exchange partition
+alter table ${iol_schema}.icms_clr_asset_finance_fund exchange partition p_${batch_date} with table ${iol_schema}.icms_clr_asset_finance_fund_cl;
+alter table ${iol_schema}.icms_clr_asset_finance_fund exchange partition p_20991231 with table ${iol_schema}.icms_clr_asset_finance_fund_op;
+
+-- 5.1 table grant
+whenever sqlerror exit sql.sqlcode;
+-- grant select on ${iol_schema}.icms_clr_asset_finance_fund to ${iml_schema};
+
+-- 5.2 drop temp table
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none ;
+drop table ${iol_schema}.icms_clr_asset_finance_fund_op purge;
+drop table ${iol_schema}.icms_clr_asset_finance_fund_cl purge;
+
+whenever sqlerror exit sql.sqlcode;
+drop table ${iol_schema}.icms_clr_asset_finance_fund_bk purge;
+
+-- 6 gater table status
+whenever sqlerror exit sql.sqlcode;
+exec dbms_stats.gather_table_stats(ownname => '${iol_schema}',tabname => 'icms_clr_asset_finance_fund',partname => 'p_20991231', granularity => 'PARTITION', degree => 8, cascade => true);

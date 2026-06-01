@@ -1,0 +1,69 @@
+/*
+Purpose:    应用集市层-建表脚本，此脚本由生成引擎自动生成。
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd idl_aml_agt_onl_bank_acct_lmt
+CreateDate: 20180515
+FileType:   DML
+Logs:
+    zjj 2018-05-15 新建表本
+*/
+
+set timing on
+
+-- 1 alter parallel
+alter session force parallel query parallel 4;
+alter session force parallel dml parallel 4;
+-- alter session force parallel ddl parallel 4;
+
+
+-- 2.1 drop timeout partition and add partition
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none;
+alter table ${idl_schema}.aml_agt_onl_bank_acct_lmt drop partition p_${last_date};
+alter table ${idl_schema}.aml_agt_onl_bank_acct_lmt drop partition p_${batch_date};
+
+-- 2.2 add today partition
+whenever sqlerror exit sql.sqlcode;
+alter table ${idl_schema}.aml_agt_onl_bank_acct_lmt add  partition p_${batch_date} values (to_date('${batch_date}','yyyymmdd'));
+
+-- 2.3 insert data target table
+whenever sqlerror exit sql.sqlcode;
+insert /*+ append */ into ${idl_schema}.aml_agt_onl_bank_acct_lmt (
+    etl_dt  -- 数据日期
+    ,agt_id  -- 协议编号
+    ,lp_id  -- 法人编号
+    ,acct_id  -- 账户编号
+    ,cust_id  -- 客户编号
+    ,user_seq_num  -- 用户顺序号
+    ,lmt_attr_name  -- 限额属性名称
+    ,lmt_attr_val  -- 限额属性值
+    ,tran_chn_cd  -- 交易渠道代码
+    ,start_dt  -- 开始日期
+    ,end_dt  -- 结束日期
+    ,id_mark  -- 删除标识
+    ,job_cd  -- 任务代码
+    ,etl_timestamp  -- 数据处理时间
+)
+select
+    to_date('${batch_date}','yyyymmdd') as etl_dt  -- 数据日期
+    ,replace(replace(t1.agt_id,chr(13),''),chr(10),'')  -- 协议编号
+    ,replace(replace(t1.lp_id,chr(13),''),chr(10),'')  -- 法人编号
+    ,replace(replace(t1.acct_id,chr(13),''),chr(10),'')  -- 账户编号
+    ,replace(replace(t1.cust_id,chr(13),''),chr(10),'')  -- 客户编号
+    ,replace(replace(t1.user_seq_num,chr(13),''),chr(10),'')  -- 用户顺序号
+    ,replace(replace(t1.lmt_attr_name,chr(13),''),chr(10),'')  -- 限额属性名称
+    ,replace(replace(t1.lmt_attr_val,chr(13),''),chr(10),'')  -- 限额属性值
+    ,replace(replace(t1.tran_chn_cd,chr(13),''),chr(10),'')  -- 交易渠道代码
+    ,t1.start_dt  -- 开始日期
+    ,t1.end_dt  -- 结束日期
+    ,replace(replace(t1.id_mark,chr(13),''),chr(10),'')  -- 删除标识
+    ,replace(replace(t1.job_cd,chr(13),''),chr(10),'')  -- 任务代码
+    ,to_timestamp('${batch_timestamp}', 'yyyy-mm-dd hh24:mi:ss.ff6') as etl_timestamp  -- 数据处理时间
+from ${iml_schema}.agt_onl_bank_acct_lmt t1    --网上银行账户限额
+where t1.start_dt <= to_date('${batch_date}','yyyymmdd') and t1.end_dt > to_date('${batch_date}','yyyymmdd') ;
+commit;
+
+
+-- 4 gater table status
+whenever sqlerror exit sql.sqlcode;
+exec dbms_stats.gather_table_stats(ownname => '${idl_schema}',tabname => 'aml_agt_onl_bank_acct_lmt',partname => 'p_${batch_date}', granularity => 'PARTITION', degree => 8, cascade => true);

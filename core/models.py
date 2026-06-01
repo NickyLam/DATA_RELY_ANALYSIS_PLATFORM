@@ -9,7 +9,12 @@ from dataclasses import dataclass, field
 from typing import Any
 
 # 从专用模块导入层级检测，保持向后兼容的 re-export
-from core.layer_detector import LayerType, LAYER_CONFIG, LAYER_ORDER, detect_layer  # noqa: F401
+from core.layer_detector import (  # noqa: F401
+    LAYER_CONFIG,
+    LAYER_ORDER,
+    LayerType,
+    detect_layer,
+)
 from core.table_name_resolver import TableNameResolver  # noqa: F401
 
 
@@ -241,6 +246,7 @@ class ProcedureInfo:
 @dataclass
 class FieldLineageNode:
     """字段血缘链路上的一个节点"""
+
     layer: int = 0
     table_name: str = ""
     field_name: str = ""
@@ -259,6 +265,7 @@ class FieldLineageNode:
 @dataclass
 class FieldLineageChain:
     """一条完整的字段加工链路，从源头到目标"""
+
     target_table: str = ""
     target_field: str = ""
     chain: list[FieldLineageNode] = field(default_factory=list)
@@ -280,6 +287,7 @@ class FieldLineageChain:
 @dataclass
 class SQLCondition:
     """SQL 条件子句"""
+
     condition_type: str = ""
     raw_text: str = ""
     tables_involved: list[str] = field(default_factory=list)
@@ -306,6 +314,7 @@ class SQLCondition:
 @dataclass
 class SelectColumnMapping:
     """SELECT 列映射 — 描述源列到目标列的映射关系"""
+
     source_expression: str = ""
     target_column: str = ""
     alias: str = ""
@@ -329,6 +338,7 @@ class SelectColumnMapping:
 @dataclass
 class SubqueryInfo:
     """子查询信息"""
+
     alias: str = ""
     raw_text: str = ""
     source_tables: list[str] = field(default_factory=list)
@@ -647,7 +657,10 @@ class CaliberInfo:
             src_layer = f"[{self.source_table_layer}] " if self.source_table_layer else ""
             parts.append(f"  数据来源: {src_layer}{self.short_source_table}.{self.source_location.source_column}")
 
-        if self.transform_logic and self.transform_logic.upper() not in ("DIRECT", self.source_location.source_column.upper()):
+        if self.transform_logic and self.transform_logic.upper() not in (
+            "DIRECT",
+            self.source_location.source_column.upper(),
+        ):
             parts.append(f"  转换逻辑: {self.transform_logic}")
 
         if self.expression_detail.select_columns:
@@ -709,7 +722,7 @@ class CaliberInfo:
             parts.append(f"  完整表达式: {self.full_expression}")
 
         if self.is_custom_function_call:
-            parts.append(f"  函数调用标记: 是")
+            parts.append("  函数调用标记: 是")
 
         return "\n".join(parts)
 
@@ -867,6 +880,7 @@ class CaliberChain:
       - complete_caliber_spec: 完整口径规格 (所有步骤的口径描述拼接)
       - accumulated_conditions_text: 全链路累积条件的可读描述
     """
+
     target_table: str = ""
     target_column: str = ""
     steps: list[CaliberInfo] = field(default_factory=list)
@@ -907,14 +921,14 @@ class CaliberChain:
         lines.append(f"{'=' * 60}")
 
         for i, step in enumerate(self.steps, 1):
-            lines.append(f"")
+            lines.append("")
             lines.append(f"── Step {i}/{self.depth} ──")
             spec = step.generate_caliber_spec()
             lines.append(spec)
 
-        lines.append(f"")
+        lines.append("")
         lines.append(f"{'=' * 60}")
-        lines.append(f"全链路累积条件:")
+        lines.append("全链路累积条件:")
         lines.append(self.accumulated_conditions_text or "无")
         lines.append(f"{'=' * 60}")
 
@@ -972,6 +986,7 @@ class CaliberResult:
       - data_flow_layers_summary: 所有链路经过的数据分层汇总
       - complete_caliber_spec: 完整口径规格 (首选链路的完整规格)
     """
+
     target_table: str = ""
     target_column: str = ""
     chains: list[CaliberChain] = field(default_factory=list)
@@ -1000,6 +1015,7 @@ class CaliberResult:
 @dataclass
 class FieldLineageResult:
     """字段血缘查询结果（可能包含多条链路）"""
+
     target_table: str = ""
     target_field: str = ""
     chains: list[FieldLineageChain] = field(default_factory=list)
@@ -1037,10 +1053,11 @@ class CaliberSummaryCard:
       - 统计信息 (路径数/步骤数/涉及表和过程)
       - 数据质量标记
     """
-    indicator: str = ""                    # 完整标识 (SCHEMA.TABLE.FIELD)
-    indicator_short: str = ""              # 短标识 (TABLE.FIELD)
-    business_caliber: str = ""             # 业务口径描述
-    technical_caliber_summary: str = ""    # 技术口径摘要 (一行文字链路)
+
+    indicator: str = ""  # 完整标识 (SCHEMA.TABLE.FIELD)
+    indicator_short: str = ""  # 短标识 (TABLE.FIELD)
+    business_caliber: str = ""  # 业务口径描述
+    technical_caliber_summary: str = ""  # 技术口径摘要 (一行文字链路)
     caliber_chain_text: list[str] = field(default_factory=list)  # 每步转换描述
     stats: dict = field(default_factory=dict)  # 统计信息
     data_quality_flags: dict = field(default_factory=dict)  # 数据质量标记
@@ -1055,45 +1072,49 @@ class CaliberSummaryCard:
 @dataclass
 class PipelineNode:
     """Pipeline 视图节点 — 代表链路中的一个表或表.字段"""
-    id: str = ""                           # 唯一标识 (SHORT_TABLE.FIELD)
-    layer: str = ""                        # 数据分层 (ODS/DWD/DWS/ADS/EAST)
-    layer_label: str = ""                  # 分层显示标签
-    label: str = ""                        # 显示标签 (短表名)
-    field: str = ""                        # 关联字段名
-    is_source: bool = False                # 是否为源头节点
-    is_target: bool = False                # 是否为目标节点
-    is_internal_transform: bool = False    # 是否为同表内字段转换
-    transform_note: str = ""               # 转换说明 (如 "同表内脱敏处理")
+
+    id: str = ""  # 唯一标识 (SHORT_TABLE.FIELD)
+    layer: str = ""  # 数据分层 (ODS/DWD/DWS/ADS/EAST)
+    layer_label: str = ""  # 分层显示标签
+    label: str = ""  # 显示标签 (短表名)
+    field: str = ""  # 关联字段名
+    is_source: bool = False  # 是否为源头节点
+    is_target: bool = False  # 是否为目标节点
+    is_internal_transform: bool = False  # 是否为同表内字段转换
+    transform_note: str = ""  # 转换说明 (如 "同表内脱敏处理")
 
 
 @dataclass
 class PipelineEdge:
     """Pipeline 视图边 — 代表一个加工步骤"""
-    id: str = ""                           # 步骤 ID (如 "step_1")
-    source: str = ""                       # 源节点 ID
-    target: str = ""                       # 目标节点 ID
-    source_field: str = ""                 # 源字段名
-    target_field: str = ""                 # 目标字段名
-    expression: str = ""                   # 完整加工表达式
-    procedure: str = ""                    # 所属存储过程
-    step_num: int = 0                      # 步骤编号
-    operation_type: str = ""               # 操作类型 (INSERT_SELECT/MERGE/UPDATE)
-    has_detail: bool = True                # 是否有详情可展开
-    file_path: str = ""                    # 源文件路径
-    start_line: int = 0                    # 起始行号
+
+    id: str = ""  # 步骤 ID (如 "step_1")
+    source: str = ""  # 源节点 ID
+    target: str = ""  # 目标节点 ID
+    source_field: str = ""  # 源字段名
+    target_field: str = ""  # 目标字段名
+    expression: str = ""  # 完整加工表达式
+    procedure: str = ""  # 所属存储过程
+    step_num: int = 0  # 步骤编号
+    operation_type: str = ""  # 操作类型 (INSERT_SELECT/MERGE/UPDATE)
+    has_detail: bool = True  # 是否有详情可展开
+    file_path: str = ""  # 源文件路径
+    start_line: int = 0  # 起始行号
 
 
 @dataclass
 class PipelineBranch:
     """Pipeline 视图中的分支 (并行路径)"""
-    merge_point: str = ""                  # 汇聚节点 ID
-    source_node: str = ""                  # 分支来源节点 ID
-    label: str = ""                        # 分支标签
+
+    merge_point: str = ""  # 汇聚节点 ID
+    source_node: str = ""  # 分支来源节点 ID
+    label: str = ""  # 分支标签
 
 
 @dataclass
 class PipelineView:
     """Pipeline 完整视图 — 横向 DAG 结构"""
+
     target_table: str = ""
     target_field: str = ""
     nodes: list[PipelineNode] = field(default_factory=list)
@@ -1110,8 +1131,9 @@ class PipelineView:
 @dataclass
 class TargetFieldExpression:
     """单个目标字段的完整表达式"""
+
     target_column: str = ""
-    expression: str = ""                   # 完整表达式
+    expression: str = ""  # 完整表达式
     source_columns: list[str] = field(default_factory=list)
     source_tables: list[str] = field(default_factory=list)
     is_custom_function: bool = False
@@ -1121,8 +1143,9 @@ class TargetFieldExpression:
 @dataclass
 class CTEDetail:
     """CTE 详情 (展示用)"""
+
     name: str = ""
-    definition: str = ""                   # CTE 完整定义体
+    definition: str = ""  # CTE 完整定义体
     source_tables: list[str] = field(default_factory=list)
     consumed_in_step: int = 0
 
@@ -1130,21 +1153,23 @@ class CTEDetail:
 @dataclass
 class CustomFunctionDetail:
     """自定义函数详情"""
-    name: str = ""                         # 函数全名 (如 PKG_DESEN.ENCRYPT_NAME)
+
+    name: str = ""  # 函数全名 (如 PKG_DESEN.ENCRYPT_NAME)
     is_custom: bool = True
-    migration_risk: str = "LOW"            # LOW / MEDIUM / HIGH
-    risk_note: str = ""                    # 风险说明
+    migration_risk: str = "LOW"  # LOW / MEDIUM / HIGH
+    risk_note: str = ""  # 风险说明
 
 
 @dataclass
 class StepDetail:
     """单步详情面板完整数据"""
+
     step_num: int = 0
     step_desc: str = ""
     procedure: str = ""
     source_table: str = ""
     target_table: str = ""
-    operation_type: str = ""               # INSERT_SELECT / MERGE / UPDATE
+    operation_type: str = ""  # INSERT_SELECT / MERGE / UPDATE
 
     # 源码锚定
     source_code_location: dict = field(default_factory=dict)  # {file_path, start_line, end_line}

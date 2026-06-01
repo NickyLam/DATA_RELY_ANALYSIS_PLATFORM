@@ -20,9 +20,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.api.parse import router as parse_router
-from app.api.lineage import router as lineage_router
 from app.api.indicator import router as indicator_router
+from app.api.lineage import router as lineage_router
+from app.api.parse import router as parse_router
 from app.api.system import router as system_router
 from app.config import config
 from app.dependencies import (
@@ -57,7 +57,11 @@ async def lifespan(app: FastAPI):
         if config.data_path.exists():
             result = parser_service.parse_existing_data()
             if result and result.parse_time_sec == 0.0:
-                logger.info("✅ 缓存加载完成: %d 张表, %d 个过程", len(result.tables), len(result.procedures))
+                logger.info(
+                    "✅ 缓存加载完成: %d 张表, %d 个过程",
+                    len(result.tables),
+                    len(result.procedures),
+                )
             else:
                 logger.info(
                     "✅ 全量解析完成: %d 张表, %d 个过程, 耗时 %.2fs",
@@ -69,8 +73,8 @@ async def lifespan(app: FastAPI):
             logger.warning("⚠️ 数据目录不存在: %s", config.data_path)
 
         logger.info("步骤 2/3: 构建性能优化索引...")
-        lineage_service = get_lineage_service()
-        indicator_service = get_indicator_service()
+        get_lineage_service()
+        get_indicator_service()
         logger.info("✅ 索引构建完成")
 
         logger.info("步骤 3/3: 启动 HTTP 服务...")
@@ -164,6 +168,7 @@ async def global_exception_handler(request: Request, exc: Exception) -> JSONResp
             "error": {"code": "INTERNAL_ERROR", "message": "服务内部错误"},
         },
     )
+
 
 # 静态文件服务
 static_dir = get_static_dir()

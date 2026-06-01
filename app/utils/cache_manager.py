@@ -5,11 +5,10 @@
 
 from __future__ import annotations
 
-import hashlib
 import logging
 import time
 from collections import OrderedDict
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +26,7 @@ class CacheManager:
             "procedure_name": {},
         }
 
-    def get(self, key: str) -> Optional[Any]:
+    def get(self, key: str) -> Any | None:
         """获取缓存值，过期则删除"""
         if key not in self._cache:
             return None
@@ -41,7 +40,7 @@ class CacheManager:
         self._cache.move_to_end(key)
         return entry["data"]
 
-    def set(self, key: str, value: Any, tags: Optional[list[str]] = None) -> None:
+    def set(self, key: str, value: Any, tags: list[str] | None = None) -> None:
         """设置缓存值，超出容量时淘汰最旧条目"""
         if key in self._cache:
             old_entry = self._cache[key]

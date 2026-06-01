@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import time
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from app.services.storage.protocol import CACHE_SCHEMA_VERSION, ResultStoreProtocol
 
@@ -44,7 +44,7 @@ class CacheStore:
             logger.info("使用 Legacy (pickle/json) 存储后端")
             return LegacyJsonPickleStore(self.output_dir)
 
-    def load_from_cache(self) -> Optional[dict[str, Any]]:
+    def load_from_cache(self) -> dict[str, Any] | None:
         data = self._store.load()
         if data is None:
             return None
@@ -54,7 +54,8 @@ class CacheStore:
         if version and version != CACHE_SCHEMA_VERSION:
             logger.warning(
                 "缓存版本不匹配(%s != %s)，强制重新解析",
-                version, CACHE_SCHEMA_VERSION,
+                version,
+                CACHE_SCHEMA_VERSION,
             )
             self._store.clear()
             return None

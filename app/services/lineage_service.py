@@ -7,13 +7,13 @@ from __future__ import annotations
 
 import logging
 import time
-from typing import Any, Optional
+from typing import Any
 
+from app.repository import search_table_dicts
+from app.services.event_bus import EventType, get_event_bus
 from app.services.parser_service import ParserService
 from app.services.table_lineage_tracer import TableLineageTracer
-from app.services.event_bus import EventType, get_event_bus
 from app.utils.cache_manager import CacheManager
-from app.repository import search_table_dicts
 from core.table_name_resolver import TableNameResolver
 
 logger = logging.getLogger(__name__)
@@ -67,7 +67,7 @@ class LineageService:
     def query_lineage(
         self,
         table: str,
-        field: Optional[str] = None,
+        field: str | None = None,
         depth: int = 3,
         mode: str = "both",
         include_fields: bool = True,
@@ -119,16 +119,16 @@ class LineageService:
             self.cache.set(cache_key, result)
         return result
 
-    def _find_alternate_schema_table(self, resolved_table: str, data: dict) -> Optional[str]:
+    def _find_alternate_schema_table(self, resolved_table: str, data: dict) -> str | None:
         if "." not in resolved_table:
             return None
         schema, short_name = resolved_table.rsplit(".", 1)
 
-        _SCHEMA_REDIRECT = {
+        _schema_redirect = {
             "RRP_MDL": "RRP_EAST",
             "RRP_EAST": "RRP_MDL",
         }
-        alt_schema = _SCHEMA_REDIRECT.get(schema.upper())
+        alt_schema = _schema_redirect.get(schema.upper())
         if not alt_schema:
             return None
 
@@ -144,17 +144,31 @@ class LineageService:
             if len(parts) == 2:
                 schema, table_short = parts
                 if table_short.startswith("EAST5_") and schema != "RRP_EAST":
-                    logger.info("EAST5_ 表自动重定向: %s → RRP_EAST.%s", table_upper, table_short)
+                    logger.info(
+                        "EAST5_ 表自动重定向: %s → RRP_EAST.%s",
+                        table_upper,
+                        table_short,
+                    )
                     return True
             actual_tables = {t.get("full_name", "").upper() for t in data.get("tables", [])}
             if resolved_table.upper() not in actual_tables:
-                logger.warning("显式 schema 表不存在: 输入=%s, 解析=%s", table_upper, resolved_table)
+                logger.warning(
+                    "显式 schema 表不存在: 输入=%s, 解析=%s",
+                    table_upper,
+                    resolved_table,
+                )
                 return False
         return True
 
     def _query_field_lineage(
-        self, table: str, field: str, depth: int,
-        mode: str, data: dict, include_fields: bool, limit: int,
+        self,
+        table: str,
+        field: str,
+        depth: int,
+        mode: str,
+        data: dict,
+        include_fields: bool,
+        limit: int,
     ) -> dict[str, Any]:
         all_nodes, all_edges, all_mappings = set(), [], []
         tracer = self.parser.get_lineage_tracer()
@@ -166,11 +180,27 @@ class LineageService:
             self._supplement_table_lineage(table, mode, data, all_nodes, all_edges)
         if include_fields:
             self._supplement_field_mappings(data, all_nodes, all_mappings, table, field)
-        return self._assemble_result(all_nodes, all_edges, all_mappings, data, include_fields, table, field, limit)
+        return self._assemble_result(
+            all_nodes,
+            all_edges,
+            all_mappings,
+            data,
+            include_fields,
+            table,
+            field,
+            limit,
+        )
 
     def _trace_field_with_tracer(
-        self, tracer, table: str, field: str, depth: int,
-        mode: str, all_nodes: set, all_edges: list, all_mappings: list,
+        self,
+        tracer,
+        table: str,
+        field: str,
+        depth: int,
+        mode: str,
+        all_nodes: set,
+        all_edges: list,
+        all_mappings: list,
     ) -> None:
         if mode in ("upstream", "both"):
             up_chains = tracer.trace_field_upstream(table, field, depth)
@@ -186,32 +216,47 @@ class LineageService:
             all_mappings.extend(down_mappings)
 
     def _trace_field_legacy(
-        self, table: str, field: str, depth: int,
-        mode: str, data: dict, all_nodes: set, all_edges: list, all_mappings: list,
+        self,
+        table: str,
+        field: str,
+        depth: int,
+        mode: str,
+        data: dict,
+        all_nodes: set,
+        all_edges: list,
+        all_mappings: list,
     ) -> None:
         logger.warning("LineageTracer 不可用，回退到旧版字段级追溯")
         if mode in ("upstream", "both"):
             up_nodes, up_edges, up_mappings = self._trace_field_lineage(
-                target_table=table, target_field=field,
+                target_table=table,
+                target_field=field,
                 all_field_mappings=data.get("field_mappings", []),
-                max_depth=depth, direction="upstream",
+                max_depth=depth,
+                direction="upstream",
             )
             all_nodes.update(up_nodes)
             all_edges.extend(up_edges)
             all_mappings.extend(up_mappings)
         if mode in ("downstream", "both"):
             down_nodes, down_edges, down_mappings = self._trace_field_lineage(
-                target_table=table, target_field=field,
+                target_table=table,
+                target_field=field,
                 all_field_mappings=data.get("field_mappings", []),
-                max_depth=depth, direction="downstream",
+                max_depth=depth,
+                direction="downstream",
             )
             all_nodes.update(down_nodes)
             all_edges.extend(down_edges)
             all_mappings.extend(down_mappings)
 
     def _supplement_table_lineage(
-        self, table: str, mode: str, data: dict,
-        all_nodes: set, all_edges: list,
+        self,
+        table: str,
+        mode: str,
+        data: dict,
+        all_nodes: set,
+        all_edges: list,
     ) -> None:
         logger.info("字段级血缘节点过少(%d个)，补充1层直接表级血缘", len(all_nodes))
         if mode in ("upstream", "both"):
@@ -220,22 +265,24 @@ class LineageService:
                 if node not in all_nodes:
                     all_nodes.add(node)
             for edge in up_edges_tbl:
-                if edge not in all_edges:
-                    if edge["source_table"] in all_nodes and edge["target_table"] in all_nodes:
-                        all_edges.append(edge)
+                if edge not in all_edges and edge["source_table"] in all_nodes and edge["target_table"] in all_nodes:
+                    all_edges.append(edge)
         if mode in ("downstream", "both"):
             down_nodes_tbl, down_edges_tbl = self._table_tracer.trace(table, data, max_depth=1, direction="down")
             for node in down_nodes_tbl:
                 if node not in all_nodes:
                     all_nodes.add(node)
             for edge in down_edges_tbl:
-                if edge not in all_edges:
-                    if edge["source_table"] in all_nodes and edge["target_table"] in all_nodes:
-                        all_edges.append(edge)
+                if edge not in all_edges and edge["source_table"] in all_nodes and edge["target_table"] in all_nodes:
+                    all_edges.append(edge)
 
     def _supplement_field_mappings(
-        self, data: dict, all_nodes: set, all_mappings: list,
-        table: str, field: str,
+        self,
+        data: dict,
+        all_nodes: set,
+        all_mappings: list,
+        table: str,
+        field: str,
     ) -> None:
         """补充 tracer 产出的映射中缺少 procedure 信息的版本。
 
@@ -246,12 +293,14 @@ class LineageService:
         for m in all_mappings:
             src_bare = TableNameResolver.bare_table(m.get("source_table", "")).upper()
             tgt_bare = TableNameResolver.bare_table(m.get("target_table", "")).upper()
-            existing_keys_4.add((
-                src_bare,
-                m.get("source_column", "").upper(),
-                tgt_bare,
-                m.get("target_column", "").upper(),
-            ))
+            existing_keys_4.add(
+                (
+                    src_bare,
+                    m.get("source_column", "").upper(),
+                    tgt_bare,
+                    m.get("target_column", "").upper(),
+                )
+            )
 
         node_full_by_bare: dict[str, str] = {}
         for n in all_nodes:
@@ -290,9 +339,14 @@ class LineageService:
                 all_mappings.append(nf)
 
     def _query_table_lineage(
-        self, table: str, depth: int,
-        mode: str, data: dict, include_fields: bool,
-        field: Optional[str], limit: int,
+        self,
+        table: str,
+        depth: int,
+        mode: str,
+        data: dict,
+        include_fields: bool,
+        field: str | None,
+        limit: int,
     ) -> dict[str, Any]:
         all_nodes, all_edges = set(), []
         if mode in ("upstream", "both"):
@@ -307,14 +361,31 @@ class LineageService:
         if field and include_fields:
             all_mappings = self._filter_field_mappings(
                 data.get("field_mappings", []),
-                all_nodes, target_table=table, target_field=field,
+                all_nodes,
+                target_table=table,
+                target_field=field,
             )
-        return self._assemble_result(all_nodes, all_edges, all_mappings, data, include_fields, table, field, limit)
+        return self._assemble_result(
+            all_nodes,
+            all_edges,
+            all_mappings,
+            data,
+            include_fields,
+            table,
+            field,
+            limit,
+        )
 
     def _assemble_result(
-        self, all_nodes: set, all_edges: list, all_mappings: list,
-        data: dict, include_fields: bool, table: str,
-        field: Optional[str], limit: int,
+        self,
+        all_nodes: set,
+        all_edges: list,
+        all_mappings: list,
+        data: dict,
+        include_fields: bool,
+        table: str,
+        field: str | None,
+        limit: int,
     ) -> dict[str, Any]:
         nodes_list = self._build_nodes(all_nodes, data, include_fields)
         edges_list = self._deduplicate_edges(all_edges)
@@ -325,7 +396,7 @@ class LineageService:
             "nodes_count": len(nodes_list),
             "edges_count": len(edges_list),
             "nodes": nodes_list[:limit],
-            "edges": edges_list[:limit * 3],
+            "edges": edges_list[: limit * 3],
             "has_more": len(nodes_list) > limit or len(edges_list) > limit * 3,
             "cache_hit": False,
             "tables_involved": len(all_nodes),
@@ -377,19 +448,17 @@ class LineageService:
 
             seen.add(name)
             short = table_info.get("table_name") or (name.split(".")[-1] if "." in name else name)
-            columns = [
-                column.get("name", "")
-                for column in table_info.get("columns", [])
-                if column.get("name")
-            ]
+            columns = [column.get("name", "") for column in table_info.get("columns", []) if column.get("name")]
 
-            tables.append({
-                "full_name": name,
-                "short_name": short,
-                "layer": self._detect_layer(name),
-                "field_count": len(columns),
-                "columns": columns if columns else None,
-            })
+            tables.append(
+                {
+                    "full_name": name,
+                    "short_name": short,
+                    "layer": self._detect_layer(name),
+                    "field_count": len(columns),
+                    "columns": columns if columns else None,
+                }
+            )
 
         return tables
 
@@ -418,16 +487,14 @@ class LineageService:
         tgt_table: str,
         tgt_column: str,
         procedure: str = "",
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """懒加载单条边的口径详情，委托给 UnifiedTracer。"""
         tracer = self.parser.get_unified_tracer()
         if tracer is None:
             return None
-        return tracer.get_edge_caliber(
-            src_table, src_column, tgt_table, tgt_column, procedure
-        )
+        return tracer.get_edge_caliber(src_table, src_column, tgt_table, tgt_column, procedure)
 
-    def get_node_detail(self, table: str) -> Optional[dict]:
+    def get_node_detail(self, table: str) -> dict | None:
         """懒加载节点详情（表字段 + 上下游 + 关联过程）。"""
         tracer = self.parser.get_unified_tracer()
         if tracer is None:
@@ -440,14 +507,19 @@ class LineageService:
         field: str,
         direction: str = "upstream",
         depth: int = 10,
-        data_source: Optional[str] = None,
+        data_source: str | None = None,
     ) -> dict:
         """节点浮窗用的指标概览卡（P5 由 caliber_service 迁移而来）。"""
         from app.services.summary_card_builder import build_summary_card
+
         tracer = self.parser.get_unified_tracer()
         return build_summary_card(
-            tracer, table, field,
-            direction=direction, depth=depth, data_source=data_source,
+            tracer,
+            table,
+            field,
+            direction=direction,
+            depth=depth,
+            data_source=data_source,
         )
 
     def get_system_stats(self) -> dict[str, Any]:
@@ -467,13 +539,15 @@ class LineageService:
 
         if data:
             metadata = data.get("metadata", {})
-            base_stats.update({
-                "total_tables": metadata.get("total_tables", 0),
-                "total_procedures": metadata.get("total_procedures", 0),
-                "total_table_lineages": metadata.get("total_table_lineages", 0),
-                "total_field_mappings": metadata.get("total_field_mappings", 0),
-                "total_caliber_infos": metadata.get("total_caliber_infos", 0),
-            })
+            base_stats.update(
+                {
+                    "total_tables": metadata.get("total_tables", 0),
+                    "total_procedures": metadata.get("total_procedures", 0),
+                    "total_table_lineages": metadata.get("total_table_lineages", 0),
+                    "total_field_mappings": metadata.get("total_field_mappings", 0),
+                    "total_caliber_infos": metadata.get("total_caliber_infos", 0),
+                }
+            )
 
         base_stats["cache_size"] = self.cache.size
 
@@ -520,7 +594,7 @@ class LineageService:
             self._build_indexes()
             self._last_data_mtime = current_mtime
 
-    def _get_data_mtime(self) -> Optional[float]:
+    def _get_data_mtime(self) -> float | None:
         """获取数据的最后更新时间戳。
 
         优先从 DataRepository metadata 读取，fallback 到 JSON 文件 mtime。
@@ -532,13 +606,14 @@ class LineageService:
             last_updated_str = metadata.get("last_updated", "")
             if last_updated_str:
                 from datetime import datetime
+
                 dt = datetime.strptime(str(last_updated_str), "%Y-%m-%d %H:%M:%S")
                 return dt.timestamp()
         except Exception:
             pass
 
         # Fallback: 检测 JSON 文件 mtime（legacy 模式）
-        import os
+
         cache_file = self.parser.output_dir / "lineage_data.json"
         if cache_file.exists():
             return cache_file.stat().st_mtime
@@ -585,9 +660,9 @@ class LineageService:
 
         # BFS 队列：(当前表, 当前字段, 当前深度)
         queue = [(resolved_target, target_field, 0)]
-        
+
         # 硬限制：字段级查询最多返回50个节点，避免结果爆炸
-        MAX_FIELD_NODES = 50
+        max_field_nodes = 50
 
         # 构建映射索引：加速查询
         # target_map: {(target_table, target_column): [mappings]}
@@ -651,7 +726,7 @@ class LineageService:
         def is_mapping_in_target_flow(fm: dict) -> bool:
             """判断映射是否与目标表在同一数据流中"""
             tgt_tbl = fm.get("target_table", "").upper()
-            src_tbl = fm.get("source_table", "").upper()
+            _src_tbl = fm.get("source_table", "").upper()
             # 如果映射的目标表在目标表的上游，则认为在同一数据流
             # 这意味着数据从映射的源表 -> 映射的目标表 -> ... -> 查询目标表
             return is_upstream_of_target(tgt_tbl)
@@ -672,16 +747,17 @@ class LineageService:
                 # 模糊匹配（处理表名短名、schema差异等）
                 if not matching_mappings:
                     for key, mappings in target_map.items():
-                        if self._resolver.match(key[0], current_table) and \
-                           self._resolver.match_field(key[1], current_field):
+                        if self._resolver.match(key[0], current_table) and self._resolver.match_field(
+                            key[1], current_field
+                        ):
                             matching_mappings.extend(mappings)
 
                 for fm in matching_mappings:
                     # 硬限制：最多50个节点
-                    if len(visited_nodes) >= MAX_FIELD_NODES:
+                    if len(visited_nodes) >= max_field_nodes:
                         logger.warning(
                             "字段级查询节点数达到上限(%d)，停止追溯",
-                            MAX_FIELD_NODES,
+                            max_field_nodes,
                         )
                         break
 
@@ -727,16 +803,17 @@ class LineageService:
                 # 模糊匹配
                 if not matching_mappings:
                     for key, mappings in source_map.items():
-                        if self._resolver.match(key[0], current_table) and \
-                           self._resolver.match_field(key[1], current_field):
+                        if self._resolver.match(key[0], current_table) and self._resolver.match_field(
+                            key[1], current_field
+                        ):
                             matching_mappings.extend(mappings)
 
                 for fm in matching_mappings:
                     # 硬限制：最多50个节点
-                    if len(visited_nodes) >= MAX_FIELD_NODES:
+                    if len(visited_nodes) >= max_field_nodes:
                         logger.warning(
                             "字段级查询节点数达到上限(%d)，停止追溯",
-                            MAX_FIELD_NODES,
+                            max_field_nodes,
                         )
                         break
 
@@ -774,56 +851,60 @@ class LineageService:
         # ========== 表级血缘扩展（严格限制版）==========
         # 修复：字段级查询应只返回与字段相关的表，避免全量表级扩展导致结果爆炸
         # 策略：仅当字段映射找到的节点过少时，才进行有限的表级扩展
-        
+
         if len(visited_nodes) < 3:
             # 字段映射节点过少，补充1层直接表级血缘
             logger.info(
                 "字段映射节点过少(%d个)，补充1层直接表级血缘",
                 len(visited_nodes),
             )
-            
+
             if direction in ("downstream", "both"):
                 table_queue = list(visited_nodes)
                 table_visited = set(visited_nodes)
-                
+
                 while table_queue:
                     current = table_queue.pop(0)
                     downstream_tables = self._table_tracer.adjacency_down.get(current.upper(), set())
-                    
+
                     for downstream_tbl in downstream_tables:
                         downstream_tbl_upper = downstream_tbl.upper()
                         if downstream_tbl_upper not in table_visited:
                             table_visited.add(downstream_tbl_upper)
-                            edges.append({
-                                "source_table": current.upper(),
-                                "target_table": downstream_tbl_upper,
-                                "source_field": "",
-                                "target_field": "",
-                                "type": "table_lineage",
-                            })
-                
+                            edges.append(
+                                {
+                                    "source_table": current.upper(),
+                                    "target_table": downstream_tbl_upper,
+                                    "source_field": "",
+                                    "target_field": "",
+                                    "type": "table_lineage",
+                                }
+                            )
+
                 visited_nodes = table_visited
-            
+
             if direction in ("upstream", "both"):
                 table_queue = list(visited_nodes)
                 table_visited = set(visited_nodes)
-                
+
                 while table_queue:
                     current = table_queue.pop(0)
                     upstream_tables = self._table_tracer.adjacency_up.get(current.upper(), set())
-                    
+
                     for upstream_tbl in upstream_tables:
                         upstream_tbl_upper = upstream_tbl.upper()
                         if upstream_tbl_upper not in table_visited:
                             table_visited.add(upstream_tbl_upper)
-                            edges.append({
-                                "source_table": upstream_tbl_upper,
-                                "target_table": current.upper(),
-                                "source_field": "",
-                                "target_field": "",
-                                "type": "table_lineage",
-                            })
-                
+                            edges.append(
+                                {
+                                    "source_table": upstream_tbl_upper,
+                                    "target_table": current.upper(),
+                                    "source_field": "",
+                                    "target_field": "",
+                                    "type": "table_lineage",
+                                }
+                            )
+
                 visited_nodes = table_visited
         else:
             logger.info(
@@ -833,8 +914,11 @@ class LineageService:
 
         logger.info(
             "🔗 字段映射追溯结果: %s.%s → %d 节点, %d 边, %d 映射",
-            target_table, target_field,
-            len(visited_nodes), len(edges), len(collected_mappings),
+            target_table,
+            target_field,
+            len(visited_nodes),
+            len(edges),
+            len(collected_mappings),
         )
 
         return visited_nodes, edges, collected_mappings
@@ -971,6 +1055,7 @@ class LineageService:
     def _detect_layer(table_name: str) -> str:
         """检测表所属层级 - 委托给统一的层级检测模块"""
         from core.layer_detector import detect_layer_str
+
         return detect_layer_str(table_name)
 
     @staticmethod
@@ -1042,7 +1127,7 @@ class LineageService:
     @staticmethod
     def _generate_cache_key(
         table: str,
-        field: Optional[str],
+        field: str | None,
         depth: int,
         mode: str,
     ) -> str:

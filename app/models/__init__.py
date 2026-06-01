@@ -6,38 +6,38 @@ Pydantic 数据模型定义
 from __future__ import annotations
 
 from datetime import datetime
-from enum import Enum
-from typing import Any, Optional
+from enum import StrEnum
+from typing import Any
 
 from pydantic import BaseModel, Field
 
 
-class ParseMode(str, Enum):
+class ParseMode(StrEnum):
     INCREMENTAL = "incremental"
     FULL = "full"
 
 
-class ParseStatus(str, Enum):
+class ParseStatus(StrEnum):
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
 
 
-class QueryMode(str, Enum):
+class QueryMode(StrEnum):
     UPSTREAM = "upstream"
     DOWNSTREAM = "downstream"
     BOTH = "both"
 
 
-class ProgressEventType(str, Enum):
+class ProgressEventType(StrEnum):
     PROGRESS = "progress"
     LOG = "log"
     COMPLETE = "complete"
     ERROR = "error"
 
 
-class CaliberQueryMode(str, Enum):
+class CaliberQueryMode(StrEnum):
     UPSTREAM = "upstream"
     DOWNSTREAM = "downstream"
     BOTH = "both"
@@ -48,7 +48,7 @@ class FileUploadRequest(BaseModel):
         default=ParseMode.INCREMENTAL,
         description="解析模式: incremental(增量) | full(全量)",
     )
-    schema_name: Optional[str] = Field(
+    schema_name: str | None = Field(
         default=None,
         description="目标 Schema: rrp_mdl | rrp_east",
     )
@@ -56,10 +56,10 @@ class FileUploadRequest(BaseModel):
 
 class LineageQueryRequest(BaseModel):
     table: str = Field(min_length=2, description="表名")
-    field: Optional[str] = Field(default=None, description="字段名(可选)")
+    field: str | None = Field(default=None, description="字段名(可选)")
     depth: int = Field(default=3, ge=1, le=20, description="查询深度(1-20)")
     mode: QueryMode = Field(default=QueryMode.BOTH, description="查询方向")
-    options: Optional[LineageQueryOptions] = Field(default=None, description="查询选项")
+    options: LineageQueryOptions | None = Field(default=None, description="查询选项")
 
 
 class LineageQueryOptions(BaseModel):
@@ -97,13 +97,13 @@ class ProgressEvent(BaseModel):
 
 class ProgressEventData(BaseModel):
     percent: float = Field(default=0, ge=0, le=100)
-    current_file: Optional[str] = None
+    current_file: str | None = None
     message: str = ""
     level: str = "info"
-    tables_parsed: Optional[int] = None
-    procedures_parsed: Optional[int] = None
-    lineages_found: Optional[int] = None
-    errors: Optional[list[str]] = None
+    tables_parsed: int | None = None
+    procedures_parsed: int | None = None
+    lineages_found: int | None = None
+    errors: list[str] | None = None
 
     class Config:
         populate_by_name = True
@@ -121,10 +121,10 @@ class LineageResultData(BaseModel):
     edges: list[dict[str, Any]] = Field(default_factory=list)
     has_more: bool = Field(default=False, description="是否有更多数据")
     cache_hit: bool = Field(default=False, description="是否命中缓存")
-    tables_involved: Optional[int] = None
-    procedures_involved: Optional[int] = None
-    max_depth_reached: Optional[int] = None
-    query_target: Optional[dict[str, Optional[str]]] = Field(default=None, description="查询目标(表+字段)")
+    tables_involved: int | None = None
+    procedures_involved: int | None = None
+    max_depth_reached: int | None = None
+    query_target: dict[str, str | None] | None = Field(default=None, description="查询目标(表+字段)")
     field_mappings: list[dict[str, Any]] = Field(default_factory=list, description="字段级血缘映射")
     field_mapping_count: int = Field(default=0, description="字段映射数量")
 
@@ -143,7 +143,7 @@ class TableListItem(BaseModel):
     field_count: int = 0
     layer: str = "other"
     comment: str = ""
-    columns: Optional[list[str]] = None
+    columns: list[str] | None = None
 
 
 class SystemStatsResponse(BaseModel):
@@ -169,13 +169,13 @@ class CaliberQueryRequest(BaseModel):
         default=CaliberQueryMode.UPSTREAM,
         description="查询方向: upstream(上游) | downstream(下游) | both(双向)",
     )
-    data_source: Optional[str] = Field(default=None, description="数据源筛选: oracle | tdh | gbase")
+    data_source: str | None = Field(default=None, description="数据源筛选: oracle | tdh | gbase")
 
 
 class CaliberSearchRequest(BaseModel):
     keyword: str = Field(min_length=1, description="搜索关键词(表名或字段名)")
     limit: int = Field(default=50, ge=1, le=500, description="返回数量限制")
-    data_source: Optional[str] = Field(default=None, description="数据源筛选")
+    data_source: str | None = Field(default=None, description="数据源筛选")
 
 
 class SQLConditionData(BaseModel):
@@ -257,7 +257,7 @@ class CaliberResultData(BaseModel):
     complete_caliber_spec: str = Field(default="", description="完整口径规格")
 
 
-class IndicatorQueryMode(str, Enum):
+class IndicatorQueryMode(StrEnum):
     UPSTREAM = "upstream"
     DOWNSTREAM = "downstream"
     BOTH = "both"
@@ -265,7 +265,7 @@ class IndicatorQueryMode(str, Enum):
 
 class IndicatorLineageRequest(BaseModel):
     index_no: str = Field(min_length=2, description="指标编号")
-    measure: Optional[str] = Field(default=None, description="度量(可选)")
+    measure: str | None = Field(default=None, description="度量(可选)")
     depth: int = Field(default=10, ge=1, le=20, description="查询深度(1-20)")
     direction: IndicatorQueryMode = Field(default=IndicatorQueryMode.UPSTREAM, description="查询方向")
 

@@ -1,0 +1,171 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_idl_icps_afa_jzck_filedetail_m_i
+CreateDate: 20180529
+FileName:   ${iel_data_path}/icps_afa_jzck_filedetail_m.i.${batch_date}.dat
+IF_mark:    m_i
+Logs:
+   zjj 2018-07-27 create template
+' \
+        query="select
+etl_dt
+,productcode
+,workdate
+,agentserialno
+,worktime
+,reqid
+,reqbatno
+,reqtype
+,opttype
+,applyseq
+,applytype
+,applyorgcode
+,targetorgcode
+,subjecttype
+,casetype
+,caseno
+,emergencylevel
+,sendtime
+,taskid
+,origtaskid
+,username
+,idtype
+,idno
+,accountno
+,accountnumber
+,accounttype
+,accountopenbankname
+,accountopenbankcode
+,controlcontent
+,timetype
+,starttime
+,endtime
+,frozentype
+,amount
+,currency
+,frozedbalance
+,accountbalance
+,accountavaiablebalance
+,hostfreezeserial
+,hostdate
+,formerapplicationdepartment
+,formerfrozenbalance
+,formerfrozenexpiretime
+,unfrozedbalance
+,execunitname
+,execunitno
+,handler
+,telephone
+,handleraddress
+,handleridtype
+,handleridno
+,handlerworkidno
+,handlerofficeidno
+,helper
+,helpertelephone
+,helperidtype
+,helperidno
+,documentname
+,documentno
+,origcaseno
+,assetsname
+,assetstype
+,units
+,ischange
+,execaccountname
+,execaccountbankname
+,execaccountbankcode
+,execaccount
+,execaccounttype
+,tradebusistep
+,tradestatus
+,dealcode
+,dealmsg
+,remark
+,remark1
+,remark2
+,remark3
+,tradesystem
+,tradetype
+,procemode
+,telphone
+,cxzl
+,applicationorgname
+,glbl_seq_no
+,applicationtype
+,fileid
+,formerccy
+,transserialnumber
+,transferamount
+,transfertime
+,applicationtime
+,result
+,withdrawaltime
+,tellerno
+,brno
+,author
+,manager
+,helpermobilephone
+,upddate
+,updtime
+,ckwh
+,cpxszl
+,feedbackorgname
+,fksjhm
+,feedbackremark
+,buslicense
+,dqh
+,hclx
+,hcsxje
+,thawmode
+,deltellerno
+,delbrno
+,jrcpbh
+,cardno
+,kzzt
+,lczh
+,pztxlx
+,pztxmc
+,requesttxcode
+,responsetxcode
+,qqrbgdh
+,busiserno
+,threeinone
+,se
+,skse
+,sfdysxje
+,sfxd
+,unfrozedtype
+,xcrbgdh
+,ydjah
+,zffs
+,location
+,transferoutaccountnumber
+,transferoutaccountname
+,transferoutbankid
+,transferoutbankname
+,zjhkzh
+,orgcode
+,froflag
+,exchangetype
+,querycontent
+,fhbz
+,fklx
+,isfrozed
+,orighelperidtype
+,orighandleridtype
+,origidtype
+,newaccountno
+,querydata
+,uploadflag
+,bankcode
+,bankname
+,istransee
+,prtsendflag                       
+from ${idl_schema}.icps_afa_jzck_filedetail t1
+where to_char(to_date(workdate,'yyyymmdd'),'yyyymm') = to_char(to_date('${batch_date}','yyyymmdd'),'yyyymm')" \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/icps_afa_jzck_filedetail_m.i.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes

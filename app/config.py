@@ -5,11 +5,11 @@
 
 from __future__ import annotations
 
+import contextlib
 import logging
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 
 from app.utils.path_utils import get_base_dir
 
@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class DataSourceConfig:
     """单个数据源的配置"""
+
     name: str
     display_name: str
     data_dir: str
@@ -49,40 +50,42 @@ class AppConfig:
 
     schema_dirs: list[str] = field(default_factory=list)
 
-    datasource_configs: list[DataSourceConfig] = field(default_factory=lambda: [
-        DataSourceConfig(
-            name="rrp",
-            display_name="监管报送平台",
-            data_dir="SOURCE_DATA/RRP",
-            schema_dirs=["rrp_mdl", "rrp_east"],
-            file_extensions=[".tab", ".prc"],
-            parser="oracle",
-        ),
-        DataSourceConfig(
-            name="edw",
-            display_name="企业级数据仓库",
-            data_dir="SOURCE_DATA/EDW",
-            schema_dirs=[],
-            file_extensions=[".sql", ".ctl"],
-            parser="warehouse",
-        ),
-        DataSourceConfig(
-            name="mcs",
-            display_name="管理驾驶舱",
-            data_dir="SOURCE_DATA/MCS",
-            schema_dirs=[],
-            file_extensions=[".sql", ".conf"],
-            parser="warehouse",
-        ),
-        DataSourceConfig(
-            name="fdm",
-            display_name="财务数据集市",
-            data_dir="SOURCE_DATA/FDM",
-            schema_dirs=[],
-            file_extensions=[".xlsx", ".proc"],
-            parser="indicator",
-        ),
-    ])
+    datasource_configs: list[DataSourceConfig] = field(
+        default_factory=lambda: [
+            DataSourceConfig(
+                name="rrp",
+                display_name="监管报送平台",
+                data_dir="SOURCE_DATA/RRP",
+                schema_dirs=["rrp_mdl", "rrp_east"],
+                file_extensions=[".tab", ".prc"],
+                parser="oracle",
+            ),
+            DataSourceConfig(
+                name="edw",
+                display_name="企业级数据仓库",
+                data_dir="SOURCE_DATA/EDW",
+                schema_dirs=[],
+                file_extensions=[".sql", ".ctl"],
+                parser="warehouse",
+            ),
+            DataSourceConfig(
+                name="mcs",
+                display_name="管理驾驶舱",
+                data_dir="SOURCE_DATA/MCS",
+                schema_dirs=[],
+                file_extensions=[".sql", ".conf"],
+                parser="warehouse",
+            ),
+            DataSourceConfig(
+                name="fdm",
+                display_name="财务数据集市",
+                data_dir="SOURCE_DATA/FDM",
+                schema_dirs=[],
+                file_extensions=[".xlsx", ".proc"],
+                parser="indicator",
+            ),
+        ]
+    )
 
     max_upload_size_mb: int = 100
     allowed_extensions: list[str] = field(default_factory=lambda: [".tab", ".prc", ".sql", ".ctl"])
@@ -135,17 +138,15 @@ class AppConfig:
         return self.base_dir / path
 
     @classmethod
-    def from_env(cls) -> "AppConfig":
+    def from_env(cls) -> AppConfig:
         config = cls()
 
         if os.getenv("DEBUG", "").lower() in ("1", "true", "yes"):
             config.debug = True
 
         if port := os.getenv("PORT"):
-            try:
+            with contextlib.suppress(ValueError):
                 config.port = int(port)
-            except ValueError:
-                pass
 
         if data_dir := os.getenv("DATA_DIR"):
             config.data_dir = data_dir
@@ -160,9 +161,8 @@ class AppConfig:
             config.source_data_dir = source_data_dir
 
         # SQLite 存储配置
-        if storage_backend := os.getenv("STORAGE_BACKEND"):
-            if storage_backend in ("sqlite", "legacy"):
-                config.storage_backend = storage_backend
+        if (storage_backend := os.getenv("STORAGE_BACKEND")) and storage_backend in ("sqlite", "legacy"):
+            config.storage_backend = storage_backend
 
         if sqlite_db_path := os.getenv("SQLITE_DB_PATH"):
             config.sqlite_db_path = sqlite_db_path
@@ -176,36 +176,45 @@ class AppConfig:
         manifest_configs = _load_datasource_configs_from_manifest(config.source_data_path)
         if manifest_configs:
             config.datasource_configs = manifest_configs
-            logger.info("Loaded %d datasource configs from SOURCE_DATA/manifest.yml", len(manifest_configs))
+            logger.info(
+                "Loaded %d datasource configs from SOURCE_DATA/manifest.yml",
+                len(manifest_configs),
+            )
 
         tdh_dir = os.getenv("TDH_DATA_DIR")
         if tdh_dir:
             tdh_schemas = os.getenv("TDH_SCHEMA_DIRS", "dw,ods").split(",")
-            config.datasource_configs.append(DataSourceConfig(
-                name="tdh",
-                display_name="TDH星环",
-                data_dir=tdh_dir,
-                schema_dirs=[s.strip() for s in tdh_schemas],
-                file_extensions=[".hql", ".sql"],
-                parser="warehouse",
-            ))
+            config.datasource_configs.append(
+                DataSourceConfig(
+                    name="tdh",
+                    display_name="TDH星环",
+                    data_dir=tdh_dir,
+                    schema_dirs=[s.strip() for s in tdh_schemas],
+                    file_extensions=[".hql", ".sql"],
+                    parser="warehouse",
+                )
+            )
 
         gbase_dir = os.getenv("GBASE_DATA_DIR")
         if gbase_dir:
             gbase_schemas = os.getenv("GBASE_SCHEMA_DIRS", "dws,ads").split(",")
-            config.datasource_configs.append(DataSourceConfig(
-                name="gbase",
-                display_name="GBase南大通用",
-                data_dir=gbase_dir,
-                schema_dirs=[s.strip() for s in gbase_schemas],
-                file_extensions=[".sql"],
-                parser="warehouse",
-            ))
+            config.datasource_configs.append(
+                DataSourceConfig(
+                    name="gbase",
+                    display_name="GBase南大通用",
+                    data_dir=gbase_dir,
+                    schema_dirs=[s.strip() for s in gbase_schemas],
+                    file_extensions=[".sql"],
+                    parser="warehouse",
+                )
+            )
 
         return config
 
 
-def _load_datasource_configs_from_manifest(source_data_dir: Path) -> list[DataSourceConfig]:
+def _load_datasource_configs_from_manifest(
+    source_data_dir: Path,
+) -> list[DataSourceConfig]:
     try:
         import yaml
     except ImportError:
@@ -238,15 +247,17 @@ def _load_datasource_configs_from_manifest(source_data_dir: Path) -> list[DataSo
             if not os.getenv(env_var):
                 enabled = False
 
-        configs.append(DataSourceConfig(
-            name=src["name"],
-            display_name=src.get("display_name", src["name"]),
-            data_dir=str(system_dir),
-            schema_dirs=schema_dirs,
-            file_extensions=src.get("file_extensions", []),
-            parser=src.get("parser", "warehouse"),
-            enabled=enabled,
-        ))
+        configs.append(
+            DataSourceConfig(
+                name=src["name"],
+                display_name=src.get("display_name", src["name"]),
+                data_dir=str(system_dir),
+                schema_dirs=schema_dirs,
+                file_extensions=src.get("file_extensions", []),
+                parser=src.get("parser", "warehouse"),
+                enabled=enabled,
+            )
+        )
 
     return configs
 

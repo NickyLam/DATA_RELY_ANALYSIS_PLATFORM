@@ -8,8 +8,7 @@ from __future__ import annotations
 
 import logging
 import re
-from dataclasses import dataclass, field
-from typing import Optional
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +42,17 @@ LAYER_SCHEMA_MAP: dict[str, str] = {
 }
 
 # 层级数据流向：msl → itl → iol → icl → idl → iel
-LAYER_FLOW_ORDER: list[str] = ["SRC", "MSL", "ITL", "IOL", "ICL", "IML", "IDL", "IEL", "DQC"]
+LAYER_FLOW_ORDER: list[str] = [
+    "SRC",
+    "MSL",
+    "ITL",
+    "IOL",
+    "ICL",
+    "IML",
+    "IDL",
+    "IEL",
+    "DQC",
+]
 
 # 匹配 ${xxx_schema} 变量
 _SCHEMA_VAR_PATTERN = re.compile(r"\$\{(\w+_schema)\}", re.IGNORECASE)
@@ -61,11 +70,12 @@ _SCHEMA_TABLE_PATTERN = re.compile(
 @dataclass
 class ResolvedTable:
     """变量替换后的表名解析结果"""
-    schema: str = ""          # 解析后的 schema 名（如 "ICL"）
-    table_name: str = ""      # 解析后的表名（如 "cmm_abmt_remit_dtl"）
-    full_name: str = ""       # 完整名（如 "ICL.cmm_abmt_remit_dtl"）
+
+    schema: str = ""  # 解析后的 schema 名（如 "ICL"）
+    table_name: str = ""  # 解析后的表名（如 "cmm_abmt_remit_dtl"）
+    full_name: str = ""  # 完整名（如 "ICL.cmm_abmt_remit_dtl"）
     raw_schema_var: str = ""  # 原始 schema 变量名（如 "icl_schema"）
-    layer: str = ""           # 层级标识（如 "ICL"）
+    layer: str = ""  # 层级标识（如 "ICL"）
 
 
 class SchemaResolver:
@@ -84,7 +94,7 @@ class SchemaResolver:
         # resolved.layer = "ICL"
     """
 
-    def __init__(self, custom_mapping: Optional[dict[str, str]] = None):
+    def __init__(self, custom_mapping: dict[str, str] | None = None):
         """初始化
 
         Args:
@@ -95,7 +105,7 @@ class SchemaResolver:
         if custom_mapping:
             self._schema_mapping.update(custom_mapping)
 
-    def resolve_table_name(self, raw: str) -> Optional[ResolvedTable]:
+    def resolve_table_name(self, raw: str) -> ResolvedTable | None:
         """解析含变量的表名
 
         支持的格式:
@@ -166,7 +176,7 @@ class SchemaResolver:
         clean_name = var_name.strip("${}").lower()
         return self._schema_mapping.get(clean_name, var_name)
 
-    def infer_schema_from_path(self, file_path: str) -> Optional[str]:
+    def infer_schema_from_path(self, file_path: str) -> str | None:
         """从文件路径推断所属的 schema
 
         约定：DDL/DML 目录名即层级前缀
@@ -178,7 +188,7 @@ class SchemaResolver:
         Returns:
             层级标识（如 "IDL"）或 None
         """
-        import os
+
         parts = Path(file_path).parts
 
         # 从路径末尾往前找，优先匹配 DDL/DML 下的层级目录
@@ -203,6 +213,7 @@ class SchemaResolver:
         Returns:
             替换后的 SQL 文本
         """
+
         def _replacer(match):
             var_name = match.group(1).lower()
             if var_name in self._schema_mapping:

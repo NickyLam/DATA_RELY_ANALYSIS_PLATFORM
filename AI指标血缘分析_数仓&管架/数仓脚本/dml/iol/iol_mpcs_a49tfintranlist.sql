@@ -1,0 +1,137 @@
+/*
+Purpose:    偏源模型层-增量流水脚本，清空目标表当天分区，把当天数据与目标表进行分区交换。此脚本由生成引擎自动生成。
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iol_mpcs_a49tfintranlist
+CreateDate: 20180515
+Logs:
+    zjj 2018-05-15 新建脚本
+*/
+
+set timing on
+
+-- 1 alter parallel
+alter session force parallel query parallel 8;
+alter session force parallel dml parallel 8;
+-- alter session force parallel ddl parallel 8;
+
+-- 2.1 create table for exchage and add partition
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none ;
+drop table ${iol_schema}.mpcs_a49tfintranlist_ex purge;
+alter table ${iol_schema}.mpcs_a49tfintranlist add partition p_${batch_date} values (to_date('${batch_date}','yyyymmdd'));
+
+-- 2.2 truncate target table batch_date partition
+whenever sqlerror exit sql.sqlcode;
+-- 2.2.1 get new data into table
+set serveroutput on
+declare bat_dt varchar2(10);
+    v_p_exists varchar2(10);
+    v_sql varchar2(200);
+begin    
+for i in 0 .. 14 loop
+    bat_dt := to_char(to_date('${batch_date}','yyyymmdd') - i,'yyyymmdd');
+    v_sql := 'select count(0) from user_tab_partitions where table_name = upper(''mpcs_a49tfintranlist'') and PARTITION_NAME = ''P_'||bat_dt||''' ';
+    execute immediate v_sql into v_p_exists;
+    -- exists patitions
+    if v_p_exists = 1 then 
+        v_sql := 'alter table iol.mpcs_a49tfintranlist truncate partition p_'||bat_dt ;
+        dbms_output.put_line(v_sql);
+        execute immediate v_sql;
+    --no exists partitions  
+    else 
+        v_sql := 'alter table iol.mpcs_a49tfintranlist add partition p_'||bat_dt||' values (to_date('''||bat_dt||''',''yyyymmdd'')) ';
+        dbms_output.put_line(v_sql);
+        execute immediate v_sql;
+    end if;
+      end loop;
+end;
+/
+
+
+-- 2.3 insert data to ex table
+create table ${iol_schema}.mpcs_a49tfintranlist_ex nologging
+compress ${option_switch} for query high
+as
+select * from ${iol_schema}.mpcs_a49tfintranlist where 0=1;
+
+insert /*+ append */ into ${iol_schema}.mpcs_a49tfintranlist(
+    mainseq -- 中台流水号
+    ,transdt -- 交易日期
+    ,sysid -- 系统标识
+    ,transtime -- 交易时间
+    ,unotnbr -- 前置流水号
+    ,unotdate -- 前置日期
+    ,hosttrcd -- 核心交易码
+    ,fronttrcd -- 中台交易码
+    ,magbrn -- 处理机构
+    ,userid -- 处理柜员
+    ,status -- 状态
+    ,hostdate -- 核心日期
+    ,hostnbr -- 核心流水
+    ,payacct -- 付款账户
+    ,payname -- 付款账户名
+    ,incoacct -- 收款账户
+    ,inconame -- 收款账户名称
+    ,dataid -- 交易索引号
+    ,errcode -- 错误代码
+    ,errms -- 错误信息
+    ,colsts -- 对账状态
+    ,transamt -- 交易金额
+    ,abscde -- 记账分录
+    ,colldate -- 对账日期
+    ,eaccflg -- 电子账户标志
+    ,transeqno -- 交易流水号
+    ,globalseqno -- 全局流水号
+    ,gtranseqno -- 交易流水
+    ,chn_id -- 渠道码
+    ,etl_dt -- ETL处理日期
+    ,etl_timestamp -- ETL处理时间戳
+)
+select
+    mainseq -- 中台流水号
+    ,transdt -- 交易日期
+    ,sysid -- 系统标识
+    ,transtime -- 交易时间
+    ,unotnbr -- 前置流水号
+    ,unotdate -- 前置日期
+    ,hosttrcd -- 核心交易码
+    ,fronttrcd -- 中台交易码
+    ,magbrn -- 处理机构
+    ,userid -- 处理柜员
+    ,status -- 状态
+    ,hostdate -- 核心日期
+    ,hostnbr -- 核心流水
+    ,payacct -- 付款账户
+    ,payname -- 付款账户名
+    ,incoacct -- 收款账户
+    ,inconame -- 收款账户名称
+    ,dataid -- 交易索引号
+    ,errcode -- 错误代码
+    ,errms -- 错误信息
+    ,colsts -- 对账状态
+    ,transamt -- 交易金额
+    ,abscde -- 记账分录
+    ,colldate -- 对账日期
+    ,eaccflg -- 电子账户标志
+    ,transeqno -- 交易流水号
+    ,globalseqno -- 全局流水号
+    ,gtranseqno -- 交易流水
+    ,chn_id -- 渠道码
+    ,to_date(transdt,'yyyymmdd') as etl_dt -- ETL处理日期
+    ,to_timestamp('${batch_timestamp}', 'yyyy-mm-dd hh24:mi:ss.ff6') as etl_timestamp -- ETL处理时间
+from ${itl_schema}.mpcs_a49tfintranlist
+where etl_dt = to_date('${batch_date}', 'yyyymmdd')
+;
+
+-- 2.4 exchage ex table and target table
+
+
+-- 3.1 table grant
+whenever sqlerror exit sql.sqlcode;
+-- grant select on ${iol_schema}.mpcs_a49tfintranlist to ${iml_schema};
+
+-- 3.2 drop ex table
+drop table ${iol_schema}.mpcs_a49tfintranlist_ex purge;
+
+-- 4 gater table status
+exec dbms_stats.gather_table_stats(ownname => '${iol_schema}',tabname => 'mpcs_a49tfintranlist',partname => 'p_${batch_date}', granularity => 'PARTITION', degree => 8, cascade => true);

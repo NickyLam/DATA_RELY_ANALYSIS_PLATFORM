@@ -1,0 +1,10 @@
+
+-- 调用
+DECLARE
+
+BEGIN
+	P_TAB_DATA_COMPARE_COUNT('${batch_date}','${iol_schema}');
+	--P_TAB_DATA_COMPARE_COUNT('20240423','ICL');
+	--P_TAB_DATA_COMPARE_COUNT('20240423','IML');
+END;
+/

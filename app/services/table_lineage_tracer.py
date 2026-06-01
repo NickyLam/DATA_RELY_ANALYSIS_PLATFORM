@@ -7,7 +7,6 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
 
 from core.table_name_resolver import TableNameResolver
 
@@ -113,15 +112,19 @@ class TableLineageTracer:
                         continue
 
                     if direction == "up":
-                        edges.append({
-                            "source_table": neighbor,
-                            "target_table": current,
-                        })
+                        edges.append(
+                            {
+                                "source_table": neighbor,
+                                "target_table": current,
+                            }
+                        )
                     else:
-                        edges.append({
-                            "source_table": current,
-                            "target_table": neighbor,
-                        })
+                        edges.append(
+                            {
+                                "source_table": current,
+                                "target_table": neighbor,
+                            }
+                        )
 
         return visited, edges
 

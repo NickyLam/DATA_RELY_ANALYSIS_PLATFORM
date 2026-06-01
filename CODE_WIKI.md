@@ -1,8 +1,8 @@
 # 数据血缘分析系统 - Code Wiki
 
-> **版本**: v3.0  
-> **生成日期**: 2026-05-19  
-> **技术栈**: Python 3.12+ / FastAPI / SQLGlot / D3.js / SQLite  
+> **版本**: v3.0
+> **生成日期**: 2026-05-19
+> **技术栈**: Python 3.12+ / FastAPI / SQLGlot / D3.js / SQLite
 
 ---
 
@@ -941,7 +941,7 @@ pytest --cov=core --cov=app --cov-report=html
 2. BFS 循环:
    while queue 非空:
      current = queue.popleft()
-     
+
      # 终止条件检查
      if current.layer == ODS/CONFIG:
        leaf_paths.add(reconstruct_path(current))
@@ -949,14 +949,14 @@ pytest --cov=core --cov=app --cov-report=html
      if current.depth >= D:
        leaf_paths.add(reconstruct_path(current))
        continue
-     
+
      # 查找上游来源（多策略）
      sources = find_upstream_sources(current.table, current.field)
-     
+
      if sources 为空:
        leaf_paths.add(reconstruct_path(current))
        continue
-     
+
      # 层级兼容性过滤
      for src in sources:
        if is_layer_compatible(src.table, current.table):
@@ -989,11 +989,11 @@ for step in steps:
   # 将当前步骤的条件加入累积
   acc_where.extend(step.where_conditions)
   acc_join.extend(step.join_conditions)
-  
+
   # 去重
   acc_where = deduplicate(acc_where, by=raw_text)
   acc_join = deduplicate(acc_join, by=raw_text)
-  
+
   # 注入到当前步骤
   step.accumulated_where = acc_where
   step.accumulated_join = acc_join

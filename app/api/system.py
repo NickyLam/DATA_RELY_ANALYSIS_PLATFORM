@@ -12,7 +12,10 @@ from datetime import datetime
 from fastapi import APIRouter
 
 from app.config import config
-from app.dependencies import get_lineage_service, get_progress_service, get_layer_detector
+from app.dependencies import (
+    get_layer_detector,
+    get_lineage_service,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +40,7 @@ async def health_check():
 
     try:
         from app.dependencies import get_parser_service
+
         parser = get_parser_service()
         data = parser.get_current_data()
         if data:
@@ -179,10 +183,7 @@ async def get_layer_configs():
             "layer_colors": layer_config.layer_colors,
             "default_schema": layer_config.default_schema,
             "known_schemas": layer_config.known_schemas,
-            "rules": [
-                {"pattern": r.pattern, "layer": r.layer, "label": r.label}
-                for r in layer_config.rules
-            ],
+            "rules": [{"pattern": r.pattern, "layer": r.layer, "label": r.label} for r in layer_config.rules],
         }
 
     result["_default"] = {
@@ -204,7 +205,7 @@ async def get_layer_configs():
 )
 async def force_reparse():
     """强制重新全量解析，覆盖缓存"""
-    from app.dependencies import get_parser_service, get_lineage_service
+    from app.dependencies import get_lineage_service, get_parser_service
 
     try:
         parser = get_parser_service()

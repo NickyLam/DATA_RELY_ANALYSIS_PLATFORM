@@ -4,7 +4,7 @@
 产出与 Oracle 解析器对齐的 TableInfo/FieldMapping/TableLineage。
 """
 
-from core.warehouse.schema_resolver import SchemaResolver, ResolvedTable
+from core.warehouse.schema_resolver import ResolvedTable, SchemaResolver
 from core.warehouse.temp_table_filter import TempTableFilter
 from core.warehouse.warehouse_parser import WarehouseSQLParser
 

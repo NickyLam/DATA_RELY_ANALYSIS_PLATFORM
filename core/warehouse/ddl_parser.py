@@ -8,11 +8,9 @@ from __future__ import annotations
 
 import logging
 import re
-from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 
-from core.models import TableInfo, ColumnInfo
+from core.models import ColumnInfo, TableInfo
 from core.warehouse.schema_resolver import SchemaResolver
 
 logger = logging.getLogger(__name__)
@@ -24,7 +22,7 @@ logger = logging.getLogger(__name__)
 # CREATE TABLE ${xxx_schema}.table_name (
 _CREATE_TABLE_PATTERN = re.compile(
     r"CREATE\s+TABLE\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"     # 表名（含变量或普通格式）
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 表名（含变量或普通格式）
     r"\s*\(",
     re.IGNORECASE,
 )
@@ -32,7 +30,7 @@ _CREATE_TABLE_PATTERN = re.compile(
 # COMMENT ON TABLE ${xxx_schema}.table_name IS '注释'
 _COMMENT_TABLE_PATTERN = re.compile(
     r"COMMENT\s+ON\s+TABLE\s+"
-    r"(?:\$\{[\w_]+\}|[\w]+)\.(\w+)"   # 表名（去掉 schema 部分）
+    r"(?:\$\{[\w_]+\}|[\w]+)\.(\w+)"  # 表名（去掉 schema 部分）
     r"\s+IS\s+'([^']*)'",
     re.IGNORECASE,
 )
@@ -52,12 +50,12 @@ _COMMENT_COLUMN_PATTERN = re.compile(
 #   col_name date -- 注释
 #   etl_dt date -- ETL处理日期
 _COLUMN_DEF_PATTERN = re.compile(
-    r"^\s*,?\s*"                         # 可选的逗号前缀
-    r"(\w+)\s+"                          # 列名
+    r"^\s*,?\s*"  # 可选的逗号前缀
+    r"(\w+)\s+"  # 列名
     r"(varchar2|number|date|char|clob|blob|integer|float|timestamp|long|numeric|decimal|varchar)"
-    r"(\([^)]*\))?"                      # 可选的精度说明
-    r"\s*(NOT\s+NULL)?"                  # 可选的 NOT NULL
-    r"(?:\s*--\s*(.*))?$",              # 可选的行内注释
+    r"(\([^)]*\))?"  # 可选的精度说明
+    r"\s*(NOT\s+NULL)?"  # 可选的 NOT NULL
+    r"(?:\s*--\s*(.*))?$",  # 可选的行内注释
     re.IGNORECASE,
 )
 
@@ -80,7 +78,7 @@ class DDLParser:
     def __init__(self, schema_resolver: SchemaResolver):
         self._resolver = schema_resolver
 
-    def parse_file(self, file_path: Path) -> Optional[TableInfo]:
+    def parse_file(self, file_path: Path) -> TableInfo | None:
         """解析单个 DDL 文件
 
         Args:
@@ -90,7 +88,7 @@ class DDLParser:
             TableInfo 对象，解析失败返回 None
         """
         try:
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            with open(file_path, encoding="utf-8", errors="ignore") as f:
                 content = f.read()
         except OSError as e:
             logger.error("读取文件失败: %s - %s", file_path, e)
@@ -120,8 +118,8 @@ class DDLParser:
         if not sql_files:
             return tables
 
-        from concurrent.futures import ThreadPoolExecutor
         import threading
+        from concurrent.futures import ThreadPoolExecutor
 
         tables_lock = threading.Lock()
 
@@ -137,7 +135,7 @@ class DDLParser:
         logger.info("DDLParser: 解析目录 %s, 共 %d 张表", dir_path, len(tables))
         return tables
 
-    def _parse_content(self, content: str, file_path: str) -> Optional[TableInfo]:
+    def _parse_content(self, content: str, file_path: str) -> TableInfo | None:
         """解析 DDL 内容
 
         Args:
@@ -194,7 +192,7 @@ class DDLParser:
 
         return table_info
 
-    def _extract_table_name(self, content: str) -> Optional[str]:
+    def _extract_table_name(self, content: str) -> str | None:
         """从 CREATE TABLE 语句中提取原始表名"""
         match = _CREATE_TABLE_PATTERN.search(content)
         if match:
@@ -220,16 +218,16 @@ class DDLParser:
         depth = 1
         end = start
         for i in range(start, len(content)):
-            if content[i] == '(':
+            if content[i] == "(":
                 depth += 1
-            elif content[i] == ')':
+            elif content[i] == ")":
                 depth -= 1
                 if depth == 0:
                     end = i
                     break
 
         table_body = content[start:end]
-        lines = table_body.split('\n')
+        lines = table_body.split("\n")
 
         for line in lines:
             line = line.strip()
@@ -238,7 +236,7 @@ class DDLParser:
 
             # 跳过约束行
             if re.match(
-                r'^\s*(CONSTRAINT|PARTITION|PRIMARY|FOREIGN|UNIQUE|CHECK|USING|TABLESPACE)',
+                r"^\s*(CONSTRAINT|PARTITION|PRIMARY|FOREIGN|UNIQUE|CHECK|USING|TABLESPACE)",
                 line,
                 re.IGNORECASE,
             ):
@@ -255,12 +253,14 @@ class DDLParser:
                 inline_comment = col_match.group(5)
                 comment = inline_comment.strip() if inline_comment else ""
 
-                columns.append(ColumnInfo(
-                    name=col_name,
-                    data_type=col_type,
-                    nullable=nullable,
-                    comment=comment,
-                ))
+                columns.append(
+                    ColumnInfo(
+                        name=col_name,
+                        data_type=col_type,
+                        nullable=nullable,
+                        comment=comment,
+                    )
+                )
 
         return columns
 
@@ -291,8 +291,6 @@ class DDLParser:
     def _extract_partitions(self, content: str) -> list[str]:
         """提取分区名列表"""
         partitions: list[str] = []
-        for match in re.finditer(
-            r"PARTITION\s+(\w+)\s+VALUES\s*\(", content, re.IGNORECASE
-        ):
+        for match in re.finditer(r"PARTITION\s+(\w+)\s+VALUES\s*\(", content, re.IGNORECASE):
             partitions.append(match.group(1))
         return partitions

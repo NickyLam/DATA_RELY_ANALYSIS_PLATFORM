@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Optional
 
 from core.parser_protocol import FileParser, ParseOutput
 
@@ -47,10 +46,7 @@ class ParserRegistry:
             ext_lower = ext.lower()
             if ext_lower in self._parsers:
                 existing = self._extension_map[ext_lower]
-                raise ValueError(
-                    f"扩展名 {ext_lower} 已被 {existing} 注册，"
-                    f"无法再注册 {parser_name}"
-                )
+                raise ValueError(f"扩展名 {ext_lower} 已被 {existing} 注册，无法再注册 {parser_name}")
             self._parsers[ext_lower] = parser
             self._extension_map[ext_lower] = parser_name
 
@@ -60,7 +56,7 @@ class ParserRegistry:
             ", ".join(parser.supported_extensions()),
         )
 
-    def get_parser(self, file_path: Path) -> Optional[FileParser]:
+    def get_parser(self, file_path: Path) -> FileParser | None:
         """根据文件扩展名获取对应的解析器
 
         Args:
@@ -86,7 +82,9 @@ class ParserRegistry:
             supported = ", ".join(sorted(self._parsers.keys())) or "无"
             logger.warning(
                 "无可用的解析器处理文件 %s (扩展名: %s)，已注册: %s",
-                file_path.name, ext, supported,
+                file_path.name,
+                ext,
+                supported,
             )
             return ParseOutput(errors=[f"不支持的文件类型: {ext}"])
 
@@ -146,7 +144,9 @@ class ParserRegistry:
 
         logger.info(
             "开始解析目录 %s: %d 个文件, %d 个解析器",
-            dir_path, total_files, len(parser_files),
+            dir_path,
+            total_files,
+            len(parser_files),
         )
 
         for parser, files in parser_files.items():
@@ -154,7 +154,9 @@ class ParserRegistry:
             exts = ", ".join(parser.supported_extensions())
             logger.info(
                 "解析器 %s (%s): 处理 %d 个文件",
-                parser_name, exts, len(files),
+                parser_name,
+                exts,
+                len(files),
             )
 
             # ★ 区分策略：有特殊两阶段逻辑的解析器走 parse_directory，
@@ -171,7 +173,8 @@ class ParserRegistry:
                 except Exception as e:
                     logger.warning(
                         "解析器 %s.parse_directory 失败，回退逐文件: %s",
-                        parser_name, e,
+                        parser_name,
+                        e,
                     )
 
             # 默认：逐文件解析（避免重复扫描目录）
@@ -205,8 +208,5 @@ class ParserRegistry:
         return ext.lower() in self._parsers
 
     def __repr__(self) -> str:
-        entries = [
-            f"{ext} → {name}"
-            for ext, name in sorted(self._extension_map.items())
-        ]
+        entries = [f"{ext} → {name}" for ext, name in sorted(self._extension_map.items())]
         return f"ParserRegistry({', '.join(entries)})"

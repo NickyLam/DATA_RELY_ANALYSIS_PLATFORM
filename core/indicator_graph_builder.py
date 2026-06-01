@@ -8,7 +8,6 @@ from __future__ import annotations
 import logging
 import time
 from collections import deque
-from typing import Optional
 
 from core.indicator_models import (
     ALGO_TYPE_LABELS,
@@ -23,7 +22,6 @@ from core.indicator_models import (
     IndicatorLineageNode,
     IndicatorLineageResult,
     IndicatorRel,
-    ProcedureIndicatorInfo,
 )
 from core.indicator_sql_parser import IndicatorSQLParser
 
@@ -116,14 +114,18 @@ class IndicatorGraphBuilder:
 
         if direction in ("upstream", "both"):
             upstream_nodes, upstream_edges = self._bfs(
-                start_node_id, reverse=True, max_depth=max_depth,
+                start_node_id,
+                reverse=True,
+                max_depth=max_depth,
             )
         else:
             upstream_nodes, upstream_edges = set(), []
 
         if direction in ("downstream", "both"):
             downstream_nodes, downstream_edges = self._bfs(
-                start_node_id, reverse=False, max_depth=max_depth,
+                start_node_id,
+                reverse=False,
+                max_depth=max_depth,
             )
         else:
             downstream_nodes, downstream_edges = set(), []
@@ -136,9 +138,7 @@ class IndicatorGraphBuilder:
                 seen_edge_ids.add(e.edge_id)
                 all_edges.append(e)
 
-        sub_nodes = [
-            self._nodes[nid] for nid in all_node_ids if nid in self._nodes
-        ]
+        sub_nodes = [self._nodes[nid] for nid in all_node_ids if nid in self._nodes]
         sub_graph = IndicatorLineageGraph(
             nodes=sub_nodes,
             edges=all_edges,
@@ -146,7 +146,11 @@ class IndicatorGraphBuilder:
         )
 
         chains = self._extract_chains(
-            index_no, measure, start_node_id, direction, max_depth,
+            index_no,
+            measure,
+            start_node_id,
+            direction,
+            max_depth,
         )
 
         elapsed = (time.time() - start_time) * 1000
@@ -170,36 +174,42 @@ class IndicatorGraphBuilder:
         for c in base_calcs:
             if c.index_measure not in seen_measures:
                 seen_measures.add(c.index_measure)
-                measures.append({
-                    "code": c.index_measure,
-                    "label": MEASURE_LABELS.get(c.index_measure, c.index_measure),
-                    "algo_type": c.algo_type,
-                    "algo_label": ALGO_TYPE_LABELS.get(c.algo_type, c.algo_type),
-                    "src_table": c.src_table_name,
-                    "has_sql": bool(c.sqlcc),
-                })
+                measures.append(
+                    {
+                        "code": c.index_measure,
+                        "label": MEASURE_LABELS.get(c.index_measure, c.index_measure),
+                        "algo_type": c.algo_type,
+                        "algo_label": ALGO_TYPE_LABELS.get(c.algo_type, c.algo_type),
+                        "src_table": c.src_table_name,
+                        "has_sql": bool(c.sqlcc),
+                    }
+                )
         for c in gl_calcs:
             if c.index_measure not in seen_measures:
                 seen_measures.add(c.index_measure)
-                measures.append({
-                    "code": c.index_measure,
-                    "label": MEASURE_LABELS.get(c.index_measure, c.index_measure),
-                    "algo_type": "2",
-                    "algo_label": "总账取数",
-                })
+                measures.append(
+                    {
+                        "code": c.index_measure,
+                        "label": MEASURE_LABELS.get(c.index_measure, c.index_measure),
+                        "algo_type": "2",
+                        "algo_label": "总账取数",
+                    }
+                )
 
         gl_mappings: list[dict] = []
         for c in gl_calcs:
-            gl_mappings.append({
-                "subj_no": c.subj_no,
-                "length_val": c.length_val,
-                "sign_no": c.sign_no,
-                "sign_label": "借方" if c.sign_no == 1 else "贷方",
-                "amt_val": c.amt_val,
-                "amt_val_label": _AMT_VAL_LABELS.get(c.amt_val, c.amt_val),
-                "measure": c.index_measure,
-                "measure_label": MEASURE_LABELS.get(c.index_measure, c.index_measure),
-            })
+            gl_mappings.append(
+                {
+                    "subj_no": c.subj_no,
+                    "length_val": c.length_val,
+                    "sign_no": c.sign_no,
+                    "sign_label": "借方" if c.sign_no == 1 else "贷方",
+                    "amt_val": c.amt_val,
+                    "amt_val_label": _AMT_VAL_LABELS.get(c.amt_val, c.amt_val),
+                    "measure": c.index_measure,
+                    "measure_label": MEASURE_LABELS.get(c.index_measure, c.index_measure),
+                }
+            )
 
         upstream: list[str] = []
         downstream: list[str] = []
@@ -235,39 +245,47 @@ class IndicatorGraphBuilder:
                 seen.add(index_no)
                 calcs = self._base_calc_idx[index_no]
                 measures = sorted({c.index_measure for c in calcs})
-                results.append({
-                    "index_no": index_no,
-                    "measures": measures,
-                    "source_type": "base",
-                    "is_derived": index_no in self._rel_idx,
-                })
+                results.append(
+                    {
+                        "index_no": index_no,
+                        "measures": measures,
+                        "source_type": "base",
+                        "is_derived": index_no in self._rel_idx,
+                    }
+                )
 
         for index_no in self._gl_calc_idx:
             if keyword_upper in index_no.upper() and index_no not in seen:
                 seen.add(index_no)
                 calcs = self._gl_calc_idx[index_no]
                 measures = sorted({c.index_measure for c in calcs})
-                results.append({
-                    "index_no": index_no,
-                    "measures": measures,
-                    "source_type": "gl",
-                    "is_derived": index_no in self._rel_idx,
-                })
+                results.append(
+                    {
+                        "index_no": index_no,
+                        "measures": measures,
+                        "source_type": "gl",
+                        "is_derived": index_no in self._rel_idx,
+                    }
+                )
 
         for rel in self.config.relations:
             if keyword_upper in rel.index_no.upper() and rel.index_no not in seen:
                 seen.add(rel.index_no)
-                results.append({
-                    "index_no": rel.index_no,
-                    "measures": [],
-                    "source_type": "derived",
-                    "is_derived": True,
-                })
+                results.append(
+                    {
+                        "index_no": rel.index_no,
+                        "measures": [],
+                        "source_type": "derived",
+                        "is_derived": True,
+                    }
+                )
 
         return results[:limit]
 
     def get_pipeline_steps(
-        self, index_no: str, measure: str = "",
+        self,
+        index_no: str,
+        measure: str = "",
     ) -> list[dict]:
         self.build_full_graph()
 
@@ -275,7 +293,8 @@ class IndicatorGraphBuilder:
         procedure_map = self.config.procedures
 
         for proc_name, proc_info in sorted(
-            procedure_map.items(), key=lambda x: x[1].step_order,
+            procedure_map.items(),
+            key=lambda x: x[1].step_order,
         ):
             involved = False
             detail = ""
@@ -285,24 +304,19 @@ class IndicatorGraphBuilder:
                 if gl_calcs:
                     involved = True
                     mappings = [
-                        f"科目{c.subj_no}({'借' if c.sign_no == 1 else '贷'})×{c.amt_val}"
-                        for c in gl_calcs[:3]
+                        f"科目{c.subj_no}({'借' if c.sign_no == 1 else '贷'})×{c.amt_val}" for c in gl_calcs[:3]
                     ]
                     detail = f"{len(gl_calcs)}条科目映射: {', '.join(mappings)}"
 
             elif proc_name == "PRO_F_INDEX_CALC_BASE":
                 base_calcs = self._base_calc_idx.get(index_no, [])
-                relevant = [
-                    c for c in base_calcs
-                    if not measure or c.index_measure == measure
-                ]
+                relevant = [c for c in base_calcs if not measure or c.index_measure == measure]
                 if relevant:
                     involved = True
                     detail = f"{len(relevant)}条基础算法配置, 源表: {relevant[0].src_table_name}"
 
             elif proc_name == "PRO_F_INDEX_CALC_BRCHSUM":
-                if (index_no in self._base_calc_idx
-                        or index_no in self._gl_calc_idx):
+                if index_no in self._base_calc_idx or index_no in self._gl_calc_idx:
                     involved = True
                     base_calcs = self._base_calc_idx.get(index_no, [])
                     is_agg = any(c.index_flag and "A" in c.index_flag for c in base_calcs)
@@ -313,21 +327,22 @@ class IndicatorGraphBuilder:
                 if rel:
                     involved = True
                     relevant = [
-                        c for c in self._base_calc_idx.get(index_no, [])
-                        if not measure or c.index_measure == measure
+                        c for c in self._base_calc_idx.get(index_no, []) if not measure or c.index_measure == measure
                     ]
                     algo = relevant[0].algo_type if relevant else ""
                     algo_label = ALGO_TYPE_LABELS.get(algo, algo) if algo else "衍生计算"
                     detail = f"依赖: {', '.join(rel.depend_index_nos[:5])}, 算法: {algo_label}"
 
-            steps.append({
-                "step_order": proc_info.step_order,
-                "proc_name": proc_name,
-                "description": proc_info.description or f"STEP {proc_info.step_order}",
-                "involved": involved,
-                "detail": detail,
-                "target_table": proc_info.target_table,
-            })
+            steps.append(
+                {
+                    "step_order": proc_info.step_order,
+                    "proc_name": proc_name,
+                    "description": proc_info.description or f"STEP {proc_info.step_order}",
+                    "involved": involved,
+                    "detail": detail,
+                    "target_table": proc_info.target_table,
+                }
+            )
 
         return steps
 
@@ -335,16 +350,9 @@ class IndicatorGraphBuilder:
         self.build_full_graph()
         graph = self._get_current_graph()
 
-        indicator_count = sum(
-            1 for n in self._nodes.values()
-            if n.node_type in ("indicator", "measure")
-        )
-        table_count = sum(
-            1 for n in self._nodes.values() if n.node_type == "table"
-        )
-        subject_count = sum(
-            1 for n in self._nodes.values() if n.node_type == "field"
-        )
+        indicator_count = sum(1 for n in self._nodes.values() if n.node_type in ("indicator", "measure"))
+        table_count = sum(1 for n in self._nodes.values() if n.node_type == "table")
+        subject_count = sum(1 for n in self._nodes.values() if n.node_type == "field")
 
         return {
             "total_nodes": graph.node_count,
@@ -373,31 +381,39 @@ class IndicatorGraphBuilder:
         for index_no, calcs in self._gl_calc_idx.items():
             indicator_node_id = f"IND_{index_no}"
             self._ensure_node(
-                indicator_node_id, "indicator", index_no=index_no,
-                label=index_no, layer="FDL_IDX",
+                indicator_node_id,
+                "indicator",
+                index_no=index_no,
+                label=index_no,
+                layer="FDL_IDX",
             )
 
             for calc in calcs:
                 measure_node_id = f"IND_{index_no}_{calc.index_measure}"
                 measure_label = MEASURE_LABELS.get(
-                    calc.index_measure, calc.index_measure,
+                    calc.index_measure,
+                    calc.index_measure,
                 )
                 self._ensure_node(
-                    measure_node_id, "measure",
-                    index_no=index_no, index_measure=calc.index_measure,
+                    measure_node_id,
+                    "measure",
+                    index_no=index_no,
+                    index_measure=calc.index_measure,
                     label=f"{index_no}[{measure_label}]",
                     layer="FDL_IDX",
                     detail={
                         "sign_no": calc.sign_no,
                         "amt_val": calc.amt_val,
                         "amt_val_label": _AMT_VAL_LABELS.get(
-                            calc.amt_val, calc.amt_val,
+                            calc.amt_val,
+                            calc.amt_val,
                         ),
                     },
                 )
 
                 self._add_edge(
-                    measure_node_id, indicator_node_id,
+                    measure_node_id,
+                    indicator_node_id,
                     edge_type="data_flow",
                     procedure="PRO_F_INDEX_CALC_GL",
                     transform_logic=f"sign({calc.sign_no}) × {calc.amt_val}",
@@ -405,7 +421,8 @@ class IndicatorGraphBuilder:
 
                 subject_node_id = f"SUBJ_{calc.subj_no}_{calc.length_val}"
                 self._ensure_node(
-                    subject_node_id, "field",
+                    subject_node_id,
+                    "field",
                     label=f"科目{calc.subj_no}({calc.length_val}位)",
                     layer="IML",
                     detail={
@@ -415,12 +432,12 @@ class IndicatorGraphBuilder:
                 )
 
                 self._add_edge(
-                    subject_node_id, measure_node_id,
+                    subject_node_id,
+                    measure_node_id,
                     edge_type="gl_mapping",
                     procedure="PRO_F_INDEX_CALC_GL",
                     transform_logic=(
-                        f"substr(subj_no,1,{calc.length_val})='{calc.subj_no}'"
-                        f" → sign({calc.sign_no})×{calc.amt_val}"
+                        f"substr(subj_no,1,{calc.length_val})='{calc.subj_no}' → sign({calc.sign_no})×{calc.amt_val}"
                     ),
                     algo_type="2",
                 )
@@ -434,7 +451,8 @@ class IndicatorGraphBuilder:
                     if subject_node_id not in seen_subjects:
                         seen_subjects.add(subject_node_id)
                         self._add_edge(
-                            gl_source, subject_node_id,
+                            gl_source,
+                            subject_node_id,
                             edge_type="data_flow",
                             procedure="PRO_F_INDEX_CALC_GL",
                         )
@@ -443,25 +461,33 @@ class IndicatorGraphBuilder:
         for index_no, calcs in self._base_calc_idx.items():
             indicator_node_id = f"IND_{index_no}"
             self._ensure_node(
-                indicator_node_id, "indicator", index_no=index_no,
-                label=index_no, layer="FDL_IDX",
+                indicator_node_id,
+                "indicator",
+                index_no=index_no,
+                label=index_no,
+                layer="FDL_IDX",
             )
 
             for calc in calcs:
                 measure_node_id = f"IND_{index_no}_{calc.index_measure}"
                 measure_label = MEASURE_LABELS.get(
-                    calc.index_measure, calc.index_measure,
+                    calc.index_measure,
+                    calc.index_measure,
                 )
                 self._ensure_node(
-                    measure_node_id, "measure",
-                    index_no=index_no, index_measure=calc.index_measure,
-                    index_type="1", algo_type=calc.algo_type,
+                    measure_node_id,
+                    "measure",
+                    index_no=index_no,
+                    index_measure=calc.index_measure,
+                    index_type="1",
+                    algo_type=calc.algo_type,
                     label=f"{index_no}[{measure_label}]",
                     layer="FDL_IDX",
                     detail={
                         "algo_type": calc.algo_type,
                         "algo_label": ALGO_TYPE_LABELS.get(
-                            calc.algo_type, calc.algo_type,
+                            calc.algo_type,
+                            calc.algo_type,
                         ),
                         "src_table": calc.src_table_name,
                         "index_flag": calc.index_flag,
@@ -469,7 +495,8 @@ class IndicatorGraphBuilder:
                 )
 
                 self._add_edge(
-                    measure_node_id, indicator_node_id,
+                    measure_node_id,
+                    indicator_node_id,
                     edge_type="data_flow",
                     procedure="PRO_F_INDEX_CALC_BASE",
                 )
@@ -481,11 +508,14 @@ class IndicatorGraphBuilder:
                             continue
                         table_node_id = f"TBL_{src_table}"
                         self._ensure_node(
-                            table_node_id, "table",
-                            label=src_table, layer="IML",
+                            table_node_id,
+                            "table",
+                            label=src_table,
+                            layer="IML",
                         )
                         self._add_edge(
-                            table_node_id, measure_node_id,
+                            table_node_id,
+                            measure_node_id,
                             edge_type="data_flow",
                             procedure="PRO_F_INDEX_CALC_BASE",
                             algo_type=calc.algo_type,
@@ -499,16 +529,21 @@ class IndicatorGraphBuilder:
             target_calcs = self._base_calc_idx.get(rel.index_no, [])
             if target_calcs:
                 self._ensure_node(
-                    target_indicator_id, "indicator",
-                    index_no=rel.index_no, label=rel.index_no,
+                    target_indicator_id,
+                    "indicator",
+                    index_no=rel.index_no,
+                    label=rel.index_no,
                     layer="FDL_IDX",
                 )
 
             for dep_no in rel.depend_index_nos:
                 dep_indicator_id = f"IND_{dep_no}"
                 self._ensure_node(
-                    dep_indicator_id, "indicator",
-                    index_no=dep_no, label=dep_no, layer="FDL_IDX",
+                    dep_indicator_id,
+                    "indicator",
+                    index_no=dep_no,
+                    label=dep_no,
+                    layer="FDL_IDX",
                 )
 
                 algo_type = ""
@@ -522,14 +557,17 @@ class IndicatorGraphBuilder:
                         break
 
                 self._add_edge(
-                    dep_indicator_id, target_indicator_id,
+                    dep_indicator_id,
+                    target_indicator_id,
                     edge_type="calc_dependency",
                     procedure="PRO_F_INDEX_CALC_DERIVE",
                     algo_type=algo_type,
                     condition_sql=condition_sql,
                     measure_sql=measure_sql,
                     transform_logic=self._build_derive_logic(
-                        algo_type, condition_sql, measure_sql,
+                        algo_type,
+                        condition_sql,
+                        measure_sql,
                     ),
                 )
 
@@ -537,7 +575,8 @@ class IndicatorGraphBuilder:
         for proc_name, proc_info in self.config.procedures.items():
             proc_node_id = f"PROC_{proc_name}"
             self._ensure_node(
-                proc_node_id, "procedure",
+                proc_node_id,
+                "procedure",
                 label=proc_name,
                 layer="PROC",
                 detail={
@@ -548,7 +587,10 @@ class IndicatorGraphBuilder:
             )
 
     def _build_derive_logic(
-        self, algo_type: str, condition_sql: str, measure_sql: str,
+        self,
+        algo_type: str,
+        condition_sql: str,
+        measure_sql: str,
     ) -> str:
         if algo_type == "1":
             return f"通用算法: {measure_sql or 'SUM聚合'}"
@@ -559,18 +601,26 @@ class IndicatorGraphBuilder:
         return "衍生计算"
 
     def _ensure_node(
-        self, node_id: str, node_type: str, **kwargs: object,
+        self,
+        node_id: str,
+        node_type: str,
+        **kwargs: object,
     ) -> IndicatorLineageNode:
         if node_id not in self._nodes:
             node = IndicatorLineageNode(
-                node_id=node_id, node_type=node_type, **kwargs,  # type: ignore[arg-type]
+                node_id=node_id,
+                node_type=node_type,
+                **kwargs,  # type: ignore[arg-type]
             )
             self._nodes[node_id] = node
         return self._nodes[node_id]
 
     def _add_edge(
-        self, source_id: str, target_id: str,
-        edge_type: str = "data_flow", **kwargs: object,
+        self,
+        source_id: str,
+        target_id: str,
+        edge_type: str = "data_flow",
+        **kwargs: object,
     ) -> None:
         edge_id = f"{source_id}->{target_id}"
         if edge_id in self._edge_by_id:
@@ -591,7 +641,7 @@ class IndicatorGraphBuilder:
         self._adjacency.setdefault(source_id, []).append(target_id)
         self._reverse_adjacency.setdefault(target_id, []).append(source_id)
 
-    def _find_start_node(self, index_no: str, measure: str = "") -> Optional[str]:
+    def _find_start_node(self, index_no: str, measure: str = "") -> str | None:
         if measure:
             measure_node_id = f"IND_{index_no}_{measure}"
             if measure_node_id in self._nodes:
@@ -608,7 +658,10 @@ class IndicatorGraphBuilder:
         return None
 
     def _bfs(
-        self, start_id: str, reverse: bool = False, max_depth: int = 10,
+        self,
+        start_id: str,
+        reverse: bool = False,
+        max_depth: int = 10,
     ) -> tuple[set[str], list[IndicatorLineageEdge]]:
         visited: set[str] = set()
         reached_nodes: set[str] = set()
@@ -659,7 +712,9 @@ class IndicatorGraphBuilder:
 
         chains: list[IndicatorChain] = []
         paths = self._find_all_paths(
-            start_node_id, reverse=True, max_depth=max_depth,
+            start_node_id,
+            reverse=True,
+            max_depth=max_depth,
         )
 
         for path in paths[:20]:
@@ -691,17 +746,22 @@ class IndicatorGraphBuilder:
                 steps.append(step)
 
             if steps:
-                chains.append(IndicatorChain(
-                    target_index_no=index_no,
-                    target_measure=measure,
-                    steps=steps,
-                    depth=len(steps),
-                ))
+                chains.append(
+                    IndicatorChain(
+                        target_index_no=index_no,
+                        target_measure=measure,
+                        steps=steps,
+                        depth=len(steps),
+                    )
+                )
 
         return chains
 
     def _find_all_paths(
-        self, start_id: str, reverse: bool = False, max_depth: int = 10,
+        self,
+        start_id: str,
+        reverse: bool = False,
+        max_depth: int = 10,
     ) -> list[list[str]]:
         paths: list[list[str]] = []
         adj = self._reverse_adjacency if reverse else self._adjacency
@@ -729,7 +789,8 @@ class IndicatorGraphBuilder:
             nodes=list(self._nodes.values()),
             edges=list(self._edges),
             stats=self._compute_stats(
-                list(self._nodes.values()), self._edges,
+                list(self._nodes.values()),
+                self._edges,
             ),
         )
 

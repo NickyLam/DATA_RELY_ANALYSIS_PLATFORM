@@ -1,0 +1,162 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_idl_rpt_mpcs_a08thvtrx_i
+CreateDate: 20180529
+FileName:   ${iel_data_path}/rpt_mpcs_a08thvtrx.i.${batch_date}.dat
+IF_mark:    i
+Logs:
+   zjj 2018-07-27 create template
+' \
+        query="select
+ t1.mainseq as mainseq
+,t1.transseq as transseq
+,t1.businesstrace as businesstrace
+,t1.cmtno as cmtno
+,t1.hosttrcd as hosttrcd
+,t1.fronttrcd as fronttrcd
+,t1.transdt as transdt
+,t1.consigndt as consigndt
+,t1.hostdate as hostdate
+,t1.hostnbr as hostnbr
+,t1.ccynbr as ccynbr
+,t1.transamt as transamt
+,t1.spbrn as spbrn
+,t1.sndct as sndct
+,t1.sndupbrn as sndupbrn
+,t1.sndbrn as sndbrn
+,t1.paybrn as paybrn
+,t1.payopenbrn as payopenbrn
+,t1.payopenbanknm as payopenbanknm
+,t1.payacct as payacct
+,t1.payname as payname
+,t1.payaddr as payaddr
+,t1.rcvct as rcvct
+,t1.rcvupbrn as rcvupbrn
+,t1.rcvbrn as rcvbrn
+,t1.incobrn as incobrn
+,t1.recvopenbanknm as recvopenbanknm
+,t1.incoacct as incoacct
+,t1.inconame as inconame
+,t1.incoaddr as incoaddr
+,t1.servtype as servtype
+,t1.bustype as bustype
+,t1.billdt as billdt
+,t1.billcode as billcode
+,t1.orasndbrn as orasndbrn
+,t1.oracmtno as oracmtno
+,t1.cmpsamt as cmpsamt
+,t1.inrate as inrate
+,t1.refuseamt as refuseamt
+,t1.status as status
+,t1.processcode as processcode
+,t1.varseal as varseal
+,t1.ckrvnbr as ckrvnbr
+,t1.sndrvnbr as sndrvnbr
+,t1.cleardt as cleardt
+,t1.errcode as errcode
+,t1.errms as errms
+,t1.levels as levels
+,t1.oprtlr as oprtlr
+,t1.chktlr as chktlr
+,t1.sndtlr as sndtlr
+,t1.auttlr as auttlr
+,t1.stoptlr as stoptlr
+,t1.oprbrn as oprbrn
+,t1.sndtlrbrn as sndtlrbrn
+,t1.autbrn as autbrn
+,t1.seccode as seccode
+,t1.chkstatus as chkstatus
+,t1.info as info
+,t1.note as note
+,t1.note2 as note2
+,t1.prtcnt as prtcnt
+,t1.rcvdt as rcvdt
+,t1.transmitdt as transmitdt
+,t1.billseccode as billseccode
+,t1.paydt as paydt
+,t1.wlflag as wlflag
+,t1.flag2 as flag2
+,t1.flag3 as flag3
+,t1.flag4 as flag4
+,t1.billrqcode as billrqcode
+,t1.sacacct as sacacct
+,t1.sacname as sacname
+,t1.crdt as crdt
+,t1.crtlr as crtlr
+,t1.crbrn as crbrn
+,t1.cracct as cracct
+,t1.crseq as crseq
+,t1.prodnbr as prodnbr
+,t1.tracenbr as tracenbr
+,t1.sndtracenbr as sndtracenbr
+,t1.bookcode as bookcode
+,t1.bookdate as bookdate
+,t1.bookseqno as bookseqno
+,t1.idtype as idtype
+,t1.idno as idno
+,t1.maxtransamt as maxtransamt
+,t1.transnbr as transnbr
+,t1.sndtransnbr as sndtransnbr
+,t1.changtime as changtime
+,t1.reserv40 as reserv40
+,t1.rcdver as rcdver
+,t1.rcdstatus as rcdstatus
+,t1.paymod as paymod
+,t1.openwintype as openwintype
+,t1.changdate as changdate
+,t1.servnbr as servnbr
+,t1.magebrn as magebrn
+,t1.feeamt as feeamt
+,t1.feeamt1 as feeamt1
+,t1.feeamt2 as feeamt2
+,t1.feeamt3 as feeamt3
+,t1.linkid as linkid
+,t1.endtlr as endtlr
+,t1.edhostnbr as edhostnbr
+,t1.edhostdt as edhostdt
+,t1.prodcd as prodcd
+,t1.isinout as isinout
+,t1.inacct as inacct
+,t1.inname as inname
+,t1.ourcnapsver as ourcnapsver
+,t1.othercnapsver as othercnapsver
+,t1.landdealsts as landdealsts
+,t1.checkdealsts as checkdealsts
+,t1.appenddatatable as appenddatatable
+,t1.hangupreason as hangupreason
+,t1.modifytlr as modifytlr
+,t1.info2 as info2
+,t1.cmtno2 as cmtno2
+,t1.bustype2 as bustype2
+,t1.servtype2 as servtype2
+,t1.feetype as feetype
+,t1.eaccflg as eaccflg
+,t1.srcsysssn as srcsysssn
+,t1.od_flag as od_flag
+,t1.od_ovtranam as od_ovtranam
+,t1.nextdayflag as nextdayflag
+,t1.crotransamt as crotransamt
+,t1.autoflag as autoflag
+,t1.autocount as autocount
+,t1.automsg as automsg
+,t1.bindacct as bindacct
+,t1.bindacctnm as bindacctnm
+,t1.accttype as accttype
+,t1.bindacctopnbrn as bindacctopnbrn
+,t1.tacctp as tacctp
+,t1.limitorderid as limitorderid
+,t1.globalseqno as globalseqno
+,t1.returncode as returncode
+,t1.returnmsg as returnmsg
+,t1.transseqno as transseqno
+,t1.sendouttm as sendouttm
+,t1.acct_typ_id as acct_typ_id
+,t1.finaccountid as finaccountid
+,t1.memocntt as memocntt
+ from idl.mpcs_a08thvtrx T1
+where transdt='${batch_date}' and t1.etl_dt = to_date('${batch_date}','yyyymmdd');" \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/rpt_mpcs_a08thvtrx.i.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes

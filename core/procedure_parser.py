@@ -7,12 +7,11 @@ TMP 表链路追踪、UNION ALL、步骤级追踪与置信度评分。
 from __future__ import annotations
 
 import logging
-import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
+from core.caliber_extractor import CaliberExtractor
 from core.field_cleaner import FieldCleaner
 from core.models import (
     CaliberInfo,
@@ -21,8 +20,6 @@ from core.models import (
     TableInfo,
     TableLineage,
 )
-from core.table_name_resolver import TableNameResolver
-from core.caliber_extractor import CaliberExtractor
 
 logger = logging.getLogger(__name__)
 
@@ -41,9 +38,9 @@ class SQLOperation:
     step_desc: str = ""
     raw_text: str = ""
     # 批次A新增：行号定位字段（向后兼容，带默认值）
-    start_line: int = 0    # SQL操作在文件中的起始行号（1-based）
-    end_line: int = 0      # SQL操作在文件中的结束行号（1-based）
-    file_path: str = ""    # 来源.prc文件路径
+    start_line: int = 0  # SQL操作在文件中的起始行号（1-based）
+    end_line: int = 0  # SQL操作在文件中的结束行号（1-based）
+    file_path: str = ""  # 来源.prc文件路径
 
 
 # ---------------------------------------------------------------------------
@@ -120,10 +117,10 @@ class EnhancedProcedureParser:
     # 公开接口
     # ===================================================================
 
-    def parse_prc_file(self, file_path: str) -> Optional[ProcedureInfo]:
+    def parse_prc_file(self, file_path: str) -> ProcedureInfo | None:
         """解析单个 .prc 文件，返回 ProcedureInfo 或 None。"""
         try:
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as fh:
+            with open(file_path, encoding="utf-8", errors="ignore") as fh:
                 content = fh.read()
         except OSError as e:
             logger.error("读取文件失败: %s, 错误: %s", file_path, e)
@@ -197,8 +194,8 @@ class EnhancedProcedureParser:
         if not prc_files:
             return results
 
-        from concurrent.futures import ThreadPoolExecutor
         import threading
+        from concurrent.futures import ThreadPoolExecutor
 
         results_lock = threading.Lock()
 
@@ -220,7 +217,7 @@ class EnhancedProcedureParser:
 
     def parse_prc_file_with_caliber(
         self, file_path: str, data_source: str = "oracle"
-    ) -> tuple[Optional[ProcedureInfo], list[CaliberInfo]]:
+    ) -> tuple[ProcedureInfo | None, list[CaliberInfo]]:
         """解析单个 .prc 文件，同时返回 ProcedureInfo 和口径信息列表。
 
         与 parse_prc_file 不同的地方：
@@ -234,9 +231,7 @@ class EnhancedProcedureParser:
         caliber_infos = self.extract_caliber_from_proc(proc_info, data_source)
         return proc_info, caliber_infos
 
-    def extract_caliber_from_proc(
-        self, proc_info: ProcedureInfo, data_source: str = "oracle"
-    ) -> list[CaliberInfo]:
+    def extract_caliber_from_proc(self, proc_info: ProcedureInfo, data_source: str = "oracle") -> list[CaliberInfo]:
         """从已解析的 ProcedureInfo 中提取口径信息。
 
         基于 proc_info.field_mappings 和原始文件内容中的 SQL 操作块，
@@ -254,7 +249,7 @@ class EnhancedProcedureParser:
         else:
             # 回退：缓存未命中时重新读取
             try:
-                with open(proc_info.file_path, "r", encoding="utf-8", errors="ignore") as fh:
+                with open(proc_info.file_path, encoding="utf-8", errors="ignore") as fh:
                     content = fh.read()
             except OSError:
                 logger.warning("无法重新读取文件以提取口径: %s", proc_info.file_path)
@@ -262,8 +257,8 @@ class EnhancedProcedureParser:
 
             operations = self._extract_all_sql_operations(content, proc_info)
 
-        op_by_target: dict[str, list["SQLOperation"]] = {}
-        op_by_step: dict[int, "SQLOperation"] = {}
+        op_by_target: dict[str, list[SQLOperation]] = {}
+        op_by_step: dict[int, SQLOperation] = {}
         for op in operations:
             if op.step_num > 0:
                 op_by_step[op.step_num] = op
@@ -326,20 +321,24 @@ class EnhancedProcedureParser:
                 caliber_infos.extend(batch)
             if not ops:
                 for fm in mappings:
-                    caliber_infos.append(CaliberExtractor.build_caliber_info(
-                        field_mapping=fm,
-                        sql_block="",
-                        procedure=proc_info.full_name,
-                        data_source=data_source,
-                    ))
+                    caliber_infos.append(
+                        CaliberExtractor.build_caliber_info(
+                            field_mapping=fm,
+                            sql_block="",
+                            procedure=proc_info.full_name,
+                            data_source=data_source,
+                        )
+                    )
 
         for fm in unmapped:
-            caliber_infos.append(CaliberExtractor.build_caliber_info(
-                field_mapping=fm,
-                sql_block=content if len(operations) <= 1 else "",
-                procedure=proc_info.full_name,
-                data_source=data_source,
-            ))
+            caliber_infos.append(
+                CaliberExtractor.build_caliber_info(
+                    field_mapping=fm,
+                    sql_block=content if len(operations) <= 1 else "",
+                    procedure=proc_info.full_name,
+                    data_source=data_source,
+                )
+            )
 
         logger.info(
             "[%s] 口径提取完成: %d 条口径信息",
@@ -348,9 +347,7 @@ class EnhancedProcedureParser:
         )
         return caliber_infos
 
-    def _find_mapping_step(
-        self, fm: FieldMapping, operations: list["SQLOperation"]
-    ) -> int:
+    def _find_mapping_step(self, fm: FieldMapping, operations: list[SQLOperation]) -> int:
         """根据 FieldMapping 的目标表匹配其所属步骤编号。"""
         fm_target = fm.target_table.upper().split(".")[-1] if fm.target_table else ""
         for op in operations:
@@ -367,7 +364,7 @@ class EnhancedProcedureParser:
     # 头部解析
     # ===================================================================
 
-    def _parse_header(self, content: str, file_path: str) -> Optional[ProcedureInfo]:
+    def _parse_header(self, content: str, file_path: str) -> ProcedureInfo | None:
         """从 CREATE OR REPLACE PROCEDURE 语句中提取 schema / name / description。"""
         header_match = re.search(
             r"CREATE\s+(?:OR\s+REPLACE\s+)?PROCEDURE\s+([\w.]+)",
@@ -398,9 +395,7 @@ class EnhancedProcedureParser:
     # SQL 操作提取（核心：全局查找所有 INSERT / MERGE / UPDATE）
     # ===================================================================
 
-    def _extract_all_sql_operations(
-        self, content: str, proc_info: ProcedureInfo
-    ) -> list[SQLOperation]:
+    def _extract_all_sql_operations(self, content: str, proc_info: ProcedureInfo) -> list[SQLOperation]:
         """从存储过程正文中提取所有 DML 操作，并关联 V_STEP 信息。
 
         Returns:
@@ -422,8 +417,8 @@ class EnhancedProcedureParser:
             # 尝试向前扩展 WITH/CTE 子句
             extended_block, ext_start = self._extend_with_cte(content, match.start(), raw_block)
             step_num, step_desc = self._find_step_context(match.start(), content)
-            start_line = content[:ext_start].count('\n') + 1
-            end_line = content[:match.end()].count('\n') + 1
+            start_line = content[:ext_start].count("\n") + 1
+            end_line = content[: match.end()].count("\n") + 1
 
             operations.append(
                 SQLOperation(
@@ -447,8 +442,8 @@ class EnhancedProcedureParser:
             raw_block = match.group(0)
             extended_block, ext_start = self._extend_with_cte(content, match.start(), raw_block)
             step_num, step_desc = self._find_step_context(match.start(), content)
-            start_line = content[:ext_start].count('\n') + 1
-            end_line = content[:match.end()].count('\n') + 1
+            start_line = content[:ext_start].count("\n") + 1
+            end_line = content[: match.end()].count("\n") + 1
 
             operations.append(
                 SQLOperation(
@@ -472,8 +467,8 @@ class EnhancedProcedureParser:
             raw_block = match.group(0)
             extended_block, ext_start = self._extend_with_cte(content, match.start(), raw_block)
             step_num, step_desc = self._find_step_context(match.start(), content)
-            start_line = content[:ext_start].count('\n') + 1
-            end_line = content[:match.end()].count('\n') + 1
+            start_line = content[:ext_start].count("\n") + 1
+            end_line = content[: match.end()].count("\n") + 1
 
             operations.append(
                 SQLOperation(
@@ -489,12 +484,10 @@ class EnhancedProcedureParser:
             )
 
         # 按 step_num 排序（未识别到 step 的排最后）
-        operations.sort(key=lambda op: (op.step_num if op.step_num > 0 else 9999))
+        operations.sort(key=lambda op: op.step_num if op.step_num > 0 else 9999)
         return operations
 
-    def _extend_with_cte(
-        self, content: str, dml_start: int, raw_block: str
-    ) -> tuple[str, int]:
+    def _extend_with_cte(self, content: str, dml_start: int, raw_block: str) -> tuple[str, int]:
         """向前扩展 sql_block 以包含 WITH/CTE 子句。
 
         Oracle CTE 语法：WITH alias AS (subquery) [, alias2 AS (subquery2)] INSERT INTO ...
@@ -518,7 +511,7 @@ class EnhancedProcedureParser:
         # 找到最后一个独立的 WITH 关键字（不是子查询内部的 WITH）
         # 使用反向搜索策略：从 dml_start 位置向前查找
         with_match = None
-        for m in re.finditer(r'\bWITH\b', prefix_region, re.IGNORECASE):
+        for m in re.finditer(r"\bWITH\b", prefix_region, re.IGNORECASE):
             # 检查这个 WITH 是否独立（前面不是字母/数字/下划线/点号）
             pos = m.start()
             if pos > 0 and content[pos - 1].isalnum():
@@ -529,12 +522,12 @@ class EnhancedProcedureParser:
             return raw_block, dml_start
 
         # 从 WITH 到 DML 起始位置之间的文本
-        cte_prefix = content[with_match.start():dml_start]
+        cte_prefix = content[with_match.start() : dml_start]
 
         # 验证：这段文本和 DML 语句之间不应有其他完整的 SQL 语句
         # （如另一个 INSERT/UPDATE/DELETE/MERGE/COMMIT/ROLLBACK）
         intervening_dml = re.search(
-            r'\b(?:INSERT\s|UPDATE\s|DELETE\s|MERGE\s|COMMIT|ROLLBACK)',
+            r"\b(?:INSERT\s|UPDATE\s|DELETE\s|MERGE\s|COMMIT|ROLLBACK)",
             cte_prefix,
             re.IGNORECASE,
         )
@@ -550,9 +543,7 @@ class EnhancedProcedureParser:
     # 步骤上下文定位
     # ===================================================================
 
-    def _find_step_context(
-        self, position: int, content: str
-    ) -> tuple[int, str]:
+    def _find_step_context(self, position: int, content: str) -> tuple[int, str]:
         """根据 SQL 语句在正文中的位置，向前搜索最近的 V_STEP / V_STEP_DESC 赋值。
 
         Args:
@@ -611,14 +602,55 @@ class EnhancedProcedureParser:
                 table_name = match.group(1).upper()
                 alias_name = match.group(2).upper()
                 # 排除关键字（如 ON, AND, WHERE, SET 等）
-                if alias_name not in ("ON", "AND", "WHERE", "SET", "SELECT", "INSERT", "UPDATE", "DELETE", "FROM", "JOIN", "LEFT", "RIGHT", "INNER", "OUTER", "FULL", "CROSS", "USING", "GROUP", "ORDER", "HAVING", "LIMIT", "OFFSET", "UNION", "EXCEPT", "INTERSECT", "CASE", "WHEN", "THEN", "ELSE", "END", "AS", "IS", "NOT", "NULL", "TRUE", "FALSE", "LIKE", "IN", "EXISTS", "BETWEEN", "OR", "XOR"):
+                if alias_name not in (
+                    "ON",
+                    "AND",
+                    "WHERE",
+                    "SET",
+                    "SELECT",
+                    "INSERT",
+                    "UPDATE",
+                    "DELETE",
+                    "FROM",
+                    "JOIN",
+                    "LEFT",
+                    "RIGHT",
+                    "INNER",
+                    "OUTER",
+                    "FULL",
+                    "CROSS",
+                    "USING",
+                    "GROUP",
+                    "ORDER",
+                    "HAVING",
+                    "LIMIT",
+                    "OFFSET",
+                    "UNION",
+                    "EXCEPT",
+                    "INTERSECT",
+                    "CASE",
+                    "WHEN",
+                    "THEN",
+                    "ELSE",
+                    "END",
+                    "AS",
+                    "IS",
+                    "NOT",
+                    "NULL",
+                    "TRUE",
+                    "FALSE",
+                    "LIKE",
+                    "IN",
+                    "EXISTS",
+                    "BETWEEN",
+                    "OR",
+                    "XOR",
+                ):
                     aliases[alias_name] = table_name
 
         return aliases
 
-    def _extract_insert_mappings(
-        self, operation: SQLOperation, proc_info: ProcedureInfo
-    ) -> list[FieldMapping]:
+    def _extract_insert_mappings(self, operation: SQLOperation, proc_info: ProcedureInfo) -> list[FieldMapping]:
         """从一条 INSERT INTO ... SELECT 语句中提取字段级映射。
 
         支持以下场景：
@@ -645,9 +677,7 @@ class EnhancedProcedureParser:
         # 从 FROM 子句中提取第一个裸表名（无别名时作为 source_table 的兜底）
         from_default_table = ""
         if from_part:
-            from_table_match = re.match(
-                r"\s*([\w]+(?:\.[\w]+)+)\b", from_part.strip()
-            )
+            from_table_match = re.match(r"\s*([\w]+(?:\.[\w]+)+)\b", from_part.strip())
             if from_table_match:
                 from_default_table = from_table_match.group(1).upper()
 
@@ -714,9 +744,7 @@ class EnhancedProcedureParser:
     # MERGE 字段映射提取
     # ===================================================================
 
-    def _extract_merge_mappings(
-        self, operation: SQLOperation, proc_info: ProcedureInfo
-    ) -> list[FieldMapping]:
+    def _extract_merge_mappings(self, operation: SQLOperation, proc_info: ProcedureInfo) -> list[FieldMapping]:
         """从 MERGE INTO ... USING ... ON ... WHEN MATCHED ... WHEN NOT MATCHED 中提取映射。
 
         返回两条分支的字段映射：
@@ -799,9 +827,7 @@ class EnhancedProcedureParser:
     # UPDATE 字段映射提取
     # ===================================================================
 
-    def _extract_update_mappings(
-        self, operation: SQLOperation, proc_info: ProcedureInfo
-    ) -> list[FieldMapping]:
+    def _extract_update_mappings(self, operation: SQLOperation, proc_info: ProcedureInfo) -> list[FieldMapping]:
         """从 UPDATE t SET col1=expr1, col2=expr2 中提取字段映射。"""
         mappings: list[FieldMapping] = []
 
@@ -847,9 +873,7 @@ class EnhancedProcedureParser:
     # 临时表检测
     # ===================================================================
 
-    def _detect_temp_tables(
-        self, content: str, proc_info: ProcedureInfo
-    ) -> list[str]:
+    def _detect_temp_tables(self, content: str, proc_info: ProcedureInfo) -> list[str]:
         """识别存储过程中的临时表（名称以 TMP / _TMP / TEMP / _TEMP 结尾）。
 
         同时检查 TRUNCATE TABLE 和 INSERT INTO 中出现的表名。
@@ -1005,7 +1029,7 @@ class EnhancedProcedureParser:
     def _build_table_lineages(
         self,
         proc_info: ProcedureInfo,
-        internal_deps: Optional[list[TableLineage]] = None,
+        internal_deps: list[TableLineage] | None = None,
     ) -> list[TableLineage]:
         """构建表级血缘关系（外部源表→目标表 + 内部 TMP 依赖）。"""
         lineages: list[TableLineage] = []
@@ -1014,9 +1038,7 @@ class EnhancedProcedureParser:
             for target in proc_info.target_tables:
                 if source == target:
                     continue
-                related_mappings = [
-                    fm for fm in proc_info.field_mappings if fm.target_table == target
-                ]
+                related_mappings = [fm for fm in proc_info.field_mappings if fm.target_table == target]
                 lineages.append(
                     TableLineage(
                         source_schema=proc_info.schema,

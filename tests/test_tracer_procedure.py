@@ -41,13 +41,15 @@ def test_upstream_procedure_from_source_node():
     assert len(mappings) == 2
 
     # Edge 1: O_ICL_CMM.CUST_NAME → M_CUST_IND.CUST_NM
-    assert mappings[0]["procedure"] == "ETL_PROC_A", \
+    assert mappings[0]["procedure"] == "ETL_PROC_A", (
         f"Edge 1 procedure 应来自 prev_node (源端), got '{mappings[0]['procedure']}'"
+    )
     assert mappings[0]["transform_logic"] == "logic_a"
 
     # Edge 2: M_CUST_IND.CUST_NM → EAST5_201_GRJCXXB.KHXM
-    assert mappings[1]["procedure"] == "ETL_PROC_B", \
+    assert mappings[1]["procedure"] == "ETL_PROC_B", (
         f"Edge 2 procedure 应来自 prev_node (源端), got '{mappings[1]['procedure']}'"
+    )
     assert mappings[1]["transform_logic"] == "logic_b"
 
 
@@ -93,5 +95,4 @@ def test_upstream_root_no_empty_procedure():
     _, _, mappings = LineageTracer.to_graph_result([chain], direction="upstream")
 
     assert len(mappings) == 1
-    assert mappings[0]["procedure"] == "ETL_EAST5_201", \
-        f"最后一跳 procedure 不应为空, got '{mappings[0]['procedure']}'"
+    assert mappings[0]["procedure"] == "ETL_EAST5_201", f"最后一跳 procedure 不应为空, got '{mappings[0]['procedure']}'"

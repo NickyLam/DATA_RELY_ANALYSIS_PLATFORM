@@ -1,8 +1,9 @@
 """Batch C 单元测试：CTE / 自定义函数 / 完整表达式提取"""
 
 import unittest
+
 from core.caliber_extractor import CaliberExtractor
-from core.models import CaliberInfo, FieldMapping, SQLCondition, SourceLocation
+from core.models import CaliberInfo, FieldMapping, SourceLocation
 
 
 class TestExtractCteDefinitions(unittest.TestCase):
@@ -17,11 +18,7 @@ class TestExtractCteDefinitions(unittest.TestCase):
 
     def test_multiple_ctes_comma_separated(self):
         """关键场景：逗号分隔的多 CTE"""
-        sql = (
-            "WITH a AS (SELECT x FROM t1), "
-            "b AS (SELECT y FROM t2) "
-            "SELECT * FROM a JOIN b ON a.x = b.y"
-        )
+        sql = "WITH a AS (SELECT x FROM t1), b AS (SELECT y FROM t2) SELECT * FROM a JOIN b ON a.x = b.y"
         result = CaliberExtractor._extract_cte_definitions(sql)
         self.assertEqual(len(result), 2)
         self.assertTrue(result[0].startswith("a:"))
@@ -46,10 +43,7 @@ class TestExtractCteDefinitions(unittest.TestCase):
 
     def test_three_ctes(self):
         sql = (
-            "WITH a AS (SELECT 1 FROM dual), "
-            "b AS (SELECT 2 FROM dual), "
-            "c AS (SELECT 3 FROM dual) "
-            "SELECT * FROM a, b, c"
+            "WITH a AS (SELECT 1 FROM dual), b AS (SELECT 2 FROM dual), c AS (SELECT 3 FROM dual) SELECT * FROM a, b, c"
         )
         result = CaliberExtractor._extract_cte_definitions(sql)
         self.assertEqual(len(result), 3)
@@ -165,55 +159,30 @@ class TestBuildCaliberInfoBatchC(unittest.TestCase):
         )
 
     def test_cte_definitions_populated(self):
-        sql = (
-            "WITH tmp AS (SELECT a FROM t1) "
-            "INSERT INTO TGT_TABLE (FULL_NM) SELECT UPPER(a) AS FULL_NM FROM tmp"
-        )
-        info = CaliberExtractor.build_caliber_info(
-            self._make_mapping(), sql, "TEST_PROC"
-        )
+        sql = "WITH tmp AS (SELECT a FROM t1) INSERT INTO TGT_TABLE (FULL_NM) SELECT UPPER(a) AS FULL_NM FROM tmp"
+        info = CaliberExtractor.build_caliber_info(self._make_mapping(), sql, "TEST_PROC")
         self.assertTrue(len(info.cte_definitions) >= 1)
         self.assertTrue(info.cte_definitions[0].startswith("tmp:"))
 
     def test_custom_functions_populated(self):
-        sql = (
-            "INSERT INTO TGT_TABLE (FULL_NM) "
-            "SELECT FN_FORMAT(NAME) AS FULL_NM FROM SRC_TABLE"
-        )
-        info = CaliberExtractor.build_caliber_info(
-            self._make_mapping(), sql, "TEST_PROC"
-        )
+        sql = "INSERT INTO TGT_TABLE (FULL_NM) SELECT FN_FORMAT(NAME) AS FULL_NM FROM SRC_TABLE"
+        info = CaliberExtractor.build_caliber_info(self._make_mapping(), sql, "TEST_PROC")
         self.assertTrue(len(info.custom_functions) >= 1)
         self.assertTrue(any("FN_FORMAT" in f for f in info.custom_functions))
 
     def test_full_expression_populated(self):
-        sql = (
-            "INSERT INTO TGT_TABLE (FULL_NM) "
-            "SELECT FN_FORMAT(NAME) AS FULL_NM FROM SRC_TABLE"
-        )
-        info = CaliberExtractor.build_caliber_info(
-            self._make_mapping(), sql, "TEST_PROC"
-        )
+        sql = "INSERT INTO TGT_TABLE (FULL_NM) SELECT FN_FORMAT(NAME) AS FULL_NM FROM SRC_TABLE"
+        info = CaliberExtractor.build_caliber_info(self._make_mapping(), sql, "TEST_PROC")
         self.assertEqual(info.full_expression, "FN_FORMAT(NAME)")
 
     def test_is_custom_function_call_flag(self):
-        sql = (
-            "INSERT INTO TGT_TABLE (FULL_NM) "
-            "SELECT PKG_UTILS.FN_CALC(x) AS FULL_NM FROM SRC_TABLE"
-        )
-        info = CaliberExtractor.build_caliber_info(
-            self._make_mapping(), sql, "TEST_PROC"
-        )
+        sql = "INSERT INTO TGT_TABLE (FULL_NM) SELECT PKG_UTILS.FN_CALC(x) AS FULL_NM FROM SRC_TABLE"
+        info = CaliberExtractor.build_caliber_info(self._make_mapping(), sql, "TEST_PROC")
         self.assertTrue(info.is_custom_function_call)
 
     def test_no_custom_function_flag_false(self):
-        sql = (
-            "INSERT INTO TGT_TABLE (FULL_NM) "
-            "SELECT UPPER(NAME) AS FULL_NM FROM SRC_TABLE"
-        )
-        info = CaliberExtractor.build_caliber_info(
-            self._make_mapping(), sql, "TEST_PROC"
-        )
+        sql = "INSERT INTO TGT_TABLE (FULL_NM) SELECT UPPER(NAME) AS FULL_NM FROM SRC_TABLE"
+        info = CaliberExtractor.build_caliber_info(self._make_mapping(), sql, "TEST_PROC")
         self.assertFalse(info.is_custom_function_call)
 
 

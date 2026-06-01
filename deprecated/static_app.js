@@ -849,7 +849,7 @@
           '<div class="skeleton-row"><div class="skeleton-node"></div></div>';
         canvasWrap.insertBefore(skeletonEl, canvasWrap.firstChild);
       }
-      
+
       // 隐藏已有的节点和连接线（不删除DOM元素）
       var svgLayer = dom.svgLayer;
       var nodesLayer = dom.nodesLayer;

@@ -8,24 +8,29 @@ Bug 3: 重复分支血缘 (EAST 表不应追溯到 ICL/ODS 层)
 
 import json
 import sys
+
 import requests
-from pathlib import Path
 
 BASE = "http://localhost:8088"
 
+
 def title(text: str):
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"  {text}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
+
 
 def ok(text: str):
     print(f"  ✅ {text}")
 
+
 def fail(text: str):
     print(f"  ❌ {text}")
 
+
 def warn(text: str):
     print(f"  ⚠️  {text}")
+
 
 # -----------------------------------------------------------
 # Bug 1 & Bug 2: 测试 resolve_table_name 行为
@@ -46,9 +51,11 @@ def test_table_resolution():
         # 查找 EAST5_201_GRJCXXB 相关的表
         east_tables = [t for t in tables if "EAST5_201_GRJCXXB" in str(t).upper()]
         mdl_tables = [t for t in tables if "RRP_MDL" in str(t).upper() and "EAST5_201_GRJCXXB" in str(t).upper()]
-        east_schema_tables = [t for t in tables if "RRP_EAST" in str(t).upper() and "EAST5_201_GRJCXXB" in str(t).upper()]
+        east_schema_tables = [
+            t for t in tables if "RRP_EAST" in str(t).upper() and "EAST5_201_GRJCXXB" in str(t).upper()
+        ]
 
-        print(f"\n  查找 EAST5_201_GRJCXXB 相关表:")
+        print("\n  查找 EAST5_201_GRJCXXB 相关表:")
         print(f"    总数: {len(east_tables)}")
         print(f"    RRP_MDL schema: {len(mdl_tables)}")
         print(f"    RRP_EAST schema: {len(east_schema_tables)}")
@@ -63,6 +70,7 @@ def test_table_resolution():
             print(f"    所有匹配: {east_tables[:5]}")
 
     return True
+
 
 # -----------------------------------------------------------
 # Bug 3: 字段级血缘查询 — 验证无 ICL 分支
@@ -94,13 +102,13 @@ def test_field_lineage():
                 print(f"  血缘路径数量: {len(paths)}")
                 for i, path in enumerate(paths):
                     path_str = json.dumps(path, ensure_ascii=False)[:200]
-                    print(f"    路径 {i+1}: {path_str}")
+                    print(f"    路径 {i + 1}: {path_str}")
 
                     # 检查是否包含 ICL schema
                     if "ICL" in str(path).upper():
-                        fail(f"路径 {i+1} 包含 ICL schema (Bug 3 未修复!)")
+                        fail(f"路径 {i + 1} 包含 ICL schema (Bug 3 未修复!)")
                     else:
-                        ok(f"路径 {i+1} 不包含 ICL schema")
+                        ok(f"路径 {i + 1} 不包含 ICL schema")
 
                 # 总结
                 icl_paths = [p for p in paths if "ICL" in str(p).upper()]
@@ -112,7 +120,10 @@ def test_field_lineage():
 
     # 如果以上端点都不存在，尝试通用血缘查询
     print("\n  ⚠️  专用端点不可用，尝试通用端点...")
-    resp = requests.get(f"{BASE}/api/lineage", params={"table": "EAST5_201_GRJCXXB", "field": "KHXM", "direction": "upstream"})
+    resp = requests.get(
+        f"{BASE}/api/lineage",
+        params={"table": "EAST5_201_GRJCXXB", "field": "KHXM", "direction": "upstream"},
+    )
     if resp.status_code == 200:
         data = resp.json()
         print(f"  通用端点响应: {json.dumps(data, ensure_ascii=False)[:300]}")
@@ -120,6 +131,7 @@ def test_field_lineage():
         warn(f"  通用端点也不可用 (HTTP {resp.status_code})")
 
     return False
+
 
 # -----------------------------------------------------------
 # 综合验证: 测试错误 schema 输入
@@ -153,14 +165,15 @@ def test_wrong_schema():
     warn("  无法找到可用的 API 端点进行测试")
     return False
 
+
 # -----------------------------------------------------------
 # 主验证流程
 # -----------------------------------------------------------
 if __name__ == "__main__":
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("  数据血缘分析系统 — 端到端验证")
     print("  目标: 验证展示层血缘查询三个 Bug 修复")
-    print("="*60)
+    print("=" * 60)
 
     # 检查服务是否可达
     try:
@@ -189,9 +202,9 @@ if __name__ == "__main__":
             fail(f"{name}: 失败或部分失败")
 
     all_passed = all(results.values())
-    print(f"\n  {'='*60}")
+    print(f"\n  {'=' * 60}")
     if all_passed:
         print("  🎉 所有验证通过! 三个 Bug 修复生效。")
     else:
         print("  ⚠️  部分验证未通过，需要进一步检查。")
-    print(f"  {'='*60}\n")
+    print(f"  {'=' * 60}\n")

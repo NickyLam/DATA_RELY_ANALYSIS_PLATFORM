@@ -55,7 +55,7 @@ console.log('\n=== Test 3: Field Search on Real Table ===');
 if (richTables.length > 0) {
   const targetTbl = richTables[0].tbl;
   const structCols = tableColumnsMap[targetTbl] || [];
-  
+
   // Simulate cleanColumnName
   function cleanCol(col) {
     if (!col) return '';
@@ -80,7 +80,7 @@ if (richTables.length > 0) {
   console.log('  Target: ' + targetTbl.split('.').pop());
   console.log('  Struct columns: ' + structCols.length + ', Total searchable fields: ' + fields.length);
   console.log('  Sample fields: ' + fields.slice(0,12).join(', '));
-  
+
   // Test searching specific keywords
   [['ID',0], ['',0]].forEach(function(kv) {
     const matches = fields.filter(f => f.toUpperCase().indexOf(kv[0])!==-1);
@@ -141,7 +141,7 @@ if (testTargets[0]) {
   console.log('  Target: ' + tgt.split('.').pop() + ', direct upstream tables: ' + ups.length);
   if (ups.length > 0) {
     const proc = ups[0].procedure || '';
-    const edgeFMs = allFieldMappings.filter(f => 
+    const edgeFMs = allFieldMappings.filter(f =>
       f.target_table === tgt && (f.procedure||'') === proc
     );
     console.log('  First upstream via procedure: ' + proc.split('.').pop());

@@ -1,28 +1,30 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from core.lineage_tracer import LineageTracer
     from core.caliber_tracer import CaliberTracer
+    from core.lineage_tracer import LineageTracer
     from core.unified_tracer import UnifiedTracer
 
 logger = logging.getLogger(__name__)
 
 
 class TracerFactory:
-
     def __init__(self):
-        self._lineage_tracer: Optional[LineageTracer] = None
-        self._caliber_tracer: Optional[CaliberTracer] = None
-        self._unified_tracer: Optional[UnifiedTracer] = None
+        self._lineage_tracer: LineageTracer | None = None
+        self._caliber_tracer: CaliberTracer | None = None
+        self._unified_tracer: UnifiedTracer | None = None
 
-    def create_lineage_tracer(self, tables, procedures, table_lineages, field_mappings, max_depth: int = 10) -> LineageTracer:
+    def create_lineage_tracer(
+        self, tables, procedures, table_lineages, field_mappings, max_depth: int = 10
+    ) -> LineageTracer:
         if self._lineage_tracer is not None:
             return self._lineage_tracer
         try:
             from core.lineage_tracer import LineageTracer
+
             self._lineage_tracer = LineageTracer(
                 tables=tables,
                 procedures=procedures,
@@ -35,11 +37,20 @@ class TracerFactory:
             logger.error("构建 LineageTracer 失败: %s", e, exc_info=True)
             raise
 
-    def create_caliber_tracer(self, tables, procedures, table_lineages, field_mappings, caliber_infos, max_depth: int = 10) -> CaliberTracer:
+    def create_caliber_tracer(
+        self,
+        tables,
+        procedures,
+        table_lineages,
+        field_mappings,
+        caliber_infos,
+        max_depth: int = 10,
+    ) -> CaliberTracer:
         if self._caliber_tracer is not None:
             return self._caliber_tracer
         try:
             from core.caliber_tracer import CaliberTracer
+
             self._caliber_tracer = CaliberTracer(
                 tables=tables,
                 procedures=procedures,
@@ -54,13 +65,19 @@ class TracerFactory:
             raise
 
     def create_unified_tracer(
-        self, tables, procedures, table_lineages, field_mappings,
-        caliber_infos=None, max_depth: int = 10,
+        self,
+        tables,
+        procedures,
+        table_lineages,
+        field_mappings,
+        caliber_infos=None,
+        max_depth: int = 10,
     ) -> UnifiedTracer:
         if self._unified_tracer is not None:
             return self._unified_tracer
         try:
             from core.unified_tracer import UnifiedTracer
+
             self._unified_tracer = UnifiedTracer(
                 tables=tables,
                 procedures=procedures,

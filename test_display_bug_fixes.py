@@ -8,11 +8,15 @@
 """
 
 import sys
-sys.path.insert(0, "/Users/linmaogui/VSCodeProjects/VSCodeProjects/LLM/Trae SOLO/DATA_RELY_ANALYSIS_SYS")
+
+sys.path.insert(
+    0,
+    "/Users/linmaogui/VSCodeProjects/VSCodeProjects/LLM/Trae SOLO/DATA_RELY_ANALYSIS_SYS",
+)
 
 from app.services.table_lineage_tracer import TableLineageTracer
-from core.table_name_resolver import TableNameResolver
 from core.layer_detector import LayerType, detect_layer
+from core.table_name_resolver import TableNameResolver
 
 
 def test_resolve_table_name_bug1_and_bug2():
@@ -35,7 +39,10 @@ def test_resolve_table_name_bug1_and_bug2():
     # 模拟实际表定义（只有 RRP_EAST 有 EAST5_201_GRJCXXB）
     data = {
         "tables": [
-            {"full_name": "RRP_EAST.EAST5_201_GRJCXXB", "table_name": "EAST5_201_GRJCXXB"},
+            {
+                "full_name": "RRP_EAST.EAST5_201_GRJCXXB",
+                "table_name": "EAST5_201_GRJCXXB",
+            },
             {"full_name": "RRP_EAST.OTHER_SOURCE", "table_name": "OTHER_SOURCE"},
             {"full_name": "RRP_MDL.SOME_SOURCE", "table_name": "SOME_SOURCE"},
         ]
@@ -70,7 +77,7 @@ def test_layer_compatibility():
     # O_ICL 表应被识别为 ODS
     o_icl_layer = detect_layer("RRP_MDL.O_ICL_CMM_INDV_CUST_BASIC_INFO")
     assert o_icl_layer == LayerType.ODS, f"O_ICL_ 表应检测为 ODS 层, 实际 {o_icl_layer}"
-    print(f"✅ 层级检测验证通过")
+    print("✅ 层级检测验证通过")
 
 
 def test_schema_priority_for_east5():
@@ -90,8 +97,14 @@ def test_schema_priority_for_east5():
 
     data = {
         "tables": [
-            {"full_name": "RRP_MDL.EAST5_201_GRJCXXB", "table_name": "EAST5_201_GRJCXXB"},
-            {"full_name": "RRP_EAST.EAST5_201_GRJCXXB", "table_name": "EAST5_201_GRJCXXB"},
+            {
+                "full_name": "RRP_MDL.EAST5_201_GRJCXXB",
+                "table_name": "EAST5_201_GRJCXXB",
+            },
+            {
+                "full_name": "RRP_EAST.EAST5_201_GRJCXXB",
+                "table_name": "EAST5_201_GRJCXXB",
+            },
         ]
     }
 

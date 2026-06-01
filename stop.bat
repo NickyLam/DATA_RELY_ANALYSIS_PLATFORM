@@ -68,14 +68,14 @@ if exist "%PID_FILE%" (
 :: ========== 方式2: 通过端口查找并停止 ==========
 if %KILLED% EQU 0 (
     echo [方式2] 通过端口 %PORT% 查找进程...
-    
+
     :: 使用 netstat 查找占用端口的 PID
     for /f "tokens=5" %%a in ('netstat -ano ^| findstr ":%PORT% " ^| findstr "LISTENING"') do (
         set FOUND_PID=%%a
         goto :found_by_port
     )
     goto :not_found_by_port
-    
+
     :found_by_port
         echo       找到占用端口的进程 (PID: !FOUND_PID!)
         echo       正在停止...
@@ -87,10 +87,10 @@ if %KILLED% EQU 0 (
             echo       [错误] 无法终止进程
         )
         goto :port_check_done
-        
+
     :not_found_by_port
         echo       未找到监听端口 %PORT% 的进程
-        
+
     :port_check_done
 )
 

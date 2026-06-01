@@ -8,7 +8,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Optional, Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 CACHE_SCHEMA_VERSION = "v4"
 
@@ -17,7 +17,7 @@ CACHE_SCHEMA_VERSION = "v4"
 class ResultStoreProtocol(Protocol):
     """解析结果存储后端协议。"""
 
-    def load(self) -> Optional[dict[str, Any]]:
+    def load(self) -> dict[str, Any] | None:
         """加载解析结果数据。
 
         Returns:

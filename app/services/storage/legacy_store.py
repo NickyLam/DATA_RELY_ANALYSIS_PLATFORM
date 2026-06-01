@@ -11,7 +11,7 @@ import logging
 import pickle
 import time
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from app.services.storage.protocol import CACHE_SCHEMA_VERSION
 
@@ -26,7 +26,7 @@ class LegacyJsonPickleStore:
         self._cache_file = self._output_dir / "lineage_data.pkl"
         self._json_file = self._output_dir / "lineage_data.json"
 
-    def load(self) -> Optional[dict[str, Any]]:
+    def load(self) -> dict[str, Any] | None:
         """从 pickle 或 JSON 加载缓存数据。"""
         # 优先读取 pickle
         if self._cache_file.exists():
@@ -38,7 +38,8 @@ class LegacyJsonPickleStore:
                 if version and version != CACHE_SCHEMA_VERSION:
                     logger.warning(
                         "缓存版本不匹配(%s != %s)，强制重新解析",
-                        version, CACHE_SCHEMA_VERSION,
+                        version,
+                        CACHE_SCHEMA_VERSION,
                     )
                     self._cache_file.unlink(missing_ok=True)
                     return None
@@ -58,7 +59,7 @@ class LegacyJsonPickleStore:
         # fallback 读取 JSON
         if self._json_file.exists():
             try:
-                with open(self._json_file, "r", encoding="utf-8") as f:
+                with open(self._json_file, encoding="utf-8") as f:
                     data = json.load(f)
                 metadata = data.get("metadata", {})
                 version = metadata.get("cache_schema_version", "")

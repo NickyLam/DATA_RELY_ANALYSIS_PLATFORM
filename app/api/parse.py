@@ -11,24 +11,21 @@
 from __future__ import annotations
 
 import logging
-from typing import Annotated, Optional
+from typing import Annotated
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import StreamingResponse
 
 from app.dependencies import (
-    LineageServiceDep,
     ParserServiceDep,
     ProgressServiceDep,
 )
 from app.models import (
-    BaseResponse,
     FileUploadData,
     FileUploadResponse,
     ParseMode,
     ParseStatus,
 )
-from app.services.progress_service import TaskStatus
 from app.utils.file_handler import FileHandler
 
 logger = logging.getLogger(__name__)
@@ -45,7 +42,7 @@ router = APIRouter(prefix="/api/parse", tags=["解析管理"])
 async def upload_files(
     files: list[UploadFile] = File(description="上传的文件列表"),
     parse_mode: ParseMode = Form(default=ParseMode.INCREMENTAL, description="解析模式"),
-    schema_name: Annotated[Optional[str], Form(description="Schema名称")] = None,
+    schema_name: Annotated[str | None, Form(description="Schema名称")] = None,
     parser_service: ParserServiceDep = None,
     progress_service: ProgressServiceDep = None,
 ) -> FileUploadResponse:
@@ -77,6 +74,7 @@ async def upload_files(
 
     def run_parse_task():
         try:
+
             def on_progress(percent, current_file, message, **stats):
                 progress_service.update_progress(
                     task.task_id,
@@ -113,6 +111,7 @@ async def upload_files(
             progress_service.fail_task(task.task_id, str(e))
 
     import threading
+
     parse_thread = threading.Thread(target=run_parse_task, daemon=True)
     parse_thread.start()
 
@@ -203,7 +202,7 @@ def get_task_status(
 def list_tasks(
     progress_service: ProgressServiceDep,
     limit: Annotated[int, Query(ge=1, le=100)] = 20,
-    status: Annotated[Optional[str], Query(description="任务状态筛选")] = None,
+    status: Annotated[str | None, Query(description="任务状态筛选")] = None,
 ) -> dict:
     all_tasks_info = progress_service.list_tasks(limit=None, status=status)
     paginated = all_tasks_info[:limit]
@@ -248,6 +247,7 @@ def trigger_full_parse(
             progress_service.fail_task(task.task_id, str(e))
 
     import threading
+
     thread = threading.Thread(target=run_full_parse, daemon=True)
     thread.start()
 

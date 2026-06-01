@@ -14,32 +14,31 @@
 
 from __future__ import annotations
 
-import json
 import logging
-import os
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
-from app.config import config, DataSourceConfig
+from app.config import config
 from app.repository import DataRepository, search_table_dicts
 from app.services.cache_store import CacheStore
-from app.services.event_bus import EventBus, EventType, get_event_bus
+from app.services.event_bus import EventType, get_event_bus
 from app.services.tracer_factory import TracerFactory
+from core.parser_protocol import ParseOutput
 
 logger = logging.getLogger(__name__)
 
 try:
-    from core.table_parser import OracleTableParser
-    from core.procedure_parser import EnhancedProcedureParser
+    from core.adapters import IndicatorAdapter, OraclePrcAdapter, OracleTabAdapter
     from core.caliber_extractor import CaliberExtractor
-    from core.models import FieldMapping, TableLineage, TableInfo, ProcedureInfo
-    from core.parser_registry import ParserRegistry
-    from core.adapters import OracleTabAdapter, OraclePrcAdapter, IndicatorAdapter
-    from core.warehouse import WarehouseSQLParser, SchemaResolver
     from core.layer_detector import LayerDetector
+    from core.models import FieldMapping, ProcedureInfo, TableInfo, TableLineage
+    from core.parser_registry import ParserRegistry
+    from core.procedure_parser import EnhancedProcedureParser
+    from core.table_parser import OracleTableParser
+    from core.warehouse import SchemaResolver, WarehouseSQLParser
 except ImportError as e:
     logger.warning("无法导入核心解析模块: %s", e)
     OracleTableParser = None
@@ -55,7 +54,6 @@ except ImportError as e:
 
 
 class ParseResult:
-
     def __init__(self):
         self.tables: list[TableInfo] = []
         self.procedures: list[ProcedureInfo] = []
@@ -115,7 +113,10 @@ class ParseResult:
 
         removed_procs = set(existing_procs.keys()) & new_proc_names
         if removed_procs:
-            logger.info("检测到 %d 个重复存储过程，将清除旧血缘关系后重新添加", len(removed_procs))
+            logger.info(
+                "检测到 %d 个重复存储过程，将清除旧血缘关系后重新添加",
+                len(removed_procs),
+            )
             old_lineages_to_remove = set()
             old_mappings_to_remove = set()
 
@@ -126,14 +127,20 @@ class ParseResult:
                     if tl.procedure == proc_name
                 )
                 old_mappings_to_remove.update(
-                    (fm.source_table, fm.source_column, fm.target_table, fm.target_column)
+                    (
+                        fm.source_table,
+                        fm.source_column,
+                        fm.target_table,
+                        fm.target_column,
+                    )
                     for fm in self.field_mappings
                     if fm.procedure == proc_name
                 )
 
             if old_lineages_to_remove:
                 self.table_lineages = [
-                    tl for tl in self.table_lineages
+                    tl
+                    for tl in self.table_lineages
                     if (tl.source_table, tl.target_table, tl.procedure) not in old_lineages_to_remove
                 ]
                 self._seen_lineage_keys -= old_lineages_to_remove
@@ -141,8 +148,15 @@ class ParseResult:
 
             if old_mappings_to_remove:
                 self.field_mappings = [
-                    fm for fm in self.field_mappings
-                    if (fm.source_table, fm.source_column, fm.target_table, fm.target_column) not in old_mappings_to_remove
+                    fm
+                    for fm in self.field_mappings
+                    if (
+                        fm.source_table,
+                        fm.source_column,
+                        fm.target_table,
+                        fm.target_column,
+                    )
+                    not in old_mappings_to_remove
                 ]
                 self._seen_mapping_keys -= old_mappings_to_remove
                 logger.info("已清除 %d 条旧字段映射", len(old_mappings_to_remove))
@@ -166,9 +180,14 @@ class ParseResult:
                 self.field_mappings.append(fm)
 
         for ci in other.caliber_infos:
-            key = (ci.get("target_table", ""), ci.get("target_column", ""),
-                   ci.get("source_table", ""), ci.get("source_column", ""),
-                   ci.get("procedure", ""), ci.get("step_num", 0))
+            key = (
+                ci.get("target_table", ""),
+                ci.get("target_column", ""),
+                ci.get("source_table", ""),
+                ci.get("source_column", ""),
+                ci.get("procedure", ""),
+                ci.get("step_num", 0),
+            )
             if key not in self._seen_caliber_keys:
                 self._seen_caliber_keys.add(key)
                 self.caliber_infos.append(ci)
@@ -185,11 +204,11 @@ class ParserService:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-        self._table_parser: Optional[OracleTableParser] = None
-        self._proc_parser: Optional[EnhancedProcedureParser] = None
-        self._registry: Optional[ParserRegistry] = None
-        self._layer_detector: Optional[LayerDetector] = None
-        self._current_result: Optional[ParseResult] = None
+        self._table_parser: OracleTableParser | None = None
+        self._proc_parser: EnhancedProcedureParser | None = None
+        self._registry: ParserRegistry | None = None
+        self._layer_detector: LayerDetector | None = None
+        self._current_result: ParseResult | None = None
         self._cache_store = CacheStore(self.output_dir, config=config)
         self._tracer_factory = TracerFactory()
         self._result_lock = threading.Lock()
@@ -197,8 +216,8 @@ class ParserService:
         self._event_bus = get_event_bus()
 
         # 并行解析线程池：数据源级并发 (L1) + 文件级并发 (L3)
-        self._datasource_workers = 6   # 数据源级并行度（Oracle/EDW/BRT/PAM/GBASE/指标）
-        self._file_workers = 4         # 文件级并行度（同类文件内部）
+        self._datasource_workers = 6  # 数据源级并行度（Oracle/EDW/BRT/PAM/GBASE/指标）
+        self._file_workers = 4  # 文件级并行度（同类文件内部）
         self._executor = ThreadPoolExecutor(max_workers=self._datasource_workers)
 
     def initialize_parsers(self) -> None:
@@ -226,7 +245,6 @@ class ParserService:
             if OraclePrcAdapter is not None:
                 self._registry.register(OraclePrcAdapter(self._proc_parser))
 
-            warehouse_registered = False
             indicator_registered = False
 
             # ★ 收集所有需要 warehouse 解析器的系统名（用于 schema 变量映射）
@@ -244,11 +262,8 @@ class ParserService:
                     if ds_config.name not in warehouse_systems:
                         warehouse_systems.append(ds_config.name)
 
-                elif ds_config.parser == "indicator":
-                    # ★ 指标数据源也可能含有 .sql 文件（如 FDM 的 DDL 脚本），
-                    # 需要同时注册 warehouse 解析器来处理
-                    if ds_config.name not in warehouse_systems:
-                        warehouse_systems.append(ds_config.name)
+                elif ds_config.parser == "indicator" and ds_config.name not in warehouse_systems:
+                    warehouse_systems.append(ds_config.name)
 
             # 注册 WarehouseSQLParser（支持多系统）
             if warehouse_systems and WarehouseSQLParser is not None and SchemaResolver is not None:
@@ -260,10 +275,10 @@ class ParserService:
                     system=primary_system,
                 )
                 self._registry.register(warehouse_parser)
-                warehouse_registered = True
                 logger.info(
                     "数仓脚本解析器注册完成: systems=%s (primary=%s)",
-                    warehouse_systems, primary_system,
+                    warehouse_systems,
+                    primary_system,
                 )
 
             for ds_config in config.datasource_configs:
@@ -296,7 +311,7 @@ class ParserService:
 
             logger.info("解析器注册表初始化完成: %s", self._registry)
 
-    def load_from_cache(self) -> Optional[ParseResult]:
+    def load_from_cache(self) -> ParseResult | None:
         data = self._cache_store.load_from_cache()
         if data is None:
             return None
@@ -350,16 +365,14 @@ class ParserService:
 
             logger.info(
                 "开始并行解析 %d 个数据源 (workers=%d)",
-                len(tasks), self._datasource_workers,
+                len(tasks),
+                self._datasource_workers,
             )
 
             # ====== 数据源级并行执行 ======
             if self._registry is not None and tasks:
                 with ThreadPoolExecutor(max_workers=self._datasource_workers) as executor:
-                    futures = {
-                        executor.submit(self._registry.parse_directory, path): name
-                        for name, path in tasks
-                    }
+                    futures = {executor.submit(self._registry.parse_directory, path): name for name, path in tasks}
                     for future in as_completed(futures):
                         name = futures[future]
                         try:
@@ -369,7 +382,9 @@ class ParserService:
                             summary = output.summary()
                             logger.info(
                                 "数据源 %s 解析完成: %d 表, %d 血缘",
-                                name, summary["tables"], summary["table_lineages"],
+                                name,
+                                summary["tables"],
+                                summary["table_lineages"],
                             )
                         except Exception as e:
                             logger.error("数据源 %s 解析失败: %s", name, e, exc_info=True)
@@ -491,7 +506,7 @@ class ParserService:
     def _get_repository(self) -> DataRepository:
         return self._cache_store.get_repository()
 
-    def get_current_data(self) -> Optional[dict[str, Any]]:
+    def get_current_data(self) -> dict[str, Any] | None:
         if self._current_result is not None:
             return self._current_result.to_serializable()
         repo = self._get_repository()
@@ -525,7 +540,7 @@ class ParserService:
             return data.get("procedures", [])
         return []
 
-    def get_lineage_tracer(self) -> Optional[Any]:
+    def get_lineage_tracer(self) -> Any | None:
         if self._tracer_factory.lineage_tracer is not None:
             return self._tracer_factory.lineage_tracer
 
@@ -551,7 +566,7 @@ class ParserService:
             logger.error("构建 LineageTracer 失败: %s", e, exc_info=True)
             return None
 
-    def get_caliber_tracer(self) -> Optional[Any]:
+    def get_caliber_tracer(self) -> Any | None:
         if self._tracer_factory.caliber_tracer is not None:
             return self._tracer_factory.caliber_tracer
 
@@ -577,7 +592,7 @@ class ParserService:
             logger.error("构建 CaliberTracer 失败: %s", e, exc_info=True)
             return None
 
-    def get_unified_tracer(self) -> Optional[Any]:
+    def get_unified_tracer(self) -> Any | None:
         """获取或懒加载 UnifiedTracer（P1 引入，P2 由 API 使用）。"""
         if self._tracer_factory.unified_tracer is not None:
             return self._tracer_factory.unified_tracer
@@ -662,9 +677,7 @@ class ParserService:
             result.field_mappings.extend(proc_info.field_mappings)
 
             if self._proc_parser and CaliberExtractor is not None:
-                caliber_infos = self._proc_parser.extract_caliber_from_proc(
-                    proc_info, data_source="oracle"
-                )
+                caliber_infos = self._proc_parser.extract_caliber_from_proc(proc_info, data_source="oracle")
                 for ci in caliber_infos:
                     result.caliber_infos.append(CaliberExtractor.to_dict(ci))
 
@@ -699,11 +712,7 @@ class ParserService:
             return path
         return self.data_dir.parent / path
 
-    def _merge_output_to_result(
-        self, output: "ParseOutput", result: ParseResult
-    ) -> None:
-        from core.parser_protocol import ParseOutput
-
+    def _merge_output_to_result(self, output: ParseOutput, result: ParseResult) -> None:
         temp = ParseResult()
         temp.tables = [TableInfo.from_dict(t) for t in output.tables]
         temp.procedures = [ProcedureInfo.from_dict(p) for p in output.procedures]

@@ -139,8 +139,7 @@ def test_dedup_key_helper_consistent():
         "target_column": "KHXM",
         "procedure": "PROC_A",
     }
-    assert LineageService._field_mapping_dedup_key(full) == \
-           LineageService._field_mapping_dedup_key(short)
+    assert LineageService._field_mapping_dedup_key(full) == LineageService._field_mapping_dedup_key(short)
 
 
 # --- _filter_field_mappings tests ---

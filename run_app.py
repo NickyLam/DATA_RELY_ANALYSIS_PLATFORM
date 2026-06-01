@@ -16,7 +16,6 @@ from __future__ import annotations
 
 import logging
 import sys
-import time
 from pathlib import Path
 
 logging.basicConfig(
@@ -60,8 +59,9 @@ def main() -> None:
 
     try:
         import uvicorn
-        from app.main import app
+
         from app.config import config
+        from app.main import app
 
         logger.info("正在启动 FastAPI 服务...")
         logger.info("访问地址: http://localhost:%s", config.port)

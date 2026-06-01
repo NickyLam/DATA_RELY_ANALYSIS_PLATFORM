@@ -31,7 +31,11 @@ class ValidationReport:
         return len(self.errors) == 0
 
     def summary(self) -> str:
-        parts = [f"错误: {len(self.errors)}", f"警告: {len(self.warnings)}", f"信息: {len(self.info)}"]
+        parts = [
+            f"错误: {len(self.errors)}",
+            f"警告: {len(self.warnings)}",
+            f"信息: {len(self.info)}",
+        ]
         return " | ".join(parts)
 
 

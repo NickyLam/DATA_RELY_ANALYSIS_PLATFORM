@@ -1,0 +1,177 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_imf_agt_loan_cont_corp_loan_attach_info_h_f
+CreateDate: 20230602
+FileName:   ${iel_data_path}/agt_loan_cont_corp_loan_attach_info_h.f.${batch_date}.dat
+IF_mark:    f
+Logs:
+' \
+        query="select
+to_date('${batch_date}','yyyymmdd') as etl_dt
+,agt_id
+,cont_id
+,trade_cont_tot_amt
+,fin_cont_flg
+,cont_type_cd
+,trade_cont_id
+,lc_kind_cd
+,lc_amt
+,lc_curr_cd
+,lc_id
+,load_bill_id
+,batch_id
+,setup_proj_batch_id
+,lc_type_cd
+,aldy_acpt_fwd_lc_flg
+,lc_tenor_type_cd
+,lc_char_cd
+,fwd_pay_day_tenor
+,fee_undertaker
+,other_fee_rat
+,cargo_name
+,cargo_underly
+,cargo_traff_destination
+,traff_way_cd
+,cls_freq
+,mom_lics_id
+,mom_lics_curr_cd
+,mom_lics_amt
+,acct_recvbl_net_amnt
+,gover_crdt_type_cd
+,tran_bg_descb
+,fix_asset_crdt_flg
+,entr_dep_ec_cls_cd
+,pkg_ratio
+,guar_type_cd
+,entr_loan_cap_src_cd
+,nego_bank_cfm_flg
+,discnt_int_buyer_bear_ratio
+,discnt_bf_revw_flg
+,qual_centr_cntpty_flg
+,margin_acct_id
+,margin_curr_cd
+,margin_tran_out_acct_id
+,col_turn_margin_acct_id
+,margin_agt_rat
+,margin_int_rat_type_cd
+,margin_flo_val
+,margin_int_rat_float_type_cd
+,margin_int_rat_float_way_cd
+,margin_int_accr_method_cd
+,margin_int_rat_level_cd
+,csner_name
+,repay_comnt_descb
+,start_up_bus_guar_loan_type_cd
+,consm_serv_class_fin_flg
+,pay_way_cd
+,draw_comnt_descb
+,loan_amt_ocup_tran_price_money_ratio
+,trade_fin_mang_merchd
+,draft_qtty
+,discnt_commer_accpt_bil_cls_cd
+,commer_inv_id
+,commer_inv_type_cd
+,commer_inv_curr_cd
+,commer_inv_amt
+,other_lics_id
+,other_lics_name
+,hp_lics_id
+,arch_land_lics_id
+,plan_lics_id
+,cnstr_lics_id
+,dir_ind_fund_flg
+,entr_loan_espec_dir_cd
+,start_up_bus_guar_loan_flg
+,entr_dep_acct_id
+,underly_prod_id
+,prod_coll_amt
+,underly_prod_cls_lev_cd
+,surp_indus_cd
+,buy_house_site_dist_cd
+,agclt_flg
+,cntpty_name
+,cntpty_co_years
+,cntpty_sucs_tran_cnt
+,cntpty_strg
+,other_cond_request_descb
+,imp_loan_proj_cd
+,agclt_loan_dir_cd
+,distr_ratio
+,obank_open_flg
+,capital_amt
+,mgers_name
+,trade_fin_prod_id
+,benefc_local_cty_or_rg_cd
+,buyer_name
+,agclt_loan_main_type_cd
+,issue_appl_form_id
+,csner_id
+,imp_loan_proj_flg
+,discnt_int_rat_comnt_descb
+,factor_type_cd
+,agt_pay_int_flg
+,start_work_dt
+,cdb_crdt_flg
+,provi_doc_dt
+,actl_finer
+,discnt_applit_type_cd
+,invo_gover_class_fin_flg
+,loan_fin_supt_way_cd
+,three_old_trasf_city_update_proj_flg
+,syn_distrd_loan_amt
+,cap_src_cd
+,gover_crdt_supt_way_cd
+,crdtc_indus_dir_cd
+,sup_chain_fin_bus_prod_cls_cd
+,proj_info_text_id
+,exist_m_l_claus_flg
+,benefc_name
+,entr_dep_curr_cd
+,prepay_acct_recvbl_flg
+,acpt_bank_name
+,distr_org_id
+,cdb_crdt_prod_id
+,loan_usage_tran_amt
+,gover_crdt_flg
+,dir_makti_debt_eqty_flg
+,major_incre_crdt_way_cd
+,m_l_ratio
+,loan_char_cd
+,sup_chain_fin_bus_flg
+,advise_bank_name
+,tran_asset_name
+,loan_trast_way_cd
+,payfan_type_cd
+,remote_bus_flg
+,estate_loan_type_cd
+,discnt_int_applit_pay_ratio
+,proj_tot_invest_amt
+,cty_lmt_indus_flg
+,loc_fin_plat_solv_cap_src_cd
+,acct_recvbl_prepay_way_cd
+,draw_way_cd
+,repay_way_cd
+,overs_loan_flg
+,land_use_cert_id
+,land_use_cert_dt
+,land_plan_lics_id
+,land_plan_lics_dt
+,cnstr_lics_dt
+,proj_plan_lics_dt
+,order_name
+,seller_name
+,trade_tran_content_descb
+,advanced_manu_flg
+,cultur_industry_flg
+,only_new_minorent_flg
+,only_new_littlegiantent_flg
+,strtg_new_indus_type_cd
+,indent_tech_flg
+
+from ${iml_schema}.agt_loan_cont_corp_loan_attach_info_h t1
+where start_dt <= to_date('${batch_date}','yyyymmdd') and end_dt > to_date('${batch_date}','yyyymmdd')" \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/agt_loan_cont_corp_loan_attach_info_h.f.${batch_date}.dat" \
+        charset=utf8
+        safe=yes

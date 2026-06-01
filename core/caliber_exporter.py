@@ -8,7 +8,6 @@ from __future__ import annotations
 
 import html
 import logging
-from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -24,8 +23,8 @@ class CaliberExporter:
     def export_markdown(
         self,
         summary_card: dict,
-        pipeline_view: Optional[dict] = None,
-        step_details: Optional[list[dict]] = None,
+        pipeline_view: dict | None = None,
+        step_details: list[dict] | None = None,
         include_sql: bool = True,
         include_source_location: bool = True,
     ) -> str:
@@ -68,8 +67,8 @@ class CaliberExporter:
         if stats:
             lines.append("## 链路统计")
             lines.append("")
-            lines.append(f"| 指标 | 值 |")
-            lines.append(f"|------|-----|")
+            lines.append("| 指标 | 值 |")
+            lines.append("|------|-----|")
             lines.append(f"| 并行路径数 | {stats.get('parallel_paths', 0)} |")
             lines.append(f"| 总步骤数 | {stats.get('total_steps', 0)} |")
             lines.append(f"| 涉及存储过程数 | {stats.get('procedures_count', 0)} |")
@@ -255,15 +254,15 @@ class CaliberExporter:
         lines.append("---")
         lines.append("")
         lines.append(f"*生成时间: {self._timestamp()}*")
-        lines.append(f"*数据血缘分析系统 v2.1.0*")
+        lines.append("*数据血缘分析系统 v2.1.0*")
 
         return "\n".join(lines)
 
     def export_html(
         self,
         summary_card: dict,
-        pipeline_view: Optional[dict] = None,
-        step_details: Optional[list[dict]] = None,
+        pipeline_view: dict | None = None,
+        step_details: list[dict] | None = None,
         include_sql: bool = True,
         include_source_location: bool = True,
     ) -> str:
@@ -286,6 +285,7 @@ class CaliberExporter:
     @staticmethod
     def _timestamp() -> str:
         from datetime import datetime
+
         return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     @staticmethod
@@ -393,14 +393,15 @@ class CaliberExporter:
     def _inline_md(text: str) -> str:
         """处理行内 Markdown 语法 (code, bold, italic)。"""
         import re
+
         # 转义 HTML
         text = html.escape(text)
         # 行内代码
-        text = re.sub(r'`([^`]+)`', r'<code>\1</code>', text)
+        text = re.sub(r"`([^`]+)`", r"<code>\1</code>", text)
         # 粗体
-        text = re.sub(r'\*\*([^*]+)\*\*', r'<strong>\1</strong>', text)
+        text = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", text)
         # 斜体
-        text = re.sub(r'\*([^*]+)\*', r'<em>\1</em>', text)
+        text = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", text)
         return text
 
     @staticmethod

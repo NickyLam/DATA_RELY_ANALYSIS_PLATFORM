@@ -26,4 +26,7 @@ def test_deduplicate_field_mappings_keeps_first_mapping_order():
         },
     ]
 
-    assert LineageService._deduplicate_field_mappings(mappings) == [mappings[0], mappings[2]]
+    assert LineageService._deduplicate_field_mappings(mappings) == [
+        mappings[0],
+        mappings[2],
+    ]

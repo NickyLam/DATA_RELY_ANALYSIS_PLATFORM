@@ -5,12 +5,9 @@
 
 from __future__ import annotations
 
-import os
 import shutil
-import tempfile
 import uuid
 from pathlib import Path
-from typing import Optional
 
 from fastapi import UploadFile
 
@@ -26,7 +23,7 @@ class FileHandler:
     def validate_file(cls, file: UploadFile) -> tuple[bool, str]:
         """
         验证上传文件
-        
+
         Returns:
             (是否有效, 错误信息)
         """
@@ -35,15 +32,18 @@ class FileHandler:
 
         ext = Path(file.filename).suffix.lower()
         if ext not in cls.ALLOWED_EXTENSIONS:
-            return False, f"不支持的文件类型: {ext}，允许的类型: {', '.join(cls.ALLOWED_EXTENSIONS)}"
+            return (
+                False,
+                f"不支持的文件类型: {ext}，允许的类型: {', '.join(cls.ALLOWED_EXTENSIONS)}",
+            )
 
         return True, ""
 
     @classmethod
-    async def save_upload(cls, file: UploadFile, task_id: str) -> tuple[Optional[Path], str]:
+    async def save_upload(cls, file: UploadFile, task_id: str) -> tuple[Path | None, str]:
         """
         保存上传的文件到临时目录
-        
+
         Returns:
             (保存路径, 错误信息)
         """
@@ -61,7 +61,10 @@ class FileHandler:
             content = await file.read()
 
             if len(content) > config.max_upload_size_mb * 1024 * 1024:
-                return None, f"文件过大: {len(content) / 1024 / 1024:.1f}MB (限制: {config.max_upload_size_mb}MB)"
+                return (
+                    None,
+                    f"文件过大: {len(content) / 1024 / 1024:.1f}MB (限制: {config.max_upload_size_mb}MB)",
+                )
 
             with open(save_path, "wb") as f:
                 f.write(content)
@@ -87,7 +90,7 @@ class FileHandler:
         return list(task_dir.iterdir())
 
     @staticmethod
-    def detect_schema(filename: str) -> Optional[str]:
+    def detect_schema(filename: str) -> str | None:
         """根据文件名推断所属 Schema"""
         filename_upper = filename.upper()
 

@@ -5,9 +5,8 @@ SQL 字段清洗器
 
 from __future__ import annotations
 
-import re
 import logging
-from typing import Optional
+import re
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +34,7 @@ class FieldCleaner:
     """
 
     @staticmethod
-    def clean_column_name(raw: str, strip_fn: Optional[object] = None) -> str:
+    def clean_column_name(raw: str, strip_fn: object | None = None) -> str:
         """清洗原始字段表达式，返回最内层的裸列名。
 
         处理规则（按优先级从高到低）：
@@ -225,7 +224,13 @@ class FieldCleaner:
         """从单个字段表达式中提取结构化信息。"""
         text = col_str.strip()
         if not text:
-            return {"table": "", "column": "", "alias": "", "transform": "", "confidence": 0.0}
+            return {
+                "table": "",
+                "column": "",
+                "alias": "",
+                "transform": "",
+                "confidence": 0.0,
+            }
 
         text = re.sub(r"--.*$", "", text).strip()
 

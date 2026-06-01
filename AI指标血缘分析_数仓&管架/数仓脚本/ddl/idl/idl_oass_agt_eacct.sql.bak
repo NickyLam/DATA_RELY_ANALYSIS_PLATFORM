@@ -1,0 +1,124 @@
+/*
+Purpose:    应用集市层-建表脚本，此脚本由生成引擎自动生成。
+Author:     Sunline
+Usage:      python $ETL_HOME/script/init.py idl oass_agt_eacct
+CreateDate: 20180515
+FileType:   DDL
+Logs:
+    zjj 2018-05-15 新建表本
+*/
+
+prompt creating table ${idl_schema}.oass_agt_eacct
+whenever sqlerror continue none;
+drop table ${idl_schema}.oass_agt_eacct purge;
+
+whenever sqlerror exit sql.sqlcode;
+create table ${idl_schema}.oass_agt_eacct(
+    etl_dt date -- 数据日期   
+    ,agt_id varchar2(60) -- 协议编号   
+    ,lp_id varchar2(60) -- 法人编号   
+    ,acct_id varchar2(60) -- 账户编号   
+    ,acct_name varchar2(500) -- 账户名称   
+    ,open_acct_tm timestamp -- 开户时间   
+    ,clos_acct_tm timestamp -- 销户时间   
+    ,eacct_id varchar2(60) -- E账户编号   
+    ,cust_id varchar2(60) -- 客户编号   
+    ,open_acct_org_id varchar2(60) -- 开户机构编号   
+    ,vouch_id varchar2(60) -- 凭证编号   
+    ,vouch_status_cd varchar2(30) -- 凭证状态代码   
+    ,acct_status_cd varchar2(30) -- 账户状态代码   
+    ,tran_chn_status_cd varchar2(30) -- 交易渠道状态代码   
+    ,froz_status_cd varchar2(30) -- 冻结状态代码   
+    ,vrif_status_cd varchar2(30) -- 核实状态代码   
+    ,curr_cd varchar2(30) -- 币种代码   
+    ,eacct_level_cd varchar2(30) -- E账户等级代码   
+    ,netw_vrfction_rest_cd varchar2(20) -- 联网核查结果代码   
+    ,open_acct_chn_cd varchar2(30) -- 开户渠道代码   
+    ,tran_chn_status_modif_org_id varchar2(60) -- 交易渠道状态变更机构编号   
+    ,acct_type_cd varchar2(30) -- 账户类型代码   
+    ,acct_level_cd varchar2(30) -- 账户等级代码   
+    ,sav_type_cd varchar2(30) -- 储种代码   
+    ,tran_kind_cd varchar2(30) -- 交易种类代码   
+    ,prvy_acct_flg varchar2(30) -- 私密账户标志   
+    ,drawdown_way_cd varchar2(30) -- 支取方式代码   
+    ,vouch_kind_cd varchar2(30) -- 凭证种类代码   
+    ,cust_lev_cd varchar2(30) -- 客户级别代码   
+    ,acct_orgnz_form_cd varchar2(30) -- 账户组织形式代码   
+    ,ec_idf_cd varchar2(30) -- 钞汇标识代码   
+    ,cross_tx_cd varchar2(30) -- 通存通兑代码   
+    ,chip_card_cd varchar2(30) -- 芯片卡代码   
+    ,co_card_type_cd varchar2(30) -- 合作卡类型代码   
+    ,blip_retnd_cd varchar2(30) -- 影像留存代码   
+    ,real_name_cert_cd varchar2(30) -- 实名认证代码   
+    ,bus_type_cd varchar2(30) -- 业务类型代码   
+    ,legal_flg varchar2(30) -- 涉案标志   
+    ,legal_tm timestamp -- 涉案时间   
+    ,mercht_id varchar2(60) -- 商户编号   
+    ,mercht_name varchar2(500) -- 商户名称   
+    ,non_bind_enter_acct_flg varchar2(30) -- 非绑定账户入账标志   
+    ,sleep_acct_flg varchar2(30) -- 睡眠户标志   
+    ,descb varchar2(500) -- 描述   
+    ,create_dt date -- 创建日期   
+    ,update_dt date -- 更新日期   
+    ,id_mark varchar2(10) -- 删除标识   
+)
+partition by list(etl_dt)(
+    partition p_19000101 values (to_date('19000101','yyyymmdd'))
+)
+storage (initial 1024k next 1024k)
+compress ${option_switch} for query high
+nologging
+;
+
+-- grant
+grant select on ${idl_schema}.oass_agt_eacct to ${iel_schema};
+
+-- comment
+comment on table ${idl_schema}.oass_agt_eacct is 'E账户';
+comment on column ${idl_schema}.oass_agt_eacct.etl_dt is '数据日期';
+comment on column ${idl_schema}.oass_agt_eacct.agt_id is '协议编号';
+comment on column ${idl_schema}.oass_agt_eacct.lp_id is '法人编号';
+comment on column ${idl_schema}.oass_agt_eacct.acct_id is '账户编号';
+comment on column ${idl_schema}.oass_agt_eacct.acct_name is '账户名称';
+comment on column ${idl_schema}.oass_agt_eacct.open_acct_tm is '开户时间';
+comment on column ${idl_schema}.oass_agt_eacct.clos_acct_tm is '销户时间';
+comment on column ${idl_schema}.oass_agt_eacct.eacct_id is 'E账户编号';
+comment on column ${idl_schema}.oass_agt_eacct.cust_id is '客户编号';
+comment on column ${idl_schema}.oass_agt_eacct.open_acct_org_id is '开户机构编号';
+comment on column ${idl_schema}.oass_agt_eacct.vouch_id is '凭证编号';
+comment on column ${idl_schema}.oass_agt_eacct.vouch_status_cd is '凭证状态代码';
+comment on column ${idl_schema}.oass_agt_eacct.acct_status_cd is '账户状态代码';
+comment on column ${idl_schema}.oass_agt_eacct.tran_chn_status_cd is '交易渠道状态代码';
+comment on column ${idl_schema}.oass_agt_eacct.froz_status_cd is '冻结状态代码';
+comment on column ${idl_schema}.oass_agt_eacct.vrif_status_cd is '核实状态代码';
+comment on column ${idl_schema}.oass_agt_eacct.curr_cd is '币种代码';
+comment on column ${idl_schema}.oass_agt_eacct.eacct_level_cd is 'E账户等级代码';
+comment on column ${idl_schema}.oass_agt_eacct.netw_vrfction_rest_cd is '联网核查结果代码';
+comment on column ${idl_schema}.oass_agt_eacct.open_acct_chn_cd is '开户渠道代码';
+comment on column ${idl_schema}.oass_agt_eacct.tran_chn_status_modif_org_id is '交易渠道状态变更机构编号';
+comment on column ${idl_schema}.oass_agt_eacct.acct_type_cd is '账户类型代码';
+comment on column ${idl_schema}.oass_agt_eacct.acct_level_cd is '账户等级代码';
+comment on column ${idl_schema}.oass_agt_eacct.sav_type_cd is '储种代码';
+comment on column ${idl_schema}.oass_agt_eacct.tran_kind_cd is '交易种类代码';
+comment on column ${idl_schema}.oass_agt_eacct.prvy_acct_flg is '私密账户标志';
+comment on column ${idl_schema}.oass_agt_eacct.drawdown_way_cd is '支取方式代码';
+comment on column ${idl_schema}.oass_agt_eacct.vouch_kind_cd is '凭证种类代码';
+comment on column ${idl_schema}.oass_agt_eacct.cust_lev_cd is '客户级别代码';
+comment on column ${idl_schema}.oass_agt_eacct.acct_orgnz_form_cd is '账户组织形式代码';
+comment on column ${idl_schema}.oass_agt_eacct.ec_idf_cd is '钞汇标识代码';
+comment on column ${idl_schema}.oass_agt_eacct.cross_tx_cd is '通存通兑代码';
+comment on column ${idl_schema}.oass_agt_eacct.chip_card_cd is '芯片卡代码';
+comment on column ${idl_schema}.oass_agt_eacct.co_card_type_cd is '合作卡类型代码';
+comment on column ${idl_schema}.oass_agt_eacct.blip_retnd_cd is '影像留存代码';
+comment on column ${idl_schema}.oass_agt_eacct.real_name_cert_cd is '实名认证代码';
+comment on column ${idl_schema}.oass_agt_eacct.bus_type_cd is '业务类型代码';
+comment on column ${idl_schema}.oass_agt_eacct.legal_flg is '涉案标志';
+comment on column ${idl_schema}.oass_agt_eacct.legal_tm is '涉案时间';
+comment on column ${idl_schema}.oass_agt_eacct.mercht_id is '商户编号';
+comment on column ${idl_schema}.oass_agt_eacct.mercht_name is '商户名称';
+comment on column ${idl_schema}.oass_agt_eacct.non_bind_enter_acct_flg is '非绑定账户入账标志';
+comment on column ${idl_schema}.oass_agt_eacct.sleep_acct_flg is '睡眠户标志';
+comment on column ${idl_schema}.oass_agt_eacct.descb is '描述';
+comment on column ${idl_schema}.oass_agt_eacct.create_dt is '创建日期';
+comment on column ${idl_schema}.oass_agt_eacct.update_dt is '更新日期';
+comment on column ${idl_schema}.oass_agt_eacct.id_mark is '删除标识';

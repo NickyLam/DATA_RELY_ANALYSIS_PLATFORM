@@ -17,14 +17,11 @@ def _is_skip_table(table_name: str) -> bool:
 
 
 class IndicatorSQLParser:
-
     _FROM_JOIN_PATTERN = re.compile(
         r"""(?:FROM|JOIN)\s+([A-Za-z_][\w$#]*(?:\.[A-Za-z_][\w$#]*)?)""",
         re.IGNORECASE,
     )
-    _SELECT_COLUMNS_PATTERN = re.compile(
-        r"SELECT\s+(.*?)\s+FROM", re.IGNORECASE | re.DOTALL
-    )
+    _SELECT_COLUMNS_PATTERN = re.compile(r"SELECT\s+(.*?)\s+FROM", re.IGNORECASE | re.DOTALL)
     _INSERT_COLUMNS_PATTERN = re.compile(
         r"INSERT\s+INTO\s+[A-Za-z_][\w$#]*(?:\.[A-Za-z_][\w$#]*)?\s*\((.*?)\)",
         re.IGNORECASE | re.DOTALL,
@@ -69,23 +66,18 @@ class IndicatorSQLParser:
 
         if insert_match:
             raw_cols = insert_match.group(1)
-            target_columns = [
-                c.strip().strip("`").strip('"').strip("[]")
-                for c in raw_cols.split(",")
-            ]
+            target_columns = [c.strip().strip("`").strip('"').strip("[]") for c in raw_cols.split(",")]
             target_columns = [c for c in target_columns if c]
 
         if select_match:
             raw_exprs = select_match.group(1)
-            source_expressions = [
-                e.strip() for e in raw_exprs.split(",")
-            ]
+            source_expressions = [e.strip() for e in raw_exprs.split(",")]
             source_expressions = [e for e in source_expressions if e]
 
         mappings: list[tuple[str, str]] = []
 
         if target_columns and len(target_columns) == len(source_expressions):
-            for src, tgt in zip(source_expressions, target_columns):
+            for src, tgt in zip(source_expressions, target_columns, strict=False):
                 mappings.append((src, tgt))
         else:
             for expr in source_expressions:
@@ -100,9 +92,7 @@ class IndicatorSQLParser:
                     mappings.append((source, alias))
                 else:
                     parts = expr.rsplit(".", maxsplit=1)
-                    if len(parts) == 2 and re.match(
-                        r"^[A-Za-z_][\w$#]*$", parts[1]
-                    ):
+                    if len(parts) == 2 and re.match(r"^[A-Za-z_][\w$#]*$", parts[1]):
                         mappings.append((expr, parts[1]))
                     else:
                         mappings.append((expr, ""))

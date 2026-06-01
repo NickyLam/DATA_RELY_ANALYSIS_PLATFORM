@@ -12,14 +12,12 @@ SQLite 存储后端单元测试
 from __future__ import annotations
 
 import json
-import os
 import tempfile
 import threading
 from pathlib import Path
 from typing import Any
 
 import pytest
-
 
 # ── Fixtures ───────────────────────────────────────────────────────
 
@@ -199,7 +197,6 @@ def temp_dir():
 
 
 class TestSQLiteResultStore:
-
     def test_save_and_load(self, temp_dir, sample_result_data):
         from app.services.storage.sqlite_store import SQLiteResultStore
 
@@ -298,7 +295,7 @@ class TestSQLiteResultStore:
         store.export_json(json_path)
 
         assert json_path.exists()
-        with open(json_path, "r", encoding="utf-8") as f:
+        with open(json_path, encoding="utf-8") as f:
             exported = json.load(f)
         assert len(exported["tables"]) == 3
 
@@ -359,7 +356,6 @@ class TestSQLiteResultStore:
 
 
 class TestCacheStoreBackend:
-
     def test_sqlite_backend(self, temp_dir, sample_result_data):
         from app.services.cache_store import CacheStore
 
@@ -414,7 +410,6 @@ class TestCacheStoreBackend:
 
 
 class TestDataRepository:
-
     def test_load_from_dict(self, sample_result_data):
         from app.repository import DataRepository
 
@@ -480,9 +475,9 @@ class TestDataRepository:
 
 
 class TestMigrations:
-
     def test_schema_creation(self, temp_dir):
         import sqlite3
+
         from app.services.storage.migrations import init_schema
 
         db_path = temp_dir / "schema_test.db"
@@ -490,9 +485,7 @@ class TestMigrations:
         init_schema(conn)
 
         # 验证所有表已创建
-        tables = conn.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"
-        ).fetchall()
+        tables = conn.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name").fetchall()
         table_names = [t[0] for t in tables]
         assert "tables" in table_names
         assert "procedures" in table_names

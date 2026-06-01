@@ -7,9 +7,10 @@
 
 from __future__ import annotations
 
-import re
 import logging
+import re
 
+from core.layer_detector import detect_layer
 from core.models import (
     CaliberInfo,
     ExpressionDetail,
@@ -17,12 +18,9 @@ from core.models import (
     SelectColumnMapping,
     SourceLocation,
     SQLCondition,
-    SQLEnhancement,
     SQLOperationType,
-    StepIsolation,
     SubqueryInfo,
 )
-from core.layer_detector import detect_layer
 
 logger = logging.getLogger(__name__)
 
@@ -162,9 +160,7 @@ class CaliberExtractor:
         accumulated_where: list[SQLCondition] | None = None,
         accumulated_join: list[SQLCondition] | None = None,
     ) -> CaliberInfo:
-        where_conds, join_conds, group_by, having = CaliberExtractor.extract_conditions(
-            sql_block, dialect=data_source
-        )
+        where_conds, join_conds, group_by, having = CaliberExtractor.extract_conditions(sql_block, dialect=data_source)
         enhanced = CaliberExtractor.extract_enhanced_metadata(sql_block)
 
         source_layer = detect_layer(field_mapping.source_table).value if field_mapping.source_table else ""
@@ -221,9 +217,7 @@ class CaliberExtractor:
         # CTE / 自定义函数 / 完整表达式提取（Batch C）
         info.cte_definitions = CaliberExtractor._extract_cte_definitions(sql_block)
         info.custom_functions = CaliberExtractor._extract_custom_functions(sql_block)
-        info.full_expression = CaliberExtractor._extract_full_expression(
-            sql_block, field_mapping.target_column
-        )
+        info.full_expression = CaliberExtractor._extract_full_expression(sql_block, field_mapping.target_column)
         info.is_custom_function_call = bool(info.custom_functions)
 
         return info
@@ -247,9 +241,7 @@ class CaliberExtractor:
             return []
 
         # ★ 优化：sql_block 级别的提取结果只计算一次，复用给所有 FieldMapping
-        where_conds, join_conds, group_by, having = CaliberExtractor.extract_conditions(
-            sql_block, dialect=data_source
-        )
+        where_conds, join_conds, group_by, having = CaliberExtractor.extract_conditions(sql_block, dialect=data_source)
         enhanced = CaliberExtractor.extract_enhanced_metadata(sql_block)
 
         # ★ 优化：sql_block 级别的不变结果只计算一次
@@ -258,18 +250,14 @@ class CaliberExtractor:
         step_isolated_where = CaliberExtractor._extract_step_isolated_where(
             sql_block, accumulated_where=accumulated_where
         )
-        step_isolated_join = CaliberExtractor._extract_step_isolated_join(
-            sql_block, accumulated_join=accumulated_join
-        )
+        step_isolated_join = CaliberExtractor._extract_step_isolated_join(sql_block, accumulated_join=accumulated_join)
 
         results: list[CaliberInfo] = []
         for fm in mappings:
             source_layer = detect_layer(fm.source_table).value if fm.source_table else ""
             target_layer = detect_layer(fm.target_table).value if fm.target_table else ""
 
-            select_cols_for_field = CaliberExtractor._filter_select_columns_for_field(
-                enhanced["select_columns"], fm
-            )
+            select_cols_for_field = CaliberExtractor._filter_select_columns_for_field(enhanced["select_columns"], fm)
 
             info = CaliberInfo(
                 target_table=fm.target_table,
@@ -312,9 +300,7 @@ class CaliberExtractor:
             info.cte_definitions = cte_defs
             info.custom_functions = custom_funcs
             # full_expression 每字段不同，仍需逐个算
-            info.full_expression = CaliberExtractor._extract_full_expression(
-                sql_block, fm.target_column
-            )
+            info.full_expression = CaliberExtractor._extract_full_expression(sql_block, fm.target_column)
             info.is_custom_function_call = bool(custom_funcs)
             results.append(info)
         return results
@@ -405,18 +391,22 @@ class CaliberExtractor:
             where_conds: list[SQLCondition] = []
             inner_where = _WHERE_PATTERN.search(inner_sql)
             if inner_where:
-                where_conds.append(SQLCondition(
-                    condition_type="WHERE",
-                    raw_text=inner_where.group(1).strip(),
-                    tables_involved=_extract_table_refs(inner_where.group(1)),
-                    fields_involved=_extract_field_refs(inner_where.group(1)),
-                ))
-            results.append(SubqueryInfo(
-                alias=alias,
-                raw_text=raw[:200],
-                source_tables=source_tables,
-                where_conditions=where_conds,
-            ))
+                where_conds.append(
+                    SQLCondition(
+                        condition_type="WHERE",
+                        raw_text=inner_where.group(1).strip(),
+                        tables_involved=_extract_table_refs(inner_where.group(1)),
+                        fields_involved=_extract_field_refs(inner_where.group(1)),
+                    )
+                )
+            results.append(
+                SubqueryInfo(
+                    alias=alias,
+                    raw_text=raw[:200],
+                    source_tables=source_tables,
+                    where_conditions=where_conds,
+                )
+            )
         return results
 
     @staticmethod
@@ -449,12 +439,14 @@ class CaliberExtractor:
         fields_involved = _extract_field_refs(raw_text)
         tables_involved = _extract_table_refs(raw_text)
 
-        return [SQLCondition(
-            condition_type="WHERE",
-            raw_text=raw_text,
-            tables_involved=tables_involved,
-            fields_involved=fields_involved,
-        )]
+        return [
+            SQLCondition(
+                condition_type="WHERE",
+                raw_text=raw_text,
+                tables_involved=tables_involved,
+                fields_involved=fields_involved,
+            )
+        ]
 
     @staticmethod
     def _extract_joins(sql_block: str) -> list[SQLCondition]:
@@ -465,12 +457,14 @@ class CaliberExtractor:
             if not join_cond:
                 continue
 
-            results.append(SQLCondition(
-                condition_type="JOIN",
-                raw_text=f"JOIN {join_table} ON {join_cond}",
-                tables_involved=[join_table.upper()] + _extract_table_refs(join_cond),
-                fields_involved=_extract_field_refs(join_cond),
-            ))
+            results.append(
+                SQLCondition(
+                    condition_type="JOIN",
+                    raw_text=f"JOIN {join_table} ON {join_cond}",
+                    tables_involved=[join_table.upper()] + _extract_table_refs(join_cond),
+                    fields_involved=_extract_field_refs(join_cond),
+                )
+            )
         return results
 
     @staticmethod
@@ -582,7 +576,7 @@ class CaliberExtractor:
         # 策略1：匹配 WITH name AS ( 模式（第一个CTE）
         # 策略2：匹配逗号后的 name AS ( 模式（后续CTE）
         cte_name_pattern = re.compile(
-            r'(?:\bWITH\s+|,\s*)(\w+)\s+AS\s*\(',
+            r"(?:\bWITH\s+|,\s*)(\w+)\s+AS\s*\(",
             re.IGNORECASE,
         )
 
@@ -591,7 +585,7 @@ class CaliberExtractor:
             paren_start = match.end() - 1  # '(' 的位置
             paren_end = _find_matching_paren_in_text(sql_block, paren_start)
             if paren_end > paren_start:
-                body = sql_block[paren_start + 1:paren_end].strip()
+                body = sql_block[paren_start + 1 : paren_end].strip()
                 preview = body[:200] + "..." if len(body) > 200 else body
                 cte_defs.append(f"{cte_name}: {preview}")
             else:
@@ -615,7 +609,7 @@ class CaliberExtractor:
         """
         custom_funcs: list[str] = []
         pattern = re.compile(
-            r'((?:PKG_\w+|FN_\w+|FUNC_\w+)\s*\.)?\s*(PKG_\w+|FN_\w+|FUNC_\w+)\s*\(',
+            r"((?:PKG_\w+|FN_\w+|FUNC_\w+)\s*\.)?\s*(PKG_\w+|FN_\w+|FUNC_\w+)\s*\(",
             re.IGNORECASE,
         )
         seen: set[str] = set()
@@ -674,25 +668,35 @@ class CaliberExtractor:
                 continue
 
             # 尝试匹配 AS alias
-            as_match = re.search(r'\bAS\s+([\w]+)\s*$', col_text, re.IGNORECASE)
+            as_match = re.search(r"\bAS\s+([\w]+)\s*$", col_text, re.IGNORECASE)
             if as_match:
                 alias = as_match.group(1).upper()
                 if alias == target_upper:
-                    expr = col_text[:as_match.start()].strip()
+                    expr = col_text[: as_match.start()].strip()
                     return expr
 
             # 尝试匹配裸别名（expr alias，无 AS）
-            bare_match = re.match(r'^(.+?)\s+([\w]+)\s*$', col_text)
+            bare_match = re.match(r"^(.+?)\s+([\w]+)\s*$", col_text)
             if bare_match:
                 expr_candidate = bare_match.group(1).strip()
                 alias_candidate = bare_match.group(2).upper()
                 if alias_candidate == target_upper and alias_candidate not in (
-                    "AS", "FROM", "WHERE", "AND", "OR", "ON", "CASE", "WHEN", "THEN", "ELSE", "END"
+                    "AS",
+                    "FROM",
+                    "WHERE",
+                    "AND",
+                    "OR",
+                    "ON",
+                    "CASE",
+                    "WHEN",
+                    "THEN",
+                    "ELSE",
+                    "END",
                 ):
                     return expr_candidate
 
             # 无别名：如果列名本身匹配目标字段
-            simple_match = re.match(r'^([\w.]+)$', col_text)
+            simple_match = re.match(r"^([\w.]+)$", col_text)
             if simple_match:
                 col_name = simple_match.group(1)
                 short = col_name.split(".")[-1] if "." in col_name else col_name
@@ -721,7 +725,7 @@ def _parse_single_select_column(raw: str) -> SelectColumnMapping | None:
     )
     if alias_match:
         alias = alias_match.group(1)
-        source_expr = raw[:alias_match.start()].strip()
+        source_expr = raw[: alias_match.start()].strip()
         return SelectColumnMapping(
             source_expression=source_expr,
             target_column=alias,
@@ -791,7 +795,7 @@ def _find_matching_paren_in_text(text: str, start: int) -> int:
     Returns:
         匹配的右括号字符偏移，未找到返回 start
     """
-    if start >= len(text) or text[start] != '(':
+    if start >= len(text) or text[start] != "(":
         return start
 
     depth = 0
@@ -808,9 +812,9 @@ def _find_matching_paren_in_text(text: str, start: int) -> int:
                 continue
             in_single_quote = False
         elif not in_single_quote:
-            if ch == '(':
+            if ch == "(":
                 depth += 1
-            elif ch == ')':
+            elif ch == ")":
                 depth -= 1
                 if depth == 0:
                     return i

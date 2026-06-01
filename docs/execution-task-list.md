@@ -318,14 +318,14 @@ def _extract_step_isolated_join(self, sql_operation: SQLOperation, boundary_info
 ```python
 def build_caliber_info(self, sql_operation: SQLOperation, ...):
     # 已有逻辑...
-    
+
     # 新增：步骤级隔离条件提取
     boundary_detector = SQLBoundaryDetector(sql_operation.raw_text)
     boundary_info = boundary_detector.detect_dml_boundaries()[0]  # 取当前操作边界
-    
+
     caliber_info.step_isolated_where = self._extract_step_isolated_where(sql_operation, boundary_info)
     caliber_info.step_isolated_join = self._extract_step_isolated_join(sql_operation, boundary_info)
-    
+
     return caliber_info
 ```
 
@@ -341,14 +341,14 @@ def build_caliber_info(self, sql_operation: SQLOperation, ...):
 ```python
 def generate_caliber_spec(self) -> str:
     spec = []
-    
+
     # WHERE 条件优先级：step_isolated → accumulated → where_conditions
     where_to_use = self.step_isolated_where or self.accumulated_where or self.where_conditions
     if where_to_use:
         spec.append("WHERE 条件:")
         for cond in where_to_use:
             spec.append(f"  - {cond.raw_text}")
-    
+
     # 其他字段...
     return "\n".join(spec)
 ```
@@ -504,13 +504,13 @@ def _extract_full_expression(self, sql_block: str, target_column: str) -> str:
 ```python
 def build_caliber_info(self, sql_operation: SQLOperation, ...):
     # 已有逻辑...
-    
+
     # 新增：CTE/函数/表达式提取
     caliber_info.cte_definitions = self._extract_cte_definitions(sql_operation.sql_block)
     caliber_info.custom_functions = self._extract_custom_functions(sql_operation.sql_block)
     caliber_info.full_expression = self._extract_full_expression(sql_operation.sql_block, caliber_info.target_column)
     caliber_info.is_custom_function_call = len(caliber_info.custom_functions) > 0
-    
+
     return caliber_info
 ```
 
@@ -554,25 +554,25 @@ def from_dict(cls, d: dict) -> CaliberInfo:
 ```python
 def generate_caliber_spec(self) -> str:
     spec = []
-    
+
     # 已有渲染...
-    
+
     # 新增：CTE 定义
     if self.cte_definitions:
         spec.append("CTE 定义:")
         for cte in self.cte_definitions:
             spec.append(f"  - {cte}")
-    
+
     # 新增：自定义函数调用
     if self.custom_functions:
         spec.append("自定义函数调用:")
         for func in self.custom_functions:
             spec.append(f"  - {func}")
-    
+
     # 新增：完整表达式
     if self.full_expression:
         spec.append(f"完整表达式: {self.full_expression}")
-    
+
     return "\n".join(spec)
 ```
 
@@ -698,22 +698,22 @@ def _handle_caliber_sql_detail(file_path: str, start_line: int, end_line: int):
 ```python
 def _serialize_caliber_info(info: CaliberInfo) -> dict:
     d = {...}
-    
+
     # 批次A新增字段
     d['file_path'] = info.file_path
     d['start_line'] = info.start_line
     d['end_line'] = info.end_line
-    
+
     # 批次B新增字段
     d['step_isolated_where'] = [_serialize_sql_condition(c) for c in info.step_isolated_where]
     d['step_isolated_join'] = [_serialize_sql_condition(c) for c in info.step_isolated_join]
-    
+
     # 批次C新增字段
     d['cte_definitions'] = info.cte_definitions
     d['custom_functions'] = info.custom_functions
     d['full_expression'] = info.full_expression
     d['is_custom_function_call'] = info.is_custom_function_call
-    
+
     return d
 ```
 

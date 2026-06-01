@@ -14,7 +14,6 @@ import re
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +43,7 @@ class LayerRule:
     pattern: str
     layer: str
     label: str
-    _compiled: Optional[re.Pattern] = field(default=None, repr=False)
+    _compiled: re.Pattern | None = field(default=None, repr=False)
 
     @property
     def compiled(self) -> re.Pattern:
@@ -65,7 +64,7 @@ class BareNameRule:
     pattern: str
     layer: str
     label: str
-    _compiled: Optional[re.Pattern] = field(default=None, repr=False)
+    _compiled: re.Pattern | None = field(default=None, repr=False)
 
     @property
     def compiled(self) -> re.Pattern:
@@ -78,7 +77,7 @@ class BareNameRule:
 class SynonymRule:
     pattern: str
     target: str
-    _compiled: Optional[re.Pattern] = field(default=None, repr=False)
+    _compiled: re.Pattern | None = field(default=None, repr=False)
 
     @property
     def compiled(self) -> re.Pattern:
@@ -100,26 +99,43 @@ class LayerConfig:
 
 
 LAYER_CONFIG: dict[str, dict] = {
-    "ods":    {"label": "ODS源系统层",   "color": "#4ade80", "order": 0},
-    "src":    {"label": "SRC原始数据层",  "color": "#34d399", "order": 1},
-    "msl":    {"label": "MSL源系统层",   "color": "#2dd4bf", "order": 2},
-    "itl":    {"label": "ITL接口层",     "color": "#22d3ee", "order": 3},
-    "iol":    {"label": "IOL操作层",     "color": "#38bdf8", "order": 4},
-    "icl":    {"label": "ICL共性加工层", "color": "#818cf8", "order": 5},
-    "iml":    {"label": "IML模型层",     "color": "#a78bfa", "order": 6},
-    "idl":    {"label": "IDL接口层",     "color": "#c084fc", "order": 7},
-    "iel":    {"label": "IEL外部层",     "color": "#e879f9", "order": 8},
-    "dqc":    {"label": "DQC数据质量层", "color": "#f472b6", "order": 9},
-    "diis":  {"label": "DIIS明细层",     "color": "#fb923c", "order": 10},
-    "base":  {"label": "B基础层",       "color": "#818cf8", "order": 11},
-    "mdl":   {"label": "M模型层",       "color": "#c084fc", "order": 12},
-    "app":  {"label": "A/S应用汇总层", "color": "#fb923c", "order": 13},
-    "east":  {"label": "EAST报送层",     "color": "#f87171", "order": 14},
-    "config": {"label": "配置/临时表",   "color": "#6b7280", "order": 15},
-    "other":  {"label": "其他",          "color": "#6b7280", "order": 16},
+    "ods": {"label": "ODS源系统层", "color": "#4ade80", "order": 0},
+    "src": {"label": "SRC原始数据层", "color": "#34d399", "order": 1},
+    "msl": {"label": "MSL源系统层", "color": "#2dd4bf", "order": 2},
+    "itl": {"label": "ITL接口层", "color": "#22d3ee", "order": 3},
+    "iol": {"label": "IOL操作层", "color": "#38bdf8", "order": 4},
+    "icl": {"label": "ICL共性加工层", "color": "#818cf8", "order": 5},
+    "iml": {"label": "IML模型层", "color": "#a78bfa", "order": 6},
+    "idl": {"label": "IDL接口层", "color": "#c084fc", "order": 7},
+    "iel": {"label": "IEL外部层", "color": "#e879f9", "order": 8},
+    "dqc": {"label": "DQC数据质量层", "color": "#f472b6", "order": 9},
+    "diis": {"label": "DIIS明细层", "color": "#fb923c", "order": 10},
+    "base": {"label": "B基础层", "color": "#818cf8", "order": 11},
+    "mdl": {"label": "M模型层", "color": "#c084fc", "order": 12},
+    "app": {"label": "A/S应用汇总层", "color": "#fb923c", "order": 13},
+    "east": {"label": "EAST报送层", "color": "#f87171", "order": 14},
+    "config": {"label": "配置/临时表", "color": "#6b7280", "order": 15},
+    "other": {"label": "其他", "color": "#6b7280", "order": 16},
 }
 
-LAYER_ORDER = ["ods", "src", "msl", "itl", "iol", "icl", "iml", "idl", "iel", "dqc", "diis", "base", "mdl", "app", "east", "config"]
+LAYER_ORDER = [
+    "ods",
+    "src",
+    "msl",
+    "itl",
+    "iol",
+    "icl",
+    "iml",
+    "idl",
+    "iel",
+    "dqc",
+    "diis",
+    "base",
+    "mdl",
+    "app",
+    "east",
+    "config",
+]
 
 
 def _build_rrp_default_config() -> LayerConfig:
@@ -134,7 +150,11 @@ def _build_rrp_default_config() -> LayerConfig:
             LayerRule(pattern="^A_|^S_", layer="app", label="APP 应用汇总层"),
             LayerRule(pattern="EAST", layer="east", label="EAST 报送层"),
             LayerRule(pattern="^ADD_|DIIS", layer="diis", label="DIIS 明细层"),
-            LayerRule(pattern="^ETL_|^CONFIG|^CODE|^TMP|^SQ_|^FUN|^GET|^CHECK|^SP_", layer="config", label="CONFIG 配置/临时表"),
+            LayerRule(
+                pattern="^ETL_|^CONFIG|^CODE|^TMP|^SQ_|^FUN|^GET|^CHECK|^SP_",
+                layer="config",
+                label="CONFIG 配置/临时表",
+            ),
         ],
         schema_rules=[
             SchemaRule(schema="SRC", layer="src"),
@@ -158,15 +178,55 @@ def _build_rrp_default_config() -> LayerConfig:
             SynonymRule(pattern="^ICL\\.([A-Z].*)", target="ICL_$1"),
         ],
         default_schema="RRP_MDL",
-        known_schemas=["SRC", "MSL", "ITL", "IOL", "ICL", "IML", "IDL", "IEL", "DQC", "RRP_EAST", "RRP_MDL"],
-        layer_order=["ods", "src", "msl", "itl", "iol", "icl", "iml", "idl", "iel", "dqc", "diis", "base", "mdl", "app", "east", "config"],
+        known_schemas=[
+            "SRC",
+            "MSL",
+            "ITL",
+            "IOL",
+            "ICL",
+            "IML",
+            "IDL",
+            "IEL",
+            "DQC",
+            "RRP_EAST",
+            "RRP_MDL",
+        ],
+        layer_order=[
+            "ods",
+            "src",
+            "msl",
+            "itl",
+            "iol",
+            "icl",
+            "iml",
+            "idl",
+            "iel",
+            "dqc",
+            "diis",
+            "base",
+            "mdl",
+            "app",
+            "east",
+            "config",
+        ],
         layer_colors={
-            "ods": "#4ade80", "src": "#34d399", "msl": "#2dd4bf",
-            "itl": "#22d3ee", "iol": "#38bdf8", "icl": "#818cf8",
-            "iml": "#a78bfa", "idl": "#c084fc", "iel": "#e879f9",
-            "dqc": "#f472b6", "diis": "#fb923c", "base": "#818cf8",
-            "mdl": "#c084fc", "app": "#fb923c", "east": "#f87171",
-            "config": "#6b7280", "other": "#6b7280",
+            "ods": "#4ade80",
+            "src": "#34d399",
+            "msl": "#2dd4bf",
+            "itl": "#22d3ee",
+            "iol": "#38bdf8",
+            "icl": "#818cf8",
+            "iml": "#a78bfa",
+            "idl": "#c084fc",
+            "iel": "#e879f9",
+            "dqc": "#f472b6",
+            "diis": "#fb923c",
+            "base": "#818cf8",
+            "mdl": "#c084fc",
+            "app": "#fb923c",
+            "east": "#f87171",
+            "config": "#6b7280",
+            "other": "#6b7280",
         },
     )
 
@@ -178,7 +238,7 @@ class LayerDetector:
     无 system 参数时回退到 RRP 默认规则，确保向后兼容。
     """
 
-    def __init__(self, layer_configs: Optional[dict[str, LayerConfig]] = None):
+    def __init__(self, layer_configs: dict[str, LayerConfig] | None = None):
         self._configs: dict[str, LayerConfig] = layer_configs or {}
         if "rrp" not in self._configs:
             self._configs["rrp"] = _build_rrp_default_config()
@@ -218,10 +278,13 @@ class LayerDetector:
         return dict(self._configs)
 
     @classmethod
-    def from_manifests(cls, source_data_dir: Path) -> "LayerDetector":
+    def from_manifests(cls, source_data_dir: Path) -> LayerDetector:
         configs: dict[str, LayerConfig] = {}
         if not source_data_dir.is_dir():
-            logger.warning("SOURCE_DATA directory not found: %s, using RRP defaults", source_data_dir)
+            logger.warning(
+                "SOURCE_DATA directory not found: %s, using RRP defaults",
+                source_data_dir,
+            )
             return cls()
 
         for system_dir in sorted(source_data_dir.iterdir()):
@@ -242,7 +305,7 @@ class LayerDetector:
         return cls(configs)
 
 
-def _load_layer_config_from_manifest(manifest_path: Path) -> Optional[LayerConfig]:
+def _load_layer_config_from_manifest(manifest_path: Path) -> LayerConfig | None:
     try:
         import yaml
     except ImportError:
@@ -255,19 +318,29 @@ def _load_layer_config_from_manifest(manifest_path: Path) -> Optional[LayerConfi
 
     lr = data["layer_rules"]
 
-    rules = [LayerRule(pattern=r["pattern"], layer=r["layer"], label=r.get("label", r["layer"]))
-             for r in lr.get("rules", [])]
+    rules = [
+        LayerRule(pattern=r["pattern"], layer=r["layer"], label=r.get("label", r["layer"])) for r in lr.get("rules", [])
+    ]
 
-    schema_rules = [SchemaRule(schema=sr["schema"], layer=sr.get("layer", ""),
-                               default_layer=sr.get("default_layer", ""))
-                    for sr in lr.get("schema_rules", [])]
+    schema_rules = [
+        SchemaRule(
+            schema=sr["schema"],
+            layer=sr.get("layer", ""),
+            default_layer=sr.get("default_layer", ""),
+        )
+        for sr in lr.get("schema_rules", [])
+    ]
 
-    bare_name_rules = [BareNameRule(pattern=bnr["pattern"], layer=bnr["layer"],
-                                    label=bnr.get("label", bnr["layer"]))
-                       for bnr in lr.get("bare_name_rules", [])]
+    bare_name_rules = [
+        BareNameRule(
+            pattern=bnr["pattern"],
+            layer=bnr["layer"],
+            label=bnr.get("label", bnr["layer"]),
+        )
+        for bnr in lr.get("bare_name_rules", [])
+    ]
 
-    synonym_rules = [SynonymRule(pattern=sr["pattern"], target=sr["target"])
-                     for sr in lr.get("synonym_rules", [])]
+    synonym_rules = [SynonymRule(pattern=sr["pattern"], target=sr["target"]) for sr in lr.get("synonym_rules", [])]
 
     return LayerConfig(
         rules=rules,

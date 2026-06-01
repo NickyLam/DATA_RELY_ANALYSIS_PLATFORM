@@ -123,6 +123,24 @@ app/api/ ──→ app/services/ ──→ core/
 - **编排层 (app/services/)**: 服务编排、缓存管理、事件总线、横切关注点
 - **引擎层 (core/)**: 纯算法实现，不依赖 FastAPI，可独立测试
 
+### 同步 Service 决策
+
+Service 层采用同步 `def` 而非 `async def`，原因：
+
+1. **无 I/O 密集型操作**: 解析引擎全部是 CPU 密集型（SQL 解析、BFS 追溯、口径提取），无数据库/外部 API 调用
+2. **避免混用陷阱**: CPU 密集型任务用 `async def` 会阻塞事件循环，需额外 `run_in_executor`，增加复杂度
+3. **数据一致性**: 同步调用链保证解析→索引→缓存的顺序一致性，无需锁机制
+4. **FastAPI 兼容**: FastAPI 自动将 `def` 端点放入线程池执行，不阻塞异步事件循环
+
+### 质量工具链
+
+| 工具 | 用途 | 配置位置 |
+|------|------|----------|
+| ruff | lint + format | `pyproject.toml [tool.ruff]` |
+| mypy | 类型检查 | `pyproject.toml [tool.mypy]` (分层: app 严格 / core 宽松) |
+| pytest | 测试 + 覆盖率 | `pyproject.toml [tool.pytest.ini_options]` |
+| pre-commit | 提交前检查 | `.pre-commit-config.yaml` |
+
 ### 数仓分层架构
 
 系统完整支持企业级数仓分层，每种 schema 映射到独立的层级类型：

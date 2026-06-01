@@ -7,9 +7,9 @@ SQL 边界检测器
 
 from __future__ import annotations
 
-import re
 import logging
-from dataclasses import dataclass, field
+import re
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
@@ -19,23 +19,23 @@ class DMLBoundary:
     """单条 DML 操作的边界信息"""
 
     operation_type: str = ""  # INSERT / MERGE / UPDATE
-    start_line: int = 0       # 起始行号（1-based）
-    end_line: int = 0         # 结束行号（1-based）
-    start_offset: int = 0     # 起始字符偏移
-    end_offset: int = 0       # 结束字符偏移
-    target_table: str = ""    # 目标表名
+    start_line: int = 0  # 起始行号（1-based）
+    end_line: int = 0  # 结束行号（1-based）
+    start_offset: int = 0  # 起始字符偏移
+    end_offset: int = 0  # 结束字符偏移
+    target_table: str = ""  # 目标表名
 
 
 @dataclass
 class CTEBoundary:
     """CTE (WITH ... AS) 子句的边界信息"""
 
-    cte_name: str = ""        # CTE 名称
-    start_line: int = 0       # 起始行号（1-based）
-    end_line: int = 0         # 结束行号（1-based）
-    start_offset: int = 0     # 起始字符偏移
-    end_offset: int = 0       # 结束字符偏移
-    body: str = ""            # CTE 定义体
+    cte_name: str = ""  # CTE 名称
+    start_line: int = 0  # 起始行号（1-based）
+    end_line: int = 0  # 结束行号（1-based）
+    start_offset: int = 0  # 起始字符偏移
+    end_offset: int = 0  # 结束字符偏移
+    body: str = ""  # CTE 定义体
 
 
 # ---------------------------------------------------------------------------
@@ -43,28 +43,28 @@ class CTEBoundary:
 # ---------------------------------------------------------------------------
 
 _DML_START_PATTERNS = [
-    (re.compile(r'\bINSERT\s+(?:/\*.*?\*/\s*)?INTO\b', re.IGNORECASE), "INSERT"),
-    (re.compile(r'\bMERGE\s+INTO\b', re.IGNORECASE), "MERGE"),
-    (re.compile(r'\bUPDATE\s+([\w.]+)\s+SET\b', re.IGNORECASE), "UPDATE"),
+    (re.compile(r"\bINSERT\s+(?:/\*.*?\*/\s*)?INTO\b", re.IGNORECASE), "INSERT"),
+    (re.compile(r"\bMERGE\s+INTO\b", re.IGNORECASE), "MERGE"),
+    (re.compile(r"\bUPDATE\s+([\w.]+)\s+SET\b", re.IGNORECASE), "UPDATE"),
 ]
 
 # WITH name AS (
 _CTE_PATTERN = re.compile(
-    r'\bWITH\s+(\w+)\s+AS\s*\(',
+    r"\bWITH\s+(\w+)\s+AS\s*\(",
     re.IGNORECASE,
 )
 
 # 匹配目标表名
 _INSERT_TABLE_PATTERN = re.compile(
-    r'\bINSERT\s+(?:/\*.*?\*/\s*)?INTO\s+([\w.]+)',
+    r"\bINSERT\s+(?:/\*.*?\*/\s*)?INTO\s+([\w.]+)",
     re.IGNORECASE,
 )
 _MERGE_TABLE_PATTERN = re.compile(
-    r'\bMERGE\s+INTO\s+([\w.]+)',
+    r"\bMERGE\s+INTO\s+([\w.]+)",
     re.IGNORECASE,
 )
 _UPDATE_TABLE_PATTERN = re.compile(
-    r'\bUPDATE\s+([\w.]+)\s+SET\b',
+    r"\bUPDATE\s+([\w.]+)\s+SET\b",
     re.IGNORECASE,
 )
 
@@ -80,7 +80,7 @@ class SQLBoundaryDetector:
 
     def __init__(self, file_content: str) -> None:
         self.file_content = file_content
-        self.lines = file_content.split('\n')
+        self.lines = file_content.split("\n")
 
     def detect_dml_boundaries(self) -> list[DMLBoundary]:
         """检测文件中所有 DML 操作的边界信息。
@@ -94,21 +94,21 @@ class SQLBoundaryDetector:
             for match in pattern.finditer(self.file_content):
                 start_offset = match.start()
                 end_offset = self._find_statement_end(start_offset)
-                start_line = self.file_content[:start_offset].count('\n') + 1
-                end_line = self.file_content[:end_offset].count('\n') + 1
+                start_line = self.file_content[:start_offset].count("\n") + 1
+                end_line = self.file_content[:end_offset].count("\n") + 1
 
-                target_table = self._extract_target_table(
-                    self.file_content[start_offset:end_offset], op_type
+                target_table = self._extract_target_table(self.file_content[start_offset:end_offset], op_type)
+
+                boundaries.append(
+                    DMLBoundary(
+                        operation_type=op_type,
+                        start_line=start_line,
+                        end_line=end_line,
+                        start_offset=start_offset,
+                        end_offset=end_offset,
+                        target_table=target_table,
+                    )
                 )
-
-                boundaries.append(DMLBoundary(
-                    operation_type=op_type,
-                    start_line=start_line,
-                    end_line=end_line,
-                    start_offset=start_offset,
-                    end_offset=end_offset,
-                    target_table=target_table,
-                ))
 
         # 按起始位置排序
         boundaries.sort(key=lambda b: b.start_offset)
@@ -127,30 +127,30 @@ class SQLBoundaryDetector:
             start_offset = match.start()
 
             # 从 CTE 的左括号开始，找到匹配的右括号
-            paren_start = self.file_content.index('(', match.start())
+            paren_start = self.file_content.index("(", match.start())
             paren_end = self._find_matching_paren(paren_start)
 
             end_offset = paren_end if paren_end > paren_start else paren_start + 1
-            start_line = self.file_content[:start_offset].count('\n') + 1
-            end_line = self.file_content[:end_offset].count('\n') + 1
+            start_line = self.file_content[:start_offset].count("\n") + 1
+            end_line = self.file_content[:end_offset].count("\n") + 1
 
-            body = self.file_content[paren_start + 1:paren_end].strip() if paren_end > paren_start else ""
+            body = self.file_content[paren_start + 1 : paren_end].strip() if paren_end > paren_start else ""
 
-            cte_boundaries.append(CTEBoundary(
-                cte_name=cte_name,
-                start_line=start_line,
-                end_line=end_line,
-                start_offset=start_offset,
-                end_offset=end_offset,
-                body=body,
-            ))
+            cte_boundaries.append(
+                CTEBoundary(
+                    cte_name=cte_name,
+                    start_line=start_line,
+                    end_line=end_line,
+                    start_offset=start_offset,
+                    end_offset=end_offset,
+                    body=body,
+                )
+            )
 
         cte_boundaries.sort(key=lambda c: c.start_offset)
         return cte_boundaries
 
-    def get_sql_block_by_line_range(
-        self, start_line: int, end_line: int
-    ) -> str:
+    def get_sql_block_by_line_range(self, start_line: int, end_line: int) -> str:
         """根据行号范围提取对应的文本内容。
 
         Args:
@@ -163,7 +163,7 @@ class SQLBoundaryDetector:
         if start_line < 1 or end_line < start_line:
             return ""
         line_indices = range(start_line - 1, min(end_line, len(self.lines)))
-        return '\n'.join(self.lines[i] for i in line_indices)
+        return "\n".join(self.lines[i] for i in line_indices)
 
     def _find_statement_end(self, start_offset: int) -> int:
         """从给定偏移开始，查找 SQL 语句的结束位置。
@@ -208,21 +208,21 @@ class SQLBoundaryDetector:
 
             # 行注释
             if not in_single_quote and not in_double_quote and not in_block_comment:
-                if ch == '-' and i + 1 < len(text) and text[i + 1] == '-':
+                if ch == "-" and i + 1 < len(text) and text[i + 1] == "-":
                     in_line_comment = True
                     i += 2
                     continue
 
             # 块注释开始
             if not in_single_quote and not in_double_quote and not in_line_comment:
-                if ch == '/' and i + 1 < len(text) and text[i + 1] == '*':
+                if ch == "/" and i + 1 < len(text) and text[i + 1] == "*":
                     in_block_comment = True
                     i += 2
                     continue
 
             # 块注释结束
             if in_block_comment:
-                if ch == '*' and i + 1 < len(text) and text[i + 1] == '/':
+                if ch == "*" and i + 1 < len(text) and text[i + 1] == "/":
                     in_block_comment = False
                     i += 2
                     continue
@@ -231,7 +231,7 @@ class SQLBoundaryDetector:
 
             # 行注释：到行末结束
             if in_line_comment:
-                if ch == '\n':
+                if ch == "\n":
                     in_line_comment = False
                 i += 1
                 continue
@@ -253,7 +253,7 @@ class SQLBoundaryDetector:
                 continue
 
             # 分号
-            if ch == ';' and not in_single_quote and not in_double_quote:
+            if ch == ";" and not in_single_quote and not in_double_quote:
                 return i
 
             i += 1
@@ -266,7 +266,7 @@ class SQLBoundaryDetector:
         Returns:
             匹配的右括号字符偏移，未找到返回 start
         """
-        if start >= len(self.file_content) or self.file_content[start] != '(':
+        if start >= len(self.file_content) or self.file_content[start] != "(":
             return start
 
         depth = 0
@@ -285,9 +285,9 @@ class SQLBoundaryDetector:
                     continue
                 in_single_quote = False
             elif not in_single_quote:
-                if ch == '(':
+                if ch == "(":
                     depth += 1
-                elif ch == ')':
+                elif ch == ")":
                     depth -= 1
                     if depth == 0:
                         return i

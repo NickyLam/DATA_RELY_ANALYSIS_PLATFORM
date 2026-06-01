@@ -3,9 +3,11 @@
 使用 Playwright 进行测试
 FE-001 到 FE-304
 """
-import pytest
-from pathlib import Path
+
 import sys
+from pathlib import Path
+
+import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 

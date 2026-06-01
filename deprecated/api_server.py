@@ -27,7 +27,7 @@ import time
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from core.caliber_extractor import CaliberExtractor
 from core.lineage_tracer import LineageTracer
@@ -76,7 +76,7 @@ logger = logging.getLogger(__name__)
 # ===========================================================================
 # 全局状态：启动时初始化，Handler 通过类属性访问
 # ===========================================================================
-_tracer: Optional[LineageTracer] = None
+_tracer: LineageTracer | None = None
 _tables: dict[str, TableInfo] = {}
 _procedures: dict[str, Any] = {}
 _proc_table_names: dict[str, set] = {}  # {upper_name: set of fields}
@@ -85,8 +85,8 @@ _table_lineages_count: int = 0
 _field_mappings_count: int = 0
 _static_dir: str = "static"
 _start_time: float = 0.0  # 服务启动时间（Unix 时间戳）
-_indicator_graph_builder: Optional[Any] = None  # 指标图构建器
-_indicator_config_result: Optional[Any] = None   # 指标配置结果
+_indicator_graph_builder: Any | None = None  # 指标图构建器
+_indicator_config_result: Any | None = None  # 指标配置结果
 
 
 def _init_engine(prc_dir: str) -> None:
@@ -246,6 +246,7 @@ def _serialize_result(result: Any) -> dict[str, Any]:
 # 口径查询辅助函数
 # ===========================================================================
 
+
 def _find_field_mapping(
     src_node: FieldLineageNode,
     tgt_node: FieldLineageNode,
@@ -305,7 +306,7 @@ def _extract_sql_block_for_mapping(proc: Any, target_table: str) -> str:
         return ""
 
     try:
-        with open(proc.file_path, "r", encoding="utf-8", errors="ignore") as fh:
+        with open(proc.file_path, encoding="utf-8", errors="ignore") as fh:
             content = fh.read()
     except OSError:
         return ""
@@ -324,11 +325,7 @@ def _extract_sql_block_for_mapping(proc: Any, target_table: str) -> str:
 
     # 策略1: 精确短名匹配
     for op in operations:
-        op_target_short = (
-            op.target_table.split(".")[-1].upper()
-            if "." in op.target_table
-            else op.target_table.upper()
-        )
+        op_target_short = op.target_table.split(".")[-1].upper() if "." in op.target_table else op.target_table.upper()
         if op_target_short == target_short:
             return op.sql_block
 
@@ -423,7 +420,6 @@ def _chains_to_caliber_result(
                 )
             else:
                 # 即使没有精确匹配的 FieldMapping，仍然尝试用 sql_block 提取口径信息
-                from core.layer_detector import detect_layer as _detect_layer
                 from core.models import FieldMapping as _FM
 
                 # 构造一个最小化的 FieldMapping 传给 build_caliber_info
@@ -571,8 +567,7 @@ def _serialize_caliber_info(ci: CaliberInfo) -> dict[str, Any]:
                 "raw_text": sq.raw_text,
                 "source_tables": sq.source_tables,
                 "where_conditions": [
-                    {"condition_type": wc.condition_type, "raw_text": wc.raw_text}
-                    for wc in sq.where_conditions
+                    {"condition_type": wc.condition_type, "raw_text": wc.raw_text} for wc in sq.where_conditions
                 ],
             }
             for sq in ci.subqueries
@@ -737,12 +732,14 @@ def _result_to_graph(result: Any) -> dict[str, Any]:
             edge_key = f"{src_bare}|{tgt_bare}"
             if edge_key not in edge_keys:
                 edge_keys.add(edge_key)
-                edges.append({
-                    "source_table": display_src,
-                    "target_table": display_tgt,
-                    "source_field": src_field,
-                    "target_field": tgt_field,
-                })
+                edges.append(
+                    {
+                        "source_table": display_src,
+                        "target_table": display_tgt,
+                        "source_field": src_field,
+                        "target_field": tgt_field,
+                    }
+                )
 
             # 去重 field_mapping（按逻辑裸表名+字段名，避免 schema 前缀差异导致重复映射）
             # 同时对同一 (逻辑源表, 逻辑目标表, 目标字段) 三元组去重，
@@ -936,15 +933,17 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
 
     def _handle_health(self) -> None:
         uptime = time.time() - _start_time if _start_time > 0 else 0
-        self._send_json({
-            "success": True,
-            "data": {
-                "status": "ok",
-                "uptime_seconds": round(uptime),
-                "total_tables": len(_tables),
-                "total_procedures": _procedures_count,
-            },
-        })
+        self._send_json(
+            {
+                "success": True,
+                "data": {
+                    "status": "ok",
+                    "uptime_seconds": round(uptime),
+                    "total_tables": len(_tables),
+                    "total_procedures": _procedures_count,
+                },
+            }
+        )
 
     def _handle_index(self) -> None:
         index_path = os.path.join(_static_dir, "index.html")
@@ -997,13 +996,15 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
                 continue
             schema_name = tbl_info.schema or (full_name.split(".")[0] if "." in full_name else "")
             layer_val = detect_layer(tbl_info.full_name).value if tbl_info.full_name else "other"
-            results.append({
-                "full_name": full_name,
-                "short_name": name,
-                "schema": schema_name,
-                "field_count": len(tbl_info.columns),
-                "layer": layer_val,
-            })
+            results.append(
+                {
+                    "full_name": full_name,
+                    "short_name": name,
+                    "schema": schema_name,
+                    "field_count": len(tbl_info.columns),
+                    "layer": layer_val,
+                }
+            )
             seen_full.add(full_name.upper())
 
         # 2. 从存储过程提取的表（补充 .tab 未覆盖的）
@@ -1016,13 +1017,15 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
             schema_name = proc_tbl_upper.split(".")[0] if "." in proc_tbl_upper else ""
             fields = _proc_table_names.get(proc_tbl_upper, set())
             layer_val = detect_layer(proc_tbl_upper).value
-            results.append({
-                "full_name": proc_tbl_upper,
-                "short_name": short_name,
-                "schema": schema_name,
-                "field_count": len(fields),
-                "layer": layer_val,
-            })
+            results.append(
+                {
+                    "full_name": proc_tbl_upper,
+                    "short_name": short_name,
+                    "schema": schema_name,
+                    "field_count": len(fields),
+                    "layer": layer_val,
+                }
+            )
             seen_full.add(proc_tbl_upper)
 
         # 排序：优先匹配 schema/短名前缀，再按 short_name 排序
@@ -1046,7 +1049,7 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
         norm_name = table_name.strip().upper()
 
         # 1. 先从 .tab 表中找
-        matched_tbl: Optional[TableInfo] = None
+        matched_tbl: TableInfo | None = None
         for tbl_info in _tables.values():
             if tbl_info.table_name.upper() == norm_name or (
                 tbl_info.full_name and tbl_info.full_name.upper() == norm_name
@@ -1103,6 +1106,7 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
         if mode == "downstream":
             import time as _time
             from types import SimpleNamespace as _SN
+
             t0 = _time.perf_counter()
             chains = _tracer.trace_field_downstream(table, field, max_depth=max_depth)
             elapsed = round((_time.perf_counter() - t0) * 1000, 2)
@@ -1145,7 +1149,13 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
             graph_data = _result_to_graph(result)
             self._send_json({"success": True, "data": graph_data})
         except Exception as exc:
-            logger.error("血缘查询异常(GET): %s.%s — %s", table_clean, field_clean, exc, exc_info=True)
+            logger.error(
+                "血缘查询异常(GET): %s.%s — %s",
+                table_clean,
+                field_clean,
+                exc,
+                exc_info=True,
+            )
             self._send_error(f"血缘查询失败: {exc}", status=500)
 
     def _handle_caliber_fields(self, table: str) -> None:
@@ -1178,9 +1188,7 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
 
         self._send_json({"success": True, "data": {"fields": caliber_fields}})
 
-    def _handle_caliber_trace(
-        self, table: str, field: str, direction: str, depth: int
-    ) -> None:
+    def _handle_caliber_trace(self, table: str, field: str, direction: str, depth: int) -> None:
         """执行口径追溯查询，返回 CaliberResult。"""
         if _tracer is None:
             self._send_error("引擎尚未初始化", status=503)
@@ -1200,9 +1208,7 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
             else:
                 chains = _tracer.trace_field(table, field).chains
 
-            caliber_result = _chains_to_caliber_result(
-                chains, table, field, direction=direction
-            )
+            caliber_result = _chains_to_caliber_result(chains, table, field, direction=direction)
             caliber_result.query_time_ms = round((_time.perf_counter() - t0) * 1000, 2)
 
             data = _serialize_caliber_result(caliber_result)
@@ -1248,37 +1254,60 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
             logger.error("指标详情查询异常: %s", exc, exc_info=True)
             self._send_error(f"指标详情查询失败: {exc}", status=500)
 
-    def _handle_indicator_lineage(
-        self, index_no: str, measure: str, direction: str, depth: int
-    ) -> None:
+    def _handle_indicator_lineage(self, index_no: str, measure: str, direction: str, depth: int) -> None:
         """查询指标血缘图"""
         if not _indicator_graph_builder:
-            self._send_json({
-                "success": False, "message": "指标服务未初始化",
-                "data": {"target_index_no": index_no, "graph": {"nodes": [], "edges": []}, "chains": []},
-            })
+            self._send_json(
+                {
+                    "success": False,
+                    "message": "指标服务未初始化",
+                    "data": {
+                        "target_index_no": index_no,
+                        "graph": {"nodes": [], "edges": []},
+                        "chains": [],
+                    },
+                }
+            )
             return
         if not index_no:
             self._send_error("缺少必要参数: index_no", status=400)
             return
         try:
             result = _indicator_graph_builder.trace_indicator(
-                index_no=index_no, measure=measure, direction=direction, max_depth=depth,
+                index_no=index_no,
+                measure=measure,
+                direction=direction,
+                max_depth=depth,
             )
             # 序列化图
             graph_data = {
                 "nodes": [
-                    {"id": n.node_id, "type": n.node_type, "label": n.display_label,
-                     "index_no": n.index_no, "index_measure": n.index_measure,
-                     "index_type": n.index_type, "algo_type": n.algo_type,
-                     "layer": n.layer, "brch_type": n.brch_type, "detail": n.detail}
+                    {
+                        "id": n.node_id,
+                        "type": n.node_type,
+                        "label": n.display_label,
+                        "index_no": n.index_no,
+                        "index_measure": n.index_measure,
+                        "index_type": n.index_type,
+                        "algo_type": n.algo_type,
+                        "layer": n.layer,
+                        "brch_type": n.brch_type,
+                        "detail": n.detail,
+                    }
                     for n in result.graph.nodes
                 ],
                 "edges": [
-                    {"id": e.edge_id, "source": e.source_id, "target": e.target_id,
-                     "type": e.edge_type, "procedure": e.procedure,
-                     "transform_logic": e.transform_logic, "algo_type": e.algo_type,
-                     "condition_sql": e.condition_sql, "measure_sql": e.measure_sql}
+                    {
+                        "id": e.edge_id,
+                        "source": e.source_id,
+                        "target": e.target_id,
+                        "type": e.edge_type,
+                        "procedure": e.procedure,
+                        "transform_logic": e.transform_logic,
+                        "algo_type": e.algo_type,
+                        "condition_sql": e.condition_sql,
+                        "measure_sql": e.measure_sql,
+                    }
                     for e in result.graph.edges
                 ],
                 "stats": result.graph.stats,
@@ -1287,37 +1316,56 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
             }
             # 序列化链路
             chains_data = [
-                {"target_index_no": c.target_index_no, "target_measure": c.target_measure,
-                 "depth": c.depth, "step_count": c.step_count,
-                 "procedures_involved": c.procedures_involved,
-                 "tables_involved": c.tables_involved, "has_gl_step": c.has_gl_step,
-                 "steps": [
-                     {"step_num": s.step_num, "index_no": s.index_no,
-                      "index_measure": s.index_measure, "measure_label": s.measure_label,
-                      "index_type": s.index_type, "algo_type": s.algo_type,
-                      "algo_label": s.algo_label, "procedure": s.procedure,
-                      "source_tables": s.source_tables, "target_table": s.target_table,
-                      "transform_logic": s.transform_logic, "condition_sql": s.condition_sql,
-                      "measure_sql": s.measure_sql, "brch_type": s.brch_type,
-                      "gl_subj_no": s.gl_subj_no, "gl_amt_val": s.gl_amt_val,
-                      "gl_sign_no": s.gl_sign_no, "is_gl_step": s.is_gl_step}
-                     for s in c.steps
-                 ]}
+                {
+                    "target_index_no": c.target_index_no,
+                    "target_measure": c.target_measure,
+                    "depth": c.depth,
+                    "step_count": c.step_count,
+                    "procedures_involved": c.procedures_involved,
+                    "tables_involved": c.tables_involved,
+                    "has_gl_step": c.has_gl_step,
+                    "steps": [
+                        {
+                            "step_num": s.step_num,
+                            "index_no": s.index_no,
+                            "index_measure": s.index_measure,
+                            "measure_label": s.measure_label,
+                            "index_type": s.index_type,
+                            "algo_type": s.algo_type,
+                            "algo_label": s.algo_label,
+                            "procedure": s.procedure,
+                            "source_tables": s.source_tables,
+                            "target_table": s.target_table,
+                            "transform_logic": s.transform_logic,
+                            "condition_sql": s.condition_sql,
+                            "measure_sql": s.measure_sql,
+                            "brch_type": s.brch_type,
+                            "gl_subj_no": s.gl_subj_no,
+                            "gl_amt_val": s.gl_amt_val,
+                            "gl_sign_no": s.gl_sign_no,
+                            "is_gl_step": s.is_gl_step,
+                        }
+                        for s in c.steps
+                    ],
+                }
                 for c in result.chains
             ]
-            self._send_json({
-                "success": True, "message": "查询成功",
-                "data": {
-                    "target_index_no": result.target_index_no,
-                    "target_measure": result.target_measure,
-                    "measure_label": result.measure_label,
-                    "chain_count": result.chain_count,
-                    "max_depth": result.max_depth,
-                    "query_time_ms": result.query_time_ms,
-                    "graph": graph_data,
-                    "chains": chains_data,
-                },
-            })
+            self._send_json(
+                {
+                    "success": True,
+                    "message": "查询成功",
+                    "data": {
+                        "target_index_no": result.target_index_no,
+                        "target_measure": result.target_measure,
+                        "measure_label": result.measure_label,
+                        "chain_count": result.chain_count,
+                        "max_depth": result.max_depth,
+                        "query_time_ms": result.query_time_ms,
+                        "graph": graph_data,
+                        "chains": chains_data,
+                    },
+                }
+            )
         except Exception as exc:
             logger.error("指标血缘查询异常: %s — %s", index_no, exc, exc_info=True)
             self._send_error(f"指标血缘查询失败: {exc}", status=500)
@@ -1325,19 +1373,31 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
     def _handle_indicator_pipeline(self, index_no: str, measure: str) -> None:
         """获取指标加工流水线"""
         if not _indicator_graph_builder:
-            self._send_json({"success": False, "message": "指标服务未初始化",
-                            "data": {"index_no": index_no, "steps": [], "total_steps": 0}})
+            self._send_json(
+                {
+                    "success": False,
+                    "message": "指标服务未初始化",
+                    "data": {"index_no": index_no, "steps": [], "total_steps": 0},
+                }
+            )
             return
         if not index_no:
             self._send_error("缺少必要参数: index_no", status=400)
             return
         try:
             steps = _indicator_graph_builder.get_pipeline_steps(index_no, measure)
-            self._send_json({
-                "success": True, "message": "查询成功",
-                "data": {"index_no": index_no, "measure": measure,
-                         "steps": steps, "total_steps": len(steps)},
-            })
+            self._send_json(
+                {
+                    "success": True,
+                    "message": "查询成功",
+                    "data": {
+                        "index_no": index_no,
+                        "measure": measure,
+                        "steps": steps,
+                        "total_steps": len(steps),
+                    },
+                }
+            )
         except Exception as exc:
             logger.error("指标流水线查询异常: %s", exc, exc_info=True)
             self._send_error(f"指标流水线查询失败: {exc}", status=500)
@@ -1357,8 +1417,13 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
     def _handle_indicator_source_tables(self, index_no: str) -> None:
         """获取指标源表列表"""
         if not _indicator_graph_builder:
-            self._send_json({"success": False, "message": "指标服务未初始化",
-                            "data": {"index_no": index_no, "tables": [], "count": 0}})
+            self._send_json(
+                {
+                    "success": False,
+                    "message": "指标服务未初始化",
+                    "data": {"index_no": index_no, "tables": [], "count": 0},
+                }
+            )
             return
         if not index_no:
             self._send_error("缺少必要参数: index_no", status=400)
@@ -1373,10 +1438,17 @@ class LineageAPIHandler(BaseHTTPRequestHandler):
                         t = t.strip().upper()
                         if t and t not in tables:
                             tables.append(t)
-            self._send_json({
-                "success": True, "message": "查询成功",
-                "data": {"index_no": index_no, "tables": tables, "count": len(tables)},
-            })
+            self._send_json(
+                {
+                    "success": True,
+                    "message": "查询成功",
+                    "data": {
+                        "index_no": index_no,
+                        "tables": tables,
+                        "count": len(tables),
+                    },
+                }
+            )
         except Exception as exc:
             logger.error("获取指标源表异常: %s", exc, exc_info=True)
             self._send_error(f"获取指标源表失败: {exc}", status=500)
@@ -1482,14 +1554,14 @@ def main() -> None:
 
     server = HTTPServer(("0.0.0.0", args.port), LineageAPIHandler)
     url = f"http://localhost:{args.port}"
-    print(f"\n{'='*50}")
-    print(f"  数据血缘分析 API 服务已启动")
+    print(f"\n{'=' * 50}")
+    print("  数据血缘分析 API 服务已启动")
     print(f"  地址: {url}")
-    print(f"  接口:")
+    print("  接口:")
     print(f"    GET  {url}/api/tables?keyword=KHXXB")
     print(f"    POST {url}/api/lineage/query")
     print(f"    GET  {url}/api/stats")
-    print(f"{'='*50}\n")
+    print(f"{'=' * 50}\n")
 
     try:
         server.serve_forever()

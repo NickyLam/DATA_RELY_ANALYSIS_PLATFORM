@@ -12,14 +12,13 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Optional
 
 from core.parser_protocol import ParseOutput
-from core.warehouse.schema_resolver import SchemaResolver
-from core.warehouse.temp_table_filter import TempTableFilter
+from core.warehouse.ctl_parser import CTLParser
 from core.warehouse.ddl_parser import DDLParser
 from core.warehouse.dml_parser import DMLParser
-from core.warehouse.ctl_parser import CTLParser
+from core.warehouse.schema_resolver import SchemaResolver
+from core.warehouse.temp_table_filter import TempTableFilter
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +46,7 @@ class WarehouseSQLParser:
 
     def __init__(
         self,
-        schema_resolver: Optional[SchemaResolver] = None,
+        schema_resolver: SchemaResolver | None = None,
         system: str = "rrp",
     ):
         self._schema_resolver = schema_resolver or SchemaResolver()
@@ -126,17 +125,18 @@ class WarehouseSQLParser:
                 ddl_tables.update(tables)
 
         for table_info in ddl_tables.values():
-            total_output.tables.append({
-                "full_name": table_info.full_name,
-                "schema": table_info.schema,
-                "table_name": table_info.table_name,
-                "comment": table_info.comment,
-                "columns": [
-                    {"name": c.name, "data_type": c.data_type, "comment": c.comment}
-                    for c in table_info.columns
-                ],
-                "primary_keys": table_info.primary_keys,
-            })
+            total_output.tables.append(
+                {
+                    "full_name": table_info.full_name,
+                    "schema": table_info.schema,
+                    "table_name": table_info.table_name,
+                    "comment": table_info.comment,
+                    "columns": [
+                        {"name": c.name, "data_type": c.data_type, "comment": c.comment} for c in table_info.columns
+                    ],
+                    "primary_keys": table_info.primary_keys,
+                }
+            )
 
         logger.info(
             "Phase 1 完成: DDL 解析出 %d 张表",
@@ -144,9 +144,7 @@ class WarehouseSQLParser:
         )
 
         # 将 DDL 表结构注入 DML 解析器（辅助字段映射）
-        self._dml_parser = DMLParser(
-            self._schema_resolver, self._temp_filter, ddl_tables
-        )
+        self._dml_parser = DMLParser(self._schema_resolver, self._temp_filter, ddl_tables)
 
         # Phase 2: 解析 DML
         # ★ 优化：DML 目录下的文件如果 DML 解析无产出，回退尝试 DDL
@@ -169,6 +167,7 @@ class WarehouseSQLParser:
                             len(sql_files),
                         )
                         from concurrent.futures import ThreadPoolExecutor, as_completed
+
                         with ThreadPoolExecutor(max_workers=4) as pool:
                             futures = {pool.submit(self._ddl_parser.parse_file, f): f for f in sql_files}
                             for future in as_completed(futures):
@@ -176,17 +175,23 @@ class WarehouseSQLParser:
                                     ddl_result = future.result()
                                     if ddl_result and ddl_result.columns:
                                         ddl_tables[ddl_result.table_name] = ddl_result
-                                        total_output.tables.append({
-                                            "full_name": ddl_result.full_name,
-                                            "schema": ddl_result.schema,
-                                            "table_name": ddl_result.table_name,
-                                            "comment": ddl_result.comment,
-                                            "columns": [
-                                                {"name": c.name, "data_type": c.data_type, "comment": c.comment}
-                                                for c in ddl_result.columns
-                                            ],
-                                            "primary_keys": ddl_result.primary_keys,
-                                        })
+                                        total_output.tables.append(
+                                            {
+                                                "full_name": ddl_result.full_name,
+                                                "schema": ddl_result.schema,
+                                                "table_name": ddl_result.table_name,
+                                                "comment": ddl_result.comment,
+                                                "columns": [
+                                                    {
+                                                        "name": c.name,
+                                                        "data_type": c.data_type,
+                                                        "comment": c.comment,
+                                                    }
+                                                    for c in ddl_result.columns
+                                                ],
+                                                "primary_keys": ddl_result.primary_keys,
+                                            }
+                                        )
                                         ddl_fallback_count += 1
                                 except Exception as e:
                                     logger.warning("DDL 回退解析失败: %s", e)
@@ -229,15 +234,16 @@ class WarehouseSQLParser:
     def _table_info_to_output(self, table_info) -> ParseOutput:
         output = ParseOutput()
         if table_info is not None:
-            output.tables.append({
-                "full_name": table_info.full_name,
-                "schema": table_info.schema,
-                "table_name": table_info.table_name,
-                "comment": table_info.comment,
-                "columns": [
-                    {"name": c.name, "data_type": c.data_type, "comment": c.comment}
-                    for c in table_info.columns
-                ],
-                "primary_keys": table_info.primary_keys,
-            })
+            output.tables.append(
+                {
+                    "full_name": table_info.full_name,
+                    "schema": table_info.schema,
+                    "table_name": table_info.table_name,
+                    "comment": table_info.comment,
+                    "columns": [
+                        {"name": c.name, "data_type": c.data_type, "comment": c.comment} for c in table_info.columns
+                    ],
+                    "primary_keys": table_info.primary_keys,
+                }
+            )
         return output

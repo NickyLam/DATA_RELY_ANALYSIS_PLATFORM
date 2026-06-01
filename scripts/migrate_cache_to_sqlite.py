@@ -54,7 +54,7 @@ def load_from_json(json_path: Path) -> dict | None:
     if not json_path.exists():
         return None
     try:
-        with open(json_path, "r", encoding="utf-8") as f:
+        with open(json_path, encoding="utf-8") as f:
             data = json.load(f)
         logger.info("从 JSON 加载: %s", json_path)
         return data
@@ -78,11 +78,15 @@ def validate_data(data: dict) -> bool:
 def main():
     parser = argparse.ArgumentParser(description="迁移缓存到 SQLite")
     parser.add_argument(
-        "--input", type=Path, default=None,
+        "--input",
+        type=Path,
+        default=None,
         help="输入缓存文件路径 (pickle 或 json)，默认自动检测",
     )
     parser.add_argument(
-        "--output", type=Path, default=Path("output/lineage.db"),
+        "--output",
+        type=Path,
+        default=Path("output/lineage.db"),
         help="输出 SQLite 文件路径 (默认: output/lineage.db)",
     )
     args = parser.parse_args()
@@ -125,9 +129,18 @@ def main():
     logger.info("源数据统计:")
     logger.info("  表: %s", metadata.get("total_tables", 0))
     logger.info("  过程: %s", metadata.get("total_procedures", 0))
-    logger.info("  血缘: %s", metadata.get("total_table_lineages", len(data.get("table_lineages", []))))
-    logger.info("  映射: %s", metadata.get("total_field_mappings", len(data.get("field_mappings", []))))
-    logger.info("  口径: %s", metadata.get("total_caliber_infos", len(data.get("caliber_infos", []))))
+    logger.info(
+        "  血缘: %s",
+        metadata.get("total_table_lineages", len(data.get("table_lineages", []))),
+    )
+    logger.info(
+        "  映射: %s",
+        metadata.get("total_field_mappings", len(data.get("field_mappings", []))),
+    )
+    logger.info(
+        "  口径: %s",
+        metadata.get("total_caliber_infos", len(data.get("caliber_infos", []))),
+    )
 
     # 写入 SQLite
     from app.services.storage.sqlite_store import SQLiteResultStore

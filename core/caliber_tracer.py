@@ -19,8 +19,9 @@ from __future__ import annotations
 import logging
 import time
 from collections import deque
-from dataclasses import dataclass, field as dc_field
-from typing import Any, Optional
+from dataclasses import dataclass
+from dataclasses import field as dc_field
+from typing import Any
 
 from core.base_tracer import BaseTracer
 from core.caliber_extractor import CaliberExtractor
@@ -71,7 +72,6 @@ class _CaliberSourceRecord:
 
 
 class CaliberTracer(BaseTracer):
-
     def __init__(
         self,
         tables: dict[str, TableInfo],
@@ -89,8 +89,7 @@ class CaliberTracer(BaseTracer):
 
         self._build_caliber_indexes()
         logger.info(
-            "CaliberTracer 初始化完成: %d 张表, %d 个过程, "
-            "%d 条字段映射, %d 条口径信息",
+            "CaliberTracer 初始化完成: %d 张表, %d 个过程, %d 条字段映射, %d 条口径信息",
             len(tables),
             len(procedures),
             len(field_mappings),
@@ -119,8 +118,8 @@ class CaliberTracer(BaseTracer):
         target_table: str,
         target_field: str,
         direction: str = "upstream",
-        max_depth: Optional[int] = None,
-        data_source: Optional[str] = None,
+        max_depth: int | None = None,
+        data_source: str | None = None,
     ) -> CaliberResult:
         t0 = time.perf_counter()
         depth = max_depth or self.max_depth
@@ -128,7 +127,13 @@ class CaliberTracer(BaseTracer):
         norm_table = self.normalize_name(target_table)
         norm_field = target_field.upper().strip()
 
-        logger.info("开始追溯口径: %s.%s, 方向=%s, 深度=%d", norm_table, norm_field, direction, depth)
+        logger.info(
+            "开始追溯口径: %s.%s, 方向=%s, 深度=%d",
+            norm_table,
+            norm_field,
+            direction,
+            depth,
+        )
 
         chains: list[CaliberChain] = []
 
@@ -143,11 +148,7 @@ class CaliberTracer(BaseTracer):
         elapsed_ms = (time.perf_counter() - t0) * 1000
 
         total_steps = sum(len(c.steps) for c in chains)
-        total_conds = sum(
-            len(s.where_conditions) + len(s.join_conditions)
-            for c in chains
-            for s in c.steps
-        )
+        total_conds = sum(len(s.where_conditions) + len(s.join_conditions) for c in chains for s in c.steps)
 
         result = CaliberResult(
             target_table=norm_table,
@@ -171,19 +172,11 @@ class CaliberTracer(BaseTracer):
         )
         return result
 
-    def trace_upstream(
-        self, target_table: str, target_field: str, max_depth: int = 10
-    ) -> list[CaliberChain]:
-        return self._trace_upstream(
-            self.normalize_name(target_table), target_field.upper(), max_depth
-        )
+    def trace_upstream(self, target_table: str, target_field: str, max_depth: int = 10) -> list[CaliberChain]:
+        return self._trace_upstream(self.normalize_name(target_table), target_field.upper(), max_depth)
 
-    def trace_downstream(
-        self, target_table: str, target_field: str, max_depth: int = 10
-    ) -> list[CaliberChain]:
-        return self._trace_downstream(
-            self.normalize_name(target_table), target_field.upper(), max_depth
-        )
+    def trace_downstream(self, target_table: str, target_field: str, max_depth: int = 10) -> list[CaliberChain]:
+        return self._trace_downstream(self.normalize_name(target_table), target_field.upper(), max_depth)
 
     def get_direct_sources(self, table: str, field: str) -> list[_CaliberSourceRecord]:
         key = self.make_key(self.normalize_name(table), field.upper())
@@ -197,20 +190,22 @@ class CaliberTracer(BaseTracer):
 
     def generate_summary_text(self, result: CaliberResult) -> str:
         lines: list[str] = []
-        lines.append(f"## 指标口径分析报告")
-        lines.append(f"")
+        lines.append("## 指标口径分析报告")
+        lines.append("")
         lines.append(f"- **目标**: `{result.target_table}.{result.target_column}`")
         lines.append(f"- **链路数**: {len(result.chains)}")
         lines.append(f"- **总步骤**: {result.total_steps}")
         lines.append(f"- **总条件数**: {result.total_conditions}")
         lines.append(f"- **查询耗时**: {result.query_time_ms:.1f}ms")
-        lines.append(f"")
+        lines.append("")
 
         for i, chain in enumerate(result.chains):
             lines.append(f"### 链路 #{i + 1}（深度: {chain.depth}）")
             lines.append("")
             for j, step in enumerate(chain.steps):
-                lines.append(f"**Step {j + 1}**: `{step.source_table}.{step.source_column}` → `{step.target_table}.{step.target_column}`")
+                lines.append(
+                    f"**Step {j + 1}**: `{step.source_table}.{step.source_column}` → `{step.target_table}.{step.target_column}`"
+                )
 
                 if step.transform_logic:
                     lines.append(f"  - 转换逻辑: `{step.transform_logic}`")
@@ -251,18 +246,20 @@ class CaliberTracer(BaseTracer):
         start_table: str,
         start_field: str,
         max_depth: int,
-        data_source: Optional[str] = None,
+        data_source: str | None = None,
     ) -> list[CaliberChain]:
         start_key = self.make_key(start_table, start_field)
 
         visited: set[tuple[str, str]] = {start_key}
         queue: deque[_CaliberBFSNode] = deque()
-        queue.append(_CaliberBFSNode(
-            table_name=start_table,
-            field_name=start_field,
-            depth=0,
-            parent_key="",
-        ))
+        queue.append(
+            _CaliberBFSNode(
+                table_name=start_table,
+                field_name=start_field,
+                depth=0,
+                parent_key="",
+            )
+        )
 
         bfs_tree: dict[str, _CaliberBFSNode] = {
             start_key: _CaliberBFSNode(
@@ -283,9 +280,7 @@ class CaliberTracer(BaseTracer):
                 leaf_paths.append(path)
                 continue
 
-            sources = self._find_upstream_sources(
-                current.table_name, current.field_name, data_source
-            )
+            sources = self._find_upstream_sources(current.table_name, current.field_name, data_source)
 
             if not sources:
                 path = self._reconstruct_path(bfs_tree, current)
@@ -346,18 +341,20 @@ class CaliberTracer(BaseTracer):
         start_table: str,
         start_field: str,
         max_depth: int,
-        data_source: Optional[str] = None,
+        data_source: str | None = None,
     ) -> list[CaliberChain]:
         start_key = self.make_key(start_table, start_field)
 
         visited: set[tuple[str, str]] = {start_key}
         queue: deque[_CaliberBFSNode] = deque()
-        queue.append(_CaliberBFSNode(
-            table_name=start_table,
-            field_name=start_field,
-            depth=0,
-            parent_key="",
-        ))
+        queue.append(
+            _CaliberBFSNode(
+                table_name=start_table,
+                field_name=start_field,
+                depth=0,
+                parent_key="",
+            )
+        )
 
         bfs_tree: dict[str, _CaliberBFSNode] = {
             start_key: _CaliberBFSNode(
@@ -378,9 +375,7 @@ class CaliberTracer(BaseTracer):
                 leaf_paths.append(path)
                 continue
 
-            targets = self._find_downstream_targets(
-                current.table_name, current.field_name, data_source
-            )
+            targets = self._find_downstream_targets(current.table_name, current.field_name, data_source)
 
             if not targets:
                 path = self._reconstruct_path(bfs_tree, current)
@@ -451,9 +446,7 @@ class CaliberTracer(BaseTracer):
         chains = self._paths_to_chains(leaf_paths, start_table, start_field)
         return chains
 
-    def _find_upstream_sources(
-        self, table: str, field: str, data_source: Optional[str]
-    ) -> list[_CaliberSourceRecord]:
+    def _find_upstream_sources(self, table: str, field: str, data_source: str | None) -> list[_CaliberSourceRecord]:
         results: list[_CaliberSourceRecord] = []
         short_table = self.normalize_name(table).split(".")[-1]
         field_upper = field.upper()
@@ -572,29 +565,29 @@ class CaliberTracer(BaseTracer):
                                 matched = True
 
             if not matched:
-                results.append(_CaliberSourceRecord(
-                    source_table=tl.source_table,
-                    source_column=field_upper,
-                    target_table=tl.target_table,
-                    target_column=field_upper,
-                    transform_logic="TABLE_LINEAGE_FALLBACK",
-                    where_conditions=[],
-                    join_conditions=[],
-                    group_by_clause="",
-                    having_clause="",
-                    procedure=tl.procedure or "",
-                    step_num=0,
-                    step_desc="表级血缘回退(同名字段匹配)",
-                    data_source="oracle",
-                    raw_sql_fragment="",
-                    confidence=0.5,
-                ))
+                results.append(
+                    _CaliberSourceRecord(
+                        source_table=tl.source_table,
+                        source_column=field_upper,
+                        target_table=tl.target_table,
+                        target_column=field_upper,
+                        transform_logic="TABLE_LINEAGE_FALLBACK",
+                        where_conditions=[],
+                        join_conditions=[],
+                        group_by_clause="",
+                        having_clause="",
+                        procedure=tl.procedure or "",
+                        step_num=0,
+                        step_desc="表级血缘回退(同名字段匹配)",
+                        data_source="oracle",
+                        raw_sql_fragment="",
+                        confidence=0.5,
+                    )
+                )
 
         return results
 
-    def _find_downstream_targets(
-        self, table: str, field: str, data_source: Optional[str]
-    ) -> list[_CaliberSourceRecord]:
+    def _find_downstream_targets(self, table: str, field: str, data_source: str | None) -> list[_CaliberSourceRecord]:
         results: list[_CaliberSourceRecord] = []
         short_table = self.normalize_name(table).split(".")[-1]
         field_upper = field.upper()
@@ -700,29 +693,29 @@ class CaliberTracer(BaseTracer):
                                 matched = True
 
             if not matched:
-                results.append(_CaliberSourceRecord(
-                    source_table=tl.source_table,
-                    source_column=field_upper,
-                    target_table=tl.target_table,
-                    target_column=field_upper,
-                    transform_logic="TABLE_LINEAGE_FALLBACK",
-                    where_conditions=[],
-                    join_conditions=[],
-                    group_by_clause="",
-                    having_clause="",
-                    procedure=tl.procedure or "",
-                    step_num=0,
-                    step_desc="表级血缘回退(同名字段匹配)",
-                    data_source="oracle",
-                    raw_sql_fragment="",
-                    confidence=0.5,
-                ))
+                results.append(
+                    _CaliberSourceRecord(
+                        source_table=tl.source_table,
+                        source_column=field_upper,
+                        target_table=tl.target_table,
+                        target_column=field_upper,
+                        transform_logic="TABLE_LINEAGE_FALLBACK",
+                        where_conditions=[],
+                        join_conditions=[],
+                        group_by_clause="",
+                        having_clause="",
+                        procedure=tl.procedure or "",
+                        step_num=0,
+                        step_desc="表级血缘回退(同名字段匹配)",
+                        data_source="oracle",
+                        raw_sql_fragment="",
+                        confidence=0.5,
+                    )
+                )
 
         return results
 
-    def _reconstruct_path(
-        self, tree: dict[str, _CaliberBFSNode], end_node: _CaliberBFSNode
-    ) -> list[_CaliberBFSNode]:
+    def _reconstruct_path(self, tree: dict[str, _CaliberBFSNode], end_node: _CaliberBFSNode) -> list[_CaliberBFSNode]:
         path: list[_CaliberBFSNode] = []
         current = end_node
         while True:
@@ -756,7 +749,8 @@ class CaliberTracer(BaseTracer):
 
                 src_short = src_table.split(".")[-1].upper() if src_table else ""
                 matching_records = [
-                    r for r in records
+                    r
+                    for r in records
                     if r.get("source_table", "").upper().split(".")[-1] == src_short
                     and r.get("source_column", "").upper() == src_field.upper()
                 ]
@@ -771,7 +765,8 @@ class CaliberTracer(BaseTracer):
                     for variant in src_variants:
                         v_short = variant.split(".")[-1].upper()
                         matching_records = [
-                            r for r in records
+                            r
+                            for r in records
                             if r.get("source_table", "").upper().split(".")[-1] == v_short
                             and r.get("source_column", "").upper() == src_field.upper()
                         ]
@@ -786,8 +781,16 @@ class CaliberTracer(BaseTracer):
                     if node.procedure:
                         ci.procedure = node.procedure
 
-                    ci_src_short = ci.source_table.split(".")[-1] if ci.source_table and "." in ci.source_table else (ci.source_table or "")
-                    ci_tgt_short = ci.target_table.split(".")[-1] if ci.target_table and "." in ci.target_table else (ci.target_table or "")
+                    ci_src_short = (
+                        ci.source_table.split(".")[-1]
+                        if ci.source_table and "." in ci.source_table
+                        else (ci.source_table or "")
+                    )
+                    ci_tgt_short = (
+                        ci.target_table.split(".")[-1]
+                        if ci.target_table and "." in ci.target_table
+                        else (ci.target_table or "")
+                    )
                     if not ci_src_short.strip() or not ci_tgt_short.strip():
                         continue
 
@@ -799,17 +802,29 @@ class CaliberTracer(BaseTracer):
                     if not self.is_upstream_layer_compatible(ci.source_table, ci.target_table):
                         logger.debug(
                             "口径步骤层级不兼容，跳过: %s → %s",
-                            ci.source_table, ci.target_table,
+                            ci.source_table,
+                            ci.target_table,
                         )
                         continue
 
                     if steps:
                         prev_step = steps[-1]
-                        prev_s = prev_step.source_table.split(".")[-1] if prev_step.source_table and "." in prev_step.source_table else (prev_step.source_table or "")
-                        prev_t = prev_step.target_table.split(".")[-1] if prev_step.target_table and "." in prev_step.target_table else (prev_step.target_table or "")
-                        if (ci_src_short == prev_s and ci_tgt_short == prev_t
-                                and ci.source_column.upper() == prev_step.source_column.upper()
-                                and ci.target_column.upper() == prev_step.target_column.upper()):
+                        prev_s = (
+                            prev_step.source_table.split(".")[-1]
+                            if prev_step.source_table and "." in prev_step.source_table
+                            else (prev_step.source_table or "")
+                        )
+                        prev_t = (
+                            prev_step.target_table.split(".")[-1]
+                            if prev_step.target_table and "." in prev_step.target_table
+                            else (prev_step.target_table or "")
+                        )
+                        if (
+                            ci_src_short == prev_s
+                            and ci_tgt_short == prev_t
+                            and ci.source_column.upper() == prev_step.source_column.upper()
+                            and ci.target_column.upper() == prev_step.target_column.upper()
+                        ):
                             continue
 
                     steps.append(ci)
@@ -827,32 +842,48 @@ class CaliberTracer(BaseTracer):
                     if not self.is_upstream_layer_compatible(src_table, tgt_table):
                         logger.debug(
                             "口径步骤层级不兼容(回退)，跳过: %s → %s",
-                            src_table, tgt_table,
+                            src_table,
+                            tgt_table,
                         )
                         continue
 
                     if steps:
                         prev_step = steps[-1]
-                        prev_s = prev_step.source_table.split(".")[-1] if prev_step.source_table and "." in prev_step.source_table else (prev_step.source_table or "")
-                        prev_t = prev_step.target_table.split(".")[-1] if prev_step.target_table and "." in prev_step.target_table else (prev_step.target_table or "")
-                        if (src_short_name == prev_s and tgt_short_name == prev_t
-                                and src_field.upper() == prev_step.source_column.upper()
-                                and tgt_field.upper() == prev_step.target_column.upper()):
+                        prev_s = (
+                            prev_step.source_table.split(".")[-1]
+                            if prev_step.source_table and "." in prev_step.source_table
+                            else (prev_step.source_table or "")
+                        )
+                        prev_t = (
+                            prev_step.target_table.split(".")[-1]
+                            if prev_step.target_table and "." in prev_step.target_table
+                            else (prev_step.target_table or "")
+                        )
+                        if (
+                            src_short_name == prev_s
+                            and tgt_short_name == prev_t
+                            and src_field.upper() == prev_step.source_column.upper()
+                            and tgt_field.upper() == prev_step.target_column.upper()
+                        ):
                             continue
 
-                    steps.append(CaliberInfo(
-                        source_location=SourceLocation(
-                            source_table=src_table,
-                            source_column=src_field,
-                        ),
-                        target_table=tgt_table,
-                        target_column=tgt_field,
-                        procedure=node.procedure or "",
-                        confidence=0.5,
-                        source_table_layer=src_layer,
-                        target_table_layer=detect_layer(tgt_table).value if tgt_table else "",
-                        step_desc="表级血缘回退(同名字段匹配)" if node.procedure == "TABLE_LINEAGE_FALLBACK" else "",
-                    ))
+                    steps.append(
+                        CaliberInfo(
+                            source_location=SourceLocation(
+                                source_table=src_table,
+                                source_column=src_field,
+                            ),
+                            target_table=tgt_table,
+                            target_column=tgt_field,
+                            procedure=node.procedure or "",
+                            confidence=0.5,
+                            source_table_layer=src_layer,
+                            target_table_layer=detect_layer(tgt_table).value if tgt_table else "",
+                            step_desc="表级血缘回退(同名字段匹配)"
+                            if node.procedure == "TABLE_LINEAGE_FALLBACK"
+                            else "",
+                        )
+                    )
 
             if not steps:
                 continue
@@ -860,8 +891,7 @@ class CaliberTracer(BaseTracer):
             self._inject_accumulated_conditions(steps)
 
             signature = "|".join(
-                f"{s.source_table}.{s.source_column}->{s.target_table}.{s.target_column}"
-                for s in steps
+                f"{s.source_table}.{s.source_column}->{s.target_table}.{s.target_column}" for s in steps
             )
             if signature in seen_chain_signatures:
                 continue
@@ -904,9 +934,7 @@ class CaliberTracer(BaseTracer):
             step.accumulated_where = deduped_where
             step.accumulated_join = deduped_join
 
-    def _get_records_for_node(
-        self, key: tuple[str, str], node: _CaliberBFSNode
-    ) -> list[Any]:
+    def _get_records_for_node(self, key: tuple[str, str], node: _CaliberBFSNode) -> list[Any]:
         records = self._target_idx.get(key, [])
         if not records:
             short_key = (
@@ -945,7 +973,7 @@ class CaliberTracer(BaseTracer):
         )
 
     @staticmethod
-    def _field_mapping_to_caliber(fm: FieldMapping, procedure: str) -> Optional[_CaliberSourceRecord]:
+    def _field_mapping_to_caliber(fm: FieldMapping, procedure: str) -> _CaliberSourceRecord | None:
         if not fm.source_table or not fm.source_column:
             return None
         return _CaliberSourceRecord(

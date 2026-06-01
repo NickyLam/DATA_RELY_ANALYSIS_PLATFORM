@@ -26,12 +26,11 @@ from __future__ import annotations
 import logging
 import time
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Any
 
 from core.caliber_tracer import CaliberTracer
 from core.lineage_tracer import LineageTracer
 from core.models import (
-    CaliberInfo,
     CaliberResult,
     FieldLineageResult,
     FieldMapping,
@@ -66,7 +65,7 @@ class UnifiedEdge:
     target_field: str
     procedure: str = ""
     transform_logic: str = ""
-    caliber_key: Optional[tuple[str, str, str, str, str]] = None
+    caliber_key: tuple[str, str, str, str, str] | None = None
 
 
 @dataclass
@@ -99,7 +98,7 @@ class UnifiedTracer:
         procedures: dict[str, ProcedureInfo],
         table_lineages: list[TableLineage],
         field_mappings: list[FieldMapping],
-        caliber_infos: Optional[list[dict]] = None,
+        caliber_infos: list[dict] | None = None,
         max_depth: int = 10,
     ) -> None:
         self.tables = tables
@@ -117,7 +116,7 @@ class UnifiedTracer:
             max_depth=max_depth,
         )
 
-        self._caliber: Optional[CaliberTracer] = None
+        self._caliber: CaliberTracer | None = None
         if self.caliber_infos:
             try:
                 self._caliber = CaliberTracer(
@@ -133,8 +132,11 @@ class UnifiedTracer:
 
         logger.info(
             "UnifiedTracer 初始化完成: %d 张表, %d 过程, %d 表级血缘, %d 字段映射, %d 口径",
-            len(tables), len(procedures), len(table_lineages),
-            len(field_mappings), len(self.caliber_infos),
+            len(tables),
+            len(procedures),
+            len(table_lineages),
+            len(field_mappings),
+            len(self.caliber_infos),
         )
 
     # -------------------------------------------------------------------
@@ -145,7 +147,7 @@ class UnifiedTracer:
         self,
         table: str,
         field: str,
-        depth: Optional[int] = None,
+        depth: int | None = None,
         mode: str = "upstream",
         with_caliber: bool = False,
     ) -> UnifiedLineageResult:
@@ -170,7 +172,8 @@ class UnifiedTracer:
             chains_down = self._lineage.trace_field_downstream(table, field, depth)
 
         nodes, edges, max_layer = self._chains_to_graph(
-            chains_up, chains_down,
+            chains_up,
+            chains_down,
         )
 
         caliber_steps: dict[tuple[str, str, str, str, str], dict] = {}
@@ -185,8 +188,10 @@ class UnifiedTracer:
                 )
                 edge.caliber_key = key
                 ci = self._lookup_caliber_step(
-                    edge.source_table, edge.source_field,
-                    edge.target_table, edge.target_field,
+                    edge.source_table,
+                    edge.source_field,
+                    edge.target_table,
+                    edge.target_field,
                     edge.procedure,
                 )
                 if ci:
@@ -219,7 +224,7 @@ class UnifiedTracer:
         tgt_table: str,
         tgt_column: str,
         procedure: str = "",
-    ) -> Optional[dict]:
+    ) -> dict | None:
         """O(1) 查询单条边的口径详情。
 
         命中策略与 CaliberTracer._paths_to_chains 中的匹配逻辑保持一致：
@@ -230,29 +235,26 @@ class UnifiedTracer:
         """
         if not self._caliber:
             return None
-        return self._lookup_caliber_step(
-            src_table, src_column, tgt_table, tgt_column, procedure
-        )
+        return self._lookup_caliber_step(src_table, src_column, tgt_table, tgt_column, procedure)
 
     def get_node_detail(self, table: str) -> dict[str, Any]:
         """节点详情：表的字段列表 + 上下游表 + 关联的过程。"""
         norm = self._lineage.normalize_name(table)
         short = self._short_table(norm)
 
-        tbl_info = (
-            self.tables.get(norm)
-            or self.tables.get(short)
-        )
+        tbl_info = self.tables.get(norm) or self.tables.get(short)
 
         fields: list[dict] = []
         if tbl_info and getattr(tbl_info, "columns", None):
             for c in tbl_info.columns:
-                fields.append({
-                    "name": getattr(c, "name", "") or getattr(c, "column_name", ""),
-                    "type": getattr(c, "data_type", ""),
-                    "comment": getattr(c, "comment", ""),
-                    "nullable": getattr(c, "nullable", True),
-                })
+                fields.append(
+                    {
+                        "name": getattr(c, "name", "") or getattr(c, "column_name", ""),
+                        "type": getattr(c, "data_type", ""),
+                        "comment": getattr(c, "comment", ""),
+                        "nullable": getattr(c, "nullable", True),
+                    }
+                )
 
         upstream = self._lineage.get_upstream_tables(norm)
         downstream = self._lineage.get_downstream_tables(norm)
@@ -285,7 +287,14 @@ class UnifiedTracer:
         edges_by_key: dict[tuple, UnifiedEdge] = {}
         max_layer = 0
 
-        def _add_node(table: str, field: str, layer: int, layer_type: str, is_temp: bool, procedure: str) -> None:
+        def _add_node(
+            table: str,
+            field: str,
+            layer: int,
+            layer_type: str,
+            is_temp: bool,
+            procedure: str,
+        ) -> None:
             nid = f"{table}.{field}"
             existing = nodes_by_id.get(nid)
             if existing is None:
@@ -304,10 +313,22 @@ class UnifiedTracer:
 
         for chain in chains_up:
             for i, node in enumerate(chain.chain):
-                _add_node(node.table_name, node.field_name, i, node.layer_type, node.is_temp, node.procedure)
+                _add_node(
+                    node.table_name,
+                    node.field_name,
+                    i,
+                    node.layer_type,
+                    node.is_temp,
+                    node.procedure,
+                )
                 if i > 0:
                     prev = chain.chain[i - 1]
-                    key = (prev.table_name, prev.field_name, node.table_name, node.field_name)
+                    key = (
+                        prev.table_name,
+                        prev.field_name,
+                        node.table_name,
+                        node.field_name,
+                    )
                     if key not in edges_by_key:
                         edges_by_key[key] = UnifiedEdge(
                             source_table=prev.table_name,
@@ -322,10 +343,22 @@ class UnifiedTracer:
 
         for chain in chains_down:
             for i, node in enumerate(chain.chain):
-                _add_node(node.table_name, node.field_name, i, node.layer_type, node.is_temp, node.procedure)
+                _add_node(
+                    node.table_name,
+                    node.field_name,
+                    i,
+                    node.layer_type,
+                    node.is_temp,
+                    node.procedure,
+                )
                 if i > 0:
                     prev = chain.chain[i - 1]
-                    key = (prev.table_name, prev.field_name, node.table_name, node.field_name)
+                    key = (
+                        prev.table_name,
+                        prev.field_name,
+                        node.table_name,
+                        node.field_name,
+                    )
                     if key not in edges_by_key:
                         edges_by_key[key] = UnifiedEdge(
                             source_table=prev.table_name,
@@ -347,7 +380,7 @@ class UnifiedTracer:
         tgt_table: str,
         tgt_column: str,
         procedure: str = "",
-    ) -> Optional[dict]:
+    ) -> dict | None:
         if not self._caliber:
             return None
 
@@ -359,10 +392,7 @@ class UnifiedTracer:
         tgt_col = tgt_column.upper().strip()
 
         target_idx = getattr(self._caliber, "_target_idx", {})
-        candidates = (
-            target_idx.get((tgt_short, tgt_col), [])
-            or target_idx.get((norm_tgt, tgt_col), [])
-        )
+        candidates = target_idx.get((tgt_short, tgt_col), []) or target_idx.get((norm_tgt, tgt_col), [])
         if not candidates:
             return None
 
@@ -409,9 +439,9 @@ class UnifiedTracer:
         table: str,
         field: str,
         direction: str = "upstream",
-        max_depth: Optional[int] = None,
-        data_source: Optional[str] = None,
-    ) -> Optional[CaliberResult]:
+        max_depth: int | None = None,
+        data_source: str | None = None,
+    ) -> CaliberResult | None:
         if not self._caliber:
             return None
         return self._caliber.trace_caliber(
@@ -427,5 +457,5 @@ class UnifiedTracer:
         return self._lineage
 
     @property
-    def caliber_tracer(self) -> Optional[CaliberTracer]:
+    def caliber_tracer(self) -> CaliberTracer | None:
         return self._caliber

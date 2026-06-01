@@ -1,0 +1,167 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_idl_crss_guaranty_info_f
+CreateDate: 20180529
+FileName:   ${iel_data_path}/crss_guaranty_info.f.${batch_date}.dat
+IF_mark:    f
+Logs:
+   zjj 2018-07-27 create template
+' \
+        query="select
+to_date('${batch_date}','yyyymmdd') as etl_dt
+,guarantyid
+,guarantytype
+,guarantystatus
+,ownerid
+,ownername
+,ownertype
+,rate
+,custguarantytype
+,subjectno
+,relativeaccount
+,guarantyrightid
+,otherguarantyright
+,guarantyname
+,guarantysubtype
+,guarantyownway
+,guarantyusing
+,guarantylocation
+,guarantyamount
+,guarantyamount1
+,guarantyamount2
+,guarantyresouce
+,guarantydate
+,begindate
+,ownertime
+,guarantydescript
+,aboutotherid1
+,aboutotherid2
+,aboutotherid3
+,aboutotherid4
+,purpose
+,aboutsum1
+,aboutsum2
+,aboutrate
+,guarantyana
+,guarantyprice
+,evalmethod
+,evalorgid
+,evalorgname
+,evaldate
+,evalnetvalue
+,confirmvalue
+,guarantyrate
+,thirdparty1
+,thirdparty2
+,thirdparty3
+,guarantydescribe1
+,guarantydescribe2
+,guarantydescribe3
+,flag1
+,flag2
+,flag3
+,flag4
+,guarantyregno
+,guarantyregorg
+,guarantyregdate
+,guarantywodate
+,insurecertno
+,otherassumpsit
+,inputorgid
+,inputuserid
+,inputdate
+,updateuserid
+,updatedate
+,remark
+,sapvouchtype
+,certtype
+,certid
+,loancardno
+,guarantycurrency
+,evalcurrency
+,guarantydescribe4
+,status
+,eguarantyquality
+,eguarantyamount
+,eguarantyname
+,eguarantyright
+,eguarantyshare
+,eguarantyowner
+,eguarantyothersituation
+,pledgename
+,evaluatenetvalue
+,spareyear
+,buytime
+,buyprice
+,unitprice
+,guarantynumber
+,insurefirmname
+,insuredate
+,insuresum
+,insurecontent
+,nowstate
+,ifguarantyflag
+,rwaguarantytype
+,guarantypublishtype
+,evaluatemeans
+,ifsure
+,islowrisk
+,drawee
+,ownerrelative
+,enddate
+,custodyability
+,impawncustody
+,mortgagepledgevalue
+,jointowner
+,flag5
+,commercebackdrop
+,querycase
+,chamberlain
+,putoutorgid
+,trandt
+,transq
+,otherguarrigper
+,ischange
+,newhnmber
+,newhaddress
+,zqno
+,guarantycompany
+,commercialhousingcontract
+,chitnd
+,carbrand
+,cartype
+,carnumber
+,chariotnumber
+,motornumber
+,subguarantyrightid
+,recordlogno
+,updateflag
+,inputoffice
+,tempsaveflag
+,grteac
+,account
+,fpflag
+,fpserialno
+,swtbizid
+,isinuse
+,hbname1
+,hbname2
+,qzname
+,bwstartdate
+,djendtime
+,hbdate
+,qzendtime
+,ifbwhs
+,approveno
+,ypguarantytype
+,ypguarantyid
+,start_dt
+,end_dt
+,id_mark
+from idl.crss_guaranty_info
+where start_dt <= to_date('${batch_date}','yyyymmdd') and end_dt > to_date('${batch_date}','yyyymmdd')" \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/crss_guaranty_info.f.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes

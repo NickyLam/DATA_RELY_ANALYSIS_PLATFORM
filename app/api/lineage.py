@@ -49,9 +49,7 @@ def search_tables(
 
     results = lineage_service.search_tables(keyword, limit)
 
-    table_list = [
-        TableListItem(**item) for item in results
-    ]
+    table_list = [TableListItem(**item) for item in results]
 
     return TableInfoResponse(data=table_list)
 

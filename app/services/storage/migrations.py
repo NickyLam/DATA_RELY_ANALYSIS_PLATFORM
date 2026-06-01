@@ -8,8 +8,6 @@ SQLite 数据库 schema 迁移管理
 from __future__ import annotations
 
 import sqlite3
-from typing import Optional
-
 
 SCHEMA_VERSION = 1
 
@@ -167,16 +165,12 @@ def init_schema(conn: sqlite3.Connection) -> None:
     conn.commit()
 
 
-def get_schema_version(conn: sqlite3.Connection) -> Optional[int]:
+def get_schema_version(conn: sqlite3.Connection) -> int | None:
     """读取当前数据库的 schema 版本。"""
     try:
-        row = conn.execute(
-            "SELECT value FROM storage_metadata WHERE key = 'cache_schema_version'"
-        ).fetchone()
+        row = conn.execute("SELECT value FROM storage_metadata WHERE key = 'cache_schema_version'").fetchone()
         if row:
             return int(row[0])
     except sqlite3.OperationalError:
         pass
     return None
-
-

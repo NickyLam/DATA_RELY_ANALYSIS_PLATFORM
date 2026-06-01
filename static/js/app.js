@@ -165,7 +165,7 @@ async function showSystemStats() {
                 <div style="margin-top:20px;padding:16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;">
                     <div style="font-size:13px;color:#166534;">✅ 缓存已启用 | 缓存条目: ${stats.cache_size}</div>
                 </div>` : ''}
-                <button onclick="this.closest('div').remove()" 
+                <button onclick="this.closest('div').remove()"
                     style="margin-top:20px;width:100%;padding:10px;background:#f1f5f9;border:none;border-radius:6px;cursor:pointer;font-size:13px;">
                     关闭
                 </button>
@@ -191,7 +191,7 @@ async function showSystemStats() {
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
     console.log('%c🔗 数据血缘分析系统 v2.0 已启动', 'color:#6366f1;font-size:14px;font-weight:bold;');
-    
+
     checkSystemHealth();
 
     // 默认激活展示层，确保初始化

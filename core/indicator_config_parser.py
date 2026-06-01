@@ -105,7 +105,6 @@ def _is_skip_table(table_name: str) -> bool:
 
 
 class IndicatorConfigParser:
-
     def __init__(self, data_path: Path | str) -> None:
         self.data_path = Path(data_path)  # ★ 修复：确保 data_path 始终为 Path 对象
         self._sql_parser = IndicatorSQLParser()
@@ -138,7 +137,7 @@ class IndicatorConfigParser:
             logger.exception("解析存储过程文件失败")
             result.procedures = {}
 
-        elapsed_sec = (time.time() - start)
+        elapsed_sec = time.time() - start
         result.parse_time_sec = round(elapsed_sec, 3)
         logger.info(
             "指标配置解析完成: %d 基础指标, %d 总账指标, %d 依赖关系, %d 存储过程, 耗时 %.1f ms",
@@ -163,7 +162,17 @@ class IndicatorConfigParser:
     def _parse_base_calc_excel(self) -> list[IndicatorCalcBase]:
         excel_path = self._resolve_excel_path()
         if not excel_path.exists():
-            logger.warning("Excel 文件不存在: %s (已搜索: %s)", excel_path, ", ".join(str(p) for p in [self.data_path / _EXCEL_FILENAME, self.data_path / "config" / _EXCEL_FILENAME]))
+            logger.warning(
+                "Excel 文件不存在: %s (已搜索: %s)",
+                excel_path,
+                ", ".join(
+                    str(p)
+                    for p in [
+                        self.data_path / _EXCEL_FILENAME,
+                        self.data_path / "config" / _EXCEL_FILENAME,
+                    ]
+                ),
+            )
             return []
 
         wb = openpyxl.load_workbook(str(excel_path), read_only=True, data_only=True)
@@ -205,18 +214,10 @@ class IndicatorConfigParser:
                     if extracted and not calc.src_table_name:
                         calc.src_table_name = ",".join(extracted)
                     elif extracted:
-                        existing = {
-                            t.strip().upper()
-                            for t in calc.src_table_name.split(",")
-                            if t.strip()
-                        }
+                        existing = {t.strip().upper() for t in calc.src_table_name.split(",") if t.strip()}
                         for tbl in extracted:
                             if tbl.upper() not in existing:
-                                calc.src_table_name = (
-                                    calc.src_table_name.rstrip(",")
-                                    + ","
-                                    + tbl
-                                )
+                                calc.src_table_name = calc.src_table_name.rstrip(",") + "," + tbl
 
                 results.append(calc)
 
@@ -280,9 +281,7 @@ class IndicatorConfigParser:
         finally:
             wb.close()
 
-    def _parse_relations_from_base(
-        self, base_calcs: list[IndicatorCalcBase]
-    ) -> list[IndicatorRel]:
+    def _parse_relations_from_base(self, base_calcs: list[IndicatorCalcBase]) -> list[IndicatorRel]:
         deps_map: dict[str, set[str]] = {}
 
         for calc in base_calcs:
@@ -445,9 +444,7 @@ class IndicatorConfigParser:
         return tables
 
     @staticmethod
-    def _build_col_index(
-        header: list[str], expected_columns: tuple[str, ...]
-    ) -> dict[str, int]:
+    def _build_col_index(header: list[str], expected_columns: tuple[str, ...]) -> dict[str, int]:
         col_index: dict[str, int] = {}
         for i, col_name in enumerate(header):
             cleaned = col_name.strip()

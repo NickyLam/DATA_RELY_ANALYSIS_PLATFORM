@@ -7,13 +7,15 @@ SQLite 存储后端
 
 from __future__ import annotations
 
+import contextlib
 import json
 import logging
 import sqlite3
 import threading
 import time
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Any, Iterator, Optional
+from typing import Any
 
 from app.services.storage.migrations import (
     DATA_TABLE_NAMES,
@@ -35,16 +37,14 @@ class SQLiteConnectionManager:
         self._local = threading.local()
 
     def get_connection(self) -> sqlite3.Connection:
-        conn: Optional[sqlite3.Connection] = getattr(self._local, "connection", None)
+        conn: sqlite3.Connection | None = getattr(self._local, "connection", None)
         if conn is not None:
             try:
                 conn.execute("SELECT 1")
                 return conn
             except sqlite3.Error:
-                try:
+                with contextlib.suppress(Exception):
                     conn.close()
-                except Exception:
-                    pass
                 conn = None
 
         db_path_str = str(self._db_path)
@@ -58,12 +58,10 @@ class SQLiteConnectionManager:
         return conn
 
     def close_all(self) -> None:
-        conn: Optional[sqlite3.Connection] = getattr(self._local, "connection", None)
+        conn: sqlite3.Connection | None = getattr(self._local, "connection", None)
         if conn is not None:
-            try:
+            with contextlib.suppress(Exception):
                 conn.close()
-            except Exception:
-                pass
             self._local.connection = None
 
 
@@ -83,14 +81,12 @@ class SQLiteResultStore:
 
     # ── ResultStoreProtocol 实现 ────────────────────────────────
 
-    def load(self) -> Optional[dict[str, Any]]:
+    def load(self) -> dict[str, Any] | None:
         """从 SQLite 加载解析结果。"""
         conn = self._conn_mgr.get_connection()
 
         # 校验 schema 版本
-        row = conn.execute(
-            "SELECT value FROM storage_metadata WHERE key = 'cache_schema_version'"
-        ).fetchone()
+        row = conn.execute("SELECT value FROM storage_metadata WHERE key = 'cache_schema_version'").fetchone()
         if row is None:
             return None
 
@@ -107,8 +103,11 @@ class SQLiteResultStore:
 
         logger.info(
             "从 SQLite 加载: %d 表, %d 过程, %d 血缘, %d 映射, %d 口径",
-            len(tables), len(procedures), len(table_lineages),
-            len(field_mappings), len(caliber_infos),
+            len(tables),
+            len(procedures),
+            len(table_lineages),
+            len(field_mappings),
+            len(caliber_infos),
         )
 
         return {
@@ -127,10 +126,8 @@ class SQLiteResultStore:
         单个超大事务导致内存和 WAL 文件膨胀。
         """
         conn = self._conn_mgr.get_connection()
-        try:
+        with contextlib.suppress(Exception):
             conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
-        except Exception:
-            pass
 
         metadata = result_data.get("metadata", {})
         now = time.time()
@@ -138,29 +135,54 @@ class SQLiteResultStore:
 
         try:
             # ── 表数据 ──
-            self._replace_table_data(conn, "tables",
-                                     result_data.get("tables", []),
-                                     self._iter_table_rows, batch_size, now)
+            self._replace_table_data(
+                conn,
+                "tables",
+                result_data.get("tables", []),
+                self._iter_table_rows,
+                batch_size,
+                now,
+            )
 
             # ── 过程数据 ──
-            self._replace_table_data(conn, "procedures",
-                                     result_data.get("procedures", []),
-                                     self._iter_procedure_rows, batch_size, now)
+            self._replace_table_data(
+                conn,
+                "procedures",
+                result_data.get("procedures", []),
+                self._iter_procedure_rows,
+                batch_size,
+                now,
+            )
 
             # ── 血缘数据 ──
-            self._replace_table_data(conn, "table_lineages",
-                                     result_data.get("table_lineages", []),
-                                     self._iter_lineage_rows, batch_size, now)
+            self._replace_table_data(
+                conn,
+                "table_lineages",
+                result_data.get("table_lineages", []),
+                self._iter_lineage_rows,
+                batch_size,
+                now,
+            )
 
             # ── 字段映射 ──
-            self._replace_table_data(conn, "field_mappings",
-                                     result_data.get("field_mappings", []),
-                                     self._iter_mapping_rows, batch_size, now)
+            self._replace_table_data(
+                conn,
+                "field_mappings",
+                result_data.get("field_mappings", []),
+                self._iter_mapping_rows,
+                batch_size,
+                now,
+            )
 
             # ── 口径数据 ──
-            self._replace_table_data(conn, "caliber_infos",
-                                     result_data.get("caliber_infos", []),
-                                     self._iter_caliber_rows, batch_size, now)
+            self._replace_table_data(
+                conn,
+                "caliber_infos",
+                result_data.get("caliber_infos", []),
+                self._iter_caliber_rows,
+                batch_size,
+                now,
+            )
 
             # ── 元数据 ──
             with conn:
@@ -168,10 +190,8 @@ class SQLiteResultStore:
                 self._upsert_metadata(cursor, metadata, now)
 
             # 写入后 checkpoint
-            try:
+            with contextlib.suppress(Exception):
                 conn.execute("PRAGMA wal_checkpoint(TRUNCATE)")
-            except Exception:
-                pass
 
             db_size = self._db_path.stat().st_size / (1024 * 1024)
             if db_size > 1000:
@@ -240,7 +260,7 @@ class SQLiteResultStore:
     @staticmethod
     def _insert_sql(table_name: str) -> str:
         """获取 INSERT OR REPLACE SQL。"""
-        _SQL_MAP = {
+        _sql_map = {
             "tables": (
                 "INSERT OR REPLACE INTO tables "
                 "(full_name, schema_name, table_name, description, layer, "
@@ -272,7 +292,7 @@ class SQLiteResultStore:
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
             ),
         }
-        return _SQL_MAP[table_name]
+        return _sql_map[table_name]
 
     # ── 行迭代器（内存友好，逐条生成） ─────────────────────────
 
@@ -289,15 +309,13 @@ class SQLiteResultStore:
             else:
                 table_name = full_name
 
-            columns_json = (
-                json.dumps(t.get("columns", []), ensure_ascii=False)
-                if t.get("columns")
-                else None
-            )
+            columns_json = json.dumps(t.get("columns", []), ensure_ascii=False) if t.get("columns") else None
             raw_json = json.dumps(t, ensure_ascii=False)
 
             yield (
-                full_name, schema_name, table_name,
+                full_name,
+                schema_name,
+                table_name,
                 t.get("description", ""),
                 t.get("layer", ""),
                 t.get("data_source", ""),
@@ -320,34 +338,34 @@ class SQLiteResultStore:
                 proc_name = full_name
 
             source_tables_json = (
-                json.dumps(p.get("source_tables", []), ensure_ascii=False)
-                if p.get("source_tables")
-                else None
+                json.dumps(p.get("source_tables", []), ensure_ascii=False) if p.get("source_tables") else None
             )
             target_tables_json = (
-                json.dumps(p.get("target_tables", []), ensure_ascii=False)
-                if p.get("target_tables")
-                else None
+                json.dumps(p.get("target_tables", []), ensure_ascii=False) if p.get("target_tables") else None
             )
             raw_json = json.dumps(p, ensure_ascii=False)
 
             yield (
-                full_name, schema_name, proc_name,
+                full_name,
+                schema_name,
+                proc_name,
                 p.get("description", ""),
                 p.get("data_source", ""),
-                source_tables_json, target_tables_json,
-                raw_json, now,
+                source_tables_json,
+                target_tables_json,
+                raw_json,
+                now,
             )
 
     @staticmethod
     def _iter_lineage_rows(items: list[dict], now: float) -> Iterator[tuple]:
-        for l in items:
-            raw_json = json.dumps(l, ensure_ascii=False)
+        for item in items:
+            raw_json = json.dumps(item, ensure_ascii=False)
             yield (
-                l.get("source_table", ""),
-                l.get("target_table", ""),
-                l.get("procedure", ""),
-                l.get("data_source", ""),
+                item.get("source_table", ""),
+                item.get("target_table", ""),
+                item.get("procedure", ""),
+                item.get("data_source", ""),
                 raw_json,
                 now,
             )
@@ -388,9 +406,7 @@ class SQLiteResultStore:
 
     def _read_metadata(self, conn: sqlite3.Connection) -> dict[str, Any]:
         """读取所有 metadata 键值对。"""
-        rows = conn.execute(
-            "SELECT key, value FROM storage_metadata"
-        ).fetchall()
+        rows = conn.execute("SELECT key, value FROM storage_metadata").fetchall()
         metadata = {}
         for row in rows:
             key, value = row["key"], row["value"]
@@ -400,21 +416,15 @@ class SQLiteResultStore:
                 metadata[key] = value
         return metadata
 
-    def _upsert_metadata(
-        self, cursor: sqlite3.Cursor, metadata: dict[str, Any], now: float
-    ) -> None:
+    def _upsert_metadata(self, cursor: sqlite3.Cursor, metadata: dict[str, Any], now: float) -> None:
         """批量 upsert metadata。"""
         if "last_updated" not in metadata:
             metadata["last_updated"] = time.strftime("%Y-%m-%d %H:%M:%S")
 
         for key, value in metadata.items():
-            if isinstance(value, (dict, list)):
-                value_str = json.dumps(value, ensure_ascii=False)
-            else:
-                value_str = str(value)
+            value_str = json.dumps(value, ensure_ascii=False) if isinstance(value, (dict, list)) else str(value)
             cursor.execute(
-                "INSERT OR REPLACE INTO storage_metadata (key, value, updated_at) "
-                "VALUES (?, ?, ?)",
+                "INSERT OR REPLACE INTO storage_metadata (key, value, updated_at) VALUES (?, ?, ?)",
                 (key, value_str, now),
             )
 
@@ -422,9 +432,7 @@ class SQLiteResultStore:
 
     def _read_table(self, conn: sqlite3.Connection, table_name: str) -> list[dict]:
         """从表中读取所有 raw_json 还原为 dict 列表。"""
-        rows = conn.execute(
-            f"SELECT raw_json FROM {table_name}"
-        ).fetchall()
+        rows = conn.execute(f"SELECT raw_json FROM {table_name}").fetchall()
         result = []
         for row in rows:
             try:

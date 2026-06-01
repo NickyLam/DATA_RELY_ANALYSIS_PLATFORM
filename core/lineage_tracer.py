@@ -15,7 +15,6 @@ import logging
 import time
 from collections import deque
 from dataclasses import dataclass
-from typing import Optional
 
 from core.base_tracer import BaseTracer
 from core.models import (
@@ -23,7 +22,6 @@ from core.models import (
     FieldLineageNode,
     FieldLineageResult,
     FieldMapping,
-    LayerType,
     ProcedureInfo,
     TableInfo,
     TableLineage,
@@ -62,7 +60,6 @@ class _TargetRecord:
 
 
 class LineageTracer(BaseTracer):
-
     def __init__(
         self,
         tables: dict[str, TableInfo],
@@ -180,16 +177,13 @@ class LineageTracer(BaseTracer):
             inner.setdefault(src_col, []).append(fm)
 
         logger.debug(
-            "LineageTracer 索引构建完成: table_lineage_idx=%d, field_mapping_idx=%d, "
-            "source_field_mapping_idx=%d",
+            "LineageTracer 索引构建完成: table_lineage_idx=%d, field_mapping_idx=%d, source_field_mapping_idx=%d",
             len(self._table_lineage_idx),
             len(self._field_mapping_idx),
             len(self._source_field_mapping_idx),
         )
 
-    def _bfs_trace(
-        self, target_table: str, target_field: str, max_depth: int = 10
-    ) -> dict[str, _BFSNode]:
+    def _bfs_trace(self, target_table: str, target_field: str, max_depth: int = 10) -> dict[str, _BFSNode]:
         norm_table = self.normalize_name(target_table)
         norm_field = self._normalize_field_name(target_field)
 
@@ -226,9 +220,7 @@ class LineageTracer(BaseTracer):
                 )
                 continue
 
-            sources = self._find_source_fields(
-                current.table_name, current.field_name
-            )
+            sources = self._find_source_fields(current.table_name, current.field_name)
 
             if not sources:
                 logger.debug(
@@ -248,15 +240,11 @@ class LineageTracer(BaseTracer):
                 if src_bare == cur_bare:
                     transform_note = src.transform_logic or "同表字段转换"
                     same_table_transform_note = transform_note
-                    inner_sources = self._find_source_fields(
-                        src.source_table, src.source_field
-                    )
+                    inner_sources = self._find_source_fields(src.source_table, src.source_field)
                     if inner_sources:
                         found_cross_table = False
                         for inner in inner_sources:
-                            inner_bare = self.bare_table(
-                                self.normalize_name(inner.source_table)
-                            )
+                            inner_bare = self.bare_table(self.normalize_name(inner.source_table))
                             if inner_bare != cur_bare:
                                 final_sources.append(inner)
                                 found_cross_table = True
@@ -275,9 +263,7 @@ class LineageTracer(BaseTracer):
             if same_table_transform_note and current_key in bfs_tree:
                 existing_logic = bfs_tree[current_key].transform_logic
                 if existing_logic and existing_logic != "(目标字段)":
-                    bfs_tree[current_key].transform_logic = (
-                        f"{existing_logic}; {same_table_transform_note}"
-                    )
+                    bfs_tree[current_key].transform_logic = f"{existing_logic}; {same_table_transform_note}"
                 else:
                     bfs_tree[current_key].transform_logic = same_table_transform_note
 
@@ -358,9 +344,7 @@ class LineageTracer(BaseTracer):
         chains = self._build_chains_from_bfs_tree(bfs_tree, (norm_table, norm_field), reverse=True)
         return chains
 
-    def _bfs_trace_downstream(
-        self, source_table: str, source_field: str, max_depth: int = 10
-    ) -> dict[str, _BFSNode]:
+    def _bfs_trace_downstream(self, source_table: str, source_field: str, max_depth: int = 10) -> dict[str, _BFSNode]:
         norm_table = self.normalize_name(source_table)
         norm_field = self._normalize_field_name(source_field)
 
@@ -397,9 +381,7 @@ class LineageTracer(BaseTracer):
                 )
                 continue
 
-            targets = self._find_target_fields(
-                current.table_name, current.field_name
-            )
+            targets = self._find_target_fields(current.table_name, current.field_name)
 
             if not targets:
                 logger.debug(
@@ -480,9 +462,7 @@ class LineageTracer(BaseTracer):
         )
         return bfs_tree
 
-    def _find_target_fields(
-        self, source_table: str, source_field: str
-    ) -> list[_TargetRecord]:
+    def _find_target_fields(self, source_table: str, source_field: str) -> list[_TargetRecord]:
         norm_table = self.normalize_name(source_table)
         norm_field = self._normalize_field_name(source_field)
         results: list[_TargetRecord] = []
@@ -538,7 +518,7 @@ class LineageTracer(BaseTracer):
 
         return results
 
-    def _fuzzy_match_source_table_key(self, table_name: str) -> Optional[str]:
+    def _fuzzy_match_source_table_key(self, table_name: str) -> str | None:
         upper_name = table_name.upper()
         bare_name = upper_name.split(".")[-1] if "." in upper_name else upper_name
 
@@ -552,9 +532,7 @@ class LineageTracer(BaseTracer):
                     return key
         return None
 
-    def _find_source_fields(
-        self, target_table: str, target_field: str
-    ) -> list[_SourceRecord]:
+    def _find_source_fields(self, target_table: str, target_field: str) -> list[_SourceRecord]:
         norm_table = self.normalize_name(target_table)
         norm_field = self._normalize_field_name(target_field)
         results: list[_SourceRecord] = []
@@ -611,16 +589,16 @@ class LineageTracer(BaseTracer):
         if tmp_bridge:
             logger.info(
                 "TMP 桥接命中: %s.%s → %s.%s",
-                norm_table, norm_field,
-                tmp_bridge.source_table, tmp_bridge.source_field,
+                norm_table,
+                norm_field,
+                tmp_bridge.source_table,
+                tmp_bridge.source_field,
             )
             return [tmp_bridge]
 
         procs = self._find_procedures_for_table(norm_table)
         for proc in procs:
-            proc_results = self._find_source_fields_in_procedure(
-                norm_table, norm_field, proc
-            )
+            proc_results = self._find_source_fields_in_procedure(norm_table, norm_field, proc)
             results.extend(proc_results)
 
         if not results:
@@ -650,7 +628,7 @@ class LineageTracer(BaseTracer):
 
         return results
 
-    def _try_tmp_bridge(self, target_table: str, target_field: str) -> Optional[_SourceRecord]:
+    def _try_tmp_bridge(self, target_table: str, target_field: str) -> _SourceRecord | None:
         base_name = target_table.split(".")[-1] if "." in target_table else target_table
         candidates = [
             f"{base_name}_TMP",
@@ -690,7 +668,7 @@ class LineageTracer(BaseTracer):
 
         return None
 
-    def _fuzzy_match_table_key(self, table_name: str) -> Optional[str]:
+    def _fuzzy_match_table_key(self, table_name: str) -> str | None:
         upper_name = table_name.upper()
         bare_name = upper_name.split(".")[-1] if "." in upper_name else upper_name
 
@@ -704,9 +682,7 @@ class LineageTracer(BaseTracer):
                     return key
         return None
 
-    def _infer_source_table_from_lineage(
-        self, target_table: str, procedure_name: str
-    ) -> str:
+    def _infer_source_table_from_lineage(self, target_table: str, procedure_name: str) -> str:
         norm_target = self.normalize_name(target_table)
         candidates: list[str] = []
         same_proc_candidates: list[str] = []
@@ -781,15 +757,14 @@ class LineageTracer(BaseTracer):
             return primary
 
         secondary = self._table_proc_idx.get(norm_table, [])
-        filtered = [
-            p
-            for p in secondary
-            if norm_table in [self.normalize_name(t) for t in p.target_tables]
-        ]
+        filtered = [p for p in secondary if norm_table in [self.normalize_name(t) for t in p.target_tables]]
         return filtered
 
     def _build_chains_from_bfs_tree(
-        self, bfs_tree: dict[str, _BFSNode], target: tuple[str, str], reverse: bool = False
+        self,
+        bfs_tree: dict[str, _BFSNode],
+        target: tuple[str, str],
+        reverse: bool = False,
     ) -> list[FieldLineageChain]:
         if not bfs_tree:
             return []
@@ -835,14 +810,10 @@ class LineageTracer(BaseTracer):
 
                 display_layer = i
                 source_fields_for_node: list[str] = []
-                parent_keys = [
-                    k for k, n in bfs_tree.items() if n.parent_key == node_key
-                ]
+                parent_keys = [k for k, n in bfs_tree.items() if n.parent_key == node_key]
                 for pk in parent_keys:
                     parent_node = bfs_tree[pk]
-                    source_fields_for_node.append(
-                        f"{parent_node.table_name}.{parent_node.field_name}"
-                    )
+                    source_fields_for_node.append(f"{parent_node.table_name}.{parent_node.field_name}")
 
                 fl_node = FieldLineageNode(
                     layer=display_layer,
@@ -905,34 +876,34 @@ class LineageTracer(BaseTracer):
                     edge_key = (src_table, tgt_table, src_field, tgt_field)
                     if edge_key not in seen_edges:
                         seen_edges.add(edge_key)
-                        edges.append({
-                            "source_table": src_table,
-                            "target_table": tgt_table,
-                            "source_field": src_field,
-                            "target_field": tgt_field,
-                            "type": "field_mapping",
-                        })
+                        edges.append(
+                            {
+                                "source_table": src_table,
+                                "target_table": tgt_table,
+                                "source_field": src_field,
+                                "target_field": tgt_field,
+                                "type": "field_mapping",
+                            }
+                        )
 
                     # 边 src → tgt 的 procedure 取自承载该字段映射的 BFS 节点：
                     # - upstream BFS：src.procedure 存的是"src 流向其 BFS 父节点（即下游 tgt）的过程"
                     # - downstream BFS：tgt.procedure 存的是"流入此 tgt 的过程"
-                    edge_procedure = (
-                        prev_node.procedure if direction == "upstream" else node.procedure
-                    )
-                    edge_transform = (
-                        prev_node.transform_logic if direction == "upstream" else node.transform_logic
-                    )
+                    edge_procedure = prev_node.procedure if direction == "upstream" else node.procedure
+                    edge_transform = prev_node.transform_logic if direction == "upstream" else node.transform_logic
 
                     mapping_key = (src_table, src_field, tgt_table, tgt_field)
                     if mapping_key not in seen_mappings:
                         seen_mappings.add(mapping_key)
-                        mappings.append({
-                            "source_table": src_table,
-                            "source_column": src_field,
-                            "target_table": tgt_table,
-                            "target_column": tgt_field,
-                            "transform_logic": edge_transform,
-                            "procedure": edge_procedure,
-                        })
+                        mappings.append(
+                            {
+                                "source_table": src_table,
+                                "source_column": src_field,
+                                "target_table": tgt_table,
+                                "target_column": tgt_field,
+                                "transform_logic": edge_transform,
+                                "procedure": edge_procedure,
+                            }
+                        )
 
         return node_names, edges, mappings

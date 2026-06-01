@@ -1,0 +1,165 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_idl_scss_tbl_n_txn_m_i
+CreateDate: 20180529
+FileName:   ${iel_data_path}/scss_tbl_n_txn_m.i.${batch_date}.dat
+IF_mark:    m_i
+Logs:
+   zjj 2018-07-27 create template
+' \
+        query="select
+etl_dt
+,sys_date
+,sys_seq_num
+,msg_src_id
+,msg_dest_id
+,log_unistamp
+,org_biz_txn
+,txn_num
+,trans_state
+,resp_code
+,resp_desc
+,revsal_flag
+,revsal_ssn
+,cancel_flag
+,cancel_ssn
+,key_rsp
+,key_revsal
+,key_cancel
+,chann_num
+,org_chann_num
+,transnum
+,transtyp
+,chaldate
+,checkcode
+,mchnt_type
+,mchnt_id
+,mchnt_name
+,termnl_id
+,acqinsid
+,acq_inst_id_code
+,txn_acct_num
+,txn_card_seqid
+,txn_acct_isscode
+,txn_acct_name
+,txn_acc_type
+,card_level
+,txn_acc_spec
+,acc_status
+,date_expr
+,vrf_flg
+,drw_mode
+,drw_mode_status
+,sett_card_flag
+,sett_card_name
+,cash_can
+,currcy_code_stlm
+,amt_trans
+,cert_type
+,cert_id
+,res_ceph_num
+,out_acct_id
+,out_acct_name
+,out_acct_issid
+,in_acct_id
+,in_acct_name
+,in_acct_issid
+,pye_acct_id1
+,pye_acctname1
+,pyr_acctid1
+,pyr_acctname1
+,pye2pyr_amt1
+,pye_acct_id2
+,pye_acct_name2
+,pyr_acct_id2
+,pyr_acct_name2
+,pye2pyr_amt2
+,pye_acct_id3
+,pye_acct_name3
+,pyr_acct_id3
+,pyr_acct_name3
+,pye2pyr_amt3
+,pye_acct_id4
+,pye_acct_name4
+,pyr_acct_id4
+,pyr_acct_name4
+,pye2pyr_amt4
+,pye_fee_acct_id
+,pye_fee_acct_name
+,pyr_fee_acct_id
+,pyr_fee_acct_name
+,tran_fee_amt
+,scs_ctl_flg
+,f55_9a
+,f55_9c
+,f55_9f1a
+,f55_95
+,f55_9f37
+,f55_82
+,f55_9f36
+,f55_9f10
+,f55_5f34
+,f55_5f2a
+,f55_9f26
+,f55_9f02
+,f55_9f03
+,f55_df31
+,f55_91
+,f55_72
+,srv_src_sysid
+,srv_dest_sysid
+,srv_msgid
+,srv_cllpty_sysid
+,svr_glob_seqno
+,svr_sou_seqno
+,svr_sou_date
+,svr_sou_time
+,svr_src_name
+,svr_src_num
+,svr_src_msgt
+,svr_src_pri
+,tell_no
+,city_code
+,ptyid
+,ptybrno
+,outnum
+,authtelid
+,chktelid
+,authseqno
+,authpwd
+,prcscd
+,orisouseqno
+,orisoudate
+,orisoutime
+,oriuppno
+,oriuppdate
+,uppno
+,uppdate
+,uppcode
+,upptxt
+,authcode
+,colddate
+,coldnum
+,oricolddate
+,oricoldnum
+,onlnbal
+,acctbal
+,msgtype
+,miscflag
+,misc1
+,misc2
+,misc3
+,misc4
+,misc5
+,misc6
+,resv1
+,resv2
+,inst_date
+,updt_date
+from ${idl_schema}.scss_tbl_n_txn t1
+where to_char(to_date(sys_date,'yyyymmdd'),'yyyymm') = to_char(to_date('${batch_date}','yyyymmdd'),'yyyymm')" \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/scss_tbl_n_txn_m.i.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes

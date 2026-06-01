@@ -42,7 +42,7 @@ function addFilesToList(files) {
 
     files.forEach(file => {
         const ext = '.' + file.name.split('.').pop().toLowerCase();
-        
+
         if (!validExtensions.includes(ext)) {
             showNotification(`不支持的文件类型: ${file.name}`, 'error');
             return;
@@ -136,13 +136,13 @@ async function startParsing() {
         }
 
         AppState.currentTaskId = result.data.task_id;
-        
+
         // 上传成功后清空文件列表
         clearSelectedFiles();
-        
+
         showProgressSection();
         connectToSSE(result.data.task_id);
-        
+
         showNotification(`解析任务已启动 (ID: ${result.data.task_id.slice(0,8)}...)`, 'success');
 
     } catch (error) {
@@ -156,12 +156,12 @@ async function startParsing() {
 async function triggerFullParse() {
     try {
         const response = await apiRequest('/api/parse/parse-existing', { method: 'POST' });
-        
+
         AppState.currentTaskId = response.data.task_id;
-        
+
         showProgressSection();
         connectToSSE(response.data.task_id);
-        
+
         showNotification('全量解析任务已启动', 'success');
 
     } catch (error) {
@@ -208,7 +208,7 @@ function connectToSSE(taskId) {
     eventSource.onerror = (error) => {
         console.error('SSE 连接错误:', error);
         addLogEntry('error', '连接中断，尝试重连...');
-        
+
         setTimeout(() => {
             if (AppState.currentTaskId) {
                 connectToSSE(AppState.currentTaskId);
@@ -228,7 +228,7 @@ function showProgressSection() {
 
 function updateProgressUI(data) {
     const percent = Math.min(Math.max(data.percent, 0), 100);
-    
+
     document.getElementById('progressBarFill').style.width = `${percent}%`;
     document.getElementById('progressPercent').textContent = `${Math.round(percent)}%`;
     document.getElementById('currentFile').textContent = data.current_file || '';
@@ -253,11 +253,11 @@ function updateProgressUI(data) {
 function addLogEntry(level, message) {
     const logOutput = document.getElementById('logOutput');
     const time = formatTime(new Date());
-    
+
     const entry = document.createElement('div');
     entry.className = `log-entry ${level}`;
     entry.innerHTML = `<span class="log-time">[${time}]</span>${escapeHtml(message)}`;
-    
+
     logOutput.appendChild(entry);
     logOutput.scrollTop = logOutput.scrollHeight;
 }
@@ -312,7 +312,7 @@ function handleTaskError(data) {
     }
 
     showNotification('解析任务失败: ' + errorMessage, 'error');
-    
+
     document.getElementById('startParseBtn').disabled = false;
     document.getElementById('startParseBtn').textContent = '⚡ 开始解析';
 }

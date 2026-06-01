@@ -16,7 +16,6 @@ from core.models import (
     ColumnInfo,
     FieldMapping,
     ProcedureInfo,
-    SourceLocation,
     TableInfo,
     TableLineage,
 )
@@ -33,27 +32,39 @@ def sample_data():
     """
     tables = {
         "RRP_ODS.SRC_TBL": TableInfo(
-            schema="RRP_ODS", table_name="SRC_TBL", full_name="RRP_ODS.SRC_TBL",
+            schema="RRP_ODS",
+            table_name="SRC_TBL",
+            full_name="RRP_ODS.SRC_TBL",
             columns=[ColumnInfo(name="SRC_COL", data_type="VARCHAR2(10)", comment="源字段")],
         ),
         "SRC_TBL": TableInfo(
-            schema="RRP_ODS", table_name="SRC_TBL", full_name="RRP_ODS.SRC_TBL",
+            schema="RRP_ODS",
+            table_name="SRC_TBL",
+            full_name="RRP_ODS.SRC_TBL",
             columns=[ColumnInfo(name="SRC_COL", data_type="VARCHAR2(10)", comment="源字段")],
         ),
         "RRP_MDL.MID_TBL": TableInfo(
-            schema="RRP_MDL", table_name="MID_TBL", full_name="RRP_MDL.MID_TBL",
+            schema="RRP_MDL",
+            table_name="MID_TBL",
+            full_name="RRP_MDL.MID_TBL",
             columns=[ColumnInfo(name="MID_COL", data_type="VARCHAR2(10)")],
         ),
         "MID_TBL": TableInfo(
-            schema="RRP_MDL", table_name="MID_TBL", full_name="RRP_MDL.MID_TBL",
+            schema="RRP_MDL",
+            table_name="MID_TBL",
+            full_name="RRP_MDL.MID_TBL",
             columns=[ColumnInfo(name="MID_COL", data_type="VARCHAR2(10)")],
         ),
         "RRP_EAST.TGT_TBL": TableInfo(
-            schema="RRP_EAST", table_name="TGT_TBL", full_name="RRP_EAST.TGT_TBL",
+            schema="RRP_EAST",
+            table_name="TGT_TBL",
+            full_name="RRP_EAST.TGT_TBL",
             columns=[ColumnInfo(name="TGT_COL", data_type="VARCHAR2(10)")],
         ),
         "TGT_TBL": TableInfo(
-            schema="RRP_EAST", table_name="TGT_TBL", full_name="RRP_EAST.TGT_TBL",
+            schema="RRP_EAST",
+            table_name="TGT_TBL",
+            full_name="RRP_EAST.TGT_TBL",
             columns=[ColumnInfo(name="TGT_COL", data_type="VARCHAR2(10)")],
         ),
     }
@@ -82,14 +93,18 @@ def sample_data():
 
     field_mappings = [
         FieldMapping(
-            source_table="RRP_ODS.SRC_TBL", source_column="SRC_COL",
-            target_table="RRP_MDL.MID_TBL", target_column="MID_COL",
+            source_table="RRP_ODS.SRC_TBL",
+            source_column="SRC_COL",
+            target_table="RRP_MDL.MID_TBL",
+            target_column="MID_COL",
             transform_logic="NVL(SRC_COL, 0)",
             procedure="RRP_PROC.P_DEMO",
         ),
         FieldMapping(
-            source_table="RRP_MDL.MID_TBL", source_column="MID_COL",
-            target_table="RRP_EAST.TGT_TBL", target_column="TGT_COL",
+            source_table="RRP_MDL.MID_TBL",
+            source_column="MID_COL",
+            target_table="RRP_EAST.TGT_TBL",
+            target_column="TGT_COL",
             transform_logic="",
             procedure="RRP_PROC.P_DEMO",
         ),
@@ -104,8 +119,12 @@ def sample_data():
             "transform_logic": "NVL(SRC_COL, 0)",
             "procedure": "RRP_PROC.P_DEMO",
             "where_conditions": [
-                {"raw_text": "STATUS = '1'", "condition_type": "EQUAL",
-                 "tables_involved": ["SRC_TBL"], "fields_involved": ["STATUS"]}
+                {
+                    "raw_text": "STATUS = '1'",
+                    "condition_type": "EQUAL",
+                    "tables_involved": ["SRC_TBL"],
+                    "fields_involved": ["STATUS"],
+                }
             ],
             "join_conditions": [],
             "data_source": "oracle",
@@ -165,8 +184,10 @@ def test_trace_with_caliber_populates_steps(sample_data):
 def test_get_edge_caliber_direct(sample_data):
     tracer = UnifiedTracer(**sample_data)
     info = tracer.get_edge_caliber(
-        "RRP_ODS.SRC_TBL", "SRC_COL",
-        "RRP_MDL.MID_TBL", "MID_COL",
+        "RRP_ODS.SRC_TBL",
+        "SRC_COL",
+        "RRP_MDL.MID_TBL",
+        "MID_COL",
         procedure="RRP_PROC.P_DEMO",
     )
     assert info is not None
@@ -177,8 +198,10 @@ def test_get_edge_caliber_direct(sample_data):
 def test_get_edge_caliber_short_table_match(sample_data):
     tracer = UnifiedTracer(**sample_data)
     info = tracer.get_edge_caliber(
-        "SRC_TBL", "SRC_COL",
-        "MID_TBL", "MID_COL",
+        "SRC_TBL",
+        "SRC_COL",
+        "MID_TBL",
+        "MID_COL",
     )
     assert info is not None
     assert info["target_column"] == "MID_COL"
@@ -227,6 +250,7 @@ def test_trace_both_direction(sample_data):
 
 def test_factory_creates_unified(sample_data):
     from app.services.tracer_factory import TracerFactory
+
     factory = TracerFactory()
     tracer = factory.create_unified_tracer(**sample_data)
     assert tracer is not None

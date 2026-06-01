@@ -39,10 +39,7 @@ class OracleTabAdapter:
             "schema": table_info.schema,
             "table_name": table_info.table_name,
             "comment": table_info.comment,
-            "columns": [
-                {"name": c.name, "data_type": c.data_type, "comment": c.comment}
-                for c in table_info.columns
-            ],
+            "columns": [{"name": c.name, "data_type": c.data_type, "comment": c.comment} for c in table_info.columns],
             "primary_keys": table_info.primary_keys,
         }
         return ParseOutput(tables=[table_dict])
@@ -61,6 +58,7 @@ class OracleTabAdapter:
             return output
 
         from concurrent.futures import ThreadPoolExecutor
+
         with ThreadPoolExecutor(max_workers=4) as executor:
             futures = {executor.submit(self.parse_file, fp): fp for fp in tab_files}
             for future in futures:
@@ -74,6 +72,7 @@ class OracleTabAdapter:
 
         logger.info(
             "OracleTabAdapter: 解析目录 %s, 共 %d 张表",
-            dir_path, len(output.tables),
+            dir_path,
+            len(output.tables),
         )
         return output

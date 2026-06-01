@@ -9,25 +9,42 @@
 from __future__ import annotations
 
 import logging
-from typing import Optional
 
-from core.layer_detector import LayerDetector, LayerConfig
+from core.layer_detector import LayerConfig, LayerDetector
 
 logger = logging.getLogger(__name__)
 
-TEMP_TABLE_SUFFIXES: frozenset[str] = frozenset({
-    "TMP", "_TMP", "TEMP", "_TEMP",
-})
+TEMP_TABLE_SUFFIXES: frozenset[str] = frozenset(
+    {
+        "TMP",
+        "_TMP",
+        "TEMP",
+        "_TEMP",
+    }
+)
 
 INVALID_TABLE_PREFIXES: tuple[str, ...] = (
-    "DUAL", "ETL_", "FUN_", "SQL", "ALTER", "EXECUTE", "COMMIT", "ROLLBACK",
+    "DUAL",
+    "ETL_",
+    "FUN_",
+    "SQL",
+    "ALTER",
+    "EXECUTE",
+    "COMMIT",
+    "ROLLBACK",
 )
 
 _RRP_PREFIXES: tuple[str, ...] = ("O_ICL_", "O_IML_", "O_IOL_", "O_RDW_")
 
-_RRP_KNOWN_SCHEMAS: frozenset[str] = frozenset({
-    "ICL", "IML", "IOL", "RRP_EAST", "RRP_MDL",
-})
+_RRP_KNOWN_SCHEMAS: frozenset[str] = frozenset(
+    {
+        "ICL",
+        "IML",
+        "IOL",
+        "RRP_EAST",
+        "RRP_MDL",
+    }
+)
 
 
 class TableNameResolver:
@@ -47,8 +64,8 @@ class TableNameResolver:
 
     def __init__(
         self,
-        known_full_names: Optional[set[str]] = None,
-        layer_detector: Optional[LayerDetector] = None,
+        known_full_names: set[str] | None = None,
+        layer_detector: LayerDetector | None = None,
     ):
         self._known_full_names: set[str] = {n.upper() for n in (known_full_names or set())}
         self._bare_name_index: dict[str, list[str]] = {}
@@ -196,8 +213,15 @@ class TableNameResolver:
             return True
 
         ignore_suffixes = (
-            "_DESEN", "_ORIG", "_BAK", "_NEW", "_TMP", "_TEMP",
-            "_ENCRYPT", "_MASK", "_HASH",
+            "_DESEN",
+            "_ORIG",
+            "_BAK",
+            "_NEW",
+            "_TMP",
+            "_TEMP",
+            "_ENCRYPT",
+            "_MASK",
+            "_HASH",
         )
 
         shorter, longer = (a, b) if len(a) <= len(b) else (b, a)
@@ -215,10 +239,7 @@ class TableNameResolver:
 
         if longer.endswith(shorter):
             prefix = longer[:-min_len] if len(longer) > min_len else ""
-            is_valid_prefix = (
-                (len(prefix) == 1 and prefix.isalpha())
-                or (prefix.endswith("_") and len(prefix) <= 3)
-            )
+            is_valid_prefix = (len(prefix) == 1 and prefix.isalpha()) or (prefix.endswith("_") and len(prefix) <= 3)
             if is_valid_prefix:
                 min_len_req = 4 if len(prefix) <= 2 else 5
                 if min_len >= min_len_req and (min_len / len(longer)) >= 0.75:

@@ -1,0 +1,78 @@
+/*
+Purpose:    技术缓冲层-建表脚本，此脚本由生成引擎自动生成。
+Author:     Sunline
+Usage:      python $ETL_HOME/script/init.py msl msl_edw_evt_conl_bk_payoff_tran_h
+CreateDate: 20180515
+FileType:   DDL
+Logs:
+    zjj 2018-05-15 新建表本
+*/
+
+prompt creating table ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h
+whenever sqlerror continue none;
+drop table ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h purge;
+
+whenever sqlerror exit sql.sqlcode;
+create table ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h(
+    etl_dt date
+    ,evt_id varchar(250)
+    ,lp_id varchar2(60)
+    ,batch_id varchar2(100)
+    ,seq_num varchar2(100)
+    ,cust_id varchar2(100)
+    ,recver_name varchar2(250)
+    ,recver_acct_id varchar2(100)
+    ,payer_name varchar2(250)
+    ,payer_acct_id varchar2(100)
+    ,tran_amt number(30,2)
+    ,curr_cd varchar2(30)
+    ,tran_status_cd varchar2(30)
+    ,tran_dt date
+    ,core_tran_dt date
+    ,core_batch_id varchar2(100)
+    ,core_flow_num varchar2(100)
+    ,remark varchar2(250)
+    ,recver_ibank_no varchar2(100)
+    ,recver_open_brac_name varchar2(500)
+    ,mobile_no varchar2(60)
+    ,return_code varchar2(250)
+    ,return_info varchar2(1000)
+    ,err_info varchar2(250)
+    ,bank_int_flg varchar2(10)
+    ,emply_id varchar2(100)
+)
+storage (initial 1024k next 1024k)
+compress nologging
+;
+
+-- grant
+grant select on ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h to ${itl_schema};
+
+-- comment
+comment on table ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h is '企业网银代发工资交易明细历史';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.etl_dt is '数据日期';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.evt_id is '事件编号';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.lp_id is '法人编号';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.batch_id is '批次编号';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.seq_num is '序号';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.cust_id is '交易客户编号';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.recver_name is '收款人名称';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.recver_acct_id is '收款人账户编号';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.payer_name is '付款人名称';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.payer_acct_id is '付款人账户编号';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.tran_amt is '交易金额';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.curr_cd is '币种代码';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.tran_status_cd is '交易状态代码';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.tran_dt is '交易日期';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.core_tran_dt is '核心交易日期';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.core_batch_id is '核心批次编号';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.core_flow_num is '核心流水号';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.remark is '备注';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.recver_ibank_no is '收款方联行号';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.recver_open_brac_name is '收款方开户网点名称';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.mobile_no is '手机号码';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.return_code is '返回码';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.return_info is '返回信息';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.err_info is '错误信息';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.bank_int_flg is '行内标志';
+comment on column ${msl_schema}.msl_edw_evt_conl_bk_payoff_tran_h.emply_id is '员工编号';

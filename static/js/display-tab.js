@@ -99,7 +99,7 @@ function setupSearchListeners() {
     document.addEventListener('click', (e) => {
         const searchBox = document.querySelector('.search-box');
         const results = document.getElementById('searchResults');
-        
+
         if (searchBox && results && !searchBox.contains(e.target) && !results.contains(e.target)) {
             results.style.display = 'none';
         }
@@ -159,21 +159,21 @@ function selectTable(fullName) {
 async function loadTableFields(tableFullName) {
     const fieldContainer = document.getElementById('fieldListContainer');
     const fieldSelect = document.getElementById('fieldSelect');
-    
+
     if (!fieldContainer || !fieldSelect) return;
 
     // 显示字段选择区域
     fieldContainer.style.display = 'block';
     fieldSelect.innerHTML = '<option value="">-- 加载中... --</option>';
     fieldSelect.disabled = true;
-    
+
     try {
         // 调用API获取表详情（包含字段列表）
         const response = await apiRequest(`/api/tables?keyword=${encodeURIComponent(tableFullName)}&limit=1`);
-        
+
         if (response.data && response.data.length > 0) {
             const tableInfo = response.data[0];
-            
+
             // 如果有字段信息，显示字段列表
             if (tableInfo.columns && tableInfo.columns.length > 0) {
                 let options = '<option value="">-- 请选择字段 --</option>';
@@ -182,13 +182,13 @@ async function loadTableFields(tableFullName) {
                 });
                 fieldSelect.innerHTML = options;
                 fieldSelect.disabled = false;
-                
+
                 console.log(`✅ 已加载 ${tableInfo.columns.length} 个字段`);
             } else {
                 // 没有字段信息，提示用户手动输入
                 fieldSelect.innerHTML = '<option value="">-- 无字段数据，请手动输入 --</option>';
                 fieldSelect.disabled = true;
-                
+
                 // 自动聚焦到手动输入框
                 document.getElementById('fieldInput').focus();
             }
@@ -207,11 +207,11 @@ async function loadTableFields(tableFullName) {
 function onFieldSelect() {
     const fieldSelect = document.getElementById('fieldSelect');
     const fieldValue = fieldSelect.value;
-    
+
     if (fieldValue) {
         document.getElementById('fieldInput').value = fieldValue;
     }
-    
+
     updateQueryButton();
 }
 
@@ -219,7 +219,7 @@ function updateQueryButton() {
     const tableVal = document.getElementById('tableInput').value.trim();
     const fieldVal = document.getElementById('fieldInput').value.trim();
     const btn = document.getElementById('queryBtn');
-    
+
     if (btn) {
         btn.disabled = !(tableVal.length >= 2 && fieldVal.length >= 1);
     }
@@ -779,7 +779,7 @@ function renderGraphVertical(data) {
 function renderLegend(layers) {
     const legendEl = document.getElementById('legend');
     if (!legendEl) return;
-    
+
     legendEl.style.display = 'block';
     let html = '';
 
@@ -806,7 +806,7 @@ function renderLegend(layers) {
 function renderDetailPanel(data, queryId) {
     const panel = document.getElementById('detailPanel');
     const content = document.getElementById('detailContent');
-    
+
     if (!panel || !content) return;
     panel.style.display = 'block';
 
@@ -838,13 +838,13 @@ function renderDetailPanel(data, queryId) {
     if (data.field_mappings && data.field_mappings.length > 0) {
         html += `<h4 style="color:#6366f1;margin:16px 0 8px;font-size:13px;">🔗 字段血缘映射 (${data.field_mapping_count || data.field_mappings.length} 条)</h4>`;
         html += `<div style="max-height:280px;overflow-y:auto;background:#fafafa;border-radius:8px;padding:10px;border:1px solid #e2e8f0;">`;
-        
+
         data.field_mappings.slice(0, 80).forEach(fm => {
             const srcShort = (fm.get ? fm.get('source_table') : fm.source_table || '').split('.').pop();
             const tgtShort = (fm.get ? fm.get('target_table') : fm.target_table || '').split('.').pop();
             const srcCol = fm.get ? fm.get('source_column') : fm.source_column;
             const tgtCol = fm.get ? fm.get('target_column') : fm.target_column;
-            
+
             html += `
                 <div style="padding:7px 10px;margin-bottom:4px;background:white;border-radius:5px;font-size:11px;border-left:3px solid #a855f7;display:flex;justify-content:space-between;align-items:center;">
                     <span>
@@ -900,7 +900,7 @@ function showInfoPanel(node) {
     title.textContent = node.id;
 
     const config = LAYER_CONFIG[node.layer] || LAYER_CONFIG['config'];
-    
+
     let html = `
         <div class="info-section">
             <div class="section-title">层级</div>
@@ -921,7 +921,7 @@ function showInfoPanel(node) {
         const colsHtml = node.columns.slice(0, 30)
             .map(c => `<span class="tag">${c}</span>`)
             .join('');
-        
+
         html += `
             <div class="info-section">
                 <div class="section-title">字段 (${node.columns.length})</div>

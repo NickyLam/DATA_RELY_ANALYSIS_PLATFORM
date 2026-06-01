@@ -1,0 +1,28 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_iol_pcls_byte_vintage_amt_info_f
+CreateDate: 20250711
+FileName:   ${iel_data_path}/pcls_byte_vintage_amt_info.f.${batch_date}.dat
+IF_mark:    f
+Logs:
+' \
+        query="select
+to_date('${batch_date}','yyyymmdd') as etl_dt
+,replace(replace(t1.monthcreated2,chr(13),''),chr(10),'') as monthcreated2
+,vintage3plus_mob1_amt
+,vintage3plus_mob2_amt
+,vintage3plus_mob3_amt
+,vintage7plus_mob1_amt
+,vintage7plus_mob2_amt
+,vintage7plus_mob3_amt
+,vintage30plus_mob1_amt
+,vintage30plus_mob2_amt
+,vintage30plus_mob3_amt
+
+from ${iol_schema}.pcls_byte_vintage_amt_info t1
+where etl_dt = to_date('${batch_date}','yyyymmdd')" \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/pcls_byte_vintage_amt_info.f.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes

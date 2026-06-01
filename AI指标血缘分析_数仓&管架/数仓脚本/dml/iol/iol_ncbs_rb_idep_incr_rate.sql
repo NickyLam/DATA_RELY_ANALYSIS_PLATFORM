@@ -1,0 +1,287 @@
+/*
+Purpose:    偏源模型层-全量拉链脚本。此脚本由生成引擎自动生成。
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iol_ncbs_rb_idep_incr_rate
+CreateDate: 20180515
+Logs:
+    zjj 2018-05-15 新建脚本
+*/
+
+set timing on
+
+-- 1 alter parallel
+alter session force parallel query parallel 8;
+alter session force parallel dml parallel 8;
+-- alter session force parallel ddl parallel 8;
+
+-- 2.1 create backup table
+-- if backup table is exists, mean script if failed on last time
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none ;
+create table ${iol_schema}.ncbs_rb_idep_incr_rate_bk nologging
+compress ${option_switch} for query high
+as
+select *
+from ${iol_schema}.ncbs_rb_idep_incr_rate
+where start_dt < to_date('${batch_date}','yyyymmdd') and end_dt >=to_date('${batch_date}','yyyymmdd');
+
+-- 2.2 drop temp table
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none ;
+drop table ${iol_schema}.ncbs_rb_idep_incr_rate_op purge;
+drop table ${iol_schema}.ncbs_rb_idep_incr_rate_cl purge;
+
+-- 2.3 create temp table
+whenever sqlerror exit sql.sqlcode;
+create table ${iol_schema}.ncbs_rb_idep_incr_rate_op nologging
+compress ${option_switch} for query high
+as
+select * from ${iol_schema}.ncbs_rb_idep_incr_rate where 0=1;
+
+create table ${iol_schema}.ncbs_rb_idep_incr_rate_cl nologging
+compress ${option_switch} for query high
+as
+select * from ${iol_schema}.ncbs_rb_idep_incr_rate where 0=1;
+
+-- 3.1 get new, alter, delete data and put into temp table
+whenever sqlerror exit sql.sqlcode;
+insert /*+ append */ all
+    when end_dt = to_date('${batch_date}', 'yyyymmdd') then
+        into ${iol_schema}.ncbs_rb_idep_incr_rate_cl(
+            client_no -- 客户编号
+            ,period_freq -- 频率id
+            ,agreement_id -- 协议编号
+            ,company -- 法人
+            ,seq_no -- 序号
+            ,int_class -- 利息分类
+            ,tran_timestamp -- 交易时间戳
+            ,acct_fixed_rate -- 分户级固定利率
+            ,acct_percent_rate -- 分户级利率浮动百分比
+            ,acct_spread_rate -- 分户级利率浮动百分点
+            ,actual_rate -- 行内利率
+            ,day_num -- 每期天数
+            ,float_rate -- 浮动利率
+            ,near_amt -- 靠档金额
+            ,real_rate -- 执行利率
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+    else
+        into ${iol_schema}.ncbs_rb_idep_incr_rate_op(
+            client_no -- 客户编号
+            ,period_freq -- 频率id
+            ,agreement_id -- 协议编号
+            ,company -- 法人
+            ,seq_no -- 序号
+            ,int_class -- 利息分类
+            ,tran_timestamp -- 交易时间戳
+            ,acct_fixed_rate -- 分户级固定利率
+            ,acct_percent_rate -- 分户级利率浮动百分比
+            ,acct_spread_rate -- 分户级利率浮动百分点
+            ,actual_rate -- 行内利率
+            ,day_num -- 每期天数
+            ,float_rate -- 浮动利率
+            ,near_amt -- 靠档金额
+            ,real_rate -- 执行利率
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+select
+    nvl(n.client_no, o.client_no) as client_no -- 客户编号
+    ,nvl(n.period_freq, o.period_freq) as period_freq -- 频率id
+    ,nvl(n.agreement_id, o.agreement_id) as agreement_id -- 协议编号
+    ,nvl(n.company, o.company) as company -- 法人
+    ,nvl(n.seq_no, o.seq_no) as seq_no -- 序号
+    ,nvl(n.int_class, o.int_class) as int_class -- 利息分类
+    ,nvl(n.tran_timestamp, o.tran_timestamp) as tran_timestamp -- 交易时间戳
+    ,nvl(n.acct_fixed_rate, o.acct_fixed_rate) as acct_fixed_rate -- 分户级固定利率
+    ,nvl(n.acct_percent_rate, o.acct_percent_rate) as acct_percent_rate -- 分户级利率浮动百分比
+    ,nvl(n.acct_spread_rate, o.acct_spread_rate) as acct_spread_rate -- 分户级利率浮动百分点
+    ,nvl(n.actual_rate, o.actual_rate) as actual_rate -- 行内利率
+    ,nvl(n.day_num, o.day_num) as day_num -- 每期天数
+    ,nvl(n.float_rate, o.float_rate) as float_rate -- 浮动利率
+    ,nvl(n.near_amt, o.near_amt) as near_amt -- 靠档金额
+    ,nvl(n.real_rate, o.real_rate) as real_rate -- 执行利率
+    ,case when
+            n.agreement_id is null
+            and n.seq_no is null
+        then o.start_dt
+        else to_date('${batch_date}', 'yyyymmdd')
+    end as start_dt -- 开始时间
+    ,case when
+            n.agreement_id is null
+            and n.seq_no is null
+        then to_date('${batch_date}', 'yyyymmdd')
+        else to_date('20991231', 'yyyymmdd')
+    end as end_dt -- 结束时间
+    ,case when
+            n.agreement_id is null
+            and n.seq_no is null
+        then 'D'
+        else 'I'
+    end as id_mark -- 增删标志
+    ,to_timestamp('${batch_timestamp}', 'yyyy-mm-dd hh24:mi:ss.ff6') as etl_timestamp -- ETL处理时间
+from (select * from ${iol_schema}.ncbs_rb_idep_incr_rate_bk where start_dt < to_date('${batch_date}','yyyymmdd') and end_dt >= to_date('${batch_date}','yyyymmdd')) o
+    full join (select * from ${itl_schema}.ncbs_rb_idep_incr_rate where etl_dt = to_date('${batch_date}', 'yyyymmdd')) n
+        on
+            o.agreement_id = n.agreement_id
+            and o.seq_no = n.seq_no
+where (
+        o.agreement_id is null
+        and o.seq_no is null
+    )
+    or (
+        n.agreement_id is null
+        and n.seq_no is null
+    )
+    or (
+        o.client_no <> n.client_no
+        or o.period_freq <> n.period_freq
+        or o.company <> n.company
+        or o.int_class <> n.int_class
+        or o.tran_timestamp <> n.tran_timestamp
+        or o.acct_fixed_rate <> n.acct_fixed_rate
+        or o.acct_percent_rate <> n.acct_percent_rate
+        or o.acct_spread_rate <> n.acct_spread_rate
+        or o.actual_rate <> n.actual_rate
+        or o.day_num <> n.day_num
+        or o.float_rate <> n.float_rate
+        or o.near_amt <> n.near_amt
+        or o.real_rate <> n.real_rate
+    )
+;
+commit;
+
+-- 3.2 get unchange, alter(close) data and put into temp table
+whenever sqlerror exit sql.sqlcode;
+insert /*+ append */ all
+    when end_dt <= to_date('${batch_date}', 'yyyymmdd') then
+        into ${iol_schema}.ncbs_rb_idep_incr_rate_cl(
+            client_no -- 客户编号
+            ,period_freq -- 频率id
+            ,agreement_id -- 协议编号
+            ,company -- 法人
+            ,seq_no -- 序号
+            ,int_class -- 利息分类
+            ,tran_timestamp -- 交易时间戳
+            ,acct_fixed_rate -- 分户级固定利率
+            ,acct_percent_rate -- 分户级利率浮动百分比
+            ,acct_spread_rate -- 分户级利率浮动百分点
+            ,actual_rate -- 行内利率
+            ,day_num -- 每期天数
+            ,float_rate -- 浮动利率
+            ,near_amt -- 靠档金额
+            ,real_rate -- 执行利率
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+    else
+        into ${iol_schema}.ncbs_rb_idep_incr_rate_op(
+            client_no -- 客户编号
+            ,period_freq -- 频率id
+            ,agreement_id -- 协议编号
+            ,company -- 法人
+            ,seq_no -- 序号
+            ,int_class -- 利息分类
+            ,tran_timestamp -- 交易时间戳
+            ,acct_fixed_rate -- 分户级固定利率
+            ,acct_percent_rate -- 分户级利率浮动百分比
+            ,acct_spread_rate -- 分户级利率浮动百分点
+            ,actual_rate -- 行内利率
+            ,day_num -- 每期天数
+            ,float_rate -- 浮动利率
+            ,near_amt -- 靠档金额
+            ,real_rate -- 执行利率
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+select
+    o.client_no -- 客户编号
+    ,o.period_freq -- 频率id
+    ,o.agreement_id -- 协议编号
+    ,o.company -- 法人
+    ,o.seq_no -- 序号
+    ,o.int_class -- 利息分类
+    ,o.tran_timestamp -- 交易时间戳
+    ,o.acct_fixed_rate -- 分户级固定利率
+    ,o.acct_percent_rate -- 分户级利率浮动百分比
+    ,o.acct_spread_rate -- 分户级利率浮动百分点
+    ,o.actual_rate -- 行内利率
+    ,o.day_num -- 每期天数
+    ,o.float_rate -- 浮动利率
+    ,o.near_amt -- 靠档金额
+    ,o.real_rate -- 执行利率
+    ,o.start_dt -- 开始时间
+    ,case when n.start_dt is not null then to_date('${batch_date}', 'yyyymmdd')
+          when o.end_dt >= to_date('${batch_date}','yyyymmdd') then to_date('20991231','yyyymmdd')
+          else o.end_dt
+     end as end_dt -- 结束时间
+    ,case when n.start_dt is not null
+          then 'I'
+          when o.end_dt >= to_date('${batch_date}','yyyymmdd')
+          then 'I'
+          else o.id_mark
+     end as id_mark  -- 增删标志 
+    ,o.etl_timestamp -- ETL处理时间
+from ${iol_schema}.ncbs_rb_idep_incr_rate_bk o
+    left join ${iol_schema}.ncbs_rb_idep_incr_rate_op n
+        on
+            o.agreement_id = n.agreement_id
+            and o.seq_no = n.seq_no
+            and o.end_dt >= to_date('${batch_date}','yyyymmdd')
+    left join ${iol_schema}.ncbs_rb_idep_incr_rate_cl d
+        on
+            o.agreement_id = d.agreement_id
+            and o.seq_no = d.seq_no
+where o.start_dt < to_date('${batch_date}','yyyymmdd')
+    and (
+        o.start_dt <> d.start_dt
+        or d.start_dt is null
+    )
+;
+commit;
+
+-- 4.1 truncate target table
+--truncate table ${iol_schema}.ncbs_rb_idep_incr_rate;
+
+-- 4.2 rebuild partition
+declare
+v_sql varchar2(100);
+begin
+for cur in (select partition_name from all_tab_partitions where table_owner=upper('${iol_schema}') and table_name=upper('ncbs_rb_idep_incr_rate') and substr(partition_name,3) >= '${batch_date}' and substr(partition_name,3) < '20991231') loop
+    v_sql := 'alter table ${iol_schema}.ncbs_rb_idep_incr_rate drop partition ' || cur.partition_name;
+    dbms_output.put_line(v_sql);
+    execute immediate v_sql;
+end loop;
+end;
+/
+alter table ${iol_schema}.ncbs_rb_idep_incr_rate add partition p_${batch_date} values(to_date('${batch_date}','YYYYMMDD'));
+
+-- 4.3 exchange partition
+alter table ${iol_schema}.ncbs_rb_idep_incr_rate exchange partition p_${batch_date} with table ${iol_schema}.ncbs_rb_idep_incr_rate_cl;
+alter table ${iol_schema}.ncbs_rb_idep_incr_rate exchange partition p_20991231 with table ${iol_schema}.ncbs_rb_idep_incr_rate_op;
+
+-- 5.1 table grant
+whenever sqlerror exit sql.sqlcode;
+-- grant select on ${iol_schema}.ncbs_rb_idep_incr_rate to ${iml_schema};
+
+-- 5.2 drop temp table
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none ;
+drop table ${iol_schema}.ncbs_rb_idep_incr_rate_op purge;
+drop table ${iol_schema}.ncbs_rb_idep_incr_rate_cl purge;
+
+whenever sqlerror exit sql.sqlcode;
+drop table ${iol_schema}.ncbs_rb_idep_incr_rate_bk purge;
+
+-- 6 gater table status
+whenever sqlerror exit sql.sqlcode;
+exec dbms_stats.gather_table_stats(ownname => '${iol_schema}',tabname => 'ncbs_rb_idep_incr_rate',partname => 'p_20991231', granularity => 'PARTITION', degree => 8, cascade => true);

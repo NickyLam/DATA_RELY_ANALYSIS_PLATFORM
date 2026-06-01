@@ -164,7 +164,7 @@ done
 echo -e "${YELLOW}[2/3] 正在加载数据（缓存优先）...${NC}"
 while ! grep -q "系统就绪" "$LOG_FILE" 2>/dev/null; do
     sleep 2
-    
+
     # 显示进度提示
     if grep -q "缓存加载完成" "$LOG_FILE" 2>/dev/null; then
         if [ "$LAST_PROGRESS" != "cache" ]; then
@@ -182,7 +182,7 @@ while ! grep -q "系统就绪" "$LOG_FILE" 2>/dev/null; do
             LAST_PROGRESS="index"
         fi
     fi
-    
+
     # 检查进程是否退出
     if ! kill -0 $SERVER_PID 2>/dev/null; then
         echo ""

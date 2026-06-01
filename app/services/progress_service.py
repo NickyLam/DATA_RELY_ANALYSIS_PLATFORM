@@ -5,20 +5,19 @@
 
 from __future__ import annotations
 
-import asyncio
 import logging
 import queue
 import threading
 import time
 import uuid
 from dataclasses import dataclass, field
-from enum import Enum
-from typing import Any, Callable, Optional
+from enum import StrEnum
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
 
-class TaskStatus(str, Enum):
+class TaskStatus(StrEnum):
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -29,6 +28,7 @@ class TaskStatus(str, Enum):
 @dataclass
 class ProgressUpdate:
     """进度更新事件"""
+
     percent: float = 0.0
     current_file: str = ""
     message: str = ""
@@ -43,6 +43,7 @@ class ProgressUpdate:
 @dataclass
 class ParseTask:
     """解析任务"""
+
     task_id: str = field(default_factory=lambda: uuid.uuid4().hex)
     status: TaskStatus = TaskStatus.PENDING
     created_at: float = field(default_factory=time.time)
@@ -50,8 +51,8 @@ class ParseTask:
 
     files_received: int = 0
     progress: ProgressUpdate = field(default_factory=ProgressUpdate)
-    result: Optional[Any] = None
-    error: Optional[str] = None
+    result: Any | None = None
+    error: str | None = None
 
     subscribers: list[queue.Queue] = field(default_factory=list)
     lock: threading.Lock = field(default_factory=threading.Lock)
@@ -75,7 +76,7 @@ class ProgressService:
         logger.info("创建任务: %s, 文件数: %d", task.task_id, files_count)
         return task
 
-    def get_task(self, task_id: str) -> Optional[ParseTask]:
+    def get_task(self, task_id: str) -> ParseTask | None:
         """获取任务信息"""
         with self._lock:
             return self._tasks.get(task_id)
@@ -96,8 +97,8 @@ class ProgressService:
 
     def list_tasks(
         self,
-        limit: Optional[int] = 20,
-        status: Optional[str] = None,
+        limit: int | None = 20,
+        status: str | None = None,
     ) -> list[dict[str, Any]]:
         """返回按更新时间倒序排列的任务摘要"""
         with self._lock:
@@ -109,14 +110,16 @@ class ProgressService:
                 if status and task.status.value != status:
                     continue
 
-                summaries.append({
-                    "task_id": task.task_id,
-                    "status": task.status.value,
-                    "files_received": task.files_received,
-                    "progress_percent": round(task.progress.percent, 2),
-                    "created_at": task.created_at,
-                    "updated_at": task.updated_at,
-                })
+                summaries.append(
+                    {
+                        "task_id": task.task_id,
+                        "status": task.status.value,
+                        "files_received": task.files_received,
+                        "progress_percent": round(task.progress.percent, 2),
+                        "created_at": task.created_at,
+                        "updated_at": task.updated_at,
+                    }
+                )
 
         summaries.sort(key=lambda x: x["updated_at"], reverse=True)
         if limit is None:
@@ -166,21 +169,23 @@ class ProgressService:
             task.progress.percent = 100.0
             task.progress.message = "解析完成"
             task.result = result
-            
+
             # 从结果中更新统计数据
             if result and isinstance(result, dict):
                 task.progress.tables_parsed = result.get("tables_parsed", 0)
                 task.progress.procedures_parsed = result.get("procedures_parsed", 0)
                 task.progress.lineages_found = result.get("table_lineages", 0) + result.get("field_mappings", 0)
-            
+
             task.updated_at = time.time()
 
         self._notify_subscribers(task)
-        logger.info("任务完成: %s, 表=%d, 过程=%d, 血缘=%d", 
-                   task_id, 
-                   task.progress.tables_parsed,
-                   task.progress.procedures_parsed,
-                   task.progress.lineages_found)
+        logger.info(
+            "任务完成: %s, 表=%d, 过程=%d, 血缘=%d",
+            task_id,
+            task.progress.tables_parsed,
+            task.progress.procedures_parsed,
+            task.progress.lineages_found,
+        )
 
     def fail_task(self, task_id: str, error: str) -> None:
         """标记任务失败"""
@@ -226,7 +231,7 @@ class ProgressService:
     def generate_sse_events(self, task_id: str):
         """
         SSE 事件生成器（供 FastAPI StreamingResponse 使用）
-        
+
         Yields:
             str: SSE 格式的事件字符串
         """
@@ -248,12 +253,22 @@ class ProgressService:
                         break
 
                 except queue.Empty:
-                    if task.status in (TaskStatus.COMPLETED, TaskStatus.FAILED, TaskStatus.CANCELLED):
+                    if task.status in (
+                        TaskStatus.COMPLETED,
+                        TaskStatus.FAILED,
+                        TaskStatus.CANCELLED,
+                    ):
                         break
 
                     now = time.time()
                     if now - last_keepalive >= 30:
-                        yield self._format_sse_event("progress", {"percent": task.progress.percent, "message": "保持连接..."})
+                        yield self._format_sse_event(
+                            "progress",
+                            {
+                                "percent": task.progress.percent,
+                                "message": "保持连接...",
+                            },
+                        )
                         last_keepalive = now
 
         finally:
@@ -285,9 +300,7 @@ class ProgressService:
     def active_tasks_count(self) -> int:
         """当前活跃任务数量"""
         with self._lock:
-            return sum(
-                1 for t in self._tasks.values() if t.status == TaskStatus.PROCESSING
-            )
+            return sum(1 for t in self._tasks.values() if t.status == TaskStatus.PROCESSING)
 
     @property
     def stats(self) -> dict:
@@ -312,7 +325,11 @@ class ProgressService:
     def _notify_subscribers(self, task: ParseTask) -> None:
         """向所有订阅者推送进度更新"""
         event_data = {
-            "type": "complete" if task.status == TaskStatus.COMPLETED else "error" if task.status == TaskStatus.FAILED else "progress",
+            "type": "complete"
+            if task.status == TaskStatus.COMPLETED
+            else "error"
+            if task.status == TaskStatus.FAILED
+            else "progress",
             "data": {
                 "percent": task.progress.percent,
                 "current_file": task.progress.current_file,
@@ -339,4 +356,5 @@ class ProgressService:
     def _format_sse_event(event_type: str, data: dict) -> str:
         """格式化为 SSE 事件字符串"""
         import json
+
         return f"event: {event_type}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"

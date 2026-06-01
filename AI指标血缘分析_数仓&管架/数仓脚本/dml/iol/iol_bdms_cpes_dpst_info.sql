@@ -1,0 +1,268 @@
+/*
+Purpose:    偏源模型层-全量拉链脚本。此脚本由生成引擎自动生成。
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iol_bdms_cpes_dpst_info
+CreateDate: 20180515
+Logs:
+    zjj 2018-05-15 新建脚本
+*/
+
+set timing on
+
+-- 1 alter parallel
+alter session force parallel query parallel 8;
+alter session force parallel dml parallel 8;
+-- alter session force parallel ddl parallel 8;
+
+-- 2.1 create backup table
+-- if backup table is exists, mean script if failed on last time
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none ;
+create table ${iol_schema}.bdms_cpes_dpst_info_bk nologging
+compress ${option_switch} for query high
+as
+select *
+from ${iol_schema}.bdms_cpes_dpst_info;
+
+-- 2.2 drop temp table
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none ;
+drop table ${iol_schema}.bdms_cpes_dpst_info_op purge;
+drop table ${iol_schema}.bdms_cpes_dpst_info_cl purge;
+
+-- 2.3 create temp table
+whenever sqlerror exit sql.sqlcode;
+create table ${iol_schema}.bdms_cpes_dpst_info_op nologging
+compress ${option_switch} for query high
+as
+select * from ${iol_schema}.bdms_cpes_dpst_info where 0=1;
+
+create table ${iol_schema}.bdms_cpes_dpst_info_cl nologging
+compress ${option_switch} for query high
+as
+select * from ${iol_schema}.bdms_cpes_dpst_info where 0=1;
+
+-- 3.1 get new, alter, delete data and put into temp table
+whenever sqlerror exit sql.sqlcode;
+insert /*+ append */ all
+    when end_dt = to_date('${batch_date}', 'yyyymmdd') then
+        into ${iol_schema}.bdms_cpes_dpst_info_cl(
+            id -- ID
+            ,rs_product -- 存托应答方存托类产品
+            ,rs_product_name -- 存托产品名称
+            ,req_org_code -- 存托机构代码
+            ,std_product_code -- 标准化票据产品代码
+            ,std_product_bank_no -- 标准化票据产品开户行行号
+            ,std_product_bank_name -- 标准化票据产品开户行名称
+            ,sum_draft_amount -- 存托票据汇总金额
+            ,settle_amount -- 存托结算金额
+            ,dpst_result -- 创设结果： 0 创设中 1 创设成功 2 创设失败
+            ,branch_no -- 业务机构号
+            ,top_branch_no -- 总行机构号
+            ,last_upd_opr -- 最后操作员
+            ,last_upd_time -- 最后修改时间
+            ,reserve1 -- 备用字段1
+            ,reserve2 -- 备用字段2
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+    else
+        into ${iol_schema}.bdms_cpes_dpst_info_op(
+            id -- ID
+            ,rs_product -- 存托应答方存托类产品
+            ,rs_product_name -- 存托产品名称
+            ,req_org_code -- 存托机构代码
+            ,std_product_code -- 标准化票据产品代码
+            ,std_product_bank_no -- 标准化票据产品开户行行号
+            ,std_product_bank_name -- 标准化票据产品开户行名称
+            ,sum_draft_amount -- 存托票据汇总金额
+            ,settle_amount -- 存托结算金额
+            ,dpst_result -- 创设结果： 0 创设中 1 创设成功 2 创设失败
+            ,branch_no -- 业务机构号
+            ,top_branch_no -- 总行机构号
+            ,last_upd_opr -- 最后操作员
+            ,last_upd_time -- 最后修改时间
+            ,reserve1 -- 备用字段1
+            ,reserve2 -- 备用字段2
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+select
+    nvl(n.id, o.id) as id -- ID
+    ,nvl(n.rs_product, o.rs_product) as rs_product -- 存托应答方存托类产品
+    ,nvl(n.rs_product_name, o.rs_product_name) as rs_product_name -- 存托产品名称
+    ,nvl(n.req_org_code, o.req_org_code) as req_org_code -- 存托机构代码
+    ,nvl(n.std_product_code, o.std_product_code) as std_product_code -- 标准化票据产品代码
+    ,nvl(n.std_product_bank_no, o.std_product_bank_no) as std_product_bank_no -- 标准化票据产品开户行行号
+    ,nvl(n.std_product_bank_name, o.std_product_bank_name) as std_product_bank_name -- 标准化票据产品开户行名称
+    ,nvl(n.sum_draft_amount, o.sum_draft_amount) as sum_draft_amount -- 存托票据汇总金额
+    ,nvl(n.settle_amount, o.settle_amount) as settle_amount -- 存托结算金额
+    ,nvl(n.dpst_result, o.dpst_result) as dpst_result -- 创设结果： 0 创设中 1 创设成功 2 创设失败
+    ,nvl(n.branch_no, o.branch_no) as branch_no -- 业务机构号
+    ,nvl(n.top_branch_no, o.top_branch_no) as top_branch_no -- 总行机构号
+    ,nvl(n.last_upd_opr, o.last_upd_opr) as last_upd_opr -- 最后操作员
+    ,nvl(n.last_upd_time, o.last_upd_time) as last_upd_time -- 最后修改时间
+    ,nvl(n.reserve1, o.reserve1) as reserve1 -- 备用字段1
+    ,nvl(n.reserve2, o.reserve2) as reserve2 -- 备用字段2
+    ,case when
+            n.id is null
+        then o.start_dt
+        else to_date('${batch_date}', 'yyyymmdd')
+    end as start_dt -- 开始时间
+    ,case when
+            n.id is null
+        then to_date('${batch_date}', 'yyyymmdd')
+        else to_date('20991231', 'yyyymmdd')
+    end as end_dt -- 结束时间
+    ,case when
+            n.id is null
+        then 'D'
+        else 'I'
+    end as id_mark -- 增删标志
+    ,to_timestamp('${batch_timestamp}', 'yyyy-mm-dd hh24:mi:ss.ff6') as etl_timestamp -- ETL处理时间
+from (select * from ${iol_schema}.bdms_cpes_dpst_info_bk where start_dt < to_date('${batch_date}','yyyymmdd') and end_dt >= to_date('${batch_date}','yyyymmdd')) o
+    full join (select * from ${itl_schema}.bdms_cpes_dpst_info where etl_dt = to_date('${batch_date}', 'yyyymmdd')) n
+        on
+            o.id = n.id
+where (
+        o.id is null
+    )
+    or (
+        n.id is null
+    )
+    or (
+        o.rs_product <> n.rs_product
+        or o.rs_product_name <> n.rs_product_name
+        or o.req_org_code <> n.req_org_code
+        or o.std_product_code <> n.std_product_code
+        or o.std_product_bank_no <> n.std_product_bank_no
+        or o.std_product_bank_name <> n.std_product_bank_name
+        or o.sum_draft_amount <> n.sum_draft_amount
+        or o.settle_amount <> n.settle_amount
+        or o.dpst_result <> n.dpst_result
+        or o.branch_no <> n.branch_no
+        or o.top_branch_no <> n.top_branch_no
+        or o.last_upd_opr <> n.last_upd_opr
+        or o.last_upd_time <> n.last_upd_time
+        or o.reserve1 <> n.reserve1
+        or o.reserve2 <> n.reserve2
+    )
+;
+commit;
+
+-- 3.2 get unchange, alter(close) data and put into temp table
+whenever sqlerror exit sql.sqlcode;
+insert /*+ append */ all
+    when end_dt <= to_date('${batch_date}', 'yyyymmdd') then
+        into ${iol_schema}.bdms_cpes_dpst_info_cl(
+            id -- ID
+            ,rs_product -- 存托应答方存托类产品
+            ,rs_product_name -- 存托产品名称
+            ,req_org_code -- 存托机构代码
+            ,std_product_code -- 标准化票据产品代码
+            ,std_product_bank_no -- 标准化票据产品开户行行号
+            ,std_product_bank_name -- 标准化票据产品开户行名称
+            ,sum_draft_amount -- 存托票据汇总金额
+            ,settle_amount -- 存托结算金额
+            ,dpst_result -- 创设结果： 0 创设中 1 创设成功 2 创设失败
+            ,branch_no -- 业务机构号
+            ,top_branch_no -- 总行机构号
+            ,last_upd_opr -- 最后操作员
+            ,last_upd_time -- 最后修改时间
+            ,reserve1 -- 备用字段1
+            ,reserve2 -- 备用字段2
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+    else
+        into ${iol_schema}.bdms_cpes_dpst_info_op(
+            id -- ID
+            ,rs_product -- 存托应答方存托类产品
+            ,rs_product_name -- 存托产品名称
+            ,req_org_code -- 存托机构代码
+            ,std_product_code -- 标准化票据产品代码
+            ,std_product_bank_no -- 标准化票据产品开户行行号
+            ,std_product_bank_name -- 标准化票据产品开户行名称
+            ,sum_draft_amount -- 存托票据汇总金额
+            ,settle_amount -- 存托结算金额
+            ,dpst_result -- 创设结果： 0 创设中 1 创设成功 2 创设失败
+            ,branch_no -- 业务机构号
+            ,top_branch_no -- 总行机构号
+            ,last_upd_opr -- 最后操作员
+            ,last_upd_time -- 最后修改时间
+            ,reserve1 -- 备用字段1
+            ,reserve2 -- 备用字段2
+            ,start_dt -- 开始时间
+            ,end_dt -- 结束时间
+            ,id_mark -- 增删标志
+            ,etl_timestamp -- ETL处理时间戳
+        )
+select
+    o.id -- ID
+    ,o.rs_product -- 存托应答方存托类产品
+    ,o.rs_product_name -- 存托产品名称
+    ,o.req_org_code -- 存托机构代码
+    ,o.std_product_code -- 标准化票据产品代码
+    ,o.std_product_bank_no -- 标准化票据产品开户行行号
+    ,o.std_product_bank_name -- 标准化票据产品开户行名称
+    ,o.sum_draft_amount -- 存托票据汇总金额
+    ,o.settle_amount -- 存托结算金额
+    ,o.dpst_result -- 创设结果： 0 创设中 1 创设成功 2 创设失败
+    ,o.branch_no -- 业务机构号
+    ,o.top_branch_no -- 总行机构号
+    ,o.last_upd_opr -- 最后操作员
+    ,o.last_upd_time -- 最后修改时间
+    ,o.reserve1 -- 备用字段1
+    ,o.reserve2 -- 备用字段2
+    ,o.start_dt -- 开始时间
+    ,case when n.start_dt is not null then to_date('${batch_date}', 'yyyymmdd')
+          when o.end_dt >= to_date('${batch_date}','yyyymmdd') then to_date('20991231','yyyymmdd')
+          else o.end_dt
+     end as end_dt -- 结束时间
+    ,o.id_mark -- 增删标志
+    ,to_timestamp('${batch_timestamp}', 'yyyy-mm-dd hh24:mi:ss.ff6') as etl_timestamp -- ETL处理时间
+from ${iol_schema}.bdms_cpes_dpst_info_bk o
+    left join ${iol_schema}.bdms_cpes_dpst_info_op n
+        on
+            o.id = n.id
+            and o.end_dt >= to_date('${batch_date}','yyyymmdd')
+    left join ${iol_schema}.bdms_cpes_dpst_info_cl d
+        on
+            o.id = d.id
+where o.start_dt < to_date('${batch_date}','yyyymmdd')
+    and (
+        o.start_dt <> d.start_dt
+        or d.start_dt is null
+    )
+;
+commit;
+
+-- 4.1 truncate target table
+-- truncate table ${iol_schema}.bdms_cpes_dpst_info;
+
+-- 4.2 exchange partition
+alter table ${iol_schema}.bdms_cpes_dpst_info exchange partition p_19000101 with table ${iol_schema}.bdms_cpes_dpst_info_cl;
+alter table ${iol_schema}.bdms_cpes_dpst_info exchange partition p_20991231 with table ${iol_schema}.bdms_cpes_dpst_info_op;
+
+-- 5.1 table grant
+whenever sqlerror exit sql.sqlcode;
+-- grant select on ${iol_schema}.bdms_cpes_dpst_info to ${iml_schema};
+
+-- 5.2 drop temp table
+-- it is no need to check when this segment SQL was return faied
+whenever sqlerror continue none ;
+drop table ${iol_schema}.bdms_cpes_dpst_info_op purge;
+drop table ${iol_schema}.bdms_cpes_dpst_info_cl purge;
+
+whenever sqlerror exit sql.sqlcode;
+drop table ${iol_schema}.bdms_cpes_dpst_info_bk purge;
+
+-- 6 gater table status
+whenever sqlerror exit sql.sqlcode;
+exec dbms_stats.gather_table_stats(ownname => '${iol_schema}',tabname => 'bdms_cpes_dpst_info',partname => 'p_20991231', granularity => 'PARTITION', degree => 8, cascade => true);

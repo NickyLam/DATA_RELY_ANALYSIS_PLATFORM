@@ -1,0 +1,158 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_idl_aml_cmm_retl_loan_acct_info_i
+CreateDate: 20180529
+FileName:   ${iel_data_path}/aml_cmm_retl_loan_acct_info.i.${batch_date}.dat
+IF_mark:    i
+Logs:
+   zjj 2018-07-27 create template
+' \
+        query="select etl_dt 
+,lp_id 
+,acct_id 
+,acct_name 
+,cust_id 
+,cont_id 
+,dubil_num 
+,loan_distr_acct_num 
+,loan_repay_num 
+,prod_id 
+,subj_id 
+,acctnt_cate_cd 
+,loan_modal_cd 
+,loan_acct_status_cd 
+,unite_loan_cd 
+,priv_loan_flg 
+,promis_loan_flg 
+,circl_loan_flg 
+,deriv_loan_flg 
+,agent_loan_flg 
+,oots_accti_flg 
+,loan_modal_dg_subj_accti_flg 
+,loan_tenor 
+,loan_tenor_type_cd 
+,acru_non_acru_cd 
+,final_fin_dt 
+,open_acct_teller_id 
+,clos_acct_teller_id 
+,open_acct_org_id 
+,mgmt_org_id 
+,acct_instit_id 
+,open_acct_dt 
+,distr_dt 
+,value_dt 
+,exp_dt 
+,clos_acct_dt 
+,renew_flg 
+,renew_cnt 
+,int_accr_rule 
+,int_accr_flg 
+,comp_int_flg 
+,pre_recv_int_way 
+,int_rat_adj_way_cd 
+,int_rat_base_type_cd 
+,base_rat 
+,exec_int_rat 
+,int_rat_float_way_cd 
+,int_rat_adj_ped_corp_cd 
+,int_rat_adj_ped_freq 
+,int_rat_flo_val 
+,curr_int_rat_effect_dt 
+,next_int_rat_adj_dt 
+,int_set_way_cd 
+,int_accr_way_cd 
+,ped_distr_flg 
+,distr_way_cd 
+,repay_way_cd 
+,repay_ped_corp_cd 
+,repay_ped 
+,ovdue_flg 
+,curr_ovdue_perds 
+,ovdue_days 
+,ovdue_pric_bal 
+,ovdue_int_amt 
+,ovdue_comp_int_amt 
+,fir_ovdue_dt 
+,ovdue_int_rat 
+,ovdue_int_rat_flo_val 
+,tot_perds 
+,curr_issue_perds 
+,last_repay_dt 
+,curr_cd 
+,next_repay_dt 
+,next_rpp_amt 
+,next_repay_int_amt 
+,cont_amt 
+,dubil_amt 
+,distr_amt 
+,froz_distrd_amt 
+,distrd_amt 
+,td_acru_int 
+,currt_acru_int 
+,nomal_pric 
+,ovdue_pric 
+,idle_pric 
+,bad_debt_pric 
+,loan_fund 
+,coll_acru_int 
+,recvbl_acru_pnlt 
+,coll_acru_pnlt 
+,recvbl_pnlt 
+,coll_pnlt 
+,acru_comp_int 
+,recvbl_comp_int 
+,acru_int_sub 
+,recvbl_int_sub 
+,amorted_int 
+,wrt_off_pric 
+,wrt_off_int 
+,int_income 
+,wrt_off_advc_fee_bal 
+,wrt_off_advc_fee_amt 
+,recvbl_fine 
+,fine_inco 
+,resv 
+,recvbl_over_int 
+,coll_over_int 
+,in_bs_int 
+,off_bs_int 
+,acm_recvbl_uncol_int_amt 
+,repaid_pric 
+,repaid_int 
+,repaid_pnlt 
+,repaid_comp_int 
+,repaid_fee 
+,pric_bal 
+,currt_bal 
+,cl_curr_currt_bal 
+,ear_d_bal 
+,ear_m_bal 
+,ear_s_bal 
+,ear_y_bal 
+,y_acm_bal 
+,s_acm_bal 
+,m_acm_bal 
+,cl_curr_ear_d_bal 
+,cl_curr_ear_m_bal 
+,cl_curr_ear_s_bal 
+,cl_curr_ear_y_bal 
+,cl_curr_y_acm_bal 
+,cl_curr_ear_d_y_acm_bal 
+,cl_curr_ear_m_y_acm_bal 
+,cl_curr_ear_s_y_acm_bal 
+,cl_curr_ear_y_y_acm_bal 
+,cl_curr_s_acm_bal 
+,cl_curr_ear_d_s_acm_bal 
+,cl_curr_ear_s_s_acm_bal 
+,cl_curr_ear_y_s_acm_bal 
+,cl_curr_m_acm_bal 
+,cl_curr_ear_d_m_acm_bal 
+,cl_curr_ear_m_m_acm_bal 
+,cl_curr_ear_y_m_acm_bal 
+,job_cd 
+,etl_timestamp from idl.aml_cmm_retl_loan_acct_info where etl_dt=to_date('${batch_date}','yyyymmdd');" \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/aml_cmm_retl_loan_acct_info.i.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes

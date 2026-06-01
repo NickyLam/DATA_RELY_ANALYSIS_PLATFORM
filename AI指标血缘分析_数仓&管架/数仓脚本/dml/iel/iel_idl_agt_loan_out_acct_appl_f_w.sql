@@ -1,0 +1,141 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_idl_agt_loan_out_acct_appl_f_w
+CreateDate: 20180529
+FileName:   ${iel_data_path}/agt_loan_out_acct_appl_w.f.${batch_date}.dat
+IF_mark:    f_w
+Logs:
+   zjj 2018-07-27 create t1emplate
+' \
+        query="select 
+t1.etl_dt 
+,t1.appl_id
+,t1.lp_id
+,t1.out_acct_flow_num
+,t1.party_id
+,t1.bus_type_id
+,t1.curr_cd
+,t1.amt
+,t1.tenor_mon
+,t1.distr_dt
+,t1.exp_dt
+,t1.exec_int_rat
+,t1.pric_repay_way_cd
+,t1.subj_id
+,t1.oper_org_id
+,t1.oper_teller_id
+,t1.oper_dt
+,t1.rgst_org_id
+,t1.rgst_teller_id
+,t1.input_dt
+,t1.modif_dt
+,t1.file_dt
+,t1.base_rat_cd
+,t1.base_rat
+,t1.float_type_cd
+,t1.float_int_rat
+,t1.cont_id
+,t1.dubil_id
+,t1.manu_cont_id
+,t1.stl_acct_id
+,t1.loan_type_cd
+,t1.crdt_lmt_agt_id
+,t1.int_rat_adj_type_cd
+,t1.fix_ped
+,t1.col_int_type_cd
+,t1.pre_recv_int_flg
+,t1.cont_comp_int_flg
+,t1.secd_repay_acct_id
+,t1.entr_acct_id
+,t1.comm_fee_amt
+,t1.comm_fee_collect_way_cd
+,t1.bus_breed_sub_type_cd
+,t1.out_acct_tran
+,t1.appl_status_cd
+,t1.bill_id
+,t1.recver_acct_name
+,t1.recv_bank_name
+,t1.margin_acct_id
+,t1.recv_bank_no
+,t1.guar_way_cd
+,t1.margin_curr_cd
+,t1.margin_ratio
+,t1.out_acct_org_id
+,t1.entr_dep_acct_id
+,t1.csner_dep_acct_id
+,t1.loan_org_id
+,t1.pric_auto_rtn_flg
+,t1.int_auto_rtn_flg
+,t1.int_rat_reval_cd
+,t1.inst_loan_repay_way_cd
+,t1.ovdue_loan_int_rat_fl_rt
+,t1.ovdue_loan_exec_int_rat
+,t1.inst_loan_tot_perds
+,t1.entr_dep_sub_acct_id
+,t1.money_use_type_cd
+,t1.coll_comp_int_flg
+,t1.tenor_cd
+,t1.entr_loan_comm_fee_coll_ratio
+,t1.crdt_distr_repay_plan_flg
+,t1.stop_accr_int_flg
+,t1.entr_pay_amt
+,t1.check_org_id
+,t1.check_teller_id
+,t1.check_dt
+,t1.repay_way_cd
+,t1.recver_acct_id
+,t1.tran_tm
+,t1.margin_sub_acct_num
+,t1.margin_amt
+,t1.guar_org_id
+,t1.fin_log_flg
+,t1.comm_fee
+,t1.todos
+,t1.discnt_int
+,t1.bus_kind_cd
+,t1.out_acct_acct_id
+,t1.strk_bal_flg
+,t1.lc_amt
+,t1.int_accr_method_cd
+,t1.agt_rat
+,t1.margin_exp_day
+,t1.recver_name
+,t1.onl_bank_distr_flg
+,t1.conti_loan_init_dubil_id
+,t1.loan_kind_cd
+,t1.matn_flg
+,t1.od_promis_fee
+,t1.start_od_amt
+,t1.od_lmt
+,t1.od_acct_num
+,t1.od_loan_way_cd
+,t1.lp_od_lmt_start_day
+,t1.lp_od_lmt_exp_day
+,t1.accptor_name
+,t1.accptor_open_bank_num
+,t1.accptor_open_bank_name
+,t1.comm_fee_amort_flg
+,t1.comm_fee_charge_way_cd
+,t1.amort_flow_num
+,t1.acpt_entry_tran_dt
+,t1.acpt_entry_tran_flow_num
+,t1.fin_sys_out_acct_flg
+,t1.distr_acct_name
+,t1.distr_acct_open_bank_name
+,t1.sign_crdt_cont_flg
+,t1.sig_bill_uniq_mark_id
+,t1.asset_thd_cls_cd
+,t1.fft_exp_lc_advise_id
+,t1.fft_exp_lc_id
+,t1.fft_exp_send_bill_id
+,t1.create_dt 
+,t1.update_dt
+,t1.id_mark 
+,t1.job_cd
+from ${idl_schema}.agt_loan_out_acct_appl t1 
+where etl_dt between to_date('${batch_date}','yyyymmdd')-6 and to_date('${batch_date}','yyyymmdd')" \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/agt_loan_out_acct_appl_w.f.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes

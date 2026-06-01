@@ -1,0 +1,379 @@
+"""
+表查询服务
+封装表/存储过程搜索、字段获取、系统统计等查询功能
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+from app.repository import search_table_dicts
+from app.services.parser_service import ParserService
+from app.utils.cache_manager import CacheManager
+from core.table_name_resolver import TableNameResolver
+
+
+class TableQueryService:
+    """表信息查询服务（从 LineageService 拆分）"""
+
+    def __init__(
+        self,
+        parser_service: ParserService,
+        cache_manager: CacheManager,
+    ):
+        self._parser = parser_service
+        self._cache = cache_manager
+        self._resolver = TableNameResolver()
+
+    def search_tables(
+        self,
+        keyword: str,
+        limit: int = 50,
+    ) -> list[dict]:
+        """
+        搜索表名（智能排序 - 精确匹配优先）
+
+        排序优先级（从高到低）：
+        1. 短名完全匹配（如 EAST5_201_GRJCXXB == EAST5_201_GRJCXXB）
+        2. 全名以关键词结尾（如 RRP_MDL.EAST5_201_GRJCXXB）
+        3. 包含匹配（如 T_COM_RRP_EAST_EAST5_201_GRJCXXB）
+        """
+        parser_search = getattr(self._parser, "search_tables", None)
+        if callable(parser_search):
+            return self._format_table_search_results(
+                parser_search(keyword, limit=limit),
+                limit,
+            )
+
+        data = self._parser.get_current_data()
+        table_results = search_table_dicts(data.get("tables", []), keyword, limit) if data else []
+        return self._format_table_search_results(table_results, limit)
+
+    def _format_table_search_results(self, table_results: list[dict], limit: int) -> list[dict]:
+        tables = []
+        seen = set()
+
+        for table_info in table_results[:limit]:
+            name = table_info.get("full_name", "")
+            if not name or name in seen:
+                continue
+
+            seen.add(name)
+            short = table_info.get("table_name") or (name.split(".")[-1] if "." in name else name)
+            columns = [column.get("name", "") for column in table_info.get("columns", []) if column.get("name")]
+
+            tables.append(
+                {
+                    "full_name": name,
+                    "short_name": short,
+                    "layer": self._detect_layer(name),
+                    "field_count": len(columns),
+                    "columns": columns if columns else None,
+                }
+            )
+
+        return tables
+
+    def search_procedures(
+        self,
+        keyword: str,
+        limit: int = 50,
+    ) -> list[dict]:
+        """搜索存储过程名称"""
+        results = self._cache.search_by_keyword(keyword, index_type="procedure_name", limit=limit)
+
+        procedures = []
+        seen = set()
+        for name in results[:limit]:
+            if name not in seen:
+                seen.add(name)
+                short = name.split(".")[-1] if "." in name else name
+                procedures.append({"full_name": name, "short_name": short})
+
+        return procedures
+
+    def get_table_fields(self, table: str) -> list[str] | None:
+        """获取指定表的字段名列表。
+
+        查找策略：
+        1. 精确匹配 .tab 表（table_name 或 full_name）
+        2. 从字段映射中查找过程表（短名或全名）
+        3. 模糊匹配过程表
+        """
+        data = self._parser.get_current_data()
+        if not data:
+            return None
+
+        norm_name = table.strip().upper()
+
+        # 1. 精确匹配 .tab 表
+        for t in data.get("tables", []):
+            tbl_name = (t.get("table_name") or "").upper()
+            full_name = (t.get("full_name") or "").upper()
+            if tbl_name == norm_name or full_name == norm_name:
+                columns = t.get("columns", [])
+                return [c.get("name", "") for c in columns if c.get("name")]
+
+        # 2. 从字段映射中查找过程表（按 target_table 聚合字段名）
+        field_mappings = data.get("field_mappings", [])
+        proc_fields: dict[str, set[str]] = {}
+        for fm in field_mappings:
+            tgt_table = (fm.get("target_table") or "").upper()
+            tgt_col = fm.get("target_column", "")
+            if tgt_table and tgt_col:
+                proc_fields.setdefault(tgt_table, set()).add(tgt_col)
+
+        for proc_tbl, fields in proc_fields.items():
+            short = proc_tbl.split(".")[-1] if "." in proc_tbl else proc_tbl
+            if short == norm_name or proc_tbl == norm_name:
+                return sorted(fields)
+
+        # 3. 模糊匹配过程表
+        for proc_tbl, fields in proc_fields.items():
+            if norm_name in proc_tbl or proc_tbl.endswith(norm_name):
+                return sorted(fields)
+
+        return None
+
+    def get_system_stats(self) -> dict[str, Any]:
+        """获取系统统计信息"""
+        data = self._parser.get_current_data()
+
+        base_stats = {
+            "total_tables": 0,
+            "total_procedures": 0,
+            "total_table_lineages": 0,
+            "total_field_mappings": 0,
+            "total_caliber_infos": 0,
+            "cache_size": 0,
+            "active_tasks": 0,
+            "uptime_seconds": 0.0,
+        }
+
+        if data:
+            metadata = data.get("metadata", {})
+            base_stats.update(
+                {
+                    "total_tables": metadata.get("total_tables", 0),
+                    "total_procedures": metadata.get("total_procedures", 0),
+                    "total_table_lineages": metadata.get("total_table_lineages", 0),
+                    "total_field_mappings": metadata.get("total_field_mappings", 0),
+                    "total_caliber_infos": metadata.get("total_caliber_infos", 0),
+                }
+            )
+
+        base_stats["cache_size"] = self._cache.size
+
+        return base_stats
+
+    # --- 级联查询方法（系统→Schema→表）---
+
+    def _build_schema_to_system(self) -> dict[str, str]:
+        """构建 schema_name → system_name 映射。
+
+        每次调用时从数据和配置中重新计算，确保数据刷新后映射正确。
+        """
+        from app.config import config
+
+        schema_to_system: dict[str, str] = {}
+        oracle_systems: list[str] = []
+
+        for ds_cfg in config.datasource_configs:
+            if not ds_cfg.enabled:
+                continue
+            for schema_dir in ds_cfg.schema_dirs:
+                schema_to_system[schema_dir.upper()] = ds_cfg.name
+            if ds_cfg.parser == "oracle":
+                oracle_systems.append(ds_cfg.name)
+
+        # 如果有 Oracle 系统，将数据中未知 schema 自动归属
+        data = self._parser.get_current_data()
+        all_tables = data.get("tables", []) if data else []
+
+        unknown_schemas: set[str] = set()
+        for t in all_tables:
+            full_name = t.get("full_name") or ""
+            if not full_name or "." not in full_name:
+                continue
+            schema = full_name.split(".")[0].upper()
+            if schema not in schema_to_system:
+                unknown_schemas.add(schema)
+
+        # 将未知 schema 归属到第一个 Oracle 系统
+        if oracle_systems and unknown_schemas:
+            oracle_sys = oracle_systems[0]
+            for schema in unknown_schemas:
+                schema_to_system[schema] = oracle_sys
+
+        return schema_to_system
+
+    def get_systems(self) -> list[dict]:
+        """返回所有启用的数据源列表（含表计数）。"""
+        from app.config import config
+
+        data = self._parser.get_current_data()
+        all_tables = data.get("tables", []) if data else []
+
+        schema_to_system = self._build_schema_to_system()
+
+        # 统计每个系统的表数
+        system_table_counts: dict[str, int] = {c.name: 0 for c in config.datasource_configs if c.enabled}
+
+        for t in all_tables:
+            full_name = t.get("full_name") or ""
+            if not full_name:
+                continue
+
+            if "." in full_name:
+                schema = full_name.split(".")[0].upper()
+                if schema in schema_to_system:
+                    sys_name = schema_to_system[schema]
+                    system_table_counts[sys_name] = system_table_counts.get(sys_name, 0) + 1
+            else:
+                # 无 schema 前缀的表，归属第一个非 Oracle 系统
+                warehouse_systems = [c for c in config.datasource_configs if c.enabled and c.parser != "oracle"]
+                if warehouse_systems:
+                    ws = warehouse_systems[0].name
+                    system_table_counts[ws] = system_table_counts.get(ws, 0) + 1
+
+        result = []
+        for ds_cfg in config.datasource_configs:
+            if not ds_cfg.enabled:
+                continue
+            result.append(
+                {
+                    "name": ds_cfg.name,
+                    "display_name": ds_cfg.display_name,
+                    "table_count": system_table_counts.get(ds_cfg.name, 0),
+                }
+            )
+        return result
+
+    def get_schemas(self, system: str) -> list[dict]:
+        """返回指定系统下的 schema 列表（含表计数）。"""
+        from app.config import config
+
+        data = self._parser.get_current_data()
+        all_tables = data.get("tables", []) if data else []
+
+        ds_cfg = next((c for c in config.datasource_configs if c.name == system), None)
+        if not ds_cfg:
+            return []
+
+        schema_to_system = self._build_schema_to_system()
+
+        # 从数据中提取所有 schema 及其表计数
+        system_schemas: dict[str, int] = {}
+        unclassified_count = 0
+
+        for t in all_tables:
+            full_name = t.get("full_name") or ""
+            if not full_name:
+                continue
+
+            if "." in full_name:
+                schema = full_name.split(".")[0].upper()
+                # 检查该 schema 是否属于该系统
+                mapped_system = schema_to_system.get(schema)
+                if mapped_system == system:
+                    system_schemas[schema] = system_schemas.get(schema, 0) + 1
+            else:
+                # 无 schema 的表归属数仓系统
+                if ds_cfg.parser != "oracle":
+                    unclassified_count += 1
+
+        # 构建结果
+        result = []
+        for schema_name, count in sorted(system_schemas.items()):
+            result.append(
+                {
+                    "schema_name": schema_name,
+                    "table_count": count,
+                }
+            )
+
+        # 未分类表
+        if unclassified_count > 0:
+            result.append(
+                {
+                    "schema_name": "__unclassified__",
+                    "table_count": unclassified_count,
+                }
+            )
+
+        return result
+
+    def get_tables_by_schema(
+        self,
+        system: str,
+        schema: str,
+        keyword: str = "",
+    ) -> list[dict]:
+        """返回指定系统+schema 下的表列表。"""
+        from app.config import config
+
+        data = self._parser.get_current_data()
+        all_tables = data.get("tables", []) if data else []
+
+        ds_cfg = next((c for c in config.datasource_configs if c.name == system), None)
+        if not ds_cfg:
+            return []
+
+        schema_to_system = self._build_schema_to_system()
+
+        keyword_upper = keyword.upper() if keyword else ""
+
+        tables = []
+        for t in all_tables:
+            full_name = t.get("full_name", "")
+            if not full_name:
+                continue
+
+            # 确定 schema
+            if "." in full_name:  # noqa: SIM108
+                table_schema = full_name.split(".")[0].upper()
+            else:
+                table_schema = "__unclassified__"
+
+            # 检查该表是否属于该系统
+            if schema == "__unclassified__":
+                # 未分类：只有无 schema 前缀的表
+                if "." in full_name:
+                    continue
+                # 且系统应该是数仓类
+                if ds_cfg.parser == "oracle":
+                    continue
+            else:
+                # 有 schema 的表：检查系统归属
+                mapped_system = schema_to_system.get(table_schema)
+                if mapped_system != system:
+                    continue
+                # 检查 schema 匹配
+                if table_schema != schema.upper():
+                    continue
+
+            short_name = full_name.split(".")[-1] if "." in full_name else full_name
+
+            # 关键词过滤
+            if keyword_upper and keyword_upper not in full_name.upper() and keyword_upper not in short_name.upper():
+                continue
+
+            columns = [c.get("name", "") for c in t.get("columns", []) if c.get("name")]
+
+            tables.append(
+                {
+                    "full_name": full_name,
+                    "short_name": short_name,
+                    "layer": self._detect_layer(full_name),
+                    "field_count": len(columns),
+                }
+            )
+
+        return tables
+
+    @staticmethod
+    def _detect_layer(table_name: str) -> str:
+        """检测表所属层级"""
+        from core.layer_detector import detect_layer_str
+
+        return detect_layer_str(table_name)

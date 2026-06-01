@@ -1,0 +1,60 @@
+/*
+Purpose:    近源模型层-状态表建表脚本，此脚本由生成引擎自动生成。
+Author:     Sunline
+Usage:      python $ETL_HOME/script/init.py iol eifs_contact_certificate_type
+CreateDate: 20180515
+FileType:   DDL
+Logs:
+    zjj 2018-05-15 新建表本
+*/
+
+prompt creating table ${iol_schema}.eifs_contact_certificate_type
+whenever sqlerror continue none;
+drop table ${iol_schema}.eifs_contact_certificate_type purge;
+
+whenever sqlerror exit sql.sqlcode;
+create table ${iol_schema}.eifs_contact_certificate_type(
+    contact_certificate_type_id varchar2(30) -- 证件类型编号
+    ,parent_type_id varchar2(30) -- 证件类型父类型编号
+    ,has_table varchar2(2) -- 证件类型是否有关联表
+    ,can_be_multiple varchar2(2) -- 同客户下是否允许多条
+    ,description varchar2(383) -- 证件类型描述
+    ,last_updated_stamp timestamp -- 最后更新时间
+    ,last_updated_tx_stamp timestamp -- 最后更新事务时间
+    ,created_stamp timestamp -- 创建时间
+    ,created_tx_stamp timestamp -- 创建事务时间
+    ,start_dt date -- 开始时间
+    ,end_dt date -- 结束时间
+    ,id_mark varchar2(10) -- 增删标志
+    ,etl_timestamp timestamp -- ETL处理时间戳
+)
+partition by list(end_dt)(
+     partition p_19000101 values (to_date('19000101','yyyymmdd')),
+     partition p_20991231 values (to_date('20991231','yyyymmdd'))
+)
+storage (initial 1024k next 1024k)
+compress ${option_switch} for query high
+nologging
+;
+
+-- grant
+grant select on ${iol_schema}.eifs_contact_certificate_type to ${iml_schema};
+grant select on ${iol_schema}.eifs_contact_certificate_type to ${icl_schema};
+grant select on ${iol_schema}.eifs_contact_certificate_type to ${idl_schema};
+grant select on ${iol_schema}.eifs_contact_certificate_type to ${iel_schema};
+
+-- comment
+comment on table ${iol_schema}.eifs_contact_certificate_type is '证件类型表';
+comment on column ${iol_schema}.eifs_contact_certificate_type.contact_certificate_type_id is '证件类型编号';
+comment on column ${iol_schema}.eifs_contact_certificate_type.parent_type_id is '证件类型父类型编号';
+comment on column ${iol_schema}.eifs_contact_certificate_type.has_table is '证件类型是否有关联表';
+comment on column ${iol_schema}.eifs_contact_certificate_type.can_be_multiple is '同客户下是否允许多条';
+comment on column ${iol_schema}.eifs_contact_certificate_type.description is '证件类型描述';
+comment on column ${iol_schema}.eifs_contact_certificate_type.last_updated_stamp is '最后更新时间';
+comment on column ${iol_schema}.eifs_contact_certificate_type.last_updated_tx_stamp is '最后更新事务时间';
+comment on column ${iol_schema}.eifs_contact_certificate_type.created_stamp is '创建时间';
+comment on column ${iol_schema}.eifs_contact_certificate_type.created_tx_stamp is '创建事务时间';
+comment on column ${iol_schema}.eifs_contact_certificate_type.start_dt is '开始时间';
+comment on column ${iol_schema}.eifs_contact_certificate_type.end_dt is '结束时间';
+comment on column ${iol_schema}.eifs_contact_certificate_type.id_mark is '增删标志';
+comment on column ${iol_schema}.eifs_contact_certificate_type.etl_timestamp is 'ETL处理时间戳';

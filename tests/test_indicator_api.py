@@ -2,11 +2,13 @@
 指标血缘 API 测试用例
 TC-301 到 TC-305
 """
-import pytest
-from unittest.mock import patch, MagicMock
-from fastapi.testclient import TestClient
+
 import sys
 from pathlib import Path
+from unittest.mock import MagicMock, patch
+
+import pytest
+from fastapi.testclient import TestClient
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -22,28 +24,20 @@ def client():
 def mock_indicator_service():
     with patch("app.dependencies.get_indicator_service") as mock:
         service = MagicMock()
-        service.search_indicators.return_value = [
-            {"index_no": "FM0100011", "index_name": "测试指标"}
-        ]
+        service.search_indicators.return_value = [{"index_no": "FM0100011", "index_name": "测试指标"}]
         service.get_indicator_detail.return_value = {
             "index_no": "FM0100011",
             "index_name": "测试指标",
-            "index_bclass": "1"
+            "index_bclass": "1",
         }
-        service.trace_indicator.return_value = {
-            "nodes": [],
-            "edges": []
-        }
+        service.trace_indicator.return_value = {"nodes": [], "edges": []}
         service.get_pipeline_steps.return_value = []
         service.get_stats.return_value = {
             "total_indicators": 100,
-            "total_dependencies": 500
+            "total_dependencies": 500,
         }
         service.get_indicator_source_tables.return_value = []
-        service.bridge_to_field_lineage.return_value = {
-            "success": True,
-            "data": {}
-        }
+        service.bridge_to_field_lineage.return_value = {"success": True, "data": {}}
         mock.return_value = service
         yield service
 
@@ -73,9 +67,7 @@ class TestIndicatorLineage:
 
     def test_get_indicator_lineage(self, client, mock_indicator_service):
         """TC-303: 指标血缘查询"""
-        response = client.get(
-            "/api/indicator/lineage?index_no=FM0100011&direction=upstream&depth=10"
-        )
+        response = client.get("/api/indicator/lineage?index_no=FM0100011&direction=upstream&depth=10")
         assert response.status_code == 200
 
 

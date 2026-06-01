@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import logging
+from collections.abc import Callable
 from enum import Enum, auto
-from typing import Any, Callable
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +17,6 @@ class EventType(Enum):
 
 
 class EventBus:
-
     def __init__(self):
         self._handlers: dict[EventType, list[Callable]] = {}
 
@@ -27,9 +27,7 @@ class EventBus:
 
     def unsubscribe(self, event_type: EventType, handler: Callable) -> None:
         if event_type in self._handlers:
-            self._handlers[event_type] = [
-                h for h in self._handlers[event_type] if h != handler
-            ]
+            self._handlers[event_type] = [h for h in self._handlers[event_type] if h != handler]
 
     def publish(self, event_type: EventType, **kwargs: Any) -> None:
         handlers = self._handlers.get(event_type, [])
@@ -39,7 +37,12 @@ class EventBus:
             try:
                 handler(**kwargs)
             except Exception as e:
-                logger.error("事件处理器 %s 处理 %s 时出错: %s", handler.__name__, event_type.name, e)
+                logger.error(
+                    "事件处理器 %s 处理 %s 时出错: %s",
+                    handler.__name__,
+                    event_type.name,
+                    e,
+                )
 
     def clear(self) -> None:
         self._handlers.clear()

@@ -10,7 +10,6 @@ SQL 解析器抽象基类
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Optional
 
 from core.models import CaliberInfo, ProcedureInfo, TableInfo
 
@@ -19,12 +18,12 @@ class BaseSQLParser(ABC):
     """SQL 解析器抽象基类"""
 
     @abstractmethod
-    def parse_ddl(self, content: str, file_path: str = "") -> Optional[TableInfo]:
+    def parse_ddl(self, content: str, file_path: str = "") -> TableInfo | None:
         """解析 DDL 语句（CREATE TABLE），返回表结构信息"""
         ...
 
     @abstractmethod
-    def parse_dml(self, content: str, file_path: str = "") -> Optional[ProcedureInfo]:
+    def parse_dml(self, content: str, file_path: str = "") -> ProcedureInfo | None:
         """解析 DML 语句（存储过程/SQL脚本），返回过程信息"""
         ...
 

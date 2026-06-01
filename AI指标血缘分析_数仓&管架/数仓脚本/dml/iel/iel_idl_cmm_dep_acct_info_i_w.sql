@@ -1,0 +1,154 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_idl_cmm_dep_acct_info_i_w
+CreateDate: 20180529
+FileName:   ${iel_data_path}/cmm_dep_acct_info_w.i.${batch_date}.dat
+IF_mark:    i_w
+Logs:
+   zjj 2018-07-27 create template
+' \
+        query="select 
+to_date('${batch_date}','yyyymmdd') as etl_dt
+,t.lp_id
+,t.acct_id
+,t.acct_name
+,t.cust_acct_id
+,t.cust_acct_sub_acct_num
+,t.cds_liab_acct_num
+,t.old_acct_id
+,t.cust_id
+,t.subj_id
+,t.int_paybl_subj_id
+,t.int_paybl_adj_subj_id
+,t.int_expns_subj_id
+,t.int_expns_adj_subj_id
+,t.dep_kind_cd
+,t.acct_cls_cd
+,t.acct_type_cd
+,t.acct_attr_cd
+,t.dep_term
+,t.std_prod_id
+,t.ext_prod_id
+,t.intnal_prod_id
+,t.open_oa_apv_form_num
+,t.dep_acct_status_cd
+,t.cust_type_cd
+,t.corp_acct_flg
+,t.stop_pay_status_cd
+,t.general_exch_flg
+,t.advise_dep_flg
+,t.agt_dep_flg
+,t.float_int_rat_flg
+,t.int_rat_float_way_cd
+,t.int_rat_adj_ped_corp_cd
+,t.int_rat_adj_ped_freq
+,t.corp_supv_acct_flg
+,t.rc_flg
+,t.margin_flg
+,t.bill_pool_margin_flg
+,t.bill_pool_type_cd
+,t.agree_dep_flg
+,t.ibank_dep_flg
+,t.web_dep_flg
+,t.dep_basic_acct_flg
+,t.ec_flg
+,t.privavy_acct_flg
+,t.legal_acct_flg
+,t.auto_redt_flg
+,t.redted_cnt
+,t.itg_dep_earliest_drawbl_dt
+,t.sleep_acct_flg
+,t.dormt_acct_flg
+,t.long_hang_acct_flg
+,t.sal_acct_flg
+,t.froz_flg
+,t.advd_draw_flg
+,t.tranbl_flg
+,t.int_accr_base_cd
+,t.int_accr_flg
+,t.int_set_way_cd
+,t.int_accr_way_cd
+,t.allow_od_flg
+,t.curr_cd
+,t.redt_way_cd
+,t.open_acct_chn_type_cd
+,t.tran_chn_status_cd
+,t.acct_usage_cd
+,t.open_acct_dt
+,t.open_acct_tm
+,t.open_flow_num
+,t.clos_acct_dt
+,t.clos_acct_tm
+,t.clos_flow_num
+,t.actv_dt
+,t.value_dt
+,t.exp_dt
+,t.final_activ_acct_dt
+,t.agree_dep_value_dt
+,t.agree_dep_exp_dt
+,t.froz_dt
+,t.unfrz_dt
+,t.last_int_set_dt
+,t.next_int_set_dt
+,t.fir_value_dt
+,t.agree_int_rat
+,t.base_rat_type_cd
+,t.base_rat
+,t.exec_int_rat
+,t.td_acru_int
+,t.currt_acru_int
+,t.currt_int_paybl_adj
+,t.td_int_expns
+,t.td_int_expns_adj
+,t.cust_mgr_id
+,t.open_acct_teller_id
+,t.clos_acct_teller_id
+,t.open_acct_org_id
+,t.close_acct_org_id
+,t.belong_org_id
+,t.loc_flg
+,t.expe_higt_yld_rat
+,t.agree_dep_init_amt
+,t.open_acct_amt
+,t.currt_bal
+,t.aval_bal
+,t.froz_amt
+,t.stop_pay_amt
+,t.cl_curr_currt_bal
+,t.ear_d_bal
+,t.ear_m_bal
+,t.ear_s_bal
+,t.ear_y_bal
+,t.y_acm_bal
+,t.s_acm_bal
+,t.m_acm_bal
+,t.cl_curr_ear_d_bal
+,t.cl_curr_ear_m_bal
+,t.cl_curr_ear_s_bal
+,t.cl_curr_ear_y_bal
+,t.cl_curr_y_acm_bal
+,t.cl_curr_ear_d_y_acm_bal
+,t.cl_curr_ear_m_y_acm_bal
+,t.cl_curr_ear_s_y_acm_bal
+,t.cl_curr_ear_y_y_acm_bal
+,t.cl_curr_s_acm_bal
+,t.cl_curr_ear_d_s_acm_bal
+,t.cl_curr_ear_s_s_acm_bal
+,t.cl_curr_ear_y_s_acm_bal
+,t.cl_curr_m_acm_bal
+,t.cl_curr_ear_d_m_acm_bal
+,t.cl_curr_ear_m_m_acm_bal
+,t.cl_curr_ear_y_m_acm_bal
+,t.y_avg_bal
+,t.q_avg_bal
+,t.m_avg_bal
+,t.cl_curr_y_avg_bal
+,t.cl_curr_q_avg_bal
+,t.cl_curr_m_avg_bal
+from ${idl_schema}.cmm_dep_acct_info t
+where etl_dt = to_date('${batch_date}','yyyymmdd') ; " \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/cmm_dep_acct_info_w.i.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes

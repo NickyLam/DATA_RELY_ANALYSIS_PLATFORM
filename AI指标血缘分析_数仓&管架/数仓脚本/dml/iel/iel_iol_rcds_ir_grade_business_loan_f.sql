@@ -1,0 +1,36 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_iol_rcds_ir_grade_business_loan_f
+CreateDate: 20180529
+FileName:   ${iel_data_path}/rcds_ir_grade_business_loan.f.${batch_date}.dat
+IF_mark:    f
+Logs:
+   zjj 2018-07-27 create template
+' \
+        query="select
+    to_date('${batch_date}','yyyymmdd') as etl_dt
+    ,replace(replace(t.key_id,chr(13),''),chr(10),'') as key_id
+    ,replace(replace(t.data_dt,chr(13),''),chr(10),'') as data_dt
+    ,replace(replace(t.loan_no,chr(13),''),chr(10),'') as loan_no
+    ,replace(replace(t.var_name,chr(13),''),chr(10),'') as var_name
+    ,replace(replace(t.var_desc,chr(13),''),chr(10),'') as var_desc
+    ,replace(replace(t.var_value,chr(13),''),chr(10),'') as var_value
+    ,t.grade as grade
+    ,replace(replace(t.remark,chr(13),''),chr(10),'') as remark
+    ,replace(replace(t.mode_type,chr(13),''),chr(10),'') as mode_type
+    ,replace(replace(t.serno,chr(13),''),chr(10),'') as serno
+    ,replace(replace(t.blng_org_id,chr(13),''),chr(10),'') as blng_org_id
+    ,replace(replace(t.iden_num,chr(13),''),chr(10),'') as iden_num
+    ,replace(replace(t.cus_name,chr(13),''),chr(10),'') as cus_name
+    ,replace(replace(t.grade_key_id,chr(13),''),chr(10),'') as grade_key_id
+    ,replace(replace(t.loan_biz_type_cd,chr(13),''),chr(10),'') as loan_biz_type_cd
+    ,t.start_dt as start_dt
+    ,t.end_dt as end_dt
+    ,replace(replace(t.id_mark,chr(13),''),chr(10),'') as id_mark
+from iol.rcds_ir_grade_business_loan t
+  where t.start_dt <= to_date('${batch_date}','yyyymmdd') and t.end_dt > to_date('${batch_date}','yyyymmdd') " \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/rcds_ir_grade_business_loan.f.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes

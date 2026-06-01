@@ -2,12 +2,14 @@
 解析 API 测试用例
 TC-001 到 TC-006
 """
-import pytest
-from unittest.mock import patch, MagicMock
-from fastapi.testclient import TestClient
+
 import sys
-from pathlib import Path
 from io import BytesIO
+from pathlib import Path
+from unittest.mock import MagicMock, patch
+
+import pytest
+from fastapi.testclient import TestClient
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -73,7 +75,7 @@ class TestFileUpload:
         file_content = BytesIO(b"invalid content")
         response = client.post(
             "/api/parse/upload",
-            files={"files": ("test.txt", file_content, "text/plain")}
+            files={"files": ("test.txt", file_content, "text/plain")},
         )
         assert response.status_code in [200, 400]
 
@@ -83,7 +85,7 @@ class TestFileUpload:
         response = client.post(
             "/api/parse/upload",
             files={"files": ("test.tab", file_content, "text/plain")},
-            data={"parse_mode": "incremental"}
+            data={"parse_mode": "incremental"},
         )
         assert response.status_code in [200, 422]
 

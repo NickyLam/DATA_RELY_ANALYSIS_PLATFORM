@@ -2,11 +2,13 @@
 血缘查询 API 测试用例
 TC-101 到 TC-108
 """
-import pytest
-from unittest.mock import patch, MagicMock
-from fastapi.testclient import TestClient
+
 import sys
 from pathlib import Path
+from unittest.mock import MagicMock, patch
+
+import pytest
+from fastapi.testclient import TestClient
 
 # 添加项目根目录
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -26,21 +28,13 @@ def mock_lineage_service():
     with patch("app.dependencies.get_lineage_service") as mock:
         service = MagicMock()
         # 设置默认返回值
-        service.search_tables.return_value = [
-            {"full_name": "TEST_TABLE", "layer": "MDL", "column_count": 10}
-        ]
-        service.search_procedures.return_value = [
-            {"full_name": "TEST_PROC", "source_tables": [], "target_tables": []}
-        ]
-        service.query_lineage.return_value = {
-            "nodes": [],
-            "edges": [],
-            "chains": []
-        }
+        service.search_tables.return_value = [{"full_name": "TEST_TABLE", "layer": "MDL", "column_count": 10}]
+        service.search_procedures.return_value = [{"full_name": "TEST_PROC", "source_tables": [], "target_tables": []}]
+        service.query_lineage.return_value = {"nodes": [], "edges": [], "chains": []}
         service.get_system_stats.return_value = {
             "tables_count": 100,
             "procedures_count": 50,
-            "field_mappings_count": 1000
+            "field_mappings_count": 1000,
         }
         mock.return_value = service
         yield service
@@ -57,8 +51,8 @@ def mock_parser_service():
                     "full_name": "TEST_TABLE",
                     "columns": [
                         {"name": "ID", "data_type": "NUMBER"},
-                        {"name": "NAME", "data_type": "VARCHAR2"}
-                    ]
+                        {"name": "NAME", "data_type": "VARCHAR2"},
+                    ],
                 }
             ]
         }
@@ -68,11 +62,9 @@ def mock_parser_service():
 
 @pytest.fixture
 def mock_caliber_service():
-    """模拟 CaliberService"""
-    with patch("app.dependencies.get_caliber_service") as mock:
-        service = MagicMock()
-        mock.return_value = service
-        yield service
+    """模拟 CaliberService（已迁移至 lineage_service，保留 fixture 兼容）"""
+    service = MagicMock()
+    yield service
 
 
 class TestTableSearch:
@@ -105,7 +97,7 @@ class TestLineageQuery:
             "table": "TEST_TABLE",
             "field": "ID",
             "depth": 3,
-            "mode": "upstream"
+            "mode": "upstream",
         }
         response = client.post("/api/lineage/query", json=request_data)
         assert response.status_code in [200, 422]
@@ -116,7 +108,7 @@ class TestLineageQuery:
             "table": "TEST_TABLE",
             "field": "ID",
             "depth": 3,
-            "mode": "downstream"
+            "mode": "downstream",
         }
         response = client.post("/api/lineage/query", json=request_data)
         assert response.status_code in [200, 422]
@@ -167,6 +159,7 @@ class TestEdgeCaliber:
     @pytest.fixture
     def override_service(self):
         from app.dependencies import get_lineage_service
+
         service = MagicMock()
         app.dependency_overrides[get_lineage_service] = lambda: service
         try:
@@ -186,9 +179,7 @@ class TestEdgeCaliber:
             "join_conditions": [],
         }
         response = client.get(
-            "/api/lineage/edge-caliber"
-            "?src=RRP_ODS.SRC_TBL&src_col=SRC_COL"
-            "&tgt=RRP_MDL.MID_TBL&tgt_col=MID_COL"
+            "/api/lineage/edge-caliber?src=RRP_ODS.SRC_TBL&src_col=SRC_COL&tgt=RRP_MDL.MID_TBL&tgt_col=MID_COL"
         )
         assert response.status_code == 200
         body = response.json()
@@ -198,10 +189,7 @@ class TestEdgeCaliber:
 
     def test_edge_caliber_miss(self, client, override_service):
         override_service.get_edge_caliber.return_value = None
-        response = client.get(
-            "/api/lineage/edge-caliber"
-            "?src=NO_TBL&src_col=NO_COL&tgt=NA_TBL&tgt_col=NA_COL"
-        )
+        response = client.get("/api/lineage/edge-caliber?src=NO_TBL&src_col=NO_COL&tgt=NA_TBL&tgt_col=NA_COL")
         assert response.status_code == 200
         body = response.json()
         assert body["success"] is True
@@ -213,10 +201,7 @@ class TestEdgeCaliber:
 
     def test_edge_caliber_with_procedure(self, client, override_service):
         override_service.get_edge_caliber.return_value = {"target_column": "X"}
-        response = client.get(
-            "/api/lineage/edge-caliber"
-            "?src=A&src_col=B&tgt=C&tgt_col=D&proc=P.MYPROC"
-        )
+        response = client.get("/api/lineage/edge-caliber?src=A&src_col=B&tgt=C&tgt_col=D&proc=P.MYPROC")
         assert response.status_code == 200
         args, _ = override_service.get_edge_caliber.call_args
         assert args[-1] == "P.MYPROC"
@@ -228,6 +213,7 @@ class TestNodeDetail:
     @pytest.fixture
     def override_service(self):
         from app.dependencies import get_lineage_service
+
         service = MagicMock()
         app.dependency_overrides[get_lineage_service] = lambda: service
         try:

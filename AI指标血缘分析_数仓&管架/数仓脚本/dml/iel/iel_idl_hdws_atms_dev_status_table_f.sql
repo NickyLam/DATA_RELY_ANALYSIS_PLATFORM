@@ -1,0 +1,173 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_idl_hdws_atms_dev_status_table_f
+CreateDate: 20180529
+FileName:   ${iel_data_path}/hdws_atms_dev_status_table.f.${batch_date}.dat
+IF_mark:    f
+Logs:
+   zjj 2018-07-27 create template
+' \
+        query="select 
+ t1.dev_no
+,t1.dev_status
+,t1.dev_tx_status
+,t1.dev_net_status
+,t1.dev_run_status
+,t1.dev_cashbox_status
+,t1.dev_mod_status
+,t1.dev_potential_fault
+,t1.status_last_time
+,t1.status_expire_time
+,t1.tx_type
+,t1.tx_time
+,t1.atm_type
+,t1.cash_unit_type
+,t1.status_info_type
+,t1.combin_unit_type
+,t1.idc_device_status
+,t1.cim_device_status
+,t1.cdm_device_status
+,t1.dep_device_status
+,t1.ups_device_status
+,t1.spr_device_status
+,t1.rpr_device_status
+,t1.jpr_device_status
+,t1.chk_device_status
+,t1.ttu_device_status
+,t1.pbk_device_status
+,t1.pin_device_status
+,t1.siu_device_status
+,t1.cam_device_status
+,t1.idc_media_status
+,t1.idc_capture_bin_status
+,t1.idc_capture_bin_count
+,t1.cim_accept_or_status
+,t1.cim_escrow_status
+,t1.cim_cash_units
+,t1.cim_shutter_status
+,t1.cim_transport_status
+,t1.cim_inout_position
+,t1.cim_input_output_status
+,t1.cim_pu_id
+,t1.cim_pu_count
+,t1.cim_pu_cash_in_count
+,t1.cim_pu_status
+,t1.cim_pupos_name
+,t1.cim_cu_id
+,t1.cim_pcu_id
+,t1.cim_cu_note_value
+,t1.cim_cu_currency
+,t1.cim_cu_count
+,t1.cim_cu_cash_in_count
+,t1.cim_cu_type
+,t1.cim_cu_status
+,t1.cdm_shutter_status
+,t1.cdm_dispenser_status
+,t1.cdm_safe_door_status
+,t1.cdm_stacker_status
+,t1.cdm_cash_units
+,t1.cdm_transport_status
+,t1.cdm_out_position
+,t1.cdm_input_output_status
+,t1.cdm_pu_status
+,t1.cdm_pu_id
+,t1.cdm_pu_initial_count
+,t1.cdm_pu_current_count
+,t1.cdm_pu_reject_count
+,t1.cdm_pupos_name
+,t1.cdm_cu_id
+,t1.cdm_pcu_id
+,t1.cdm_cu_note_value
+,t1.cdm_cu_currency
+,t1.cdm_cu_current_count
+,t1.cdm_cu_initial_count
+,t1.cdm_cu_reject_count
+,t1.cdm_cu_type
+,t1.cdm_cu_status
+,t1.dep_deposit_status
+,t1.dep_deposit_container_status
+,t1.dep_envelope_supply_status
+,t1.dep_envelope_status
+,t1.dep_printer_status
+,t1.dep_printer_ink
+,t1.dep_deposited_items
+,t1.dep_transport_status
+,t1.dep_shutter_status
+,t1.ups_low
+,t1.ups_engaged
+,t1.ups_powering
+,t1.ups_recovered
+,t1.spr_media_status
+,t1.spr_paper_status
+,t1.spr_retract_bin_status
+,t1.spr_ink_status
+,t1.spr_toner_status
+,t1.spr_stack_count
+,t1.chk_media_status
+,t1.chk_ink_status
+,t1.rpr_media_status
+,t1.rpr_paper_status
+,t1.rpr_retract_bin_status
+,t1.rpr_ink_status
+,t1.rpr_toner_status
+,t1.jpr_media_status
+,t1.jpr_paper_status
+,t1.jpr_ink_status
+,t1.jpr_toner_status
+,t1.pbk_media_status
+,t1.pbk_ink_status
+,t1.pbk_toner_status
+,t1.pbk_retract_bin_status
+,t1.pbk_retract_bin_count
+,t1.siu_operator_switch
+,t1.siu_terminal_tamper
+,t1.siu_alarm_tamper
+,t1.siu_seismic
+,t1.siu_proximity_detector
+,t1.siu_heat
+,t1.siu_ambient_light
+,t1.siu_cabinet_state
+,t1.siu_safe_state
+,t1.siu_shield_state
+,t1.siu_bill_acceptor_light
+,t1.siu_card_reader_light
+,t1.siu_cheque_unit_light
+,t1.siu_coin_dispenser_light
+,t1.siu_note_dispenser_light
+,t1.siu_envelope_depository_light
+,t1.siu_passbook_printer_light
+,t1.siu_pinpad_light
+,t1.siu_receipt_printer_light
+,t1.siu_envelope_dispenser_light
+,t1.cam_camera_area
+,t1.cam_camera_area_status
+,t1.cam_media_status
+,t1.cam_picture_staken
+,t1.dev_cash_status
+,t1.action_type
+,t1.action_note
+,t1.icc_device_status
+,t1.icc_media_status
+,t1.isc_device_status
+,t1.isc_media_status
+,t1.irc_device_status
+,t1.irc_media_status
+,t1.fpi_device_status
+,t1.crd_device_status
+,t1.ccd_device_status
+,t1.dpr_device_status
+,t1.bcr_device_status
+,t1.cam_status_area
+,t1.cam_status_media
+,t1.cam_status_state
+,t1.cam_status_pictures
+,t1.start_dt
+,t1.end_dt
+,t1.id_mark
+from ${idl_schema}.hdws_atms_dev_status_table t1 
+where etl_dt = to_date('${batch_date}','yyyymmdd');" \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/hdws_atms_dev_status_table.f.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes

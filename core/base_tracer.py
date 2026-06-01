@@ -10,7 +10,6 @@ logger = logging.getLogger(__name__)
 
 
 class BaseTracer:
-
     def __init__(
         self,
         tables: dict[str, TableInfo],
@@ -92,11 +91,19 @@ class BaseTracer:
         short = table.split(".")[-1] if "." in table else table
         return (short.upper(), column.upper())
 
-    _WAREHOUSE_LAYERS = frozenset({
-        LayerType.SRC, LayerType.MSL, LayerType.ITL, LayerType.IOL,
-        LayerType.ICL, LayerType.IML, LayerType.IDL, LayerType.IEL,
-        LayerType.DQC,
-    })
+    _WAREHOUSE_LAYERS = frozenset(
+        {
+            LayerType.SRC,
+            LayerType.MSL,
+            LayerType.ITL,
+            LayerType.IOL,
+            LayerType.ICL,
+            LayerType.IML,
+            LayerType.IDL,
+            LayerType.IEL,
+            LayerType.DQC,
+        }
+    )
 
     def is_layer_compatible(self, src_table: str, tgt_table: str) -> bool:
         tgt_layer = detect_layer(tgt_table)

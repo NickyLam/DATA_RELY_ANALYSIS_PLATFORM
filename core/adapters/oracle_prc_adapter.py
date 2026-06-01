@@ -32,9 +32,7 @@ class OraclePrcAdapter:
         """解析单个 .prc 文件"""
         # ★ 优化：使用 parse_prc_file_with_caliber 一次性获取过程信息 + 口径
         # 避免两次读取文件和两次正则匹配
-        proc_info, caliber_infos = self._parser.parse_prc_file_with_caliber(
-            str(file_path)
-        )
+        proc_info, caliber_infos = self._parser.parse_prc_file_with_caliber(str(file_path))
         if proc_info is None:
             return ParseOutput()
 
@@ -53,9 +51,7 @@ class OraclePrcAdapter:
         for proc_info in procedures.values():
             try:
                 # ★ 优化：利用缓存直接提取口径，不重复读取文件
-                caliber_infos = self._parser.extract_caliber_from_proc(
-                    proc_info, data_source="oracle"
-                )
+                caliber_infos = self._parser.extract_caliber_from_proc(proc_info, data_source="oracle")
                 proc_output = self._proc_info_to_output(proc_info, caliber_infos)
                 output.merge(proc_output)
             except Exception as e:
@@ -64,13 +60,13 @@ class OraclePrcAdapter:
 
         logger.info(
             "OraclePrcAdapter: 解析目录 %s, 共 %d 个过程, %d 条血缘",
-            dir_path, len(output.procedures), len(output.table_lineages),
+            dir_path,
+            len(output.procedures),
+            len(output.table_lineages),
         )
         return output
 
-    def _proc_info_to_output(
-        self, proc_info, caliber_infos: list | None = None
-    ) -> ParseOutput:
+    def _proc_info_to_output(self, proc_info, caliber_infos: list | None = None) -> ParseOutput:
         """将 ProcedureInfo 转换为 ParseOutput（对齐 ParserService 的序列化逻辑）
 
         Args:
@@ -93,31 +89,33 @@ class OraclePrcAdapter:
 
         # 表级血缘
         for tl in proc_info.table_lineages:
-            output.table_lineages.append({
-                "source_table": tl.source_table,
-                "target_table": tl.target_table,
-                "procedure": tl.procedure,
-            })
+            output.table_lineages.append(
+                {
+                    "source_table": tl.source_table,
+                    "target_table": tl.target_table,
+                    "procedure": tl.procedure,
+                }
+            )
 
         # 字段映射
         for fm in proc_info.field_mappings:
-            output.field_mappings.append({
-                "source_table": fm.source_table,
-                "source_column": fm.source_column,
-                "target_table": fm.target_table,
-                "target_column": fm.target_column,
-                "transform_logic": fm.transform_logic,
-                "procedure": fm.procedure,
-                "confidence": fm.confidence,
-            })
+            output.field_mappings.append(
+                {
+                    "source_table": fm.source_table,
+                    "source_column": fm.source_column,
+                    "target_table": fm.target_table,
+                    "target_column": fm.target_column,
+                    "transform_logic": fm.transform_logic,
+                    "procedure": fm.procedure,
+                    "confidence": fm.confidence,
+                }
+            )
 
         # 口径信息
         try:
             if caliber_infos is None:
                 # 兜底：未传入时再提取（利用缓存）
-                caliber_infos = self._parser.extract_caliber_from_proc(
-                    proc_info, data_source="oracle"
-                )
+                caliber_infos = self._parser.extract_caliber_from_proc(proc_info, data_source="oracle")
             for ci in caliber_infos:
                 output.caliber_infos.append(CaliberExtractor.to_dict(ci))
         except Exception as e:

@@ -1,0 +1,60 @@
+/*
+Purpose:    近源模型层-状态表建表脚本，此脚本由生成引擎自动生成。
+Author:     Sunline
+Usage:      python $ETL_HOME/script/init.py iol pams_khfa_khzb_hy
+CreateDate: 20180515
+FileType:   DDL
+Logs:
+    zjj 2018-05-15 新建表本
+*/
+
+prompt creating table ${iol_schema}.pams_khfa_khzb_hy
+whenever sqlerror continue none;
+drop table ${iol_schema}.pams_khfa_khzb_hy purge;
+
+whenever sqlerror exit sql.sqlcode;
+create table ${iol_schema}.pams_khfa_khzb_hy(
+    khzbdh number(22,0) -- 考核指标代号
+    ,khzbmc varchar2(150) -- 考核指标名称
+    ,zbdh number(22,0) -- 指标代号
+    ,sdbs varchar2(15) -- 时段标识
+    ,bz varchar2(15) -- 币种
+    ,tjkj varchar2(15) -- 统计口径
+    ,zbpx number(22,0) -- 指标排序
+    ,ydsfzs varchar2(2) -- 移动是否展示
+    ,ydbm varchar2(150) -- 移动别名
+    ,start_dt date -- 开始时间
+    ,end_dt date -- 结束时间
+    ,id_mark varchar2(10) -- 增删标志
+    ,etl_timestamp timestamp -- ETL处理时间戳
+)
+partition by list(end_dt)(
+     partition p_19000101 values (to_date('19000101','yyyymmdd')),
+     partition p_20991231 values (to_date('20991231','yyyymmdd'))
+)
+storage (initial 1024k next 1024k)
+compress ${option_switch} for query high
+nologging
+;
+
+-- grant
+grant select on ${iol_schema}.pams_khfa_khzb_hy to ${iml_schema};
+grant select on ${iol_schema}.pams_khfa_khzb_hy to ${icl_schema};
+grant select on ${iol_schema}.pams_khfa_khzb_hy to ${idl_schema};
+grant select on ${iol_schema}.pams_khfa_khzb_hy to ${iel_schema};
+
+-- comment
+comment on table ${iol_schema}.pams_khfa_khzb_hy is '考核方案-考核指标-行员';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.khzbdh is '考核指标代号';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.khzbmc is '考核指标名称';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.zbdh is '指标代号';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.sdbs is '时段标识';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.bz is '币种';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.tjkj is '统计口径';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.zbpx is '指标排序';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.ydsfzs is '移动是否展示';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.ydbm is '移动别名';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.start_dt is '开始时间';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.end_dt is '结束时间';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.id_mark is '增删标志';
+comment on column ${iol_schema}.pams_khfa_khzb_hy.etl_timestamp is 'ETL处理时间戳';

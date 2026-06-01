@@ -1,15 +1,18 @@
 """
-指标口径 API 测试用例
-TC-201 到 TC-209
+口径 API 测试用例（已迁移至 /api/lineage/* 子路由）
+测试 edge-caliber、node-detail、node-caliber 端点
 """
-import pytest
-from unittest.mock import patch, MagicMock
-from fastapi.testclient import TestClient
+
 import sys
 from pathlib import Path
+from unittest.mock import MagicMock
+
+import pytest
+from fastapi.testclient import TestClient
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from app.dependencies import get_lineage_service
 from app.main import app
 
 
@@ -19,144 +22,77 @@ def client():
 
 
 @pytest.fixture
-def mock_caliber_service():
-    with patch("app.dependencies.get_caliber_service") as mock:
-        service = MagicMock()
-        service.query_caliber.return_value = {
-            "chains": [],
-            "summary": {}
-        }
-        service.build_pipeline_view.return_value = {
-            "success": True,
-            "data": {"steps": []}
-        }
-        service.build_summary_card.return_value = {
-            "success": True,
-            "data": {}
-        }
-        service.build_step_detail.return_value = {
-            "success": True,
-            "data": {}
-        }
-        service.get_direct_sources.return_value = []
-        service.get_direct_targets.return_value = []
-        service.search_indicators.return_value = []
-        service.get_fields_with_caliber.return_value = []
-        service.get_datasources.return_value = ["oracle", "tdh", "gbase"]
-        service.query_caliber_summary.return_value = "# 口径摘要"
-        mock.return_value = service
-        yield service
+def mock_lineage_service():
+    """使用 dependency_overrides 注入 mock LineageService"""
+    service = MagicMock()
+    service.get_edge_caliber.return_value = {
+        "transform_logic": "SELECT a, b FROM src",
+        "where_conditions": [],
+    }
+    service.get_node_detail.return_value = {
+        "table_name": "TEST_TABLE",
+        "fields": ["ID", "NAME"],
+        "upstream_tables": [],
+        "downstream_tables": [],
+        "procedures": [],
+    }
+    service.build_summary_card.return_value = {
+        "success": True,
+        "data": {"summary": "test"},
+    }
+    app.dependency_overrides[get_lineage_service] = lambda: service
+    yield service
+    app.dependency_overrides.pop(get_lineage_service, None)
 
 
-class TestCaliberQuery:
-    """口径查询测试"""
+class TestEdgeCaliber:
+    """边口径查询测试"""
 
-    def test_query_caliber_upstream(self, client, mock_caliber_service):
-        """TC-201: 口径查询 - 上游追溯"""
-        request_data = {
-            "table": "TEST_TABLE",
-            "field": "ID",
-            "depth": 10,
-            "direction": "upstream"
-        }
-        response = client.post("/api/caliber/query", json=request_data)
-        assert response.status_code in [200, 422]
-
-    def test_query_caliber_summary(self, client, mock_caliber_service):
-        """测试口径摘要查询"""
-        response = client.get("/api/caliber/summary?table=TEST_TABLE&field=ID")
+    def test_get_edge_caliber(self, client, mock_lineage_service):
+        """TC-201: 边口径详情查询"""
+        response = client.get("/api/lineage/edge-caliber?src=SRC_TABLE&src_col=ID&tgt=TGT_TABLE&tgt_col=ID")
         assert response.status_code == 200
 
+    def test_edge_caliber_missing_params(self, client, mock_lineage_service):
+        """缺少必要参数应返回 422"""
+        response = client.get("/api/lineage/edge-caliber?src=SRC_TABLE")
+        assert response.status_code == 422
 
-class TestCaliberPipeline:
-    """Pipeline 视图测试"""
 
-    def test_get_pipeline_view(self, client, mock_caliber_service):
-        """TC-202: 口径 Pipeline 视图"""
-        response = client.get("/api/caliber/pipeline?table=TEST_TABLE&field=ID")
+class TestNodeDetail:
+    """节点详情查询测试"""
+
+    def test_get_node_detail(self, client, mock_lineage_service):
+        """TC-202: 节点详情查询"""
+        response = client.get("/api/lineage/node-detail?table=TEST_TABLE")
         assert response.status_code == 200
 
-    def test_get_summary_card(self, client, mock_caliber_service):
-        """TC-205: 口径概览卡"""
-        response = client.get("/api/caliber/card-summary?table=TEST_TABLE&field=ID")
+    def test_node_detail_not_found(self, client, mock_lineage_service):
+        """节点不存在应返回 404"""
+        mock_lineage_service.get_node_detail.return_value = None
+        response = client.get("/api/lineage/node-detail?table=NONEXISTENT")
+        assert response.status_code == 404
+
+
+class TestNodeCaliber:
+    """节点口径概览卡测试"""
+
+    def test_get_node_caliber(self, client, mock_lineage_service):
+        """TC-203: 节点口径概览卡"""
+        response = client.get("/api/lineage/node-caliber?table=TEST_TABLE&field=ID")
         assert response.status_code == 200
 
-    def test_get_step_detail(self, client, mock_caliber_service):
-        """TC-206: 步骤详情查询"""
-        response = client.get("/api/caliber/step-detail?table=TEST_TABLE&field=ID&step_num=1")
+    def test_node_caliber_with_direction(self, client, mock_lineage_service):
+        """带方向参数的口径查询"""
+        response = client.get("/api/lineage/node-caliber?table=TEST_TABLE&field=ID&direction=downstream")
         assert response.status_code == 200
-
-
-class TestDirectLineage:
-    """直接上下游测试"""
-
-    def test_get_direct_sources(self, client, mock_caliber_service):
-        """TC-203: 直接上游查询"""
-        response = client.get("/api/caliber/sources?table=TEST_TABLE&field=ID")
-        assert response.status_code == 200
-
-    def test_get_direct_targets(self, client, mock_caliber_service):
-        """TC-204: 直接下游查询"""
-        response = client.get("/api/caliber/targets?table=TEST_TABLE&field=ID")
-        assert response.status_code == 200
-
-
-class TestCaliberSearch:
-    """口径搜索测试"""
-
-    def test_search_caliber(self, client, mock_caliber_service):
-        """TC-207: 口径搜索"""
-        response = client.get("/api/caliber/search?keyword=TEST")
-        assert response.status_code == 200
-
-    def test_get_caliber_fields(self, client, mock_caliber_service):
-        """TC-208: 口径字段列表"""
-        response = client.get("/api/caliber/fields?table=TEST_TABLE")
-        assert response.status_code == 200
-
-    def test_get_datasources(self, client, mock_caliber_service):
-        """测试获取数据源列表"""
-        response = client.get("/api/caliber/datasources/list")
-        assert response.status_code == 200
-
-
-class TestCaliberExport:
-    """口径导出测试"""
-
-    def test_export_caliber(self, client, mock_caliber_service):
-        """TC-209: 口径文档导出"""
-        request_data = {
-            "table": "TEST_TABLE",
-            "field": "ID",
-            "format": "markdown"
-        }
-        response = client.post("/api/caliber/export", json=request_data)
-        assert response.status_code in [200, 422]
 
 
 class TestCaliberDeprecation:
-    """P4: /api/caliber/* 弃用头测试"""
-
-    def test_deprecation_headers_on_get(self, client, mock_caliber_service):
-        """GET 路由响应应包含 Deprecation/Sunset/Link/Warning 头"""
-        response = client.get("/api/caliber/datasources/list")
-        assert response.status_code == 200
-        assert response.headers.get("Deprecation") == "true"
-        assert "2026" in response.headers.get("Sunset", "")
-        assert "/api/lineage" in response.headers.get("Link", "")
-        assert "deprecated" in response.headers.get("Warning", "").lower()
-
-    def test_deprecation_headers_on_post(self, client, mock_caliber_service):
-        """POST 路由响应也应包含弃用头"""
-        response = client.post(
-            "/api/caliber/query",
-            json={"table": "T", "field": "F", "depth": 1, "direction": "upstream"},
-        )
-        assert response.headers.get("Deprecation") == "true"
-        assert response.headers.get("Sunset") is not None
+    """P4: /api/caliber/* 弃用头测试 — 已在 P5 中删除路由，此测试保留兼容性验证"""
 
     def test_lineage_routes_not_deprecated(self, client):
-        """非 caliber 路由不应有弃用头"""
+        """lineage 路由不应有弃用头"""
         response = client.get("/api/stats")
         assert response.headers.get("Deprecation") is None
         assert response.headers.get("Sunset") is None

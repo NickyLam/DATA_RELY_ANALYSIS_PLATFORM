@@ -11,7 +11,7 @@ import logging
 import threading
 import time
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -28,13 +28,13 @@ def search_table_dicts(tables: list[dict], keyword: str, limit: int = 50) -> lis
 
     # schema 与短名前缀的语义关联映射
     # 当短名以特定前缀开头时，对应的 schema 应获得加分
-    _SCHEMA_PREFIX_PRIORITY: dict[str, list[str]] = {
-        "EAST5_": ["RRP_EAST"],   # EAST5_ 表应优先属于 RRP_EAST
+    _schema_prefix_priority: dict[str, list[str]] = {
+        "EAST5_": ["RRP_EAST"],  # EAST5_ 表应优先属于 RRP_EAST
         "EAST1_": ["RRP_EAST"],
         "EAST2_": ["RRP_EAST"],
         "EAST3_": ["RRP_EAST"],
         "EAST4_": ["RRP_EAST"],
-        "ICL_":   ["ICL", "RRP_MDL"],  # ICL_ 表优先属于 ICL 或 RRP_MDL
+        "ICL_": ["ICL", "RRP_MDL"],  # ICL_ 表优先属于 ICL 或 RRP_MDL
     }
 
     for table in tables:
@@ -61,7 +61,7 @@ def search_table_dicts(tables: list[dict], keyword: str, limit: int = 50) -> lis
         if "." in full_name:
             schema = full_name.split(".")[0]
 
-        for prefix, preferred_schemas in _SCHEMA_PREFIX_PRIORITY.items():
+        for prefix, preferred_schemas in _schema_prefix_priority.items():
             if short_name.startswith(prefix):
                 if schema in preferred_schemas:
                     score += 5.0
@@ -83,10 +83,10 @@ class DataRepository:
       - 线程安全
     """
 
-    def __init__(self, data_path: Optional[Path] = None):
+    def __init__(self, data_path: Path | None = None):
         self._data_path = data_path
         self._lock = threading.Lock()
-        self._data: Optional[dict[str, Any]] = None
+        self._data: dict[str, Any] | None = None
         self._table_map: dict[str, dict] = {}
         self._procedure_map: dict[str, dict] = {}
         self._loaded_at: float = 0.0
@@ -124,7 +124,7 @@ class DataRepository:
 
             try:
                 t0 = time.time()
-                with open(json_path, "r", encoding="utf-8") as f:
+                with open(json_path, encoding="utf-8") as f:
                     self._data = json.load(f)
 
                 self._migrate_if_needed()
@@ -159,7 +159,7 @@ class DataRepository:
             self._build_indexes()
             self._loaded_at = time.time()
 
-    def get_raw_data(self) -> Optional[dict[str, Any]]:
+    def get_raw_data(self) -> dict[str, Any] | None:
         """获取原始数据字典（向后兼容）。"""
         with self._lock:
             return self._data
@@ -206,9 +206,7 @@ class DataRepository:
                 return []
             return self._data.get("caliber_infos", [])
 
-    def search_caliber(
-        self, table: str, field: str = "", limit: int = 200
-    ) -> list[dict]:
+    def search_caliber(self, table: str, field: str = "", limit: int = 200) -> list[dict]:
         """按表名+字段名搜索口径信息。"""
         with self._lock:
             if not self._data:
@@ -235,10 +233,7 @@ class DataRepository:
                     continue
 
                 if field_upper:
-                    field_hit = (
-                        field_upper in target_column
-                        or field_upper in source_column
-                    )
+                    field_hit = field_upper in target_column or field_upper in source_column
                     if not field_hit:
                         continue
 
@@ -248,12 +243,12 @@ class DataRepository:
 
             return matched
 
-    def get_table(self, full_name: str) -> Optional[dict]:
+    def get_table(self, full_name: str) -> dict | None:
         """按全名获取表信息。"""
         with self._lock:
             return self._table_map.get(full_name.upper())
 
-    def get_procedure(self, full_name: str) -> Optional[dict]:
+    def get_procedure(self, full_name: str) -> dict | None:
         """按全名获取存储过程信息。"""
         with self._lock:
             return self._procedure_map.get(full_name.upper())

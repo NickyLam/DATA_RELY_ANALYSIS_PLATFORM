@@ -17,7 +17,6 @@
 
 from __future__ import annotations
 
-import os
 import platform
 import subprocess
 import sys
@@ -27,33 +26,33 @@ from pathlib import Path
 def check_python_version() -> bool:
     """检查 Python 版本"""
     print("\n检查 Python 版本...")
-    
+
     py_version = sys.version_info
     py_ver_str = f"{py_version.major}.{py_version.minor}.{py_version.micro}"
-    
+
     print(f"  当前版本: Python {py_ver_str}")
-    
+
     if py_version.major < 3 or (py_version.major == 3 and py_version.minor < 11):
         print("  ❌ Python 版本过低，需要 3.11+")
         print("  提示: Python 3.9 已于 2025年10月停止维护")
         print("  推荐: Python 3.11 或 3.12")
         return False
-    
+
     if py_version.minor == 9:
         print("  ️ Python 3.9 已停止维护 (EOL: 2025-10-31)")
         print("  推荐: 升级到 Python 3.11 或 3.12")
-    
+
     if py_version.minor == 10:
         print("  ️ Python 3.10 将于 2026年10月停止维护")
         print("  推荐: 升级到 Python 3.11 或 3.12")
-    
+
     if py_version.minor >= 14:
         print("  ⚠️ Python 3.14 是最新版本，可能存在兼容性问题")
         print("  推荐: 使用 Python 3.11 或 3.12 进行打包")
-    
+
     if 11 <= py_version.minor <= 13:
         print("  ✅ Python 版本符合要求")
-    
+
     return True
 
 
@@ -98,6 +97,7 @@ def check_dependencies() -> bool:
 
     try:
         import pyinstaller
+
         print("  ✅ PyInstaller 已安装")
         return True
     except ImportError:
@@ -171,7 +171,7 @@ def run_build() -> bool:
         print("\n" + "=" * 60)
         print("  ✅ 打包成功!")
         print("=" * 60)
-        print(f"  输出文件: dist/数据血缘分析系统.exe")
+        print("  输出文件: dist/数据血缘分析系统.exe")
         print("\n  使用方法:")
         print("  1. 双击运行 数据血缘分析系统.exe")
         print("  2. 访问 http://localhost:8899")

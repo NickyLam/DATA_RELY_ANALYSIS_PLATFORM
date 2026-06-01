@@ -11,7 +11,7 @@ SQLBoundaryDetector 单元测试
 
 import unittest
 
-from core.sql_boundary_detector import SQLBoundaryDetector, DMLBoundary, CTEBoundary
+from core.sql_boundary_detector import SQLBoundaryDetector
 
 
 class TestDMLBoundaryDetection(unittest.TestCase):

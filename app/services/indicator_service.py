@@ -7,12 +7,12 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
+from app.utils.cache_manager import CacheManager
 from core.indicator_config_parser import IndicatorConfigParser
 from core.indicator_graph_builder import IndicatorGraphBuilder
 from core.indicator_models import IndicatorConfigResult
-from app.utils.cache_manager import CacheManager
 
 logger = logging.getLogger(__name__)
 
@@ -24,13 +24,13 @@ class IndicatorService:
         self,
         indicator_data_path: str,
         cache_manager: CacheManager,
-        lineage_service: Optional[Any] = None,
+        lineage_service: Any | None = None,
     ) -> None:
         self.data_path = Path(indicator_data_path)
         self.cache = cache_manager
         self._lineage_service = lineage_service
-        self._config_result: Optional[IndicatorConfigResult] = None
-        self._graph_builder: Optional[IndicatorGraphBuilder] = None
+        self._config_result: IndicatorConfigResult | None = None
+        self._graph_builder: IndicatorGraphBuilder | None = None
         self._load_and_build()
 
     def _load_and_build(self) -> None:

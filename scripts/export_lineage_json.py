@@ -34,11 +34,15 @@ logger = logging.getLogger(__name__)
 def main():
     parser = argparse.ArgumentParser(description="导出 SQLite 缓存数据为 JSON")
     parser.add_argument(
-        "--db", type=Path, default=Path("output/lineage.db"),
+        "--db",
+        type=Path,
+        default=Path("output/lineage.db"),
         help="SQLite 数据库路径 (默认: output/lineage.db)",
     )
     parser.add_argument(
-        "--output", type=Path, default=Path("output/lineage_data.json"),
+        "--output",
+        type=Path,
+        default=Path("output/lineage_data.json"),
         help="输出 JSON 文件路径 (默认: output/lineage_data.json)",
     )
     args = parser.parse_args()
@@ -58,6 +62,7 @@ def main():
     # 检查配置是否允许导出
     try:
         from app.config import config
+
         if not config.enable_json_export:
             logger.error("JSON 导出已禁用 (ENABLE_JSON_EXPORT=false)")
             sys.exit(1)

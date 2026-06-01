@@ -4,7 +4,7 @@ from pathlib import Path
 from app.repository import DataRepository
 from app.services.lineage_service import LineageService
 from app.services.parser_service import ParseResult, ParserService
-from core.models import TableInfo, ColumnInfo
+from core.models import ColumnInfo, TableInfo
 
 
 def test_search_tables_ranks_exact_short_name_before_contains_match(tmp_path: Path):
@@ -53,8 +53,14 @@ def test_parser_service_search_tables_delegates_to_repository(tmp_path: Path):
     assert results == [exact_table, contains_table]
 
 
-def test_parser_service_search_tables_uses_current_result_without_loading_repository(tmp_path: Path):
-    parser = ParserService(data_dir=str(tmp_path / "data"), schema_dirs=[], output_dir=str(tmp_path / "output"))
+def test_parser_service_search_tables_uses_current_result_without_loading_repository(
+    tmp_path: Path,
+):
+    parser = ParserService(
+        data_dir=str(tmp_path / "data"),
+        schema_dirs=[],
+        output_dir=str(tmp_path / "output"),
+    )
     result = ParseResult()
     exact_table = TableInfo(
         schema="LONG_SCHEMA",
@@ -116,11 +122,11 @@ def test_lineage_service_search_tables_uses_parser_repository_search_when_availa
 
     assert parser.search_calls == [("customer", 10)]
     assert results == [
-            {
-                "full_name": "RRP_MDL.CUSTOMER",
-                "short_name": "CUSTOMER",
-                "layer": "base",
-                "field_count": 2,
-                "columns": ["ID", "NAME"],
-            }
+        {
+            "full_name": "RRP_MDL.CUSTOMER",
+            "short_name": "CUSTOMER",
+            "layer": "base",
+            "field_count": 2,
+            "columns": ["ID", "NAME"],
+        }
     ]

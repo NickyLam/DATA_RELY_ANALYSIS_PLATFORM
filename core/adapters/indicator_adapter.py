@@ -12,10 +12,9 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Optional
 
-from core.parser_protocol import ParseOutput
 from core.layer_detector import LayerDetector
+from core.parser_protocol import ParseOutput
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +42,7 @@ class IndicatorAdapter:
 
     def __init__(
         self,
-        layer_detector: Optional[LayerDetector] = None,
+        layer_detector: LayerDetector | None = None,
         system: str = "fdm",
     ):
         self._layer_detector = layer_detector or LayerDetector()
@@ -92,14 +91,20 @@ class IndicatorAdapter:
                 if source_table and source_table != target_table:
                     self._register_table(source_table, output, seen_tables)
 
-                    key = (source_table, target_table, getattr(base_calc, "procedure_name", ""))
+                    key = (
+                        source_table,
+                        target_table,
+                        getattr(base_calc, "procedure_name", ""),
+                    )
                     if key not in seen_lineage_keys:
                         seen_lineage_keys.add(key)
-                        output.table_lineages.append({
-                            "source_table": source_table,
-                            "target_table": target_table,
-                            "procedure": getattr(base_calc, "procedure_name", ""),
-                        })
+                        output.table_lineages.append(
+                            {
+                                "source_table": source_table,
+                                "target_table": target_table,
+                                "procedure": getattr(base_calc, "procedure_name", ""),
+                            }
+                        )
 
             mappings = getattr(base_calc, "field_mappings", [])
             if mappings:
@@ -110,15 +115,17 @@ class IndicatorAdapter:
 
                     if src_col or tgt_col:
                         for source_table in source_tables:
-                            output.field_mappings.append({
-                                "source_table": source_table,
-                                "source_column": src_col,
-                                "target_table": target_table,
-                                "target_column": tgt_col,
-                                "transform_logic": expression,
-                                "procedure": getattr(base_calc, "procedure_name", ""),
-                                "confidence": 0.7,
-                            })
+                            output.field_mappings.append(
+                                {
+                                    "source_table": source_table,
+                                    "source_column": src_col,
+                                    "target_table": target_table,
+                                    "target_column": tgt_col,
+                                    "transform_logic": expression,
+                                    "procedure": getattr(base_calc, "procedure_name", ""),
+                                    "confidence": 0.7,
+                                }
+                            )
 
         for rel in result.relations:
             src = getattr(rel, "source_table", "")
@@ -129,11 +136,13 @@ class IndicatorAdapter:
                 key = (src, tgt, proc)
                 if key not in seen_lineage_keys:
                     seen_lineage_keys.add(key)
-                    output.table_lineages.append({
-                        "source_table": src,
-                        "target_table": tgt,
-                        "procedure": proc,
-                    })
+                    output.table_lineages.append(
+                        {
+                            "source_table": src,
+                            "target_table": tgt,
+                            "procedure": proc,
+                        }
+                    )
 
                 self._register_table(src, output, seen_tables)
                 self._register_table(tgt, output, seen_tables)
@@ -149,11 +158,13 @@ class IndicatorAdapter:
                         # ★ 优化：使用 seen set 增量去重
                         if key not in seen_lineage_keys:
                             seen_lineage_keys.add(key)
-                            output.table_lineages.append({
-                                "source_table": src,
-                                "target_table": tgt,
-                                "procedure": proc_name,
-                            })
+                            output.table_lineages.append(
+                                {
+                                    "source_table": src,
+                                    "target_table": tgt,
+                                    "procedure": proc_name,
+                                }
+                            )
 
         summary = output.summary()
         logger.info(
@@ -187,12 +198,14 @@ class IndicatorAdapter:
             schema = default_schema
             name = table_name
 
-        output.tables.append({
-            "full_name": f"{schema}.{name}" if schema else name,
-            "schema": schema,
-            "table_name": name,
-            "comment": "",
-            "columns": [],
-            "primary_keys": [],
-            "layer": layer.value if hasattr(layer, "value") else str(layer),
-        })
+        output.tables.append(
+            {
+                "full_name": f"{schema}.{name}" if schema else name,
+                "schema": schema,
+                "table_name": name,
+                "comment": "",
+                "columns": [],
+                "primary_keys": [],
+                "layer": layer.value if hasattr(layer, "value") else str(layer),
+            }
+        )

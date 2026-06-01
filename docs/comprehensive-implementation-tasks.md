@@ -1,8 +1,8 @@
 # 指标口径功能增强 — 综合实施任务清单与详细设计
 
-> 版本: v1.0  
-> 日期: 2026-05-18  
-> 来源: docs/indicator-spec-design.md + docs/execution-task-list.md  
+> 版本: v1.0
+> 日期: 2026-05-18
+> 来源: docs/indicator-spec-design.md + docs/execution-task-list.md
 > 设计原则: 分层聚焦、单步自治、表达式优先、源码锚定、可导出文档
 
 ---
@@ -53,9 +53,9 @@
 
 #### 任务 1.1: 新增 CaliberSummaryCard 数据模型
 
-**优先级**: P0  
-**涉及文件**: `core/models.py`  
-**依赖**: 无  
+**优先级**: P0
+**涉及文件**: `core/models.py`
+**依赖**: 无
 **风险**: 🟢 低 — 纯新增数据类，不影响已有代码
 
 **详细设计**:
@@ -106,9 +106,9 @@ data_quality_flags = {
 
 #### 任务 1.2: 实现 Summary Card 构建逻辑
 
-**优先级**: P0  
-**涉及文件**: `app/services/caliber_service.py`  
-**依赖**: 任务 1.1  
+**优先级**: P0
+**涉及文件**: `app/services/caliber_service.py`
+**依赖**: 任务 1.1
 **风险**: 🟡 中 — 需从 CaliberResult 中提取和聚合信息
 
 **详细设计**:
@@ -118,7 +118,7 @@ data_quality_flags = {
 ```python
 def build_summary_card(self, table: str, field: str) -> dict:
     """构建指标概览卡数据。
-    
+
     算法:
       1. 调用 trace_caliber() 获取完整 CaliberResult
       2. 提取技术口径摘要: 遍历首选链路的每个 step，
@@ -133,10 +133,10 @@ def build_summary_card(self, table: str, field: str) -> dict:
 ```python
 def _build_technical_summary(self, chain: CaliberChain) -> str:
     """从链路步骤生成技术口径摘要文本。
-    
+
     示例输出:
       "TRIM(UPPER(CUST_NAME)) → [MDL 脱敏] → [EAST 映射] → KHXM"
-    
+
     逻辑:
       1. 取首步的 full_expression 作为起始表达式
       2. 中间步骤: 如果 full_expression 不同于 source_column，
@@ -149,7 +149,7 @@ def _build_technical_summary(self, chain: CaliberChain) -> str:
 ```python
 def _detect_quality_flags(self, result: CaliberResult) -> dict:
     """扫描链路检测数据质量问题。
-    
+
     检测规则:
       - has_hardcoded_values: WHERE 条件中包含字面量 ('1', '0', 数字)
       - has_cross_schema_join: JOIN 涉及不同 schema 的表
@@ -167,9 +167,9 @@ def _detect_quality_flags(self, result: CaliberResult) -> dict:
 
 #### 任务 1.3: 新增 `/api/caliber/summary` API 端点
 
-**优先级**: P0  
-**涉及文件**: `app/api/caliber.py`  
-**依赖**: 任务 1.2  
+**优先级**: P0
+**涉及文件**: `app/api/caliber.py`
+**依赖**: 任务 1.2
 **风险**: 🟢 低 — 纯新增端点
 
 **API 规格**:
@@ -214,9 +214,9 @@ Response (404):
 
 #### 任务 1.4: Summary Card 单元测试
 
-**优先级**: P0  
-**涉及文件**: `tests/test_summary_card.py` (新建)  
-**依赖**: 任务 1.2  
+**优先级**: P0
+**涉及文件**: `tests/test_summary_card.py` (新建)
+**依赖**: 任务 1.2
 **风险**: 🟢 低
 
 **测试场景**:
@@ -233,9 +233,9 @@ Response (404):
 
 #### 任务 1.5: Summary Card 集成验证
 
-**优先级**: P0  
-**涉及文件**: 无新文件，运行验证  
-**依赖**: 任务 1.3, 1.4  
+**优先级**: P0
+**涉及文件**: 无新文件，运行验证
+**依赖**: 任务 1.3, 1.4
 **风险**: 🟢 低
 
 **验证方法**:
@@ -261,9 +261,9 @@ Response (404):
 
 #### 任务 2.1: 新增 Pipeline 数据模型
 
-**优先级**: P0  
-**涉及文件**: `core/models.py`  
-**依赖**: 无  
+**优先级**: P0
+**涉及文件**: `core/models.py`
+**依赖**: 无
 **风险**: 🟢 低
 
 **详细设计**:
@@ -327,9 +327,9 @@ class PipelineView:
 
 #### 任务 2.2: 实现 Pipeline 构建引擎
 
-**优先级**: P0  
-**涉及文件**: `app/services/caliber_service.py`  
-**依赖**: 任务 2.1  
+**优先级**: P0
+**涉及文件**: `app/services/caliber_service.py`
+**依赖**: 任务 2.1
 **风险**: 🟡 中 — 需要将线性 chain 转换为图结构
 
 **详细设计**:
@@ -339,7 +339,7 @@ class PipelineView:
 ```python
 def build_pipeline_view(self, table: str, field: str) -> dict:
     """构建 Pipeline 流水线视图数据。
-    
+
     算法:
       1. 调用 trace_caliber() 获取 CaliberResult (所有 chains)
       2. 遍历所有 chains，构建全局节点集和边集
@@ -355,7 +355,7 @@ def build_pipeline_view(self, table: str, field: str) -> dict:
 ```python
 def _detect_branches(self, nodes: dict, edges: list) -> list[PipelineBranch]:
     """检测并行分支路径。
-    
+
     规则:
       - 如果某个节点有多个入边来自不同源节点，则为汇聚点
       - 主路径 (首选 chain 的路径) 为实线
@@ -367,7 +367,7 @@ def _detect_branches(self, nodes: dict, edges: list) -> list[PipelineBranch]:
 ```python
 def _detect_internal_transforms(self, chain) -> list[tuple]:
     """检测同表内字段转换。
-    
+
     规则:
       - 同一步骤中 source_table == target_table 但 source_column != target_column
       - 标记为 is_internal_transform = True
@@ -385,9 +385,9 @@ def _detect_internal_transforms(self, chain) -> list[tuple]:
 
 #### 任务 2.3: 新增 `/api/caliber/pipeline` API 端点
 
-**优先级**: P0  
-**涉及文件**: `app/api/caliber.py`  
-**依赖**: 任务 2.2  
+**优先级**: P0
+**涉及文件**: `app/api/caliber.py`
+**依赖**: 任务 2.2
 **风险**: 🟢 低
 
 **API 规格**:
@@ -424,9 +424,9 @@ Response (200):
 
 #### 任务 2.4: Pipeline 节点去重与 ID 稳定化
 
-**优先级**: P0  
-**涉及文件**: `app/services/caliber_service.py`  
-**依赖**: 任务 2.2  
+**优先级**: P0
+**涉及文件**: `app/services/caliber_service.py`
+**依赖**: 任务 2.2
 **风险**: 🟡 中
 
 **详细设计**:
@@ -435,7 +435,7 @@ Response (200):
 ```python
 def _make_node_id(self, table: str, field: str) -> str:
     """生成稳定的节点 ID。
-    
+
     规则:
       - 基本格式: "{SHORT_TABLE}.{FIELD}"
       - 同表内转换: "{SHORT_TABLE}.{FIELD}" (每个字段一个节点)
@@ -449,7 +449,7 @@ def _make_node_id(self, table: str, field: str) -> str:
 ```python
 def _merge_nodes(self, chains: list) -> dict[str, PipelineNode]:
     """从多条 chain 中合并去重节点。
-    
+
     合并规则:
       - 相同 node_id 的节点合并为一个
       - 属性合并: is_source = any(node.is_source for same_id)
@@ -466,9 +466,9 @@ def _merge_nodes(self, chains: list) -> dict[str, PipelineNode]:
 
 #### 任务 2.5: Pipeline 单元测试
 
-**优先级**: P0  
-**涉及文件**: `tests/test_pipeline_view.py` (新建)  
-**依赖**: 任务 2.2  
+**优先级**: P0
+**涉及文件**: `tests/test_pipeline_view.py` (新建)
+**依赖**: 任务 2.2
 **风险**: 🟢 低
 
 **测试场景**:
@@ -485,9 +485,9 @@ def _merge_nodes(self, chains: list) -> dict[str, PipelineNode]:
 
 #### 任务 2.6: Pipeline 集成验证
 
-**优先级**: P0  
-**涉及文件**: 无新文件  
-**依赖**: 任务 2.3  
+**优先级**: P0
+**涉及文件**: 无新文件
+**依赖**: 任务 2.3
 **风险**: 🟢 低
 
 **验证**: 启动服务后请求 `/api/caliber/pipeline`，确认响应可被 D3.js 消费。
@@ -510,9 +510,9 @@ def _merge_nodes(self, chains: list) -> dict[str, PipelineNode]:
 
 #### 任务 3.1: 新增 StepDetail 数据模型
 
-**优先级**: P0  
-**涉及文件**: `core/models.py`  
-**依赖**: 无  
+**优先级**: P0
+**涉及文件**: `core/models.py`
+**依赖**: 无
 **风险**: 🟢 低
 
 **详细设计**:
@@ -556,17 +556,17 @@ class StepDetail:
     source_table: str = ""
     target_table: str = ""
     operation_type: str = ""               # INSERT_SELECT / MERGE / UPDATE
-    
+
     # 源码锚定
     source_code_location: dict = field(default_factory=dict)  # {file_path, start_line, end_line}
-    
+
     # 目标字段表达式 (核心)
     target_field_expressions: list[TargetFieldExpression] = field(default_factory=list)
-    
+
     # 步骤级隔离条件 (非累积)
     step_isolated_where: list[dict] = field(default_factory=list)
     step_isolated_join: list[dict] = field(default_factory=list)
-    
+
     # 聚合/窗口
     window_functions: list[str] = field(default_factory=list)
     group_by_clause: str = ""
@@ -574,16 +574,16 @@ class StepDetail:
     distinct_flag: bool = False
     set_operation: str = ""
     order_by_clause: str = ""
-    
+
     # CTE
     cte_definitions: list[CTEDetail] = field(default_factory=list)
-    
+
     # 自定义函数
     custom_functions: list[CustomFunctionDetail] = field(default_factory=list)
-    
+
     # 原始 SQL
     raw_sql: str = ""
-    
+
     # 元数据
     confidence: float = 1.0
 ```
@@ -594,9 +594,9 @@ class StepDetail:
 
 #### 任务 3.2: 实现 Step Detail 构建逻辑
 
-**优先级**: P0  
-**涉及文件**: `app/services/caliber_service.py`  
-**依赖**: 任务 3.1  
+**优先级**: P0
+**涉及文件**: `app/services/caliber_service.py`
+**依赖**: 任务 3.1
 **风险**: 🟡 中 — 需从 CaliberInfo 中组装 StepDetail
 
 **详细设计**:
@@ -606,7 +606,7 @@ def build_step_detail(
     self, table: str, field: str, step_num: int, procedure: str = ""
 ) -> dict:
     """构建单步详情面板数据。
-    
+
     算法:
       1. 调用 trace_caliber() 获取 CaliberResult
       2. 在 chains 中定位指定 step_num (和 procedure) 的 CaliberInfo
@@ -625,12 +625,12 @@ def build_step_detail(
 ```python
 def _build_target_expressions(self, caliber_info) -> list[dict]:
     """从 CaliberInfo 构建目标字段表达式列表。
-    
+
     优先级:
       1. full_expression (如果非空且不等于 source_column)
       2. select_columns 中的 source_expression
       3. 降级为 transform_logic
-    
+
     自定义函数标记:
       - 表达式中包含 PKG_.* 或 FN_.* 调用 → is_custom_function = true
     """
@@ -640,7 +640,7 @@ def _build_target_expressions(self, caliber_info) -> list[dict]:
 ```python
 def _assess_migration_risk(self, func_name: str) -> tuple[str, str]:
     """评估自定义函数的迁移风险。
-    
+
     规则:
       - PKG_*.FUNC() → HIGH ("自定义包函数，新环境需确认或重写")
       - FN_*() / FUNC_*() → MEDIUM ("独立自定义函数，可能需迁移")
@@ -658,9 +658,9 @@ def _assess_migration_risk(self, func_name: str) -> tuple[str, str]:
 
 #### 任务 3.3: 实现 raw_sql 读取逻辑
 
-**优先级**: P0  
-**涉及文件**: `app/services/caliber_service.py`  
-**依赖**: 任务 3.2  
+**优先级**: P0
+**涉及文件**: `app/services/caliber_service.py`
+**依赖**: 任务 3.2
 **风险**: 🟡 中 — 需要文件系统读取
 
 **详细设计**:
@@ -668,13 +668,13 @@ def _assess_migration_risk(self, func_name: str) -> tuple[str, str]:
 ```python
 def _read_raw_sql(self, file_path: str, start_line: int, end_line: int) -> str:
     """从源文件读取指定行号范围的 SQL 文本。
-    
+
     安全措施:
       - 文件路径必须在配置的数据目录内 (防目录遍历)
       - 行号范围不超过 500 行 (防大段读取)
       - 文件不存在时返回 "(源文件不可用)"
       - 编码为 UTF-8，errors='ignore'
-    
+
     返回:
       原始 SQL 文本 (保留缩进和换行)
     """
@@ -689,9 +689,9 @@ def _read_raw_sql(self, file_path: str, start_line: int, end_line: int) -> str:
 
 #### 任务 3.4: 新增 `/api/caliber/step-detail` API 端点
 
-**优先级**: P0  
-**涉及文件**: `app/api/caliber.py`  
-**依赖**: 任务 3.2, 3.3  
+**优先级**: P0
+**涉及文件**: `app/api/caliber.py`
+**依赖**: 任务 3.2, 3.3
 **风险**: 🟢 低
 
 **API 规格**:
@@ -741,9 +741,9 @@ Response (200):
 
 #### 任务 3.5: Step Detail 单元测试
 
-**优先级**: P0  
-**涉及文件**: `tests/test_step_detail.py` (新建)  
-**依赖**: 任务 3.2  
+**优先级**: P0
+**涉及文件**: `tests/test_step_detail.py` (新建)
+**依赖**: 任务 3.2
 **风险**: 🟢 低
 
 **测试场景**:
@@ -760,9 +760,9 @@ Response (200):
 
 #### 任务 3.6: Step Detail 集成验证
 
-**优先级**: P0  
-**涉及文件**: 无  
-**依赖**: 任务 3.4  
+**优先级**: P0
+**涉及文件**: 无
+**依赖**: 任务 3.4
 **风险**: 🟢 低
 
 **验证**: 启动服务后请求 `/api/caliber/step-detail`，确认响应完整且 raw_sql 来自源文件。
@@ -784,9 +784,9 @@ Response (200):
 
 #### 任务 4.1: 前端目录结构搭建
 
-**优先级**: P1  
-**涉及文件**: `static/js/caliber/` (新建目录), `static/css/caliber.css` (新建)  
-**依赖**: Phase 1-3 API 完成  
+**优先级**: P1
+**涉及文件**: `static/js/caliber/` (新建目录), `static/css/caliber.css` (新建)
+**依赖**: Phase 1-3 API 完成
 **风险**: 🟢 低
 
 **文件结构**:
@@ -808,9 +808,9 @@ static/
 
 #### 任务 4.2: Summary Card 前端组件
 
-**优先级**: P1  
-**涉及文件**: `static/js/caliber/summary-card.js`, `static/css/caliber.css`  
-**依赖**: 任务 1.3 (API), 任务 4.1  
+**优先级**: P1
+**涉及文件**: `static/js/caliber/summary-card.js`, `static/css/caliber.css`
+**依赖**: 任务 1.3 (API), 任务 4.1
 **风险**: 🟢 低
 
 **详细设计**:
@@ -831,7 +831,7 @@ static/
 </div>
 ```
 
-**交互**: 
+**交互**:
 - 输入框接受 table + field
 - 查询后渲染卡片
 - 点击"查看加工链路"调用 Pipeline View
@@ -845,9 +845,9 @@ static/
 
 #### 任务 4.3: Pipeline View 前端组件 (D3.js)
 
-**优先级**: P1  
-**涉及文件**: `static/js/caliber/pipeline-view.js`, `static/css/caliber.css`  
-**依赖**: 任务 2.3 (API), 任务 4.1  
+**优先级**: P1
+**涉及文件**: `static/js/caliber/pipeline-view.js`, `static/css/caliber.css`
+**依赖**: 任务 2.3 (API), 任务 4.1
 **风险**: 🟡 中 — D3.js 布局算法需调试
 
 **详细设计**:
@@ -856,7 +856,7 @@ static/
 ```javascript
 class PipelineLayout {
     constructor(nodes, edges, branches) { ... }
-    
+
     layout() {
         // 1. 按 layer 分列 (从左到右: ODS → DWD → DWS → ADS → EAST)
         // 2. 同列内按拓扑序排列
@@ -892,9 +892,9 @@ class PipelineLayout {
 
 #### 任务 4.4: Step Detail Panel 前端组件
 
-**优先级**: P1  
-**涉及文件**: `static/js/caliber/step-detail.js`, `static/css/caliber.css`  
-**依赖**: 任务 3.4 (API), 任务 4.1  
+**优先级**: P1
+**涉及文件**: `static/js/caliber/step-detail.js`, `static/css/caliber.css`
+**依赖**: 任务 3.4 (API), 任务 4.1
 **风险**: 🟢 低
 
 **详细设计**:
@@ -956,9 +956,9 @@ function highlightSQL(expr) {
 
 #### 任务 4.5: 三层组件联动集成
 
-**优先级**: P1  
-**涉及文件**: `static/index.html`, `static/js/caliber/` 各组件  
-**依赖**: 任务 4.2, 4.3, 4.4  
+**优先级**: P1
+**涉及文件**: `static/index.html`, `static/js/caliber/` 各组件
+**依赖**: 任务 4.2, 4.3, 4.4
 **风险**: 🟡 中 — 组件间通信和状态管理
 
 **详细设计**:
@@ -990,9 +990,9 @@ document.dispatchEvent(new CustomEvent('caliber:show-step', { detail: { table, f
 
 #### 任务 4.6: 前端样式设计
 
-**优先级**: P1  
-**涉及文件**: `static/css/caliber.css`  
-**依赖**: 任务 4.2, 4.3, 4.4  
+**优先级**: P1
+**涉及文件**: `static/css/caliber.css`
+**依赖**: 任务 4.2, 4.3, 4.4
 **风险**: 🟢 低
 
 **CSS 变量** (与现有系统风格一致):
@@ -1013,9 +1013,9 @@ document.dispatchEvent(new CustomEvent('caliber:show-step', { detail: { table, f
 
 #### 任务 4.7: 前端 E2E 验证
 
-**优先级**: P1  
-**涉及文件**: 无  
-**依赖**: 任务 4.5  
+**优先级**: P1
+**涉及文件**: 无
+**依赖**: 任务 4.5
 **风险**: 🟢 低
 
 **验证场景**:
@@ -1042,9 +1042,9 @@ document.dispatchEvent(new CustomEvent('caliber:show-step', { detail: { table, f
 
 #### 任务 5.1: 实现 Markdown 导出引擎
 
-**优先级**: P2  
-**涉及文件**: `core/caliber_exporter.py` (新建)  
-**依赖**: Phase 1-3 完成  
+**优先级**: P2
+**涉及文件**: `core/caliber_exporter.py` (新建)
+**依赖**: Phase 1-3 完成
 **风险**: 🟢 低
 
 **详细设计**:
@@ -1052,14 +1052,14 @@ document.dispatchEvent(new CustomEvent('caliber:show-step', { detail: { table, f
 ```python
 class CaliberExporter:
     """口径文档导出引擎"""
-    
+
     def export_markdown(
-        self, table: str, field: str, 
+        self, table: str, field: str,
         include_sql: bool = True,
         include_source_location: bool = True,
     ) -> str:
         """导出为 Markdown 格式文档。
-        
+
         模板:
           # 指标口径规格：{table}.{field}
           ## 技术口径摘要
@@ -1079,7 +1079,7 @@ class CaliberExporter:
           ## 数据质量标记
           ...
         """
-    
+
     def export_html(self, table: str, field: str, **kwargs) -> str:
         """导出为 HTML 格式 (Jinja2 模板)。"""
 ```
@@ -1093,9 +1093,9 @@ class CaliberExporter:
 
 #### 任务 5.2: 新增 `/api/caliber/export` API 端点
 
-**优先级**: P2  
-**涉及文件**: `app/api/caliber.py`  
-**依赖**: 任务 5.1  
+**优先级**: P2
+**涉及文件**: `app/api/caliber.py`
+**依赖**: 任务 5.1
 **风险**: 🟢 低
 
 **API 规格**:
@@ -1112,7 +1112,7 @@ Content-Type: application/json
   "include_source_location": true
 }
 
-Response: 
+Response:
   Content-Type: text/markdown (或 text/html)
   Content-Disposition: attachment; filename="caliber_EAST5_201_GRJCXXB_KHXM.md"
   Body: 文档内容
@@ -1124,9 +1124,9 @@ Response:
 
 #### 任务 5.3: 前端导出按钮集成
 
-**优先级**: P2  
-**涉及文件**: `static/js/caliber/caliber-export.js`  
-**依赖**: 任务 5.2, 任务 4.5  
+**优先级**: P2
+**涉及文件**: `static/js/caliber/caliber-export.js`
+**依赖**: 任务 5.2, 任务 4.5
 **风险**: 🟢 低
 
 **实现**:
@@ -1138,9 +1138,9 @@ Response:
 
 #### 任务 5.4: 全链路集成测试
 
-**优先级**: P2  
-**涉及文件**: `tests/test_caliber_integration.py` (新建)  
-**依赖**: Phase 1-4 完成  
+**优先级**: P2
+**涉及文件**: `tests/test_caliber_integration.py` (新建)
+**依赖**: Phase 1-4 完成
 **风险**: 🟢 低
 
 **测试场景**:
@@ -1274,6 +1274,6 @@ Phase 1 (Summary Card)          Phase 2 (Pipeline)           Phase 3 (Step Detai
 
 ---
 
-*文档版本: v1.0*  
-*生成日期: 2026-05-18*  
+*文档版本: v1.0*
+*生成日期: 2026-05-18*
 *适用项目: 数据血缘分析系统 v2.1.0*

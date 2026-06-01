@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import logging
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
@@ -18,25 +18,25 @@ logger = logging.getLogger(__name__)
 
 # 后缀模式：以这些后缀结尾的表为临时表
 TEMP_SUFFIXES: tuple[str, ...] = (
-    "_bk",    # 备份表 (backup)
-    "_tm",    # 临时表 (temp)
-    "_op",    # 操作表 (operation)
-    "_cl",    # 清理表 (clean)
-    "_old",   # 旧表 (旧版本保留)
-    "_new",   # 新表 (新版本临时)
+    "_bk",  # 备份表 (backup)
+    "_tm",  # 临时表 (temp)
+    "_op",  # 操作表 (operation)
+    "_cl",  # 清理表 (clean)
+    "_old",  # 旧表 (旧版本保留)
+    "_new",  # 新表 (新版本临时)
 )
 
 # 前缀模式：以这些前缀开头的表为临时表
 TEMP_PREFIXES: tuple[str, ...] = (
-    "tmp_",   # 临时表前缀
+    "tmp_",  # 临时表前缀
     "temp_",  # 临时表前缀
 )
 
 # 正则模式：匹配临时表的附加模式
 TEMP_PATTERNS: tuple[re.Pattern, ...] = (
-    re.compile(r"_\d{8}$", re.IGNORECASE),      # 日期后缀如 _20240101（非分区表）
-    re.compile(r"^etl_", re.IGNORECASE),          # ETL 临时表
-    re.compile(r"^stg_", re.IGNORECASE),          # staging 临时表
+    re.compile(r"_\d{8}$", re.IGNORECASE),  # 日期后缀如 _20240101（非分区表）
+    re.compile(r"^etl_", re.IGNORECASE),  # ETL 临时表
+    re.compile(r"^stg_", re.IGNORECASE),  # staging 临时表
 )
 
 _EXCHANGE_PATTERN = re.compile(r"_ex\d*$", re.IGNORECASE)
@@ -134,7 +134,7 @@ class TempTableFilter:
 
         match = _EXCHANGE_PATTERN.search(short_name)
         if match:
-            formal_name = short_name[:match.start()]
+            formal_name = short_name[: match.start()]
             return f"{schema}.{formal_name}" if schema else formal_name
 
         return table_name
@@ -195,10 +195,7 @@ class TempTableFilter:
         Returns:
             过滤后的表信息列表
         """
-        filtered = [
-            t for t in tables
-            if not self.is_temp_table(t.get("full_name", ""))
-        ]
+        filtered = [t for t in tables if not self.is_temp_table(t.get("full_name", ""))]
 
         removed = len(tables) - len(filtered)
         if removed > 0:

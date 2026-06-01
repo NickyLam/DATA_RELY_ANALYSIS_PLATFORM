@@ -19,9 +19,8 @@ import logging
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 
-from core.models import TableLineage, FieldMapping, ProcedureInfo
+from core.models import FieldMapping, ProcedureInfo, TableLineage
 from core.warehouse.schema_resolver import SchemaResolver
 from core.warehouse.temp_table_filter import TempTableFilter
 
@@ -34,37 +33,37 @@ logger = logging.getLogger(__name__)
 # INSERT INTO target [PARTITION ...] (columns) SELECT ... FROM source
 # 简化版：仅匹配目标表名和目标字段列表，不贪婪匹配 SELECT/FROM
 _INSERT_TARGET_PATTERN = re.compile(
-    r"INSERT\s+(?:/\*.*?\*/\s*)?"   # 可选 hint
+    r"INSERT\s+(?:/\*.*?\*/\s*)?"  # 可选 hint
     r"INTO\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"   # 目标表名（含变量或普通格式）
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 目标表名（含变量或普通格式）
     r"(?:\s+PARTITION\s+FOR\s*\(.*?\))?"  # 可选 PARTITION FOR(expr) — 简化后
-    r"(?:\s+PARTITION\s+\w+)?"      # 可选 PARTITION p_xxx
+    r"(?:\s+PARTITION\s+\w+)?"  # 可选 PARTITION p_xxx
     r"(?:\s+NOLOGGING)?\s*"
-    r"\((.*?)\)\s*"                   # 目标字段列表
-    r"SELECT\b",                     # SELECT 关键字确认
+    r"\((.*?)\)\s*"  # 目标字段列表
+    r"SELECT\b",  # SELECT 关键字确认
     re.IGNORECASE | re.DOTALL,
 )
 
 # FROM 子句中的表引用（简化版）
 _FROM_TABLE_PATTERN = re.compile(
     r"(?:FROM|JOIN)\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"    # 表名
-    r"(?:\s+\w+)?",                   # 可选别名
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 表名
+    r"(?:\s+\w+)?",  # 可选别名
     re.IGNORECASE,
 )
 
 # 逗号分隔的表引用
 _COMMA_TABLE_PATTERN = re.compile(
     r",\s*"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"    # 表名
-    r"(?:\s+\w+)?",                   # 可选别名
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 表名
+    r"(?:\s+\w+)?",  # 可选别名
     re.IGNORECASE,
 )
 
 # MERGE INTO target USING source ON (...)
 _MERGE_INTO_PATTERN = re.compile(
     r"MERGE\s+INTO\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"    # 目标表
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 目标表
     r"\s+USING\s+"
     r"(\$\{[\w_]+\}\.\w+|[\w.]+(?:\s+\w+)?)",  # 源表
     re.IGNORECASE,
@@ -73,7 +72,7 @@ _MERGE_INTO_PATTERN = re.compile(
 # UPDATE target SET ...
 _UPDATE_PATTERN = re.compile(
     r"UPDATE\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"    # 目标表
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 目标表
     r"\s+SET\s+",
     re.IGNORECASE,
 )
@@ -81,7 +80,7 @@ _UPDATE_PATTERN = re.compile(
 # CREATE TABLE ... AS SELECT (CTAS)
 _CTAS_PATTERN = re.compile(
     r"CREATE\s+TABLE\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"    # 目标表
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 目标表
     r"\s+(?:NOLOGGING\s+)?"
     r"(?:COMPRESS\s+\$\{[\w_]+\}\s+FOR\s+QUERY\s+HIGH\s+)?"
     r"AS\s+SELECT\s+(.*?)"
@@ -92,26 +91,26 @@ _CTAS_PATTERN = re.compile(
 # ALTER TABLE ... EXCHANGE PARTITION ... WITH TABLE ...
 _EXCHANGE_PARTITION_PATTERN = re.compile(
     r"ALTER\s+TABLE\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"    # 目标表
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 目标表
     r"\s+EXCHANGE\s+PARTITION\s+\S+\s+"
     r"WITH\s+TABLE\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)",    # 交换表
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)",  # 交换表
     re.IGNORECASE,
 )
 
 # FROM 子句中的表引用（简化版）
 _FROM_TABLE_PATTERN = re.compile(
     r"(?:FROM|JOIN)\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"    # 表名
-    r"(?:\s+\w+)?",                   # 可选别名
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 表名
+    r"(?:\s+\w+)?",  # 可选别名
     re.IGNORECASE,
 )
 
 # 逗号分隔的表引用
 _COMMA_TABLE_PATTERN = re.compile(
     r",\s*"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"    # 表名
-    r"(?:\s+\w+)?",                   # 可选别名
+    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 表名
+    r"(?:\s+\w+)?",  # 可选别名
     re.IGNORECASE,
 )
 
@@ -125,15 +124,16 @@ _IEL_QUERY_PATTERN = re.compile(
 @dataclass
 class DMLStatement:
     """解析出的单条 DML 语句"""
-    op_type: str = ""                    # insert / merge / update / ctas
-    target_table: str = ""               # 目标表（变量替换后）
+
+    op_type: str = ""  # insert / merge / update / ctas
+    target_table: str = ""  # 目标表（变量替换后）
     target_columns: list[str] = field(default_factory=list)  # 目标字段
-    source_tables: list[str] = field(default_factory=list)   # 源表列表
-    select_clause: str = ""              # SELECT 子句
-    from_clause: str = ""                # FROM 子句
-    raw_sql: str = ""                    # 原始 SQL
-    file_path: str = ""                  # 来源文件
-    start_line: int = 0                  # 起始行号
+    source_tables: list[str] = field(default_factory=list)  # 源表列表
+    select_clause: str = ""  # SELECT 子句
+    from_clause: str = ""  # FROM 子句
+    raw_sql: str = ""  # 原始 SQL
+    file_path: str = ""  # 来源文件
+    start_line: int = 0  # 起始行号
 
 
 class DMLParser:
@@ -153,13 +153,13 @@ class DMLParser:
         self,
         schema_resolver: SchemaResolver,
         temp_filter: TempTableFilter,
-        tables: Optional[dict[str, "TableInfo"]] = None,
+        tables: dict[str, TableInfo] | None = None,
     ):
         self._resolver = schema_resolver
         self._temp_filter = temp_filter
         self._tables = tables or {}
 
-    def parse_file(self, file_path: Path) -> "ParseOutput":
+    def parse_file(self, file_path: Path) -> ParseOutput:
         """解析单个 DML 文件
 
         Args:
@@ -171,7 +171,7 @@ class DMLParser:
         from core.parser_protocol import ParseOutput
 
         try:
-            with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+            with open(file_path, encoding="utf-8", errors="ignore") as f:
                 content = f.read()
         except OSError as e:
             logger.error("读取文件失败: %s - %s", file_path, e)
@@ -198,14 +198,12 @@ class DMLParser:
 
         # 构建 ProcedureInfo
         proc_name = file_path.stem.upper()
-        proc_info = self._build_procedure_info(
-            statements, proc_name, inferred_layer, str(file_path)
-        )
+        proc_info = self._build_procedure_info(statements, proc_name, inferred_layer, str(file_path))
 
         # 转换为 ParseOutput
         return self._proc_info_to_output(proc_info)
 
-    def parse_directory(self, dir_path: Path) -> "ParseOutput":
+    def parse_directory(self, dir_path: Path) -> ParseOutput:
         """递归解析目录下所有 .sql DML 文件"""
         from core.parser_protocol import ParseOutput
 
@@ -221,6 +219,7 @@ class DMLParser:
             return output
 
         from concurrent.futures import ThreadPoolExecutor
+
         with ThreadPoolExecutor(max_workers=4) as executor:
             futures = {executor.submit(self.parse_file, fp): fp for fp in sql_files}
             for future in futures:
@@ -234,13 +233,13 @@ class DMLParser:
 
         logger.info(
             "DMLParser: 解析目录 %s, %d 个文件, %d 条血缘",
-            dir_path, len(sql_files), len(output.table_lineages),
+            dir_path,
+            len(sql_files),
+            len(output.table_lineages),
         )
         return output
 
-    def _extract_all_statements(
-        self, content: str, file_path: str
-    ) -> list[DMLStatement]:
+    def _extract_all_statements(self, content: str, file_path: str) -> list[DMLStatement]:
         """从内容中提取所有 DML 语句"""
         statements: list[DMLStatement] = []
 
@@ -276,9 +275,7 @@ class DMLParser:
 
         return statements
 
-    def _parse_insert_statement(
-        self, match: re.Match, content: str, file_path: str
-    ) -> Optional[DMLStatement]:
+    def _parse_insert_statement(self, match: re.Match, content: str, file_path: str) -> DMLStatement | None:
         """解析 INSERT INTO ... SELECT FROM 语句"""
         target_raw = match.group(1).strip()
         columns_raw = match.group(2).strip()
@@ -294,8 +291,11 @@ class DMLParser:
 
         if self._temp_filter.is_exchange_table(target_table):
             target_table = self._temp_filter.resolve_exchange_table(target_table)
-            logger.debug("INSERT 目标为交换表，映射为正式表: %s → %s",
-                         target_resolved.full_name, target_table)
+            logger.debug(
+                "INSERT 目标为交换表，映射为正式表: %s → %s",
+                target_resolved.full_name,
+                target_table,
+            )
 
         # 解析目标字段
         target_columns = self._parse_column_list(columns_raw)
@@ -307,7 +307,7 @@ class DMLParser:
         source_tables = self._extract_source_tables(from_clause)
 
         # 计算行号
-        start_line = content[:match.start()].count('\n') + 1
+        start_line = content[: match.start()].count("\n") + 1
 
         return DMLStatement(
             op_type="insert",
@@ -321,9 +321,7 @@ class DMLParser:
             start_line=start_line,
         )
 
-    def _parse_merge_statement(
-        self, match: re.Match, file_path: str
-    ) -> Optional[DMLStatement]:
+    def _parse_merge_statement(self, match: re.Match, file_path: str) -> DMLStatement | None:
         """解析 MERGE INTO ... USING 语句"""
         target_raw = match.group(1).strip()
         source_raw = match.group(2).strip().split()[0]  # 取第一个词（去掉别名）
@@ -346,9 +344,7 @@ class DMLParser:
             file_path=file_path,
         )
 
-    def _parse_update_statement(
-        self, match: re.Match, file_path: str
-    ) -> Optional[DMLStatement]:
+    def _parse_update_statement(self, match: re.Match, file_path: str) -> DMLStatement | None:
         """解析 UPDATE ... SET 语句"""
         target_raw = match.group(1).strip()
         target_resolved = self._resolver.resolve_table_name(target_raw)
@@ -367,9 +363,7 @@ class DMLParser:
             file_path=file_path,
         )
 
-    def _parse_ctas_statement(
-        self, match: re.Match, file_path: str
-    ) -> Optional[DMLStatement]:
+    def _parse_ctas_statement(self, match: re.Match, file_path: str) -> DMLStatement | None:
         """解析 CREATE TABLE AS SELECT 语句"""
         target_raw = match.group(1).strip()
         target_resolved = self._resolver.resolve_table_name(target_raw)
@@ -391,9 +385,7 @@ class DMLParser:
             file_path=file_path,
         )
 
-    def _parse_exchange_statement(
-        self, match: re.Match, file_path: str
-    ) -> Optional[DMLStatement]:
+    def _parse_exchange_statement(self, match: re.Match, file_path: str) -> DMLStatement | None:
         """解析 ALTER TABLE ... EXCHANGE PARTITION ... WITH TABLE 语句
 
         分区交换意味着交换表的数据会进入目标表，形成血缘关系。
@@ -414,8 +406,11 @@ class DMLParser:
 
         if self._temp_filter.is_exchange_table(source_table):
             source_table = self._temp_filter.resolve_exchange_table(source_table)
-            logger.debug("EXCHANGE 源为交换表，映射为正式表: %s → %s",
-                         source_resolved.full_name, source_table)
+            logger.debug(
+                "EXCHANGE 源为交换表，映射为正式表: %s → %s",
+                source_resolved.full_name,
+                source_table,
+            )
 
         return DMLStatement(
             op_type="exchange_partition",
@@ -429,9 +424,17 @@ class DMLParser:
         """提取 FROM 子句的完整内容（到分号或下一个 DDL/DML 关键字为止）"""
         # 简化处理：从 start_pos 开始，到下一个分号或 UNION/EXCEPT/INTERSECT 为止
         end_keywords = [
-            ";", "UNION", "EXCEPT", "INTERSECT",
-            "CREATE TABLE", "ALTER TABLE", "DROP TABLE",
-            "GRANT ", "COMMENT ON", "EXEC ", "COMMIT;",
+            ";",
+            "UNION",
+            "EXCEPT",
+            "INTERSECT",
+            "CREATE TABLE",
+            "ALTER TABLE",
+            "DROP TABLE",
+            "GRANT ",
+            "COMMENT ON",
+            "EXEC ",
+            "COMMIT;",
         ]
 
         search_text = content[start_pos:]
@@ -496,21 +499,82 @@ class DMLParser:
 
         # 常见 SQL 函数/关键字黑名单
         _BLACKLIST = {
-            "NVL", "TO_DATE", "TO_TIMESTAMP", "TO_CHAR", "TO_NUMBER",
-            "DUAL", "SYSDATE", "ROWNUM", "NULL", "CASE", "WHEN",
-            "SELECT", "FROM", "WHERE", "AND", "OR", "NOT", "IN",
-            "EXISTS", "BETWEEN", "LIKE", "IS", "AS", "ON", "SET",
-            "INTO", "VALUES", "GROUP", "ORDER", "HAVING", "LIMIT",
-            "UNION", "ALL", "DISTINCT", "TRIM", "UPPER", "LOWER",
-            "SUBSTR", "INSTR", "LENGTH", "REPLACE", "CONCAT",
-            "SUM", "COUNT", "AVG", "MAX", "MIN",
-            "DECODE", "GREATEST", "LEAST", "COALESCE",
-            "CAST", "EXTRACT", "ROUND", "TRUNC", "FLOOR", "CEIL",
-            "ABS", "MOD", "SIGN", "POWER", "SQRT",
-            "ADD_MONTHS", "LAST_DAY", "NEXT_DAY", "MONTHS_BETWEEN",
-            "TRUNC", "ROW_NUMBER", "RANK", "DENSE_RANK",
-            "LEAD", "LAG", "FIRST_VALUE", "LAST_VALUE",
-            "OVER", "PARTITION", "WITH",
+            "NVL",
+            "TO_DATE",
+            "TO_TIMESTAMP",
+            "TO_CHAR",
+            "TO_NUMBER",
+            "DUAL",
+            "SYSDATE",
+            "ROWNUM",
+            "NULL",
+            "CASE",
+            "WHEN",
+            "SELECT",
+            "FROM",
+            "WHERE",
+            "AND",
+            "OR",
+            "NOT",
+            "IN",
+            "EXISTS",
+            "BETWEEN",
+            "LIKE",
+            "IS",
+            "AS",
+            "ON",
+            "SET",
+            "INTO",
+            "VALUES",
+            "GROUP",
+            "ORDER",
+            "HAVING",
+            "LIMIT",
+            "UNION",
+            "ALL",
+            "DISTINCT",
+            "TRIM",
+            "UPPER",
+            "LOWER",
+            "SUBSTR",
+            "INSTR",
+            "LENGTH",
+            "REPLACE",
+            "CONCAT",
+            "SUM",
+            "COUNT",
+            "AVG",
+            "MAX",
+            "MIN",
+            "DECODE",
+            "GREATEST",
+            "LEAST",
+            "COALESCE",
+            "CAST",
+            "EXTRACT",
+            "ROUND",
+            "TRUNC",
+            "FLOOR",
+            "CEIL",
+            "ABS",
+            "MOD",
+            "SIGN",
+            "POWER",
+            "SQRT",
+            "ADD_MONTHS",
+            "LAST_DAY",
+            "NEXT_DAY",
+            "MONTHS_BETWEEN",
+            "ROW_NUMBER",
+            "RANK",
+            "DENSE_RANK",
+            "LEAD",
+            "LAG",
+            "FIRST_VALUE",
+            "LAST_VALUE",
+            "OVER",
+            "PARTITION",
+            "WITH",
         }
 
         return short.upper() not in _BLACKLIST
@@ -559,25 +623,29 @@ class DMLParser:
                 # 构建表级血缘
                 tl_key = (src, stmt.target_table)
                 if tl_key not in {(tl.source_table, tl.target_table) for tl in table_lineages}:
-                    table_lineages.append(TableLineage(
-                        source_table=src,
-                        target_table=stmt.target_table,
-                        procedure=proc_name,
-                    ))
+                    table_lineages.append(
+                        TableLineage(
+                            source_table=src,
+                            target_table=stmt.target_table,
+                            procedure=proc_name,
+                        )
+                    )
 
             # 构建字段级映射（如果目标字段列表可用）
             if stmt.target_columns and stmt.source_tables:
                 for col in stmt.target_columns:
                     for src in stmt.source_tables:
                         # 简化：假设字段名在源表中也存在（同名映射）
-                        field_mappings.append(FieldMapping(
-                            source_table=src,
-                            source_column=col,
-                            target_table=stmt.target_table,
-                            target_column=col,
-                            procedure=proc_name,
-                            confidence=0.5,  # 中等置信度（同名假设）
-                        ))
+                        field_mappings.append(
+                            FieldMapping(
+                                source_table=src,
+                                source_column=col,
+                                target_table=stmt.target_table,
+                                target_column=col,
+                                procedure=proc_name,
+                                confidence=0.5,  # 中等置信度（同名假设）
+                            )
+                        )
 
         return ProcedureInfo(
             schema=schema,
@@ -590,7 +658,7 @@ class DMLParser:
             file_path=file_path,
         )
 
-    def _proc_info_to_output(self, proc_info: ProcedureInfo) -> "ParseOutput":
+    def _proc_info_to_output(self, proc_info: ProcedureInfo) -> ParseOutput:
         """将 ProcedureInfo 转换为 ParseOutput"""
         from core.parser_protocol import ParseOutput
 
@@ -624,20 +692,16 @@ class DMLParser:
 
         # 仅当有有效血缘时才输出 ProcedureInfo
         if filtered_lineages or filtered_mappings:
-            output.procedures.append({
-                "full_name": proc_info.full_name,
-                "schema": proc_info.schema,
-                "proc_name": proc_info.proc_name,
-                "description": proc_info.description,
-                "source_tables": [
-                    t for t in proc_info.source_tables
-                    if not self._temp_filter.is_temp_table(t)
-                ],
-                "target_tables": [
-                    t for t in proc_info.target_tables
-                    if not self._temp_filter.is_temp_table(t)
-                ],
-            })
+            output.procedures.append(
+                {
+                    "full_name": proc_info.full_name,
+                    "schema": proc_info.schema,
+                    "proc_name": proc_info.proc_name,
+                    "description": proc_info.description,
+                    "source_tables": [t for t in proc_info.source_tables if not self._temp_filter.is_temp_table(t)],
+                    "target_tables": [t for t in proc_info.target_tables if not self._temp_filter.is_temp_table(t)],
+                }
+            )
 
         output.table_lineages = filtered_lineages
         output.field_mappings = filtered_mappings
@@ -657,20 +721,20 @@ class DMLParser:
 
         while i < len(content):
             # 检测 PARTITION FOR 关键字
-            if upper[i:i + 13] == "PARTITION FOR":
+            if upper[i : i + 13] == "PARTITION FOR":
                 # 找到紧跟的 (
                 j = i + 13
-                while j < len(content) and content[j] != '(':
+                while j < len(content) and content[j] != "(":
                     j += 1
 
-                if j < len(content) and content[j] == '(':
+                if j < len(content) and content[j] == "(":
                     # 用括号计数法找到匹配的 )
                     depth = 1
                     k = j + 1
                     while k < len(content) and depth > 0:
-                        if content[k] == '(':
+                        if content[k] == "(":
                             depth += 1
-                        elif content[k] == ')':
+                        elif content[k] == ")":
                             depth -= 1
                         k += 1
 

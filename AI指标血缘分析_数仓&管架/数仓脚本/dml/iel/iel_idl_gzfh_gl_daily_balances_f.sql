@@ -1,0 +1,150 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_idl_gzfh_gl_daily_balances_f
+CreateDate: 20180529
+FileName:   ${iel_data_path}/gzfh_gl_daily_balances_${batch_date}_f.dat
+IF_mark:    f
+Logs:
+   zjj 2018-07-27 create template
+' \
+        query="select
+ledger_id
+,transaction_date
+,period_name
+,code_combination_id
+,currency_code
+,template_id
+,segment1
+,segment2
+,segment3
+,segment4
+,segment5
+,segment6
+,segment7
+,segment8
+,segment9
+,yod_balance_dr
+,yod_balance_cr
+,yod_fun_balance_dr
+,yod_fun_balance_cr
+,yod_usd_balance_dr
+,yod_usd_balance_cr
+,yod_rep_balance_dr
+,yod_rep_balance_cr
+,yod_rep_fun_balance_dr
+,yod_rep_fun_balance_cr
+,yod_rep_usd_balance_dr
+,yod_rep_usd_balance_cr
+,dtd_balance_dr
+,dtd_balance_cr
+,dtd_fun_balance_dr
+,dtd_fun_balance_cr
+,dtd_usd_balance_dr
+,dtd_usd_balance_cr
+,eod_balance_dr
+,eod_balance_cr
+,eod_fun_balance_dr
+,eod_fun_balance_cr
+,eod_usd_balance_dr
+,eod_usd_balance_cr
+,eod_rep_balance_dr
+,eod_rep_balance_cr
+,eod_rep_fun_balance_dr
+,eod_rep_fun_balance_cr
+,eod_rep_usd_balance_dr
+,eod_rep_usd_balance_cr
+,ten_days_begin_dr
+,ten_days_begin_cr
+,ten_days_begin_fun_dr
+,ten_days_begin_fun_cr
+,ten_days_begin_usd_dr
+,ten_days_begin_usd_cr
+,month_begin_dr
+,month_begin_cr
+,month_begin_fun_dr
+,month_begin_fun_cr
+,month_begin_usd_dr
+,month_begin_usd_cr
+,month_rep_begin_dr
+,month_rep_begin_cr
+,month_rep_begin_fun_dr
+,month_rep_begin_fun_cr
+,month_rep_begin_usd_dr
+,month_rep_begin_usd_cr
+,mtm_balance_dr
+,mtm_balance_cr
+,mtm_fun_balance_dr
+,mtm_fun_balance_cr
+,mtm_usd_balance_dr
+,mtm_usd_balance_cr
+,quarter_begin_dr
+,quarter_begin_cr
+,quarter_begin_fun_dr
+,quarter_begin_fun_cr
+,quarter_begin_usd_dr
+,quarter_begin_usd_cr
+,quarter_rep_begin_dr
+,quarter_rep_begin_cr
+,quarter_rep_begin_fun_dr
+,quarter_rep_begin_fun_cr
+,quarter_rep_begin_usd_dr
+,quarter_rep_begin_usd_cr
+,qtq_balance_dr
+,qtq_balance_cr
+,qtq_fun_balance_dr
+,qtq_fun_balance_cr
+,qtq_usd_balance_dr
+,qtq_usd_balance_cr
+,half_year_begin_dr
+,half_year_begin_cr
+,half_year_begin_fun_dr
+,half_year_begin_fun_cr
+,half_year_begin_usd_dr
+,half_year_begin_usd_cr
+,half_rep_year_begin_dr
+,half_rep_year_begin_cr
+,half_rep_year_begin_fun_dr
+,half_rep_year_begin_fun_cr
+,half_rep_year_begin_usd_dr
+,half_rep_year_begin_usd_cr
+,hth_balance_dr
+,hth_balance_cr
+,hth_fun_balance_dr
+,hth_fun_balance_cr
+,hth_usd_balance_dr
+,hth_usd_balance_cr
+,year_begin_dr
+,year_begin_cr
+,year_begin_fun_dr
+,year_begin_fun_cr
+,year_begin_usd_dr
+,year_begin_usd_cr
+,year_rep_begin_dr
+,year_rep_begin_cr
+,year_rep_begin_fun_dr
+,year_rep_begin_fun_cr
+,year_rep_begin_usd_dr
+,year_rep_begin_usd_cr
+,yty_balance_dr
+,yty_balance_cr
+,yty_fun_balance_dr
+,yty_fun_balance_cr
+,yty_usd_balance_dr
+,yty_usd_balance_cr
+,creation_date
+,created_by
+,last_update_date
+,last_updated_by
+,attribute1
+,attribute2
+,attribute3
+,attribute4
+,attribute5
+,attribute6
+from ${idl_schema}.gzfh_gl_daily_balances 
+where etl_dt =to_date('${batch_date}','yyyymmdd');" \
+        field="|#|" record="0x0a"  \
+        file="${iel_data_path}/gzfh_gl_daily_balances_${batch_date}_f.dat" \
+        charset=zhs16gbk
+        safe=yes

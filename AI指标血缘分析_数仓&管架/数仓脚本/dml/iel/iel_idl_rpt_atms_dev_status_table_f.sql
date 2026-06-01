@@ -1,0 +1,170 @@
+: '
+Purpose:    unload config for sqluldr2
+Author:     Sunline
+Usage:      python $ETL_HOME/script/main.py yyyymmdd iel_idl_rpt_atms_dev_status_table_f
+CreateDate: 20180529
+FileName:   ${iel_data_path}/rpt_atms_dev_status_table.f.${batch_date}.dat
+IF_mark:    f
+Logs:
+   zjj 2018-07-27 create template
+' \
+        query="select
+ t1.dev_no as dev_no
+,t1.dev_status as dev_status
+,t1.dev_tx_status as dev_tx_status
+,t1.dev_net_status as dev_net_status
+,t1.dev_run_status as dev_run_status
+,t1.dev_cashbox_status as dev_cashbox_status
+,t1.dev_mod_status as dev_mod_status
+,t1.dev_potential_fault as dev_potential_fault
+,t1.status_last_time as status_last_time
+,t1.status_expire_time as status_expire_time
+,t1.tx_type as tx_type
+,t1.tx_time as tx_time
+,t1.atm_type as atm_type
+,t1.cash_unit_type as cash_unit_type
+,t1.status_info_type as status_info_type
+,t1.combin_unit_type as combin_unit_type
+,t1.idc_device_status as idc_device_status
+,t1.cim_device_status as cim_device_status
+,t1.cdm_device_status as cdm_device_status
+,t1.dep_device_status as dep_device_status
+,t1.ups_device_status as ups_device_status
+,t1.spr_device_status as spr_device_status
+,t1.rpr_device_status as rpr_device_status
+,t1.jpr_device_status as jpr_device_status
+,t1.chk_device_status as chk_device_status
+,t1.ttu_device_status as ttu_device_status
+,t1.pbk_device_status as pbk_device_status
+,t1.pin_device_status as pin_device_status
+,t1.siu_device_status as siu_device_status
+,t1.cam_device_status as cam_device_status
+,t1.idc_media_status as idc_media_status
+,t1.idc_capture_bin_status as idc_capture_bin_status
+,t1.idc_capture_bin_count as idc_capture_bin_count
+,t1.cim_accept_or_status as cim_accept_or_status
+,t1.cim_escrow_status as cim_escrow_status
+,t1.cim_cash_units as cim_cash_units
+,t1.cim_shutter_status as cim_shutter_status
+,t1.cim_transport_status as cim_transport_status
+,t1.cim_inout_position as cim_inout_position
+,t1.cim_input_output_status as cim_input_output_status
+,t1.cim_pu_id as cim_pu_id
+,t1.cim_pu_count as cim_pu_count
+,t1.cim_pu_cash_in_count as cim_pu_cash_in_count
+,t1.cim_pu_status as cim_pu_status
+,t1.cim_pupos_name as cim_pupos_name
+,t1.cim_cu_id as cim_cu_id
+,t1.cim_pcu_id as cim_pcu_id
+,t1.cim_cu_note_value as cim_cu_note_value
+,t1.cim_cu_currency as cim_cu_currency
+,t1.cim_cu_count as cim_cu_count
+,t1.cim_cu_cash_in_count as cim_cu_cash_in_count
+,t1.cim_cu_type as cim_cu_type
+,t1.cim_cu_status as cim_cu_status
+,t1.cdm_shutter_status as cdm_shutter_status
+,t1.cdm_dispenser_status as cdm_dispenser_status
+,t1.cdm_safe_door_status as cdm_safe_door_status
+,t1.cdm_stacker_status as cdm_stacker_status
+,t1.cdm_cash_units as cdm_cash_units
+,t1.cdm_transport_status as cdm_transport_status
+,t1.cdm_out_position as cdm_out_position
+,t1.cdm_input_output_status as cdm_input_output_status
+,t1.cdm_pu_status as cdm_pu_status
+,t1.cdm_pu_id as cdm_pu_id
+,t1.cdm_pu_initial_count as cdm_pu_initial_count
+,t1.cdm_pu_current_count as cdm_pu_current_count
+,t1.cdm_pu_reject_count as cdm_pu_reject_count
+,t1.cdm_pupos_name as cdm_pupos_name
+,t1.cdm_cu_id as cdm_cu_id
+,t1.cdm_pcu_id as cdm_pcu_id
+,t1.cdm_cu_note_value as cdm_cu_note_value
+,t1.cdm_cu_currency as cdm_cu_currency
+,t1.cdm_cu_current_count as cdm_cu_current_count
+,t1.cdm_cu_initial_count as cdm_cu_initial_count
+,t1.cdm_cu_reject_count as cdm_cu_reject_count
+,t1.cdm_cu_type as cdm_cu_type
+,t1.cdm_cu_status as cdm_cu_status
+,t1.dep_deposit_status as dep_deposit_status
+,t1.dep_deposit_container_status as dep_deposit_container_status
+,t1.dep_envelope_supply_status as dep_envelope_supply_status
+,t1.dep_envelope_status as dep_envelope_status
+,t1.dep_printer_status as dep_printer_status
+,t1.dep_printer_ink as dep_printer_ink
+,t1.dep_deposited_items as dep_deposited_items
+,t1.dep_transport_status as dep_transport_status
+,t1.dep_shutter_status as dep_shutter_status
+,t1.ups_low as ups_low
+,t1.ups_engaged as ups_engaged
+,t1.ups_powering as ups_powering
+,t1.ups_recovered as ups_recovered
+,t1.spr_media_status as spr_media_status
+,t1.spr_paper_status as spr_paper_status
+,t1.spr_retract_bin_status as spr_retract_bin_status
+,t1.spr_ink_status as spr_ink_status
+,t1.spr_toner_status as spr_toner_status
+,t1.spr_stack_count as spr_stack_count
+,t1.chk_media_status as chk_media_status
+,t1.chk_ink_status as chk_ink_status
+,t1.rpr_media_status as rpr_media_status
+,t1.rpr_paper_status as rpr_paper_status
+,t1.rpr_retract_bin_status as rpr_retract_bin_status
+,t1.rpr_ink_status as rpr_ink_status
+,t1.rpr_toner_status as rpr_toner_status
+,t1.jpr_media_status as jpr_media_status
+,t1.jpr_paper_status as jpr_paper_status
+,t1.jpr_ink_status as jpr_ink_status
+,t1.jpr_toner_status as jpr_toner_status
+,t1.pbk_media_status as pbk_media_status
+,t1.pbk_ink_status as pbk_ink_status
+,t1.pbk_toner_status as pbk_toner_status
+,t1.pbk_retract_bin_status as pbk_retract_bin_status
+,t1.pbk_retract_bin_count as pbk_retract_bin_count
+,t1.siu_operator_switch as siu_operator_switch
+,t1.siu_terminal_tamper as siu_terminal_tamper
+,t1.siu_alarm_tamper as siu_alarm_tamper
+,t1.siu_seismic as siu_seismic
+,t1.siu_proximity_detector as siu_proximity_detector
+,t1.siu_heat as siu_heat
+,t1.siu_ambient_light as siu_ambient_light
+,t1.siu_cabinet_state as siu_cabinet_state
+,t1.siu_safe_state as siu_safe_state
+,t1.siu_shield_state as siu_shield_state
+,t1.siu_bill_acceptor_light as siu_bill_acceptor_light
+,t1.siu_card_reader_light as siu_card_reader_light
+,t1.siu_cheque_unit_light as siu_cheque_unit_light
+,t1.siu_coin_dispenser_light as siu_coin_dispenser_light
+,t1.siu_note_dispenser_light as siu_note_dispenser_light
+,t1.siu_envelope_depository_light as siu_envelope_depository_light
+,t1.siu_passbook_printer_light as siu_passbook_printer_light
+,t1.siu_pinpad_light as siu_pinpad_light
+,t1.siu_receipt_printer_light as siu_receipt_printer_light
+,t1.siu_envelope_dispenser_light as siu_envelope_dispenser_light
+,t1.cam_camera_area as cam_camera_area
+,t1.cam_camera_area_status as cam_camera_area_status
+,t1.cam_media_status as cam_media_status
+,t1.cam_picture_staken as cam_picture_staken
+,t1.dev_cash_status as dev_cash_status
+,t1.action_type as action_type
+,t1.action_note as action_note
+,t1.icc_device_status as icc_device_status
+,t1.icc_media_status as icc_media_status
+,t1.isc_device_status as isc_device_status
+,t1.isc_media_status as isc_media_status
+,t1.irc_device_status as irc_device_status
+,t1.irc_media_status as irc_media_status
+,t1.fpi_device_status as fpi_device_status
+,t1.crd_device_status as crd_device_status
+,t1.ccd_device_status as ccd_device_status
+,t1.dpr_device_status as dpr_device_status
+,t1.bcr_device_status as bcr_device_status
+,t1.cam_status_area as cam_status_area
+,t1.cam_status_media as cam_status_media
+,t1.cam_status_state as cam_status_state
+,t1.cam_status_pictures as cam_status_pictures
+ from idl.atms_dev_status_table T1
+where start_dt <= to_date('${batch_date}','yyyymmdd') and end_dt > to_date('${batch_date}','yyyymmdd') and t1.etl_dt = to_date('${batch_date}','yyyymmdd');" \
+        field="0x1b" record="0x0a"  \
+        file="${iel_data_path}/rpt_atms_dev_status_table.f.${batch_date}.dat" \
+        charset=zhs16gbk
+        safe=yes
