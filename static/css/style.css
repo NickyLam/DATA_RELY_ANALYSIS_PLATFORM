@@ -659,7 +659,7 @@ body {
 .input-group {
     display: flex;
     flex-direction: column;
-    min-width: 340px;
+    min-width: 140px;
     position: relative;  /* 为下拉框提供定位上下文 */
 }
 

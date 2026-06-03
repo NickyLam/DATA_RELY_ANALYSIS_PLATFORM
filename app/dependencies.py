@@ -17,6 +17,7 @@ from app.services.indicator_service import IndicatorService
 from app.services.lineage_service import LineageService
 from app.services.parser_service import ParserService
 from app.services.progress_service import ProgressService
+from app.services.table_query_service import TableQueryService
 from app.utils.cache_manager import CacheManager
 from core.layer_detector import LayerDetector
 
@@ -69,6 +70,16 @@ def get_progress_service() -> ProgressService:
 
 
 @lru_cache
+def get_table_query_service() -> TableQueryService:
+    parser = get_parser_service()
+    cache = get_cache_manager()
+    return TableQueryService(
+        parser_service=parser,
+        cache_manager=cache,
+    )
+
+
+@lru_cache
 def get_indicator_service() -> IndicatorService:
     fdm_config = next(
         (c for c in config.datasource_configs if c.name == "fdm"),
@@ -98,3 +109,4 @@ LineageServiceDep = Annotated[LineageService, Depends(get_lineage_service)]
 ProgressServiceDep = Annotated[ProgressService, Depends(get_progress_service)]
 IndicatorServiceDep = Annotated[IndicatorService, Depends(get_indicator_service)]
 LayerDetectorDep = Annotated[LayerDetector, Depends(get_layer_detector)]
+TableQueryServiceDep = Annotated[TableQueryService, Depends(get_table_query_service)]

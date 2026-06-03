@@ -35,6 +35,7 @@ try:
     from core.caliber_extractor import CaliberExtractor
     from core.layer_detector import LayerDetector
     from core.models import FieldMapping, ProcedureInfo, TableInfo, TableLineage
+    from core.pam import PamParser
     from core.parser_registry import ParserRegistry
     from core.procedure_parser import EnhancedProcedureParser
     from core.table_parser import OracleTableParser
@@ -51,6 +52,7 @@ except ImportError as e:
     WarehouseSQLParser = None
     SchemaResolver = None
     LayerDetector = None
+    PamParser = None
 
 
 class ParseResult:
@@ -207,6 +209,7 @@ class ParserService:
         self._table_parser: OracleTableParser | None = None
         self._proc_parser: EnhancedProcedureParser | None = None
         self._registry: ParserRegistry | None = None
+        self._pam_parser: PamParser | None = None
         self._layer_detector: LayerDetector | None = None
         self._current_result: ParseResult | None = None
         self._cache_store = CacheStore(self.output_dir, config=config)
@@ -219,6 +222,20 @@ class ParserService:
         self._datasource_workers = 6  # 数据源级并行度（Oracle/EDW/BRT/PAM/GBASE/指标）
         self._file_workers = 4  # 文件级并行度（同类文件内部）
         self._executor = ThreadPoolExecutor(max_workers=self._datasource_workers)
+
+    def shutdown(self) -> None:
+        """关闭线程池，释放资源。幂等操作，可多次调用。"""
+        if self._executor is not None:
+            self._executor.shutdown(wait=True)
+            self._executor = None
+            logger.info("ParserService 线程池已关闭")
+
+    def __del__(self) -> None:
+        """析构时确保线程池被关闭（best-effort 兜底）。"""
+        try:
+            self.shutdown()
+        except Exception:
+            pass  # __del__ 中忽略异常
 
     def initialize_parsers(self) -> None:
         if OracleTableParser is None:
@@ -309,6 +326,15 @@ class ParserService:
                             ds_config.name,
                         )
 
+                elif ds_config.parser == "pam" and PamParser is not None:
+                    if self._pam_parser is None:
+                        self._pam_parser = PamParser(default_schema="pam")
+                        logger.info(
+                            "PAM 解析器初始化完成: %s (system=%s)",
+                            ds_config.display_name,
+                            ds_config.name,
+                        )
+
             logger.info("解析器注册表初始化完成: %s", self._registry)
 
     def load_from_cache(self) -> ParseResult | None:
@@ -343,6 +369,7 @@ class ParserService:
 
             # ====== 并行解析：收集所有独立数据源任务 ======
             tasks: list[tuple[str, Path]] = []
+            pam_tasks: list[tuple[str, Path]] = []
 
             # Oracle schema 目录
             for schema_dir in self.schema_dirs:
@@ -361,34 +388,51 @@ class ParserService:
                 if not ds_path.exists():
                     logger.info("数据源目录不存在，跳过: %s (%s)", ds_config.name, ds_path)
                     continue
-                tasks.append((ds_config.name, ds_path))
+                if ds_config.parser == "pam":
+                    pam_tasks.append((ds_config.name, ds_path))
+                else:
+                    tasks.append((ds_config.name, ds_path))
 
             logger.info(
-                "开始并行解析 %d 个数据源 (workers=%d)",
+                "开始并行解析 %d 个数据源 (workers=%d), PAM 数据源 %d 个",
                 len(tasks),
                 self._datasource_workers,
+                len(pam_tasks),
             )
 
             # ====== 数据源级并行执行 ======
+            all_futures: dict = {}
+            executor = ThreadPoolExecutor(max_workers=self._datasource_workers)
+
             if self._registry is not None and tasks:
-                with ThreadPoolExecutor(max_workers=self._datasource_workers) as executor:
-                    futures = {executor.submit(self._registry.parse_directory, path): name for name, path in tasks}
-                    for future in as_completed(futures):
-                        name = futures[future]
-                        try:
-                            output = future.result()
-                            with self._result_lock:
-                                self._merge_output_to_result(output, result)
-                            summary = output.summary()
-                            logger.info(
-                                "数据源 %s 解析完成: %d 表, %d 血缘",
-                                name,
-                                summary["tables"],
-                                summary["table_lineages"],
-                            )
-                        except Exception as e:
-                            logger.error("数据源 %s 解析失败: %s", name, e, exc_info=True)
-                            result.errors.append(f"数据源 {name}: {str(e)}")
+                for name, path in tasks:
+                    future = executor.submit(self._registry.parse_directory, path)
+                    all_futures[future] = name
+
+            if self._pam_parser is not None and pam_tasks:
+                for name, path in pam_tasks:
+                    future = executor.submit(self._pam_parser.parse_directory, path)
+                    all_futures[future] = name
+
+            if all_futures:
+                for future in as_completed(all_futures):
+                    name = all_futures[future]
+                    try:
+                        output = future.result()
+                        with self._result_lock:
+                            self._merge_output_to_result(output, result)
+                        summary = output.summary()
+                        logger.info(
+                            "数据源 %s 解析完成: %d 表, %d 血缘",
+                            name,
+                            summary["tables"],
+                            summary["table_lineages"],
+                        )
+                    except Exception as e:
+                        logger.error("数据源 %s 解析失败: %s", name, e, exc_info=True)
+                        result.errors.append(f"数据源 {name}: {str(e)}")
+
+            executor.shutdown(wait=False)
 
             result.parse_time_sec = time.time() - start_time
             self._current_result = result

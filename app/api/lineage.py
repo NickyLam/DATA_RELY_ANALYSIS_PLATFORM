@@ -15,15 +15,19 @@ from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Query
 
-from app.dependencies import LineageServiceDep, ParserServiceDep
+from app.dependencies import LineageServiceDep, ParserServiceDep, TableQueryServiceDep
 from app.models import (
     LineageQueryOptions,
     LineageQueryRequest,
     LineageQueryResponse,
     LineageResultData,
     SingleTableInfoResponse,
+    SystemListResponse,
     SystemStatsData,
     SystemStatsResponse,
+    SystemTablesResponse,
+    SystemInfo,
+    TableBrief,
     TableInfoResponse,
     TableListItem,
 )
@@ -73,6 +77,47 @@ def search_procedures(
         "success": True,
         "data": results,
     }
+
+
+# ── 系统级联查询端点 ──────────────────────────────────────────
+
+
+@router.get(
+    "/systems",
+    response_model=SystemListResponse,
+    summary="获取数据源系统列表",
+    description="返回所有启用的数据源系统及其表数量，供级联选择器使用",
+)
+def get_systems(
+    table_query_service: TableQueryServiceDep,
+) -> SystemListResponse:
+    systems = table_query_service.get_systems()
+    return SystemListResponse(
+        data=[SystemInfo(**s) for s in systems],
+    )
+
+
+@router.get(
+    "/systems/{system_name}/tables",
+    response_model=SystemTablesResponse,
+    summary="获取指定系统下的表列表",
+    description="返回指定数据源系统下的所有表，支持关键词过滤",
+)
+def get_system_tables(
+    system_name: str,
+    table_query_service: TableQueryServiceDep,
+    keyword: Annotated[str, Query(description="表名关键词过滤（可选）")] = "",
+    limit: Annotated[int, Query(ge=1, le=2000, description="返回数量限制")] = 500,
+) -> SystemTablesResponse:
+    tables = table_query_service.get_tables_by_system(
+        system_name=system_name,
+        keyword=keyword,
+    )
+    limited = tables[:limit]
+    return SystemTablesResponse(
+        data=[TableBrief(**t) for t in limited],
+        total=len(tables),
+    )
 
 
 @router.post(

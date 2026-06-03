@@ -213,58 +213,113 @@
 
                 <!-- 顶部：搜索与控制栏（横向布局） -->
                 <header class="query-header">
-                    <div class="query-inputs-row">
-                        <!-- 表名输入 -->
-                        <div class="input-group">
-                            <label class="input-label">📋 表名</label>
-                            <input
-                                type="text"
-                                id="tableInput"
-                                placeholder="如: EAST5_201_GRJCXXB"
-                                autocomplete="off"
-                                oninput="onTableInput()"
-                            >
+                    <!-- 查询模式切换 -->
+                    <div class="query-mode-toggle" style="display:flex;justify-content:center;gap:8px;margin-bottom:8px;">
+                        <button id="wizardModeBtn" class="mode-btn active" onclick="setQueryMode('wizard')" style="padding:4px 12px;border-radius:6px;font-size:12px;">🔗 级联查询</button>
+                        <button id="advancedModeBtn" class="mode-btn" onclick="setQueryMode('advanced')" style="padding:4px 12px;border-radius:6px;font-size:12px;">🔍 高级搜索</button>
+                    </div>
 
-                            <!-- 搜索结果下拉 -->
-                            <div id="searchResults" class="search-results-dropdown" style="display:none;"></div>
-                        </div>
+                    <!-- 级联查询面板（默认显示） -->
+                    <div id="wizardPanel">
+                        <div class="query-inputs-row">
+                            <!-- 系统选择 -->
+                            <div class="input-group">
+                                <label class="input-label">🏢 系统</label>
+                                <select id="systemSelect" onchange="onSystemChange()" style="width:100%;padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;background:#fff;">
+                                    <option value="">-- 加载中... --</option>
+                                </select>
+                            </div>
 
-                        <!-- 字段输入 -->
-                        <div class="input-group">
-                            <label class="input-label">✏️ 字段名</label>
-                            <input
-                                type="text"
-                                id="fieldInput"
-                                placeholder="请先选择表名"
-                                autocomplete="off"
-                                disabled
-                                oninput="onFieldInput()"
-                            >
-                            <!-- 字段下拉列表 -->
-                            <div id="fieldResults" class="field-results-dropdown" style="display:none;"></div>
-                        </div>
+                            <!-- 表选择 -->
+                            <div class="input-group">
+                                <label class="input-label">📋 表名</label>
+                                <select id="tableSelect" onchange="onTableChange()" style="width:100%;padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;background:#fff;" disabled>
+                                    <option value="">-- 请先选择系统 --</option>
+                                </select>
+                            </div>
 
-                        <!-- 查询方向选择 -->
-                        <div class="input-group mode-group">
-                            <label class="input-label">🧭 方向</label>
-                            <div class="mode-buttons-inline">
-                                <button class="mode-btn active" data-mode="upstream" onclick="setMode('upstream')">↑ 上游追溯</button>
-                                <button class="mode-btn" data-mode="downstream" onclick="setMode('downstream')">↓ 下游去向</button>
+                            <!-- 字段选择 -->
+                            <div class="input-group">
+                                <label class="input-label">✏️ 字段名</label>
+                                <select id="fieldSelect" onchange="onFieldChange()" style="width:100%;padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;background:#fff;" disabled>
+                                    <option value="">-- 请先选择表 --</option>
+                                </select>
+                            </div>
+
+                            <!-- 查询方向选择 -->
+                            <div class="input-group mode-group">
+                                <label class="input-label">🧭 方向</label>
+                                <div class="mode-buttons-inline">
+                                    <button class="mode-btn active" data-mode="upstream" onclick="setMode('upstream')">↑ 上游追溯</button>
+                                    <button class="mode-btn" data-mode="downstream" onclick="setMode('downstream')">↓ 下游去向</button>
+                                </div>
+                            </div>
+
+                            <!-- 查询按钮 -->
+                            <div class="input-group btn-group">
+                                <label class="input-label">&nbsp;</label>
+                                <button id="cascadingQueryBtn" class="btn btn-primary query-btn" onclick="executeCascadingQuery()" disabled>
+                                    🔍 开始查询
+                                </button>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- 查询按钮 -->
-                        <div class="input-group btn-group">
-                            <label class="input-label">&nbsp;</label>
-                            <button id="queryBtn" class="btn btn-primary query-btn" onclick="executeFieldQuery()" disabled>
-                                🔍 开始查询
-                            </button>
+                    <!-- 高级搜索面板（默认隐藏） -->
+                    <div id="advancedPanel" style="display:none;">
+                        <div class="query-inputs-row">
+                            <!-- 表名输入 -->
+                            <div class="input-group">
+                                <label class="input-label">📋 表名</label>
+                                <input
+                                    type="text"
+                                    id="tableInput"
+                                    placeholder="如: EAST5_201_GRJCXXB"
+                                    autocomplete="off"
+                                    oninput="onTableInput()"
+                                >
+
+                                <!-- 搜索结果下拉 -->
+                                <div id="searchResults" class="search-results-dropdown" style="display:none;"></div>
+                            </div>
+
+                            <!-- 字段输入 -->
+                            <div class="input-group">
+                                <label class="input-label">✏️ 字段名</label>
+                                <input
+                                    type="text"
+                                    id="fieldInput"
+                                    placeholder="请先选择表名"
+                                    autocomplete="off"
+                                    disabled
+                                    oninput="onFieldInput()"
+                                >
+                                <!-- 字段下拉列表 -->
+                                <div id="fieldResults" class="field-results-dropdown" style="display:none;"></div>
+                            </div>
+
+                            <!-- 查询方向选择 -->
+                            <div class="input-group mode-group">
+                                <label class="input-label">🧭 方向</label>
+                                <div class="mode-buttons-inline">
+                                    <button class="mode-btn active" data-mode="upstream" onclick="setMode('upstream')">↑ 上游追溯</button>
+                                    <button class="mode-btn" data-mode="downstream" onclick="setMode('downstream')">↓ 下游去向</button>
+                                </div>
+                            </div>
+
+                            <!-- 查询按钮 -->
+                            <div class="input-group btn-group">
+                                <label class="input-label">&nbsp;</label>
+                                <button id="queryBtn" class="btn btn-primary query-btn" onclick="executeFieldQuery()" disabled>
+                                    🔍 开始查询
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 提示信息 -->
                     <p style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">
-                        💡 输入表名和字段名后点击查询，默认展示全部层级血缘关系
+                        💡 依次选择系统、表名、字段名后点击查询，默认展示全部层级血缘关系
                     </p>
                 </header>
 
@@ -370,6 +425,7 @@
     <script src="/static/js/parse-tab.js?v=6e355c7a"></script>
     <!-- 展示层模块化拆分 -->
     <script src="/static/js/detail-panel.js?v=p5-node-caliber"></script>
+    <script src="/static/js/cascading-wizard.js?v=cascade-3level"></script>
     <script src="/static/js/search-panel.js?v=a7c0dbbd"></script>
     <script src="/static/js/lineage-graph.js?v=p3-node-caliber"></script>
     <!-- 指标血缘模块 -->

@@ -144,7 +144,8 @@ class WarehouseSQLParser:
         )
 
         # 将 DDL 表结构注入 DML 解析器（辅助字段映射）
-        self._dml_parser = DMLParser(self._schema_resolver, self._temp_filter, ddl_tables)
+        # ★ 使用局部变量避免并发场景下 self._dml_parser 被覆盖导致竞态条件
+        local_dml_parser = DMLParser(self._schema_resolver, self._temp_filter, ddl_tables)
 
         # Phase 2: 解析 DML
         # ★ 优化：DML 目录下的文件如果 DML 解析无产出，回退尝试 DDL
@@ -154,7 +155,7 @@ class WarehouseSQLParser:
         ddl_fallback_count = 0
         for dml_dir in dir_path.rglob("dml"):
             if dml_dir.is_dir():
-                dml_output = self._dml_parser.parse_directory(dml_dir)
+                dml_output = local_dml_parser.parse_directory(dml_dir)
                 total_output.merge(dml_output)
                 dml_count += 1
 

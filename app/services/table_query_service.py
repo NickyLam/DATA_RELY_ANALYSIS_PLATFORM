@@ -183,6 +183,10 @@ class TableQueryService:
                 continue
             for schema_dir in ds_cfg.schema_dirs:
                 schema_to_system[schema_dir.upper()] = ds_cfg.name
+            # 非 Oracle 解析器（warehouse/pam）的表通常以数据源名作为 schema
+            # 自动注册数据源名 → 系统映射，确保 PAM 等系统的表能正确归属
+            if ds_cfg.parser != "oracle":
+                schema_to_system[ds_cfg.name.upper()] = ds_cfg.name
             if ds_cfg.parser == "oracle":
                 oracle_systems.append(ds_cfg.name)
 
@@ -302,6 +306,64 @@ class TableQueryService:
             )
 
         return result
+
+    def get_tables_by_system(
+        self,
+        system_name: str,
+        keyword: str = "",
+    ) -> list[dict]:
+        """返回指定系统下所有表（跨 schema 聚合）。
+
+        用于三级级联查询（系统→表→字段），不区分 schema。
+        """
+        from app.config import config
+
+        data = self._parser.get_current_data()
+        all_tables = data.get("tables", []) if data else []
+
+        ds_cfg = next((c for c in config.datasource_configs if c.name == system_name), None)
+        if not ds_cfg:
+            return []
+
+        schema_to_system = self._build_schema_to_system()
+
+        keyword_upper = keyword.upper() if keyword else ""
+
+        tables = []
+        for t in all_tables:
+            full_name = t.get("full_name", "")
+            if not full_name:
+                continue
+
+            # 确定该表是否属于该系统
+            if "." in full_name:
+                table_schema = full_name.split(".")[0].upper()
+                mapped_system = schema_to_system.get(table_schema)
+                if mapped_system != system_name:
+                    continue
+            else:
+                # 无 schema 的表归属数仓类系统
+                if ds_cfg.parser == "oracle":
+                    continue
+
+            short_name = full_name.split(".")[-1] if "." in full_name else full_name
+
+            # 关键词过滤
+            if keyword_upper and keyword_upper not in full_name.upper() and keyword_upper not in short_name.upper():
+                continue
+
+            columns = [c.get("name", "") for c in t.get("columns", []) if c.get("name")]
+
+            tables.append(
+                {
+                    "full_name": full_name,
+                    "short_name": short_name,
+                    "layer": self._detect_layer(full_name),
+                    "field_count": len(columns),
+                }
+            )
+
+        return tables
 
     def get_tables_by_schema(
         self,

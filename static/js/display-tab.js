@@ -69,6 +69,11 @@ function initDisplayTab() {
     }
 
     setupSearchListeners();
+
+    // 初始化级联查询向导
+    if (typeof window.initCascadingWizard === 'function') {
+        window.initCascadingWizard();
+    }
 }
 
 function setupSearchListeners() {

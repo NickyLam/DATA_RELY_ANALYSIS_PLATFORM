@@ -52,7 +52,7 @@ sources:
     display_name: "绩效考核系统"
     path: PAM
     enabled: true
-    parser: warehouse
+    parser: pam
     file_extensions: [".sql"]
 
   - name: ccr

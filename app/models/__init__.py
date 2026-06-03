@@ -390,3 +390,38 @@ class IndicatorStatsResponse(BaseResponse):
 
 class CaliberSearchResponse(BaseResponse):
     data: list[dict[str, Any]] = Field(default_factory=list)
+
+
+# ── 系统级联查询模型 ──────────────────────────────────────────
+
+
+class SystemInfo(BaseModel):
+    """数据源系统信息"""
+
+    name: str
+    display_name: str
+    table_count: int = 0
+
+
+class TableBrief(BaseModel):
+    """表简要信息（级联选择用）"""
+
+    full_name: str
+    short_name: str = ""
+    layer: str = ""
+    field_count: int = 0
+
+
+class SystemListResponse(BaseModel):
+    """系统列表响应"""
+
+    success: bool = True
+    data: list[SystemInfo] = []
+
+
+class SystemTablesResponse(BaseModel):
+    """系统下表列表响应"""
+
+    success: bool = True
+    data: list[TableBrief] = []
+    total: int = 0

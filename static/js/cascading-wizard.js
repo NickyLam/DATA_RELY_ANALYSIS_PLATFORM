@@ -1,6 +1,6 @@
 /**
- * 级联查询向导模块
- * 系统→Schema→表→字段 级联选择器 + 高级搜索切换
+ * 级联查询模块（三级：系统→表→字段）
+ * 替代原有的两步搜索（表名搜索→字段选择），强制逐层递进，三者选完才可查询
  *
  * 核心约束：每级选择后自动加载下一级，切换时清空下游
  */
@@ -15,9 +15,10 @@
 
     // 缓存
     let _systemsCache = null;     // 系统列表缓存
-    let _schemasCache = {};       // system → schema 列表缓存
-    let _tablesCache = {};        // "system:schema" → 表列表缓存
+    let _tablesCache = {};        // system → 表列表缓存
     let _currentFields = [];      // 当前选中表的字段列表
+    let _currentSystem = '';      // 当前选中系统
+    let _currentTableFullName = ''; // 当前选中表全名
     let _queryMode = 'wizard';   // 'wizard' | 'advanced'
 
     // ============================================
@@ -33,7 +34,7 @@
         if (!select) return;
 
         try {
-            const response = await apiRequest('/api/v1/systems');
+            const response = await apiRequest('/api/systems');
             const systems = response.data || [];
             _systemsCache = systems;
 
@@ -49,85 +50,55 @@
     }
 
     // ============================================
-    // 系统→Schema 级联
+    // 系统→表 级联
     // ============================================
     window.onSystemChange = async function() {
         const system = document.getElementById('systemSelect').value;
 
         // 清空下游
-        resetCascadeFrom('schema');
+        resetCascadeFrom('table');
 
         if (!system) return;
 
-        const schemaSelect = document.getElementById('schemaSelect');
-        schemaSelect.disabled = true;
-        schemaSelect.innerHTML = '<option value="">-- 加载中... --</option>';
-
-        try {
-            // 检查缓存
-            if (!_schemasCache[system]) {
-                const response = await apiRequest(`/api/v1/systems/${encodeURIComponent(system)}/schemas`);
-                _schemasCache[system] = response.data || [];
-            }
-
-            const schemas = _schemasCache[system];
-            let html = '<option value="">-- 请选择Schema --</option>';
-
-            schemas.forEach(s => {
-                const label = s.schema_name === '__unclassified__'
-                    ? '📋 未分类'
-                    : _esc(s.schema_name);
-                html += `<option value="${_esc(s.schema_name)}">${label} (${s.table_count} 表)</option>`;
-            });
-
-            schemaSelect.innerHTML = html;
-            schemaSelect.disabled = false;
-        } catch (error) {
-            console.error('加载Schema列表失败:', error);
-            schemaSelect.innerHTML = '<option value="">-- 加载失败 --</option>';
-        }
-    };
-
-    // ============================================
-    // Schema→表 级联
-    // ============================================
-    window.onSchemaChange = async function() {
-        const system = document.getElementById('systemSelect').value;
-        const schema = document.getElementById('schemaSelect').value;
-
-        // 清空下游
-        resetCascadeFrom('table');
-
-        if (!system || !schema) return;
+        _currentSystem = system;
 
         const tableSelect = document.getElementById('tableSelect');
         tableSelect.disabled = true;
         tableSelect.innerHTML = '<option value="">-- 加载中... --</option>';
 
         try {
-            const cacheKey = `${system}:${schema}`;
-            if (!_tablesCache[cacheKey]) {
-                const response = await apiRequest(
-                    `/api/v1/systems/${encodeURIComponent(system)}/schemas/${encodeURIComponent(schema)}/tables`
-                );
-                _tablesCache[cacheKey] = response.data || [];
+            // 检查缓存
+            if (!_tablesCache[system]) {
+                const response = await apiRequest(`/api/systems/${encodeURIComponent(system)}/tables`);
+                _tablesCache[system] = response.data || [];
             }
 
-            const tables = _tablesCache[cacheKey];
-            let html = '<option value="">-- 请选择表 --</option>';
-
-            tables.forEach(t => {
-                const layerTag = t.layer ? ` [${_esc(t.layer)}]` : '';
-                html += `<option value="${_esc(t.full_name)}" data-short="${_esc(t.short_name)}">${_esc(t.short_name)}${layerTag} (${t.field_count} 字段)</option>`;
-            });
-
-            tableSelect.innerHTML = html;
+            const tables = _tablesCache[system];
+            populateTableSelect(tables);
             tableSelect.disabled = false;
         } catch (error) {
             console.error('加载表列表失败:', error);
             tableSelect.innerHTML = '<option value="">-- 加载失败 --</option>';
         }
     };
+
+    function populateTableSelect(tables) {
+        const tableSelect = document.getElementById('tableSelect');
+        let html = '<option value="">-- 请选择表 --</option>';
+
+        const display = tables.slice(0, 200);
+        display.forEach(t => {
+            const layerTag = t.layer ? ` [${_esc(t.layer)}]` : '';
+            const schemaPrefix = t.full_name.includes('.') ? `<span style="color:#6366f1">${_esc(t.full_name.split('.')[0])}.</span>` : '';
+            html += `<option value="${_esc(t.full_name)}" data-short="${_esc(t.short_name)}">${schemaPrefix}${_esc(t.short_name)}${layerTag} (${t.field_count} 字段)</option>`;
+        });
+
+        if (tables.length > 200) {
+            html += `<option value="" disabled>... 共 ${tables.length} 表，请使用高级搜索模式过滤</option>`;
+        }
+
+        tableSelect.innerHTML = html;
+    }
 
     // ============================================
     // 表→字段 级联
@@ -140,20 +111,22 @@
 
         if (!tableFullName) return;
 
+        _currentTableFullName = tableFullName;
+
         const fieldSelect = document.getElementById('fieldSelect');
         fieldSelect.disabled = true;
         fieldSelect.innerHTML = '<option value="">-- 加载中... --</option>';
 
         try {
             // 使用现有字段获取 API
-            const response = await apiRequest(`/api/v1/tables/${encodeURIComponent(tableFullName)}/fields`);
+            const response = await apiRequest(`/api/tables/${encodeURIComponent(tableFullName)}/fields`);
             const fields = response.data || [];
             _currentFields = fields;
 
             let html = '<option value="">-- 请选择字段 --</option>';
 
             if (fields.length === 0) {
-                html = '<option value="">-- 无字段数据 --</option>';
+                html = '<option value="">-- 无字段数据，可手动输入 --</option>';
             } else {
                 fields.forEach(f => {
                     html += `<option value="${_esc(f)}">${_esc(f)}</option>`;
@@ -167,7 +140,7 @@
             // 尝试通过搜索接口获取字段
             try {
                 const shortName = tableFullName.split('.').pop();
-                const searchResp = await apiRequest(`/api/v1/tables?keyword=${encodeURIComponent(shortName)}&limit=5`);
+                const searchResp = await apiRequest(`/api/tables?keyword=${encodeURIComponent(shortName)}&limit=5`);
                 const tables = searchResp.data || [];
                 const matched = tables.find(t => t.full_name === tableFullName);
                 const columns = matched?.columns || [];
@@ -225,7 +198,7 @@
                 },
             };
 
-            const response = await apiRequest('/api/v1/lineage/query', {
+            const response = await apiRequest('/api/lineage/query', {
                 method: 'POST',
                 body: JSON.stringify(requestBody),
             });
@@ -285,8 +258,8 @@
     };
 
     function prefillAdvancedFromWizard() {
-        const tableFullName = document.getElementById('tableSelect').value;
-        const fieldName = document.getElementById('fieldSelect').value;
+        const tableFullName = document.getElementById('tableSelect')?.value || '';
+        const fieldName = document.getElementById('fieldSelect')?.value || '';
 
         const tableInput = document.getElementById('tableInput');
         const fieldInput = document.getElementById('fieldInput');
@@ -310,14 +283,12 @@
     // ============================================
     function resetCascadeFrom(level) {
         const levels = {
-            schema: ['schemaSelect', 'tableSelect', 'fieldSelect'],
             table: ['tableSelect', 'fieldSelect'],
             field: ['fieldSelect'],
         };
 
         const placeholders = {
-            schemaSelect: ['-- 请先选择系统 --', true],
-            tableSelect: ['-- 请先选择Schema --', true],
+            tableSelect: ['-- 请先选择系统 --', true],
             fieldSelect: ['-- 请先选择表 --', true],
         };
 
@@ -336,6 +307,9 @@
         if (queryBtn) queryBtn.disabled = true;
 
         _currentFields = [];
+        if (level === 'table') {
+            _currentTableFullName = '';
+        }
     }
 
     // ============================================
@@ -369,16 +343,27 @@
     }
 
     // ============================================
+    // 暴露状态访问接口
+    // ============================================
+    window.getCascadingWizardState = function() {
+        return {
+            currentSystem: _currentSystem,
+            currentTableFullName: _currentTableFullName,
+            currentFields: _currentFields,
+            queryMode: _queryMode,
+        };
+    };
+
+    // ============================================
     // 页面加载时初始化
     // ============================================
-    // 使用 DOMContentLoaded + 重试机制替代任意 setTimeout
     let _initRetries = 0;
     const MAX_INIT_RETRIES = 5;
 
     async function _initWithRetry() {
         try {
             await loadSystems();
-            _initRetries = 0; // 成功则重置
+            _initRetries = 0;
         } catch (error) {
             _initRetries++;
             if (_initRetries < MAX_INIT_RETRIES) {

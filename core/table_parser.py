@@ -3,6 +3,8 @@ Oracle 表结构解析器
 解析 .tab 文件中的 CREATE TABLE 语句，提取表名、字段、主键、分区等信息
 """
 
+from __future__ import annotations
+
 import logging
 import os
 import re
