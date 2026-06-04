@@ -398,16 +398,16 @@ class UnifiedTracer:
 
         matched: list[dict] = []
         for r in candidates:
-            r_src = CaliberTracer._get_source_table(r).upper()
+            r_src = r.get("source_table", "").upper()
             r_src_short = r_src.split(".")[-1] if "." in r_src else r_src
-            r_src_col = CaliberTracer._get_source_column(r).upper()
+            r_src_col = r.get("source_column", "").upper()
 
             if r_src_short == src_short and r_src_col == src_col:
                 matched.append(r)
 
         if not matched and src_short:
             for r in candidates:
-                r_src_col = CaliberTracer._get_source_column(r).upper()
+                r_src_col = r.get("source_column", "").upper()
                 if r_src_col == src_col:
                     matched.append(r)
 
