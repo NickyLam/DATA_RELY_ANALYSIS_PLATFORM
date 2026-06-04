@@ -296,7 +296,7 @@ async function executeFieldQuery() {
             depth: AppState.queryDepth,
             mode: AppState.queryMode,
             options: {
-                include_fields: true,
+                include_fields: false,
                 limit: 100,
                 use_cache: true,
             },

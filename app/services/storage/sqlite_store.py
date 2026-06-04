@@ -440,3 +440,53 @@ class SQLiteResultStore:
             except (json.JSONDecodeError, TypeError) as e:
                 logger.warning("解析 %s raw_json 失败: %s", table_name, e)
         return result
+
+    # ── 按条件查询接口（T6：利用 SQLite 索引，服务懒加载场景）────
+
+    def get_table_by_full(self, full_name: str) -> dict | None:
+        """按完整表名获取表 dict（使用 PRIMARY KEY 索引）。"""
+        conn = self._conn_mgr.get_connection()
+        row = conn.execute(
+            "SELECT raw_json FROM tables WHERE full_name = ?", (full_name,)
+        ).fetchone()
+        if row is None:
+            return None
+        try:
+            return json.loads(row["raw_json"])
+        except (json.JSONDecodeError, TypeError) as e:
+            logger.warning("get_table_by_full raw_json 解析失败: %s", e)
+            return None
+
+    def get_field_mappings_by_target(self, table: str, column: str) -> list[dict]:
+        """按 (target_table, target_column) 获取字段映射列表（使用 idx_field_mappings_target 索引）。"""
+        conn = self._conn_mgr.get_connection()
+        rows = conn.execute(
+            "SELECT raw_json FROM field_mappings WHERE target_table = ? AND target_column = ?",
+            (table, column),
+        ).fetchall()
+        return [json.loads(r["raw_json"]) for r in rows if r["raw_json"]]
+
+    def get_field_mappings_by_source(self, table: str, column: str) -> list[dict]:
+        """按 (source_table, source_column) 获取字段映射列表（使用 idx_field_mappings_source 索引）。"""
+        conn = self._conn_mgr.get_connection()
+        rows = conn.execute(
+            "SELECT raw_json FROM field_mappings WHERE source_table = ? AND source_column = ?",
+            (table, column),
+        ).fetchall()
+        return [json.loads(r["raw_json"]) for r in rows if r["raw_json"]]
+
+    def get_table_lineages_by_target(self, table: str) -> list[dict]:
+        """获取指定表的上游血缘（使用 idx_table_lineages_target 索引）。"""
+        conn = self._conn_mgr.get_connection()
+        rows = conn.execute(
+            "SELECT raw_json FROM table_lineages WHERE target_table = ?", (table,)
+        ).fetchall()
+        return [json.loads(r["raw_json"]) for r in rows if r["raw_json"]]
+
+    def get_table_lineages_by_source(self, table: str) -> list[dict]:
+        """获取指定表的下游血缘（使用 idx_table_lineages_source 索引）。"""
+        conn = self._conn_mgr.get_connection()
+        rows = conn.execute(
+            "SELECT raw_json FROM table_lineages WHERE source_table = ?", (table,)
+        ).fetchall()
+        return [json.loads(r["raw_json"]) for r in rows if r["raw_json"]]

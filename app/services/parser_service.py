@@ -212,6 +212,7 @@ class ParserService:
         self._pam_parser: PamParser | None = None
         self._layer_detector: LayerDetector | None = None
         self._current_result: ParseResult | None = None
+        self._current_data_cache: dict[str, Any] | None = None  # 缓存 to_serializable() 结果
         self._cache_store = CacheStore(self.output_dir, config=config)
         self._tracer_factory = TracerFactory()
         self._result_lock = threading.Lock()
@@ -348,6 +349,8 @@ class ParserService:
         result.parse_time_sec = 0.0
 
         self._current_result = result
+        # 直接缓存已反序列化的 data，避免后续 get_current_data() 重复 to_serializable()
+        self._current_data_cache = data
 
         repository = self._cache_store.get_repository()
         repository.update(data)
@@ -436,6 +439,7 @@ class ParserService:
 
             result.parse_time_sec = time.time() - start_time
             self._current_result = result
+            self._current_data_cache = None  # 由 _save_result_to_cache 填充
 
             self._save_result_to_cache(result)
             self._event_bus.publish(EventType.DATA_CHANGED)
@@ -520,9 +524,11 @@ class ParserService:
                 if progress_callback:
                     progress_callback(96, "", "合并增量数据（去重更新中）...")
                 self._current_result.merge(result)
+                self._current_data_cache = None  # 数据变更，清除缓存
                 self._save_result_to_cache(self._current_result)
             else:
                 self._current_result = result
+                self._current_data_cache = None
                 self._save_result_to_cache(result)
 
             self._event_bus.publish(EventType.DATA_CHANGED)
@@ -551,15 +557,22 @@ class ParserService:
         return self._cache_store.get_repository()
 
     def get_current_data(self) -> dict[str, Any] | None:
+        # 优先返回缓存的 data dict，避免重复全量 to_serializable()
+        if self._current_data_cache is not None:
+            return self._current_data_cache
         if self._current_result is not None:
-            return self._current_result.to_serializable()
+            # 惰性构建并缓存
+            self._current_data_cache = self._current_result.to_serializable()
+            return self._current_data_cache
         repo = self._get_repository()
         cached = repo.get_raw_data()
         if cached:
+            self._current_data_cache = cached
             return cached
         # Fallback: 从存储后端加载（SQLite 或 legacy）
         data = self._cache_store.load_from_cache()
         if data:
+            self._current_data_cache = data
             return data
         return None
 
@@ -662,6 +675,7 @@ class ParserService:
             return None
 
     def clear_cache(self) -> None:
+        self._current_data_cache = None
         self._cache_store.clear_cache()
         self._tracer_factory.invalidate()
         self._event_bus.publish(EventType.CACHE_INVALIDATED)
@@ -746,6 +760,7 @@ class ParserService:
                 },
                 **serializable,
             }
+            self._current_data_cache = data  # 同步填充 data cache，避免后续重复 to_serializable()
             self._cache_store.save_to_cache(data)
         except Exception as e:
             logger.error("保存缓存数据失败: %s", e)

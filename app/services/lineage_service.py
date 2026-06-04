@@ -11,6 +11,7 @@ from typing import Any
 
 from app.repository import search_table_dicts
 from app.services.event_bus import EventType, get_event_bus
+from app.services.lineage_query_index import LineageQueryIndex
 from app.services.parser_service import ParserService
 from app.services.table_lineage_tracer import TableLineageTracer
 from app.utils.cache_manager import CacheManager
@@ -32,6 +33,7 @@ class LineageService:
 
         self._resolver = TableNameResolver()
         self._table_tracer = TableLineageTracer(self._resolver)
+        self._index = LineageQueryIndex()  # 预构建查询索引，避免每次查询重建全量 map/set
         self._transitive_cache: dict[tuple, set] = {}
         self._last_data_mtime: float = 0
 
@@ -53,6 +55,7 @@ class LineageService:
 
         self.cache.build_index(tables, procedures)
         self._table_tracer.build_graph(data.get("table_lineages", []))
+        self._index.build(data)  # 构建查询索引
         logger.info("血缘服务索引构建完成")
 
     def _on_data_changed(self, **kwargs) -> None:
@@ -75,35 +78,46 @@ class LineageService:
         use_cache: bool = True,
     ) -> dict[str, Any]:
         start_time = time.perf_counter()
+        t_refresh = start_time
+
         self._check_and_refresh_cache()
+        t_after_refresh = time.perf_counter()
 
         cache_key = None
         if use_cache:
-            cache_key = self._generate_cache_key(table, field, depth, mode)
+            cache_key = self._generate_cache_key(table, field, depth, mode, include_fields, limit)
             cached = self.cache.get(cache_key)
             if cached:
-                cached["query_time_ms"] = round((time.perf_counter() - start_time) * 1000, 2)
-                cached["cache_hit"] = True
-                return cached
+                # 返回副本，避免修改缓存对象本身
+                result_copy = dict(cached)
+                result_copy["query_time_ms"] = round((time.perf_counter() - start_time) * 1000, 2)
+                result_copy["cache_hit"] = True
+                return result_copy
 
+        t_cache_check = time.perf_counter()
         data = self.parser.get_current_data()
         if not data:
             return self._empty_result(start_time)
 
+        t_get_data = time.perf_counter()
         table_upper = table.upper().strip()
         field_upper = field.upper().strip() if field else None
-        resolved_table = self._table_tracer.resolve_table_name(table_upper, data)
 
-        if not self._validate_schema(table_upper, resolved_table, data):
+        # 使用预构建索引解析表名，替代每次扫描全量 tables
+        adjacency_keys = set(self._table_tracer.adjacency_up.keys()) | set(self._table_tracer.adjacency_down.keys())
+        resolved_table = self._index.resolve_table_name(table_upper, adjacency_keys) if self._index.is_built else self._table_tracer.resolve_table_name(table_upper, data)
+
+        if not self._validate_schema(table_upper, resolved_table):
             return self._empty_result(start_time)
 
+        t_resolve = time.perf_counter()
         if field_upper:
             result = self._query_field_lineage(resolved_table, field_upper, depth, mode, data, include_fields, limit)
         else:
             result = self._query_table_lineage(resolved_table, depth, mode, data, include_fields, field_upper, limit)
 
         if result.get("nodes_count", 0) == 0 and "." in resolved_table:
-            alt_table = self._find_alternate_schema_table(resolved_table, data)
+            alt_table = self._find_alternate_schema_table(resolved_table)
             if alt_table:
                 logger.info("同名表重定向: %s → %s", resolved_table, alt_table)
                 if field_upper:
@@ -114,12 +128,27 @@ class LineageService:
                     result["redirected_from"] = resolved_table
                     result["resolved_table"] = alt_table
 
-        result["query_time_ms"] = round((time.perf_counter() - start_time) * 1000, 2)
+        t_assemble = time.perf_counter()
+        total_ms = round((t_assemble - start_time) * 1000, 2)
+        result["query_time_ms"] = total_ms
         if cache_key:
             self.cache.set(cache_key, result)
+
+        # 分段耗时日志：慢查询（>2s）使用 info，否则 debug
+        log_fn = logger.info if total_ms > 2000 else logger.debug
+        log_fn(
+            "query_lineage 分段耗时: table=%s field=%s total=%.1fms "
+            "[refresh=%.1f cache_check=%.1f get_data=%.1f resolve=%.1f trace+assemble=%.1f]",
+            table, field or "", total_ms,
+            (t_after_refresh - t_refresh) * 1000,
+            (t_cache_check - t_after_refresh) * 1000,
+            (t_get_data - t_cache_check) * 1000,
+            (t_resolve - t_get_data) * 1000,
+            (t_assemble - t_resolve) * 1000,
+        )
         return result
 
-    def _find_alternate_schema_table(self, resolved_table: str, data: dict) -> str | None:
+    def _find_alternate_schema_table(self, resolved_table: str) -> str | None:
         if "." not in resolved_table:
             return None
         schema, short_name = resolved_table.rsplit(".", 1)
@@ -133,12 +162,12 @@ class LineageService:
             return None
 
         alt_full = f"{alt_schema}.{short_name}"
-        actual_tables = {t.get("full_name", "").upper() for t in data.get("tables", [])}
-        if alt_full.upper() in actual_tables:
+        # 使用预构建索引，替代每次扫描全量 tables
+        if self._index.is_built and self._index.has_table(alt_full):
             return alt_full
         return None
 
-    def _validate_schema(self, table_upper: str, resolved_table: str, data: dict) -> bool:
+    def _validate_schema(self, table_upper: str, resolved_table: str) -> bool:
         if "." in table_upper:
             parts = table_upper.split(".")
             if len(parts) == 2:
@@ -150,7 +179,7 @@ class LineageService:
                         table_short,
                     )
                     return True
-            actual_tables = {t.get("full_name", "").upper() for t in data.get("tables", [])}
+            actual_tables = self._index.table_full_names if self._index.is_built else set()
             if resolved_table.upper() not in actual_tables:
                 logger.warning(
                     "显式 schema 表不存在: 输入=%s, 解析=%s",
@@ -234,6 +263,7 @@ class LineageService:
                 all_field_mappings=data.get("field_mappings", []),
                 max_depth=depth,
                 direction="upstream",
+                query_index=self._index,
             )
             all_nodes.update(up_nodes)
             all_edges.extend(up_edges)
@@ -245,6 +275,7 @@ class LineageService:
                 all_field_mappings=data.get("field_mappings", []),
                 max_depth=depth,
                 direction="downstream",
+                query_index=self._index,
             )
             all_nodes.update(down_nodes)
             all_edges.extend(down_edges)
@@ -260,7 +291,7 @@ class LineageService:
     ) -> None:
         logger.info("字段级血缘节点过少(%d个)，补充1层直接表级血缘", len(all_nodes))
         if mode in ("upstream", "both"):
-            up_nodes_tbl, up_edges_tbl = self._table_tracer.trace(table, data, max_depth=1, direction="up")
+            up_nodes_tbl, up_edges_tbl = self._table_tracer.trace(table, data, max_depth=1, direction="up", query_index=self._index)
             for node in up_nodes_tbl:
                 if node not in all_nodes:
                     all_nodes.add(node)
@@ -268,7 +299,7 @@ class LineageService:
                 if edge not in all_edges and edge["source_table"] in all_nodes and edge["target_table"] in all_nodes:
                     all_edges.append(edge)
         if mode in ("downstream", "both"):
-            down_nodes_tbl, down_edges_tbl = self._table_tracer.trace(table, data, max_depth=1, direction="down")
+            down_nodes_tbl, down_edges_tbl = self._table_tracer.trace(table, data, max_depth=1, direction="down", query_index=self._index)
             for node in down_nodes_tbl:
                 if node not in all_nodes:
                     all_nodes.add(node)
@@ -288,6 +319,8 @@ class LineageService:
 
         只补充与已有映射具有相同 (src_bare, src_col, tgt_bare, tgt_col) 的映射，
         不引入图节点范围外的新映射。
+
+        使用预构建索引（field_mappings_by_bare_pair）替代全量扫描。
         """
         existing_keys_4: set[tuple] = set()
         for m in all_mappings:
@@ -307,12 +340,26 @@ class LineageService:
             bare = n.split(".")[-1].upper() if "." in n else n.upper()
             node_full_by_bare.setdefault(bare, n)
 
-        candidates = self._filter_field_mappings(
-            data.get("field_mappings", []),
-            all_nodes,
-            target_table=table,
-            target_field=field,
-        )
+        # 使用索引按 bare_pair 精确查找候选映射，替代扫描全量 field_mappings
+        candidates: list[dict] = []
+        if self._index.is_built:
+            for (src_bare, src_col, tgt_bare, tgt_col) in existing_keys_4:
+                index_hits = self._index.get_field_mappings_by_bare_pair(src_bare, src_col, tgt_bare, tgt_col)
+                for fm in index_hits:
+                    # 只保留双端都在节点集合中的映射
+                    src_tbl = fm.get("source_table", "").upper()
+                    tgt_tbl = fm.get("target_table", "").upper()
+                    if self._index._node_in_set(src_tbl, all_nodes) and self._index._node_in_set(tgt_tbl, all_nodes):
+                        candidates.append(fm)
+        else:
+            # Fallback: 全量扫描（仅在索引未构建时使用）
+            logger.debug("LineageQueryIndex 未构建，回退到全量扫描 _supplement_field_mappings")
+            candidates = self._filter_field_mappings(
+                data.get("field_mappings", []),
+                all_nodes,
+                target_table=table,
+                target_field=field,
+            )
 
         seen_dedup = {self._field_mapping_dedup_key(m) for m in all_mappings}
         for fm in candidates:
@@ -350,11 +397,11 @@ class LineageService:
     ) -> dict[str, Any]:
         all_nodes, all_edges = set(), []
         if mode in ("upstream", "both"):
-            up_nodes, up_edges = self._table_tracer.trace(table, data, depth, direction="up")
+            up_nodes, up_edges = self._table_tracer.trace(table, data, depth, direction="up", query_index=self._index)
             all_nodes.update(up_nodes)
             all_edges.extend(up_edges)
         if mode in ("downstream", "both"):
-            down_nodes, down_edges = self._table_tracer.trace(table, data, depth, direction="down")
+            down_nodes, down_edges = self._table_tracer.trace(table, data, depth, direction="down", query_index=self._index)
             all_nodes.update(down_nodes)
             all_edges.extend(down_edges)
         all_mappings = []
@@ -633,6 +680,7 @@ class LineageService:
         all_field_mappings: list[dict],
         max_depth: int = 5,
         direction: str = "both",
+        query_index: LineageQueryIndex | None = None,
     ) -> tuple[set, list, list]:
         """
         基于字段映射递归追溯血缘关系（核心算法 - 增强版）
@@ -653,7 +701,13 @@ class LineageService:
             tuple[set, list, list]: (节点集合, 边列表, 字段映射列表)
         """
         # 将短名解析为完整表名，确保节点和边中的表名统一
-        resolved_target = TableNameResolver.resolve_from_mappings(target_table, all_field_mappings)
+        _use_index = query_index is not None and query_index.is_built
+        if _use_index:
+            resolved_target = query_index.resolve_table_name(target_table)
+            if "." not in resolved_target.upper():
+                resolved_target = resolved_target.upper()
+        else:
+            resolved_target = TableNameResolver.resolve_from_mappings(target_table, all_field_mappings)
         visited_nodes = {resolved_target}
         edges = []
         collected_mappings = []
@@ -667,21 +721,26 @@ class LineageService:
         # 构建映射索引：加速查询
         # target_map: {(target_table, target_column): [mappings]}
         # source_map: {(source_table, source_column): [mappings]}
-        target_map = {}
-        source_map = {}
+        if _use_index:
+            # 使用预构建索引，避免 O(N) 全量扫描
+            target_map = query_index.field_mappings_by_target
+            source_map = query_index.field_mappings_by_source
+        else:
+            target_map = {}
+            source_map = {}
 
-        for fm in all_field_mappings:
-            tgt_key = (
-                fm.get("target_table", "").upper(),
-                fm.get("target_column", "").upper(),
-            )
-            src_key = (
-                fm.get("source_table", "").upper(),
-                fm.get("source_column", "").upper(),
-            )
+            for fm in all_field_mappings:
+                tgt_key = (
+                    fm.get("target_table", "").upper(),
+                    fm.get("target_column", "").upper(),
+                )
+                src_key = (
+                    fm.get("source_table", "").upper(),
+                    fm.get("source_column", "").upper(),
+                )
 
-            target_map.setdefault(tgt_key, []).append(fm)
-            source_map.setdefault(src_key, []).append(fm)
+                target_map.setdefault(tgt_key, []).append(fm)
+                source_map.setdefault(src_key, []).append(fm)
 
         # 方案C：基于数据流向过滤
         # 核心思想：只保留与查询目标表在同一数据流中的映射
@@ -693,12 +752,25 @@ class LineageService:
         # 预计算：构建表级血缘图，用于判断数据流方向
         # table_to_upstream: {table: set(upstream_tables)}
         # 即：对于每个表，记录哪些表是它的上游（数据从这些表流向它）
-        table_to_upstream = {}
-        for fm in all_field_mappings:
-            src_tbl = fm.get("source_table", "").upper()
-            tgt_tbl = fm.get("target_table", "").upper()
-            if src_tbl and tgt_tbl:
-                table_to_upstream.setdefault(tgt_tbl, set()).add(src_tbl)
+        if _use_index:
+            # 延迟构建：按需从 table_lineages_by_target 获取上游表
+            _upstream_cache: dict[str, set[str]] = {}
+
+            def _get_upstream_tables(tbl: str) -> set[str]:
+                tbl_upper = tbl.upper()
+                if tbl_upper not in _upstream_cache:
+                    tls = query_index.table_lineages_by_target.get(tbl_upper, [])
+                    _upstream_cache[tbl_upper] = {
+                        tl.get("source_table", "").upper() for tl in tls if tl.get("source_table")
+                    }
+                return _upstream_cache[tbl_upper]
+        else:
+            table_to_upstream = {}
+            for fm in all_field_mappings:
+                src_tbl = fm.get("source_table", "").upper()
+                tgt_tbl = fm.get("target_table", "").upper()
+                if src_tbl and tgt_tbl:
+                    table_to_upstream.setdefault(tgt_tbl, set()).add(src_tbl)
 
         # 判断一个表是否在目标表的上游（即数据从该表流向目标表）
         def is_upstream_of_target(table: str) -> bool:
@@ -712,7 +784,8 @@ class LineageService:
             queue_bfs = [table_upper]
             while queue_bfs:
                 current = queue_bfs.pop(0)
-                for upstream in table_to_upstream.get(current, set()):
+                upstreams = _get_upstream_tables(current) if _use_index else table_to_upstream.get(current, set())
+                for upstream in upstreams:
                     if upstream == target_upper:
                         return True
                     if upstream not in visited:
@@ -746,11 +819,18 @@ class LineageService:
 
                 # 模糊匹配（处理表名短名、schema差异等）
                 if not matching_mappings:
-                    for key, mappings in target_map.items():
-                        if self._resolver.match(key[0], current_table) and self._resolver.match_field(
-                            key[1], current_field
-                        ):
-                            matching_mappings.extend(mappings)
+                    if _use_index:
+                        # 通过索引解析短名后精确查找，避免 O(N) 遍历
+                        resolved_tbl = query_index.resolve_table_name(current_table)
+                        if resolved_tbl.upper() != current_table.upper():
+                            tgt_key2 = (resolved_tbl.upper(), current_field.upper())
+                            matching_mappings = target_map.get(tgt_key2, [])
+                    else:
+                        for key, mappings in target_map.items():
+                            if self._resolver.match(key[0], current_table) and self._resolver.match_field(
+                                key[1], current_field
+                            ):
+                                matching_mappings.extend(mappings)
 
                 for fm in matching_mappings:
                     # 硬限制：最多50个节点
@@ -802,11 +882,17 @@ class LineageService:
 
                 # 模糊匹配
                 if not matching_mappings:
-                    for key, mappings in source_map.items():
-                        if self._resolver.match(key[0], current_table) and self._resolver.match_field(
-                            key[1], current_field
-                        ):
-                            matching_mappings.extend(mappings)
+                    if _use_index:
+                        resolved_tbl = query_index.resolve_table_name(current_table)
+                        if resolved_tbl.upper() != current_table.upper():
+                            src_key2 = (resolved_tbl.upper(), current_field.upper())
+                            matching_mappings = source_map.get(src_key2, [])
+                    else:
+                        for key, mappings in source_map.items():
+                            if self._resolver.match(key[0], current_table) and self._resolver.match_field(
+                                key[1], current_field
+                            ):
+                                matching_mappings.extend(mappings)
 
                 for fm in matching_mappings:
                     # 硬限制：最多50个节点
@@ -982,7 +1068,8 @@ class LineageService:
         include_fields: bool,
     ) -> list[dict]:
         """构建节点数据列表"""
-        table_map = {t["full_name"]: t for t in data.get("tables", [])}
+        # 使用预构建索引替代每次扫描全量 tables
+        table_map = self._index.table_by_full if self._index.is_built else {t["full_name"]: t for t in data.get("tables", [])}
 
         nodes = []
         for name in sorted(node_names):
@@ -1130,11 +1217,15 @@ class LineageService:
         field: str | None,
         depth: int,
         mode: str,
+        include_fields: bool = True,
+        limit: int = 1000,
     ) -> str:
-        """生成缓存键"""
+        """生成缓存键（含 include_fields 和 limit，避免不同参数命中同一缓存）"""
         parts = [table.upper(), str(depth), mode]
         if field:
             parts.append(field.upper())
+        parts.append(f"f={int(include_fields)}")
+        parts.append(f"l={limit}")
         return ":".join(parts)
 
     @staticmethod

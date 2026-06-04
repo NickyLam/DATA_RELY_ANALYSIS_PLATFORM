@@ -28,13 +28,19 @@ class CacheStore:
         if backend == "sqlite":
             from app.services.storage.sqlite_store import SQLiteResultStore
 
-            db_path = self.output_dir / "lineage.db"
-            if self.config:
+            db_path: Path | None = None
+            if self.config and hasattr(self.config, "sqlite_db_full_path"):
+                # 优先使用 config 已解析的绝对路径，避免 output/output/ 重复拼接
+                db_path = Path(self.config.sqlite_db_full_path)
+            elif self.config:
                 config_db_path = getattr(self.config, "sqlite_db_path", "")
                 if config_db_path:
                     db_path = Path(config_db_path)
                     if not db_path.is_absolute():
                         db_path = self.output_dir / config_db_path
+
+            if db_path is None:
+                db_path = self.output_dir / "lineage.db"
 
             logger.info("使用 SQLite 存储后端: %s", db_path)
             return SQLiteResultStore(db_path)

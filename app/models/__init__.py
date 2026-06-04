@@ -63,7 +63,7 @@ class LineageQueryRequest(BaseModel):
 
 
 class LineageQueryOptions(BaseModel):
-    include_fields: bool = Field(default=True, description="是否包含字段信息")
+    include_fields: bool = Field(default=False, description="是否包含字段信息（首屏默认不返回，点击节点时通过 node-detail 懒加载）")
     limit: int = Field(default=1000, ge=1, le=10000, description="结果数量限制")
     use_cache: bool = Field(default=True, description="是否使用缓存")
 

@@ -7,8 +7,12 @@
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 
 from core.table_name_resolver import TableNameResolver
+
+if TYPE_CHECKING:
+    from app.services.lineage_query_index import LineageQueryIndex
 
 logger = logging.getLogger(__name__)
 
@@ -64,21 +68,29 @@ class TableLineageTracer:
         data: dict,
         max_depth: int,
         direction: str = "up",
+        query_index: LineageQueryIndex | None = None,
     ) -> tuple[set[str], list[dict]]:
         """追踪表级血缘关系（BFS）。
 
         Args:
             start_table: 起始表名（支持短名）
-            data: 数据字典（用于短名解析）
+            data: 数据字典（用于短名解析，当 query_index 为 None 时使用）
             max_depth: 最大追溯深度
             direction: "up" 上游 / "down" 下游
+            query_index: 可选的预构建查询索引，存在时替代每次扫描 data["tables"]
 
         Returns:
             (节点集合, 边列表)
         """
         from core.layer_detector import detect_layer_str
 
-        resolved_start = self.resolve_table_name(start_table, data)
+        # 使用索引解析表名，避免每次重建 actual_tables_by_full/short
+        if query_index is not None and query_index.is_built:
+            adjacency_keys = set(self._adjacency_up.keys()) | set(self._adjacency_down.keys())
+            resolved_start = query_index.resolve_table_name(start_table, adjacency_keys)
+        else:
+            resolved_start = self.resolve_table_name(start_table, data)
+
         start_layer = detect_layer_str(resolved_start)
         visited: set[str] = {resolved_start}
         edges: list[dict] = []
@@ -160,14 +172,10 @@ class TableLineageTracer:
             return actual_tables_by_short[table_upper].get("full_name", table_name)
 
         # ---- 步骤1: 显式 schema 前缀的严格校验 ----
-        # 用户输入了 schema.table 格式（如 RRP_MDL.EAST5_201_GRJCXXB）
-        # 如果未在实际表定义中找到，直接返回原输入（后续会自然失败）
-        # 注意：不再接受邻接表中的 schema+表名，因为邻接表可能包含派生的中间节点
         if "." in table_upper:
             return table_name
 
         # ---- 步骤3: 短名模糊匹配（无 schema 前缀）----
-        # 从邻接表中收集候选
         candidates: list[str] = []
         all_keys = set(list(self._adjacency_up.keys()) + list(self._adjacency_down.keys()))
 
@@ -189,7 +197,6 @@ class TableLineageTracer:
                     return east_candidates[0]
 
             # 3c) 多个真实候选时，按 schema 优先级排序（而非简单取最短）
-            # 优先级：RRP_EAST > RRP_MDL > ICL > 其他
             schema_priority = {"RRP_EAST.": 0, "RRP_MDL.": 1, "ICL.": 2}
 
             def _schema_sort_key(c: str) -> tuple:
