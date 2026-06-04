@@ -5,6 +5,10 @@
 
 let selectedFilesArray = [];
 let eventSource = null;
+let sseRetryCount = 0;
+const SSE_MAX_RETRIES = 10;
+const SSE_BASE_DELAY = 3000;
+const SSE_MAX_DELAY = 30000;
 
 // ============================================
 // 文件拖拽上传
@@ -186,6 +190,7 @@ function connectToSSE(taskId) {
 
     eventSource.onopen = () => {
         console.log('SSE 连接已建立');
+        sseRetryCount = 0;
         addLogEntry('info', '已连接到进度服务器');
         statusBadge.textContent = '处理中...';
     };
@@ -207,13 +212,23 @@ function connectToSSE(taskId) {
 
     eventSource.onerror = (error) => {
         console.error('SSE 连接错误:', error);
-        addLogEntry('error', '连接中断，尝试重连...');
+        sseRetryCount++;
+
+        if (sseRetryCount > SSE_MAX_RETRIES) {
+            addLogEntry('error', `连接中断，已达到最大重试次数(${SSE_MAX_RETRIES})，停止重连`);
+            eventSource.close();
+            eventSource = null;
+            return;
+        }
+
+        const delay = Math.min(SSE_BASE_DELAY * Math.pow(2, sseRetryCount - 1), SSE_MAX_DELAY);
+        addLogEntry('error', `连接中断，${delay/1000}秒后尝试重连(${sseRetryCount}/${SSE_MAX_RETRIES})...`);
 
         setTimeout(() => {
             if (AppState.currentTaskId) {
                 connectToSSE(AppState.currentTaskId);
             }
-        }, 3000);
+        }, delay);
     };
 }
 
@@ -260,12 +275,6 @@ function addLogEntry(level, message) {
 
     logOutput.appendChild(entry);
     logOutput.scrollTop = logOutput.scrollHeight;
-}
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
 }
 
 // ============================================
@@ -361,15 +370,15 @@ async function loadParsedObjects() {
         document.getElementById('procCount').textContent = procedures.length;
 
         const tablesHtml = tables.slice(0, 200).map(table => `
-            <div class="object-item" onclick="queryTableFromParse('${table.full_name}')">
-                <span class="object-name">${table.short_name || table.full_name}</span>
-                <span class="object-meta">${table.layer || ''} | ${(table.field_count || 0)} 字段</span>
+            <div class="object-item" data-table-name="${escapeHtml(table.full_name)}">
+                <span class="object-name">${escapeHtml(table.short_name || table.full_name)}</span>
+                <span class="object-meta">${escapeHtml(table.layer || '')} | ${(table.field_count || 0)} 字段</span>
             </div>
         `).join('');
 
         const procsHtml = procedures.slice(0, 200).map(proc => `
             <div class="object-item">
-                <span class="object-name">${proc.short_name || proc.full_name}</span>
+                <span class="object-name">${escapeHtml(proc.short_name || proc.full_name)}</span>
                 <span class="object-meta">存储过程</span>
             </div>
         `).join('');
@@ -394,7 +403,19 @@ function showParsedList(type) {
 function queryTableFromParse(tableName) {
     switchTab('display');
     setTimeout(() => {
-        document.getElementById('searchInput').value = tableName;
+        document.getElementById('tableInput').value = tableName;
         executeQuery(tableName, 'table');
     }, 300);
 }
+
+// 解析结果列表点击事件委托（替代 inline onclick，防止 XSS）
+document.addEventListener('DOMContentLoaded', () => {
+    const parsedTablesList = document.getElementById('parsedTablesList');
+    if (parsedTablesList) {
+        parsedTablesList.addEventListener('click', function(event) {
+            const item = event.target.closest('.object-item[data-table-name]');
+            if (!item) return;
+            queryTableFromParse(item.dataset.tableName);
+        });
+    }
+});

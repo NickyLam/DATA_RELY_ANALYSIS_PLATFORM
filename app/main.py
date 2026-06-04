@@ -48,6 +48,7 @@ async def lifespan(app: FastAPI):
     logger.info("=" * 60)
 
     start_time = time.time()
+    progress_service = None
 
     try:
         parser_service = get_parser_service()
@@ -92,7 +93,8 @@ async def lifespan(app: FastAPI):
     yield
 
     logger.info("正在关闭服务...")
-    progress_service.cleanup_old_tasks(max_age_sec=0)
+    if progress_service is not None:
+        progress_service.cleanup_old_tasks(max_age_sec=0)
     logger.info("服务已安全关闭")
 
 

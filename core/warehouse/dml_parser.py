@@ -632,20 +632,20 @@ class DMLParser:
                     )
 
             # 构建字段级映射（如果目标字段列表可用）
-            if stmt.target_columns and stmt.source_tables:
+            # 仅当源表唯一时才做同名映射，避免多源表笛卡尔积
+            if stmt.target_columns and len(stmt.source_tables) == 1:
+                src = stmt.source_tables[0]
                 for col in stmt.target_columns:
-                    for src in stmt.source_tables:
-                        # 简化：假设字段名在源表中也存在（同名映射）
-                        field_mappings.append(
-                            FieldMapping(
-                                source_table=src,
-                                source_column=col,
-                                target_table=stmt.target_table,
-                                target_column=col,
-                                procedure=proc_name,
-                                confidence=0.5,  # 中等置信度（同名假设）
-                            )
+                    field_mappings.append(
+                        FieldMapping(
+                            source_table=src,
+                            source_column=col,
+                            target_table=stmt.target_table,
+                            target_column=col,
+                            procedure=proc_name,
+                            confidence=0.5,  # 中等置信度（同名假设）
                         )
+                    )
 
         return ProcedureInfo(
             schema=schema,

@@ -133,25 +133,12 @@
             div.dataset.indexNo = item.index_no;
 
             div.innerHTML = `
-                <div class="indicator-no">${item.index_no}</div>
+                <div class="indicator-no">${escapeHtml(item.index_no)}</div>
                 <div class="indicator-meta">
                     <span class="indicator-type">${item.source_type === 'gl' ? '总账' : '基础'}</span>
                     ${item.is_derived ? '<span class="indicator-tag">衍生</span>' : ''}
                 </div>
             `;
-
-            // 四重保障：直接 addEventListener（最可靠）
-            div.addEventListener('click', function(e) {
-                console.log('[indicator] result item clicked (direct listener):', item.index_no);
-                // 视觉反馈：高亮选中项
-                container.querySelectorAll('.indicator-result-item').forEach(el => {
-                    el.style.background = '';
-                    el.style.borderLeft = '';
-                });
-                div.style.background = '#e0e7ff';
-                div.style.borderLeft = '3px solid #3b82f6';
-                selectIndicator(item.index_no);
-            });
 
             container.appendChild(div);
             console.log('[indicator] appended item', idx);
@@ -215,7 +202,7 @@
         panel.style.display = 'block';
         panel.innerHTML = `
             <div class="detail-header">
-                <h3>${detail.index_no}</h3>
+                <h3>${escapeHtml(detail.index_no)}</h3>
                 <button class="btn-close" onclick="closeIndicatorDetail()">×</button>
             </div>
             <div class="detail-content">
@@ -224,9 +211,9 @@
                     <div class="measure-list">
                         ${detail.measures.map(m => `
                             <div class="measure-item">
-                                <span class="measure-code">${m.code}</span>
-                                <span class="measure-label">${m.label}</span>
-                                <span class="algo-type">${m.algo_label}</span>
+                                <span class="measure-code">${escapeHtml(m.code)}</span>
+                                <span class="measure-label">${escapeHtml(m.label)}</span>
+                                <span class="algo-type">${escapeHtml(m.algo_label)}</span>
                             </div>
                         `).join('')}
                     </div>
@@ -237,8 +224,8 @@
                     <div class="gl-mapping-list">
                         ${detail.gl_mappings.map(m => `
                             <div class="gl-mapping-item">
-                                <span>科目${m.subj_no}(${m.length_val}位)</span>
-                                <span>${m.sign_label} × ${m.amt_val_label}</span>
+                                <span>科目${escapeHtml(m.subj_no)}(${escapeHtml(String(m.length_val))}位)</span>
+                                <span>${escapeHtml(m.sign_label)} × ${escapeHtml(m.amt_val_label)}</span>
                             </div>
                         `).join('')}
                     </div>
@@ -247,8 +234,8 @@
                 <div class="detail-section">
                     <h4>上下游关系</h4>
                     <div class="relation-list">
-                        ${detail.upstream_indices.length > 0 ? `<div>上游: ${detail.upstream_indices.join(', ')}</div>` : ''}
-                        ${detail.downstream_indices.length > 0 ? `<div>下游: ${detail.downstream_indices.join(', ')}</div>` : ''}
+                        ${detail.upstream_indices.length > 0 ? `<div>上游: ${detail.upstream_indices.map(i => escapeHtml(i)).join(', ')}</div>` : ''}
+                        ${detail.downstream_indices.length > 0 ? `<div>下游: ${detail.downstream_indices.map(i => escapeHtml(i)).join(', ')}</div>` : ''}
                     </div>
                 </div>
             </div>
@@ -270,10 +257,10 @@
             div.innerHTML = `
                 <div class="step-header">
                     <span class="step-order">STEP ${step.step_order}</span>
-                    <span class="step-name">${step.proc_name.replace('PRO_F_INDEX_CALC_', '')}</span>
+                    <span class="step-name">${escapeHtml(step.proc_name.replace('PRO_F_INDEX_CALC_', ''))}</span>
                 </div>
-                <div class="step-detail">${step.detail || '-'}</div>
-                <div class="step-target">${step.target_table || ''}</div>
+                <div class="step-detail">${escapeHtml(step.detail || '-')}</div>
+                <div class="step-target">${escapeHtml(step.target_table || '')}</div>
             `;
             container.appendChild(div);
         });

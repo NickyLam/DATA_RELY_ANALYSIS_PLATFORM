@@ -405,16 +405,15 @@ class ParserService:
 
             # ====== 数据源级并行执行 ======
             all_futures: dict = {}
-            executor = ThreadPoolExecutor(max_workers=self._datasource_workers)
 
             if self._registry is not None and tasks:
                 for name, path in tasks:
-                    future = executor.submit(self._registry.parse_directory, path)
+                    future = self._executor.submit(self._registry.parse_directory, path)
                     all_futures[future] = name
 
             if self._pam_parser is not None and pam_tasks:
                 for name, path in pam_tasks:
-                    future = executor.submit(self._pam_parser.parse_directory, path)
+                    future = self._executor.submit(self._pam_parser.parse_directory, path)
                     all_futures[future] = name
 
             if all_futures:
@@ -434,8 +433,6 @@ class ParserService:
                     except Exception as e:
                         logger.error("数据源 %s 解析失败: %s", name, e, exc_info=True)
                         result.errors.append(f"数据源 {name}: {str(e)}")
-
-            executor.shutdown(wait=False)
 
             result.parse_time_sec = time.time() - start_time
             self._current_result = result
@@ -523,8 +520,9 @@ class ParserService:
             if mode == "incremental" and self._current_result:
                 if progress_callback:
                     progress_callback(96, "", "合并增量数据（去重更新中）...")
-                self._current_result.merge(result)
-                self._current_data_cache = None  # 数据变更，清除缓存
+                with self._result_lock:
+                    self._current_result.merge(result)
+                    self._current_data_cache = None  # 数据变更，清除缓存
                 self._save_result_to_cache(self._current_result)
             else:
                 self._current_result = result

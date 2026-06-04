@@ -70,6 +70,16 @@ function initDisplayTab() {
 
     setupSearchListeners();
 
+    // 详情面板行点击事件委托（替代 inline onclick，防止 XSS）
+    const detailContent = document.getElementById('detailContent');
+    if (detailContent) {
+        detailContent.addEventListener('click', function(event) {
+            const row = event.target.closest('.detail-row[data-table-name]');
+            if (!row) return;
+            quickQuery(row.dataset.tableName);
+        });
+    }
+
     // 初始化级联查询向导
     if (typeof window.initCascadingWizard === 'function') {
         window.initCascadingWizard();
@@ -97,6 +107,17 @@ function setupSearchListeners() {
             if (e.key === 'Enter' && !document.getElementById('queryBtn').disabled) {
                 executeFieldQuery();
             }
+        });
+    }
+
+    // 搜索结果点击事件委托（替代 inline onclick，防止 XSS）
+    const resultsContainer = document.getElementById('searchResults');
+    if (resultsContainer) {
+        resultsContainer.addEventListener('click', function(event) {
+            const item = event.target.closest('.search-result-item');
+            if (!item) return;
+            const tableName = item.dataset.tableName;
+            if (tableName) selectTable(tableName);
         });
     }
 
@@ -136,9 +157,9 @@ window.onTableInput = debounce(async function () {
         }
 
         let html = tables.map(table => `
-            <div class="search-result-item" onclick="selectTable('${table.full_name}')">
-                <div class="result-name">${table.short_name || table.full_name}</div>
-                <div class="result-type">表 · ${table.layer || 'unknown'}</div>
+            <div class="search-result-item" data-table-name="${escapeHtml(table.full_name)}">
+                <div class="result-name">${escapeHtml(table.short_name || table.full_name)}</div>
+                <div class="result-type">表 · ${escapeHtml(table.layer || 'unknown')}</div>
             </div>
         `).join('');
 
@@ -183,7 +204,7 @@ async function loadTableFields(tableFullName) {
             if (tableInfo.columns && tableInfo.columns.length > 0) {
                 let options = '<option value="">-- 请选择字段 --</option>';
                 tableInfo.columns.forEach(col => {
-                    options += `<option value="${col}">${col}</option>`;
+                    options += `<option value="${escapeHtml(col)}">${escapeHtml(col)}</option>`;
                 });
                 fieldSelect.innerHTML = options;
                 fieldSelect.disabled = false;
@@ -830,9 +851,9 @@ function renderDetailPanel(data, queryId) {
     // 查询目标高亮显示
     html += `<div style="margin-bottom:16px;padding:14px;background:linear-gradient(135deg,#fef2f2,#fff7ed);border-radius:8px;border-left:4px solid #ef4444;">
         <strong style="color:#dc2626;font-size:14px;">🎯 查询目标</strong><br>
-        <span style="font-family:monospace;font-size:13px;color:#1e293b;">${targetTable.split('.').pop()}</span>
+        <span style="font-family:monospace;font-size:13px;color:#1e293b;">${escapeHtml(targetTable.split('.').pop())}</span>
         <span style="color:#dc2626;margin:0 4px;">.</span>
-        <span style="font-family:monospace;font-size:13px;color:#dc2626;font-weight:600;">${targetField || ''}</span>
+        <span style="font-family:monospace;font-size:13px;color:#dc2626;font-weight:600;">${escapeHtml(targetField || '')}</span>
         <br>
         <span style="font-size:12px;color:#64748b;margin-top:4px;display:inline-block;">
             深度: ${AppState.queryDepth}层 | 涉及: ${data.nodes_count}表, ${data.edges_count}关系 | 耗时: ${data.query_time_ms}ms
@@ -853,9 +874,9 @@ function renderDetailPanel(data, queryId) {
             html += `
                 <div style="padding:7px 10px;margin-bottom:4px;background:white;border-radius:5px;font-size:11px;border-left:3px solid #a855f7;display:flex;justify-content:space-between;align-items:center;">
                     <span>
-                        <span style="color:#059669;font-weight:500;">${srcShort}.${srcCol}</span>
+                        <span style="color:#059669;font-weight:500;">${escapeHtml(srcShort)}.${escapeHtml(srcCol)}</span>
                         <span style="color:#94a3b8;margin:0 6px;">→</span>
-                        <span style="color:#dc2626;font-weight:500;">${tgtShort}.${tgtCol}</span>
+                        <span style="color:#dc2626;font-weight:500;">${escapeHtml(tgtShort)}.${escapeHtml(tgtCol)}</span>
                     </span>
                 </div>`;
         });
@@ -870,8 +891,8 @@ function renderDetailPanel(data, queryId) {
     if (upTables.length > 0) {
         html += `<h4 style="color:#22c55e;margin:16px 0 8px;font-size:13px;">↑ 上游来源表 (${upTables.length})</h4>`;
         upTables.slice(0, 25).forEach(t => {
-            html += `<div class="detail-row upstream" onclick="quickQuery('${t}')">
-                <div class="d-name">${t.split('.').pop()}</div>
+            html += `<div class="detail-row upstream" data-table-name="${escapeHtml(t)}">
+                <div class="d-name">${escapeHtml(t.split('.').pop())}</div>
             </div>`;
         });
     }
@@ -879,8 +900,8 @@ function renderDetailPanel(data, queryId) {
     if (downTables.length > 0) {
         html += `<h4 style="color:#ef4444;margin:12px 0 8px;font-size:13px;">↓ 下游去向表 (${downTables.length})</h4>`;
         downTables.slice(0, 25).forEach(t => {
-            html += `<div class="detail-row downstream" onclick="quickQuery('${t}')">
-                <div class="d-name">${t.split('.').pop()}</div>
+            html += `<div class="detail-row downstream" data-table-name="${escapeHtml(t)}">
+                <div class="d-name">${escapeHtml(t.split('.').pop())}</div>
             </div>`;
         });
     }
@@ -924,7 +945,7 @@ function showInfoPanel(node) {
 
     if (node.columns && node.columns.length > 0) {
         const colsHtml = node.columns.slice(0, 30)
-            .map(c => `<span class="tag">${c}</span>`)
+            .map(c => `<span class="tag">${escapeHtml(c)}</span>`)
             .join('');
 
         html += `

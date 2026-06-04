@@ -115,6 +115,8 @@ class IndicatorService:
         if not self._graph_builder:
             return []
         detail = self._graph_builder.get_indicator_detail(index_no)
+        if not detail:
+            return []
         tables: list[str] = []
         for m in detail.get("measures", []):
             src = m.get("src_table", "")

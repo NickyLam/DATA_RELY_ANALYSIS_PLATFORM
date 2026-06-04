@@ -127,7 +127,10 @@ class SQLBoundaryDetector:
             start_offset = match.start()
 
             # 从 CTE 的左括号开始，找到匹配的右括号
-            paren_start = self.file_content.index("(", match.start())
+            paren_start = self.file_content.find("(", match.start())
+            if paren_start == -1:
+                logger.warning("CTE '%s' 未找到左括号，跳过", cte_name)
+                continue
             paren_end = self._find_matching_paren(paren_start)
 
             end_offset = paren_end if paren_end > paren_start else paren_start + 1

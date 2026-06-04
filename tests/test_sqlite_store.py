@@ -387,7 +387,6 @@ class TestCacheStoreBackend:
         assert len(loaded["tables"]) == 3
 
         # 验证文件存在
-        assert (temp_dir / "lineage_data.pkl").exists()
         assert (temp_dir / "lineage_data.json").exists()
 
     def test_clear_cache(self, temp_dir, sample_result_data):

@@ -1,14 +1,14 @@
 """
-Legacy (pickle/json 双写) 存储后端
+Legacy (JSON) 存储后端
 
-从原有 CacheStore 逻辑抽取，保持与旧缓存机制的完全兼容。
+从原有 CacheStore 逻辑抽取，保持与旧缓存机制的兼容。
+旧版 pickle 文件不再加载（安全风险），仅记录警告后跳过。
 """
 
 from __future__ import annotations
 
 import json
 import logging
-import pickle
 import time
 from pathlib import Path
 from typing import Any
@@ -17,9 +17,22 @@ from app.services.storage.protocol import CACHE_SCHEMA_VERSION
 
 logger = logging.getLogger(__name__)
 
+# pickle 文件魔数前缀，用于检测旧格式文件
+_PICKLE_MAGIC_PREFIXES = (
+    b"\x80",  # protocol >= 2
+    b"(lp0",  # protocol 1 list
+    b"(dp0",  # protocol 1 dict
+    b"S'",     # protocol 1 string
+    b"I",      # protocol 1 int
+)
+
 
 class LegacyJsonPickleStore:
-    """基于 pickle/json 双写的存储后端（兼容模式）。"""
+    """基于 JSON 的存储后端（兼容模式）。
+
+    不再使用 pickle 进行序列化/反序列化，以消除任意代码执行风险。
+    遇到旧 pickle 文件时仅记录警告，不会加载。
+    """
 
     def __init__(self, output_dir: Path):
         self._output_dir = Path(output_dir)
@@ -27,36 +40,12 @@ class LegacyJsonPickleStore:
         self._json_file = self._output_dir / "lineage_data.json"
 
     def load(self) -> dict[str, Any] | None:
-        """从 pickle 或 JSON 加载缓存数据。"""
-        # 优先读取 pickle
+        """从 JSON 加载缓存数据。旧 pickle 文件仅检测并警告，不加载。"""
+        # 检测旧 pickle 文件并警告
         if self._cache_file.exists():
-            try:
-                with open(self._cache_file, "rb") as f:
-                    data = pickle.load(f)
-                metadata = data.get("metadata", {})
-                version = metadata.get("cache_schema_version", "")
-                if version and version != CACHE_SCHEMA_VERSION:
-                    logger.warning(
-                        "缓存版本不匹配(%s != %s)，强制重新解析",
-                        version,
-                        CACHE_SCHEMA_VERSION,
-                    )
-                    self._cache_file.unlink(missing_ok=True)
-                    return None
-                if not metadata or not metadata.get("total_tables"):
-                    logger.info("缓存数据为空或格式不兼容，将重新解析")
-                    return None
-                logger.info(
-                    "成功加载 pickle 缓存: %s 个表, %s 个过程",
-                    metadata.get("total_tables", 0),
-                    metadata.get("total_procedures", 0),
-                )
-                return data
-            except Exception as e:
-                logger.error("加载 pickle 缓存失败: %s", e)
-                self._cache_file.unlink(missing_ok=True)
+            self._warn_old_pickle()
 
-        # fallback 读取 JSON
+        # 读取 JSON
         if self._json_file.exists():
             try:
                 with open(self._json_file, encoding="utf-8") as f:
@@ -76,7 +65,7 @@ class LegacyJsonPickleStore:
         return None
 
     def save(self, result_data: dict[str, Any]) -> None:
-        """保存数据到 pickle 和 JSON。"""
+        """保存数据到 JSON。"""
         data = {
             **result_data,
             "metadata": {
@@ -85,7 +74,6 @@ class LegacyJsonPickleStore:
                 "last_updated": time.strftime("%Y-%m-%d %H:%M:%S"),
             },
         }
-        self._save_pickle(data)
         self._save_json(data)
 
     def clear(self) -> None:
@@ -113,24 +101,26 @@ class LegacyJsonPickleStore:
     def cache_file(self) -> Path:
         return self._cache_file
 
-    def _save_pickle(self, data: dict[str, Any]) -> None:
+    def _warn_old_pickle(self) -> None:
+        """检测旧 pickle 文件并记录安全警告。"""
         try:
-            tmp_path = self._cache_file.with_suffix(".tmp")
-            with open(tmp_path, "wb") as f:
-                pickle.dump(data, f, protocol=pickle.HIGHEST_PROTOCOL)
-            tmp_path.replace(self._cache_file)
-            logger.info(
-                "Pickle 已保存: %s (%.2f KB)",
-                self._cache_file,
-                self._cache_file.stat().st_size / 1024,
-            )
-        except Exception as e:
-            logger.error("保存 Pickle 失败: %s", e)
+            header = self._cache_file.read_bytes()[:4]
+            if any(header.startswith(prefix) for prefix in _PICKLE_MAGIC_PREFIXES):
+                logger.warning(
+                    "检测到旧版 pickle 缓存文件 %s，因安全风险不再加载。"
+                    "请使用 JSON 缓存或重新解析数据。"
+                    "如需迁移旧数据，请运行 scripts/migrate_cache_to_sqlite.py",
+                    self._cache_file,
+                )
+        except OSError:
+            pass
 
     def _save_json(self, data: dict[str, Any]) -> None:
         try:
-            with open(self._json_file, "w", encoding="utf-8") as f:
+            tmp_path = self._json_file.with_suffix(".tmp")
+            with open(tmp_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
+            tmp_path.replace(self._json_file)
             logger.info("JSON 缓存已保存: %s", self._json_file)
         except Exception as e:
             logger.error("保存 JSON 失败: %s", e)

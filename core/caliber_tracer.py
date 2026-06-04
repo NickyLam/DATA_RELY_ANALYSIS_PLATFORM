@@ -80,9 +80,13 @@ class CaliberTracer(BaseTracer):
         field_mappings: list[FieldMapping],
         caliber_infos: list[dict],
         max_depth: int = 10,
+        known_schemas: list[str] | None = None,
+        default_data_source: str = "oracle",
     ) -> None:
         super().__init__(tables, procedures, table_lineages, field_mappings, max_depth)
         self.caliber_infos_raw: list[dict] = caliber_infos
+        self._known_schemas: list[str] = known_schemas or ["RRP_MDL", "RRP_EAST"]
+        self._default_data_source: str = default_data_source
 
         self._target_idx: dict[tuple[str, str], list[dict]] = {}
         self._source_idx: dict[tuple[str, str], list[dict]] = {}
@@ -95,6 +99,13 @@ class CaliberTracer(BaseTracer):
             len(field_mappings),
             len(caliber_infos),
         )
+
+    def _build_schema_variants(self, short_table: str) -> list[str]:
+        """根据已知 schema 列表动态构建 schema 变体，替代硬编码 RRP_MDL/RRP_EAST"""
+        variants = [short_table]
+        for schema in self._known_schemas:
+            variants.append(f"{schema}.{short_table}")
+        return variants
 
     def _build_caliber_indexes(self) -> None:
         for ci_dict in self.caliber_infos_raw:
@@ -462,11 +473,7 @@ class CaliberTracer(BaseTracer):
         if results:
             return results
 
-        schema_variants = [
-            f"RRP_MDL.{short_table}",
-            f"RRP_EAST.{short_table}",
-            short_table,
-        ]
+        schema_variants = self._build_schema_variants(short_table)
 
         for variant in schema_variants:
             vkey = (variant, field_upper)
@@ -579,7 +586,7 @@ class CaliberTracer(BaseTracer):
                         procedure=tl.procedure or "",
                         step_num=0,
                         step_desc="表级血缘回退(同名字段匹配)",
-                        data_source="oracle",
+                        data_source=self._default_data_source,
                         raw_sql_fragment="",
                         confidence=0.5,
                     )
@@ -603,11 +610,7 @@ class CaliberTracer(BaseTracer):
         if results:
             return results
 
-        schema_variants = [
-            f"RRP_MDL.{short_table}",
-            f"RRP_EAST.{short_table}",
-            short_table,
-        ]
+        schema_variants = self._build_schema_variants(short_table)
 
         for variant in schema_variants:
             vkey = (variant, field_upper)
@@ -707,7 +710,7 @@ class CaliberTracer(BaseTracer):
                         procedure=tl.procedure or "",
                         step_num=0,
                         step_desc="表级血缘回退(同名字段匹配)",
-                        data_source="oracle",
+                        data_source=self._default_data_source,
                         raw_sql_fragment="",
                         confidence=0.5,
                     )
@@ -756,12 +759,7 @@ class CaliberTracer(BaseTracer):
                 ]
 
                 if not matching_records:
-                    src_variants = [
-                        src_table,
-                        f"RRP_MDL.{src_short}",
-                        f"RRP_EAST.{src_short}",
-                        src_short,
-                    ]
+                    src_variants = [src_table] + self._build_schema_variants(src_short)
                     for variant in src_variants:
                         v_short = variant.split(".")[-1].upper()
                         matching_records = [
@@ -950,8 +948,7 @@ class CaliberTracer(BaseTracer):
 
         return records
 
-    @staticmethod
-    def _dict_to_record(d: dict) -> _CaliberSourceRecord:
+    def _dict_to_record(self, d: dict) -> _CaliberSourceRecord:
         where_conds = d.get("where_conditions", [])
         join_conds = d.get("join_conditions", [])
         return _CaliberSourceRecord(
@@ -967,13 +964,12 @@ class CaliberTracer(BaseTracer):
             procedure=d.get("procedure", ""),
             step_num=d.get("step_num", 0),
             step_desc=d.get("step_desc", ""),
-            data_source=d.get("data_source", "oracle"),
+            data_source=d.get("data_source", self._default_data_source),
             raw_sql_fragment=d.get("raw_sql_fragment", ""),
             confidence=d.get("confidence", 1.0),
         )
 
-    @staticmethod
-    def _field_mapping_to_caliber(fm: FieldMapping, procedure: str) -> _CaliberSourceRecord | None:
+    def _field_mapping_to_caliber(self, fm: FieldMapping, procedure: str) -> _CaliberSourceRecord | None:
         if not fm.source_table or not fm.source_column:
             return None
         return _CaliberSourceRecord(
@@ -989,7 +985,7 @@ class CaliberTracer(BaseTracer):
             procedure=procedure,
             step_num=0,
             step_desc="",
-            data_source="oracle",
+            data_source=self._default_data_source,
             raw_sql_fragment="",
             confidence=fm.confidence,
         )

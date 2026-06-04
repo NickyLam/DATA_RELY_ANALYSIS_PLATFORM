@@ -17,7 +17,7 @@ from app.config import config
 class FileHandler:
     """文件上传处理器"""
 
-    ALLOWED_EXTENSIONS = {".tab", ".prc", ".sql", ".fnc"}
+    ALLOWED_EXTENSIONS = set(config.allowed_extensions)
 
     @classmethod
     def validate_file(cls, file: UploadFile) -> tuple[bool, str]:
@@ -58,16 +58,26 @@ class FileHandler:
             safe_filename = f"{uuid.uuid4().hex}_{file.filename}"
             save_path = task_dir / safe_filename
 
-            content = await file.read()
+            max_bytes = config.max_upload_size_mb * 1024 * 1024
+            chunk_size = 1024 * 1024  # 1MB
+            total_size = 0
+            chunks: list[bytes] = []
 
-            if len(content) > config.max_upload_size_mb * 1024 * 1024:
-                return (
-                    None,
-                    f"文件过大: {len(content) / 1024 / 1024:.1f}MB (限制: {config.max_upload_size_mb}MB)",
-                )
+            while True:
+                chunk = await file.read(chunk_size)
+                if not chunk:
+                    break
+                total_size += len(chunk)
+                if total_size > max_bytes:
+                    return (
+                        None,
+                        f"文件过大: {total_size / 1024 / 1024:.1f}MB (限制: {config.max_upload_size_mb}MB)",
+                    )
+                chunks.append(chunk)
 
             with open(save_path, "wb") as f:
-                f.write(content)
+                for chunk in chunks:
+                    f.write(chunk)
 
             return save_path, ""
 

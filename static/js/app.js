@@ -66,6 +66,16 @@ function formatTime(date) {
     });
 }
 
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 function debounce(func, delay = 300) {
     let timeoutId;
     return function (...args) {
@@ -78,11 +88,13 @@ async function apiRequest(url, options = {}) {
     const defaultOptions = {
         headers: {
             'Content-Type': 'application/json',
-            ...options.headers,
         },
     };
 
-    const response = await fetch(API_BASE + url, { ...defaultOptions, ...options });
+    const mergedHeaders = { ...(defaultOptions.headers || {}), ...(options.headers || {}) };
+    const finalOptions = { ...defaultOptions, ...options, headers: mergedHeaders };
+
+    const response = await fetch(API_BASE + url, finalOptions);
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
