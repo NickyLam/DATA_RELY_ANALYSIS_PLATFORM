@@ -5,7 +5,11 @@ FastAPI 应用主入口
 启动方式:
   uvicorn app.main:app --reload --port 8899
   或
-  python -m app.main
+  python -m app.main              # 默认：缓存优先，不重新解析
+  python -m app.main --reparse    # 强制重新解析所有数据源
+
+环境变量:
+  FORCE_REPARSE=1                 # 等效于 --reparse 参数
 """
 
 from __future__ import annotations
@@ -54,9 +58,9 @@ async def lifespan(app: FastAPI):
         parser_service = get_parser_service()
         progress_service = get_progress_service()
 
-        logger.info("步骤 1/3: 加载数据（缓存优先）...")
+        logger.info("步骤 1/3: 加载数据（%s）...", "强制重新解析" if config.force_reparse else "缓存优先")
         if config.data_path.exists():
-            result = parser_service.parse_existing_data()
+            result = parser_service.parse_existing_data(force=config.force_reparse)
             if result and result.parse_time_sec == 0.0:
                 logger.info(
                     "✅ 缓存加载完成: %d 张表, %d 个过程",
@@ -144,12 +148,18 @@ ALLOWED_ORIGINS = [
     "http://localhost:8899",
 ]
 
+DEV_ORIGINS = ALLOWED_ORIGINS + [
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:8080",
+    "http://127.0.0.1:8899",
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS if os.getenv("PRODUCTION") else ["*"],
-    allow_credentials=True,
+    allow_origins=ALLOWED_ORIGINS if os.getenv("PRODUCTION") else DEV_ORIGINS,
+    allow_credentials=False,
     allow_methods=["GET", "POST"],
-    allow_headers=["Content-Type"],
+    allow_headers=["Content-Type", "X-Admin-Key"],
 )
 
 
@@ -202,12 +212,29 @@ async def serve_index():
 
 
 if __name__ == "__main__":
+    import argparse
+
     import uvicorn
+
+    parser = argparse.ArgumentParser(description="数据血缘分析系统")
+    parser.add_argument(
+        "--reparse",
+        action="store_true",
+        default=False,
+        help="启动时强制重新解析所有数据源（跳过缓存）",
+    )
+    parser.add_argument("--host", default=config.host, help="监听地址")
+    parser.add_argument("--port", type=int, default=config.port, help="监听端口")
+    args = parser.parse_args()
+
+    if args.reparse:
+        config.force_reparse = True
+        logger.info("🔄 已启用 --reparse 参数，启动时将强制重新解析数据源")
 
     uvicorn.run(
         "app.main:app",
-        host=config.host,
-        port=config.port,
+        host=args.host,
+        port=args.port,
         reload=config.debug,
         log_level="info",
     )

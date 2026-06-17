@@ -7,10 +7,12 @@ FastAPI 依赖注入模块
 
 from __future__ import annotations
 
+import os
 from functools import lru_cache
 from typing import Annotated
 
-from fastapi import Depends
+from fastapi import Depends, HTTPException, Security
+from fastapi.security import APIKeyHeader
 
 from app.config import config
 from app.services.indicator_service import IndicatorService
@@ -88,7 +90,7 @@ def get_indicator_service() -> IndicatorService:
     if fdm_config and fdm_config.enabled:
         indicator_data_path = fdm_config.data_dir
     else:
-        indicator_data_path = str(config.base_dir / "财务集市指标血缘分析" / "指标")
+        indicator_data_path = str(config.base_dir / config.indicator_fallback_path)
 
     cache = get_cache_manager()
     lineage = get_lineage_service()
@@ -110,3 +112,16 @@ ProgressServiceDep = Annotated[ProgressService, Depends(get_progress_service)]
 IndicatorServiceDep = Annotated[IndicatorService, Depends(get_indicator_service)]
 LayerDetectorDep = Annotated[LayerDetector, Depends(get_layer_detector)]
 TableQueryServiceDep = Annotated[TableQueryService, Depends(get_table_query_service)]
+
+_api_key_header = APIKeyHeader(name="X-Admin-Key", auto_error=False)
+
+
+async def admin_required(api_key: str = Security(_api_key_header)) -> None:
+    admin_key = os.getenv("ADMIN_API_KEY")
+    if not admin_key:
+        raise HTTPException(
+            status_code=403,
+            detail="Admin API key not configured. Set ADMIN_API_KEY environment variable to enable admin endpoints.",
+        )
+    if api_key != admin_key:
+        raise HTTPException(status_code=403, detail="Invalid admin API key")

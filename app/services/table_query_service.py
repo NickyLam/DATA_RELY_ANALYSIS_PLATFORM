@@ -228,6 +228,11 @@ class TableQueryService:
             if not full_name:
                 continue
 
+            data_source = self._normalize_data_source(t.get("data_source"))
+            if data_source and data_source in system_table_counts:
+                system_table_counts[data_source] = system_table_counts.get(data_source, 0) + 1
+                continue
+
             if "." in full_name:
                 schema = full_name.split(".")[0].upper()
                 if schema in schema_to_system:
@@ -275,15 +280,19 @@ class TableQueryService:
             if not full_name:
                 continue
 
+            data_source = self._normalize_data_source(t.get("data_source"))
+            if data_source and data_source != system:
+                continue
+
             if "." in full_name:
                 schema = full_name.split(".")[0].upper()
                 # 检查该 schema 是否属于该系统
-                mapped_system = schema_to_system.get(schema)
+                mapped_system = data_source or schema_to_system.get(schema)
                 if mapped_system == system:
                     system_schemas[schema] = system_schemas.get(schema, 0) + 1
             else:
                 # 无 schema 的表归属数仓系统
-                if ds_cfg.parser != "oracle":
+                if data_source == system or (not data_source and ds_cfg.parser != "oracle"):
                     unclassified_count += 1
 
         # 构建结果
@@ -335,15 +344,19 @@ class TableQueryService:
             if not full_name:
                 continue
 
+            data_source = self._normalize_data_source(t.get("data_source"))
+            if data_source and data_source != system_name:
+                continue
+
             # 确定该表是否属于该系统
             if "." in full_name:
                 table_schema = full_name.split(".")[0].upper()
-                mapped_system = schema_to_system.get(table_schema)
+                mapped_system = data_source or schema_to_system.get(table_schema)
                 if mapped_system != system_name:
                     continue
             else:
                 # 无 schema 的表归属数仓类系统
-                if ds_cfg.parser == "oracle":
+                if not data_source and ds_cfg.parser == "oracle":
                     continue
 
             short_name = full_name.split(".")[-1] if "." in full_name else full_name
@@ -391,6 +404,10 @@ class TableQueryService:
             if not full_name:
                 continue
 
+            data_source = self._normalize_data_source(t.get("data_source"))
+            if data_source and data_source != system:
+                continue
+
             # 确定 schema
             if "." in full_name:  # noqa: SIM108
                 table_schema = full_name.split(".")[0].upper()
@@ -407,7 +424,7 @@ class TableQueryService:
                     continue
             else:
                 # 有 schema 的表：检查系统归属
-                mapped_system = schema_to_system.get(table_schema)
+                mapped_system = data_source or schema_to_system.get(table_schema)
                 if mapped_system != system:
                     continue
                 # 检查 schema 匹配
@@ -432,6 +449,10 @@ class TableQueryService:
             )
 
         return tables
+
+    @staticmethod
+    def _normalize_data_source(value: Any) -> str:
+        return str(value or "").strip().lower()
 
     @staticmethod
     def _detect_layer(table_name: str) -> str:

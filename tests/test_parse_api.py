@@ -3,16 +3,13 @@
 TC-001 到 TC-006
 """
 
-import sys
 from io import BytesIO
-from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 from fastapi.testclient import TestClient
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
+from app.dependencies import get_parser_service, get_progress_service
 from app.main import app
 
 
@@ -23,43 +20,47 @@ def client():
 
 @pytest.fixture
 def mock_parser_service():
-    with patch("app.dependencies.get_parser_service") as mock:
-        service = MagicMock()
-        service.parse_uploaded_files.return_value = MagicMock(
-            to_dict=lambda: {"tables": [], "procedures": [], "errors": []}
-        )
-        service.parse_existing_data.return_value = MagicMock(
-            to_dict=lambda: {"tables": [], "procedures": [], "errors": []}
-        )
-        mock.return_value = service
+    service = MagicMock()
+    service.parse_uploaded_files.return_value = MagicMock(
+        to_dict=lambda: {"tables": [], "procedures": [], "errors": []}
+    )
+    service.parse_existing_data.return_value = MagicMock(
+        to_dict=lambda: {"tables": [], "procedures": [], "errors": []}
+    )
+    app.dependency_overrides[get_parser_service] = lambda: service
+    try:
         yield service
+    finally:
+        app.dependency_overrides.pop(get_parser_service, None)
 
 
 @pytest.fixture
 def mock_progress_service():
-    with patch("app.dependencies.get_progress_service") as mock:
-        service = MagicMock()
-        task = MagicMock()
-        task.task_id = "test-task-123"
-        task.status.value = "processing"
-        task.progress.percent = 0
-        task.progress.current_file = ""
-        task.progress.message = "准备开始"
-        task.progress.tables_parsed = 0
-        task.progress.procedures_parsed = 0
-        task.progress.lineages_found = 0
-        task.progress.errors = []
-        task.result = None
-        task.error = None
-        task.created_at = "2024-01-01T00:00:00"
-        task.updated_at = "2024-01-01T00:00:00"
+    service = MagicMock()
+    task = MagicMock()
+    task.task_id = "test-task-123"
+    task.status.value = "processing"
+    task.progress.percent = 0
+    task.progress.current_file = ""
+    task.progress.message = "准备开始"
+    task.progress.tables_parsed = 0
+    task.progress.procedures_parsed = 0
+    task.progress.lineages_found = 0
+    task.progress.errors = []
+    task.result = None
+    task.error = None
+    task.created_at = "2024-01-01T00:00:00"
+    task.updated_at = "2024-01-01T00:00:00"
 
-        service.create_task.return_value = task
-        service.get_task.return_value = task
-        service.list_tasks.return_value = [task]
-        service.generate_sse_events.return_value = iter([])
-        mock.return_value = service
+    service.create_task.return_value = task
+    service.get_task.return_value = task
+    service.list_tasks.return_value = [task]
+    service.generate_sse_events.return_value = iter([])
+    app.dependency_overrides[get_progress_service] = lambda: service
+    try:
         yield service
+    finally:
+        app.dependency_overrides.pop(get_progress_service, None)
 
 
 class TestFileUpload:

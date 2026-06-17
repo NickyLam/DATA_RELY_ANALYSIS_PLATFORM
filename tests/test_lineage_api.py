@@ -3,16 +3,12 @@
 TC-101 到 TC-108
 """
 
-import sys
-from pathlib import Path
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 from fastapi.testclient import TestClient
 
-# 添加项目根目录
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
+from app.dependencies import get_lineage_service, get_parser_service
 from app.main import app
 
 
@@ -25,39 +21,43 @@ def client():
 @pytest.fixture
 def mock_lineage_service():
     """模拟 LineageService"""
-    with patch("app.dependencies.get_lineage_service") as mock:
-        service = MagicMock()
-        # 设置默认返回值
-        service.search_tables.return_value = [{"full_name": "TEST_TABLE", "layer": "MDL", "column_count": 10}]
-        service.search_procedures.return_value = [{"full_name": "TEST_PROC", "source_tables": [], "target_tables": []}]
-        service.query_lineage.return_value = {"nodes": [], "edges": [], "chains": []}
-        service.get_system_stats.return_value = {
-            "tables_count": 100,
-            "procedures_count": 50,
-            "field_mappings_count": 1000,
-        }
-        mock.return_value = service
+    service = MagicMock()
+    # 设置默认返回值
+    service.search_tables.return_value = [{"full_name": "TEST_TABLE", "short_name": "TEST_TABLE", "layer": "MDL", "field_count": 10}]
+    service.search_procedures.return_value = [{"full_name": "TEST_PROC", "source_tables": [], "target_tables": []}]
+    service.query_lineage.return_value = {"nodes": [], "edges": [], "chains": [], "query_time_ms": 0.0}
+    service.get_system_stats.return_value = {
+        "total_tables": 100,
+        "total_procedures": 50,
+        "total_field_mappings": 1000,
+    }
+    app.dependency_overrides[get_lineage_service] = lambda: service
+    try:
         yield service
+    finally:
+        app.dependency_overrides.pop(get_lineage_service, None)
 
 
 @pytest.fixture
 def mock_parser_service():
     """模拟 ParserService"""
-    with patch("app.dependencies.get_parser_service") as mock:
-        service = MagicMock()
-        service.get_current_data.return_value = {
-            "tables": [
-                {
-                    "full_name": "TEST_TABLE",
-                    "columns": [
-                        {"name": "ID", "data_type": "NUMBER"},
-                        {"name": "NAME", "data_type": "VARCHAR2"},
-                    ],
-                }
-            ]
-        }
-        mock.return_value = service
+    service = MagicMock()
+    service.get_current_data.return_value = {
+        "tables": [
+            {
+                "full_name": "TEST_TABLE",
+                "columns": [
+                    {"name": "ID", "data_type": "NUMBER"},
+                    {"name": "NAME", "data_type": "VARCHAR2"},
+                ],
+            }
+        ]
+    }
+    app.dependency_overrides[get_parser_service] = lambda: service
+    try:
         yield service
+    finally:
+        app.dependency_overrides.pop(get_parser_service, None)
 
 
 @pytest.fixture
@@ -148,8 +148,17 @@ class TestCacheRebuild:
     """缓存重建测试"""
 
     def test_rebuild_cache(self, client, mock_lineage_service, mock_caliber_service):
-        """TC-108: 缓存重建"""
+        """TC-108: 缓存重建（未配置 ADMIN_API_KEY 时应返回 403）"""
         response = client.post("/api/cache/rebuild")
+        assert response.status_code == 403
+
+    def test_rebuild_cache_with_admin_key(self, client, mock_lineage_service, mock_caliber_service, monkeypatch):
+        """TC-108: 缓存重建（配置 ADMIN_API_KEY 后应成功）"""
+        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
+        response = client.post(
+            "/api/cache/rebuild",
+            headers={"X-Admin-Key": "test-admin-key"},
+        )
         assert response.status_code == 200
 
 
@@ -158,8 +167,6 @@ class TestEdgeCaliber:
 
     @pytest.fixture
     def override_service(self):
-        from app.dependencies import get_lineage_service
-
         service = MagicMock()
         app.dependency_overrides[get_lineage_service] = lambda: service
         try:
@@ -212,8 +219,6 @@ class TestNodeDetail:
 
     @pytest.fixture
     def override_service(self):
-        from app.dependencies import get_lineage_service
-
         service = MagicMock()
         app.dependency_overrides[get_lineage_service] = lambda: service
         try:

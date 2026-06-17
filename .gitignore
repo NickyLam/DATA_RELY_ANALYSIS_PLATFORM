@@ -39,6 +39,21 @@ Thumbs.db
 .idea/
 .vscode/
 
+# AI tool configurations
+.codebuddy/
+.opencode/
+.planning/
+.qoder/
+.trae-cn/
+.workbuddy/
+.codex/
+
+# Sensitive files
+.env
+.env.*
+*.sqlite
+*.db
+
 # Data source files (sensitive business data)
 RRP_ORACLE/
 

@@ -33,7 +33,6 @@
         // Tab 可能刚切换为可见，需要读取实际尺寸
         const width = container.clientWidth || 800;
         const height = container.clientHeight || 500;
-        console.log('[indicator] initIndicatorGraph container size:', width, 'x', height);
 
         // 确保SVG元素存在
         let svgEl = document.getElementById('indicatorSvg');
@@ -81,9 +80,7 @@
     }
 
     window.searchIndicator = async function() {
-        console.log('[indicator] searchIndicator START');
         const keyword = document.getElementById('indicatorSearchInput').value.trim();
-        console.log('[indicator] keyword:', keyword);
         if (!keyword) {
             showIndicatorMessage('请输入指标编号');
             return;
@@ -92,18 +89,11 @@
         showIndicatorLoading(true);
 
         try {
-            console.log('[indicator] fetching...');
-            const response = await fetch(`${API_BASE}/search?keyword=${encodeURIComponent(keyword)}&limit=20`);
-            console.log('[indicator] response status:', response.status);
-            const result = await response.json();
-            console.log('[indicator] result:', result.success, 'data.length:', result.data?.length);
+            const result = await apiRequest(`/api/indicator/search?keyword=${encodeURIComponent(keyword)}&limit=20`);
 
             if (result.success && result.data.length > 0) {
-                console.log('[indicator] calling renderIndicatorSearchResults with', result.data.length, 'items');
                 renderIndicatorSearchResults(result.data);
-                console.log('[indicator] renderIndicatorSearchResults DONE');
             } else {
-                console.log('[indicator] no results, calling showIndicatorMessage');
                 showIndicatorMessage('未找到匹配的指标');
             }
         } catch (error) {
@@ -111,23 +101,18 @@
             showIndicatorMessage('搜索失败: ' + error.message);
         } finally {
             showIndicatorLoading(false);
-            console.log('[indicator] searchIndicator END');
         }
     };
 
     function renderIndicatorSearchResults(results) {
-        console.log('[indicator] renderIndicatorSearchResults START, results:', results?.length);
         const container = document.getElementById('indicatorSearchResults');
-        console.log('[indicator] container:', !!container);
         if (!container) {
             console.error('[indicator] container NOT FOUND');
             return;
         }
         container.innerHTML = '';
-        console.log('[indicator] cleared container');
 
         results.forEach((item, idx) => {
-            console.log('[indicator] rendering item', idx, ':', item.index_no);
             const div = document.createElement('div');
             div.className = 'indicator-result-item';
             div.dataset.indexNo = item.index_no;
@@ -135,15 +120,14 @@
             div.innerHTML = `
                 <div class="indicator-no">${escapeHtml(item.index_no)}</div>
                 <div class="indicator-meta">
-                    <span class="indicator-type">${item.source_type === 'gl' ? '总账' : '基础'}</span>
+                    <span class="indicator-type">${item.source_type === 'gl' ? '总账' : item.source_type === 'derived' ? '衍生' : '基础'}</span>
                     ${item.is_derived ? '<span class="indicator-tag">衍生</span>' : ''}
+                    ${(item.measures || []).length > 0 ? `<span class="indicator-tag" style="background:#eff6ff;color:#2563eb;">${item.measures.length}度量</span>` : ''}
                 </div>
             `;
 
             container.appendChild(div);
-            console.log('[indicator] appended item', idx);
         });
-        console.log('[indicator] renderIndicatorSearchResults END, total children:', container.children.length);
     }
 
     // 使用事件委托处理搜索结果点击，比单个 onclick 更可靠
@@ -154,7 +138,6 @@
             const item = event.target.closest('.indicator-result-item');
             if (!item) return;
             const indexNo = item.dataset.indexNo;
-            console.log('[indicator] result item clicked (delegation):', indexNo);
             // 视觉反馈：高亮选中项
             container.querySelectorAll('.indicator-result-item').forEach(el => {
                 el.style.background = '';
@@ -167,17 +150,15 @@
     }
 
     async function selectIndicator(indexNo) {
-        console.log('[indicator] selectIndicator called:', indexNo);
         currentIndicator = indexNo;
         showIndicatorLoading(true);
 
         try {
             const [detailRes, pipelineRes, lineageRes] = await Promise.all([
-                fetch(`${API_BASE}/detail?index_no=${indexNo}`).then(r => r.json()),
-                fetch(`${API_BASE}/pipeline?index_no=${indexNo}`).then(r => r.json()),
-                fetch(`${API_BASE}/lineage?index_no=${indexNo}&direction=both&depth=5`).then(r => r.json()),
+                apiRequest(`/api/indicator/detail?index_no=${indexNo}`),
+                apiRequest(`/api/indicator/pipeline?index_no=${indexNo}`),
+                apiRequest(`/api/indicator/lineage?index_no=${indexNo}&direction=both&depth=5`),
             ]);
-            console.log('[indicator] API responses - detail:', detailRes.success, 'pipeline:', pipelineRes.success, 'lineage:', lineageRes.success);
 
             if (detailRes.success) {
                 renderIndicatorDetail(detailRes.data);
@@ -189,6 +170,7 @@
 
             if (lineageRes.success) {
                 renderIndicatorGraph(lineageRes.data.graph);
+                renderIndicatorChains(lineageRes.data.chains || []);
             }
         } catch (error) {
             showIndicatorMessage('加载指标详情失败: ' + error.message);
@@ -200,29 +182,42 @@
     function renderIndicatorDetail(detail) {
         const panel = document.getElementById('indicatorDetailPanel');
         panel.style.display = 'block';
+
+        // 指标类型标签
+        const indexTypeTag = detail.is_gl ? '总账指标' :
+            detail.is_derived ? '衍生指标' :
+            detail.is_base ? '基础指标' : '';
+        const indexTypeColor = detail.is_gl ? '#7c3aed' :
+            detail.is_derived ? '#d97706' :
+            detail.is_base ? '#2563eb' : '#64748b';
+
         panel.innerHTML = `
             <div class="detail-header">
                 <h3>${escapeHtml(detail.index_no)}</h3>
+                ${indexTypeTag ? `<span style="background:${indexTypeColor}15;color:${indexTypeColor};font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;">${escapeHtml(indexTypeTag)}</span>` : ''}
                 <button class="btn-close" onclick="closeIndicatorDetail()">×</button>
             </div>
             <div class="detail-content">
                 <div class="detail-section">
                     <h4>度量配置</h4>
                     <div class="measure-list">
-                        ${detail.measures.map(m => `
-                            <div class="measure-item">
-                                <span class="measure-code">${escapeHtml(m.code)}</span>
-                                <span class="measure-label">${escapeHtml(m.label)}</span>
-                                <span class="algo-type">${escapeHtml(m.algo_label)}</span>
+                        ${(detail.measures || []).map(m => `
+                            <div class="measure-item" style="padding:8px 10px;border-bottom:1px solid #f1f5f9;">
+                                <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+                                    <span class="measure-code">${escapeHtml(m.code)}</span>
+                                    <span class="measure-label">${escapeHtml(m.label)}</span>
+                                    <span class="algo-type">${escapeHtml(m.algo_label)}</span>
+                                </div>
+                                ${m.src_table ? `<div style="font-size:11px;color:#64748b;margin-top:2px;">源表: <code style="color:#059669;">${escapeHtml(m.src_table)}</code></div>` : ''}
                             </div>
                         `).join('')}
                     </div>
                 </div>
-                ${detail.gl_mappings.length > 0 ? `
+                ${(detail.gl_mappings || []).length > 0 ? `
                 <div class="detail-section">
                     <h4>科目映射</h4>
                     <div class="gl-mapping-list">
-                        ${detail.gl_mappings.map(m => `
+                        ${(detail.gl_mappings || []).map(m => `
                             <div class="gl-mapping-item">
                                 <span>科目${escapeHtml(m.subj_no)}(${escapeHtml(String(m.length_val))}位)</span>
                                 <span>${escapeHtml(m.sign_label)} × ${escapeHtml(m.amt_val_label)}</span>
@@ -234,8 +229,8 @@
                 <div class="detail-section">
                     <h4>上下游关系</h4>
                     <div class="relation-list">
-                        ${detail.upstream_indices.length > 0 ? `<div>上游: ${detail.upstream_indices.map(i => escapeHtml(i)).join(', ')}</div>` : ''}
-                        ${detail.downstream_indices.length > 0 ? `<div>下游: ${detail.downstream_indices.map(i => escapeHtml(i)).join(', ')}</div>` : ''}
+                        ${(detail.upstream_indices || []).length > 0 ? `<div>上游: ${(detail.upstream_indices || []).map(i => escapeHtml(i)).join(', ')}</div>` : ''}
+                        ${(detail.downstream_indices || []).length > 0 ? `<div>下游: ${(detail.downstream_indices || []).map(i => escapeHtml(i)).join(', ')}</div>` : ''}
                     </div>
                 </div>
             </div>
@@ -243,7 +238,6 @@
     }
 
     function renderIndicatorPipeline(steps) {
-        console.log('[indicator] renderIndicatorPipeline steps:', steps ? steps.length : 0);
         const container = document.getElementById('indicatorPipeline');
         if (!container) {
             console.error('[indicator] indicatorPipeline container NOT FOUND');
@@ -266,8 +260,64 @@
         });
     }
 
+    /** 渲染加工链路（chains），展示从源头到目标的完整加工路径 */
+    function renderIndicatorChains(chains) {
+        let container = document.getElementById('indicatorChains');
+        if (!container) {
+            // 动态创建 chains 容器，插入到 pipeline 后面
+            const pipeline = document.getElementById('indicatorPipeline');
+            if (!pipeline || !pipeline.parentElement) return;
+            container = document.createElement('div');
+            container.id = 'indicatorChains';
+            container.style.cssText = 'margin-top:12px;max-height:300px;overflow-y:auto;';
+            pipeline.parentElement.insertBefore(container, pipeline.nextSibling);
+        }
+        container.innerHTML = '';
+
+        if (!chains || chains.length === 0) {
+            container.innerHTML = '<div style="color:#94a3b8;font-size:12px;padding:8px;">无加工链路数据</div>';
+            return;
+        }
+
+        const header = document.createElement('h4');
+        header.style.cssText = 'color:#6366f1;font-size:13px;margin:0 0 8px;';
+        header.textContent = `加工链路 (${chains.length} 条)`;
+        container.appendChild(header);
+
+        chains.slice(0, 5).forEach((chain, ci) => {
+            const chainDiv = document.createElement('div');
+            chainDiv.style.cssText = 'background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;margin-bottom:6px;font-size:11px;';
+
+            let stepsHtml = (chain.steps || []).map(s => {
+                const typeTag = s.index_type_label ? `[${escapeHtml(s.index_type_label)}]` : '';
+                const algoTag = s.algo_label ? `[${escapeHtml(s.algo_label)}]` : '';
+                const procShort = s.procedure ? s.procedure.replace('PRO_F_INDEX_CALC_', '') : '';
+                return `<div style="padding:3px 0;border-bottom:1px solid #f1f5f9;">
+                    <span style="color:#6366f1;font-weight:600;">${escapeHtml(s.index_no || '')}</span>
+                    ${typeTag ? `<span style="color:#2563eb;font-size:10px;">${typeTag}</span>` : ''}
+                    ${algoTag ? `<span style="color:#d97706;font-size:10px;">${algoTag}</span>` : ''}
+                    ${procShort ? `<span style="color:#64748b;font-size:10px;margin-left:4px;">← ${escapeHtml(procShort)}</span>` : ''}
+                    ${s.source_tables && s.source_tables.length > 0 ? `<div style="color:#059669;font-size:10px;">源表: ${s.source_tables.map(t => escapeHtml(t)).join(', ')}</div>` : ''}
+                    ${s.condition_sql ? `<div style="color:#94a3b8;font-size:10px;word-break:break-all;">条件: ${escapeHtml(s.condition_sql.substring(0, 80))}</div>` : ''}
+                </div>`;
+            }).join('');
+
+            chainDiv.innerHTML = `
+                <div style="color:#1e293b;font-weight:600;margin-bottom:4px;">链路 ${ci + 1} (深度 ${chain.depth}, ${chain.step_count} 步)</div>
+                ${stepsHtml}
+            `;
+            container.appendChild(chainDiv);
+        });
+
+        if (chains.length > 5) {
+            const more = document.createElement('div');
+            more.style.cssText = 'color:#94a3b8;font-size:11px;text-align:center;padding:4px;';
+            more.textContent = `... 还有 ${chains.length - 5} 条链路`;
+            container.appendChild(more);
+        }
+    }
+
     function renderIndicatorGraph(graphData) {
-        console.log('[indicator] renderIndicatorGraph called, nodes:', graphData?.nodes?.length, 'edges:', graphData?.edges?.length);
         if (!checkD3()) return;
 
         const container = document.getElementById('indicatorGraphContainer');
@@ -297,7 +347,12 @@
         const edges = (graphData.edges || []).map(e => ({
             source: typeof e.source === 'object' ? e.source.id : e.source,
             target: typeof e.target === 'object' ? e.target.id : e.target,
-            type: e.type
+            type: e.type,
+            procedure: e.procedure || '',
+            transform_logic: e.transform_logic || '',
+            algo_type: e.algo_type || '',
+            condition_sql: e.condition_sql || '',
+            measure_sql: e.measure_sql || '',
         }));
 
         const nodeMap = {};
@@ -521,7 +576,7 @@
             }
 
             const midY = (y1 + y2) / 2;
-            indicatorG.append('path')
+            const pathEl = indicatorG.append('path')
                 .attr('d', `M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}`)
                 .attr('fill', 'none')
                 .attr('stroke', strokeColor)
@@ -529,6 +584,26 @@
                 .attr('opacity', isQueryEdge ? 0.9 : 0.65)
                 .attr('stroke-dasharray', isDashed ? '5,5' : 'none')
                 .attr('marker-end', isQueryEdge ? 'url(#indicator-arrow-query)' : 'url(#indicator-arrow)');
+
+            // 边 tooltip：展示 procedure / transform_logic
+            const tooltipParts = [];
+            if (edge.procedure) tooltipParts.push(`过程: ${edge.procedure}`);
+            if (edge.transform_logic) tooltipParts.push(`逻辑: ${edge.transform_logic}`);
+            if (edge.condition_sql) tooltipParts.push(`条件: ${edge.condition_sql}`);
+            if (tooltipParts.length > 0) {
+                pathEl.append('title').text(tooltipParts.join('\n'));
+            }
+
+            // 加宽透明热区提升点击命中率
+            indicatorG.append('path')
+                .attr('d', `M${x1},${y1} C${x1},${midY} ${x2},${midY} ${x2},${y2}`)
+                .attr('fill', 'none')
+                .attr('stroke', 'transparent')
+                .attr('stroke-width', 10)
+                .style('cursor', 'pointer')
+                .on('click', (evt) => {
+                    _showEdgeInfoTooltip(edge, evt);
+                });
         });
 
         // ====== 6. 绘制节点（矩形卡片，保留指标类型配色） ======
@@ -589,17 +664,31 @@
                 .attr('font-size', `${fontSize}px`).attr('font-weight', '700')
                 .text(displayName);
 
-            // 第3行：ID / 附加信息
+            // 第3行：ID / 附加信息 + index_type 标签
+            const indexTypeLabels = { '1': '基础', '2': '衍生', '3': '特殊', '6': '绩效' };
+            const indexTypeShort = indexTypeLabels[node.index_type] || '';
             const subText = node.type === 'table' ? (node.id || '')
                 : node.type === 'indicator' ? (node.label || '')
                 : '';
-            if (subText) {
-                const shortSub = subText.length > 22 ? subText.substring(0, 22) + '..' : subText;
+            if (subText || indexTypeShort) {
+                const shortSub = subText.length > 18 ? subText.substring(0, 18) + '..' : subText;
+                const typeTag = indexTypeShort ? `[${indexTypeShort}]` : '';
                 ng.append('text')
                     .attr('x', 10).attr('y', 54)
                     .attr('fill', isTarget ? 'rgba(255,255,255,0.75)' : '#6366f1')
                     .attr('font-size', '10px').attr('font-weight', '500')
-                    .text(shortSub);
+                    .text(`${typeTag}${shortSub}`);
+            }
+
+            // 节点 tooltip：展示 detail 中的 src_table / algo_type 等信息
+            const tooltipLines = [];
+            if (node.detail) {
+                if (node.detail.src_table) tooltipLines.push(`源表: ${node.detail.src_table}`);
+                if (node.detail.algo_label) tooltipLines.push(`算法: ${node.detail.algo_label}`);
+                if (node.detail.index_flag) tooltipLines.push(`标志: ${node.detail.index_flag}`);
+            }
+            if (tooltipLines.length > 0) {
+                ng.append('title').text(tooltipLines.join('\n'));
             }
 
             // 右下角类型色块标签
@@ -656,13 +745,11 @@
 
     // 暴露给 switchTab 调用，确保 Tab 切换后重新计算 SVG 尺寸
     window.initIndicatorGraphTab = function() {
-        console.log('[indicator] initIndicatorGraphTab called');
         initIndicatorGraph();
     };
 
     // 内联 onclick 兜底处理器（绕过所有 JS 事件绑定问题）
     window._indicatorSelect = function(indexNo) {
-        console.log('[indicator] _indicatorSelect called (inline fallback):', indexNo);
         selectIndicator(indexNo);
     };
 
@@ -676,6 +763,47 @@
     window.closeIndicatorDetail = function() {
         document.getElementById('indicatorDetailPanel').style.display = 'none';
     };
+
+    /** 边信息浮窗：展示 procedure / transform_logic / condition_sql / measure_sql */
+    function _showEdgeInfoTooltip(edge, clickEvent) {
+        let existing = document.getElementById('indicatorEdgeTooltip');
+        if (existing) existing.remove();
+
+        const algoTypeLabels = { '1': '通用算法', '2': '自定义算法', '3': '年化通用算法', '4': '临时转标准' };
+        const algoLabel = algoTypeLabels[edge.algo_type] || edge.algo_type || '';
+
+        let html = '<div style="font-size:12px;line-height:1.6;max-width:360px;">';
+        if (edge.procedure) html += `<div><b>存储过程:</b> ${escapeHtml(edge.procedure)}</div>`;
+        if (algoLabel) html += `<div><b>算法类型:</b> ${escapeHtml(algoLabel)}</div>`;
+        if (edge.transform_logic) html += `<div style="margin-top:4px;"><b>转换逻辑:</b><br><code style="font-size:11px;word-break:break-all;">${escapeHtml(edge.transform_logic)}</code></div>`;
+        if (edge.condition_sql) html += `<div style="margin-top:4px;"><b>条件SQL:</b><br><code style="font-size:11px;word-break:break-all;">${escapeHtml(edge.condition_sql)}</code></div>`;
+        if (edge.measure_sql) html += `<div style="margin-top:4px;"><b>度量SQL:</b><br><code style="font-size:11px;word-break:break-all;">${escapeHtml(edge.measure_sql)}</code></div>`;
+        html += '</div>';
+
+        const tooltip = document.createElement('div');
+        tooltip.id = 'indicatorEdgeTooltip';
+        tooltip.style.cssText = 'position:fixed;z-index:9999;background:#1e293b;color:#f1f5f9;padding:12px 16px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.3);max-width:400px;pointer-events:auto;';
+        tooltip.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><b style="color:#94a3b8;font-size:11px;">边信息</b><span style="cursor:pointer;color:#94a3b8;font-size:14px;" onclick="this.closest('#indicatorEdgeTooltip').remove()">×</span></div>${html}`;
+        document.body.appendChild(tooltip);
+
+        // 定位在鼠标附近
+        const rect = tooltip.getBoundingClientRect();
+        const cx = clickEvent ? clickEvent.clientX : 200;
+        const cy = clickEvent ? clickEvent.clientY : 200;
+        const px = Math.min(window.innerWidth - rect.width - 16, Math.max(16, cx + 12));
+        const py = Math.min(window.innerHeight - rect.height - 16, Math.max(16, cy + 12));
+        tooltip.style.left = px + 'px';
+        tooltip.style.top = py + 'px';
+
+        // 点击其他区域关闭
+        const closeHandler = (e) => {
+            if (!tooltip.contains(e.target)) {
+                tooltip.remove();
+                document.removeEventListener('click', closeHandler);
+            }
+        };
+        setTimeout(() => document.addEventListener('click', closeHandler), 100);
+    }
 
     function showIndicatorLoading(show) {
         const container = document.getElementById('indicatorGraphContainer');
@@ -708,8 +836,7 @@
         showIndicatorLoading(true);
 
         try {
-            const response = await fetch(`${API_BASE}/bridge-lineage?table_name=${encodeURIComponent(cleanTableName)}`);
-            const result = await response.json();
+            const result = await apiRequest(`/api/indicator/bridge-lineage?table_name=${encodeURIComponent(cleanTableName)}`);
 
             if (result.success && result.data) {
                 switchTab('display');
@@ -730,7 +857,8 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        initIndicatorGraph();
+        // initIndicatorGraph() 不在此处调用，由 initIndicatorGraphTab 懒初始化
+        // 避免在 Tab 隐藏时（display:none）初始化导致 SVG 尺寸为 0
         setupResultClickDelegation();
 
         // 搜索输入框 Enter 键触发搜索
@@ -747,9 +875,7 @@
         // 直接给搜索按钮绑定点击事件（不依赖 HTML onclick 属性）
         const searchBtn = document.querySelector('#indicator-tab button.btn-primary');
         if (searchBtn) {
-            console.log('[indicator] binding search button click');
             searchBtn.addEventListener('click', (e) => {
-                console.log('[indicator] search button clicked (direct)');
                 e.preventDefault();
                 e.stopPropagation();
                 window.searchIndicator();

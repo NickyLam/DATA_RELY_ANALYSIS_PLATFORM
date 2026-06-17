@@ -12,6 +12,7 @@ PORT=8899
 DIR="RRP_ORACLE"
 LOG_FILE="$SCRIPT_DIR/server.log"
 PID_FILE="$SCRIPT_DIR/.server.pid"
+REPARSE=false
 
 # 颜色
 RED='\033[0;31m'
@@ -23,14 +24,16 @@ NC='\033[0m'
 # 解析参数
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --port|-p) PORT="$2"; shift 2 ;;
-        --dir|-d)  DIR="$2";  shift 2 ;;
+        --port|-p)    PORT="$2"; shift 2 ;;
+        --dir|-d)     DIR="$2";  shift 2 ;;
+        --reparse|-r) REPARSE=true; shift ;;
         --help|-h)
-            echo "用法: $0 [--port PORT] [--dir DIR]"
+            echo "用法: $0 [--port PORT] [--dir DIR] [--reparse]"
             echo ""
             echo "选项:"
             echo "  -p, --port PORT   监听端口 (默认: 8899)"
             echo "  -d, --dir  DIR    .prc 文件目录 (默认: RRP_ORACLE)"
+            echo "  -r, --reparse     启动时强制重新解析所有数据源（跳过缓存）"
             echo "  -h, --help        显示帮助"
             exit 0
             ;;
@@ -130,6 +133,11 @@ if [ ! -d "$DIR" ]; then
     exit 1
 fi
 
+# 设置重新解析环境变量
+if [ "$REPARSE" = true ]; then
+    export FORCE_REPARSE=1
+fi
+
 # 启动
 echo -e "${BLUE}========================================${NC}"
 echo -e "${BLUE}  数据血缘分析系统 启动中...${NC}"
@@ -137,6 +145,11 @@ echo -e "${BLUE}========================================${NC}"
 echo ""
 echo -e "  端口: ${GREEN}$PORT${NC}"
 echo -e "  目录: ${GREEN}$DIR${NC}"
+if [ "$REPARSE" = true ]; then
+    echo -e "  数据加载: ${YELLOW}强制重新解析（跳过缓存）${NC}"
+else
+    echo -e "  数据加载: ${GREEN}缓存优先（默认）${NC}"
+fi
 echo -e "  日志: ${GREEN}$LOG_FILE${NC}"
 echo ""
 
@@ -161,7 +174,11 @@ for i in $(seq 1 10); do
     fi
 done
 
-echo -e "${YELLOW}[2/3] 正在加载数据（缓存优先）...${NC}"
+if [ "$REPARSE" = true ]; then
+    echo -e "${YELLOW}[2/3] 正在重新解析所有数据源（跳过缓存，请耐心等待）...${NC}"
+else
+    echo -e "${YELLOW}[2/3] 正在加载数据（缓存优先）...${NC}"
+fi
 while ! grep -q "系统就绪" "$LOG_FILE" 2>/dev/null; do
     sleep 2
 

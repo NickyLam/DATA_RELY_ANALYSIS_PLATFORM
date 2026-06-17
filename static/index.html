@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>数据血缘分析系统 v3.0</title>
-    <link rel="stylesheet" href="/static/css/style.css?v=p3-node-summary">
+    <title>数据血缘分析系统 v2.0</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=combo-fix-02">
 </head>
 <body>
     <!-- 顶部导航栏 -->
@@ -225,25 +225,35 @@
                             <!-- 系统选择 -->
                             <div class="input-group">
                                 <label class="input-label">🏢 系统</label>
-                                <select id="systemSelect" onchange="onSystemChange()" style="width:100%;padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;background:#fff;">
+                                <select id="systemSelect" onchange="onSystemChange()">
                                     <option value="">-- 加载中... --</option>
                                 </select>
                             </div>
 
-                            <!-- 表选择 -->
+                            <!-- 表名 combobox（输入模糊匹配 + 下拉选择） -->
                             <div class="input-group">
                                 <label class="input-label">📋 表名</label>
-                                <select id="tableSelect" onchange="onTableChange()" style="width:100%;padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;background:#fff;" disabled>
-                                    <option value="">-- 请先选择系统 --</option>
-                                </select>
+                                <input
+                                    type="text"
+                                    id="tableComboInput"
+                                    placeholder="输入搜索或下拉选择"
+                                    autocomplete="off"
+                                    disabled
+                                >
+                                <div id="tableComboDropdown" class="combo-dropdown" style="display:none;"></div>
                             </div>
 
-                            <!-- 字段选择 -->
+                            <!-- 字段名 combobox（输入模糊匹配 + 下拉选择） -->
                             <div class="input-group">
                                 <label class="input-label">✏️ 字段名</label>
-                                <select id="fieldSelect" onchange="onFieldChange()" style="width:100%;padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:13px;background:#fff;" disabled>
-                                    <option value="">-- 请先选择表 --</option>
-                                </select>
+                                <input
+                                    type="text"
+                                    id="fieldComboInput"
+                                    placeholder="请先选择表名"
+                                    autocomplete="off"
+                                    disabled
+                                >
+                                <div id="fieldComboDropdown" class="combo-dropdown" style="display:none;"></div>
                             </div>
 
                             <!-- 查询方向选择 -->
@@ -364,7 +374,8 @@
                         <h3 id="panelTitle"></h3>
                         <div id="panelContent"></div>
                     </div>
-                </div>
+                    </div>
+                </main>
             </div>
         </section>
 
@@ -385,7 +396,7 @@
                     <!-- 加工流水线 -->
                     <div class="pipeline-section">
                         <h3>⚙️ 加工流水线</h3>
-                        <div id="indicatorPipeline" class="pipeline-container"></div>
+                        <div id="indicatorPipeline" class="indicator-pipeline-container"></div>
                     </div>
                 </div>
 
@@ -424,10 +435,10 @@
     <script src="/static/js/app.js?v=0e3a2476"></script>
     <script src="/static/js/parse-tab.js?v=6e355c7a"></script>
     <!-- 展示层模块化拆分 -->
-    <script src="/static/js/detail-panel.js?v=p5-node-caliber"></script>
-    <script src="/static/js/cascading-wizard.js?v=cascade-3level"></script>
+    <script src="/static/js/detail-panel.js?v=field-type-meta"></script>
+    <script src="/static/js/cascading-wizard.js?v=combo-fix-02"></script>
     <script src="/static/js/search-panel.js?v=a7c0dbbd"></script>
-    <script src="/static/js/lineage-graph.js?v=p3-node-caliber"></script>
+    <script src="/static/js/lineage-graph.js?v=field-type-meta"></script>
     <!-- 指标血缘模块 -->
     <script src="/static/js/indicator-tab.js?v=3b52b090"></script>
 </body>

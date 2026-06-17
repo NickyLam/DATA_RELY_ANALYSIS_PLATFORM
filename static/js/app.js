@@ -85,10 +85,14 @@ function debounce(func, delay = 300) {
 }
 
 async function apiRequest(url, options = {}) {
+    const needsJsonContentType = options.body && !(options.body instanceof FormData);
+    const defaultHeaders = {};
+    if (needsJsonContentType) {
+        defaultHeaders['Content-Type'] = 'application/json';
+    }
+
     const defaultOptions = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: defaultHeaders,
     };
 
     const mergedHeaders = { ...(defaultOptions.headers || {}), ...(options.headers || {}) };
@@ -105,6 +109,10 @@ async function apiRequest(url, options = {}) {
 }
 
 function showNotification(message, type = 'info') {
+    // 移除已有的通知，避免重叠
+    const existing = document.querySelector('.notification');
+    if (existing) existing.remove();
+
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.textContent = message;
@@ -157,25 +165,25 @@ async function showSystemStats() {
                 <h2 style="margin-bottom:20px;color:#1e293b;">📊 系统统计信息</h2>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
                     <div style="padding:16px;background:#f8fafc;border-radius:8px;text-align:center;">
-                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${stats.total_tables || 0}</div>
+                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${escapeHtml(String(stats.total_tables || 0))}</div>
                         <div style="font-size:12px;color:#64748b;margin-top:4px;">表数量</div>
                     </div>
                     <div style="padding:16px;background:#f8fafc;border-radius:8px;text-align:center;">
-                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${stats.total_procedures || 0}</div>
+                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${escapeHtml(String(stats.total_procedures || 0))}</div>
                         <div style="font-size:12px;color:#64748b;margin-top:4px;">存储过程</div>
                     </div>
                     <div style="padding:16px;background:#f8fafc;border-radius:8px;text-align:center;">
-                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${stats.total_table_lineages || 0}</div>
+                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${escapeHtml(String(stats.total_table_lineages || 0))}</div>
                         <div style="font-size:12px;color:#64748b;margin-top:4px;">表级血缘</div>
                     </div>
                     <div style="padding:16px;background:#f8fafc;border-radius:8px;text-align:center;">
-                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${stats.total_field_mappings || 0}</div>
+                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${escapeHtml(String(stats.total_field_mappings || 0))}</div>
                         <div style="font-size:12px;color:#64748b;margin-top:4px;">字段映射</div>
                     </div>
                 </div>
                 ${stats.cache_size !== undefined ? `
                 <div style="margin-top:20px;padding:16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;">
-                    <div style="font-size:13px;color:#166534;">✅ 缓存已启用 | 缓存条目: ${stats.cache_size}</div>
+                    <div style="font-size:13px;color:#166534;">✅ 缓存已启用 | 缓存条目: ${escapeHtml(String(stats.cache_size || 0))}</div>
                 </div>` : ''}
                 <button onclick="this.closest('div').remove()"
                     style="margin-top:20px;width:100%;padding:10px;background:#f1f5f9;border:none;border-radius:6px;cursor:pointer;font-size:13px;">
@@ -210,14 +218,23 @@ document.addEventListener('DOMContentLoaded', () => {
     initDisplayTab();
 });
 
-async function checkSystemHealth() {
+async function checkSystemHealth(retryCount = 0) {
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY_MS = 30000;
+
     try {
         const health = await apiRequest('/health');
         document.getElementById('systemStatus').textContent = `● 系统就绪 (运行 ${Math.floor(health.uptime_seconds/60)} 分钟)`;
         document.getElementById('systemStatus').style.color = '#22c55e';
     } catch (error) {
-        document.getElementById('systemStatus').textContent = '● 系统异常';
-        document.getElementById('systemStatus').style.color = '#ef4444';
+        if (retryCount < MAX_RETRIES) {
+            document.getElementById('systemStatus').textContent = `● 系统连接中... (重试 ${retryCount + 1}/${MAX_RETRIES})`;
+            document.getElementById('systemStatus').style.color = '#f59e0b';
+            setTimeout(() => checkSystemHealth(retryCount + 1), RETRY_DELAY_MS);
+        } else {
+            document.getElementById('systemStatus').textContent = '● 系统异常';
+            document.getElementById('systemStatus').style.color = '#ef4444';
+        }
     }
 }
 

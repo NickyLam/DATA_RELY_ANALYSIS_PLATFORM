@@ -20,11 +20,99 @@ import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from core.models import FieldMapping, ProcedureInfo, TableLineage
-from core.warehouse.schema_resolver import SchemaResolver
+from core.field_cleaner import FieldCleaner
+from core.models import FieldMapping, ProcedureInfo, TableInfo, TableLineage
+from core.warehouse.schema_resolver import SCHEMA_LAYER_MAP, SchemaResolver
 from core.warehouse.temp_table_filter import TempTableFilter
 
 logger = logging.getLogger(__name__)
+_KNOWN_SCHEMA_PREFIXES = {schema.upper() for schema in SCHEMA_LAYER_MAP.values()}
+_SQL_KEYWORDS = {
+    "NVL",
+    "TO_DATE",
+    "TO_TIMESTAMP",
+    "TO_CHAR",
+    "TO_NUMBER",
+    "DUAL",
+    "SYSDATE",
+    "ROWNUM",
+    "NULL",
+    "CASE",
+    "WHEN",
+    "SELECT",
+    "FROM",
+    "WHERE",
+    "AND",
+    "OR",
+    "NOT",
+    "IN",
+    "EXISTS",
+    "BETWEEN",
+    "LIKE",
+    "IS",
+    "AS",
+    "ON",
+    "SET",
+    "INTO",
+    "VALUES",
+    "GROUP",
+    "ORDER",
+    "HAVING",
+    "LIMIT",
+    "UNION",
+    "ALL",
+    "DISTINCT",
+    "TRIM",
+    "UPPER",
+    "LOWER",
+    "SUBSTR",
+    "INSTR",
+    "LENGTH",
+    "REPLACE",
+    "CONCAT",
+    "SUM",
+    "COUNT",
+    "AVG",
+    "MAX",
+    "MIN",
+    "DECODE",
+    "GREATEST",
+    "LEAST",
+    "COALESCE",
+    "CAST",
+    "EXTRACT",
+    "ROUND",
+    "TRUNC",
+    "FLOOR",
+    "CEIL",
+    "ABS",
+    "MOD",
+    "SIGN",
+    "POWER",
+    "SQRT",
+    "ADD_MONTHS",
+    "LAST_DAY",
+    "NEXT_DAY",
+    "MONTHS_BETWEEN",
+    "ROW_NUMBER",
+    "RANK",
+    "DENSE_RANK",
+    "LEAD",
+    "LAG",
+    "FIRST_VALUE",
+    "LAST_VALUE",
+    "OVER",
+    "PARTITION",
+    "WITH",
+    "JOIN",
+    "LEFT",
+    "RIGHT",
+    "INNER",
+    "OUTER",
+    "FULL",
+    "CROSS",
+    "USING",
+}
 
 # ---------------------------------------------------------------------------
 # 正则：DML 解析
@@ -44,20 +132,35 @@ _INSERT_TARGET_PATTERN = re.compile(
     re.IGNORECASE | re.DOTALL,
 )
 
+# SQL 标识符按数据库对象名处理，避免 Python \w 把中文注释误识别为表名。
+_SQL_IDENTIFIER = r"[A-Za-z_][A-Za-z0-9_$#]*"
+_SCHEMA_TABLE_REF = rf"(?:\$\{{[\w_]+\}}|{_SQL_IDENTIFIER})\.{_SQL_IDENTIFIER}"
+_BARE_TABLE_REF = _SQL_IDENTIFIER
+_TABLE_REF = rf"(?:{_SCHEMA_TABLE_REF}|{_BARE_TABLE_REF})"
+
 # FROM 子句中的表引用（简化版）
 _FROM_TABLE_PATTERN = re.compile(
     r"(?:FROM|JOIN)\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 表名
-    r"(?:\s+\w+)?",  # 可选别名
+    rf"({_TABLE_REF})"  # 表名
+    rf"(?:\s+(?:AS\s+)?({_SQL_IDENTIFIER}))?",  # 可选别名
     re.IGNORECASE,
 )
 
-# 逗号分隔的表引用
-_COMMA_TABLE_PATTERN = re.compile(
-    r",\s*"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 表名
-    r"(?:\s+\w+)?",  # 可选别名
+_TABLE_REF_AT_PATTERN = re.compile(_TABLE_REF, re.IGNORECASE)
+_SQL_IDENTIFIER_AT_PATTERN = re.compile(_SQL_IDENTIFIER, re.IGNORECASE)
+_FROM_KEYWORD_PATTERN = re.compile(r"\bFROM\b", re.IGNORECASE)
+_INSERT_ALL_PATTERN = re.compile(
+    r"INSERT\s+(?:/\*.*?\*/\s*)?ALL\b",
     re.IGNORECASE,
+)
+_INSERT_ALL_INTO_PATTERN = re.compile(
+    r"\bINTO\s+"
+    rf"({_TABLE_REF})"
+    r"(?:\s+PARTITION\s+FOR\s*\(.*?\))?"
+    r"(?:\s+PARTITION\s+\w+)?"
+    r"(?:\s+NOLOGGING)?\s*"
+    r"\((.*?)\)",
+    re.IGNORECASE | re.DOTALL,
 )
 
 # MERGE INTO target USING source ON (...)
@@ -95,22 +198,6 @@ _EXCHANGE_PARTITION_PATTERN = re.compile(
     r"\s+EXCHANGE\s+PARTITION\s+\S+\s+"
     r"WITH\s+TABLE\s+"
     r"(\$\{[\w_]+\}\.\w+|[\w.]+)",  # 交换表
-    re.IGNORECASE,
-)
-
-# FROM 子句中的表引用（简化版）
-_FROM_TABLE_PATTERN = re.compile(
-    r"(?:FROM|JOIN)\s+"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 表名
-    r"(?:\s+\w+)?",  # 可选别名
-    re.IGNORECASE,
-)
-
-# 逗号分隔的表引用
-_COMMA_TABLE_PATTERN = re.compile(
-    r",\s*"
-    r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 表名
-    r"(?:\s+\w+)?",  # 可选别名
     re.IGNORECASE,
 )
 
@@ -218,11 +305,11 @@ class DMLParser:
         if not sql_files:
             return output
 
-        from concurrent.futures import ThreadPoolExecutor
+        from concurrent.futures import ThreadPoolExecutor, as_completed
 
         with ThreadPoolExecutor(max_workers=4) as executor:
             futures = {executor.submit(self.parse_file, fp): fp for fp in sql_files}
-            for future in futures:
+            for future in as_completed(futures):
                 fp = futures[future]
                 try:
                     file_output = future.result()
@@ -249,25 +336,29 @@ class DMLParser:
             if stmt:
                 statements.append(stmt)
 
-        # 2. 提取 MERGE INTO ... USING 语句
+        # 2. 提取 Oracle INSERT ALL ... INTO ... SELECT FROM 语句
+        for match in _INSERT_ALL_PATTERN.finditer(content):
+            statements.extend(self._parse_insert_all_statement(match, content, file_path))
+
+        # 3. 提取 MERGE INTO ... USING 语句
         for match in _MERGE_INTO_PATTERN.finditer(content):
             stmt = self._parse_merge_statement(match, file_path)
             if stmt:
                 statements.append(stmt)
 
-        # 3. 提取 UPDATE ... SET 语句
+        # 4. 提取 UPDATE ... SET 语句
         for match in _UPDATE_PATTERN.finditer(content):
             stmt = self._parse_update_statement(match, file_path)
             if stmt:
                 statements.append(stmt)
 
-        # 4. 提取 CTAS (CREATE TABLE AS SELECT)
+        # 5. 提取 CTAS (CREATE TABLE AS SELECT)
         for match in _CTAS_PATTERN.finditer(content):
             stmt = self._parse_ctas_statement(match, file_path)
             if stmt:
                 statements.append(stmt)
 
-        # 5. 提取 EXCHANGE PARTITION（作为血缘关系）
+        # 6. 提取 EXCHANGE PARTITION（作为血缘关系）
         for match in _EXCHANGE_PARTITION_PATTERN.finditer(content):
             stmt = self._parse_exchange_statement(match, file_path)
             if stmt:
@@ -284,25 +375,17 @@ class DMLParser:
         if target_resolved is None:
             return None
 
-        target_table = target_resolved.full_name
-
-        if self._temp_filter.is_temp_table(target_table):
+        target_table = self._resolve_insert_target_table(target_resolved.full_name)
+        if not target_table:
             return None
-
-        if self._temp_filter.is_exchange_table(target_table):
-            target_table = self._temp_filter.resolve_exchange_table(target_table)
-            logger.debug(
-                "INSERT 目标为交换表，映射为正式表: %s → %s",
-                target_resolved.full_name,
-                target_table,
-            )
 
         # 解析目标字段
         target_columns = self._parse_column_list(columns_raw)
 
-        # 提取源表：从 INSERT 语句的 SELECT ... FROM 部分提取
-        # 使用从 match 结束位置到分号之间的文本作为 FROM 子句
-        from_clause = self._extract_from_clause(content, match.end())
+        # 提取 SELECT 字段列表和 FROM 子句。
+        # 使用从 match 结束位置到分号之间的文本作为 SELECT 语句主体。
+        statement_body = self._extract_from_clause(content, match.end())
+        select_clause, from_clause = self._split_select_body(statement_body)
 
         source_tables = self._extract_source_tables(from_clause)
 
@@ -314,12 +397,128 @@ class DMLParser:
             target_table=target_table,
             target_columns=target_columns,
             source_tables=source_tables,
-            select_clause="",  # 不再单独提取 SELECT 子句
+            select_clause=select_clause,
             from_clause=from_clause,
             raw_sql=match.group(0),
             file_path=file_path,
             start_line=start_line,
         )
+
+    def _parse_insert_all_statement(self, match: re.Match, content: str, file_path: str) -> list[DMLStatement]:
+        """解析 Oracle INSERT ALL ... INTO ... SELECT ... 语句。"""
+        statement_text = self._extract_sql_statement(content, match.start())
+        body_start = match.end() - match.start()
+        body = statement_text[body_start:]
+        select_pos = self._find_top_level_keyword(body, "SELECT")
+        if select_pos < 0:
+            return []
+
+        into_clause = body[:select_pos]
+        select_body = body[select_pos + len("SELECT") :]
+        select_clause, from_clause = self._split_select_body(select_body)
+        if not from_clause:
+            return []
+
+        source_tables = self._extract_source_tables(from_clause)
+        start_line = content[: match.start()].count("\n") + 1
+        statements: list[DMLStatement] = []
+        seen_targets: set[tuple[str, tuple[str, ...]]] = set()
+
+        for into_match in _INSERT_ALL_INTO_PATTERN.finditer(into_clause):
+            target_raw = into_match.group(1).strip()
+            columns_raw = into_match.group(2).strip()
+            target_resolved = self._resolver.resolve_table_name(target_raw)
+            if target_resolved is None:
+                continue
+
+            target_table = self._resolve_insert_target_table(target_resolved.full_name)
+            if not target_table:
+                continue
+
+            target_columns = self._parse_column_list(columns_raw)
+            target_key = (target_table, tuple(target_columns))
+            if target_key in seen_targets:
+                continue
+            seen_targets.add(target_key)
+
+            statements.append(
+                DMLStatement(
+                    op_type="insert_all",
+                    target_table=target_table,
+                    target_columns=target_columns,
+                    source_tables=source_tables,
+                    select_clause=select_clause,
+                    from_clause=from_clause,
+                    raw_sql=statement_text,
+                    file_path=file_path,
+                    start_line=start_line,
+                )
+            )
+
+        return statements
+
+    def _resolve_insert_target_table(self, target_table: str) -> str:
+        """将 INSERT 目标规范到正式表；无法证明正式表存在的临时表仍过滤。"""
+        if self._temp_filter.is_exchange_table(target_table):
+            formal_table = self._temp_filter.resolve_exchange_table(target_table)
+            logger.debug("INSERT 目标为交换表，映射为正式表: %s → %s", target_table, formal_table)
+            return formal_table
+
+        if not self._temp_filter.is_temp_table(target_table):
+            return target_table
+
+        formal_table = self._resolve_formal_table_for_operational_table(target_table)
+        if formal_table:
+            logger.debug("INSERT 目标为操作临时表，映射为正式表: %s → %s", target_table, formal_table)
+            return formal_table
+
+        return ""
+
+    def _resolve_formal_table_for_operational_table(self, table_name: str) -> str:
+        """根据已解析 DDL 表结构，将 xxx_job_tm/cl/op 等操作表折叠到正式表。"""
+        if not self._tables:
+            return ""
+
+        table_upper = table_name.upper()
+        schema = table_upper.rsplit(".", 1)[0] if "." in table_upper else ""
+        short = table_upper.rsplit(".", 1)[-1]
+        candidates: list[tuple[int, str]] = []
+
+        for full_name, table_info in self._tables.items():
+            formal_full = getattr(table_info, "full_name", "") or full_name
+            formal_upper = formal_full.upper()
+            formal_schema = formal_upper.rsplit(".", 1)[0] if "." in formal_upper else ""
+            if schema and formal_schema and schema != formal_schema:
+                continue
+
+            formal_short = (getattr(table_info, "table_name", "") or formal_upper.rsplit(".", 1)[-1]).upper()
+            if not formal_short or not short.startswith(f"{formal_short}_"):
+                continue
+
+            suffix = short[len(formal_short) + 1 :]
+            if self._looks_like_operational_suffix(suffix):
+                candidates.append((len(formal_short), formal_upper))
+
+        if not candidates:
+            return ""
+
+        candidates.sort(reverse=True)
+        return candidates[0][1]
+
+    @staticmethod
+    def _looks_like_operational_suffix(suffix: str) -> bool:
+        if not suffix:
+            return False
+
+        parts = [part for part in suffix.upper().split("_") if part]
+        if not parts:
+            return False
+
+        operational_tail = {"TM", "TMP", "TEMP", "OP", "CL", "BK", "OLD", "NEW"}
+        if parts[-1] in operational_tail:
+            return True
+
+        return bool(re.fullmatch(r"EX\d*", parts[-1]))
 
     def _parse_merge_statement(self, match: re.Match, file_path: str) -> DMLStatement | None:
         """解析 MERGE INTO ... USING 语句"""
@@ -412,6 +611,9 @@ class DMLParser:
                 source_table,
             )
 
+        if source_table == target_resolved.full_name:
+            return None
+
         return DMLStatement(
             op_type="exchange_partition",
             target_table=target_resolved.full_name,
@@ -447,24 +649,95 @@ class DMLParser:
 
         return search_text[:end_pos].strip()
 
+    @staticmethod
+    def _extract_sql_statement(content: str, start_pos: int) -> str:
+        """从指定位置提取到下一个分号的 SQL 语句。"""
+        search_text = content[start_pos:]
+        end_pos = search_text.find(";")
+        if end_pos < 0:
+            return search_text.strip()
+        return search_text[:end_pos].strip()
+
+    def _split_select_body(self, statement_body: str) -> tuple[str, str]:
+        """将 INSERT 的 SELECT 主体拆成 select 列表和 FROM 子句。"""
+        from_pos = self._find_top_level_keyword(statement_body, "FROM")
+        if from_pos < 0:
+            return statement_body.strip(), ""
+        return statement_body[:from_pos].strip(), statement_body[from_pos:].strip()
+
+    @staticmethod
+    def _find_top_level_keyword(sql: str, keyword: str) -> int:
+        """查找不在括号、字符串或注释中的顶层关键字位置。"""
+        keyword_upper = keyword.upper()
+        in_single_quote = False
+        in_double_quote = False
+        in_line_comment = False
+        in_block_comment = False
+        depth = 0
+        i = 0
+
+        while i < len(sql):
+            ch = sql[i]
+            next_ch = sql[i + 1] if i + 1 < len(sql) else ""
+
+            if in_line_comment:
+                if ch == "\n":
+                    in_line_comment = False
+                i += 1
+                continue
+
+            if in_block_comment:
+                if ch == "*" and next_ch == "/":
+                    in_block_comment = False
+                    i += 2
+                else:
+                    i += 1
+                continue
+
+            if not in_single_quote and not in_double_quote:
+                if ch == "-" and next_ch == "-":
+                    in_line_comment = True
+                    i += 2
+                    continue
+                if ch == "/" and next_ch == "*":
+                    in_block_comment = True
+                    i += 2
+                    continue
+
+            if ch == "'" and not in_double_quote:
+                if next_ch == "'":
+                    i += 2
+                    continue
+                in_single_quote = not in_single_quote
+                i += 1
+                continue
+
+            if ch == '"' and not in_single_quote:
+                in_double_quote = not in_double_quote
+                i += 1
+                continue
+
+            if not in_single_quote and not in_double_quote:
+                if ch == "(":
+                    depth += 1
+                elif ch == ")":
+                    depth = max(depth - 1, 0)
+                elif depth == 0 and sql[i : i + len(keyword)].upper() == keyword_upper:
+                    before = sql[i - 1] if i > 0 else " "
+                    after = sql[i + len(keyword)] if i + len(keyword) < len(sql) else " "
+                    if not (before.isalnum() or before == "_") and not (after.isalnum() or after == "_"):
+                        return i
+
+            i += 1
+
+        return -1
+
     def _extract_source_tables(self, from_clause: str) -> list[str]:
         """从 FROM 子句中提取源表列表"""
         tables: list[str] = []
         seen: set[str] = set()
 
-        # 提取 FROM/JOIN 后的表名
-        for match in _FROM_TABLE_PATTERN.finditer(from_clause):
-            table_raw = match.group(1).strip()
-            if self._is_valid_table_name(table_raw):
-                resolved = self._resolver.resolve_table_name(table_raw)
-                if resolved and resolved.full_name and resolved.full_name not in seen:
-                    if not self._temp_filter.is_temp_table(resolved.full_name):
-                        seen.add(resolved.full_name)
-                        tables.append(resolved.full_name)
-
-        # 提取逗号分隔的表名
-        for match in _COMMA_TABLE_PATTERN.finditer(from_clause):
-            table_raw = match.group(1).strip()
+        for table_raw, _alias_raw in self._iter_table_references(from_clause):
             if self._is_valid_table_name(table_raw):
                 resolved = self._resolver.resolve_table_name(table_raw)
                 if resolved and resolved.full_name and resolved.full_name not in seen:
@@ -474,16 +747,215 @@ class DMLParser:
 
         return tables
 
+    def _iter_table_references(self, from_clause: str) -> list[tuple[str, str]]:
+        """提取 FROM/JOIN 中真实表引用，逗号表仅限 FROM 顶层项。"""
+        clean_clause = self._strip_sql_comments(from_clause)
+        references: list[tuple[str, str]] = []
+
+        for match in _FROM_TABLE_PATTERN.finditer(clean_clause):
+            table_raw = match.group(1).strip()
+            alias_raw = match.group(2).strip() if match.lastindex and match.group(2) else ""
+            references.append((table_raw, alias_raw))
+
+        for match in _FROM_KEYWORD_PATTERN.finditer(clean_clause):
+            references.extend(self._extract_comma_table_references(clean_clause, match.end()))
+
+        return references
+
+    def _extract_comma_table_references(self, sql: str, from_pos: int) -> list[tuple[str, str]]:
+        """解析 FROM 后逗号分隔的并列表，不扫描 SELECT 列表逗号。"""
+        references: list[tuple[str, str]] = []
+        _first_table, _first_alias, pos = self._read_table_factor(sql, from_pos)
+
+        while pos < len(sql):
+            pos = self._skip_whitespace(sql, pos)
+            if pos >= len(sql) or sql[pos] != ",":
+                break
+
+            table_raw, alias_raw, next_pos = self._read_table_factor(sql, pos + 1)
+            if next_pos <= pos:
+                break
+
+            if table_raw:
+                references.append((table_raw, alias_raw))
+
+            pos = next_pos
+
+        return references
+
+    def _read_table_factor(self, sql: str, pos: int) -> tuple[str, str, int]:
+        """读取一个 FROM 项；子查询返回空表名但会跳过别名。"""
+        pos = self._skip_whitespace(sql, pos)
+        if pos >= len(sql):
+            return "", "", pos
+
+        if sql[pos] == "(":
+            close_pos = self._find_matching_paren(sql, pos)
+            if close_pos < 0:
+                return "", "", len(sql)
+
+            alias_raw, next_pos = self._read_optional_alias(sql, close_pos + 1)
+            return "", alias_raw, next_pos
+
+        match = _TABLE_REF_AT_PATTERN.match(sql, pos)
+        if not match:
+            return "", "", pos
+
+        table_raw = match.group(0).strip()
+        alias_raw, next_pos = self._read_optional_alias(sql, match.end())
+        return table_raw, alias_raw, next_pos
+
+    def _read_optional_alias(self, sql: str, pos: int) -> tuple[str, int]:
+        """读取表别名；遇到 SQL 关键字时不消费，避免吞掉 WHERE/JOIN。"""
+        start_pos = pos
+        pos = self._skip_whitespace(sql, pos)
+
+        word, word_end = self._read_identifier(sql, pos)
+        if not word:
+            return "", start_pos
+
+        if word.upper() == "AS":
+            alias_pos = self._skip_whitespace(sql, word_end)
+            alias, alias_end = self._read_identifier(sql, alias_pos)
+            if alias and self._is_valid_alias(alias):
+                return alias, alias_end
+            return "", start_pos
+
+        if self._is_valid_alias(word):
+            return word, word_end
+
+        return "", start_pos
+
+    @staticmethod
+    def _read_identifier(sql: str, pos: int) -> tuple[str, int]:
+        match = _SQL_IDENTIFIER_AT_PATTERN.match(sql, pos)
+        if not match:
+            return "", pos
+        return match.group(0), match.end()
+
+    @staticmethod
+    def _skip_whitespace(sql: str, pos: int) -> int:
+        while pos < len(sql) and sql[pos].isspace():
+            pos += 1
+        return pos
+
+    @staticmethod
+    def _find_matching_paren(sql: str, open_pos: int) -> int:
+        depth = 0
+        in_single_quote = False
+        in_double_quote = False
+        i = open_pos
+
+        while i < len(sql):
+            ch = sql[i]
+            next_ch = sql[i + 1] if i + 1 < len(sql) else ""
+
+            if ch == "'" and not in_double_quote:
+                if next_ch == "'":
+                    i += 2
+                    continue
+                in_single_quote = not in_single_quote
+                i += 1
+                continue
+
+            if ch == '"' and not in_single_quote:
+                in_double_quote = not in_double_quote
+                i += 1
+                continue
+
+            if not in_single_quote and not in_double_quote:
+                if ch == "(":
+                    depth += 1
+                elif ch == ")":
+                    depth -= 1
+                    if depth == 0:
+                        return i
+
+            i += 1
+
+        return -1
+
+    @staticmethod
+    def _strip_sql_comments(sql: str) -> str:
+        """移除 SQL 注释，保留字符串内容和换行边界。"""
+        result: list[str] = []
+        in_single_quote = False
+        in_double_quote = False
+        in_line_comment = False
+        in_block_comment = False
+        i = 0
+
+        while i < len(sql):
+            ch = sql[i]
+            next_ch = sql[i + 1] if i + 1 < len(sql) else ""
+
+            if in_line_comment:
+                if ch == "\n":
+                    in_line_comment = False
+                    result.append(ch)
+                else:
+                    result.append(" ")
+                i += 1
+                continue
+
+            if in_block_comment:
+                if ch == "*" and next_ch == "/":
+                    in_block_comment = False
+                    result.extend("  ")
+                    i += 2
+                else:
+                    result.append("\n" if ch == "\n" else " ")
+                    i += 1
+                continue
+
+            if not in_single_quote and not in_double_quote:
+                if ch == "-" and next_ch == "-":
+                    in_line_comment = True
+                    result.extend("  ")
+                    i += 2
+                    continue
+                if ch == "/" and next_ch == "*":
+                    in_block_comment = True
+                    result.extend("  ")
+                    i += 2
+                    continue
+
+            result.append(ch)
+
+            if ch == "'" and not in_double_quote:
+                if next_ch == "'":
+                    result.append(next_ch)
+                    i += 2
+                    continue
+                in_single_quote = not in_single_quote
+            elif ch == '"' and not in_single_quote:
+                in_double_quote = not in_double_quote
+
+            i += 1
+
+        return "".join(result)
+
     @staticmethod
     def _is_valid_table_name(name: str) -> bool:
         """判断名称是否为有效的表名（排除函数、关键字、常量等）
 
         过滤规则：
           - 长度 >= 3（排除 '0', '1' 等常量）
+          - 不含非 ASCII 字符（排除 SQL 注释泄漏的中文/全角字符）
           - 不以数字开头（排除 '0', '123' 等）
           - 不在已知函数/关键字列表中（NVL, TO_DATE, TO_TIMESTAMP, DUAL 等）
+
+        防御性说明：
+          合法的 Oracle / 数仓表名仅含 ASCII 字符（字母、数字、_ $ # .），
+          任何含中文/CJK/全角字符的"表名"均来自 SQL 注释或文本泄漏
+          （如 "--个人客户,对私担保客户" 被误捕获），一律拒绝。
         """
         if not name or len(name) < 3:
+            return False
+
+        # 防御性非 ASCII 过滤：拒绝任何含中文/CJK/全角字符的"表名"
+        # 合法表名仅含 ASCII，含非 ASCII 即为注释/文本泄漏
+        if not name.isascii():
             return False
 
         # 去掉 schema 前缀后检查短名
@@ -497,87 +969,32 @@ class DMLParser:
         if short[0].isdigit():
             return False
 
-        # 常见 SQL 函数/关键字黑名单
-        _BLACKLIST = {
-            "NVL",
-            "TO_DATE",
-            "TO_TIMESTAMP",
-            "TO_CHAR",
-            "TO_NUMBER",
-            "DUAL",
-            "SYSDATE",
-            "ROWNUM",
-            "NULL",
-            "CASE",
-            "WHEN",
-            "SELECT",
-            "FROM",
-            "WHERE",
-            "AND",
-            "OR",
-            "NOT",
-            "IN",
-            "EXISTS",
-            "BETWEEN",
-            "LIKE",
-            "IS",
-            "AS",
-            "ON",
-            "SET",
-            "INTO",
-            "VALUES",
-            "GROUP",
-            "ORDER",
-            "HAVING",
-            "LIMIT",
-            "UNION",
-            "ALL",
-            "DISTINCT",
-            "TRIM",
-            "UPPER",
-            "LOWER",
-            "SUBSTR",
-            "INSTR",
-            "LENGTH",
-            "REPLACE",
-            "CONCAT",
-            "SUM",
-            "COUNT",
-            "AVG",
-            "MAX",
-            "MIN",
-            "DECODE",
-            "GREATEST",
-            "LEAST",
-            "COALESCE",
-            "CAST",
-            "EXTRACT",
-            "ROUND",
-            "TRUNC",
-            "FLOOR",
-            "CEIL",
-            "ABS",
-            "MOD",
-            "SIGN",
-            "POWER",
-            "SQRT",
-            "ADD_MONTHS",
-            "LAST_DAY",
-            "NEXT_DAY",
-            "MONTHS_BETWEEN",
-            "ROW_NUMBER",
-            "RANK",
-            "DENSE_RANK",
-            "LEAD",
-            "LAG",
-            "FIRST_VALUE",
-            "LAST_VALUE",
-            "OVER",
-            "PARTITION",
-            "WITH",
-        }
+        if short.upper() in _SQL_KEYWORDS:
+            return False
 
-        return short.upper() not in _BLACKLIST
+        # --- SQL 别名过滤 ---
+        # 拒绝无 schema 前缀且看起来像 SQL 别名的短名称（如 UNIT, KHNF, BU_NO）
+        if "." not in name and len(name) <= 5:
+            upper = name.upper()
+            if not (upper.endswith(("TMP", "_TMP", "TEMP", "_TEMP")) or upper.startswith("TMP_")):
+                return False
+
+        # 拒绝 alias.column 格式（如 T1.ORG_LEVEL, T3.OPEN_ACCT_ORG_ID）
+        if "." in name:
+            prefix = name.split(".")[0].upper()
+            if prefix in _KNOWN_SCHEMA_PREFIXES or prefix.startswith("$"):
+                return True
+            if len(prefix) <= 3:
+                return False
+
+        return True
+
+    @staticmethod
+    def _is_valid_alias(alias: str) -> bool:
+        if not alias:
+            return False
+        upper = alias.upper()
+        return upper not in _SQL_KEYWORDS
 
     def _parse_column_list(self, columns_raw: str) -> list[str]:
         """解析目标字段列表
@@ -631,21 +1048,7 @@ class DMLParser:
                         )
                     )
 
-            # 构建字段级映射（如果目标字段列表可用）
-            # 仅当源表唯一时才做同名映射，避免多源表笛卡尔积
-            if stmt.target_columns and len(stmt.source_tables) == 1:
-                src = stmt.source_tables[0]
-                for col in stmt.target_columns:
-                    field_mappings.append(
-                        FieldMapping(
-                            source_table=src,
-                            source_column=col,
-                            target_table=stmt.target_table,
-                            target_column=col,
-                            procedure=proc_name,
-                            confidence=0.5,  # 中等置信度（同名假设）
-                        )
-                    )
+            field_mappings.extend(self._build_field_mappings_for_statement(stmt, proc_name))
 
         return ProcedureInfo(
             schema=schema,
@@ -657,6 +1060,139 @@ class DMLParser:
             field_mappings=field_mappings,
             file_path=file_path,
         )
+
+    def _build_field_mappings_for_statement(self, stmt: DMLStatement, proc_name: str) -> list[FieldMapping]:
+        """基于 INSERT 目标字段和 SELECT 表达式的位置关系构建字段映射。"""
+        if not stmt.target_columns:
+            return []
+
+        if stmt.select_clause:
+            return self._build_positional_insert_mappings(stmt, proc_name)
+
+        # 无 SELECT 列表时保留原有低置信度单源同名兜底。
+        if len(stmt.source_tables) != 1:
+            return []
+
+        src = stmt.source_tables[0]
+        return [
+            FieldMapping(
+                source_table=src,
+                source_column=col,
+                target_table=stmt.target_table,
+                target_column=col,
+                procedure=proc_name,
+                confidence=0.5,
+            )
+            for col in stmt.target_columns
+        ]
+
+    def _build_positional_insert_mappings(self, stmt: DMLStatement, proc_name: str) -> list[FieldMapping]:
+        mappings: list[FieldMapping] = []
+        alias_map = self._extract_alias_map(stmt.from_clause)
+        select_infos = FieldCleaner.parse_select_columns(stmt.select_clause)
+
+        for idx, target_col in enumerate(stmt.target_columns):
+            if idx >= len(select_infos):
+                continue
+
+            src_info = select_infos[idx]
+            source_column = src_info.get("column", "").upper()
+            source_table = self._resolve_source_table_for_select_expr(
+                src_info.get("table", ""),
+                source_column,
+                alias_map,
+                stmt.source_tables,
+            )
+
+            if not source_table or not source_column:
+                continue
+
+            mappings.append(
+                FieldMapping(
+                    source_table=source_table,
+                    source_column=source_column,
+                    target_table=stmt.target_table,
+                    target_column=target_col,
+                    transform_logic=src_info.get("transform", ""),
+                    procedure=proc_name,
+                    confidence=src_info.get("confidence", 0.5),
+                )
+            )
+
+        return mappings
+
+    def _extract_alias_map(self, from_clause: str) -> dict[str, str]:
+        """从 FROM/JOIN 子句中提取 alias -> table 映射。"""
+        alias_map: dict[str, str] = {}
+
+        for table_raw, alias_raw in self._iter_table_references(from_clause):
+            resolved = self._resolver.resolve_table_name(table_raw)
+            if not resolved or not resolved.full_name:
+                continue
+
+            if alias_raw and self._is_valid_alias(alias_raw):
+                alias_map[alias_raw.upper()] = resolved.full_name
+
+        alias_map.update(self._extract_subquery_alias_map(from_clause))
+        return alias_map
+
+    def _extract_subquery_alias_map(self, from_clause: str) -> dict[str, str]:
+        """解析 FROM/JOIN 子查询别名；仅单一真实来源表时建立映射。"""
+        clean_clause = self._strip_sql_comments(from_clause)
+        alias_map: dict[str, str] = {}
+        pattern = re.compile(r"\b(?:FROM|JOIN)\s*\(", re.IGNORECASE)
+        pos = 0
+
+        while True:
+            match = pattern.search(clean_clause, pos)
+            if not match:
+                break
+
+            open_pos = clean_clause.find("(", match.start())
+            if open_pos < 0:
+                break
+
+            close_pos = self._find_matching_paren(clean_clause, open_pos)
+            if close_pos < 0:
+                break
+
+            alias_raw, next_pos = self._read_optional_alias(clean_clause, close_pos + 1)
+            if alias_raw and self._is_valid_alias(alias_raw):
+                inner_sql = clean_clause[open_pos + 1 : close_pos]
+                sources = self._extract_source_tables(inner_sql)
+                if len(sources) == 1:
+                    alias_map[alias_raw.upper()] = sources[0]
+
+            pos = max(next_pos, close_pos + 1)
+
+        return alias_map
+
+    def _resolve_source_table_for_select_expr(
+        self,
+        source_table_ref: str,
+        source_column: str,
+        alias_map: dict[str, str],
+        source_tables: list[str],
+    ) -> str:
+        """将 SELECT 表达式中的表引用解析为真实表名。"""
+        if source_table_ref:
+            table_ref = source_table_ref.upper()
+            if table_ref in alias_map:
+                return alias_map[table_ref]
+
+            if "." not in table_ref:
+                return ""
+
+            resolved = self._resolver.resolve_table_name(table_ref)
+            if resolved and resolved.full_name:
+                return resolved.full_name
+
+            return ""
+
+        if source_column and len(source_tables) == 1:
+            return source_tables[0]
+
+        return ""
 
     def _proc_info_to_output(self, proc_info: ProcedureInfo) -> ParseOutput:
         """将 ProcedureInfo 转换为 ParseOutput"""

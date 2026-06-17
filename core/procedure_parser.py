@@ -20,6 +20,7 @@ from core.models import (
     TableInfo,
     TableLineage,
 )
+from core.utils import is_temp_table as _is_temp_table_shared
 
 logger = logging.getLogger(__name__)
 
@@ -575,10 +576,29 @@ class EnhancedProcedureParser:
     # INSERT 字段映射提取
     # ===================================================================
 
+    def _looks_like_unresolved_alias(self, table_name: str) -> bool:
+        """判断 table_name 是否看起来像未解析的 SQL 别名而非真实表名。
+
+        真实表名通常带 schema 前缀（如 ICL.XXX, IML.XXX, RRP_EAST.XXX），
+        而 SQL 别名通常是短名称（如 T1, T3, A, TB）。
+        带 TMP/TEMP 后缀的视为合法临时表，不做过滤。
+        """
+        if not table_name or "." in table_name:
+            return False
+        upper = table_name.upper()
+        # 带临时表后缀的视为合法临时表名
+        if upper.endswith(_TEMP_TABLE_SUFFIXES) or upper.startswith("TMP_"):
+            return False
+        # 无 schema 前缀且名称较短（≤5字符），极大概率是 SQL 别名
+        if len(upper) <= 5:
+            return True
+        return False
+
     def _parse_from_aliases(self, sql_block: str) -> dict[str, str]:
         """解析 FROM 子句中的表别名映射。
 
         返回 {alias: real_table} 字典，例如 {'A': 'RRP_EAST.M_CUST_IND_INFO_EAST'}
+        支持标准表别名和子查询别名（如 FROM (SELECT ...) T1）。
         """
         aliases: dict[str, str] = {}
 
@@ -648,6 +668,51 @@ class EnhancedProcedureParser:
                 ):
                     aliases[alias_name] = table_name
 
+        # --- 子查询别名提取：FROM (SELECT ...) T1 / JOIN (SELECT ...) AS T1 ---
+        # 通过括号深度追踪定位子查询的右括号，再提取后续标识符作为别名
+        depth = 0
+        i = 0
+        sql_upper = sql_block.upper()
+        while i < len(sql_block):
+            ch = sql_block[i]
+            if ch == "(":
+                # 检查是否为子查询开头
+                rest = sql_upper[i + 1 :].lstrip()
+                if rest.startswith("SELECT"):
+                    sub_start = i
+                    j = i + 1
+                    d = 1
+                    while j < len(sql_block) and d > 0:
+                        if sql_block[j] == "(":
+                            d += 1
+                        elif sql_block[j] == ")":
+                            d -= 1
+                        j += 1
+                    # j 现在指向子查询右括号之后
+                    after = sql_block[j : j + 30].strip()
+                    alias_m = re.match(r"(?:AS\s+)?(\w+)\b", after, re.IGNORECASE)
+                    if alias_m:
+                        alias_name = alias_m.group(1).upper()
+                        if alias_name not in (
+                            "ON", "AND", "WHERE", "SET", "SELECT", "INSERT",
+                            "UPDATE", "DELETE", "FROM", "JOIN", "LEFT", "RIGHT",
+                            "INNER", "OUTER", "FULL", "CROSS", "USING", "GROUP",
+                            "ORDER", "HAVING", "UNION", "EXCEPT", "INTERSECT",
+                        ):
+                            # 子查询别名不加入 alias_map，避免被解析为伪表名。
+                            # _extract_insert_mappings 的别名守卫会将其过滤掉。
+                            logger.debug(
+                                "    检测到子查询别名: %s (position=%d)，不解析为真实表",
+                                alias_name, sub_start,
+                            )
+                    i = j
+                    continue
+                else:
+                    depth += 1
+            elif ch == ")":
+                depth -= 1
+            i += 1
+
         return aliases
 
     def _extract_insert_mappings(self, operation: SQLOperation, proc_info: ProcedureInfo) -> list[FieldMapping]:
@@ -705,6 +770,15 @@ class EnhancedProcedureParser:
                 # 将别名替换为真实表名
                 if source_table and source_table in alias_map:
                     source_table = alias_map[source_table]
+                elif source_table and self._looks_like_unresolved_alias(source_table):
+                    # 未解析的 SQL 别名（如子查询的 T1、T3），跳过以避免生成伪血缘节点
+                    logger.debug(
+                        "    跳过未解析别名: %s.%s (别名 %s 未在 FROM 子句中解析)",
+                        source_table, source_column, source_table,
+                    )
+                    source_table = ""
+                    source_column = ""
+                    confidence = 0.0
 
                 # 兜底：SELECT 列无表前缀（如 CUST_NAME）且 FROM 只有一张表时，
                 # 自动补全 source_table（解决外部视图/单表直传场景）
@@ -766,6 +840,9 @@ class EnhancedProcedureParser:
         # USING 后面可能带别名，如 "RRP_EAST.SRC S"
         source_table = source_table_raw.split()[0] if source_table_raw else ""
 
+        # 解析 SQL 块中的别名映射（用于解析 UPDATE SET / VALUES 中的别名引用）
+        alias_map = self._parse_from_aliases(operation.sql_block)
+
         # --- WHEN NOT MATCHED: INSERT (cols) VALUES (vals) ---
         insert_cols = FieldCleaner.split_target_columns(insert_cols_str)
         insert_vals = FieldCleaner.split_target_columns(insert_vals_str)
@@ -776,6 +853,14 @@ class EnhancedProcedureParser:
             val_expr = insert_vals[i] if i < len(insert_vals) else ""
             val_clean = FieldCleaner.clean_column_name(val_expr)
             src_tbl, src_col = FieldCleaner.resolve_source_from_expr(val_clean, source_table)
+
+            # 别名解析 + 未解析别名守卫
+            if src_tbl and src_tbl in alias_map:
+                src_tbl = alias_map[src_tbl]
+            elif src_tbl and self._looks_like_unresolved_alias(src_tbl):
+                logger.debug("    MERGE INSERT: 跳过未解析别名 %s.%s", src_tbl, src_col)
+                src_tbl = ""
+                src_col = ""
 
             mappings.append(
                 FieldMapping(
@@ -799,6 +884,14 @@ class EnhancedProcedureParser:
                 continue
             expr_clean = FieldCleaner.clean_column_name(expr)
             src_tbl, src_col = FieldCleaner.resolve_source_from_expr(expr_clean, source_table)
+
+            # 别名解析 + 未解析别名守卫
+            if src_tbl and src_tbl in alias_map:
+                src_tbl = alias_map[src_tbl]
+            elif src_tbl and self._looks_like_unresolved_alias(src_tbl):
+                logger.debug("    MERGE UPDATE: 跳过未解析别名 %s.%s", src_tbl, src_col)
+                src_tbl = ""
+                src_col = ""
 
             mappings.append(
                 FieldMapping(
@@ -838,6 +931,9 @@ class EnhancedProcedureParser:
         target_table = match.group(1).strip().upper()
         set_clause = match.group(2)
 
+        # 解析 SQL 块中的别名映射
+        alias_map = self._parse_from_aliases(operation.sql_block)
+
         update_pairs = FieldCleaner.parse_update_set_pairs(set_clause)
         for tgt_col, expr in update_pairs:
             tgt_clean = FieldCleaner.clean_column_name(tgt_col)
@@ -845,6 +941,14 @@ class EnhancedProcedureParser:
                 continue
             expr_clean = FieldCleaner.clean_column_name(expr)
             src_tbl, src_col = FieldCleaner.resolve_source_from_expr(expr_clean, "")
+
+            # 别名解析 + 未解析别名守卫
+            if src_tbl and src_tbl in alias_map:
+                src_tbl = alias_map[src_tbl]
+            elif src_tbl and self._looks_like_unresolved_alias(src_tbl):
+                logger.debug("    UPDATE: 跳过未解析别名 %s.%s", src_tbl, src_col)
+                src_tbl = ""
+                src_col = ""
 
             mappings.append(
                 FieldMapping(
@@ -905,8 +1009,7 @@ class EnhancedProcedureParser:
 
     def _is_temp_table(self, table_name: str) -> bool:
         """判断表名是否为临时表（基于命名约定）。"""
-        name_upper = table_name.upper()
-        return any(name_upper.endswith(suffix) for suffix in _TEMP_TABLE_SUFFIXES)
+        return _is_temp_table_shared(table_name)
 
     # ===================================================================
     # TMP 表内部依赖检测
@@ -1068,6 +1171,16 @@ class EnhancedProcedureParser:
             return False
         if len(table_name) < 2:
             return False
+        # 拒绝无 schema 前缀的短名称（SQL 别名，如 T1, A, BU_NO）
+        if "." not in table_name and len(table_name) <= 5:
+            upper = table_name.upper()
+            if not (upper.endswith(_TEMP_TABLE_SUFFIXES) or upper.startswith("TMP_")):
+                return False
+        # 拒绝 alias.column 格式（如 T1.ORG_LEVEL）
+        if "." in table_name:
+            prefix = table_name.split(".")[0]
+            if len(prefix) <= 3:
+                return False
         return True
 
     def _normalize_table_name(self, raw_name: str, default_schema: str = "RRP_MDL") -> str:

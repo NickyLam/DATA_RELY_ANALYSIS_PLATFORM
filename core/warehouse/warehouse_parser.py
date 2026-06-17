@@ -13,6 +13,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
+from core.models import ColumnInfo
 from core.parser_protocol import ParseOutput
 from core.warehouse.ctl_parser import CTLParser
 from core.warehouse.ddl_parser import DDLParser
@@ -125,18 +126,8 @@ class WarehouseSQLParser:
                 ddl_tables.update(tables)
 
         for table_info in ddl_tables.values():
-            total_output.tables.append(
-                {
-                    "full_name": table_info.full_name,
-                    "schema": table_info.schema,
-                    "table_name": table_info.table_name,
-                    "comment": table_info.comment,
-                    "columns": [
-                        {"name": c.name, "data_type": c.data_type, "comment": c.comment} for c in table_info.columns
-                    ],
-                    "primary_keys": table_info.primary_keys,
-                }
-            )
+            phase1_output = self._table_info_to_output(table_info)
+            total_output.tables.extend(phase1_output.tables)
 
         logger.info(
             "Phase 1 完成: DDL 解析出 %d 张表",
@@ -217,6 +208,8 @@ class WarehouseSQLParser:
             ctl_count,
         )
 
+        self._add_referenced_upstream_tables(total_output)
+
         # 过滤临时表
         total_output.tables = self._temp_filter.filter_tables(total_output.tables)
 
@@ -248,3 +241,70 @@ class WarehouseSQLParser:
                 }
             )
         return output
+
+    def _add_referenced_upstream_tables(self, output: ParseOutput) -> None:
+        """补齐 DML 明确引用但缺 DDL 的上游表元数据。
+
+        EDW 脚本中常见 ITL/MSL 等上游 schema 未随交付包提供 DDL，但 IOL
+        拉链脚本会直接引用这些表。为了字段级链路节点能显示字段类型，只对
+        同名跨层表从已有正式表继承被映射字段的元数据。
+        """
+        tables_by_name = {
+            str(table.get("full_name", "")).upper(): table
+            for table in output.tables
+            if table.get("full_name")
+        }
+        if not tables_by_name or not output.field_mappings:
+            return
+
+        inherited_columns: dict[str, dict[str, dict]] = {}
+        for mapping in output.field_mappings:
+            source_table = str(mapping.get("source_table", "")).upper()
+            target_table = str(mapping.get("target_table", "")).upper()
+            source_column = str(mapping.get("source_column", "")).upper()
+            target_column = str(mapping.get("target_column", "")).upper()
+            if not source_table or not target_table or not source_column:
+                continue
+            if source_table in tables_by_name:
+                continue
+            if "." not in source_table or "." not in target_table:
+                continue
+            if self._temp_filter.is_temp_table(source_table):
+                continue
+            if source_table.split(".")[-1] != target_table.split(".")[-1]:
+                continue
+
+            target = tables_by_name.get(target_table)
+            if not target:
+                continue
+            source_col_meta = self._find_column_meta(target, source_column)
+            if source_col_meta is None and target_column:
+                source_col_meta = self._find_column_meta(target, target_column)
+            if source_col_meta is None:
+                continue
+
+            inherited_columns.setdefault(source_table, {})[source_column] = {
+                "name": source_column,
+                "data_type": source_col_meta.data_type,
+                "comment": source_col_meta.comment,
+            }
+
+        for full_name, columns in sorted(inherited_columns.items()):
+            schema, table_name = full_name.split(".", 1)
+            output.tables.append(
+                {
+                    "full_name": full_name,
+                    "schema": schema,
+                    "table_name": table_name,
+                    "comment": "",
+                    "columns": list(columns.values()),
+                    "primary_keys": [],
+                }
+            )
+
+    @staticmethod
+    def _find_column_meta(table: dict, column_name: str) -> ColumnInfo | None:
+        for raw_col in table.get("columns", []):
+            if str(raw_col.get("name", "")).upper() == column_name.upper():
+                return ColumnInfo.from_dict(raw_col)
+        return None

@@ -663,6 +663,33 @@ body {
     position: relative;  /* 为下拉框提供定位上下文 */
 }
 
+/* 向导面板统一控件样式（select + input 等高，覆盖 .input-group 通用规则） */
+#wizardPanel select,
+#wizardPanel input[type="text"] {
+    height: 36px;
+    padding: 4px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 13px;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+    line-height: normal;
+}
+
+#wizardPanel select:focus,
+#wizardPanel input[type="text"]:focus {
+    border-color: var(--primary-color, #6366f1);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+#wizardPanel input[type="text"]:disabled {
+    background: #f8fafc;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
 .input-group input[type="text"] {
     width: 100%;
     height: 40px;
@@ -760,6 +787,71 @@ body {
     color: var(--text-muted);
     font-size: 12px;
     text-align: center;
+}
+
+/* Combobox 下拉框（向导模式表名/字段名输入+选择） */
+.combo-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    max-height: 260px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+.combo-dropdown .combo-item {
+    padding: 7px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+    transition: background 0.15s;
+}
+
+.combo-dropdown .combo-item:last-child {
+    border-bottom: none;
+}
+
+.combo-dropdown .combo-item:hover {
+    background: #eef2ff;
+}
+
+.combo-dropdown .combo-item .combo-main {
+    font-weight: 600;
+    color: #334155;
+}
+
+.combo-dropdown .combo-item .combo-sub {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-left: 6px;
+}
+
+.combo-dropdown .combo-item mark {
+    background: #fef08a;
+    color: inherit;
+    padding: 0 1px;
+    border-radius: 2px;
+}
+
+.combo-dropdown .combo-empty {
+    padding: 12px 14px;
+    color: #94a3b8;
+    font-size: 12px;
+    text-align: center;
+}
+
+.combo-dropdown .combo-more {
+    padding: 8px 12px;
+    color: #94a3b8;
+    font-size: 11px;
+    text-align: center;
+    border-top: 1px solid #f1f5f9;
 }
 
 /* 字段输入框验证状态 */
@@ -1979,10 +2071,7 @@ body {
     .pipeline-node {
         min-width: 200px;
     }
-}
 
-/* 响应式适配 */
-@media (max-width: 1200px) {
     .parse-layout {
         grid-template-columns: 1fr;
         height: auto;
@@ -2114,7 +2203,7 @@ body {
     margin-bottom: 12px;
 }
 
-.pipeline-container {
+.indicator-pipeline-container {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -2278,9 +2367,5 @@ body {
     border: 3px solid var(--border-color);
     border-top-color: var(--primary-color);
     border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
+    animation: spin 0.8s linear infinite;
 }

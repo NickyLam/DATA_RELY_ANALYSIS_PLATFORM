@@ -91,6 +91,8 @@ class AppConfig:
     allowed_extensions: list[str] = field(default_factory=lambda: [".tab", ".prc", ".sql", ".ctl"])
     parse_batch_size: int = 50
 
+    force_reparse: bool = False  # 启动时强制重新解析（跳过缓存）
+
     enable_cache: bool = True
     cache_ttl_seconds: int = 3600
     max_cache_size: int = 10000
@@ -103,6 +105,8 @@ class AppConfig:
 
     progress_interval_ms: int = 500
     progress_keepalive_sec: int = 300
+
+    indicator_fallback_path: str = "财务集市指标血缘分析/指标"
 
     virtual_scroll_item_height: int = 50
     virtual_scroll_buffer: int = 10
@@ -173,6 +177,12 @@ class AppConfig:
         if os.getenv("ENABLE_JSON_EXPORT", "").lower() in ("0", "false", "no"):
             config.enable_json_export = False
 
+        if os.getenv("FORCE_REPARSE", "").lower() in ("1", "true", "yes"):
+            config.force_reparse = True
+
+        if indicator_fallback_path := os.getenv("INDICATOR_FALLBACK_PATH"):
+            config.indicator_fallback_path = indicator_fallback_path
+
         manifest_configs = _load_datasource_configs_from_manifest(config.source_data_path)
         if manifest_configs:
             config.datasource_configs = manifest_configs
@@ -237,29 +247,81 @@ def _load_datasource_configs_from_manifest(
 
     configs: list[DataSourceConfig] = []
     for src in data["sources"]:
-        system_dir = source_data_dir / src["path"]
-        schema_dirs = _discover_schema_dirs(system_dir)
-        enabled = src.get("enabled", True)
+        try:
+            name = src.get("name")
+            path = src.get("path")
+            if not name or not path:
+                logger.warning("Skipping manifest entry with missing 'name' or 'path': %s", src)
+                continue
 
-        env_override = src.get("env_override", {})
-        if env_override and env_override.get("enabled"):
-            env_var = env_override["enabled"]
-            if not os.getenv(env_var):
-                enabled = False
-
-        configs.append(
-            DataSourceConfig(
-                name=src["name"],
-                display_name=src.get("display_name", src["name"]),
-                data_dir=str(system_dir),
-                schema_dirs=schema_dirs,
-                file_extensions=src.get("file_extensions", []),
-                parser=src.get("parser", "warehouse"),
-                enabled=enabled,
+            system_dir = source_data_dir / path
+            system_manifest = _load_system_manifest(system_dir)
+            schema_dirs = _discover_schema_dirs(system_dir)
+            enabled = src.get("enabled", True)
+            parser = system_manifest.get("parser") or src.get("parser", "warehouse")
+            file_extensions = _resolve_file_extensions(
+                root_extensions=src.get("file_extensions", []),
+                system_extensions=system_manifest.get("file_extensions"),
             )
-        )
+
+            env_override = src.get("env_override", {})
+            if env_override and env_override.get("enabled"):
+                env_var = env_override["enabled"]
+                if not os.getenv(env_var):
+                    enabled = False
+
+            configs.append(
+                DataSourceConfig(
+                    name=name,
+                    display_name=src.get("display_name", name),
+                    data_dir=str(system_dir),
+                    schema_dirs=schema_dirs,
+                    file_extensions=file_extensions,
+                    parser=parser,
+                    enabled=enabled,
+                )
+            )
+        except Exception as e:
+            logger.warning("Skipping invalid manifest entry: %s (%s)", src, e)
+            continue
 
     return configs
+
+
+def _load_system_manifest(system_dir: Path) -> dict:
+    try:
+        import yaml
+    except ImportError:
+        return {}
+
+    manifest_path = system_dir / "manifest.yml"
+    if not manifest_path.exists():
+        return {}
+
+    try:
+        data = yaml.safe_load(manifest_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+    return data if isinstance(data, dict) else {}
+
+
+def _resolve_file_extensions(
+    root_extensions: list[str],
+    system_extensions,
+) -> list[str]:
+    if not isinstance(system_extensions, dict):
+        return root_extensions
+
+    extensions: list[str] = []
+    for values in system_extensions.values():
+        if not isinstance(values, list):
+            continue
+        for ext in values:
+            if isinstance(ext, str) and ext not in extensions:
+                extensions.append(ext)
+
+    return extensions or root_extensions
 
 
 def _discover_schema_dirs(system_dir: Path) -> list[str]:

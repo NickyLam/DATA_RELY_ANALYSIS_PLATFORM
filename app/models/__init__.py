@@ -43,17 +43,6 @@ class CaliberQueryMode(StrEnum):
     BOTH = "both"
 
 
-class FileUploadRequest(BaseModel):
-    parse_mode: ParseMode = Field(
-        default=ParseMode.INCREMENTAL,
-        description="解析模式: incremental(增量) | full(全量)",
-    )
-    schema_name: str | None = Field(
-        default=None,
-        description="目标 Schema: rrp_mdl | rrp_east",
-    )
-
-
 class LineageQueryRequest(BaseModel):
     table: str = Field(min_length=2, description="表名")
     field: str | None = Field(default=None, description="字段名(可选)")
@@ -381,7 +370,7 @@ class IndicatorSearchResponse(BaseResponse):
 
 
 class IndicatorPipelineResponse(BaseResponse):
-    data: list[IndicatorPipelineStepData] = Field(default_factory=list)
+    data: dict[str, Any] = Field(default_factory=dict)
 
 
 class IndicatorStatsResponse(BaseResponse):

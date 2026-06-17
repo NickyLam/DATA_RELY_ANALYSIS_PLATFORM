@@ -11,6 +11,8 @@ import logging
 import re
 from dataclasses import dataclass
 
+from core.utils import find_matching_paren
+
 logger = logging.getLogger(__name__)
 
 
@@ -269,35 +271,7 @@ class SQLBoundaryDetector:
         Returns:
             匹配的右括号字符偏移，未找到返回 start
         """
-        if start >= len(self.file_content) or self.file_content[start] != "(":
-            return start
-
-        depth = 0
-        in_single_quote = False
-        i = start
-
-        while i < len(self.file_content):
-            ch = self.file_content[i]
-
-            if ch == "'" and not in_single_quote:
-                in_single_quote = True
-            elif ch == "'" and in_single_quote:
-                # 转义单引号
-                if i + 1 < len(self.file_content) and self.file_content[i + 1] == "'":
-                    i += 2
-                    continue
-                in_single_quote = False
-            elif not in_single_quote:
-                if ch == "(":
-                    depth += 1
-                elif ch == ")":
-                    depth -= 1
-                    if depth == 0:
-                        return i
-
-            i += 1
-
-        return start  # 未找到匹配的右括号
+        return find_matching_paren(self.file_content, start)
 
     @staticmethod
     def _extract_target_table(sql_fragment: str, op_type: str) -> str:

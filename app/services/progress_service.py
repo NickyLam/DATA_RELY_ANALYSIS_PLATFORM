@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 import logging
-import queue
+import asyncio
 import threading
 import time
 import uuid
@@ -54,7 +54,7 @@ class ParseTask:
     result: Any | None = None
     error: str | None = None
 
-    subscribers: list[queue.Queue] = field(default_factory=list)
+    subscribers: list[asyncio.Queue] = field(default_factory=list)
     lock: threading.Lock = field(default_factory=threading.Lock)
 
 
@@ -204,13 +204,13 @@ class ProgressService:
         self._notify_subscribers(task)
         logger.error("任务失败: %s - %s", task_id, error)
 
-    def subscribe(self, task_id: str) -> queue.Queue:
+    def subscribe(self, task_id: str) -> asyncio.Queue:
         """订阅任务进度事件（用于 SSE 推送）"""
         task = self.get_task(task_id)
         if not task:
             raise ValueError(f"任务不存在: {task_id}")
 
-        q: queue.Queue = queue.Queue(maxsize=100)
+        q: asyncio.Queue = asyncio.Queue(maxsize=100)
 
         with task.lock:
             task.subscribers.append(q)
@@ -218,7 +218,7 @@ class ProgressService:
         logger.debug("新订阅者加入任务: %s (当前订阅数: %d)", task_id, len(task.subscribers))
         return q
 
-    def unsubscribe(self, task_id: str, q: queue.Queue) -> None:
+    def unsubscribe(self, task_id: str, q: asyncio.Queue) -> None:
         """取消订阅"""
         task = self.get_task(task_id)
         if not task:
@@ -228,9 +228,9 @@ class ProgressService:
             if q in task.subscribers:
                 task.subscribers.remove(q)
 
-    def generate_sse_events(self, task_id: str):
+    async def generate_sse_events(self, task_id: str):
         """
-        SSE 事件生成器（供 FastAPI StreamingResponse 使用）
+        SSE 异步事件生成器（供 FastAPI StreamingResponse 使用）
 
         Yields:
             str: SSE 格式的事件字符串
@@ -246,14 +246,18 @@ class ProgressService:
         try:
             while True:
                 try:
-                    event = q.get(timeout=self.keepalive_sec)
+                    event = await asyncio.wait_for(q.get(), timeout=self.keepalive_sec)
                     yield self._format_sse_event(event["type"], event["data"])
 
                     if event["type"] in ("complete", "error"):
                         break
 
-                except queue.Empty:
-                    if task.status in (
+                except asyncio.TimeoutError:
+                    with task.lock:
+                        current_status = task.status
+                        current_percent = task.progress.percent
+
+                    if current_status in (
                         TaskStatus.COMPLETED,
                         TaskStatus.FAILED,
                         TaskStatus.CANCELLED,
@@ -265,7 +269,7 @@ class ProgressService:
                         yield self._format_sse_event(
                             "progress",
                             {
-                                "percent": task.progress.percent,
+                                "percent": current_percent,
                                 "message": "保持连接...",
                             },
                         )
@@ -346,11 +350,15 @@ class ProgressService:
         for q in task.subscribers:
             try:
                 q.put_nowait(event_data)
-            except queue.Full:
+            except asyncio.QueueFull:
+                dead_subscribers.append(q)
+            except Exception:
+                logger.warning("通知订阅者失败，将其移除", exc_info=True)
                 dead_subscribers.append(q)
 
         for q in dead_subscribers:
-            task.subscribers.remove(q)
+            if q in task.subscribers:
+                task.subscribers.remove(q)
 
     @staticmethod
     def _format_sse_event(event_type: str, data: dict) -> str:

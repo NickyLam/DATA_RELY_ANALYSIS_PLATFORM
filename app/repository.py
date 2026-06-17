@@ -172,39 +172,39 @@ class DataRepository:
             return self._data.get("metadata", {})
 
     def get_all_tables(self) -> list[dict]:
-        """获取所有表列表。"""
+        """获取所有表列表（返回浅拷贝防止外部修改内部数据）。"""
         with self._lock:
             if not self._data:
                 return []
-            return self._data.get("tables", [])
+            return list(self._data.get("tables", []))
 
     def get_all_procedures(self) -> list[dict]:
-        """获取所有存储过程列表。"""
+        """获取所有存储过程列表（返回浅拷贝防止外部修改内部数据）。"""
         with self._lock:
             if not self._data:
                 return []
-            return self._data.get("procedures", [])
+            return list(self._data.get("procedures", []))
 
     def get_all_table_lineages(self) -> list[dict]:
-        """获取所有表级血缘。"""
+        """获取所有表级血缘（返回浅拷贝防止外部修改内部数据）。"""
         with self._lock:
             if not self._data:
                 return []
-            return self._data.get("table_lineages", [])
+            return list(self._data.get("table_lineages", []))
 
     def get_all_field_mappings(self) -> list[dict]:
-        """获取所有字段映射。"""
+        """获取所有字段映射（返回浅拷贝防止外部修改内部数据）。"""
         with self._lock:
             if not self._data:
                 return []
-            return self._data.get("field_mappings", [])
+            return list(self._data.get("field_mappings", []))
 
     def get_all_caliber_infos(self) -> list[dict]:
-        """获取所有口径信息。"""
+        """获取所有口径信息（返回浅拷贝防止外部修改内部数据）。"""
         with self._lock:
             if not self._data:
                 return []
-            return self._data.get("caliber_infos", [])
+            return list(self._data.get("caliber_infos", []))
 
     def search_caliber(self, table: str, field: str = "", limit: int = 200) -> list[dict]:
         """按表名+字段名搜索口径信息。"""

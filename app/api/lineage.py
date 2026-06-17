@@ -13,10 +13,11 @@ from __future__ import annotations
 import logging
 from typing import Annotated
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 
-from app.dependencies import LineageServiceDep, ParserServiceDep, TableQueryServiceDep
+from app.dependencies import LineageServiceDep, ParserServiceDep, TableQueryServiceDep, admin_required
 from app.models import (
+    BaseResponse,
     LineageQueryOptions,
     LineageQueryRequest,
     LineageQueryResponse,
@@ -195,7 +196,7 @@ def get_table_fields(
         if norm_name in proc_tbl or proc_tbl.endswith(norm_name):
             return {"success": True, "data": sorted(fields)}
 
-    raise HTTPException(status_code=404, detail=f"未找到表: {table}")
+    raise HTTPException(status_code=404, detail="指定的表不存在")
 
 
 @router.get(
@@ -216,7 +217,7 @@ def get_table_info(
         if t.get("full_name", "").upper() == table.upper():
             return SingleTableInfoResponse(data=t)
 
-    raise HTTPException(status_code=404, detail=f"表不存在: {table}")
+    raise HTTPException(status_code=404, detail="指定的表不存在")
 
 
 @router.get(
@@ -256,11 +257,13 @@ def get_system_stats(
 
 @router.post(
     "/cache/rebuild",
+    response_model=BaseResponse,
     summary="重建缓存索引",
     description="强制清空并重建内存索引和图预处理数据",
 )
 def rebuild_cache(
     lineage_service: LineageServiceDep,
+    _: None = Depends(admin_required),
 ) -> dict:
     lineage_service.rebuild_indexes()
 
@@ -307,7 +310,7 @@ def get_node_detail(
 ) -> dict:
     detail = lineage_service.get_node_detail(table)
     if detail is None:
-        raise HTTPException(status_code=404, detail=f"未找到节点: {table}")
+        raise HTTPException(status_code=404, detail="指定的节点不存在")
     return {
         "success": True,
         "data": detail,

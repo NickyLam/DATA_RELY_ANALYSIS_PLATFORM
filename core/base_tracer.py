@@ -5,6 +5,7 @@ import logging
 from core.layer_detector import LayerType, detect_layer
 from core.models import FieldMapping, ProcedureInfo, TableInfo, TableLineage
 from core.table_name_resolver import TableNameResolver
+from core.utils import is_temp_table as _is_temp_table_shared
 
 logger = logging.getLogger(__name__)
 
@@ -132,8 +133,4 @@ class BaseTracer:
 
     @staticmethod
     def is_temp_table(table_name: str) -> bool:
-        if not table_name:
-            return False
-        upper_name = table_name.upper()
-        temp_suffixes = ("TMP", "_TMP", "TEMP", "_TEMP")
-        return any(upper_name.endswith(s) for s in temp_suffixes)
+        return _is_temp_table_shared(table_name)

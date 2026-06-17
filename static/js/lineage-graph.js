@@ -23,8 +23,11 @@
         return true;
     }
 
-    // 获取节点相关的字段名
+    // 获取节点相关的字段名（legacy fallback — 仅当 node.field 不存在时使用）
     function _getNodeField(node, data) {
+        // Prefer backend-provided field metadata
+        if (node.field && node.field.name) return node.field.name;
+
         const qt = currentQuery?.table || '';
         const isTarget = node.id === qt ||
                          (qt.includes('.') && node.id === qt) ||
@@ -46,6 +49,26 @@
         }
 
         return null;
+    }
+
+    /**
+     * 获取节点字段元数据（name + data_type）。
+     * 优先使用后端返回的 node.field，否则回退到边/映射查找。
+     * @returns {{name: string, data_type: string}|null}
+     */
+    function _getNodeFieldMeta(node, data) {
+        if (node.field && node.field.name) {
+            return { name: node.field.name, data_type: node.field.data_type || '' };
+        }
+        const fallback = _getNodeField(node, data);
+        return fallback ? { name: fallback, data_type: '' } : null;
+    }
+
+    /** 格式化字段标签：字段名 + 完整类型声明 */
+    function _formatFieldLabel(meta) {
+        if (!meta || !meta.name) return '';
+        if (meta.data_type) return `${meta.name} ${meta.data_type}`;
+        return meta.name;
     }
 
     function getDepthLayerConfig(depth) {
@@ -150,7 +173,7 @@
         );
 
         // 布局参数
-        const nodeW = 240, nodeH = 72;
+        const nodeW = 240, nodeH = 80;
         const layerGap = 80, nodeGapX = 30;
         const leftMargin = 96, graphStartX = leftMargin + 24, topMargin = 40;
 
@@ -317,7 +340,8 @@
                 .attr('stroke-width', isQueryTarget ? 2 : 1.5).attr('rx', 8)
                 .on('click', () => {
                     if (typeof showInfoPanel === 'function') {
-                        showInfoPanel(node, _getNodeField(node, data));
+                        const meta = _getNodeFieldMeta(node, data);
+                        showInfoPanel(node, meta);
                     }
                 })
                 .on('mouseover', function() { d3.select(this).attr('opacity', 0.85); })
@@ -342,13 +366,62 @@
                 .attr('font-size', `${fontSize}px`).attr('font-weight', '700')
                 .text(displayName);
 
-            const relatedField = _getNodeField(node, data);
-            if (relatedField) {
-                ng.append('text')
+            const fieldMeta = _getNodeFieldMeta(node, data);
+            if (fieldMeta && fieldMeta.name) {
+                const maxFieldChars = 28;
+                const nameStr = fieldMeta.name;
+                const typeStr = fieldMeta.data_type || '';
+                const fullLabel = typeStr ? `${nameStr} ${typeStr}` : nameStr;
+
+                // 截断：先截类型，再截名称
+                let displayName = nameStr;
+                let displayType = typeStr;
+                if (fullLabel.length > maxFieldChars) {
+                    if (typeStr) {
+                        const nameBudget = Math.min(nameStr.length, 16);
+                        displayName = nameStr.substring(0, nameBudget);
+                        const typeBudget = maxFieldChars - nameBudget - 4;
+                        displayType = typeBudget > 2 ? typeStr.substring(0, typeBudget) + '..' : '';
+                    } else {
+                        displayName = nameStr.length > maxFieldChars - 2
+                            ? nameStr.substring(0, maxFieldChars - 2) + '..' : nameStr;
+                    }
+                }
+
+                // 颜色方案：字段名 vs 类型 使用不同颜色
+                const nameColor = isQueryTarget ? '#ffcaca' : '#6366f1';
+                const typeColor = isQueryTarget ? '#fda4af' : '#0d9488';
+                const noTypeColor = isQueryTarget ? '#f9a8a8' : '#94a3b8';
+
+                const fieldText = ng.append('text')
                     .attr('x', 12).attr('y', 52)
-                    .attr('fill', isQueryTarget ? '#ffcaca' : '#6366f1')
-                    .attr('font-size', '11px').attr('font-weight', '600')
-                    .text(`→ ${relatedField}`);
+                    .attr('font-size', '10px');
+
+                // 字段名 tspan
+                fieldText.append('tspan')
+                    .attr('fill', nameColor)
+                    .attr('font-weight', '600')
+                    .text(`→ ${displayName}`);
+
+                if (displayType) {
+                    // 有类型：空格 + 类型名（青绿色）
+                    fieldText.append('tspan')
+                        .attr('fill', typeColor)
+                        .attr('font-weight', '400')
+                        .text(` ${displayType}`);
+                } else {
+                    // 无类型：淡色斜体提示
+                    fieldText.append('tspan')
+                        .attr('fill', noTypeColor)
+                        .attr('font-weight', '400')
+                        .attr('font-style', 'italic')
+                        .text(' (无类型)');
+                }
+
+                // SVG tooltip: show full untruncated value
+                if (fullLabel.length > maxFieldChars) {
+                    fieldText.append('title').text(`→ ${fullLabel}`);
+                }
             }
 
             const layerLabel = typeof getLayerShortLabel === 'function'
@@ -426,7 +499,7 @@
             const tx = (cw - bbox.width * scale) / 2 - bbox.x * scale + padding * scale / 2;
             const ty = (ch - bbox.height * scale) / 2 - bbox.y * scale + padding * scale / 2;
             svg.transition().duration(600).call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(scale));
-        } catch (e) {}
+        } catch (e) { console.warn('fitView failed:', e); }
     };
 
     // 初始化 D3 SVG 画布

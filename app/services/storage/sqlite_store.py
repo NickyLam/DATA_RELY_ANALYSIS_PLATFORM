@@ -24,6 +24,14 @@ from app.services.storage.migrations import (
 
 logger = logging.getLogger(__name__)
 
+_VALID_TABLES: frozenset[str] = frozenset(DATA_TABLE_NAMES)
+
+
+def _validate_table_name(name: str) -> None:
+    """校验表名是否在白名单中，防止 SQL 注入。"""
+    if name not in _VALID_TABLES:
+        raise ValueError(f"Invalid table name: {name}")
+
 
 class SQLiteConnectionManager:
     """线程安全的 SQLite 连接管理器。
@@ -35,6 +43,8 @@ class SQLiteConnectionManager:
     def __init__(self, db_path: Path):
         self._db_path = db_path
         self._local = threading.local()
+        self._all_connections: set[sqlite3.Connection] = set()
+        self._all_connections_lock = threading.Lock()
 
     def get_connection(self) -> sqlite3.Connection:
         conn: sqlite3.Connection | None = getattr(self._local, "connection", None)
@@ -45,6 +55,8 @@ class SQLiteConnectionManager:
             except sqlite3.Error:
                 with contextlib.suppress(Exception):
                     conn.close()
+                with self._all_connections_lock:
+                    self._all_connections.discard(conn)
                 conn = None
 
         db_path_str = str(self._db_path)
@@ -55,13 +67,21 @@ class SQLiteConnectionManager:
         conn.execute("PRAGMA temp_store=MEMORY")
         conn.row_factory = sqlite3.Row
         self._local.connection = conn
+        with self._all_connections_lock:
+            self._all_connections.add(conn)
         return conn
 
     def close_all(self) -> None:
-        conn: sqlite3.Connection | None = getattr(self._local, "connection", None)
-        if conn is not None:
+        with self._all_connections_lock:
+            connections = list(self._all_connections)
+            self._all_connections.clear()
+
+        for conn in connections:
             with contextlib.suppress(Exception):
                 conn.close()
+
+        # 清除当前线程的 local 引用
+        if hasattr(self._local, "connection"):
             self._local.connection = None
 
 
@@ -122,8 +142,8 @@ class SQLiteResultStore:
     def save(self, result_data: dict[str, Any]) -> None:
         """全量写入解析结果到 SQLite。
 
-        使用分表事务策略：每张表先 DELETE 再 INSERT，避免
-        单个超大事务导致内存和 WAL 文件膨胀。
+        使用单一事务保证原子性：所有表的 DELETE + INSERT 在同一事务中完成，
+        避免中途崩溃导致数据部分写入的不一致状态。
         """
         conn = self._conn_mgr.get_connection()
         with contextlib.suppress(Exception):
@@ -134,59 +154,60 @@ class SQLiteResultStore:
         batch_size = 5000
 
         try:
-            # ── 表数据 ──
-            self._replace_table_data(
-                conn,
-                "tables",
-                result_data.get("tables", []),
-                self._iter_table_rows,
-                batch_size,
-                now,
-            )
-
-            # ── 过程数据 ──
-            self._replace_table_data(
-                conn,
-                "procedures",
-                result_data.get("procedures", []),
-                self._iter_procedure_rows,
-                batch_size,
-                now,
-            )
-
-            # ── 血缘数据 ──
-            self._replace_table_data(
-                conn,
-                "table_lineages",
-                result_data.get("table_lineages", []),
-                self._iter_lineage_rows,
-                batch_size,
-                now,
-            )
-
-            # ── 字段映射 ──
-            self._replace_table_data(
-                conn,
-                "field_mappings",
-                result_data.get("field_mappings", []),
-                self._iter_mapping_rows,
-                batch_size,
-                now,
-            )
-
-            # ── 口径数据 ──
-            self._replace_table_data(
-                conn,
-                "caliber_infos",
-                result_data.get("caliber_infos", []),
-                self._iter_caliber_rows,
-                batch_size,
-                now,
-            )
-
-            # ── 元数据 ──
             with conn:
                 cursor = conn.cursor()
+
+                # ── 表数据 ──
+                self._replace_table_data(
+                    cursor,
+                    "tables",
+                    result_data.get("tables", []),
+                    self._iter_table_rows,
+                    batch_size,
+                    now,
+                )
+
+                # ── 过程数据 ──
+                self._replace_table_data(
+                    cursor,
+                    "procedures",
+                    result_data.get("procedures", []),
+                    self._iter_procedure_rows,
+                    batch_size,
+                    now,
+                )
+
+                # ── 血缘数据 ──
+                self._replace_table_data(
+                    cursor,
+                    "table_lineages",
+                    result_data.get("table_lineages", []),
+                    self._iter_lineage_rows,
+                    batch_size,
+                    now,
+                )
+
+                # ── 字段映射 ──
+                self._replace_table_data(
+                    cursor,
+                    "field_mappings",
+                    result_data.get("field_mappings", []),
+                    self._iter_mapping_rows,
+                    batch_size,
+                    now,
+                )
+
+                # ── 口径数据 ──
+                self._replace_table_data(
+                    cursor,
+                    "caliber_infos",
+                    result_data.get("caliber_infos", []),
+                    self._iter_caliber_rows,
+                    batch_size,
+                    now,
+                )
+
+                # ── 元数据 ──
                 self._upsert_metadata(cursor, metadata, now)
 
             # 写入后 checkpoint
@@ -208,6 +229,7 @@ class SQLiteResultStore:
         with conn:
             cursor = conn.cursor()
             for table_name in DATA_TABLE_NAMES:
+                _validate_table_name(table_name)
                 cursor.execute(f"DELETE FROM {table_name}")
             cursor.execute("DELETE FROM storage_metadata")
         logger.info("SQLite 缓存已清除")
@@ -228,30 +250,28 @@ class SQLiteResultStore:
 
     def _replace_table_data(
         self,
-        conn: sqlite3.Connection,
+        cursor: sqlite3.Cursor,
         table_name: str,
         items: list[dict],
         row_iter_fn,
         batch_size: int,
         now: float,
     ) -> None:
-        """分表事务: 先 DELETE 再分批 INSERT。"""
-        with conn:
-            conn.execute(f"DELETE FROM {table_name}")
+        """分表写入: 先 DELETE 再分批 INSERT（由调用方管理事务）。"""
+        _validate_table_name(table_name)
+        cursor.execute(f"DELETE FROM {table_name}")
 
         batch = []
         inserted = 0
         for row in row_iter_fn(items, now):
             batch.append(row)
             if len(batch) >= batch_size:
-                with conn:
-                    conn.executemany(self._insert_sql(table_name), batch)
+                cursor.executemany(self._insert_sql(table_name), batch)
                 inserted += len(batch)
                 batch = []
 
         if batch:
-            with conn:
-                conn.executemany(self._insert_sql(table_name), batch)
+            cursor.executemany(self._insert_sql(table_name), batch)
             inserted += len(batch)
 
         if inserted:
@@ -390,11 +410,12 @@ class SQLiteResultStore:
     def _iter_caliber_rows(items: list[dict], now: float) -> Iterator[tuple]:
         for c in items:
             raw_json = json.dumps(c, ensure_ascii=False)
+            source_location = c.get("source_location") if isinstance(c.get("source_location"), dict) else {}
             yield (
                 c.get("target_table", ""),
                 c.get("target_column", ""),
-                c.get("source_table", ""),
-                c.get("source_column", ""),
+                c.get("source_table", "") or source_location.get("source_table", ""),
+                c.get("source_column", "") or source_location.get("source_column", ""),
                 c.get("procedure", ""),
                 c.get("step_num", 0),
                 c.get("data_source", ""),
@@ -432,6 +453,7 @@ class SQLiteResultStore:
 
     def _read_table(self, conn: sqlite3.Connection, table_name: str) -> list[dict]:
         """从表中读取所有 raw_json 还原为 dict 列表。"""
+        _validate_table_name(table_name)
         rows = conn.execute(f"SELECT raw_json FROM {table_name}").fetchall()
         result = []
         for row in rows:

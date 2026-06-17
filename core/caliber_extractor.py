@@ -21,6 +21,7 @@ from core.models import (
     SQLOperationType,
     SubqueryInfo,
 )
+from core.utils import find_matching_paren
 
 logger = logging.getLogger(__name__)
 
@@ -795,32 +796,7 @@ def _find_matching_paren_in_text(text: str, start: int) -> int:
     Returns:
         匹配的右括号字符偏移，未找到返回 start
     """
-    if start >= len(text) or text[start] != "(":
-        return start
-
-    depth = 0
-    in_single_quote = False
-    i = start
-
-    while i < len(text):
-        ch = text[i]
-        if ch == "'" and not in_single_quote:
-            in_single_quote = True
-        elif ch == "'" and in_single_quote:
-            if i + 1 < len(text) and text[i + 1] == "'":
-                i += 2
-                continue
-            in_single_quote = False
-        elif not in_single_quote:
-            if ch == "(":
-                depth += 1
-            elif ch == ")":
-                depth -= 1
-                if depth == 0:
-                    return i
-        i += 1
-
-    return start
+    return find_matching_paren(text, start)
 
 
 def _split_select_columns(raw_select: str) -> list[str]:

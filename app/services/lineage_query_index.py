@@ -143,9 +143,9 @@ class LineageQueryIndex:
                 if tgt_tbl == node_upper or tgt_tbl.split(".")[-1] == node_upper.split(".")[-1]:
                     for fm in mappings:
                         src_tbl = fm.get("source_table", "").upper()
-                        src_in = self._node_in_set(src_tbl, nodes)
+                        src_in = self.node_in_set(src_tbl, nodes)
                         tgt_tbl_fm = fm.get("target_table", "").upper()
-                        tgt_in = self._node_in_set(tgt_tbl_fm, nodes)
+                        tgt_in = self.node_in_set(tgt_tbl_fm, nodes)
                         if not (src_in and tgt_in):
                             continue
                         if field_upper:
@@ -277,7 +277,7 @@ class LineageQueryIndex:
                 self.table_lineages_by_source.setdefault(src, []).append(tl)
 
     @staticmethod
-    def _node_in_set(table_name: str, nodes: set[str]) -> bool:
+    def node_in_set(table_name: str, nodes: set[str]) -> bool:
         """检查表名是否在节点集合中（支持全名和短名匹配）。"""
         upper = table_name.upper()
         if upper in nodes:

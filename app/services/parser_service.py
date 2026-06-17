@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+import json
 import logging
 import threading
 import time
@@ -176,20 +177,21 @@ class ParseResult:
                 self.table_lineages.append(tl)
 
         for fm in other.field_mappings:
-            key = (fm.source_table, fm.source_column, fm.target_table, fm.target_column)
+            key = (
+                fm.source_table,
+                fm.source_column,
+                fm.target_table,
+                fm.target_column,
+                fm.procedure,
+                fm.transform_logic,
+                fm.data_source,
+            )
             if key not in self._seen_mapping_keys:
                 self._seen_mapping_keys.add(key)
                 self.field_mappings.append(fm)
 
         for ci in other.caliber_infos:
-            key = (
-                ci.get("target_table", ""),
-                ci.get("target_column", ""),
-                ci.get("source_table", ""),
-                ci.get("source_column", ""),
-                ci.get("procedure", ""),
-                ci.get("step_num", 0),
-            )
+            key = json.dumps(ci, ensure_ascii=False, sort_keys=True, default=str)
             if key not in self._seen_caliber_keys:
                 self._seen_caliber_keys.add(key)
                 self.caliber_infos.append(ci)
@@ -421,6 +423,7 @@ class ParserService:
                     name = all_futures[future]
                     try:
                         output = future.result()
+                        self._tag_output_data_source(output, name)
                         with self._result_lock:
                             self._merge_output_to_result(output, result)
                         summary = output.summary()
@@ -492,6 +495,7 @@ class ParserService:
                 try:
                     if self._registry is not None and self._registry.get_parser(file_path) is not None:
                         output = self._registry.parse_file(file_path)
+                        self._tag_output_data_source(output, "upload")
                         self._merge_output_to_result(output, result)
                     elif file_path.suffix.lower() == ".tab":
                         self._parse_single_tab(file_path, result)
@@ -553,6 +557,21 @@ class ParserService:
 
     def _get_repository(self) -> DataRepository:
         return self._cache_store.get_repository()
+
+    def get_data_mtime(self) -> float | None:
+        """获取数据最后修改时间"""
+        try:
+            repo = self._cache_store.get_repository()
+            if repo and hasattr(repo, 'get_metadata'):
+                metadata = repo.get_metadata()
+                last_updated_str = metadata.get("last_updated", "")
+                if last_updated_str:
+                    from datetime import datetime
+                    dt = datetime.strptime(str(last_updated_str), "%Y-%m-%d %H:%M:%S")
+                    return dt.timestamp()
+        except Exception:
+            pass
+        return None
 
     def get_current_data(self) -> dict[str, Any] | None:
         # 优先返回缓存的 data dict，避免重复全量 to_serializable()
@@ -678,6 +697,11 @@ class ParserService:
         self._tracer_factory.invalidate()
         self._event_bus.publish(EventType.CACHE_INVALIDATED)
 
+    def reset_tracer(self) -> None:
+        """重置血缘追踪器和过程缓存，用于强制重新解析前清理旧状态。"""
+        self._tracer_factory.invalidate()
+        self._cached_procedures.clear()
+
     def _parse_tab_directory(self, directory: Path, result: ParseResult) -> None:
         if not self._table_parser:
             return
@@ -778,3 +802,29 @@ class ParserService:
         temp.caliber_infos = output.caliber_infos
         temp.errors = output.errors
         result.merge(temp)
+
+    @staticmethod
+    def _tag_output_data_source(output: ParseOutput, data_source: str) -> None:
+        if not data_source:
+            return
+
+        for table in output.tables:
+            table.setdefault("data_source", data_source)
+
+        for procedure in output.procedures:
+            procedure.setdefault("data_source", data_source)
+            for lineage in procedure.get("table_lineages", []):
+                lineage.setdefault("data_source", data_source)
+            for mapping in procedure.get("field_mappings", []):
+                mapping.setdefault("data_source", data_source)
+
+        for lineage in output.table_lineages:
+            lineage.setdefault("data_source", data_source)
+            for mapping in lineage.get("field_mappings", []):
+                mapping.setdefault("data_source", data_source)
+
+        for mapping in output.field_mappings:
+            mapping.setdefault("data_source", data_source)
+
+        for caliber in output.caliber_infos:
+            caliber.setdefault("data_source", data_source)

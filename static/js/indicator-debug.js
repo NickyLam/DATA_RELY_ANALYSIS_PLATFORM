@@ -1,4 +1,5 @@
 /**
+ * DEV ONLY - Do not include in production builds
  * 指标血缘点击诊断脚本
  * 在 Console 中执行此脚本，定位点击事件拦截问题
  */

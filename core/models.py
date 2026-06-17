@@ -54,6 +54,7 @@ class TableInfo:
     is_temp: bool = False
     file_path: str = ""
     partitions: list[str] = field(default_factory=list)
+    data_source: str = ""
 
     @property
     def layer(self) -> LayerType:
@@ -74,6 +75,7 @@ class TableInfo:
             "is_temp": self.is_temp,
             "file_path": self.file_path,
             "partitions": self.partitions,
+            "data_source": self.data_source,
         }
 
     @classmethod
@@ -88,6 +90,7 @@ class TableInfo:
             is_temp=data.get("is_temp", False),
             file_path=data.get("file_path", ""),
             partitions=data.get("partitions", []),
+            data_source=data.get("data_source", ""),
         )
 
 
@@ -102,6 +105,7 @@ class FieldMapping:
     transform_logic: str = ""
     procedure: str = ""
     confidence: float = 1.0
+    data_source: str = ""
 
     @property
     def source_key(self) -> str:
@@ -122,6 +126,7 @@ class FieldMapping:
             "transform_logic": self.transform_logic,
             "procedure": self.procedure,
             "confidence": self.confidence,
+            "data_source": self.data_source,
         }
 
     @classmethod
@@ -136,33 +141,7 @@ class FieldMapping:
             transform_logic=data.get("transform_logic", ""),
             procedure=data.get("procedure", ""),
             confidence=data.get("confidence", 1.0),
-        )
-
-    def to_dict(self) -> dict[str, Any]:
-        return {
-            "source_schema": self.source_schema,
-            "source_table": self.source_table,
-            "source_column": self.source_column,
-            "target_schema": self.target_schema,
-            "target_table": self.target_table,
-            "target_column": self.target_column,
-            "transform_logic": self.transform_logic,
-            "procedure": self.procedure,
-            "confidence": self.confidence,
-        }
-
-    @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> FieldMapping:
-        return cls(
-            source_schema=data.get("source_schema", ""),
-            source_table=data.get("source_table", ""),
-            source_column=data.get("source_column", ""),
-            target_schema=data.get("target_schema", ""),
-            target_table=data.get("target_table", ""),
-            target_column=data.get("target_column", ""),
-            transform_logic=data.get("transform_logic", ""),
-            procedure=data.get("procedure", ""),
-            confidence=data.get("confidence", 1.0),
+            data_source=data.get("data_source", ""),
         )
 
 
@@ -174,6 +153,7 @@ class TableLineage:
     target_table: str = ""
     procedure: str = ""
     field_mappings: list[FieldMapping] = field(default_factory=list)
+    data_source: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -183,6 +163,7 @@ class TableLineage:
             "target_table": self.target_table,
             "procedure": self.procedure,
             "field_mappings": [fm.to_dict() for fm in self.field_mappings],
+            "data_source": self.data_source,
         }
 
     @classmethod
@@ -194,6 +175,7 @@ class TableLineage:
             target_table=data.get("target_table", ""),
             procedure=data.get("procedure", ""),
             field_mappings=[FieldMapping.from_dict(fm) for fm in data.get("field_mappings", [])],
+            data_source=data.get("data_source", ""),
         )
 
 
@@ -210,6 +192,7 @@ class ProcedureInfo:
     table_lineages: list[TableLineage] = field(default_factory=list)
     field_mappings: list[FieldMapping] = field(default_factory=list)
     file_path: str = ""
+    data_source: str = ""
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -224,6 +207,7 @@ class ProcedureInfo:
             "table_lineages": [tl.to_dict() for tl in self.table_lineages],
             "field_mappings": [fm.to_dict() for fm in self.field_mappings],
             "file_path": self.file_path,
+            "data_source": self.data_source,
         }
 
     @classmethod
@@ -240,6 +224,7 @@ class ProcedureInfo:
             table_lineages=[TableLineage.from_dict(tl) for tl in data.get("table_lineages", [])],
             field_mappings=[FieldMapping.from_dict(fm) for fm in data.get("field_mappings", [])],
             file_path=data.get("file_path", ""),
+            data_source=data.get("data_source", ""),
         )
 
 

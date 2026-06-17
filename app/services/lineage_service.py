@@ -5,9 +5,11 @@
 
 from __future__ import annotations
 
+import copy
 import logging
 import time
-from typing import Any
+from collections import deque
+from typing import Any, Callable
 
 from app.repository import search_table_dicts
 from app.services.event_bus import EventType, get_event_bus
@@ -88,8 +90,8 @@ class LineageService:
             cache_key = self._generate_cache_key(table, field, depth, mode, include_fields, limit)
             cached = self.cache.get(cache_key)
             if cached:
-                # 返回副本，避免修改缓存对象本身
-                result_copy = dict(cached)
+                # 返回深拷贝，避免修改缓存对象本身
+                result_copy = copy.deepcopy(cached)
                 result_copy["query_time_ms"] = round((time.perf_counter() - start_time) * 1000, 2)
                 result_copy["cache_hit"] = True
                 return result_copy
@@ -349,7 +351,7 @@ class LineageService:
                     # 只保留双端都在节点集合中的映射
                     src_tbl = fm.get("source_table", "").upper()
                     tgt_tbl = fm.get("target_table", "").upper()
-                    if self._index._node_in_set(src_tbl, all_nodes) and self._index._node_in_set(tgt_tbl, all_nodes):
+                    if self._index.node_in_set(src_tbl, all_nodes) and self._index.node_in_set(tgt_tbl, all_nodes):
                         candidates.append(fm)
         else:
             # Fallback: 全量扫描（仅在索引未构建时使用）
@@ -423,6 +425,98 @@ class LineageService:
             limit,
         )
 
+    def _build_node_field_map(
+        self,
+        all_nodes: set,
+        all_edges: list,
+        all_mappings: list,
+        query_table: str,
+        query_field: str | None,
+    ) -> dict[str, str]:
+        """Determine which field each node should display.
+
+        Strategy:
+        - Query target node always gets the query field.
+        - Other nodes get their field from edge endpoints or mapping endpoints.
+        - Bare-name matching used to handle full-name vs short-name differences.
+
+        Returns:
+            dict mapping node_id (as in all_nodes) -> field name (upper)
+        """
+        if not query_field:
+            return {}
+
+        field_map: dict[str, str] = {}
+
+        query_table_upper = query_table.upper()
+        query_field_upper = query_field.upper()
+
+        # Helper: match node against a table name (bare or full)
+        def _node_matches_table(node: str, tbl: str) -> bool:
+            n_upper = node.upper()
+            t_upper = tbl.upper()
+            if n_upper == t_upper:
+                return True
+            n_bare = n_upper.split(".")[-1] if "." in n_upper else n_upper
+            t_bare = t_upper.split(".")[-1] if "." in t_upper else t_upper
+            return n_bare == t_bare
+
+        # Step 1: Assign query target field to matching node
+        for node in all_nodes:
+            if _node_matches_table(node, query_table_upper):
+                field_map[node] = query_field_upper
+
+        # Step 2: For remaining nodes, derive field from edges
+        for edge in all_edges:
+            src_tbl = edge.get("source_table", "")
+            tgt_tbl = edge.get("target_table", "")
+            src_field = edge.get("source_field", "")
+            tgt_field = edge.get("target_field", "")
+
+            for node in all_nodes:
+                if node in field_map:
+                    continue
+                if src_tbl and src_field and _node_matches_table(node, src_tbl):
+                    field_map[node] = src_field.upper()
+                elif tgt_tbl and tgt_field and _node_matches_table(node, tgt_tbl):
+                    field_map[node] = tgt_field.upper()
+
+        # Step 3: Fill gaps from field_mappings
+        for fm in all_mappings:
+            src_tbl = fm.get("source_table", "")
+            tgt_tbl = fm.get("target_table", "")
+            src_col = fm.get("source_column", "")
+            tgt_col = fm.get("target_column", "")
+
+            for node in all_nodes:
+                if node in field_map:
+                    continue
+                if src_tbl and src_col and _node_matches_table(node, src_tbl):
+                    field_map[node] = src_col.upper()
+                elif tgt_tbl and tgt_col and _node_matches_table(node, tgt_tbl):
+                    field_map[node] = tgt_col.upper()
+
+        return field_map
+
+    @staticmethod
+    def _resolve_column_type(
+        table_info: dict,
+        field_name: str,
+    ) -> tuple[str, str]:
+        """Resolve a column's canonical name and data_type from table metadata.
+
+        Matching is case-insensitive.  Returns (canonical_name, data_type).
+        If no matching column found, returns (field_name, "").
+        """
+        columns = table_info.get("columns", [])
+        field_upper = field_name.upper()
+        for col in columns:
+            col_name = col.get("name", "")
+            if col_name.upper() == field_upper:
+                return col_name, col.get("data_type", "")
+        # No match found: return original name with empty type
+        return field_name, ""
+
     def _assemble_result(
         self,
         all_nodes: set,
@@ -434,7 +528,8 @@ class LineageService:
         field: str | None,
         limit: int,
     ) -> dict[str, Any]:
-        nodes_list = self._build_nodes(all_nodes, data, include_fields)
+        field_map = self._build_node_field_map(all_nodes, all_edges, all_mappings, table, field)
+        nodes_list = self._build_nodes(all_nodes, data, include_fields, field_map=field_map)
         edges_list = self._deduplicate_edges(all_edges)
         if field and len(nodes_list) > limit:
             nodes_list = self._prioritize_field_lineage_nodes(nodes_list, edges_list, table, field, limit)
@@ -612,6 +707,10 @@ class LineageService:
         self._update_data_mtime()
         logger.info("索引重建完成")
 
+    def is_index_ready(self) -> bool:
+        """检查血缘索引是否已构建且可用。"""
+        return bool(self._table_tracer.adjacency_up or self._table_tracer.adjacency_down)
+
     def _check_and_refresh_cache(self) -> None:
         """检查数据是否已更新，如果更新则自动清除缓存。
 
@@ -644,23 +743,14 @@ class LineageService:
     def _get_data_mtime(self) -> float | None:
         """获取数据的最后更新时间戳。
 
-        优先从 DataRepository metadata 读取，fallback 到 JSON 文件 mtime。
+        优先通过 ParserService 公共接口获取，fallback 到 JSON 文件 mtime。
         """
-        # 优先从 repository metadata 获取
-        try:
-            repo = self.parser._cache_store.get_repository()
-            metadata = repo.get_metadata()
-            last_updated_str = metadata.get("last_updated", "")
-            if last_updated_str:
-                from datetime import datetime
-
-                dt = datetime.strptime(str(last_updated_str), "%Y-%m-%d %H:%M:%S")
-                return dt.timestamp()
-        except Exception:
-            pass
+        # 优先通过公共接口获取
+        mtime = self.parser.get_data_mtime()
+        if mtime is not None:
+            return mtime
 
         # Fallback: 检测 JSON 文件 mtime（legacy 模式）
-
         cache_file = self.parser.output_dir / "lineage_data.json"
         if cache_file.exists():
             return cache_file.stat().st_mtime
@@ -672,6 +762,292 @@ class LineageService:
         current = self._get_data_mtime()
         if current is not None:
             self._last_data_mtime = current
+
+    def _build_field_mapping_indexes(
+        self,
+        all_field_mappings: list[dict],
+        query_index: LineageQueryIndex | None,
+    ) -> tuple[dict[tuple[str, str], list[dict]], dict[tuple[str, str], list[dict]]]:
+        """构建字段映射索引，加速 BFS 查询。
+
+        Returns:
+            (target_map, source_map) — 目标/源索引映射
+        """
+        if query_index is not None and query_index.is_built:
+            return query_index.field_mappings_by_target, query_index.field_mappings_by_source
+
+        target_map: dict[tuple[str, str], list[dict]] = {}
+        source_map: dict[tuple[str, str], list[dict]] = {}
+
+        for fm in all_field_mappings:
+            tgt_key = (
+                fm.get("target_table", "").upper(),
+                fm.get("target_column", "").upper(),
+            )
+            src_key = (
+                fm.get("source_table", "").upper(),
+                fm.get("source_column", "").upper(),
+            )
+            target_map.setdefault(tgt_key, []).append(fm)
+            source_map.setdefault(src_key, []).append(fm)
+
+        return target_map, source_map
+
+    def _build_upstream_graph_cache(
+        self,
+        all_field_mappings: list[dict],
+        query_index: LineageQueryIndex | None,
+    ) -> tuple[dict[str, set[str]], Callable[[str], set[str]]]:
+        """构建上游图缓存，用于判断数据流方向。
+
+        Returns:
+            (table_to_upstream, get_upstream_fn) — 上游映射和查询函数
+        """
+        if query_index is not None and query_index.is_built:
+            _upstream_cache: dict[str, set[str]] = {}
+
+            def _get_upstream_tables(tbl: str) -> set[str]:
+                tbl_upper = tbl.upper()
+                if tbl_upper not in _upstream_cache:
+                    tls = query_index.table_lineages_by_target.get(tbl_upper, [])
+                    _upstream_cache[tbl_upper] = {
+                        tl.get("source_table", "").upper() for tl in tls if tl.get("source_table")
+                    }
+                return _upstream_cache[tbl_upper]
+
+            return {}, _get_upstream_tables
+
+        table_to_upstream: dict[str, set[str]] = {}
+        for fm in all_field_mappings:
+            src_tbl = fm.get("source_table", "").upper()
+            tgt_tbl = fm.get("target_table", "").upper()
+            if src_tbl and tgt_tbl:
+                table_to_upstream.setdefault(tgt_tbl, set()).add(src_tbl)
+
+        return table_to_upstream, lambda tbl: table_to_upstream.get(tbl.upper(), set())
+
+    def _trace_upstream_field_lineage(
+        self,
+        current_table: str,
+        current_field: str,
+        depth: int,
+        max_depth: int,
+        target_map: dict[tuple[str, str], list[dict]],
+        query_index: LineageQueryIndex | None,
+        visited_nodes: set[str],
+        edges: list[dict],
+        collected_mappings: list[dict],
+        max_field_nodes: int,
+        is_mapping_in_target_flow: Callable[[dict], bool],
+    ) -> deque[tuple[str, str, int]]:
+        """向上游追溯字段血缘（BFS 单步）。
+
+        Returns:
+            新增的 BFS 队列条目
+        """
+        new_queue_items: deque[tuple[str, str, int]] = deque()
+        tgt_key = (current_table.upper(), current_field.upper())
+
+        # 精确匹配
+        matching_mappings = target_map.get(tgt_key, [])
+
+        # 模糊匹配（处理表名短名、schema差异等）
+        if not matching_mappings:
+            if query_index is not None and query_index.is_built:
+                resolved_tbl = query_index.resolve_table_name(current_table)
+                if resolved_tbl.upper() != current_table.upper():
+                    tgt_key2 = (resolved_tbl.upper(), current_field.upper())
+                    matching_mappings = target_map.get(tgt_key2, [])
+            else:
+                for key, mappings in target_map.items():
+                    if self._resolver.match(key[0], current_table) and self._resolver.match_field(
+                        key[1], current_field
+                    ):
+                        matching_mappings.extend(mappings)
+
+        for fm in matching_mappings:
+            if len(visited_nodes) >= max_field_nodes:
+                logger.warning("字段级查询节点数达到上限(%d)，停止追溯", max_field_nodes)
+                break
+
+            if not is_mapping_in_target_flow(fm):
+                continue
+
+            src_tbl = fm.get("source_table", "").upper()
+            src_col = fm.get("source_column", "").upper()
+
+            if not src_tbl or not src_col:
+                continue
+
+            if src_tbl not in visited_nodes:
+                visited_nodes.add(src_tbl)
+
+            edge = {
+                "source_table": src_tbl,
+                "target_table": current_table.upper(),
+                "source_field": src_col,
+                "target_field": current_field.upper(),
+                "type": "field_mapping",
+            }
+
+            if edge not in edges:
+                edges.append(edge)
+
+            if fm not in collected_mappings:
+                collected_mappings.append(fm)
+
+            if depth + 1 < max_depth:
+                new_queue_items.append((src_tbl, src_col, depth + 1))
+
+        return new_queue_items
+
+    def _trace_downstream_field_lineage(
+        self,
+        current_table: str,
+        current_field: str,
+        depth: int,
+        max_depth: int,
+        source_map: dict[tuple[str, str], list[dict]],
+        query_index: LineageQueryIndex | None,
+        visited_nodes: set[str],
+        edges: list[dict],
+        collected_mappings: list[dict],
+        max_field_nodes: int,
+        is_mapping_in_target_flow: Callable[[dict], bool],
+    ) -> deque[tuple[str, str, int]]:
+        """向下游追溯字段血缘（BFS 单步）。
+
+        Returns:
+            新增的 BFS 队列条目
+        """
+        new_queue_items: deque[tuple[str, str, int]] = deque()
+        src_key = (current_table.upper(), current_field.upper())
+
+        # 精确匹配
+        matching_mappings = source_map.get(src_key, [])
+
+        # 模糊匹配
+        if not matching_mappings:
+            if query_index is not None and query_index.is_built:
+                resolved_tbl = query_index.resolve_table_name(current_table)
+                if resolved_tbl.upper() != current_table.upper():
+                    src_key2 = (resolved_tbl.upper(), current_field.upper())
+                    matching_mappings = source_map.get(src_key2, [])
+            else:
+                for key, mappings in source_map.items():
+                    if self._resolver.match(key[0], current_table) and self._resolver.match_field(
+                        key[1], current_field
+                    ):
+                        matching_mappings.extend(mappings)
+
+        for fm in matching_mappings:
+            if len(visited_nodes) >= max_field_nodes:
+                logger.warning("字段级查询节点数达到上限(%d)，停止追溯", max_field_nodes)
+                break
+
+            if not is_mapping_in_target_flow(fm):
+                continue
+
+            tgt_tbl = fm.get("target_table", "").upper()
+            tgt_col = fm.get("target_column", "").upper()
+
+            if not tgt_tbl or not tgt_col:
+                continue
+
+            if tgt_tbl not in visited_nodes:
+                visited_nodes.add(tgt_tbl)
+
+            edge = {
+                "source_table": current_table.upper(),
+                "target_table": tgt_tbl,
+                "source_field": current_field.upper(),
+                "target_field": tgt_col,
+                "type": "field_mapping",
+            }
+
+            if edge not in edges:
+                edges.append(edge)
+
+            if fm not in collected_mappings:
+                collected_mappings.append(fm)
+
+            if depth + 1 < max_depth:
+                new_queue_items.append((tgt_tbl, tgt_col, depth + 1))
+
+        return new_queue_items
+
+    def _expand_table_lineage_fallback(
+        self,
+        visited_nodes: set[str],
+        edges: list[dict],
+        direction: str,
+    ) -> set[str]:
+        """字段映射节点过少时，补充1层直接表级血缘。
+
+        Returns:
+            扩展后的节点集合
+        """
+        if len(visited_nodes) >= 3:
+            logger.info(
+                "字段映射已找到%d个节点，跳过表级扩展以避免结果膨胀",
+                len(visited_nodes),
+            )
+            return visited_nodes
+
+        logger.info(
+            "字段映射节点过少(%d个)，补充1层直接表级血缘",
+            len(visited_nodes),
+        )
+
+        if direction in ("downstream", "both"):
+            table_queue = deque(visited_nodes)
+            table_visited = set(visited_nodes)
+
+            while table_queue:
+                current = table_queue.popleft()
+                downstream_tables = self._table_tracer.adjacency_down.get(current.upper(), set())
+
+                for downstream_tbl in downstream_tables:
+                    downstream_tbl_upper = downstream_tbl.upper()
+                    if downstream_tbl_upper not in table_visited:
+                        table_visited.add(downstream_tbl_upper)
+                        edges.append(
+                            {
+                                "source_table": current.upper(),
+                                "target_table": downstream_tbl_upper,
+                                "source_field": "",
+                                "target_field": "",
+                                "type": "table_lineage",
+                            }
+                        )
+
+            visited_nodes = table_visited
+
+        if direction in ("upstream", "both"):
+            table_queue = deque(visited_nodes)
+            table_visited = set(visited_nodes)
+
+            while table_queue:
+                current = table_queue.popleft()
+                upstream_tables = self._table_tracer.adjacency_up.get(current.upper(), set())
+
+                for upstream_tbl in upstream_tables:
+                    upstream_tbl_upper = upstream_tbl.upper()
+                    if upstream_tbl_upper not in table_visited:
+                        table_visited.add(upstream_tbl_upper)
+                        edges.append(
+                            {
+                                "source_table": upstream_tbl_upper,
+                                "target_table": current.upper(),
+                                "source_field": "",
+                                "target_field": "",
+                                "type": "table_lineage",
+                            }
+                        )
+
+            visited_nodes = table_visited
+
+        return visited_nodes
 
     def _trace_field_lineage(
         self,
@@ -696,321 +1072,89 @@ class LineageService:
             all_field_mappings: 全部字段映射列表
             max_depth: 最大追溯深度（默认5层）
             direction: 追溯方向 (upstream/downstream/both)
+            query_index: 预构建的查询索引（可选）
 
         Returns:
             tuple[set, list, list]: (节点集合, 边列表, 字段映射列表)
         """
-        # 将短名解析为完整表名，确保节点和边中的表名统一
         _use_index = query_index is not None and query_index.is_built
-        if _use_index:
-            resolved_target = query_index.resolve_table_name(target_table)
-            if "." not in resolved_target.upper():
-                resolved_target = resolved_target.upper()
-        else:
-            resolved_target = TableNameResolver.resolve_from_mappings(target_table, all_field_mappings)
-        visited_nodes = {resolved_target}
-        edges = []
-        collected_mappings = []
 
-        # BFS 队列：(当前表, 当前字段, 当前深度)
-        queue = [(resolved_target, target_field, 0)]
+        # 解析目标表名
+        resolved_target = (
+            query_index.resolve_table_name(target_table)
+            if _use_index
+            else TableNameResolver.resolve_from_mappings(target_table, all_field_mappings)
+        )
+        if "." not in resolved_target.upper():
+            resolved_target = resolved_target.upper()
 
-        # 硬限制：字段级查询最多返回50个节点，避免结果爆炸
-        max_field_nodes = 50
+        # 构建索引
+        target_map, source_map = self._build_field_mapping_indexes(all_field_mappings, query_index)
+        table_to_upstream, get_upstream_fn = self._build_upstream_graph_cache(all_field_mappings, query_index)
 
-        # 构建映射索引：加速查询
-        # target_map: {(target_table, target_column): [mappings]}
-        # source_map: {(source_table, source_column): [mappings]}
-        if _use_index:
-            # 使用预构建索引，避免 O(N) 全量扫描
-            target_map = query_index.field_mappings_by_target
-            source_map = query_index.field_mappings_by_source
-        else:
-            target_map = {}
-            source_map = {}
-
-            for fm in all_field_mappings:
-                tgt_key = (
-                    fm.get("target_table", "").upper(),
-                    fm.get("target_column", "").upper(),
-                )
-                src_key = (
-                    fm.get("source_table", "").upper(),
-                    fm.get("source_column", "").upper(),
-                )
-
-                target_map.setdefault(tgt_key, []).append(fm)
-                source_map.setdefault(src_key, []).append(fm)
-
-        # 方案C：基于数据流向过滤
-        # 核心思想：只保留与查询目标表在同一数据流中的映射
-        # 实现方式：
-        # 1. 从目标表出发，向上游追溯时，只保留"映射的目标表是目标表的祖先"的映射
-        # 2. 这意味着我们只关心那些"最终到达目标表"的数据流
-        # 3. 即：数据从映射的源表 -> 映射的目标表 -> ... -> 查询目标表
-
-        # 预计算：构建表级血缘图，用于判断数据流方向
-        # table_to_upstream: {table: set(upstream_tables)}
-        # 即：对于每个表，记录哪些表是它的上游（数据从这些表流向它）
-        if _use_index:
-            # 延迟构建：按需从 table_lineages_by_target 获取上游表
-            _upstream_cache: dict[str, set[str]] = {}
-
-            def _get_upstream_tables(tbl: str) -> set[str]:
-                tbl_upper = tbl.upper()
-                if tbl_upper not in _upstream_cache:
-                    tls = query_index.table_lineages_by_target.get(tbl_upper, [])
-                    _upstream_cache[tbl_upper] = {
-                        tl.get("source_table", "").upper() for tl in tls if tl.get("source_table")
-                    }
-                return _upstream_cache[tbl_upper]
-        else:
-            table_to_upstream = {}
-            for fm in all_field_mappings:
-                src_tbl = fm.get("source_table", "").upper()
-                tgt_tbl = fm.get("target_table", "").upper()
-                if src_tbl and tgt_tbl:
-                    table_to_upstream.setdefault(tgt_tbl, set()).add(src_tbl)
-
-        # 判断一个表是否在目标表的上游（即数据从该表流向目标表）
+        # 构建数据流过滤函数
         def is_upstream_of_target(table: str) -> bool:
-            """判断表是否在目标表的上游（数据从该表流向目标表）"""
             table_upper = table.upper()
             target_upper = resolved_target.upper()
             if table_upper == target_upper:
                 return True
-            # BFS检查该表是否能到达目标表（即该表是否在目标表的上游）
             visited = {table_upper}
-            queue_bfs = [table_upper]
-            while queue_bfs:
-                current = queue_bfs.pop(0)
-                upstreams = _get_upstream_tables(current) if _use_index else table_to_upstream.get(current, set())
+            bfs_queue = deque([table_upper])
+            while bfs_queue:
+                current = bfs_queue.popleft()
+                upstreams = get_upstream_fn(current)
                 for upstream in upstreams:
                     if upstream == target_upper:
                         return True
                     if upstream not in visited:
                         visited.add(upstream)
-                        queue_bfs.append(upstream)
+                        bfs_queue.append(upstream)
             return False
 
-        # 判断一个映射是否与目标表在同一数据流中
-        # 条件：映射的目标表必须在目标表的上游（包括目标表本身）
-        # 即：映射的目标表是目标表的祖先，数据从映射的源表 -> 映射的目标表 -> ... -> 查询目标表
         def is_mapping_in_target_flow(fm: dict) -> bool:
-            """判断映射是否与目标表在同一数据流中"""
             tgt_tbl = fm.get("target_table", "").upper()
-            _src_tbl = fm.get("source_table", "").upper()
-            # 如果映射的目标表在目标表的上游，则认为在同一数据流
-            # 这意味着数据从映射的源表 -> 映射的目标表 -> ... -> 查询目标表
             return is_upstream_of_target(tgt_tbl)
 
+        # BFS 遍历
+        visited_nodes = {resolved_target}
+        edges: list[dict] = []
+        collected_mappings: list[dict] = []
+        queue: deque[tuple[str, str, int]] = deque([(resolved_target, target_field, 0)])
+        max_field_nodes = 50
+
         while queue:
-            current_table, current_field, depth = queue.pop(0)
+            current_table, current_field, depth = queue.popleft()
 
             if depth >= max_depth:
                 continue
 
-            # ========== 向上游追溯（找来源）==========
             if direction in ("upstream", "both"):
-                tgt_key = (current_table.upper(), current_field.upper())
-
-                # 精确匹配
-                matching_mappings = target_map.get(tgt_key, [])
-
-                # 模糊匹配（处理表名短名、schema差异等）
-                if not matching_mappings:
-                    if _use_index:
-                        # 通过索引解析短名后精确查找，避免 O(N) 遍历
-                        resolved_tbl = query_index.resolve_table_name(current_table)
-                        if resolved_tbl.upper() != current_table.upper():
-                            tgt_key2 = (resolved_tbl.upper(), current_field.upper())
-                            matching_mappings = target_map.get(tgt_key2, [])
-                    else:
-                        for key, mappings in target_map.items():
-                            if self._resolver.match(key[0], current_table) and self._resolver.match_field(
-                                key[1], current_field
-                            ):
-                                matching_mappings.extend(mappings)
-
-                for fm in matching_mappings:
-                    # 硬限制：最多50个节点
-                    if len(visited_nodes) >= max_field_nodes:
-                        logger.warning(
-                            "字段级查询节点数达到上限(%d)，停止追溯",
-                            max_field_nodes,
-                        )
-                        break
-
-                    # 方案C过滤：只保留与目标表在同一数据流中的映射
-                    if not is_mapping_in_target_flow(fm):
-                        continue  # 跳过不在目标数据流中的映射
-
-                    src_tbl = fm.get("source_table", "").upper()
-                    src_col = fm.get("source_column", "").upper()
-
-                    if not src_tbl or not src_col:
-                        continue
-
-                    # 添加节点和边
-                    if src_tbl not in visited_nodes:
-                        visited_nodes.add(src_tbl)
-
-                    edge = {
-                        "source_table": src_tbl,
-                        "target_table": current_table.upper(),
-                        "source_field": src_col,
-                        "target_field": current_field.upper(),
-                        "type": "field_mapping",
-                    }
-
-                    if edge not in edges:
-                        edges.append(edge)
-
-                    if fm not in collected_mappings:
-                        collected_mappings.append(fm)
-
-                    # 继续向上追溯（从源表的源字段出发）
-                    if depth + 1 < max_depth:
-                        queue.append((src_tbl, src_col, depth + 1))
-
-            # ========== 向下游追溯（找去向）==========
-            if direction in ("downstream", "both"):
-                src_key = (current_table.upper(), current_field.upper())
-
-                # 精确匹配
-                matching_mappings = source_map.get(src_key, [])
-
-                # 模糊匹配
-                if not matching_mappings:
-                    if _use_index:
-                        resolved_tbl = query_index.resolve_table_name(current_table)
-                        if resolved_tbl.upper() != current_table.upper():
-                            src_key2 = (resolved_tbl.upper(), current_field.upper())
-                            matching_mappings = source_map.get(src_key2, [])
-                    else:
-                        for key, mappings in source_map.items():
-                            if self._resolver.match(key[0], current_table) and self._resolver.match_field(
-                                key[1], current_field
-                            ):
-                                matching_mappings.extend(mappings)
-
-                for fm in matching_mappings:
-                    # 硬限制：最多50个节点
-                    if len(visited_nodes) >= max_field_nodes:
-                        logger.warning(
-                            "字段级查询节点数达到上限(%d)，停止追溯",
-                            max_field_nodes,
-                        )
-                        break
-
-                    # 方案C过滤：只保留与目标表在同一数据流中的映射
-                    if not is_mapping_in_target_flow(fm):
-                        continue  # 跳过不在目标数据流中的映射
-
-                    tgt_tbl = fm.get("target_table", "").upper()
-                    tgt_col = fm.get("target_column", "").upper()
-
-                    if not tgt_tbl or not tgt_col:
-                        continue
-
-                    if tgt_tbl not in visited_nodes:
-                        visited_nodes.add(tgt_tbl)
-
-                    edge = {
-                        "source_table": current_table.upper(),
-                        "target_table": tgt_tbl,
-                        "source_field": current_field.upper(),
-                        "target_field": tgt_col,
-                        "type": "field_mapping",
-                    }
-
-                    if edge not in edges:
-                        edges.append(edge)
-
-                    if fm not in collected_mappings:
-                        collected_mappings.append(fm)
-
-                    # 继续向下追溯
-                    if depth + 1 < max_depth:
-                        queue.append((tgt_tbl, tgt_col, depth + 1))
-
-        # ========== 表级血缘扩展（严格限制版）==========
-        # 修复：字段级查询应只返回与字段相关的表，避免全量表级扩展导致结果爆炸
-        # 策略：仅当字段映射找到的节点过少时，才进行有限的表级扩展
-
-        if len(visited_nodes) < 3:
-            # 字段映射节点过少，补充1层直接表级血缘
-            logger.info(
-                "字段映射节点过少(%d个)，补充1层直接表级血缘",
-                len(visited_nodes),
-            )
+                new_items = self._trace_upstream_field_lineage(
+                    current_table, current_field, depth, max_depth,
+                    target_map, query_index, visited_nodes, edges,
+                    collected_mappings, max_field_nodes, is_mapping_in_target_flow,
+                )
+                queue.extend(new_items)
 
             if direction in ("downstream", "both"):
-                table_queue = list(visited_nodes)
-                table_visited = set(visited_nodes)
+                new_items = self._trace_downstream_field_lineage(
+                    current_table, current_field, depth, max_depth,
+                    source_map, query_index, visited_nodes, edges,
+                    collected_mappings, max_field_nodes, is_mapping_in_target_flow,
+                )
+                queue.extend(new_items)
 
-                while table_queue:
-                    current = table_queue.pop(0)
-                    downstream_tables = self._table_tracer.adjacency_down.get(current.upper(), set())
-
-                    for downstream_tbl in downstream_tables:
-                        downstream_tbl_upper = downstream_tbl.upper()
-                        if downstream_tbl_upper not in table_visited:
-                            table_visited.add(downstream_tbl_upper)
-                            edges.append(
-                                {
-                                    "source_table": current.upper(),
-                                    "target_table": downstream_tbl_upper,
-                                    "source_field": "",
-                                    "target_field": "",
-                                    "type": "table_lineage",
-                                }
-                            )
-
-                visited_nodes = table_visited
-
-            if direction in ("upstream", "both"):
-                table_queue = list(visited_nodes)
-                table_visited = set(visited_nodes)
-
-                while table_queue:
-                    current = table_queue.pop(0)
-                    upstream_tables = self._table_tracer.adjacency_up.get(current.upper(), set())
-
-                    for upstream_tbl in upstream_tables:
-                        upstream_tbl_upper = upstream_tbl.upper()
-                        if upstream_tbl_upper not in table_visited:
-                            table_visited.add(upstream_tbl_upper)
-                            edges.append(
-                                {
-                                    "source_table": upstream_tbl_upper,
-                                    "target_table": current.upper(),
-                                    "source_field": "",
-                                    "target_field": "",
-                                    "type": "table_lineage",
-                                }
-                            )
-
-                visited_nodes = table_visited
-        else:
-            logger.info(
-                "字段映射已找到%d个节点，跳过表级扩展以避免结果膨胀",
-                len(visited_nodes),
-            )
+        # 表级血缘扩展
+        visited_nodes = self._expand_table_lineage_fallback(visited_nodes, edges, direction)
 
         logger.info(
             "🔗 字段映射追溯结果: %s.%s → %d 节点, %d 边, %d 映射",
-            target_table,
-            target_field,
-            len(visited_nodes),
-            len(edges),
-            len(collected_mappings),
+            target_table, target_field,
+            len(visited_nodes), len(edges), len(collected_mappings),
         )
 
         return visited_nodes, edges, collected_mappings
 
-    @staticmethod
-    @staticmethod
     @staticmethod
     def _is_node_in_set(table_name: str, involved_nodes: set) -> bool:
         """检查表名是否在节点集合中（支持全名和短名匹配）。"""
@@ -1066,14 +1210,37 @@ class LineageService:
         node_names: set,
         data: dict,
         include_fields: bool,
+        field_map: dict[str, str] | None = None,
     ) -> list[dict]:
-        """构建节点数据列表"""
+        """构建节点数据列表，可选地为每个节点附加当前链路字段元数据。"""
         # 使用预构建索引替代每次扫描全量 tables
-        table_map = self._index.table_by_full if self._index.is_built else {t["full_name"]: t for t in data.get("tables", [])}
+        table_map = (
+            self._index.table_by_full
+            if self._index.is_built
+            else {t["full_name"]: t for t in data.get("tables", [])}
+        )
+        # Build short-name -> table_info fallback for field resolution
+        table_by_short: dict[str, dict] = {}
+        if self._index.is_built:
+            table_by_short = {
+                short: tbls[0]
+                for short, tbls in self._index.table_by_short.items()
+                if tbls
+            }
+        else:
+            for t in data.get("tables", []):
+                sn = t.get("table_name", "").upper()
+                if sn:
+                    table_by_short.setdefault(sn, t)
 
         nodes = []
         for name in sorted(node_names):
             table_info = table_map.get(name, {})
+            # Fallback: try short-name lookup when full-name misses
+            if not table_info and "." in name:
+                short_upper = name.split(".")[-1].upper()
+                table_info = table_by_short.get(short_upper, {})
+
             node = {
                 "id": name,
                 "full_name": name,
@@ -1084,6 +1251,17 @@ class LineageService:
 
             if include_fields and "columns" in table_info:
                 node["columns"] = [c["name"] for c in table_info["columns"]]
+
+            # Attach current-lineage field metadata (independent of include_fields)
+            if field_map is not None:
+                raw_field = field_map.get(name, "")
+                if raw_field:
+                    col_name, col_type = self._resolve_column_type(table_info, raw_field)
+                    node["field"] = {"name": col_name, "data_type": col_type}
+                else:
+                    # No field for this node (e.g. table-only supplemental node)
+                    # Omit the key entirely for backward compatibility
+                    pass
 
             nodes.append(node)
 
@@ -1160,7 +1338,6 @@ class LineageService:
         2. 字段级血缘路径上的节点（通过BFS计算距离）
         3. 其他节点（按字母顺序）
         """
-        from collections import deque
 
         # 支持短名和完整名匹配
         target_upper = target_table.upper()

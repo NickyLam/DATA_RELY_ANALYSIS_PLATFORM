@@ -10,7 +10,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Protocol, runtime_checkable
 
-CACHE_SCHEMA_VERSION = "v4"
+CACHE_SCHEMA_VERSION = "v5"
 
 
 @runtime_checkable

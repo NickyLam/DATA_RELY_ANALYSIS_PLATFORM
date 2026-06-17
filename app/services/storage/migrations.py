@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import sqlite3
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 # ── 建表 SQL ──────────────────────────────────────────────────────
 
@@ -89,8 +89,7 @@ CREATE TABLE IF NOT EXISTS caliber_infos (
     step_num       INTEGER,
     data_source    TEXT,
     raw_json       TEXT NOT NULL,
-    updated_at     REAL NOT NULL,
-    UNIQUE(target_table, target_column, source_table, source_column, procedure_name, step_num)
+    updated_at     REAL NOT NULL
 )
 """
 
@@ -150,6 +149,7 @@ def init_schema(conn: sqlite3.Connection) -> None:
     cursor.execute(_CREATE_TABLE_LINEAGES)
     cursor.execute(_CREATE_FIELD_MAPPINGS)
     cursor.execute(_CREATE_CALIBER_INFOS)
+    _migrate_caliber_infos_unique_constraint(cursor)
 
     # 建索引
     for idx_sql in _CREATE_INDEXES:
@@ -163,6 +163,32 @@ def init_schema(conn: sqlite3.Connection) -> None:
     )
 
     conn.commit()
+
+
+def _migrate_caliber_infos_unique_constraint(cursor: sqlite3.Cursor) -> None:
+    """Recreate caliber_infos when an older UNIQUE constraint would collapse rows."""
+    row = cursor.execute(
+        "SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'caliber_infos'"
+    ).fetchone()
+    create_sql = row[0] if row else ""
+    if "UNIQUE(target_table, target_column, source_table, source_column, procedure_name, step_num)" not in create_sql:
+        return
+
+    cursor.execute("ALTER TABLE caliber_infos RENAME TO caliber_infos_old")
+    cursor.execute(_CREATE_CALIBER_INFOS)
+    cursor.execute(
+        """
+        INSERT INTO caliber_infos (
+            target_table, target_column, source_table, source_column,
+            procedure_name, step_num, data_source, raw_json, updated_at
+        )
+        SELECT
+            target_table, target_column, source_table, source_column,
+            procedure_name, step_num, data_source, raw_json, updated_at
+        FROM caliber_infos_old
+        """
+    )
+    cursor.execute("DROP TABLE caliber_infos_old")
 
 
 def get_schema_version(conn: sqlite3.Connection) -> int | None:

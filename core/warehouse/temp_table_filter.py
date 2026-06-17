@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 TEMP_SUFFIXES: tuple[str, ...] = (
     "_bk",  # 备份表 (backup)
     "_tm",  # 临时表 (temp)
+    "_tmp",  # 临时表 (temp)
     "_op",  # 操作表 (operation)
     "_cl",  # 清理表 (clean)
     "_old",  # 旧表 (旧版本保留)

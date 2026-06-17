@@ -8,15 +8,7 @@ let svg, g, zoom;
 let currentQuery = null;
 let graphData = null;
 
-const LAYER_CONFIG = {
-    'ods':   { label: 'ODS源系统层',   color: '#10b981', bg: '#d1fae5', border: '#059669', order: 0 },
-    'diis': { label: 'DIIS明细层',     color: '#0ea5e9', bg: '#e0f2fe', border: '#0284c7', order: 1 },
-    'base': { label: 'B基础层',       color: '#6366f1', bg: '#e0e7ff', border: '#4f46e5', order: 2 },
-    'mdl':  { label: 'M模型层',       color: '#a855f7', bg: '#f3e8ff', border: '#9333ea', order: 3 },
-    'app':  { label: 'A/S应用汇总层', color: '#f97316', bg: '#ffedd5', border: '#ea580c', order: 4 },
-    'east': { label: 'EAST报送层',     color: '#ef4444', bg: '#fee2e2', border: '#dc2626', order: 5 },
-    'config': { label: '配置/临时表',  color: '#64748b', bg: '#f1f5f9', border: '#475569', order: 6 },
-};
+// LAYER_CONFIG 已移至 layer-config.js，通过 getLayerConfig(layer, system) 获取
 
 // ============================================
 // 初始化展示层
@@ -677,18 +669,24 @@ function renderGraphVertical(data) {
         const marker = isQueryNode ? 'url(#arrow-query)' : 'url(#arrow)';
 
         // 最近边连接算法：
-        // - 源节点出口点：底部边缘的X坐标限制在[srcPos.x, srcPos.x+nodeW]范围内，优先对齐目标节点中心
-        // - 目标节点入口点：顶部边缘的X坐标限制在[tgtPos.x, tgtPos.x+nodeW]范围内，优先对齐源节点中心
+        // 根据节点相对位置动态选择连接点，使边始终从源节点朝向目标节点的一侧出发
         const srcCenterX = srcPos.x + nodeW / 2;
         const tgtCenterX = tgtPos.x + nodeW / 2;
 
-        // 源节点出口：底部边缘，X坐标向目标中心靠拢但不超过边界
-        const x1 = Math.max(srcPos.x, Math.min(srcPos.x + nodeW, tgtCenterX));
-        const y1 = srcPos.y + nodeH;  // 底部
-
-        // 目标节点入口：顶部边缘，X坐标向源中心靠拢但不超过边界
-        const x2 = Math.max(tgtPos.x, Math.min(tgtPos.x + nodeW, srcCenterX));
-        const y2 = tgtPos.y;  // 顶部
+        let x1, y1, x2, y2;
+        if (srcPos.y < tgtPos.y) {
+            // 源节点在目标节点上方：从源底边 → 目标顶边
+            x1 = Math.max(srcPos.x, Math.min(srcPos.x + nodeW, tgtCenterX));
+            y1 = srcPos.y + nodeH;
+            x2 = Math.max(tgtPos.x, Math.min(tgtPos.x + nodeW, srcCenterX));
+            y2 = tgtPos.y;
+        } else {
+            // 源节点在目标节点下方：从源顶边 → 目标底边
+            x1 = Math.max(srcPos.x, Math.min(srcPos.x + nodeW, tgtCenterX));
+            y1 = srcPos.y;
+            x2 = Math.max(tgtPos.x, Math.min(tgtPos.x + nodeW, srcCenterX));
+            y2 = tgtPos.y + nodeH;
+        }
 
         // 贝塞尔曲线连接（控制点在中间Y位置）
         const midY = (y1 + y2) / 2;
@@ -713,7 +711,7 @@ function renderGraphVertical(data) {
         const isQueryTarget = node.id === queryTargetTable ||
                              (queryTargetTable.includes('.') && node.id === queryTargetTable) ||
                              (!queryTargetTable.includes('.') && node.id.split('.').pop() === queryTargetTable);
-        const config = LAYER_CONFIG[node.layer] || LAYER_CONFIG['config'];
+        const config = getLayerConfig(node.layer);
 
         const ng = g.append('g')
             .attr('transform', `translate(${pos.x},${pos.y})`)
@@ -810,14 +808,18 @@ function renderLegend(layers) {
     let html = '';
 
     Object.keys(layers).sort((a, b) => {
-        return (LAYER_CONFIG[a]?.order || 99) - (LAYER_CONFIG[b]?.order || 99);
-    }).forEach(layer => {
-        const config = LAYER_CONFIG[layer];
-        if (config && layers[layer]) {
+        const depthA = parseInt(a.split('_')[1]) || 0;
+        const depthB = parseInt(b.split('_')[1]) || 0;
+        return depthA - depthB;
+    }).forEach(layerKey => {
+        const depth = parseInt(layerKey.split('_')[1]) || 0;
+        const config = getDepthLayerConfig(depth);
+        if (config && layers[layerKey]) {
+            const label = depth === 0 ? '目标表' : `第${depth}层来源`;
             html += `
                 <div class="legend-item">
                     <div class="legend-dot" style="background:${config.color}"></div>
-                    ${config.label} (${layers[layer].length})
+                    ${label} (${layers[layerKey].length})
                 </div>
             `;
         }
@@ -925,7 +927,7 @@ function showInfoPanel(node) {
 
     title.textContent = node.id;
 
-    const config = LAYER_CONFIG[node.layer] || LAYER_CONFIG['config'];
+    const config = getLayerConfig(node.layer);
 
     let html = `
         <div class="info-section">
@@ -1031,5 +1033,5 @@ function fitView() {
             zoom.transform,
             d3.zoomIdentity.translate(tx, ty).scale(scale)
         );
-    } catch (e) {}
+    } catch (e) { console.warn('fitView failed:', e); }
 }

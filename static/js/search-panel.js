@@ -13,6 +13,29 @@
     let _lastSearchResults = [];    // 最近一次表搜索结果
     let _tableSearchSeq = 0;         // 防止慢响应覆盖新输入
     const _tableSearchCache = new Map();
+    const CACHE_MAX_SIZE = 100;
+    const CACHE_TTL_MS = 5 * 60 * 1000;  // 5分钟过期
+
+    function _cacheSet(key, value) {
+        if (_tableSearchCache.size >= CACHE_MAX_SIZE) {
+            const firstKey = _tableSearchCache.keys().next().value;
+            _tableSearchCache.delete(firstKey);
+        }
+        _tableSearchCache.set(key, { value, timestamp: Date.now() });
+    }
+
+    function _cacheGet(key) {
+        const entry = _tableSearchCache.get(key);
+        if (!entry) return null;
+        if (Date.now() - entry.timestamp > CACHE_TTL_MS) {
+            _tableSearchCache.delete(key);
+            return null;
+        }
+        // Move to end for LRU behavior
+        _tableSearchCache.delete(key);
+        _tableSearchCache.set(key, entry);
+        return entry.value;
+    }
 
     // ============================================
     // 表名搜索（带防抖）
@@ -32,13 +55,13 @@
         try {
             const cacheKey = keyword.toUpperCase();
             const searchSeq = ++_tableSearchSeq;
-            let tables = _tableSearchCache.get(cacheKey);
+            let tables = _cacheGet(cacheKey);
 
             if (!tables) {
                 const response = await apiRequest(`/api/tables?keyword=${encodeURIComponent(keyword)}&limit=15`);
                 if (searchSeq !== _tableSearchSeq) return;
                 tables = response.data || [];
-                _tableSearchCache.set(cacheKey, tables);
+                _cacheSet(cacheKey, tables);
             }
 
             if (tables.length === 0) {
@@ -47,11 +70,11 @@
             }
 
             let html = tables.map((table, idx) => {
-                const schemaLabel = table.schema ? `<span style="color:#6366f1;font-weight:600;">${table.schema}</span>.` : '';
+                const schemaLabel = table.schema ? `<span style="color:#6366f1;font-weight:600;">${escapeHtml(table.schema)}</span>.` : '';
                 return `
-                <div class="search-result-item" onclick="selectTable('${table.full_name}', ${idx})">
-                    <div class="result-name">${schemaLabel}${table.short_name || table.full_name}</div>
-                    <div class="result-type">表 · ${table.layer || 'unknown'} · ${table.field_count || 0} 字段</div>
+                <div class="search-result-item" data-table-name="${escapeHtml(table.full_name)}" data-index="${idx}">
+                    <div class="result-name">${schemaLabel}${escapeHtml(table.short_name || table.full_name)}</div>
+                    <div class="result-type">表 · ${escapeHtml(table.layer || 'unknown')} · ${table.field_count || 0} 字段</div>
                 </div>
             `}).join('');
 
@@ -74,7 +97,7 @@
         // 最多显示50个字段
         const display = _currentTableFields.slice(0, 50);
         let html = display.map(f =>
-            `<div class="field-item" onclick="selectField('${f}')">
+            `<div class="field-item" data-field-name="${escapeHtml(f)}">
                 <span class="field-name">${f}</span>
             </div>`
         ).join('');
@@ -195,7 +218,7 @@
                 const highlighted = idx >= 0
                     ? f.substring(0, idx) + '<strong>' + f.substring(idx, idx + keywordUpper.length) + '</strong>' + f.substring(idx + keywordUpper.length)
                     : f;
-                return `<div class="field-item" onclick="selectField('${f}')">
+                return `<div class="field-item" data-field-name="${escapeHtml(f)}">
                     <span class="field-name">${highlighted}</span>
                 </div>`;
             }).join('');
@@ -376,6 +399,7 @@
     };
 
     // 快速切换到另一个表的查询
+    const _prevQuickQuery = window.quickQuery;
     window.quickQuery = function(tableName) {
         document.getElementById('tableInput').value = tableName;
         _currentTableFullName = tableName;
@@ -386,6 +410,7 @@
         document.getElementById('fieldInput').classList.remove('valid', 'invalid');
         document.getElementById('fieldResults').style.display = 'none';
         loadTableFields(tableName);
+        if (_prevQuickQuery) _prevQuickQuery(tableName);
     };
 
     // ============================================
@@ -473,5 +498,25 @@
             currentTableFullName: _currentTableFullName,
         };
     };
+
+    // 事件委托：处理 data-table-name / data-field-name 点击，替代 inline onclick（防 XSS）
+    document.addEventListener('click', function(e) {
+        const tableEl = e.target.closest('[data-table-name]');
+        if (tableEl) {
+            const tableName = tableEl.dataset.tableName;
+            const idx = tableEl.dataset.index;
+            if (tableName && typeof window.selectTable === 'function') {
+                window.selectTable(tableName, idx !== undefined ? Number(idx) : undefined);
+            }
+            return;
+        }
+        const fieldEl = e.target.closest('[data-field-name]');
+        if (fieldEl) {
+            const fieldName = fieldEl.dataset.fieldName;
+            if (fieldName && typeof window.selectField === 'function') {
+                window.selectField(fieldName);
+            }
+        }
+    });
 
 })();

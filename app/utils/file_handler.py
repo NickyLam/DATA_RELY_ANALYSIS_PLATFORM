@@ -5,6 +5,7 @@
 
 from __future__ import annotations
 
+import re
 import shutil
 import uuid
 from pathlib import Path
@@ -55,7 +56,10 @@ class FileHandler:
             task_dir = config.upload_temp_path / task_id
             task_dir.mkdir(parents=True, exist_ok=True)
 
-            safe_filename = f"{uuid.uuid4().hex}_{file.filename}"
+            # 防止路径穿越：剥离目录部分，清洗危险字符
+            safe_name = Path(file.filename).name
+            safe_name = re.sub(r'[^\w.\-]', '_', safe_name)
+            safe_filename = f"{uuid.uuid4().hex}_{safe_name}"
             save_path = task_dir / safe_filename
 
             max_bytes = config.max_upload_size_mb * 1024 * 1024

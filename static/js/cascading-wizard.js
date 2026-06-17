@@ -1,6 +1,6 @@
 /**
  * 级联查询模块（三级：系统→表→字段）
- * 替代原有的两步搜索（表名搜索→字段选择），强制逐层递进，三者选完才可查询
+ * 表名和字段名使用 combobox 控件：支持输入模糊匹配 + 下拉选择
  *
  * 核心约束：每级选择后自动加载下一级，切换时清空下游
  */
@@ -13,19 +13,60 @@
         return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
+    /** 高亮匹配关键词 */
+    function _highlight(text, keyword) {
+        if (!keyword) return _esc(text);
+        const escaped = _esc(text);
+        const kw = _esc(keyword);
+        const idx = escaped.toUpperCase().indexOf(kw.toUpperCase());
+        if (idx < 0) return escaped;
+        return escaped.substring(0, idx) + '<mark>' + escaped.substring(idx, idx + kw.length) + '</mark>' + escaped.substring(idx + kw.length);
+    }
+
     // 缓存
-    let _systemsCache = null;     // 系统列表缓存
-    let _tablesCache = {};        // system → 表列表缓存
-    let _currentFields = [];      // 当前选中表的字段列表
-    let _currentSystem = '';      // 当前选中系统
-    let _currentTableFullName = ''; // 当前选中表全名
-    let _queryMode = 'wizard';   // 'wizard' | 'advanced'
+    let _systemsCache = null;
+    let _tablesCache = {};
+    const CACHE_MAX_SIZE = 100;
+    const CACHE_TTL_MS = 5 * 60 * 1000;
+    let _currentFields = [];       // 当前选中表的字段列表 [{name, data_type}] 或 [string]
+    let _currentSystem = '';
+    let _currentTableFullName = '';
+    let _currentFieldName = '';
+    let _queryMode = 'wizard';
+    let _tablesList = [];          // 当前系统下的所有表数据（用于模糊过滤）
+    let _tableComboTimer = null;   // 防抖计时器
+
+    function _tablesCacheGet(key) {
+        const entry = _tablesCache[key];
+        if (!entry) return null;
+        if (Date.now() - entry.timestamp > CACHE_TTL_MS) {
+            delete _tablesCache[key];
+            return null;
+        }
+        return entry.data;
+    }
+
+    function _tablesCacheSet(key, data) {
+        const keys = Object.keys(_tablesCache);
+        if (keys.length >= CACHE_MAX_SIZE) {
+            let oldestKey = keys[0];
+            let oldestTime = _tablesCache[keys[0]].timestamp;
+            for (let i = 1; i < keys.length; i++) {
+                if (_tablesCache[keys[i]].timestamp < oldestTime) {
+                    oldestKey = keys[i];
+                    oldestTime = _tablesCache[keys[i]].timestamp;
+                }
+            }
+            delete _tablesCache[oldestKey];
+        }
+        _tablesCache[key] = { data, timestamp: Date.now() };
+    }
 
     // ============================================
     // 初始化：加载系统列表
     // ============================================
     window.initCascadingWizard = async function() {
-        if (_systemsCache) return; // 已初始化
+        if (_systemsCache) return;
         await loadSystems();
     };
 
@@ -50,138 +91,207 @@
     }
 
     // ============================================
-    // 系统→表 级联
+    // 系统→表 级联（combobox）
     // ============================================
     window.onSystemChange = async function() {
         const system = document.getElementById('systemSelect').value;
 
-        // 清空下游
         resetCascadeFrom('table');
-
         if (!system) return;
 
         _currentSystem = system;
 
-        const tableSelect = document.getElementById('tableSelect');
-        tableSelect.disabled = true;
-        tableSelect.innerHTML = '<option value="">-- 加载中... --</option>';
+        const tableInput = document.getElementById('tableComboInput');
+        tableInput.disabled = true;
+        tableInput.value = '';
+        tableInput.placeholder = '加载中...';
 
         try {
-            // 检查缓存
-            if (!_tablesCache[system]) {
+            let tables = _tablesCacheGet(system);
+            if (!tables) {
                 const response = await apiRequest(`/api/systems/${encodeURIComponent(system)}/tables`);
-                _tablesCache[system] = response.data || [];
+                tables = response.data || [];
+                _tablesCacheSet(system, tables);
             }
-
-            const tables = _tablesCache[system];
-            populateTableSelect(tables);
-            tableSelect.disabled = false;
+            _tablesList = tables;
+            tableInput.disabled = false;
+            tableInput.placeholder = '输入搜索或点击选择';
+            // 不自动弹出下拉，等用户主动 focus 或输入时才显示
         } catch (error) {
             console.error('加载表列表失败:', error);
-            tableSelect.innerHTML = '<option value="">-- 加载失败 --</option>';
+            tableInput.placeholder = '加载失败';
         }
     };
 
-    function populateTableSelect(tables) {
-        const tableSelect = document.getElementById('tableSelect');
-        let html = '<option value="">-- 请选择表 --</option>';
+    /** 渲染表名 combobox 下拉 */
+    function renderTableComboDropdown(keyword, tables) {
+        const dropdown = document.getElementById('tableComboDropdown');
+        if (!dropdown) return;
 
-        const display = tables.slice(0, 200);
-        display.forEach(t => {
-            const layerTag = t.layer ? ` [${_esc(t.layer)}]` : '';
-            const schemaPrefix = t.full_name.includes('.') ? `<span style="color:#6366f1">${_esc(t.full_name.split('.')[0])}.</span>` : '';
-            html += `<option value="${_esc(t.full_name)}" data-short="${_esc(t.short_name)}">${schemaPrefix}${_esc(t.short_name)}${layerTag} (${t.field_count} 字段)</option>`;
-        });
+        const kw = (keyword || '').trim().toUpperCase();
+        let filtered = tables;
 
-        if (tables.length > 200) {
-            html += `<option value="" disabled>... 共 ${tables.length} 表，请使用高级搜索模式过滤</option>`;
+        if (kw) {
+            filtered = tables.filter(t => {
+                const short = (t.short_name || '').toUpperCase();
+                const full = (t.full_name || '').toUpperCase();
+                return short.includes(kw) || full.includes(kw);
+            });
         }
 
-        tableSelect.innerHTML = html;
+        if (filtered.length === 0) {
+            dropdown.innerHTML = '<div class="combo-empty">无匹配表</div>';
+            dropdown.style.display = 'block';
+            return;
+        }
+
+        const MAX_DISPLAY = 100;
+        const display = filtered.slice(0, MAX_DISPLAY);
+
+        let html = display.map((t, idx) => {
+            const schemaPrefix = t.full_name.includes('.') ? `${_esc(t.full_name.split('.')[0])}.` : '';
+            const layerTag = t.layer ? ` [${_esc(t.layer)}]` : '';
+            const shortHighlighted = _highlight(t.short_name || t.full_name, keyword);
+            return `<div class="combo-item" data-table-full="${_esc(t.full_name)}" data-index="${idx}">
+                <span class="combo-main">${schemaPrefix}${shortHighlighted}</span>
+                <span class="combo-sub">${layerTag} (${t.field_count || 0} 字段)</span>
+            </div>`;
+        }).join('');
+
+        if (filtered.length > MAX_DISPLAY) {
+            html += `<div class="combo-more">... 共 ${filtered.length} 个匹配项，请继续输入缩小范围</div>`;
+        }
+
+        dropdown.innerHTML = html;
+        dropdown.style.display = 'block';
+    }
+
+    /** 选中表名 combobox 项 */
+    function selectTableCombo(fullName) {
+        const tableInput = document.getElementById('tableComboInput');
+        tableInput.value = fullName;
+        document.getElementById('tableComboDropdown').style.display = 'none';
+        _currentTableFullName = fullName;
+        // 触发字段加载
+        loadFieldsForTable(fullName);
     }
 
     // ============================================
-    // 表→字段 级联
+    // 表→字段 级联（combobox）
     // ============================================
-    window.onTableChange = async function() {
-        const tableFullName = document.getElementById('tableSelect').value;
-
-        // 清空下游
-        resetCascadeFrom('field');
-
-        if (!tableFullName) return;
-
-        _currentTableFullName = tableFullName;
-
-        const fieldSelect = document.getElementById('fieldSelect');
-        fieldSelect.disabled = true;
-        fieldSelect.innerHTML = '<option value="">-- 加载中... --</option>';
+    async function loadFieldsForTable(tableFullName) {
+        const fieldInput = document.getElementById('fieldComboInput');
+        fieldInput.disabled = true;
+        fieldInput.value = '';
+        fieldInput.placeholder = '加载中...';
+        _currentFields = [];
+        _currentFieldName = '';
+        updateCascadingQueryBtn();
 
         try {
-            // 使用现有字段获取 API
             const response = await apiRequest(`/api/tables/${encodeURIComponent(tableFullName)}/fields`);
             const fields = response.data || [];
             _currentFields = fields;
-
-            let html = '<option value="">-- 请选择字段 --</option>';
-
-            if (fields.length === 0) {
-                html = '<option value="">-- 无字段数据，可手动输入 --</option>';
-            } else {
-                fields.forEach(f => {
-                    html += `<option value="${_esc(f)}">${_esc(f)}</option>`;
-                });
-            }
-
-            fieldSelect.innerHTML = html;
-            fieldSelect.disabled = false;
+            fieldInput.disabled = false;
+            fieldInput.placeholder = fields.length > 0 ? `输入搜索或选择（${fields.length} 字段）` : '无字段数据，可手动输入';
+            // 不自动弹出，等用户主动 focus 或输入
         } catch (error) {
             console.error('加载字段列表失败:', error);
-            // 尝试通过搜索接口获取字段
+            // 回退：通过搜索接口获取
             try {
                 const shortName = tableFullName.split('.').pop();
                 const searchResp = await apiRequest(`/api/tables?keyword=${encodeURIComponent(shortName)}&limit=5`);
                 const tables = searchResp.data || [];
                 const matched = tables.find(t => t.full_name === tableFullName);
                 const columns = matched?.columns || [];
-
                 _currentFields = columns;
-                let html = '<option value="">-- 请选择字段 --</option>';
-                columns.forEach(f => {
-                    html += `<option value="${_esc(f)}">${_esc(f)}</option>`;
-                });
-                fieldSelect.innerHTML = html;
-                fieldSelect.disabled = false;
+                fieldInput.disabled = false;
+                fieldInput.placeholder = columns.length > 0 ? `输入搜索或选择（${columns.length} 字段）` : '可手动输入';
+                // 不自动弹出
             } catch (e2) {
-                fieldSelect.innerHTML = '<option value="">-- 加载失败 --</option>';
+                fieldInput.placeholder = '加载失败，可手动输入';
+                fieldInput.disabled = false;
             }
         }
-    };
+    }
+
+    /** 渲染字段 combobox 下拉 */
+    function renderFieldComboDropdown(keyword, fields) {
+        const dropdown = document.getElementById('fieldComboDropdown');
+        if (!dropdown) return;
+
+        const kw = (keyword || '').trim().toUpperCase();
+        let filtered = fields;
+
+        if (kw) {
+            filtered = fields.filter(f => {
+                const name = (typeof f === 'string' ? f : f.name || '').toUpperCase();
+                return name.includes(kw);
+            });
+        }
+
+        if (filtered.length === 0) {
+            dropdown.innerHTML = '<div class="combo-empty">无匹配字段</div>';
+            dropdown.style.display = 'block';
+            return;
+        }
+
+        const MAX_DISPLAY = 80;
+        const display = filtered.slice(0, MAX_DISPLAY);
+
+        let html = display.map(f => {
+            const name = typeof f === 'string' ? f : (f.name || '');
+            const dtype = (typeof f === 'object' && f.data_type) ? f.data_type : '';
+            const nameHighlighted = _highlight(name, keyword);
+            const typeLabel = dtype ? `<span class="combo-sub">${_esc(dtype)}</span>` : '';
+            return `<div class="combo-item" data-field-name="${_esc(name)}">
+                <span class="combo-main">${nameHighlighted}</span>${typeLabel}
+            </div>`;
+        }).join('');
+
+        if (filtered.length > MAX_DISPLAY) {
+            html += `<div class="combo-more">... 共 ${filtered.length} 个匹配项</div>`;
+        }
+
+        dropdown.innerHTML = html;
+        dropdown.style.display = 'block';
+    }
+
+    /** 选中字段 combobox 项 */
+    function selectFieldCombo(fieldName) {
+        const fieldInput = document.getElementById('fieldComboInput');
+        fieldInput.value = fieldName;
+        document.getElementById('fieldComboDropdown').style.display = 'none';
+        _currentFieldName = fieldName;
+        updateCascadingQueryBtn();
+    }
 
     // ============================================
-    // 字段选择 → 激活查询按钮
+    // 查询按钮状态控制
     // ============================================
-    window.onFieldChange = function() {
+    function updateCascadingQueryBtn() {
         const btn = document.getElementById('cascadingQueryBtn');
-        const fieldVal = document.getElementById('fieldSelect').value;
-        if (btn) {
-            btn.disabled = !fieldVal;
-        }
-    };
+        if (!btn) return;
+        const tableVal = document.getElementById('tableComboInput')?.value.trim() || '';
+        const fieldVal = document.getElementById('fieldComboInput')?.value.trim() || '';
+        btn.disabled = !(tableVal.length >= 2 && fieldVal.length >= 1);
+    }
+    window.onFieldChange = function() { updateCascadingQueryBtn(); };
 
     // ============================================
     // 级联查询执行
     // ============================================
     window.executeCascadingQuery = async function() {
-        const tableFullName = document.getElementById('tableSelect').value;
-        const fieldName = document.getElementById('fieldSelect').value;
+        const tableFullName = document.getElementById('tableComboInput').value.trim();
+        let fieldName = document.getElementById('fieldComboInput').value.trim();
 
         if (!tableFullName || !fieldName) {
             showNotification('请完成级联选择后再查询', 'warning');
             return;
         }
 
-        // 复用展示层的查询逻辑
+        fieldName = fieldName.toUpperCase();
+        document.getElementById('fieldComboInput').value = fieldName;
         document.getElementById('emptyHint').style.display = 'none';
         document.getElementById('loadingIndicator').style.display = 'block';
 
@@ -206,12 +316,10 @@
             const graphData = response.data;
             const resolvedTable = graphData.query_target?.table || tableFullName;
 
-            // 更新全局状态
             if (typeof currentQuery !== 'undefined') {
                 currentQuery = { table: resolvedTable, field: fieldName };
             }
 
-            // 渲染图谱
             if (typeof renderGraphVertical === 'function') {
                 renderGraphVertical(graphData);
             }
@@ -251,65 +359,60 @@
             advancedPanel.style.display = 'block';
             wizardBtn.classList.remove('active');
             advancedBtn.classList.add('active');
-
-            // 将级联选择的值预填到高级搜索
             prefillAdvancedFromWizard();
         }
     };
 
     function prefillAdvancedFromWizard() {
-        const tableFullName = document.getElementById('tableSelect')?.value || '';
-        const fieldName = document.getElementById('fieldSelect')?.value || '';
-
+        const tableFullName = document.getElementById('tableComboInput')?.value || '';
+        const fieldName = document.getElementById('fieldComboInput')?.value || '';
         const tableInput = document.getElementById('tableInput');
         const fieldInput = document.getElementById('fieldInput');
 
-        if (tableFullName && tableInput) {
-            tableInput.value = tableFullName;
-        }
+        if (tableFullName && tableInput) tableInput.value = tableFullName;
         if (fieldName && fieldInput) {
             fieldInput.value = fieldName;
             fieldInput.disabled = false;
         }
-
-        // 更新查询按钮状态
-        if (typeof updateQueryButton === 'function') {
-            updateQueryButton();
-        }
+        if (typeof updateQueryButton === 'function') updateQueryButton();
     }
 
     // ============================================
     // 级联重置
     // ============================================
     function resetCascadeFrom(level) {
-        const levels = {
-            table: ['tableSelect', 'fieldSelect'],
-            field: ['fieldSelect'],
-        };
-
-        const placeholders = {
-            tableSelect: ['-- 请先选择系统 --', true],
-            fieldSelect: ['-- 请先选择表 --', true],
-        };
-
-        const toReset = levels[level] || [];
-        toReset.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                const [placeholder, disabled] = placeholders[id] || ['', true];
-                el.innerHTML = `<option value="">${placeholder}</option>`;
-                el.disabled = disabled;
-            }
-        });
-
-        // 重置查询按钮
-        const queryBtn = document.getElementById('cascadingQueryBtn');
-        if (queryBtn) queryBtn.disabled = true;
-
         _currentFields = [];
+        _currentFieldName = '';
+
         if (level === 'table') {
             _currentTableFullName = '';
+            _tablesList = [];
+            const tableInput = document.getElementById('tableComboInput');
+            if (tableInput) {
+                tableInput.value = '';
+                tableInput.disabled = true;
+                tableInput.placeholder = '-- 请先选择系统 --';
+            }
+            const tableDropdown = document.getElementById('tableComboDropdown');
+            if (tableDropdown) {
+                tableDropdown.style.display = 'none';
+                tableDropdown.innerHTML = '';
+            }
         }
+
+        const fieldInput = document.getElementById('fieldComboInput');
+        if (fieldInput) {
+            fieldInput.value = '';
+            fieldInput.disabled = true;
+            fieldInput.placeholder = level === 'table' ? '-- 请先选择表 --' : '-- 请先选择表 --';
+        }
+        const fieldDropdown = document.getElementById('fieldComboDropdown');
+        if (fieldDropdown) {
+            fieldDropdown.style.display = 'none';
+            fieldDropdown.innerHTML = '';
+        }
+
+        updateCascadingQueryBtn();
     }
 
     // ============================================
@@ -318,27 +421,23 @@
     const _originalQuickQuery = window.quickQuery;
     window.quickQuery = function(tableName) {
         if (_queryMode === 'wizard') {
-            // 在向导模式中尝试自动选择
             autoSelectInWizard(tableName);
         }
-        // 同时调用原始逻辑
         if (_originalQuickQuery) {
             _originalQuickQuery(tableName);
         }
     };
 
     async function autoSelectInWizard(tableName) {
-        // 尝试在当前 tableSelect 中找到匹配项
-        const tableSelect = document.getElementById('tableSelect');
-        if (!tableSelect) return;
-
-        const options = tableSelect.options;
-        for (let i = 0; i < options.length; i++) {
-            if (options[i].value === tableName || options[i].getAttribute('data-short') === tableName.split('.').pop()) {
-                tableSelect.selectedIndex = i;
-                await onTableChange();
-                break;
-            }
+        // 在当前已加载的表列表中查找匹配
+        const shortTarget = tableName.split('.').pop().toUpperCase();
+        const matched = _tablesList.find(t =>
+            t.full_name === tableName ||
+            t.full_name.toUpperCase() === tableName.toUpperCase() ||
+            (t.short_name || '').toUpperCase() === shortTarget
+        );
+        if (matched) {
+            selectTableCombo(matched.full_name);
         }
     }
 
@@ -355,6 +454,122 @@
     };
 
     // ============================================
+    // 事件绑定（combobox 输入/焦点/键盘/外部点击）
+    // ============================================
+    function setupComboListeners() {
+        // --- 表名 combobox ---
+        const tableInput = document.getElementById('tableComboInput');
+        const tableDropdown = document.getElementById('tableComboDropdown');
+
+        if (tableInput) {
+            tableInput.addEventListener('input', () => {
+                const kw = tableInput.value.trim();
+                clearTimeout(_tableComboTimer);
+                _tableComboTimer = setTimeout(() => {
+                    renderTableComboDropdown(kw, _tablesList);
+                }, 150);
+                updateCascadingQueryBtn();
+            });
+
+            tableInput.addEventListener('focus', () => {
+                if (!tableInput.disabled && _tablesList.length > 0) {
+                    renderTableComboDropdown(tableInput.value.trim(), _tablesList);
+                }
+            });
+
+            tableInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    // 选择下拉第一项或直接提交
+                    const firstItem = tableDropdown?.querySelector('.combo-item');
+                    if (firstItem && tableDropdown.style.display !== 'none') {
+                        firstItem.click();
+                    }
+                }
+                if (e.key === 'Escape') {
+                    tableDropdown.style.display = 'none';
+                }
+                if (e.key === 'Tab' && tableDropdown.style.display !== 'none') {
+                    const firstItem = tableDropdown.querySelector('.combo-item');
+                    if (firstItem) {
+                        e.preventDefault();
+                        firstItem.click();
+                    }
+                }
+            });
+        }
+
+        // --- 字段 combobox ---
+        const fieldInput = document.getElementById('fieldComboInput');
+        const fieldDropdown = document.getElementById('fieldComboDropdown');
+
+        if (fieldInput) {
+            fieldInput.addEventListener('input', () => {
+                const kw = fieldInput.value.trim();
+                renderFieldComboDropdown(kw, _currentFields);
+                _currentFieldName = kw;
+                updateCascadingQueryBtn();
+            });
+
+            fieldInput.addEventListener('focus', () => {
+                if (!fieldInput.disabled && _currentFields.length > 0) {
+                    renderFieldComboDropdown(fieldInput.value.trim(), _currentFields);
+                }
+            });
+
+            fieldInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const firstItem = fieldDropdown?.querySelector('.combo-item');
+                    if (firstItem && fieldDropdown.style.display !== 'none') {
+                        firstItem.click();
+                    } else if (!document.getElementById('cascadingQueryBtn').disabled) {
+                        executeCascadingQuery();
+                    }
+                }
+                if (e.key === 'Escape') {
+                    fieldDropdown.style.display = 'none';
+                }
+                if (e.key === 'Tab' && fieldDropdown.style.display !== 'none') {
+                    const firstItem = fieldDropdown.querySelector('.combo-item');
+                    if (firstItem) {
+                        e.preventDefault();
+                        firstItem.click();
+                    }
+                }
+            });
+        }
+
+        // --- 事件委托：点击下拉项 ---
+        document.addEventListener('click', (e) => {
+            // 表名下拉项
+            const tableItem = e.target.closest('[data-table-full]');
+            if (tableItem) {
+                selectTableCombo(tableItem.dataset.tableFull);
+                return;
+            }
+
+            // 字段下拉项
+            const fieldItem = e.target.closest('[data-field-name]');
+            if (fieldItem && fieldItem.closest('#fieldComboDropdown')) {
+                selectFieldCombo(fieldItem.dataset.fieldName);
+                return;
+            }
+
+            // 点击外部关闭下拉
+            const tableGroup = tableInput?.closest('.input-group');
+            if (tableDropdown && tableGroup && !tableGroup.contains(e.target)) {
+                tableDropdown.style.display = 'none';
+            }
+
+            const fieldGroup = fieldInput?.closest('.input-group');
+            if (fieldDropdown && fieldGroup && !fieldGroup.contains(e.target)) {
+                fieldDropdown.style.display = 'none';
+            }
+        });
+    }
+
+    // ============================================
     // 页面加载时初始化
     // ============================================
     let _initRetries = 0;
@@ -363,6 +578,7 @@
     async function _initWithRetry() {
         try {
             await loadSystems();
+            setupComboListeners();
             _initRetries = 0;
         } catch (error) {
             _initRetries++;

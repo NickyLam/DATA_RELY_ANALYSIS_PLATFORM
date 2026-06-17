@@ -259,8 +259,8 @@ class UnifiedTracer:
         upstream = self._lineage.get_upstream_tables(norm)
         downstream = self._lineage.get_downstream_tables(norm)
 
-        proc_idx = getattr(self._lineage, "_table_proc_idx", {})
-        procs = proc_idx.get(norm, []) or proc_idx.get(short, [])
+        proc_idx = self._lineage.get_procedures_for_table(norm)
+        procs = proc_idx or self._lineage.get_procedures_for_table(short)
         procedures = sorted({p.full_name for p in procs if getattr(p, "full_name", "")})
 
         return {
@@ -391,8 +391,9 @@ class UnifiedTracer:
         src_col = src_column.upper().strip()
         tgt_col = tgt_column.upper().strip()
 
-        target_idx = getattr(self._caliber, "_target_idx", {})
-        candidates = target_idx.get((tgt_short, tgt_col), []) or target_idx.get((norm_tgt, tgt_col), [])
+        candidates = self._caliber.lookup_caliber_by_target(tgt_short, tgt_col)
+        if not candidates:
+            candidates = self._caliber.lookup_caliber_by_target(norm_tgt, tgt_col)
         if not candidates:
             return None
 

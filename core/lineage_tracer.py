@@ -87,7 +87,7 @@ class LineageTracer(BaseTracer):
         t0 = time.perf_counter()
 
         norm_table = self.normalize_name(target_table)
-        norm_field = self._normalize_field_name(target_field)
+        norm_field = self.normalize_name(target_field)
 
         logger.info("开始追溯字段: %s.%s", norm_table, norm_field)
 
@@ -132,7 +132,7 @@ class LineageTracer(BaseTracer):
         self, target_table: str, target_field: str, max_depth: int = 10
     ) -> list[FieldLineageChain]:
         norm_table = self.normalize_name(target_table)
-        norm_field = self._normalize_field_name(target_field)
+        norm_field = self.normalize_name(target_field)
         bfs_tree = self._bfs_trace(norm_table, norm_field, max_depth)
         chains = self._build_chains_from_bfs_tree(bfs_tree, (norm_table, norm_field))
         return chains
@@ -149,13 +149,16 @@ class LineageTracer(BaseTracer):
 
     def get_downstream_tables(self, table_name: str) -> list[str]:
         norm_table = self.normalize_name(table_name)
-        downstream: set[str] = set()
-        for tl in self.table_lineages:
-            src = self.normalize_name(tl.source_table)
-            tgt = self.normalize_name(tl.target_table)
-            if src == norm_table and tgt != norm_table:
-                downstream.add(tgt)
-        return sorted(downstream)
+        return sorted({
+            self.normalize_name(tl.target_table)
+            for tl in self._tl_source_idx.get(norm_table, [])
+            if self.normalize_name(tl.target_table) != norm_table
+        })
+
+    def get_procedures_for_table(self, table: str) -> list[ProcedureInfo]:
+        """获取与指定表关联的存储过程列表"""
+        norm = self.normalize_name(table)
+        return self._table_proc_idx.get(norm, [])
 
     def _build_lineage_indexes(self) -> None:
         for tl in self.table_lineages:
@@ -164,13 +167,13 @@ class LineageTracer(BaseTracer):
 
         for fm in self.field_mappings:
             tgt_tbl = self.normalize_name(fm.target_table)
-            tgt_col = self._normalize_field_name(fm.target_column)
+            tgt_col = self.normalize_name(fm.target_column)
             inner = self._field_mapping_idx.setdefault(tgt_tbl, {})
             inner.setdefault(tgt_col, []).append(fm)
 
         for fm in self.field_mappings:
             src_tbl = self.normalize_name(fm.source_table)
-            src_col = self._normalize_field_name(fm.source_column)
+            src_col = self.normalize_name(fm.source_column)
             if not src_tbl or not src_col:
                 continue
             inner = self._source_field_mapping_idx.setdefault(src_tbl, {})
@@ -183,9 +186,34 @@ class LineageTracer(BaseTracer):
             len(self._source_field_mapping_idx),
         )
 
+    def _field_visit_key(self, table_name: str, field_name: str) -> str:
+        return f"{self.normalize_name(table_name)}.{self.normalize_name(field_name)}"
+
+    def _is_visited_field(self, visited: set[str], table_name: str, field_name: str) -> bool:
+        norm_table = self.normalize_name(table_name)
+        norm_field = self.normalize_name(field_name)
+        exact_key = f"{norm_table}.{norm_field}"
+        if exact_key in visited:
+            return True
+
+        # Qualified warehouse tables with the same bare name can be different
+        # physical layer tables (e.g. ITL.X -> IOL.X). Only collapse bare-name
+        # aliases when the candidate itself is unqualified.
+        if "." in norm_table:
+            return False
+
+        candidate_bare = self.bare_table(norm_table)
+        for visited_key in visited:
+            visited_table, _, visited_field = visited_key.rpartition(".")
+            if not visited_table or visited_field != norm_field:
+                continue
+            if self.bare_table(visited_table) == candidate_bare:
+                return True
+        return False
+
     def _bfs_trace(self, target_table: str, target_field: str, max_depth: int = 10) -> dict[str, _BFSNode]:
         norm_table = self.normalize_name(target_table)
-        norm_field = self._normalize_field_name(target_field)
+        norm_field = self.normalize_name(target_field)
 
         root_key = f"{norm_table}.{norm_field}"
         visited: set[str] = set()
@@ -201,10 +229,7 @@ class LineageTracer(BaseTracer):
             parent_key="",
         )
         bfs_tree[root_key] = root_node
-        visited.add(root_key)
-        root_bare_tbl = self.bare_table(norm_table)
-        if root_bare_tbl != norm_table:
-            visited.add(f"{root_bare_tbl}.{norm_field}")
+        visited.add(self._field_visit_key(norm_table, norm_field))
 
         queue: deque[_BFSNode] = deque([root_node])
 
@@ -269,23 +294,17 @@ class LineageTracer(BaseTracer):
 
             for src in sources:
                 src_norm_table = self.normalize_name(src.source_table)
-                src_norm_field = self._normalize_field_name(src.source_field)
+                src_norm_field = self.normalize_name(src.source_field)
                 src_key = f"{src_norm_table}.{src_norm_field}"
 
                 if not src_norm_table or not src_norm_field:
                     continue
 
-                bare_key = ""
-                bare_tbl = self.bare_table(src_norm_table)
-                if bare_tbl != src_norm_table:
-                    bare_key = f"{bare_tbl}.{src_norm_field}"
-
-                if src_key in visited or (bare_key and bare_key in visited):
+                if self._is_visited_field(visited, src_norm_table, src_norm_field):
                     logger.debug(
-                        "检测到循环依赖，跳过: %s → %s (bare=%s)",
+                        "检测到循环依赖，跳过: %s → %s",
                         current_key,
                         src_key,
-                        bare_key,
                     )
                     continue
 
@@ -300,9 +319,7 @@ class LineageTracer(BaseTracer):
                     )
                     continue
 
-                visited.add(src_key)
-                if bare_key:
-                    visited.add(bare_key)
+                visited.add(self._field_visit_key(src_norm_table, src_norm_field))
 
                 src_layer = current.layer + 1
                 src_node = _BFSNode(
@@ -339,14 +356,14 @@ class LineageTracer(BaseTracer):
         self, source_table: str, source_field: str, max_depth: int = 10
     ) -> list[FieldLineageChain]:
         norm_table = self.normalize_name(source_table)
-        norm_field = self._normalize_field_name(source_field)
+        norm_field = self.normalize_name(source_field)
         bfs_tree = self._bfs_trace_downstream(norm_table, norm_field, max_depth)
         chains = self._build_chains_from_bfs_tree(bfs_tree, (norm_table, norm_field), reverse=True)
         return chains
 
     def _bfs_trace_downstream(self, source_table: str, source_field: str, max_depth: int = 10) -> dict[str, _BFSNode]:
         norm_table = self.normalize_name(source_table)
-        norm_field = self._normalize_field_name(source_field)
+        norm_field = self.normalize_name(source_field)
 
         root_key = f"{norm_table}.{norm_field}"
         visited: set[str] = set()
@@ -362,10 +379,7 @@ class LineageTracer(BaseTracer):
             parent_key="",
         )
         bfs_tree[root_key] = root_node
-        visited.add(root_key)
-        root_bare_tbl = self.bare_table(norm_table)
-        if root_bare_tbl != norm_table:
-            visited.add(f"{root_bare_tbl}.{norm_field}")
+        visited.add(self._field_visit_key(norm_table, norm_field))
 
         queue: deque[_BFSNode] = deque([root_node])
 
@@ -396,23 +410,17 @@ class LineageTracer(BaseTracer):
 
             for tgt in targets:
                 tgt_norm_table = self.normalize_name(tgt.target_table)
-                tgt_norm_field = self._normalize_field_name(tgt.target_field)
+                tgt_norm_field = self.normalize_name(tgt.target_field)
                 tgt_key = f"{tgt_norm_table}.{tgt_norm_field}"
 
                 if not tgt_norm_table or not tgt_norm_field:
                     continue
 
-                bare_key = ""
-                bare_tbl = self.bare_table(tgt_norm_table)
-                if bare_tbl != tgt_norm_table:
-                    bare_key = f"{bare_tbl}.{tgt_norm_field}"
-
-                if tgt_key in visited or (bare_key and bare_key in visited):
+                if self._is_visited_field(visited, tgt_norm_table, tgt_norm_field):
                     logger.debug(
-                        "检测到循环依赖，跳过: %s → %s (bare=%s)",
+                        "检测到循环依赖，跳过: %s → %s",
                         current_key,
                         tgt_key,
-                        bare_key,
                     )
                     continue
 
@@ -427,9 +435,7 @@ class LineageTracer(BaseTracer):
                     )
                     continue
 
-                visited.add(tgt_key)
-                if bare_key:
-                    visited.add(bare_key)
+                visited.add(self._field_visit_key(tgt_norm_table, tgt_norm_field))
 
                 tgt_layer = current.layer + 1
                 tgt_node = _BFSNode(
@@ -464,7 +470,7 @@ class LineageTracer(BaseTracer):
 
     def _find_target_fields(self, source_table: str, source_field: str) -> list[_TargetRecord]:
         norm_table = self.normalize_name(source_table)
-        norm_field = self._normalize_field_name(source_field)
+        norm_field = self.normalize_name(source_field)
         results: list[_TargetRecord] = []
         seen_keys: set[str] = set()
 
@@ -534,7 +540,7 @@ class LineageTracer(BaseTracer):
 
     def _find_source_fields(self, target_table: str, target_field: str) -> list[_SourceRecord]:
         norm_table = self.normalize_name(target_table)
-        norm_field = self._normalize_field_name(target_field)
+        norm_field = self.normalize_name(target_field)
         results: list[_SourceRecord] = []
 
         seen_keys: set[str] = set()
@@ -546,7 +552,7 @@ class LineageTracer(BaseTracer):
             mappings = tbl_idx.get(norm_field, [])
             for fm in mappings:
                 src_table = self.normalize_name(fm.source_table)
-                src_col = self._normalize_field_name(fm.source_column)
+                src_col = self.normalize_name(fm.source_column)
                 if not src_col:
                     continue
                 if not src_table:
@@ -682,57 +688,20 @@ class LineageTracer(BaseTracer):
                     return key
         return None
 
-    def _infer_source_table_from_lineage(self, target_table: str, procedure_name: str) -> str:
-        norm_target = self.normalize_name(target_table)
-        candidates: list[str] = []
-        same_proc_candidates: list[str] = []
-
-        for tl in self.table_lineages:
-            tl_tgt = self.normalize_name(tl.target_table)
-            tl_src = self.normalize_name(tl.source_table)
-            if tl_tgt == norm_target and tl_src and tl_src != norm_target:
-                tl_proc = self.normalize_name(tl.procedure or "")
-                if procedure_name and tl_proc == self.normalize_name(procedure_name):
-                    same_proc_candidates.append(tl_src)
-                candidates.append(tl_src)
-
-        same_proc_candidates = [c for c in same_proc_candidates if self.is_layer_compatible(c, norm_target)]
-        candidates = [c for c in candidates if self.is_layer_compatible(c, norm_target)]
-
-        if same_proc_candidates:
-            if len(same_proc_candidates) == 1:
-                return same_proc_candidates[0]
-            for src in same_proc_candidates:
-                if src in self._field_mapping_idx:
-                    return src
-            return same_proc_candidates[0]
-
-        if not candidates:
-            return ""
-
-        if len(candidates) == 1:
-            return candidates[0]
-
-        for src in candidates:
-            if src in self._field_mapping_idx:
-                return src
-
-        return candidates[0]
-
     def _find_source_fields_in_procedure(
         self, target_table: str, target_field: str, procedure: ProcedureInfo
     ) -> list[_SourceRecord]:
         results: list[_SourceRecord] = []
         norm_table = self.normalize_name(target_table)
-        norm_field = self._normalize_field_name(target_field)
+        norm_field = self.normalize_name(target_field)
 
         for fm in procedure.field_mappings:
             fm_tgt_tbl = self.normalize_name(fm.target_table)
-            fm_tgt_col = self._normalize_field_name(fm.target_column)
+            fm_tgt_col = self.normalize_name(fm.target_column)
 
             if fm_tgt_tbl == norm_table and fm_tgt_col == norm_field:
                 src_table = self.normalize_name(fm.source_table)
-                src_col = self._normalize_field_name(fm.source_column)
+                src_col = self.normalize_name(fm.source_column)
                 if not src_col:
                     continue
                 if not src_table:
@@ -839,12 +808,6 @@ class LineageTracer(BaseTracer):
         return chains
 
     @staticmethod
-    def _normalize_field_name(name: str) -> str:
-        if not name:
-            return ""
-        return name.strip().upper()
-
-    @staticmethod
     def to_graph_result(
         chains: list[FieldLineageChain],
         direction: str = "upstream",
@@ -862,16 +825,12 @@ class LineageTracer(BaseTracer):
                 if i > 0:
                     prev_node = chain.chain[i - 1]
 
-                    if direction == "upstream":
-                        src_table = prev_node.table_name
-                        tgt_table = node.table_name
-                        src_field = prev_node.field_name
-                        tgt_field = node.field_name
-                    else:
-                        src_table = prev_node.table_name
-                        tgt_table = node.table_name
-                        src_field = prev_node.field_name
-                        tgt_field = node.field_name
+                    # chain 在 upstream/downstream 两种场景下均按 source → target 排列，
+                    # 因此 prev_node 是 source 方向、node 是 target 方向，边方向一致。
+                    src_table = prev_node.table_name
+                    tgt_table = node.table_name
+                    src_field = prev_node.field_name
+                    tgt_field = node.field_name
 
                     edge_key = (src_table, tgt_table, src_field, tgt_field)
                     if edge_key not in seen_edges:

@@ -9,11 +9,13 @@
 
 使用方法：
   开发模式：python run_app.py
-  打包后：数据血缘分析系统.exe
+  重新解析：python run_app.py --reparse
+  打包后：数据血缘分析系统.exe [--reparse]
 """
 
 from __future__ import annotations
 
+import argparse
 import logging
 import sys
 from pathlib import Path
@@ -27,26 +29,29 @@ logger = logging.getLogger(__name__)
 
 def is_frozen() -> bool:
     """检测是否在 PyInstaller 打包模式下运行"""
-    return getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS")
+    return getattr(sys, "frozen", False) and getattr(sys, "_MEIPASS", None) is not None
 
 
 def get_base_dir() -> Path:
     """获取应用基础目录"""
     if is_frozen():
-        return Path(sys._MEIPASS)
+        return Path(getattr(sys, "_MEIPASS"))
     return Path(__file__).parent
 
 
-def print_startup_info() -> None:
+def print_startup_info(force_reparse: bool = False) -> None:
     """打印启动信息"""
+    from app.config import config
+
     base_dir = get_base_dir()
     static_dir = base_dir / "static"
-    data_dir = base_dir / "RRP_ORACLE"
+    data_dir = config.source_data_path
 
     print("\n" + "=" * 60)
     print("  数据血缘分析系统 v2.0")
     print("=" * 60)
     print(f"  运行模式: {'打包模式' if is_frozen() else '开发模式'}")
+    print(f"  数据加载: {'强制重新解析' if force_reparse else '缓存优先（默认）'}")
     print(f"  基础目录: {base_dir}")
     print(f"  静态文件: {static_dir}")
     print(f"  数据目录: {data_dir}")
@@ -55,13 +60,30 @@ def print_startup_info() -> None:
 
 def main() -> None:
     """主入口函数"""
-    print_startup_info()
+    parser = argparse.ArgumentParser(description="数据血缘分析系统")
+    parser.add_argument(
+        "--reparse",
+        action="store_true",
+        default=False,
+        help="启动时强制重新解析所有数据源（跳过缓存）",
+    )
+    args = parser.parse_args()
+
+    if args.reparse:
+        import os
+        os.environ["FORCE_REPARSE"] = "1"
+
+    print_startup_info(force_reparse=args.reparse)
 
     try:
         import uvicorn
 
         from app.config import config
         from app.main import app
+
+        if args.reparse:
+            config.force_reparse = True
+            logger.info("🔄 已启用 --reparse 参数，启动时将强制重新解析数据源")
 
         logger.info("正在启动 FastAPI 服务...")
         logger.info("访问地址: http://localhost:%s", config.port)

@@ -21,7 +21,7 @@ import time
 from collections import deque
 from dataclasses import dataclass
 from dataclasses import field as dc_field
-from typing import Any
+from typing import Any, TypedDict
 
 from core.base_tracer import BaseTracer
 from core.caliber_extractor import CaliberExtractor
@@ -39,6 +39,17 @@ from core.models import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+class CaliberInfoDict(TypedDict, total=False):
+    source_table: str
+    source_column: str
+    target_table: str
+    target_column: str
+    transform_logic: str
+    procedure: str
+    where_conditions: list[str]
+    join_conditions: list[str]
 
 
 @dataclass
@@ -78,13 +89,13 @@ class CaliberTracer(BaseTracer):
         procedures: dict[str, ProcedureInfo],
         table_lineages: list[TableLineage],
         field_mappings: list[FieldMapping],
-        caliber_infos: list[dict],
+        caliber_infos: list[CaliberInfoDict],
         max_depth: int = 10,
         known_schemas: list[str] | None = None,
         default_data_source: str = "oracle",
     ) -> None:
         super().__init__(tables, procedures, table_lineages, field_mappings, max_depth)
-        self.caliber_infos_raw: list[dict] = caliber_infos
+        self.caliber_infos_raw: list[CaliberInfoDict] = caliber_infos
         self._known_schemas: list[str] = known_schemas or ["RRP_MDL", "RRP_EAST"]
         self._default_data_source: str = default_data_source
 
@@ -198,6 +209,11 @@ class CaliberTracer(BaseTracer):
         key = self.make_key(self.normalize_name(table), field.upper())
         records = self._source_idx.get(key, [])
         return [self._dict_to_record(r) for r in records]
+
+    def lookup_caliber_by_target(self, short_table: str, column: str) -> list[dict]:
+        """按目标表和列查找口径信息"""
+        key = (short_table.upper(), column.upper())
+        return self._target_idx.get(key, [])
 
     def generate_summary_text(self, result: CaliberResult) -> str:
         lines: list[str] = []

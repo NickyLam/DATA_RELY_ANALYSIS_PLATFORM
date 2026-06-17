@@ -5,15 +5,7 @@
 (function() {
     'use strict';
 
-    const LAYER_CONFIG = {
-        'ods':   { label: 'ODS源系统层',   color: '#10b981', bg: '#d1fae5', border: '#059669' },
-        'diis': { label: 'DIIS明细层',     color: '#0ea5e9', bg: '#e0f2fe', border: '#0284c7' },
-        'base': { label: 'B基础层',       color: '#6366f1', bg: '#e0e7ff', border: '#4f46e5' },
-        'mdl':  { label: 'M模型层',       color: '#a855f7', bg: '#f3e8ff', border: '#9333ea' },
-        'app':  { label: 'A/S应用汇总层', color: '#f97316', bg: '#ffedd5', border: '#ea580c' },
-        'east': { label: 'EAST报送层',     color: '#ef4444', bg: '#fee2e2', border: '#dc2626' },
-        'config': { label: '配置/临时表',  color: '#64748b', bg: '#f1f5f9', border: '#475569' },
-    };
+    // LAYER_CONFIG 已移至 layer-config.js，通过 getLayerConfig(layer, system) 获取
 
     function deduplicateFieldMappings(mappings) {
         const seen = new Set();
@@ -83,9 +75,9 @@
 
                 html += `<div style="padding:7px 10px;margin-bottom:4px;background:white;border-radius:5px;font-size:11px;border-left:3px solid #a855f7;display:flex;justify-content:space-between;align-items:center;">
                     <span>
-                        <span style="color:#059669;font-weight:500;">${srcShort}.${srcCol}</span>
+                        <span style="color:#059669;font-weight:500;">${_escape(srcShort)}.${_escape(srcCol)}</span>
                         <span style="color:#94a3b8;margin:0 6px;">→</span>
-                        <span style="color:#dc2626;font-weight:500;">${tgtShort}.${tgtCol}</span>
+                        <span style="color:#dc2626;font-weight:500;">${_escape(tgtShort)}.${_escape(tgtCol)}</span>
                     </span>
                 </div>`;
             });
@@ -100,8 +92,8 @@
         if (upTables.length > 0) {
             html += `<h4 style="color:#22c55e;margin:16px 0 8px;font-size:13px;">↑ 上游来源表 (${upTables.length})</h4>`;
             upTables.slice(0, 25).forEach(t => {
-                html += `<div class="detail-row upstream" onclick="quickQuery('${t}')">
-                    <div class="d-name">${t.split('.').pop()}</div>
+                html += `<div class="detail-row upstream" data-table-name="${_escape(t)}">
+                    <div class="d-name">${_escape(t.split('.').pop())}</div>
                 </div>`;
             });
         }
@@ -110,8 +102,8 @@
         if (downTables.length > 0) {
             html += `<h4 style="color:#ef4444;margin:12px 0 8px;font-size:13px;">↓ 下游去向表 (${downTables.length})</h4>`;
             downTables.slice(0, 25).forEach(t => {
-                html += `<div class="detail-row downstream" onclick="quickQuery('${t}')">
-                    <div class="d-name">${t.split('.').pop()}</div>
+                html += `<div class="detail-row downstream" data-table-name="${_escape(t)}">
+                    <div class="d-name">${_escape(t.split('.').pop())}</div>
                 </div>`;
             });
         }
@@ -128,6 +120,10 @@
     }
 
     // 显示节点信息浮窗（点节点时触发，懒加载 /api/lineage/node-detail）
+    // field 参数兼容：
+    //   - string: 旧版字段名
+    //   - object {name, data_type}: 新版字段元数据
+    //   - null: 无字段
     window.showInfoPanel = function(node, field) {
         const panel = document.getElementById('infoPanel');
         const title = document.getElementById('panelTitle');
@@ -135,15 +131,32 @@
 
         if (!panel || !title || !content) return;
 
-        const tableShort = node.id.split('.').pop();
-        title.textContent = field ? `${tableShort}.${field}` : node.id;
+        // Normalize field argument to {name, data_type} or null
+        const fieldMeta = _normalizeFieldArg(field);
+        const fieldName = fieldMeta ? fieldMeta.name : null;
+        const fieldType = fieldMeta ? fieldMeta.data_type : '';
 
-        const config = LAYER_CONFIG[node.layer] || LAYER_CONFIG['config'];
+        const tableShort = node.id.split('.').pop();
+        title.textContent = fieldName ? `${tableShort}.${fieldName}` : node.id;
+
+        const config = getLayerConfig(node.layer);
+
+        let fieldSummary = '';
+        if (fieldName) {
+            fieldSummary = `<span style="margin-left:8px;color:#64748b;font-size:11px;">` +
+                `字段: <code style="color:#6366f1;">${_escape(fieldName)}</code>`;
+            if (fieldType) {
+                fieldSummary += ` <code style="color:#0d9488;">${_escape(fieldType)}</code>`;
+            } else {
+                fieldSummary += ` <code style="color:#94a3b8;font-style:italic;">(无类型)</code>`;
+            }
+            fieldSummary += `</span>`;
+        }
 
         let html = `<div class="info-section">
             <div class="section-content">
                 <span class="tag" style="background:${config.bg};color:${config.border};">${config.label}</span>
-                ${field ? `<span style="margin-left:8px;color:#64748b;font-size:11px;">字段: <code style="color:#6366f1;">${_escape(field)}</code></span>` : ''}
+                ${fieldSummary}
             </div>
         </div>`;
 
@@ -155,7 +168,7 @@
         }
 
         html += `<div id="nodeDetailLazy" class="info-section">
-            <div class="section-title">${field ? '加工口径' : '详情'}</div>
+            <div class="section-title">${fieldName ? '加工口径' : '详情'}</div>
             <div class="section-content" style="color:#94a3b8;font-size:12px;">加载中...</div>
         </div>`;
 
@@ -163,12 +176,28 @@
         panel.style.display = 'block';
         panel.classList.add('show');
 
-        if (field) {
-            _loadNodeCaliber(node.id, field);
+        if (fieldName) {
+            _loadNodeCaliber(node.id, fieldName);
         } else {
             _loadNodeDetailFallback(node);
         }
     };
+
+    /**
+     * Normalize the field argument for backward compatibility.
+     * Accepts: string (legacy field name), object {name, data_type}, or null.
+     * @returns {{name: string, data_type: string}|null}
+     */
+    function _normalizeFieldArg(field) {
+        if (!field) return null;
+        if (typeof field === 'string') {
+            return { name: field, data_type: '' };
+        }
+        if (typeof field === 'object' && field.name) {
+            return { name: field.name, data_type: field.data_type || '' };
+        }
+        return null;
+    }
 
     function _loadNodeCaliber(table, field) {
         const url = `/api/lineage/node-caliber?table=${encodeURIComponent(table)}&field=${encodeURIComponent(field)}`;
@@ -250,7 +279,7 @@
         if (flags.has_null_branch) qFlags.push(['NULL 分支', 'tag-distinct']);
         if (flags.has_custom_function) qFlags.push(['自定义函数', 'tag-fn']);
         if (customFns.length > 0) {
-            qFlags.push([`FN: ${customFns.slice(0, 3).join(', ')}${customFns.length > 3 ? '...' : ''}`, 'tag-fn']);
+            qFlags.push([`FN: ${customFns.slice(0, 3).map(_escape).join(', ')}${customFns.length > 3 ? '...' : ''}`, 'tag-fn']);
         }
         if (qFlags.length > 0) {
             const flagTags = qFlags.map(([t, c]) => `<span class="step-tag ${c}">${_escape(t)}</span>`).join(' ');
@@ -275,23 +304,6 @@
         }
 
         slot.outerHTML = html;
-        _bindSpecToggle();
-    }
-
-    function _bindSpecToggle() {
-        document.querySelectorAll('#infoPanel .spec-toggle').forEach(head => {
-            head.style.cursor = 'pointer';
-            head.addEventListener('click', () => {
-                const section = head.closest('.caliber-spec-section');
-                if (!section) return;
-                const body = section.querySelector('.spec-body');
-                const arrow = head.querySelector('.spec-arrow');
-                if (!body) return;
-                const isHidden = body.style.display === 'none';
-                body.style.display = isHidden ? 'block' : 'none';
-                if (arrow) arrow.textContent = isHidden ? '▼' : '▶';
-            });
-        });
     }
 
     function _renderNodeCaliberEmpty(table, field) {
@@ -335,7 +347,9 @@
         if (fields.length > 0) {
             const fieldsHtml = fields.slice(0, 50).map(f => {
                 const fname = f.name || f;
-                const ftype = f.type ? ` <span style="color:#94a3b8;">(${_escape(f.type)})</span>` : '';
+                const ftype = f.type
+                    ? ` <span style="color:#0d9488;">(${_escape(f.type)})</span>`
+                    : ` <span style="color:#94a3b8;font-style:italic;">(无类型)</span>`;
                 return `<span class="tag">${_escape(fname)}${ftype}</span>`;
             }).join('');
             html += `<div class="info-section">
@@ -347,7 +361,7 @@
         const ups = d.upstream_tables || [];
         if (ups.length > 0) {
             const upsHtml = ups.slice(0, 20).map(t =>
-                `<span class="tag" style="background:#dcfce7;color:#166534;cursor:pointer;" onclick="quickQuery('${_escape(t)}')">${_escape(t.split('.').pop())}</span>`
+                `<span class="tag" style="background:#dcfce7;color:#166534;cursor:pointer;" data-table-name="${_escape(t)}">${_escape(t.split('.').pop())}</span>`
             ).join(' ');
             html += `<div class="info-section">
                 <div class="section-title">↑ 上游表 (${ups.length})</div>
@@ -358,7 +372,7 @@
         const downs = d.downstream_tables || [];
         if (downs.length > 0) {
             const downsHtml = downs.slice(0, 20).map(t =>
-                `<span class="tag" style="background:#fee2e2;color:#991b1b;cursor:pointer;" onclick="quickQuery('${_escape(t)}')">${_escape(t.split('.').pop())}</span>`
+                `<span class="tag" style="background:#fee2e2;color:#991b1b;cursor:pointer;" data-table-name="${_escape(t)}">${_escape(t.split('.').pop())}</span>`
             ).join(' ');
             html += `<div class="info-section">
                 <div class="section-title">↓ 下游表 (${downs.length})</div>
@@ -517,5 +531,29 @@
             panel.classList.remove('show');
         }
     };
+
+    // 事件委托：spec-toggle 折叠/展开
+    document.getElementById('infoPanel').addEventListener('click', function(e) {
+        const toggle = e.target.closest('.spec-toggle');
+        if (!toggle) return;
+        const section = toggle.closest('.caliber-spec-section');
+        if (!section) return;
+        const body = section.querySelector('.spec-body');
+        const arrow = toggle.querySelector('.spec-arrow');
+        if (!body) return;
+        const isHidden = body.style.display === 'none';
+        body.style.display = isHidden ? 'block' : 'none';
+        if (arrow) arrow.textContent = isHidden ? '▼' : '▶';
+    });
+
+    // 事件委托：处理 data-table-name 点击，替代 inline onclick（防 XSS）
+    document.addEventListener('click', function(e) {
+        const el = e.target.closest('[data-table-name]');
+        if (!el) return;
+        const tableName = el.dataset.tableName;
+        if (tableName && typeof window.quickQuery === 'function') {
+            window.quickQuery(tableName);
+        }
+    });
 
 })();

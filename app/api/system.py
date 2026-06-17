@@ -9,10 +9,11 @@ import logging
 import time
 from datetime import datetime
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException
 
 from app.config import config
 from app.dependencies import (
+    admin_required,
     get_layer_detector,
     get_lineage_service,
 )
@@ -51,7 +52,7 @@ async def health_check():
 
         try:
             lineage_svc = get_lineage_service()
-            if lineage_svc._table_tracer.adjacency_up or lineage_svc._table_tracer.adjacency_down:
+            if lineage_svc.is_index_ready():
                 index_status = "ready"
             else:
                 index_status = "empty"
@@ -203,7 +204,7 @@ async def get_layer_configs():
     summary="强制重新解析",
     description="清除缓存并重新全量解析所有数据文件（耗时约6-10分钟）",
 )
-def force_reparse():
+def force_reparse(_: None = Depends(admin_required)):
     """强制重新全量解析，覆盖缓存"""
     from app.dependencies import get_lineage_service, get_parser_service
 
@@ -211,8 +212,7 @@ def force_reparse():
         parser = get_parser_service()
 
         # 清除旧的 LineageTracer 缓存
-        parser._lineage_tracer = None
-        parser._cached_procedures = {}
+        parser.reset_tracer()
 
         # 强制全量解析
         result = parser.parse_existing_data(force=True)
@@ -232,8 +232,5 @@ def force_reparse():
             },
         }
     except Exception as e:
-        logger.error("强制重新解析失败: %s", e, exc_info=True)
-        return {
-            "success": False,
-            "error": str(e),
-        }
+        logger.error("Force reparse failed: %s", e)
+        raise HTTPException(status_code=500, detail="重新解析失败")
