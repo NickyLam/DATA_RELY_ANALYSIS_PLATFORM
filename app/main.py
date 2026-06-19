@@ -52,6 +52,7 @@ async def lifespan(app: FastAPI):
     logger.info("=" * 60)
 
     start_time = time.time()
+    parser_service = None
     progress_service = None
 
     try:
@@ -93,12 +94,15 @@ async def lifespan(app: FastAPI):
 
     except Exception as e:
         logger.error("❌ 启动初始化失败: %s", e, exc_info=True)
+        raise
 
     yield
 
     logger.info("正在关闭服务...")
     if progress_service is not None:
         progress_service.cleanup_old_tasks(max_age_sec=0)
+    if parser_service is not None:
+        parser_service.shutdown()
     logger.info("服务已安全关闭")
 
 

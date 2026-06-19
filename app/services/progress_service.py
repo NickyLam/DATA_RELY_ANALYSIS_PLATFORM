@@ -40,6 +40,14 @@ class ProgressUpdate:
     errors: list[str] = field(default_factory=list)
 
 
+@dataclass(eq=False)
+class ProgressSubscriber:
+    """SSE subscriber bound to the event loop that consumes its queue."""
+
+    queue: asyncio.Queue
+    loop: asyncio.AbstractEventLoop | None
+
+
 @dataclass
 class ParseTask:
     """解析任务"""
@@ -54,7 +62,7 @@ class ParseTask:
     result: Any | None = None
     error: str | None = None
 
-    subscribers: list[asyncio.Queue] = field(default_factory=list)
+    subscribers: list[ProgressSubscriber] = field(default_factory=list)
     lock: threading.Lock = field(default_factory=threading.Lock)
 
 
@@ -204,29 +212,34 @@ class ProgressService:
         self._notify_subscribers(task)
         logger.error("任务失败: %s - %s", task_id, error)
 
-    def subscribe(self, task_id: str) -> asyncio.Queue:
+    def subscribe(self, task_id: str) -> ProgressSubscriber:
         """订阅任务进度事件（用于 SSE 推送）"""
         task = self.get_task(task_id)
         if not task:
             raise ValueError(f"任务不存在: {task_id}")
 
         q: asyncio.Queue = asyncio.Queue(maxsize=100)
+        try:
+            loop = asyncio.get_running_loop()
+        except RuntimeError:
+            loop = None
+        subscriber = ProgressSubscriber(queue=q, loop=loop)
 
         with task.lock:
-            task.subscribers.append(q)
+            task.subscribers.append(subscriber)
 
         logger.debug("新订阅者加入任务: %s (当前订阅数: %d)", task_id, len(task.subscribers))
-        return q
+        return subscriber
 
-    def unsubscribe(self, task_id: str, q: asyncio.Queue) -> None:
+    def unsubscribe(self, task_id: str, subscriber: ProgressSubscriber) -> None:
         """取消订阅"""
         task = self.get_task(task_id)
         if not task:
             return
 
         with task.lock:
-            if q in task.subscribers:
-                task.subscribers.remove(q)
+            if subscriber in task.subscribers:
+                task.subscribers.remove(subscriber)
 
     async def generate_sse_events(self, task_id: str):
         """
@@ -240,13 +253,13 @@ class ProgressService:
             yield self._format_sse_event("error", {"message": f"任务不存在: {task_id}"})
             return
 
-        q = self.subscribe(task_id)
+        subscriber = self.subscribe(task_id)
         last_keepalive = time.time()
 
         try:
             while True:
                 try:
-                    event = await asyncio.wait_for(q.get(), timeout=self.keepalive_sec)
+                    event = await asyncio.wait_for(subscriber.queue.get(), timeout=self.keepalive_sec)
                     yield self._format_sse_event(event["type"], event["data"])
 
                     if event["type"] in ("complete", "error"):
@@ -276,7 +289,7 @@ class ProgressService:
                         last_keepalive = now
 
         finally:
-            self.unsubscribe(task_id, q)
+            self.unsubscribe(task_id, subscriber)
 
     def cleanup_old_tasks(self, max_age_sec: int = 3600) -> int:
         """清理过期的任务记录"""
@@ -346,19 +359,38 @@ class ProgressService:
             },
         }
 
-        dead_subscribers = []
-        for q in task.subscribers:
-            try:
-                q.put_nowait(event_data)
-            except asyncio.QueueFull:
-                dead_subscribers.append(q)
-            except Exception:
-                logger.warning("通知订阅者失败，将其移除", exc_info=True)
-                dead_subscribers.append(q)
+        with task.lock:
+            subscribers = list(task.subscribers)
 
-        for q in dead_subscribers:
-            if q in task.subscribers:
-                task.subscribers.remove(q)
+        for subscriber in subscribers:
+            loop = subscriber.loop
+            if loop is not None and loop.is_running():
+                try:
+                    loop.call_soon_threadsafe(self._put_event_for_subscriber, task, subscriber, event_data)
+                except RuntimeError:
+                    self._remove_subscriber(task, subscriber)
+            else:
+                self._put_event_for_subscriber(task, subscriber, event_data)
+
+    def _put_event_for_subscriber(
+        self,
+        task: ParseTask,
+        subscriber: ProgressSubscriber,
+        event_data: dict[str, Any],
+    ) -> None:
+        try:
+            subscriber.queue.put_nowait(event_data)
+        except asyncio.QueueFull:
+            self._remove_subscriber(task, subscriber)
+        except Exception:
+            logger.warning("通知订阅者失败，将其移除", exc_info=True)
+            self._remove_subscriber(task, subscriber)
+
+    @staticmethod
+    def _remove_subscriber(task: ParseTask, subscriber: ProgressSubscriber) -> None:
+        with task.lock:
+            if subscriber in task.subscribers:
+                task.subscribers.remove(subscriber)
 
     @staticmethod
     def _format_sse_event(event_type: str, data: dict) -> str:

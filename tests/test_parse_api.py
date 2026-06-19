@@ -109,8 +109,17 @@ class TestFullParse:
     """全量解析测试"""
 
     def test_trigger_full_parse(self, client, mock_parser_service, mock_progress_service):
-        """TC-006: 全量解析触发"""
+        """TC-006: 全量解析触发（未配置 ADMIN_API_KEY 时应拒绝）"""
         response = client.post("/api/parse/parse-existing")
+        assert response.status_code == 403
+
+    def test_trigger_full_parse_with_admin_key(self, client, mock_parser_service, mock_progress_service, monkeypatch):
+        """TC-006: 全量解析触发（配置 ADMIN_API_KEY 后应成功）"""
+        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
+        response = client.post(
+            "/api/parse/parse-existing",
+            headers={"X-Admin-Key": "test-admin-key"},
+        )
         assert response.status_code == 200
         data = response.json()
         assert "success" in data or "data" in data

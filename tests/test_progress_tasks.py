@@ -1,3 +1,5 @@
+import asyncio
+
 from app.services.progress_service import ProgressService, TaskStatus
 
 
@@ -65,3 +67,16 @@ def test_list_tasks_filters_status_and_limits_results():
     assert len(summaries) == 1
     assert summaries[0]["task_id"] == third.task_id
     assert second.task_id not in {item["task_id"] for item in summaries}
+
+
+def test_subscribe_records_running_loop_for_threadsafe_notification():
+    async def scenario():
+        service = ProgressService()
+        task = service.create_task()
+
+        subscriber = service.subscribe(task.task_id)
+
+        assert subscriber.loop is asyncio.get_running_loop()
+        service.unsubscribe(task.task_id, subscriber)
+
+    asyncio.run(scenario())

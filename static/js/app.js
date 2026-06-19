@@ -99,13 +99,45 @@ async function apiRequest(url, options = {}) {
     const finalOptions = { ...defaultOptions, ...options, headers: mergedHeaders };
 
     const response = await fetch(API_BASE + url, finalOptions);
+    const responseData = await readJsonResponse(response);
 
     if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+        throw new Error(extractApiErrorMessage(responseData, response));
     }
 
-    return response.json();
+    return responseData;
+}
+
+async function readJsonResponse(response) {
+    const text = await response.text();
+    if (!text.trim()) {
+        return {};
+    }
+
+    try {
+        return JSON.parse(text);
+    } catch (error) {
+        if (response.ok) {
+            throw new Error('响应格式错误');
+        }
+        return {};
+    }
+}
+
+function extractApiErrorMessage(errorData, response = null) {
+    if (typeof errorData?.error === 'string') {
+        return errorData.error;
+    }
+    if (typeof errorData?.error?.message === 'string') {
+        return errorData.error.message;
+    }
+    if (typeof errorData?.message === 'string') {
+        return errorData.message;
+    }
+    if (response) {
+        return `HTTP ${response.status}: ${response.statusText}`;
+    }
+    return '请求失败';
 }
 
 function showNotification(message, type = 'info') {

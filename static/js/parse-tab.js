@@ -43,7 +43,7 @@
     }
 
     function addFilesToList(files) {
-        const validExtensions = ['.tab', '.prc', '.sql'];
+        const validExtensions = ['.tab', '.prc', '.sql', '.ctl'];
         let addedCount = 0;
 
         files.forEach(file => {
@@ -90,7 +90,7 @@
 
         list.innerHTML = selectedFilesArray.map((file, index) => `
             <li>
-                <span class="file-name">${file.name}</span>
+                <span class="file-name">${escapeHtml(file.name)}</span>
                 <span class="file-size">${formatFileSize(file.size)}</span>
                 <button onclick="removeFile(${index})" style="background:none;border:none;color:#ef4444;cursor:pointer;padding:0 4px;" title="移除">✕</button>
             </li>
@@ -135,10 +135,10 @@
                 body: formData,
             });
 
-            const result = await response.json();
+            const result = await response.json().catch(() => ({}));
 
-            if (!result.success) {
-                throw new Error(result.error || '上传失败');
+            if (!response.ok || !result.success) {
+                throw new Error(extractApiErrorMessage(result, response));
             }
 
             AppState.currentTaskId = result.data.task_id;

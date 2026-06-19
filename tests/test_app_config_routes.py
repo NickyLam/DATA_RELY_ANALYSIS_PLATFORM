@@ -1,6 +1,10 @@
+import asyncio
+
+import pytest
 from fastapi.testclient import TestClient
 
 from app.config import AppConfig
+from app import main as app_main
 from app.main import app
 
 
@@ -21,3 +25,17 @@ def test_root_serves_frontend_index():
     assert response.status_code == 200
     assert response.headers["content-type"].startswith("text/html")
     assert "数据血缘分析系统" in response.text
+
+
+def test_lifespan_raises_startup_initialization_errors(monkeypatch):
+    def fail_parser_service():
+        raise RuntimeError("parser unavailable")
+
+    monkeypatch.setattr(app_main, "get_parser_service", fail_parser_service)
+
+    async def run_lifespan():
+        async with app_main.lifespan(app):
+            pass
+
+    with pytest.raises(RuntimeError, match="parser unavailable"):
+        asyncio.run(run_lifespan())

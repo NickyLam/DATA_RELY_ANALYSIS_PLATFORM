@@ -5,6 +5,9 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
 
 # Virtual environments
 .venv/
@@ -27,6 +30,7 @@ test_output/
 # Generated packages and archives
 dist/
 build/
+*.rar
 *.zip
 *.7z
 *.tar
@@ -59,6 +63,9 @@ RRP_ORACLE/
 
 # 财务集市数据目录
 财务集市指标血缘分析/
+
+# 真实业务脚本/指标数据目录
+AI指标血缘分析_数仓&管架/
 
 # 真实业务数据目录（忽略所有文件，仅保留.gitkeep和manifest.yml）
 SOURCE_DATA/*

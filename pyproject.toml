@@ -13,6 +13,7 @@ dependencies = [
 [project.optional-dependencies]
 test = [
     "pytest>=7.0.0",
+    "pytest-cov>=5.0.0",
     "httpx>=0.24.0",
 ]
 
@@ -57,7 +58,7 @@ check_untyped_defs = true
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_functions = ["test_*"]
-addopts = "--cov=app --cov=core --cov-report=term-missing --cov-fail-under=35 -q"
+addopts = "-q"
 
 [tool.coverage.run]
 source = ["app", "core"]

@@ -768,24 +768,21 @@ class ParserService:
             result.errors.append(f"文件 {file_path.name}: {str(e)}")
 
     def _save_result_to_cache(self, result: ParseResult) -> None:
-        try:
-            serializable = result.to_serializable()
-            data = {
-                "metadata": {
-                    "total_tables": len(result.tables),
-                    "total_procedures": len(result.procedures),
-                    "total_table_lineages": len(result.table_lineages),
-                    "total_field_mappings": len(result.field_mappings),
-                    "total_caliber_infos": len(result.caliber_infos),
-                    "parser_version": "unified-v1",
-                    "data_sources": [ds.name for ds in config.datasource_configs] if config else [],
-                },
-                **serializable,
-            }
-            self._current_data_cache = data  # 同步填充 data cache，避免后续重复 to_serializable()
-            self._cache_store.save_to_cache(data)
-        except Exception as e:
-            logger.error("保存缓存数据失败: %s", e)
+        serializable = result.to_serializable()
+        data = {
+            "metadata": {
+                "total_tables": len(result.tables),
+                "total_procedures": len(result.procedures),
+                "total_table_lineages": len(result.table_lineages),
+                "total_field_mappings": len(result.field_mappings),
+                "total_caliber_infos": len(result.caliber_infos),
+                "parser_version": "unified-v1",
+                "data_sources": [ds.name for ds in config.datasource_configs] if config else [],
+            },
+            **serializable,
+        }
+        self._cache_store.save_to_cache(data)
+        self._current_data_cache = data  # 同步填充 data cache，避免后续重复 to_serializable()
 
     def _resolve_ds_path(self, data_dir: str) -> Path:
         path = Path(data_dir)

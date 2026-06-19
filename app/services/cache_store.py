@@ -85,28 +85,25 @@ class CacheStore:
         return data
 
     def save_to_cache(self, result_data: dict[str, Any]) -> None:
-        try:
-            data = {
-                **result_data,
-                "metadata": {
-                    **result_data.get("metadata", {}),
-                    "cache_schema_version": CACHE_SCHEMA_VERSION,
-                    "last_updated": time.strftime("%Y-%m-%d %H:%M:%S"),
-                },
-            }
-            self._store.save(data)
+        data = {
+            **result_data,
+            "metadata": {
+                **result_data.get("metadata", {}),
+                "cache_schema_version": CACHE_SCHEMA_VERSION,
+                "last_updated": time.strftime("%Y-%m-%d %H:%M:%S"),
+            },
+        }
+        self._store.save(data)
 
-            # 如果启用了 legacy 双写，同时写 pickle/json
-            if self.config and getattr(self.config, "enable_legacy_cache_write", False):
-                from app.services.storage.legacy_store import LegacyJsonPickleStore
+        # 如果启用了 legacy 双写，同时写 pickle/json
+        if self.config and getattr(self.config, "enable_legacy_cache_write", False):
+            from app.services.storage.legacy_store import LegacyJsonPickleStore
 
-                legacy = LegacyJsonPickleStore(self.output_dir)
-                legacy.save(data)
+            legacy = LegacyJsonPickleStore(self.output_dir)
+            legacy.save(data)
 
-            if self._repository:
-                self._repository.update(data)
-        except Exception as e:
-            logger.error("保存缓存数据失败: %s", e)
+        if self._repository:
+            self._repository.update(data)
 
     def _update_repository(self, data: dict) -> None:
         if self._repository is None:

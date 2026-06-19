@@ -13,12 +13,13 @@ from __future__ import annotations
 import logging
 from typing import Annotated
 
-from fastapi import APIRouter, File, Form, HTTPException, Query, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import StreamingResponse
 
 from app.dependencies import (
     ParserServiceDep,
     ProgressServiceDep,
+    admin_required,
 )
 from app.models import (
     FileUploadData,
@@ -225,6 +226,7 @@ def list_tasks(
 def trigger_full_parse(
     parser_service: ParserServiceDep,
     progress_service: ProgressServiceDep,
+    _: None = Depends(admin_required),
 ) -> dict:
     task = progress_service.create_task(files_count=0)
     progress_service.start_task(task.task_id)

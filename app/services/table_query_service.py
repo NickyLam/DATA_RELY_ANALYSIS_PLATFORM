@@ -177,16 +177,21 @@ class TableQueryService:
 
         schema_to_system: dict[str, str] = {}
         oracle_systems: list[str] = []
+        non_oracle_system_names: list[tuple[str, str]] = []
 
         for ds_cfg in config.datasource_configs:
             if not ds_cfg.enabled:
                 continue
+            system_prefix = ds_cfg.name.upper()
             for schema_dir in ds_cfg.schema_dirs:
                 schema_to_system[schema_dir.upper()] = ds_cfg.name
             # 非 Oracle 解析器（warehouse/pam）的表通常以数据源名作为 schema
             # 自动注册数据源名 → 系统映射，确保 PAM 等系统的表能正确归属
             if ds_cfg.parser != "oracle":
-                schema_to_system[ds_cfg.name.upper()] = ds_cfg.name
+                schema_to_system[system_prefix] = ds_cfg.name
+                non_oracle_system_names.append((system_prefix, ds_cfg.name))
+                for schema_dir in ds_cfg.schema_dirs:
+                    schema_to_system[f"{system_prefix}_{schema_dir.upper()}"] = ds_cfg.name
             if ds_cfg.parser == "oracle":
                 oracle_systems.append(ds_cfg.name)
 
@@ -201,6 +206,12 @@ class TableQueryService:
                 continue
             schema = full_name.split(".")[0].upper()
             if schema not in schema_to_system:
+                for system_prefix, system_name in non_oracle_system_names:
+                    if schema.startswith(f"{system_prefix}_"):
+                        schema_to_system[schema] = system_name
+                        break
+                if schema in schema_to_system:
+                    continue
                 unknown_schemas.add(schema)
 
         # 将未知 schema 归属到第一个 Oracle 系统

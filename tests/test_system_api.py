@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -51,6 +52,8 @@ def mock_parser_service():
         "caliber_infos": [],
         "metadata": {"total_tables": 4},
     }
+    mock.parse_existing_data.return_value = SimpleNamespace(tables=[], procedures=[], parse_time_sec=0.0)
+    mock.shutdown.return_value = None
     return mock
 
 
@@ -65,9 +68,14 @@ def mock_cache_manager():
 @pytest.fixture
 def client_with_data(mock_parser_service, mock_cache_manager):
     """TestClient with mocked services that have data loaded."""
+    mock_progress_service = MagicMock()
     with (
         patch("app.dependencies.get_parser_service", return_value=mock_parser_service),
         patch("app.dependencies.get_cache_manager", return_value=mock_cache_manager),
+        patch("app.main.get_parser_service", return_value=mock_parser_service),
+        patch("app.main.get_progress_service", return_value=mock_progress_service),
+        patch("app.main.get_lineage_service", return_value=MagicMock()),
+        patch("app.main.get_indicator_service", return_value=MagicMock()),
     ):
         from app.main import app
 

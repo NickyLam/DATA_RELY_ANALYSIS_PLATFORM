@@ -5,27 +5,92 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+import openpyxl
 import pytest
 
 from core.indicator_config_parser import IndicatorConfigParser, _BASE_CALC_COLUMNS, _GL_CALC_COLUMNS
 
-# ── 路径常量 ──────────────────────────────────────────────
-_PROJECT_ROOT = Path(__file__).resolve().parent.parent
-_FDM_DATA_PATH = _PROJECT_ROOT / "SOURCE_DATA" / "FDM"
-_PROC_DATA_PATH = _PROJECT_ROOT / "财务集市指标血缘分析" / "指标"
-
 
 # ── fixtures ──────────────────────────────────────────────
 @pytest.fixture(scope="module")
-def fdm_parser() -> IndicatorConfigParser:
-    """使用 SOURCE_DATA/FDM 构造解析器。"""
-    return IndicatorConfigParser(_FDM_DATA_PATH)
+def indicator_data_path(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    data_path = tmp_path_factory.mktemp("indicator_config")
+
+    wb = openpyxl.Workbook()
+    base_ws = wb.active
+    base_ws.title = "基础指标算法表"
+    base_ws.append(list(_BASE_CALC_COLUMNS))
+    base_ws.append(
+        [
+            "FM010001",
+            "客户余额",
+            "基础",
+            "1",
+            "1",
+            "FDL_IDX_INDEX_DATA",
+            "FDL_SRC_BAL",
+            "SUM(BAL)",
+            "FM010002",
+            "SELECT BAL FROM FDL_SRC_BAL",
+            "2024-01-01",
+            "2099-12-31",
+            "tester",
+            "Y",
+        ]
+    )
+    base_ws.append(
+        [
+            "FM010002",
+            "客户余额明细",
+            "基础",
+            "1",
+            "2",
+            "FDL_IDX_INDEX_DATA",
+            "FDL_SRC_BAL_DTL",
+            "SUM(BAL_DTL)",
+            "",
+            "SELECT BAL_DTL FROM FDL_SRC_BAL_DTL",
+            "2024-01-01",
+            "2099-12-31",
+            "tester",
+            "Y",
+        ]
+    )
+
+    gl_ws = wb.create_sheet("总账指标算法表")
+    gl_ws.append(list(_GL_CALC_COLUMNS))
+    gl_ws.append(["GL010001", "总账", "总账余额", "+", "1001", "4", "BAL", "2024-01-01", "2099-12-31"])
+    gl_ws.append(["GL010002", "总账", "总账负债", "-", "2001", "4", "BAL", "2024-01-01", "2099-12-31"])
+
+    wb.save(data_path / "财务指标查询.xlsx")
+    wb.close()
+
+    (data_path / "PRO_F_INDEX_CALC_BASE.proc").write_text(
+        """
+CREATE OR REPLACE PROCEDURE PRO_F_INDEX_CALC_BASE AS
+BEGIN
+    INSERT INTO FDL_IDX_INDEX_DATA (INDEX_NO, AMT)
+    SELECT B.INDEX_NO, S.BAL
+      FROM FDL_IDX_PARA_BASE B
+      JOIN FDL_SRC_BAL S ON B.INDEX_NO = S.INDEX_NO;
+END;
+""",
+        encoding="utf-8",
+    )
+
+    return data_path
 
 
 @pytest.fixture(scope="module")
-def proc_parser() -> IndicatorConfigParser:
-    """使用 财务集市指标血缘分析/指标/ 构造解析器（用于 proc 文件测试）。"""
-    return IndicatorConfigParser(_PROC_DATA_PATH)
+def fdm_parser(indicator_data_path: Path) -> IndicatorConfigParser:
+    """使用测试内生成的指标配置目录构造解析器。"""
+    return IndicatorConfigParser(indicator_data_path)
+
+
+@pytest.fixture(scope="module")
+def proc_parser(indicator_data_path: Path) -> IndicatorConfigParser:
+    """使用测试内生成的 proc 文件构造解析器。"""
+    return IndicatorConfigParser(indicator_data_path)
 
 
 @pytest.fixture(scope="module")

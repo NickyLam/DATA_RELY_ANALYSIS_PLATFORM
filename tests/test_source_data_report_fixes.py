@@ -110,6 +110,44 @@ def test_system_table_counts_prefer_data_source_over_schema():
     ]
 
 
+def test_system_table_counts_infer_system_from_schema_prefix_without_data_source():
+    parser = _Parser(
+        {
+            "tables": [
+                {
+                    "full_name": "RRP_EAST.EAST5_1002_JRGJXXB",
+                    "table_name": "EAST5_1002_JRGJXXB",
+                    "columns": [{"name": "ID"}],
+                },
+                {
+                    "full_name": "EDW_ICL.DW_ICL_ACCT",
+                    "table_name": "DW_ICL_ACCT",
+                    "columns": [{"name": "ACCT_NO"}],
+                },
+                {
+                    "full_name": "MCS_IDL.DM_IDL_RPT",
+                    "table_name": "DM_IDL_RPT",
+                    "columns": [{"name": "RPT_ID"}],
+                },
+            ],
+            "procedures": [],
+            "table_lineages": [],
+            "field_mappings": [],
+            "caliber_infos": [],
+        }
+    )
+    service = TableQueryService(parser, _Cache())
+
+    systems = {item["name"]: item for item in service.get_systems()}
+
+    assert systems["rrp"]["table_count"] == 1
+    assert systems["edw"]["table_count"] == 1
+    assert systems["mcs"]["table_count"] == 1
+    assert [t["full_name"] for t in service.get_tables_by_system("rrp")] == [
+        "RRP_EAST.EAST5_1002_JRGJXXB"
+    ]
+
+
 def test_parse_result_merge_keeps_same_mapping_from_different_procedures():
     result = ParseResult()
     first = ParseResult()

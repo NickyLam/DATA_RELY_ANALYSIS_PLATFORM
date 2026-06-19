@@ -9,7 +9,7 @@ from datetime import datetime
 from enum import StrEnum
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ParseMode(StrEnum):
@@ -85,6 +85,8 @@ class ProgressEvent(BaseModel):
 
 
 class ProgressEventData(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
     percent: float = Field(default=0, ge=0, le=100)
     current_file: str | None = None
     message: str = ""
@@ -93,9 +95,6 @@ class ProgressEventData(BaseModel):
     procedures_parsed: int | None = None
     lineages_found: int | None = None
     errors: list[str] | None = None
-
-    class Config:
-        populate_by_name = True
 
 
 class LineageQueryResponse(BaseModel):

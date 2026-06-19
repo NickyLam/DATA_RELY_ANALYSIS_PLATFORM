@@ -404,6 +404,55 @@ class TestCacheStoreBackend:
         loaded = store.load_from_cache()
         assert loaded is None
 
+    def test_save_to_cache_propagates_store_failures(self, temp_dir, sample_result_data):
+        from app.services.cache_store import CacheStore
+
+        class MockConfig:
+            storage_backend = "sqlite"
+            sqlite_db_path = str(temp_dir / "lineage.db")
+            enable_legacy_cache_write = False
+
+        class BrokenStore:
+            def load(self):
+                return None
+
+            def save(self, result_data):
+                raise OSError("disk full")
+
+            def clear(self):
+                pass
+
+            def export_json(self, path):
+                pass
+
+        store = CacheStore(temp_dir, config=MockConfig())
+        store._store = BrokenStore()
+
+        with pytest.raises(OSError, match="disk full"):
+            store.save_to_cache(sample_result_data)
+
+    def test_parser_service_cache_save_propagates_failures(self, tmp_path):
+        from app.services.parser_service import ParseResult, ParserService
+
+        class BrokenCacheStore:
+            def save_to_cache(self, data):
+                raise RuntimeError("cache backend unavailable")
+
+        parser = ParserService(
+            data_dir=str(tmp_path / "data"),
+            schema_dirs=[],
+            output_dir=str(tmp_path / "output"),
+        )
+        parser._cache_store = BrokenCacheStore()
+
+        try:
+            with pytest.raises(RuntimeError, match="cache backend unavailable"):
+                parser._save_result_to_cache(ParseResult())
+
+            assert parser._current_data_cache is None
+        finally:
+            parser.shutdown()
+
 
 # ── DataRepository 测试 ────────────────────────────────────────────
 
