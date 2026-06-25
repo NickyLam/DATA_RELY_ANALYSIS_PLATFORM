@@ -16,6 +16,7 @@ import logging
 import re
 from pathlib import Path
 
+from core.field_cleaner import FieldCleaner
 from core.parser_protocol import ParseOutput
 
 logger = logging.getLogger(__name__)
@@ -94,6 +95,22 @@ _FROM_TABLE_RE = re.compile(
     r"(?:from|join)\s+([\w.]+)",
     re.IGNORECASE,
 )
+
+# FROM/JOIN 子句中的表名 + 可选别名（用于字段级映射的别名解析）
+_FROM_TABLE_ALIAS_RE = re.compile(
+    r"(?:from|join)\s+([\w.]+)(?:\s+(?:as\s+)?(\w+))?",
+    re.IGNORECASE,
+)
+
+# 不能作为别名的 SQL 关键字
+_SQL_KEYWORDS = frozenset({
+    "WHERE", "JOIN", "INNER", "LEFT", "RIGHT", "FULL", "OUTER", "ON",
+    "GROUP", "ORDER", "HAVING", "UNION", "SET", "VALUES", "SELECT",
+    "AND", "OR", "NOT", "AS", "BY", "FROM", "INTO", "UPDATE", "DELETE",
+    "INSERT", "MERGE", "USING", "WHEN", "THEN", "ELSE", "END", "CASE",
+    "WITH", "CONNECT", "START", "PRIOR", "MINUS", "INTERSECT", "CROSS",
+    "PARTITION", "OVER", "PARTITIONED",
+})
 
 # SELECT 列列表（从 SELECT 到 FROM）
 _SELECT_COLS_RE = re.compile(
@@ -276,18 +293,32 @@ class PamDMLParser:
         return result
 
     def _parse_dml_from_sql(self, sql: str, proc_name: str) -> tuple[list[dict], list[dict]]:
-        """从解析后的 SQL 中提取表级血缘和字段映射"""
+        """从解析后的 SQL 中提取表级血缘和字段映射。
+
+        DELETE FROM 语句不产生血缘（无源→目标关系），仅被观测后跳过。
+        INSERT INTO ... SELECT ... FROM 语句同时产出表级血缘和字段级映射，
+        字段映射通过 FROM/JOIN 别名解析到正确的源表，而非固定取 sources[0]。
+        """
         lineages: list[dict] = []
         mappings: list[dict] = []
+
+        # DELETE FROM target — 无源→目标血缘，观测后跳过
+        if _DELETE_FROM_RE.search(sql):
+            logger.info("PamDMLParser: 检测到 DELETE 语句，跳过血缘提取: %s", sql[:80])
+            return lineages, mappings
 
         # INSERT INTO target ... SELECT ... FROM source
         insert_match = _INSERT_INTO_RE.search(sql)
         if insert_match:
             target = self._normalize_table(insert_match.group(1))
             if target:
-                sources = self._extract_source_tables(sql)
+                # 提取源表（带别名）用于字段级映射的别名解析
+                table_aliases = self._extract_table_aliases(sql)
+                sources = self._dedupe_source_tables(table_aliases)
+
                 target_cols = self._extract_insert_columns(sql)
-                select_cols = self._extract_select_columns(sql)
+                select_str = self._extract_select_clause(sql)
+                select_tokens = FieldCleaner.tokenize_select_list(select_str) if select_str else []
 
                 for src in sources:
                     lineages.append({
@@ -296,21 +327,17 @@ class PamDMLParser:
                         "procedure": proc_name,
                     })
 
-                # 字段映射：按位置对齐 INSERT 列和 SELECT 列
-                if target_cols and select_cols and len(target_cols) == len(select_cols):
-                    for t_col, s_expr in zip(target_cols, select_cols):
-                        # 简单列名（非表达式）映射到第一个源表
-                        s_col = s_expr.strip()
-                        if re.match(r"^\w+$", s_col) and sources:
-                            mappings.append({
-                                "source_table": sources[0],
-                                "source_column": s_col.upper(),
-                                "target_table": target,
-                                "target_column": t_col.upper(),
-                                "transform_logic": "",
-                                "procedure": proc_name,
-                                "confidence": 0.7,
-                            })
+                # 字段映射：按位置对齐 INSERT 目标列和 SELECT 列，
+                # 通过别名解析到正确源表，而非固定 sources[0]。
+                if target_cols and select_tokens and len(target_cols) == len(select_tokens):
+                    alias_map = self._build_alias_map(table_aliases)
+                    for t_col, token in zip(target_cols, select_tokens):
+                        col_info = self._parse_select_token(token)
+                        mapping = self._build_field_mapping(
+                            t_col, col_info, alias_map, sources, target, proc_name
+                        )
+                        if mapping:
+                            mappings.append(mapping)
 
             return lineages, mappings
 
@@ -337,6 +364,137 @@ class PamDMLParser:
             if table and table not in tables:
                 tables.append(table)
         return tables
+
+    def _extract_table_aliases(self, sql: str) -> list[tuple[str, str]]:
+        """提取 FROM/JOIN 中的 (标准化表名, 别名) 对。
+
+        别名用于字段级映射时将 ``alias.column`` 解析到正确的源表。
+        SQL 关键字不会被误识别为别名。
+        """
+        pairs: list[tuple[str, str]] = []
+        for m in _FROM_TABLE_ALIAS_RE.finditer(sql):
+            table = self._normalize_table(m.group(1))
+            if not table:
+                continue
+            alias_raw = m.group(2)
+            alias = ""
+            if alias_raw:
+                alias_upper = alias_raw.strip().upper()
+                if alias_upper not in _SQL_KEYWORDS:
+                    alias = alias_upper
+            pairs.append((table, alias))
+        return pairs
+
+    @staticmethod
+    def _dedupe_source_tables(table_aliases: list[tuple[str, str]]) -> list[str]:
+        """从 (table, alias) 列表去重提取源表，保持出现顺序。"""
+        seen: set[str] = set()
+        sources: list[str] = []
+        for table, _alias in table_aliases:
+            if table not in seen:
+                seen.add(table)
+                sources.append(table)
+        return sources
+
+    @staticmethod
+    def _build_alias_map(table_aliases: list[tuple[str, str]]) -> dict[str, str]:
+        """构建 别名 → 标准化表名 映射。"""
+        alias_map: dict[str, str] = {}
+        for table, alias in table_aliases:
+            if alias and alias not in alias_map:
+                alias_map[alias] = table
+        return alias_map
+
+    def _extract_select_clause(self, sql: str) -> str:
+        """提取 SELECT 到 FROM 之间的列表达式字符串。"""
+        m = _SELECT_COLS_RE.search(sql)
+        if not m:
+            return ""
+        return m.group(1).strip()
+
+    @staticmethod
+    def _parse_select_token(token: str) -> dict:
+        """解析单个 SELECT 列表达式，拦截 CASE/DECODE 等无法定位单一源列的表达式。
+
+        返回的 dict 额外包含 ``raw_expr`` 字段，供下游做表达式级判断。
+        """
+        text = token.strip()
+        # CASE/DECODE 无法定位单一源列 → 标记为纯 transform，不产出字段映射
+        if re.search(r"\bCASE\b", text, re.IGNORECASE) or re.match(
+            r"\bDECODE\s*\(", text, re.IGNORECASE
+        ):
+            return {
+                "table": "",
+                "column": "",
+                "alias": "",
+                "transform": text,
+                "confidence": 0.0,
+                "raw_expr": text,
+            }
+        info = FieldCleaner.extract_column_info(text)
+        info["raw_expr"] = text
+        return info
+
+    def _build_field_mapping(
+        self,
+        target_col: str,
+        col_info: dict,
+        alias_map: dict[str, str],
+        sources: list[str],
+        target_table: str,
+        proc_name: str,
+    ) -> dict | None:
+        """根据 SELECT 列信息构建单条字段映射。
+
+        解析规则：
+          1. CASE/DECODE 表达式无法定位单一源列，不产出映射。
+          2. ``alias.column`` 通过 alias_map 解析到源表。
+          3. 裸列名：仅当只有一个源表时映射到该表，否则跳过（歧义）。
+          4. 函数包裹的列（NVL/COALESCE 等）由 FieldCleaner 剥离后按规则 2/3 解析。
+        """
+        column_name = col_info.get("column", "")
+        table_ref = col_info.get("table", "")
+        transform = col_info.get("transform", "")
+        confidence = col_info.get("confidence", 0.0)
+
+        # 无列名（CASE/DECODE/纯字面量）→ 不产出字段映射
+        if not column_name:
+            return None
+
+        # CASE/DECODE 表达式：FieldCleaner 可能误从 CASE 内部提取列名，这里显式拦截
+        if transform and re.search(r"\bCASE\b|\bDECODE\s*\(", transform, re.IGNORECASE):
+            return None
+
+        source_table = ""
+
+        if table_ref:
+            # alias.column → 通过别名映射解析源表
+            resolved = alias_map.get(table_ref.upper())
+            if resolved:
+                source_table = resolved
+            elif table_ref.upper() in (s.split(".")[-1] for s in sources):
+                # table_ref 直接是源表名（无别名场景）
+                source_table = next(
+                    s for s in sources if s.split(".")[-1] == table_ref.upper()
+                )
+
+        if not source_table:
+            # 裸列名：仅当唯一源表时可确定，否则跳过避免歧义
+            if len(sources) == 1:
+                source_table = sources[0]
+                confidence = min(confidence, 0.75)
+            else:
+                return None
+
+        return {
+            "source_table": source_table,
+            "source_column": column_name.upper(),
+            "target_table": target_table,
+            "target_column": target_col.strip().upper(),
+            "transform_logic": transform,
+            "procedure": proc_name,
+            "confidence": round(confidence, 2),
+        }
 
     def _extract_insert_columns(self, sql: str) -> list[str]:
         """提取 INSERT INTO ... (col1, col2, ...) 的目标列"""

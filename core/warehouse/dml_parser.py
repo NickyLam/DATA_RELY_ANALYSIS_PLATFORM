@@ -22,11 +22,10 @@ from pathlib import Path
 
 from core.field_cleaner import FieldCleaner
 from core.models import FieldMapping, ProcedureInfo, TableInfo, TableLineage
-from core.warehouse.schema_resolver import SCHEMA_LAYER_MAP, SchemaResolver
+from core.warehouse.schema_resolver import SchemaResolver
 from core.warehouse.temp_table_filter import TempTableFilter
 
 logger = logging.getLogger(__name__)
-_KNOWN_SCHEMA_PREFIXES = {schema.upper() for schema in SCHEMA_LAYER_MAP.values()}
 _SQL_KEYWORDS = {
     "NVL",
     "TO_DATE",
@@ -181,14 +180,14 @@ _UPDATE_PATTERN = re.compile(
 )
 
 # CREATE TABLE ... AS SELECT (CTAS)
+# Only matches up to the AS keyword; FROM clause is extracted via token-aware scanning.
 _CTAS_PATTERN = re.compile(
     r"CREATE\s+TABLE\s+"
     r"(\$\{[\w_]+\}\.\w+|[\w.]+)"  # 目标表
     r"\s+(?:NOLOGGING\s+)?"
     r"(?:COMPRESS\s+\$\{[\w_]+\}\s+FOR\s+QUERY\s+HIGH\s+)?"
-    r"AS\s+SELECT\s+(.*?)"
-    r"\bFROM\b\s+(.*?)",
-    re.IGNORECASE | re.DOTALL,
+    r"AS\s+",
+    re.IGNORECASE,
 )
 
 # ALTER TABLE ... EXCHANGE PARTITION ... WITH TABLE ...
@@ -354,7 +353,7 @@ class DMLParser:
 
         # 5. 提取 CTAS (CREATE TABLE AS SELECT)
         for match in _CTAS_PATTERN.finditer(content):
-            stmt = self._parse_ctas_statement(match, file_path)
+            stmt = self._parse_ctas_statement(match, content, file_path)
             if stmt:
                 statements.append(stmt)
 
@@ -562,8 +561,12 @@ class DMLParser:
             file_path=file_path,
         )
 
-    def _parse_ctas_statement(self, match: re.Match, file_path: str) -> DMLStatement | None:
-        """解析 CREATE TABLE AS SELECT 语句"""
+    def _parse_ctas_statement(self, match: re.Match, content: str, file_path: str) -> DMLStatement | None:
+        """Parse a CREATE TABLE AS SELECT statement.
+
+        Uses token-aware scanning to find the FROM keyword, avoiding false
+        matches inside string literals, comments, or nested subqueries.
+        """
         target_raw = match.group(1).strip()
         target_resolved = self._resolver.resolve_table_name(target_raw)
 
@@ -573,14 +576,32 @@ class DMLParser:
         if self._temp_filter.is_temp_table(target_resolved.full_name):
             return None
 
-        from_clause = match.group(3).strip() if match.group(3) else ""
+        # Extract the rest of the statement after AS keyword using token-aware scan.
+        # Find the semicolon (or end of content) to bound the statement.
+        as_end = match.end()
+        remaining = content[as_end:]
+        semi_pos = self._find_top_level_semicolon(remaining)
+        if semi_pos >= 0:
+            select_body = remaining[:semi_pos]
+        else:
+            select_body = remaining
+
+        # Use token-aware FROM search. Reuse _split_select_body so the FROM
+        # keyword is retained in from_clause — _extract_source_tables relies on
+        # the FROM/JOIN prefix to match table references.
+        select_clause, from_clause = self._split_select_body(select_body)
+        if not from_clause:
+            return None
+
         source_tables = self._extract_source_tables(from_clause)
 
         return DMLStatement(
             op_type="ctas",
             target_table=target_resolved.full_name,
             source_tables=source_tables,
-            raw_sql=match.group(0),
+            select_clause=select_clause,
+            from_clause=from_clause,
+            raw_sql=match.group(0) + select_body,
             file_path=file_path,
         )
 
@@ -623,8 +644,11 @@ class DMLParser:
         )
 
     def _extract_from_clause(self, content: str, start_pos: int) -> str:
-        """提取 FROM 子句的完整内容（到分号或下一个 DDL/DML 关键字为止）"""
-        # 简化处理：从 start_pos 开始，到下一个分号或 UNION/EXCEPT/INTERSECT 为止
+        """Extract the full FROM clause (up to semicolon or next DDL/DML keyword).
+
+        Uses token-aware scanning to avoid matching keywords inside string
+        literals, comments, or nested sub-queries.
+        """
         end_keywords = [
             ";",
             "UNION",
@@ -643,7 +667,11 @@ class DMLParser:
         end_pos = len(search_text)
 
         for kw in end_keywords:
-            idx = search_text.upper().find(kw.upper())
+            if kw == ";":
+                # Semicolon is not a keyword; use plain find but skip quoted ones
+                idx = self._find_top_level_semicolon(search_text)
+            else:
+                idx = self._find_top_level_keyword(search_text, kw)
             if idx != -1 and idx < end_pos:
                 end_pos = idx
 
@@ -664,6 +692,66 @@ class DMLParser:
         if from_pos < 0:
             return statement_body.strip(), ""
         return statement_body[:from_pos].strip(), statement_body[from_pos:].strip()
+
+    @staticmethod
+    def _find_top_level_semicolon(sql: str) -> int:
+        """Find the position of the first top-level semicolon.
+
+        Skips semicolons inside string literals and comments.
+        """
+        in_single_quote = False
+        in_double_quote = False
+        in_line_comment = False
+        in_block_comment = False
+        i = 0
+
+        while i < len(sql):
+            ch = sql[i]
+            next_ch = sql[i + 1] if i + 1 < len(sql) else ""
+
+            if in_line_comment:
+                if ch == "\n":
+                    in_line_comment = False
+                i += 1
+                continue
+
+            if in_block_comment:
+                if ch == "*" and next_ch == "/":
+                    in_block_comment = False
+                    i += 2
+                else:
+                    i += 1
+                continue
+
+            if not in_single_quote and not in_double_quote:
+                if ch == "-" and next_ch == "-":
+                    in_line_comment = True
+                    i += 2
+                    continue
+                if ch == "/" and next_ch == "*":
+                    in_block_comment = True
+                    i += 2
+                    continue
+
+            if ch == "'" and not in_double_quote:
+                if next_ch == "'":
+                    i += 2
+                    continue
+                in_single_quote = not in_single_quote
+                i += 1
+                continue
+
+            if ch == '"' and not in_single_quote:
+                in_double_quote = not in_double_quote
+                i += 1
+                continue
+
+            if not in_single_quote and not in_double_quote and ch == ";":
+                return i
+
+            i += 1
+
+        return -1
 
     @staticmethod
     def _find_top_level_keyword(sql: str, keyword: str) -> int:
@@ -935,8 +1023,7 @@ class DMLParser:
 
         return "".join(result)
 
-    @staticmethod
-    def _is_valid_table_name(name: str) -> bool:
+    def _is_valid_table_name(self, name: str) -> bool:
         """判断名称是否为有效的表名（排除函数、关键字、常量等）
 
         过滤规则：
@@ -949,6 +1036,9 @@ class DMLParser:
           合法的 Oracle / 数仓表名仅含 ASCII 字符（字母、数字、_ $ # .），
           任何含中文/CJK/全角字符的"表名"均来自 SQL 注释或文本泄漏
           （如 "--个人客户,对私担保客户" 被误捕获），一律拒绝。
+
+        schema 前缀判断使用 ``self._resolver.known_schema_prefixes()``，
+        以支持 ``SchemaResolver(custom_mapping=...)`` 自定义 schema。
         """
         if not name or len(name) < 3:
             return False
@@ -982,7 +1072,8 @@ class DMLParser:
         # 拒绝 alias.column 格式（如 T1.ORG_LEVEL, T3.OPEN_ACCT_ORG_ID）
         if "." in name:
             prefix = name.split(".")[0].upper()
-            if prefix in _KNOWN_SCHEMA_PREFIXES or prefix.startswith("$"):
+            known_prefixes = self._resolver.known_schema_prefixes()
+            if prefix in known_prefixes or prefix.startswith("$"):
                 return True
             if len(prefix) <= 3:
                 return False

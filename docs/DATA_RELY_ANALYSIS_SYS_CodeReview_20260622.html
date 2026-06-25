@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DATA_RELY_ANALYSIS_SYS - Code Review Report</title>
+<style>
+  :root {
+    --bg: #FAFAF8; --surface: #FFFFFF; --border: #E5E5E0;
+    --text: #1A1A1A; --text2: #6B6B6B; --accent: #4F46E5;
+    --critical: #DC2626; --major: #EA580C; --minor: #CA8A04; --suggest: #2563EB;
+    --critical-bg: #FEF2F2; --major-bg: #FFF7ED; --minor-bg: #FEFCE8; --suggest-bg: #EFF6FF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 48px; padding-bottom: 32px; border-bottom: 2px solid var(--border); }
+  .header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+  .header .subtitle { color: var(--text2); font-size: 15px; }
+  .header .meta { display: flex; justify-content: center; gap: 24px; margin-top: 16px; font-size: 13px; color: var(--text2); }
+
+  /* Score Card */
+  .score-card { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+  .score-item { background: var(--surface); border-radius: 12px; padding: 20px; text-align: center; border: 1px solid var(--border); }
+  .score-item .count { font-size: 36px; font-weight: 700; }
+  .score-item .label { font-size: 13px; color: var(--text2); margin-top: 4px; }
+  .score-item.critical .count { color: var(--critical); }
+  .score-item.major .count { color: var(--major); }
+  .score-item.minor .count { color: var(--minor); }
+  .score-item.suggest .count { color: var(--suggest); }
+
+  /* Overall Score */
+  .overall { background: var(--surface); border-radius: 16px; padding: 32px; margin-bottom: 40px; border: 1px solid var(--border); }
+  .overall h2 { font-size: 20px; margin-bottom: 16px; }
+  .score-bar { height: 12px; background: #E5E7EB; border-radius: 6px; overflow: hidden; margin-bottom: 12px; }
+  .score-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--critical) 0%, var(--major) 30%, var(--minor) 60%, var(--suggest) 100%); }
+  .score-num { font-size: 48px; font-weight: 700; color: var(--accent); }
+  .score-num span { font-size: 20px; color: var(--text2); font-weight: 400; }
+  .score-desc { color: var(--text2); font-size: 14px; margin-top: 8px; }
+
+  /* Dimensions */
+  .dimensions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 40px; }
+  .dim-card { background: var(--surface); border-radius: 12px; padding: 20px; border: 1px solid var(--border); }
+  .dim-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .dim-card .rating { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+  .dim-card .rating.good { background: #DCFCE7; color: #166534; }
+  .dim-card .rating.warn { background: #FEF9C3; color: #854D0E; }
+  .dim-card .rating.bad { background: #FEE2E2; color: #991B1B; }
+  .dim-card p { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .dim-card .strength { color: #166534; }
+  .dim-card .weakness { color: #991B1B; }
+
+  /* Section */
+  .section { margin-bottom: 40px; }
+  .section h2 { font-size: 20px; font-weight: 700; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block; }
+
+  /* Issue Card */
+  .issue { background: var(--surface); border-radius: 12px; margin-bottom: 16px; border: 1px solid var(--border); overflow: hidden; }
+  .issue-header { padding: 16px 20px; cursor: pointer; display: flex; align-items: flex-start; gap: 12px; }
+  .issue-header:hover { background: #F9F9F7; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; flex-shrink: 0; }
+  .badge.critical { background: var(--critical-bg); color: var(--critical); border: 1px solid #FECACA; }
+  .badge.major { background: var(--major-bg); color: var(--major); border: 1px solid #FED7AA; }
+  .badge.minor { background: var(--minor-bg); color: var(--minor); border: 1px solid #FDE68A; }
+  .badge.suggest { background: var(--suggest-bg); color: var(--suggest); border: 1px solid #BFDBFE; }
+  .issue-title { font-size: 14px; font-weight: 600; flex: 1; }
+  .issue-file { font-size: 12px; color: var(--text2); font-family: 'SF Mono', monospace; margin-top: 2px; }
+  .issue-body { padding: 0 20px 20px 48px; display: none; }
+  .issue.open .issue-body { display: block; }
+  .issue-body p { font-size: 13px; color: var(--text2); margin-bottom: 8px; }
+  .issue-body .fix { background: #F0FDF4; border-left: 3px solid #22C55E; padding: 10px 14px; border-radius: 0 8px 8px 0; margin-top: 12px; }
+  .issue-body .fix p { color: #166534; margin: 0; }
+  .issue-body .fix strong { color: #15803D; }
+  .chevron { color: var(--text2); font-size: 18px; transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
+  .issue.open .chevron { transform: rotate(90deg); }
+
+  /* File Table */
+  .file-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .file-table th { background: #F5F5F0; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text2); }
+  .file-table td { padding: 8px 14px; border-top: 1px solid var(--border); }
+  .file-table tr:hover td { background: #FAFAF8; }
+  .file-table code { font-family: 'SF Mono', monospace; font-size: 12px; background: #F5F5F0; padding: 2px 6px; border-radius: 4px; }
+
+  /* Priority */
+  .priority-list { background: var(--surface); border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+  .priority-item { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; }
+  .priority-item:last-child { border-bottom: none; }
+  .priority-num { background: var(--accent); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .priority-text { font-size: 14px; }
+  .priority-text strong { color: var(--accent); }
+  .priority-tag { display: inline-block; padding: 1px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 6px; }
+  .priority-tag.immediate { background: #FEE2E2; color: #991B1B; }
+  .priority-tag.short { background: #FED7AA; color: #9A3412; }
+  .priority-tag.medium { background: #FEF9C3; color: #854D0E; }
+  .priority-tag.long { background: #DBEAFE; color: #1E40AF; }
+
+  /* Toggle */
+  .toggle-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .toggle-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-size: 13px; transition: all 0.2s; }
+  .toggle-btn:hover { border-color: var(--accent); }
+  .toggle-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+  @media (max-width: 768px) {
+    .score-card { grid-template-columns: repeat(2, 1fr); }
+    .dimensions { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h1>DATA_RELY_ANALYSIS_SYS</h1>
+    <div class="subtitle">Full-Stack Code Review Report</div>
+    <div class="meta">
+      <span>审查日期: 2026-06-22</span>
+      <span>审查范围: 80+ Python 文件</span>
+      <span>审查维度: 8 项</span>
+      <span>模型: GPT-5.5 (Codex) + QoderWork</span>
+    </div>
+  </div>
+
+  <!-- Score Card -->
+  <div class="score-card">
+    <div class="score-item critical"><div class="count">3</div><div class="label">Critical 严重</div></div>
+    <div class="score-item major"><div class="count">11</div><div class="label">Major 重要</div></div>
+    <div class="score-item minor"><div class="count">14</div><div class="label">Minor 次要</div></div>
+    <div class="score-item suggest"><div class="count">8</div><div class="label">Suggestion 建议</div></div>
+  </div>
+
+  <!-- Overall Score -->
+  <div class="overall">
+    <h2>整体评分</h2>
+    <div style="display:flex;align-items:center;gap:20px;">
+      <div class="score-num">72 <span>/ 100</span></div>
+      <div style="flex:1;">
+        <div class="score-bar"><div class="score-fill" style="width:72%"></div></div>
+        <div class="score-desc">架构设计扎实，Protocol-based 解析器接口清晰，两阶段解析策略（DDL→DML）成熟。主要扣分项：线程安全隐患（-10）、大规模代码重复（-8）、核心解析器缺少单元测试（-6）、部分模块过大（-4）。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dimensions -->
+  <div class="dimensions">
+    <div class="dim-card">
+      <h3>代码质量 <span class="rating warn">B</span></h3>
+      <p><span class="strength">优点：</span>命名规范一致，docstring 全面，模块级注释清晰解释了各类解析策略。</p>
+      <p><span class="weakness">问题：</span>大规模代码重复（C-1, M-1, M-2），超大模块（M-3, M-4），置信度魔法数字（0.5, 0.7）。</p>
+    </div>
+    <div class="dim-card">
+      <h3>架构设计 <span class="rating good">B+</span></h3>
+      <p><span class="strength">优点：</span>Protocol-based 解析器接口（parser_protocol.py），Adapter 模式设计良好，manifest-based 层级检测。</p>
+      <p><span class="weakness">问题：</span>循环依赖（M-5），临时表逻辑重复（m-4），Schema 硬编码（M-6），无效 direction 参数（M-8）。</p>
+    </div>
+    <div class="dim-card">
+      <h3>安全性 <span class="rating good">A-</span></h3>
+      <p><span class="strength">优点：</span>解析器只读 SQL 不执行，无 SQL 注入风险。XSS 防护已实现。SSE 指数退避重试。</p>
+      <p><span class="weakness">问题：</span><code>errors="ignore"</code> 静默丢弃无效字节可能导致数据丢失，建议改用 <code>errors="replace"</code> 并记录警告日志。</p>
+    </div>
+    <div class="dim-card">
+      <h3>性能 <span class="rating good">B+</span></h3>
+      <p><span class="strength">优点：</span>ThreadPoolExecutor 并行解析，模块级预编译正则，懒加载 caliber 初始化，血缘查询索引优化。</p>
+      <p><span class="weakness">问题：</span>PamParser 串行解析（m-13），DOTALL 非贪婪正则可能慢（m-14），DDL 锁竞争（m-6）。</p>
+    </div>
+    <div class="dim-card">
+      <h3>线程安全 <span class="rating bad">C</span></h3>
+      <p><span class="strength">优点：</span>DDL 解析器使用显式锁，DML 解析器创建局部实例避免共享状态。</p>
+      <p><span class="weakness">问题：</span><strong>两个 Critical 级线程安全问题</strong>：procedure_parser 缓存（C-2）和 layer_detector 单例（C-3）。</p>
+    </div>
+    <div class="dim-card">
+      <h3>异常处理 <span class="rating warn">B-</span></h3>
+      <p><span class="strength">优点：</span>文件读取有完整的 OSError 处理，ParseOutput 包含 errors 列表收集非致命问题。</p>
+      <p><span class="weakness">问题：</span>indicator_config_parser 存在裸 except Exception，pam_dml_parser 的 token 解析静默产出错误结果。</p>
+    </div>
+    <div class="dim-card">
+      <h3>测试覆盖 <span class="rating bad">C-</span></h3>
+      <p><span class="strength">优点：</span>API 端点、并发、SQL 边界检测、血缘去重等有测试覆盖。</p>
+      <p><span class="weakness">问题：</span><strong>核心解析逻辑无单元测试</strong>（M-10），无 caliber 提取/追踪测试，无 SQL 别名泄露回归测试。</p>
+    </div>
+    <div class="dim-card">
+      <h3>后端服务 <span class="rating warn">B</span></h3>
+      <p><span class="strength">优点：</span>FastAPI 异步框架，SSE 进度推送，SQLite 存储迁移机制，模块化 API 路由。</p>
+      <p><span class="weakness">问题：</span>部分同步阻塞调用在异步上下文中，缺少全局速率限制，配置硬编码值较多。</p>
+    </div>
+  </div>
+
+  <!-- Critical Issues -->
+  <div class="section">
+    <h2>Critical Issues (3)</h2>
+    <div class="issue open" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge critical">CRITICAL</span>
+        <div><div class="issue-title">C-1. caliber_extractor.py 大规模代码重复（~834 行）</div><div class="issue-file">core/caliber_extractor.py</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>该文件包含 caliber_common.py（~208 行）、caliber_condition.py（~210 行）、caliber_metadata.py（~161 行）和 caliber_expression.py（~345 行）的近乎完全复制。14+ 个编译正则表达式在两个文件中重复定义。CaliberExtractor 类几乎逐字复制了 ConditionExtractor 和 MetadataExtractor 的全部功能。</p>
+        <p><strong>影响：</strong>任何正则或提取逻辑的 bug 修复都必须在两个地方同步修改，极易遗漏。</p>
+        <div class="fix"><p><strong>修复建议：</strong>删除 caliber_extractor.py 中的重复代码，改为导入/委托到已存在的拆分模块（caliber_common, caliber_condition, caliber_metadata, caliber_expression）。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge critical">CRITICAL</span>
+        <div><div class="issue-title">C-2. procedure_parser.py 线程不安全的共享可变状态</div><div class="issue-file">core/procedure_parser.py — parse_directory() line ~209</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>EnhancedProcedureParser.parse_directory() 使用 ThreadPoolExecutor 进行并行解析，但 self._last_parse_cache 是一个普通 dict，在多线程中无锁地读写。尽管 CPython 有 GIL，dict 的 resize 操作并非原子操作，并发写入可导致数据损坏或更新丢失。</p>
+        <div class="fix"><p><strong>修复建议：</strong>使用 threading.Lock 保护缓存访问，或使用 threading.local() 实现线程本地缓存，或将缓存设为 parse_directory 的局部变量，在线程完成后合并结果。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge critical">CRITICAL</span>
+        <div><div class="issue-title">C-3. layer_detector.py 线程不安全的单例模式</div><div class="issue-file">core/layer_detector.py — detect_layer._default_detector</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>detect_layer() 便利函数将 LayerDetector 实例存储为函数属性（detect_layer._default_detector）。两个并发线程可能同时发现 _default_detector 未设置并创建两个实例，或者一个线程读取到部分初始化的对象。如果 __init__ 涉及 I/O（YAML manifest 加载），竞态条件会产生不一致状态。</p>
+        <div class="fix"><p><strong>修复建议：</strong>使用 threading.Lock 或 functools.lru_cache(maxsize=1) 实现线程安全的单例初始化。</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Major Issues -->
+  <div class="section">
+    <h2>Major Issues (11)</h2>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-1. caliber_tracer.py BFS 方法近重复（~330 行）</div><div class="issue-file">core/caliber_tracer.py — _trace_upstream / _trace_downstream</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>上游和下游 BFS 方法近乎相同，仅在遍历方向和少量过滤逻辑上不同。约 330 行重复代码使任何算法变更的维护成本翻倍。</p>
+        <div class="fix"><p><strong>修复建议：</strong>提取单一 _trace_bfs(direction: str) 方法，通过方向参数控制源/目标解析和边遍历。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-2. lineage_tracer.py BFS 方法近重复（~300 行）</div><div class="issue-file">core/lineage_tracer.py — _bfs_trace / _bfs_trace_downstream</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>与 caliber_tracer 相同的上下游重复模式。两个 BFS 实现共享约 90% 的逻辑。</p>
+        <div class="fix"><p><strong>修复建议：</strong>统一为单一参数化 BFS 方法，或将共享 BFS 引擎提取到 core/lineage/ 中。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-3. models.py 模块过大（~1188 行，~20 dataclass）</div><div class="issue-file">core/models.py</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>单文件定义约 20 个 dataclass。CaliberInfo 有约 40 个字段，带复杂的 property setter 委托给嵌套 dataclass。模块难以导航，且所有消费者间耦合度高。</p>
+        <div class="fix"><p><strong>修复建议：</strong>拆分为 core/models/ 包，按 table_models.py、lineage_models.py、caliber_models.py、indicator_models.py 分离。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-4. procedure_parser.py 模块过大（~1235 行）</div><div class="issue-file">core/procedure_parser.py — EnhancedProcedureParser</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>单一类同时处理存储过程解析、别名解析、FROM 子句分析、INSERT/MERGE/UPDATE 提取和目录级并行解析。_parse_from_aliases 方法本身就有约 120 行复杂的括号深度追踪逻辑。</p>
+        <div class="fix"><p><strong>修复建议：</strong>提取别名解析为独立的 AliasResolver 类。考虑复用 core/warehouse/ 中已有的 DMLParser。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-5. caliber_expression.py 与 caliber_metadata.py 循环依赖</div><div class="issue-file">core/caliber_expression.py, core/caliber_metadata.py</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>ExpressionBuilder 需要 MetadataExtractor，反之亦然，需要延迟导入来避免循环依赖。这是代码气味，表明两个模块有重叠的职责。</p>
+        <div class="fix"><p><strong>修复建议：</strong>提取共享接口/数据到第三方模块，或合并为统一的 CaliberAnalysisEngine。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-6. Schema 名称全局硬编码</div><div class="issue-file">core/table_name_resolver.py, core/procedure_parser.py, core/warehouse/schema_resolver.py</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>table_name_resolver.py 包含硬编码的 RRP 特定前缀（ICL, IDL, IOL 等），而 warehouse 包的 SchemaResolver 正确地以 SCHEMA_LAYER_MAP 外化这些配置。两套配置使系统难以适配非 RRP 系统。</p>
+        <div class="fix"><p><strong>修复建议：</strong>集中所有 schema/前缀定义到配置模块或 YAML manifest，两个 resolver 统一引用。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-7. _extract_from_clause 使用朴素字符串搜索而非 Token 感知扫描</div><div class="issue-file">core/warehouse/dml_parser.py — _extract_from_clause() line ~625</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>该方法使用 str.upper().find() 搜索语句结束标记（分号、UNION 等），会匹配字符串字面量、注释和嵌套表达式中的关键词。例如 -- UNION 注释或字符串 'UNION' 会过早截断子句。同文件其他方法（_find_top_level_keyword）已正确处理了这些情况。</p>
+        <div class="fix"><p><strong>修复建议：</strong>使用已有的 _find_top_level_keyword 方法（感知引号/注释/括号）替代朴素搜索。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-8. GraphConverter.to_graph direction 参数无效（死代码）</div><div class="issue-file">core/lineage/graph_converter.py — lines 38-46</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>direction 参数（"upstream" vs "downstream"）在两种情况下产生完全相同的结果。if/else 分支的 src_table/tgt_table/src_field/tgt_field 赋值完全一致，direction 参数实际上是死代码。</p>
+        <div class="fix"><p><strong>修复建议：</strong>修复方向逻辑使其在下游追踪时交换源/目标，或删除无效的 direction 参数。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-9. PamDMLParser 字段映射仅支持单源 INSERT</div><div class="issue-file">core/pam/pam_dml_parser.py — _parse_dml_from_sql() line ~300-313</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>字段映射仅在 INSERT 且 len(target_cols) == len(select_cols) 且 select 表达式为简单列名时生成。所有映射都指向 sources[0] 而不考虑实际来源。多源 INSERT、表达式和函数调用不产生映射。</p>
+        <div class="fix"><p><strong>修复建议：</strong>复用 FieldCleaner.parse_select_columns() 和 DMLParser._build_positional_insert_mappings() 的已有逻辑。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-10. 核心解析器缺少单元测试</div><div class="issue-file">tests/ — 缺少 core/warehouse/, core/pam/, core/procedure_parser.py 测试</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>tests/ 目录有约 12 个测试文件，但主要覆盖 API 端点、前端 E2E 和并发。核心 SQL 解析逻辑（DDL/DML/CTL 解析器、存储过程解析器、caliber 提取器）没有单元测试。考虑到基于正则的 SQL 解析的复杂性，这是重大风险。</p>
+        <div class="fix"><p><strong>修复建议：</strong>为每种解析器类型添加带代表性 SQL 样本的全面单元测试。重点关注边界情况：嵌套子查询、CTE、多表 INSERT、动态 SQL、转义引号。</p></div>
+      </div>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header">
+        <span class="badge major">MAJOR</span>
+        <div><div class="issue-title">M-11. OracleTabAdapter 线程池未使用 as_completed</div><div class="issue-file">core/adapters/oracle_tab_adapter.py — lines 60-71</div></div>
+        <span class="chevron">▶</span>
+      </div>
+      <div class="issue-body">
+        <p>代码按提交顺序遍历 futures 字典调用 future.result()，而非使用 as_completed()。如果第一个提交的 future 较慢，所有后续已完成的结果都会被阻塞。</p>
+        <div class="fix"><p><strong>修复建议：</strong>使用 concurrent.futures.as_completed(futures)，与其他适配器（如 DMLParser.parse_directory()）保持一致。</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minor Issues -->
+  <div class="section">
+    <h2>Minor Issues (14)</h2>
+    <div class="toggle-bar">
+      <button class="toggle-btn active" onclick="toggleAll('minor', true)">全部展开</button>
+      <button class="toggle-btn" onclick="toggleAll('minor', false)">全部折叠</button>
+    </div>
+
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-1. 废弃的 base_sql_parser.py 仍然存在</div><div class="issue-file">core/base_sql_parser.py (~45 lines)</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>抽象基类已标记为废弃，被 parser_protocol.py 的 Protocol 接口替代。死代码可能误导新开发者。</p><div class="fix"><p><strong>修复：</strong>删除文件或添加 DeprecationWarning 和明确的迁移说明。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-2. table_parser.py 中 Logger 调用使用 F-String</div><div class="issue-file">core/table_parser.py</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>logger.error(f"...") 格式意味着字符串始终被格式化，即使日志级别会抑制输出。轻微性能浪费。</p><div class="fix"><p><strong>修复：</strong>使用 %s 格式：logger.error("message: %s", value)</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-3. find_matching_paren_sql 失败时返回 start 而非 -1</div><div class="issue-file">core/utils/bracket_matcher.py — lines 61, 85</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>括号不平衡时返回 start（开括号位置）而非 -1。调用方无法区分"在 start 处匹配"和"不平衡"。</p><div class="fix"><p><strong>修复：</strong>对不平衡括号返回 -1，并更新所有调用方。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-4. is_temp_table 在 core/utils/__init__.py 中重复实现</div><div class="issue-file">core/utils/__init__.py, core/warehouse/temp_table_filter.py</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>该函数复制了 TempTableFilter.is_temp_table() 的逻辑，但前缀/后缀集合更小。两套"是否临时表"实现可能给出不一致的结果。</p><div class="fix"><p><strong>修复：</strong>删除重复，从 TempTableFilter 导入。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-5. schema_resolver.py 底部导入 Path</div><div class="issue-file">core/warehouse/schema_resolver.py — line 238</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>from pathlib import Path 放在文件底部，不符合规范，可能让读者困惑。</p><div class="fix"><p><strong>修复：</strong>将导入移到文件顶部。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-6. DDLParser.parse_directory 锁竞争</div><div class="issue-file">core/warehouse/ddl_parser.py — _parse_and_collect()</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>每个解析结果获取一次 tables_lock。虽然临界区很小，但在 ThreadPoolExecutor.map 中逐结果加锁的模式不够优化。</p><div class="fix"><p><strong>修复：</strong>使用 executor.map() 返回值或 as_completed() 收集结果，完成后统一合并。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-7. IndicatorAdapter 字段映射笛卡尔积</div><div class="issue-file">core/adapters/indicator_adapter.py — lines 117-128</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>当指标有多个源表和字段映射时，每个映射会为每个源表复制一份，产生映射的笛卡尔积，可能不反映实际的字段级血缘。</p><div class="fix"><p><strong>修复：</strong>将每个映射关联到其实际源表，或文档说明笛卡尔积是有意为之。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-8. WarehouseSQLParser DDL 返回类型不一致</div><div class="issue-file">core/warehouse/warehouse_parser.py — lines 86-89</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>DDLParser.parse_file() 返回 TableInfo | None 而非 ParseOutput，类型不一致使代码推理困难。</p><div class="fix"><p><strong>修复：</strong>统一返回 ParseOutput，或使 None 检查显式化。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-9. CaliberExporter 自定义 Markdown→HTML 转换器脆弱</div><div class="issue-file">core/caliber_exporter.py (~446 lines)</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>自实现的 Markdown→HTML 转换器仅支持基础语法，嵌套列表、代码块等边界情况容易出错。</p><div class="fix"><p><strong>修复：</strong>使用 markdown 或 mistune 库。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-10. pam_dml_parser.py 缺少 DELETE FROM 血缘</div><div class="issue-file">core/pam/pam_dml_parser.py</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>解析器处理 INSERT 和 MERGE 但完全忽略 DELETE。DELETE+INSERT 模式在 PAM 中常见，应被追踪。_DELETE_FROM_RE 正则已定义但从未使用。</p><div class="fix"><p><strong>修复：</strong>将 DELETE+INSERT 作为复合操作处理，或至少在检测到 DELETE 时记录警告。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-11. _KNOWN_SCHEMA_PREFIXES 在模块加载时计算</div><div class="issue-file">core/warehouse/dml_parser.py — line 29</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>如果 SCHEMA_LAYER_MAP 在导入后被修改（如 SchemaResolver(custom_mapping=...)），DML 解析器会使用过时数据。</p><div class="fix"><p><strong>修复：</strong>动态计算或作为参数传入。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-12. CaliberInfo Property Setter 创建隐式耦合</div><div class="issue-file">core/models.py — CaliberInfo class</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>CaliberInfo 的 property setter 委托写入嵌套 dataclass。修改顶级属性会静默修改嵌套对象，调用方可能不知道在修改共享状态。</p><div class="fix"><p><strong>修复：</strong>使用显式方法 set_source_location(...) 替代 property setter。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-13. PamParser DDL 串行解析</div><div class="issue-file">core/pam/pam_parser.py — parse_directory() Phase 1</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>不同于 WarehouseSQLParser 和 DDLParser 使用 ThreadPoolExecutor 并行解析，PamParser 串行处理 DDL 文件。</p><div class="fix"><p><strong>修复：</strong>使用 ThreadPoolExecutor 并行解析 DDL 文件，与其他解析器保持一致。</p></div></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge minor">MINOR</span><div><div class="issue-title">m-14. _CTAS_PATTERN 正则使用 DOTALL 非贪婪匹配</div><div class="issue-file">core/warehouse/dml_parser.py — _CTAS_PATTERN</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>(.*?) 配合 re.DOTALL 会匹配最少文本。如果嵌套子查询中有多个 FROM 关键词，正则可能捕获不完整的 SELECT 子句。</p><div class="fix"><p><strong>修复：</strong>使用括号深度追踪（如其他方法）替代非贪婪正则。</p></div></div>
+    </div>
+  </div>
+
+  <!-- Suggestions -->
+  <div class="section">
+    <h2>Suggestions (8)</h2>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge suggest">SUGGEST</span><div><div class="issue-title">S-1. 对高频模型使用 dataclass(slots=True) 减少 ~40% 内存</div><div class="issue-file">core/models.py — FieldMapping, TableLineage, ColumnInfo</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>这些类在解析过程中被实例化数千次。@dataclass(slots=True)（Python 3.10+）可减少约 40% 内存并提升属性访问速度。</p></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge suggest">SUGGEST</span><div><div class="issue-title">S-2. 为编译正则添加 re.Pattern 类型提示</div><div class="issue-file">多个文件</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>模块级编译正则缺少类型注解。添加 re.Pattern[str] 可改善 IDE 支持。</p></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge suggest">SUGGEST</span><div><div class="issue-title">S-3. 添加结构化解析统计日志</div><div class="issue-file">core/parser_registry.py</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>添加 ParseMetrics dataclass，记录文件解析数、成功率、每类型耗时等指标，便于监控。</p></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge suggest">SUGGEST</span><div><div class="issue-title">S-4. 为 TempTableFilter 定义 Protocol 接口</div><div class="issue-file">core/warehouse/temp_table_filter.py</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>定义 TempFilter Protocol，允许替代实现（如数据库支持的临时表注册表）。</p></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge suggest">SUGGEST</span><div><div class="issue-title">S-5. 提取共享 SQL 注释剥离工具</div><div class="issue-file">dml_parser.py, field_cleaner.py, procedure_parser.py</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>SQL 注释剥离（-- 和 /* */）在多个文件中重复实现。提取到 core/utils/ 共享工具中。</p></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge suggest">SUGGEST</span><div><div class="issue-title">S-6. 添加 py.typed 标记 (PEP 561)</div><div class="issue-file">core/ 包根目录</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>添加 py.typed 标记文件使下游类型检查器能使用包中的类型注解。</p></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge suggest">SUGGEST</span><div><div class="issue-title">S-7. 为 SchemaResolver.resolve_table_name 添加 lru_cache</div><div class="issue-file">core/warehouse/schema_resolver.py</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>表名解析被调用数千次且输入高度重复。添加 @functools.lru_cache 可显著提升性能。</p></div>
+    </div>
+    <div class="issue" onclick="this.classList.toggle('open')">
+      <div class="issue-header"><span class="badge suggest">SUGGEST</span><div><div class="issue-title">S-8. 为大型 dataclass 添加自定义 __repr__</div><div class="issue-file">core/models.py — CaliberInfo (40+ fields)</div></div><span class="chevron">▶</span></div>
+      <div class="issue-body"><p>CaliberInfo 等有 40+ 字段的 dataclass 的默认 __repr__ 输出极长。自定义 __repr__ 只显示关键字段，使调试输出可控。</p></div>
+    </div>
+  </div>
+
+  <!-- Priority Actions -->
+  <div class="section">
+    <h2>优先改善路线</h2>
+    <div class="priority-list">
+      <div class="priority-item">
+        <div class="priority-num">1</div>
+        <div class="priority-text">
+          <span class="priority-tag immediate">立即修复</span>
+          <strong>修复线程安全隐患：</strong>procedure_parser.py 缓存加锁（C-2）、layer_detector.py 单例安全初始化（C-3）。这两个问题在并行解析场景下可能导致数据损坏。
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num">2</div>
+        <div class="priority-text">
+          <span class="priority-tag short">短期 (1-2 周)</span>
+          <strong>消除代码重复：</strong>清理 caliber_extractor.py 中的重复代码（C-1），统一上下游 BFS 方法（M-1, M-2）。预计可消除 1500+ 行重复代码。
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num">3</div>
+        <div class="priority-text">
+          <span class="priority-tag medium">中期 (2-4 周)</span>
+          <strong>补充核心测试 + 修复逻辑缺陷：</strong>为 DDL/DML/CTL/Procedure 解析器添加单元测试（M-10），修复 GraphConverter 无效方向参数（M-8），修复 _extract_from_clause 朴素搜索（M-7）。
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num">4</div>
+        <div class="priority-text">
+          <span class="priority-tag long">长期 (1-2 月)</span>
+          <strong>架构优化：</strong>拆分超大模块（M-3, M-4），集中 Schema 定义（M-6），采用 dataclass(slots=True) 优化内存（S-1），统一 Protocol 接口（S-4）。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center;color:var(--text2);font-size:12px;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);">
+    Generated by QoderWork Code Review &middot; 2026-06-22 23:30 CST &middot; DATA_RELY_ANALYSIS_SYS @ a2cbf4ca
+  </div>
+</div>
+
+<script>
+function toggleAll(type, open) {
+  document.querySelectorAll('.issue').forEach(el => {
+    const badge = el.querySelector('.badge');
+    if (badge && badge.classList.contains(type)) {
+      if (open) el.classList.add('open'); else el.classList.remove('open');
+    }
+  });
+}
+</script>
+</body>
+</html>

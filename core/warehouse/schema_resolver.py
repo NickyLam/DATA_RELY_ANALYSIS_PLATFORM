@@ -233,6 +233,14 @@ class SchemaResolver:
         """
         return sorted(set(m.group(1).lower() for m in _SCHEMA_VAR_PATTERN.finditer(sql)))
 
+    def known_schema_prefixes(self) -> frozenset[str]:
+        """返回当前 resolver 已知的所有 schema 名前缀（大写）。
+
+        包含默认映射和 custom_mapping 中的所有 schema 名。
+        用于表名有效性判断时区分 ``schema.table`` 与 ``alias.column``。
+        """
+        return frozenset(v.upper() for v in self._schema_mapping.values())
+
 
 # 导入 Path 供 infer_schema_from_path 使用
 from pathlib import Path

@@ -55,10 +55,11 @@ def find_matching_paren_sql(text: str, start: int) -> int:
         start: Index of the opening '(' character.
 
     Returns:
-        Index of the matching ')', or ``start`` if unbalanced (legacy compat).
+        Index of the matching ')', or -1 if ``start`` is out of range, does
+        not point to '(', or no matching ')' is found.
     """
-    if start >= len(text) or text[start] != "(":
-        return start
+    if start < 0 or start >= len(text) or text[start] != "(":
+        return -1
 
     depth = 0
     in_single_quote = False
@@ -82,7 +83,7 @@ def find_matching_paren_sql(text: str, start: int) -> int:
                     return i
         i += 1
 
-    return start
+    return -1
 
 
 def extract_parenthesized_block(text: str, start: int) -> str:

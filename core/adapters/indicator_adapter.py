@@ -106,6 +106,9 @@ class IndicatorAdapter:
                             }
                         )
 
+            # NOTE: IndicatorCalcBase 当前无 field_mappings 属性，此分支为预留逻辑（见 T15）。
+            # 若未来要启用字段级血缘，需先在 IndicatorSQLParser 中实现 SQL 别名解析，
+            # 并修复下方的笛卡尔积语义（当前每个 mapping 会被复制到每个 source_table）。
             mappings = getattr(base_calc, "field_mappings", [])
             if mappings:
                 for mapping in mappings:

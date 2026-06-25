@@ -60,7 +60,11 @@ class PamParser:
             return self._dml_parser.parse_file(file_path)
 
     def parse_directory(self, dir_path: Path) -> ParseOutput:
-        """两阶段解析目录"""
+        """两阶段解析目录
+
+        Phase 1 (DDL) 并行解析，Phase 2 (DML) 保持顺序解析，
+        以维持两阶段语义不变。
+        """
         if not dir_path.exists():
             return ParseOutput(errors=[f"目录不存在: {dir_path}"])
 
@@ -71,18 +75,31 @@ class PamParser:
 
         logger.info("=== PAM 两阶段解析开始: %s (schema=%s) ===", dir_path, self._default_schema)
 
-        # Phase 1: 解析 DDL
-        logger.info("Phase 1: 解析 DDL 文件...")
+        # Phase 1: 并行解析 DDL
+        logger.info("Phase 1: 并行解析 DDL 文件...")
+        ddl_files: list[Path] = []
         for ddl_dir in dir_path.rglob("ddl"):
             if ddl_dir.is_dir():
-                for sql_file in sorted(ddl_dir.rglob("*.sql")):
-                    if sql_file.is_file():
-                        ddl_output = self._parse_ddl_file(sql_file)
-                        total_output.merge(ddl_output)
+                ddl_files.extend(f for f in sorted(ddl_dir.rglob("*.sql")) if f.is_file())
+
+        if ddl_files:
+            from concurrent.futures import ThreadPoolExecutor, as_completed
+
+            with ThreadPoolExecutor(max_workers=4) as executor:
+                futures = {executor.submit(self._parse_ddl_file, fp): fp for fp in ddl_files}
+                for future in as_completed(futures):
+                    fp = futures[future]
+                    try:
+                        ddl_output = future.result()
+                    except Exception as e:
+                        logger.warning("解析 PAM DDL 文件失败: %s - %s", fp, e)
+                        total_output.errors.append(f"DDL 文件 {fp.name}: {str(e)}")
+                        continue
+                    total_output.merge(ddl_output)
 
         logger.info("Phase 1 完成: DDL 解析出 %d 张表", len(total_output.tables))
 
-        # Phase 2: 解析 DML
+        # Phase 2: 顺序解析 DML（保持两阶段语义，不并行）
         logger.info("Phase 2: 解析 DML 文件...")
         for dml_dir in dir_path.rglob("dml"):
             if dml_dir.is_dir():

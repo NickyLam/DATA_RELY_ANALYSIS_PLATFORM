@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import logging
 import re
+import threading
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -20,7 +21,12 @@ from core.models import (
     TableInfo,
     TableLineage,
 )
-from core.utils import is_temp_table as _is_temp_table_shared
+from core.procedure_helpers import (
+    is_valid_table as _is_valid_table_helper,
+    looks_like_unresolved_alias as _looks_like_unresolved_alias_helper,
+    is_temp_table as _is_temp_table_helper,
+    parse_from_aliases as _parse_from_aliases_helper,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -45,21 +51,13 @@ class SQLOperation:
 
 
 # ---------------------------------------------------------------------------
-# 常量：无效表名前缀（用于过滤误匹配）
+# 常量：无效表名前缀 / 临时表后缀 — 已迁移到 core/procedure_helpers.py
+# 保留 re-export 以兼容潜在的模块级引用（本文件内已全部改为委托调用）。
 # ---------------------------------------------------------------------------
-_INVALID_TABLE_PREFIXES: tuple[str, ...] = (
-    "DUAL",
-    "ETL_",
-    "FUN_",
-    "SQL",
-    "ALTER",
-    "EXECUTE",
-    "COMMIT",
-    "ROLLBACK",
+from core.procedure_helpers import (  # noqa: E402
+    INVALID_TABLE_PREFIXES as _INVALID_TABLE_PREFIXES,
+    TEMP_TABLE_SUFFIXES as _TEMP_TABLE_SUFFIXES,
 )
-
-# 常量：临时表识别模式后缀
-_TEMP_TABLE_SUFFIXES: tuple[str, ...] = ("TMP", "_TMP", "TEMP", "_TEMP")
 
 # 正则：INSERT INTO ... (cols) SELECT ... FROM / UNION / ;
 # 分组说明：
@@ -113,6 +111,7 @@ class EnhancedProcedureParser:
         self.tables: dict[str, TableInfo] = tables
         # ★ 优化：缓存最近解析的 operations + content，避免 extract_caliber_from_proc 重复读取
         self._last_parse_cache: dict[str, tuple[str, list[SQLOperation]]] = {}
+        self._cache_lock = threading.RLock()
 
     # ===================================================================
     # 公开接口
@@ -170,7 +169,11 @@ class EnhancedProcedureParser:
         proc_info.table_lineages = self._build_table_lineages(proc_info, internal_deps)
 
         # ★ 优化：缓存 operations 和 content，避免 extract_caliber_from_proc 重复读取和解析
-        self._last_parse_cache[proc_info.full_name] = (content, operations)
+        # 同时存储到 proc_info 私有属性，避免并发场景下共享缓存串数据
+        with self._cache_lock:
+            self._last_parse_cache[proc_info.full_name] = (content, operations)
+        object.__setattr__(proc_info, '_parsed_content', content)
+        object.__setattr__(proc_info, '_parsed_operations', operations)
 
         logger.info(
             "[%s] 解析完成: %d 条字段映射, %d 个源表, %d 个目标表, %d 个临时表",
@@ -243,20 +246,26 @@ class EnhancedProcedureParser:
         if not proc_info.field_mappings or not proc_info.file_path:
             return []
 
-        # ★ 优先使用缓存
-        cached = self._last_parse_cache.get(proc_info.full_name)
-        if cached is not None:
-            content, operations = cached
+        # ★ 优先使用 proc_info 私有属性（并发安全），其次使用实例缓存（加锁）
+        parsed_content = getattr(proc_info, '_parsed_content', None)
+        parsed_operations = getattr(proc_info, '_parsed_operations', None)
+        if parsed_content is not None and parsed_operations is not None:
+            content, operations = parsed_content, parsed_operations
         else:
-            # 回退：缓存未命中时重新读取
-            try:
-                with open(proc_info.file_path, encoding="utf-8", errors="ignore") as fh:
-                    content = fh.read()
-            except OSError:
-                logger.warning("无法重新读取文件以提取口径: %s", proc_info.file_path)
-                return []
+            with self._cache_lock:
+                cached = self._last_parse_cache.get(proc_info.full_name)
+            if cached is not None:
+                content, operations = cached
+            else:
+                # 回退：缓存未命中时重新读取
+                try:
+                    with open(proc_info.file_path, encoding="utf-8", errors="ignore") as fh:
+                        content = fh.read()
+                except OSError:
+                    logger.warning("无法重新读取文件以提取口径: %s", proc_info.file_path)
+                    return []
 
-            operations = self._extract_all_sql_operations(content, proc_info)
+                operations = self._extract_all_sql_operations(content, proc_info)
 
         op_by_target: dict[str, list[SQLOperation]] = {}
         op_by_step: dict[int, SQLOperation] = {}
@@ -579,141 +588,16 @@ class EnhancedProcedureParser:
     def _looks_like_unresolved_alias(self, table_name: str) -> bool:
         """判断 table_name 是否看起来像未解析的 SQL 别名而非真实表名。
 
-        真实表名通常带 schema 前缀（如 ICL.XXX, IML.XXX, RRP_EAST.XXX），
-        而 SQL 别名通常是短名称（如 T1, T3, A, TB）。
-        带 TMP/TEMP 后缀的视为合法临时表，不做过滤。
+        委托到 core.procedure_helpers.looks_like_unresolved_alias（无状态纯函数）。
         """
-        if not table_name or "." in table_name:
-            return False
-        upper = table_name.upper()
-        # 带临时表后缀的视为合法临时表名
-        if upper.endswith(_TEMP_TABLE_SUFFIXES) or upper.startswith("TMP_"):
-            return False
-        # 无 schema 前缀且名称较短（≤5字符），极大概率是 SQL 别名
-        if len(upper) <= 5:
-            return True
-        return False
+        return _looks_like_unresolved_alias_helper(table_name)
 
     def _parse_from_aliases(self, sql_block: str) -> dict[str, str]:
         """解析 FROM 子句中的表别名映射。
 
-        返回 {alias: real_table} 字典，例如 {'A': 'RRP_EAST.M_CUST_IND_INFO_EAST'}
-        支持标准表别名和子查询别名（如 FROM (SELECT ...) T1）。
+        委托到 core.procedure_helpers.parse_from_aliases（无状态纯函数）。
         """
-        aliases: dict[str, str] = {}
-
-        # 匹配 FROM table_name alias 或 FROM table_name AS alias
-        # 支持 schema.table 格式
-        patterns = [
-            r"\bFROM\s+([\w.]+)\s+AS\s+(\w+)\b",
-            r"\bFROM\s+([\w.]+)\s+(\w+)\b",
-            r"\bJOIN\s+([\w.]+)\s+AS\s+(\w+)\b",
-            r"\bJOIN\s+([\w.]+)\s+(\w+)\b",
-            r"\bLEFT\s+JOIN\s+([\w.]+)\s+AS\s+(\w+)\b",
-            r"\bLEFT\s+JOIN\s+([\w.]+)\s+(\w+)\b",
-            r"\bRIGHT\s+JOIN\s+([\w.]+)\s+AS\s+(\w+)\b",
-            r"\bRIGHT\s+JOIN\s+([\w.]+)\s+(\w+)\b",
-            r"\bINNER\s+JOIN\s+([\w.]+)\s+AS\s+(\w+)\b",
-            r"\bINNER\s+JOIN\s+([\w.]+)\s+(\w+)\b",
-        ]
-
-        for pattern in patterns:
-            for match in re.finditer(pattern, sql_block, re.IGNORECASE):
-                table_name = match.group(1).upper()
-                alias_name = match.group(2).upper()
-                # 排除关键字（如 ON, AND, WHERE, SET 等）
-                if alias_name not in (
-                    "ON",
-                    "AND",
-                    "WHERE",
-                    "SET",
-                    "SELECT",
-                    "INSERT",
-                    "UPDATE",
-                    "DELETE",
-                    "FROM",
-                    "JOIN",
-                    "LEFT",
-                    "RIGHT",
-                    "INNER",
-                    "OUTER",
-                    "FULL",
-                    "CROSS",
-                    "USING",
-                    "GROUP",
-                    "ORDER",
-                    "HAVING",
-                    "LIMIT",
-                    "OFFSET",
-                    "UNION",
-                    "EXCEPT",
-                    "INTERSECT",
-                    "CASE",
-                    "WHEN",
-                    "THEN",
-                    "ELSE",
-                    "END",
-                    "AS",
-                    "IS",
-                    "NOT",
-                    "NULL",
-                    "TRUE",
-                    "FALSE",
-                    "LIKE",
-                    "IN",
-                    "EXISTS",
-                    "BETWEEN",
-                    "OR",
-                    "XOR",
-                ):
-                    aliases[alias_name] = table_name
-
-        # --- 子查询别名提取：FROM (SELECT ...) T1 / JOIN (SELECT ...) AS T1 ---
-        # 通过括号深度追踪定位子查询的右括号，再提取后续标识符作为别名
-        depth = 0
-        i = 0
-        sql_upper = sql_block.upper()
-        while i < len(sql_block):
-            ch = sql_block[i]
-            if ch == "(":
-                # 检查是否为子查询开头
-                rest = sql_upper[i + 1 :].lstrip()
-                if rest.startswith("SELECT"):
-                    sub_start = i
-                    j = i + 1
-                    d = 1
-                    while j < len(sql_block) and d > 0:
-                        if sql_block[j] == "(":
-                            d += 1
-                        elif sql_block[j] == ")":
-                            d -= 1
-                        j += 1
-                    # j 现在指向子查询右括号之后
-                    after = sql_block[j : j + 30].strip()
-                    alias_m = re.match(r"(?:AS\s+)?(\w+)\b", after, re.IGNORECASE)
-                    if alias_m:
-                        alias_name = alias_m.group(1).upper()
-                        if alias_name not in (
-                            "ON", "AND", "WHERE", "SET", "SELECT", "INSERT",
-                            "UPDATE", "DELETE", "FROM", "JOIN", "LEFT", "RIGHT",
-                            "INNER", "OUTER", "FULL", "CROSS", "USING", "GROUP",
-                            "ORDER", "HAVING", "UNION", "EXCEPT", "INTERSECT",
-                        ):
-                            # 子查询别名不加入 alias_map，避免被解析为伪表名。
-                            # _extract_insert_mappings 的别名守卫会将其过滤掉。
-                            logger.debug(
-                                "    检测到子查询别名: %s (position=%d)，不解析为真实表",
-                                alias_name, sub_start,
-                            )
-                    i = j
-                    continue
-                else:
-                    depth += 1
-            elif ch == ")":
-                depth -= 1
-            i += 1
-
-        return aliases
+        return _parse_from_aliases_helper(sql_block)
 
     def _extract_insert_mappings(self, operation: SQLOperation, proc_info: ProcedureInfo) -> list[FieldMapping]:
         """从一条 INSERT INTO ... SELECT 语句中提取字段级映射。
@@ -1008,8 +892,11 @@ class EnhancedProcedureParser:
         return result
 
     def _is_temp_table(self, table_name: str) -> bool:
-        """判断表名是否为临时表（基于命名约定）。"""
-        return _is_temp_table_shared(table_name)
+        """判断表名是否为临时表（基于命名约定）。
+
+        委托到 core.procedure_helpers.is_temp_table（无状态纯函数）。
+        """
+        return _is_temp_table_helper(table_name)
 
     # ===================================================================
     # TMP 表内部依赖检测
@@ -1165,23 +1052,11 @@ class EnhancedProcedureParser:
 
     @staticmethod
     def _is_valid_table(table_name: str) -> bool:
-        if not table_name:
-            return False
-        if table_name.startswith(_INVALID_TABLE_PREFIXES):
-            return False
-        if len(table_name) < 2:
-            return False
-        # 拒绝无 schema 前缀的短名称（SQL 别名，如 T1, A, BU_NO）
-        if "." not in table_name and len(table_name) <= 5:
-            upper = table_name.upper()
-            if not (upper.endswith(_TEMP_TABLE_SUFFIXES) or upper.startswith("TMP_")):
-                return False
-        # 拒绝 alias.column 格式（如 T1.ORG_LEVEL）
-        if "." in table_name:
-            prefix = table_name.split(".")[0]
-            if len(prefix) <= 3:
-                return False
-        return True
+        """判断表名是否为有效表名（非 SQL 别名、非伪表）。
+
+        委托到 core.procedure_helpers.is_valid_table（无状态纯函数）。
+        """
+        return _is_valid_table_helper(table_name)
 
     def _normalize_table_name(self, raw_name: str, default_schema: str = "RRP_MDL") -> str:
         raw = raw_name.strip().upper()

@@ -57,11 +57,12 @@ class OracleTabAdapter:
         if not tab_files:
             return output
 
-        from concurrent.futures import ThreadPoolExecutor
+        from concurrent.futures import ThreadPoolExecutor, as_completed
 
         with ThreadPoolExecutor(max_workers=4) as executor:
             futures = {executor.submit(self.parse_file, fp): fp for fp in tab_files}
-            for future in futures:
+            # ★ 使用 as_completed 按完成顺序收集结果，不依赖提交顺序
+            for future in as_completed(futures):
                 fp = futures[future]
                 try:
                     file_output = future.result()

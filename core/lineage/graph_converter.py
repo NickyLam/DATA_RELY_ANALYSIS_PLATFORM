@@ -34,16 +34,12 @@ class GraphConverter:
                 if i > 0:
                     prev_node = chain.chain[i - 1]
 
-                    if direction == "upstream":
-                        src_table = prev_node.table_name
-                        tgt_table = node.table_name
-                        src_field = prev_node.field_name
-                        tgt_field = node.field_name
-                    else:
-                        src_table = prev_node.table_name
-                        tgt_table = node.table_name
-                        src_field = prev_node.field_name
-                        tgt_field = node.field_name
+                    # chain is always ordered source → target in both upstream
+                    # and downstream modes, so prev_node is always the source.
+                    src_table = prev_node.table_name
+                    tgt_table = node.table_name
+                    src_field = prev_node.field_name
+                    tgt_field = node.field_name
 
                     edge_key = (src_table, tgt_table, src_field, tgt_field)
                     if edge_key not in seen_edges:

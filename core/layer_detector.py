@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import logging
 import re
+import threading
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
@@ -354,9 +355,23 @@ def _load_layer_config_from_manifest(manifest_path: Path) -> LayerConfig | None:
     )
 
 
+# Thread-safe lazy singleton for the module-level detect_layer() helper.
+_default_detector_lock = threading.Lock()
+_default_detector_instance: LayerDetector | None = None
+
+
+def _get_default_detector() -> LayerDetector:
+    """Return the module-level LayerDetector singleton, creating it once."""
+    global _default_detector_instance
+    if _default_detector_instance is None:
+        with _default_detector_lock:
+            if _default_detector_instance is None:
+                _default_detector_instance = LayerDetector()
+    return _default_detector_instance
+
+
 def detect_layer(table_name: str) -> LayerType:
-    detect_layer._default_detector = getattr(detect_layer, "_default_detector", None) or LayerDetector()
-    return detect_layer._default_detector.detect_layer(table_name, system="rrp")
+    return _get_default_detector().detect_layer(table_name, system="rrp")
 
 
 def detect_layer_str(table_name: str) -> str:
