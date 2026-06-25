@@ -140,6 +140,41 @@ Service 层采用同步 `def` 而非 `async def`，原因：
 | mypy | 类型检查 | `pyproject.toml [tool.mypy]` (分层: app 严格 / core 宽松) |
 | pytest | 测试 + 覆盖率 | `pyproject.toml [tool.pytest.ini_options]` |
 | pre-commit | 提交前检查 | `.pre-commit-config.yaml` |
+| Git hooks | 本地提交/推送风险检查 | `.githooks/`, `scripts/agent-verify.sh` |
+
+### 本地 Git Hook 风险检查
+
+首次克隆或切换到本仓库后安装版本化 hook：
+
+```bash
+bash scripts/install-git-hooks.sh
+```
+
+安装后会启用：
+
+- `pre-commit` 快检：检查 Python 3.11 基线语法/API、staged 文件改动范围、staged Python 文件 ruff。
+- `pre-push` 全检：运行 `git diff --check` 和 `python3.11 -m pytest tests/ -q`，防止未测试代码推送到 GitHub。
+
+常用手动命令：
+
+```bash
+# 提交前快检
+scripts/agent-verify.sh quick
+
+# 推送前全量测试
+scripts/agent-verify.sh full
+
+# 快检 + 全检
+scripts/agent-verify.sh all
+```
+
+单次提交默认只允许触碰一个主业务模块，例如 `core/pam`、`core/warehouse`、`core/lineage`、`app/api`、`app/services`、`static/js`。`tests/`、`docs/`、`scripts/` 可跟随改动。确实需要跨模块时，显式声明 scope：
+
+```bash
+CHANGE_SCOPE=core/pam,core/warehouse git commit -m "fix: ..."
+```
+
+不要提交 `SOURCE_DATA/`、`output/`、`temp_uploads/`、日志、数据库文件或压缩包；hook 会直接拦截这些运行产物。
 
 ### 数仓分层架构
 
@@ -277,10 +312,10 @@ DQC (数据质量层)     ← 数据质量检查
 
 ```bash
 # 运行全部测试
-python -m pytest tests/
+python3.11 -m pytest tests/
 
 # 运行指定测试
-python -m pytest tests/test_lineage.py -v
+python3.11 -m pytest tests/test_lineage.py -v
 
 # 单元验证 DML 解析（示例）
 python3.11 -c "

@@ -31,6 +31,7 @@ pyyaml>=6.0
 pytest>=7.0.0
 pytest-cov>=5.0.0
 httpx>=0.24.0
+ruff>=0.11.8
 
 # 可选依赖（已有项目使用）
 # D3.js 通过 CDN 加载，无需安装
