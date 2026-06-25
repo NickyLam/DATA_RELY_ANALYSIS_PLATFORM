@@ -85,6 +85,9 @@ class CacheManager:
         start_time = time.time()
 
         with self._lock:
+            table_index: dict[str, set] = {}
+            procedure_index: dict[str, set] = {}
+
             table_count = 0
             for table in tables:
                 name = table.get("full_name", "").upper()
@@ -92,8 +95,7 @@ class CacheManager:
                     continue
                 tokens = self._tokenize(name)
                 for token in tokens:
-                    idx = self._indexes["table_name"]
-                    idx.setdefault(token, set()).add(name)
+                    table_index.setdefault(token, set()).add(name)
                 table_count += 1
 
             proc_count = 0
@@ -103,9 +105,11 @@ class CacheManager:
                     continue
                 tokens = self._tokenize(name)
                 for token in tokens:
-                    idx = self._indexes["procedure_name"]
-                    idx.setdefault(token, set()).add(name)
+                    procedure_index.setdefault(token, set()).add(name)
                 proc_count += 1
+
+            self._indexes["table_name"] = table_index
+            self._indexes["procedure_name"] = procedure_index
 
         elapsed = time.time() - start_time
         total_keys = sum(len(idx) for idx in self._indexes.values())

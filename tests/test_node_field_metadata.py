@@ -8,10 +8,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from app.services.lineage_service import LineageService
-
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -85,9 +82,9 @@ def _build_service(data: dict) -> LineageService:
     service = LineageService.__new__(LineageService)
     service.parser = parser
     service.cache = cache
-    from core.table_name_resolver import TableNameResolver
     from app.services.lineage_query_index import LineageQueryIndex
     from app.services.table_lineage_tracer import TableLineageTracer
+    from core.table_name_resolver import TableNameResolver
     service._resolver = TableNameResolver()
     service._table_tracer = TableLineageTracer(service._resolver)
     service._index = LineageQueryIndex()

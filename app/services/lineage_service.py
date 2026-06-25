@@ -9,10 +9,11 @@ import copy
 import logging
 import time
 from collections import deque
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 from app.repository import search_table_dicts
-from app.services.event_bus import EventType, get_event_bus
+from app.services.event_bus import DataChangedEvent, EventType, get_event_bus
 from app.services.lineage_query_index import LineageQueryIndex
 from app.services.parser_service import ParserService
 from app.services.table_lineage_tracer import TableLineageTracer
@@ -38,14 +39,15 @@ class LineageService:
         self._index = LineageQueryIndex()  # 预构建查询索引，避免每次查询重建全量 map/set
         self._transitive_cache: dict[tuple, set] = {}
         self._last_data_mtime: float = 0
+        self._index_generation: int | None = None
 
         self._event_bus = get_event_bus()
         self._event_bus.subscribe(EventType.DATA_CHANGED, self._on_data_changed)
         self._event_bus.subscribe(EventType.CACHE_INVALIDATED, self._on_cache_invalidated)
 
-        self._build_indexes()
+        self._build_indexes(generation=getattr(self.parser, "data_generation", None))
 
-    def _build_indexes(self) -> None:
+    def _build_indexes(self, generation: int | None = None) -> None:
         """启动时构建内存索引和图预处理数据"""
         data = self.parser.get_current_data()
         if not data:
@@ -58,16 +60,30 @@ class LineageService:
         self.cache.build_index(tables, procedures)
         self._table_tracer.build_graph(data.get("table_lineages", []))
         self._index.build(data)  # 构建查询索引
+        self._index_generation = generation
         logger.info("血缘服务索引构建完成")
 
-    def _on_data_changed(self, **kwargs) -> None:
-        self._build_indexes()
+    def _on_data_changed(
+        self,
+        event: DataChangedEvent | None = None,
+        generation: int | None = None,
+        **kwargs,
+    ) -> None:
+        next_generation = event.generation if event is not None else generation
+        if next_generation is not None and next_generation == self._index_generation:
+            return
+        self.cache.clear()
+        self._table_tracer.adjacency_up.clear()
+        self._table_tracer.adjacency_down.clear()
         self._transitive_cache.clear()
+        self._build_indexes(generation=next_generation)
 
     def _on_cache_invalidated(self, **kwargs) -> None:
-        self._build_indexes()
-        self._transitive_cache.clear()
         self.cache.clear()
+        self._table_tracer.adjacency_up.clear()
+        self._table_tracer.adjacency_down.clear()
+        self._transitive_cache.clear()
+        self._build_indexes(generation=getattr(self.parser, "data_generation", None))
 
     def query_lineage(
         self,
@@ -702,7 +718,7 @@ class LineageService:
         self._table_tracer.adjacency_up.clear()
         self._table_tracer.adjacency_down.clear()
         self._transitive_cache.clear()
-        self._build_indexes()
+        self._build_indexes(generation=getattr(self.parser, "data_generation", None))
         # 更新数据文件修改时间
         self._update_data_mtime()
         logger.info("索引重建完成")
@@ -737,7 +753,7 @@ class LineageService:
             self._table_tracer.adjacency_up.clear()
             self._table_tracer.adjacency_down.clear()
             self._transitive_cache.clear()
-            self._build_indexes()
+            self._build_indexes(generation=getattr(self.parser, "data_generation", None))
             self._last_data_mtime = current_mtime
 
     def _get_data_mtime(self) -> float | None:

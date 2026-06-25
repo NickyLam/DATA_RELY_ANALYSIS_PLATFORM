@@ -9,6 +9,7 @@ from __future__ import annotations
 import logging
 import re
 from dataclasses import dataclass
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -240,7 +241,3 @@ class SchemaResolver:
         用于表名有效性判断时区分 ``schema.table`` 与 ``alias.column``。
         """
         return frozenset(v.upper() for v in self._schema_mapping.values())
-
-
-# 导入 Path 供 infer_schema_from_path 使用
-from pathlib import Path

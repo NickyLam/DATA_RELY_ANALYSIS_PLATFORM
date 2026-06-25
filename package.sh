@@ -14,6 +14,32 @@ echo ""
 
 cd "$SCRIPT_DIR"
 
+PYTHON_CMD=""
+for ver in 3.13 3.12 3.11; do
+    if command -v "python${ver}" >/dev/null 2>&1; then
+        PYTHON_CMD="python${ver}"
+        break
+    fi
+done
+
+if [ -z "$PYTHON_CMD" ] && command -v python3 >/dev/null 2>&1; then
+    PYTHON_CMD="python3"
+fi
+
+if [ -z "$PYTHON_CMD" ]; then
+    echo "❌ 未找到 Python 3.11+，请先安装后再打包"
+    exit 1
+fi
+
+"$PYTHON_CMD" - <<'PY'
+import sys
+
+if sys.version_info < (3, 11):
+    raise SystemExit(
+        f"❌ Python 版本过低: {sys.version_info.major}.{sys.version_info.minor}，需要 3.11+"
+    )
+PY
+
 chmod +x start.sh 2>/dev/null || true
 
 EXCLUDE_ARGS=(

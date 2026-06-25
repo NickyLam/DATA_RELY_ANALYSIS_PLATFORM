@@ -27,6 +27,14 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def ensure_python_version() -> None:
+    if (sys.version_info.major, sys.version_info.minor) < (3, 11):
+        raise SystemExit(
+            "Python 3.11+ is required. "
+            f"Current interpreter: {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
+        )
+
+
 def is_frozen() -> bool:
     """检测是否在 PyInstaller 打包模式下运行"""
     return getattr(sys, "frozen", False) and getattr(sys, "_MEIPASS", None) is not None
@@ -35,7 +43,7 @@ def is_frozen() -> bool:
 def get_base_dir() -> Path:
     """获取应用基础目录"""
     if is_frozen():
-        return Path(getattr(sys, "_MEIPASS"))
+        return Path(sys._MEIPASS)  # type: ignore[attr-defined]
     return Path(__file__).parent
 
 
@@ -48,7 +56,7 @@ def print_startup_info(force_reparse: bool = False) -> None:
     data_dir = config.source_data_path
 
     print("\n" + "=" * 60)
-    print("  数据血缘分析系统 v2.0")
+    print(f"  数据血缘分析系统 v{config.app_version}")
     print("=" * 60)
     print(f"  运行模式: {'打包模式' if is_frozen() else '开发模式'}")
     print(f"  数据加载: {'强制重新解析' if force_reparse else '缓存优先（默认）'}")
@@ -60,6 +68,8 @@ def print_startup_info(force_reparse: bool = False) -> None:
 
 def main() -> None:
     """主入口函数"""
+    ensure_python_version()
+
     parser = argparse.ArgumentParser(description="数据血缘分析系统")
     parser.add_argument(
         "--reparse",

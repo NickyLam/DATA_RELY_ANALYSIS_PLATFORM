@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Callable
+from dataclasses import dataclass
 from enum import Enum, auto
 from typing import Any
 
@@ -14,6 +15,13 @@ class EventType(Enum):
     PARSE_STARTED = auto()
     PARSE_COMPLETED = auto()
     PARSE_FAILED = auto()
+
+
+@dataclass(frozen=True)
+class DataChangedEvent:
+    generation: int
+    source: str
+    changed_at: float
 
 
 class EventBus:

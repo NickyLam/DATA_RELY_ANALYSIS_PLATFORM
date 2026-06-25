@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import json
 import logging
 import threading
@@ -25,7 +26,7 @@ from typing import Any
 from app.config import config
 from app.repository import DataRepository, search_table_dicts
 from app.services.cache_store import CacheStore
-from app.services.event_bus import EventType, get_event_bus
+from app.services.event_bus import DataChangedEvent, EventType, get_event_bus
 from app.services.tracer_factory import TracerFactory
 from core.parser_protocol import ParseOutput
 
@@ -215,6 +216,7 @@ class ParserService:
         self._layer_detector: LayerDetector | None = None
         self._current_result: ParseResult | None = None
         self._current_data_cache: dict[str, Any] | None = None  # 缓存 to_serializable() 结果
+        self._data_generation = 0
         self._cache_store = CacheStore(self.output_dir, config=config)
         self._tracer_factory = TracerFactory()
         self._result_lock = threading.Lock()
@@ -235,10 +237,36 @@ class ParserService:
 
     def __del__(self) -> None:
         """析构时确保线程池被关闭（best-effort 兜底）。"""
-        try:
+        with contextlib.suppress(Exception):
             self.shutdown()
-        except Exception:
-            pass  # __del__ 中忽略异常
+
+    @property
+    def data_generation(self) -> int:
+        return self._data_generation
+
+    def _set_current_result(
+        self,
+        result: ParseResult,
+        data_cache: dict[str, Any] | None = None,
+    ) -> None:
+        self._current_result = result
+        self._current_data_cache = data_cache
+        self._data_generation += 1
+        self._tracer_factory.invalidate()
+
+    def _publish_data_changed(self, source: str) -> None:
+        event = DataChangedEvent(
+            generation=self._data_generation,
+            source=source,
+            changed_at=time.time(),
+        )
+        self._event_bus.publish(
+            EventType.DATA_CHANGED,
+            event=event,
+            generation=event.generation,
+            source=event.source,
+            changed_at=event.changed_at,
+        )
 
     def initialize_parsers(self) -> None:
         if OracleTableParser is None:
@@ -329,14 +357,13 @@ class ParserService:
                             ds_config.name,
                         )
 
-                elif ds_config.parser == "pam" and PamParser is not None:
-                    if self._pam_parser is None:
-                        self._pam_parser = PamParser(default_schema="pam")
-                        logger.info(
-                            "PAM 解析器初始化完成: %s (system=%s)",
-                            ds_config.display_name,
-                            ds_config.name,
-                        )
+                elif ds_config.parser == "pam" and PamParser is not None and self._pam_parser is None:
+                    self._pam_parser = PamParser(default_schema="pam")
+                    logger.info(
+                        "PAM 解析器初始化完成: %s (system=%s)",
+                        ds_config.display_name,
+                        ds_config.name,
+                    )
 
             logger.info("解析器注册表初始化完成: %s", self._registry)
 
@@ -350,9 +377,8 @@ class ParserService:
         result = ParseResult.from_serializable(data)
         result.parse_time_sec = 0.0
 
-        self._current_result = result
         # 直接缓存已反序列化的 data，避免后续 get_current_data() 重复 to_serializable()
-        self._current_data_cache = data
+        self._set_current_result(result, data_cache=data)
 
         repository = self._cache_store.get_repository()
         repository.update(data)
@@ -438,11 +464,10 @@ class ParserService:
                         result.errors.append(f"数据源 {name}: {str(e)}")
 
             result.parse_time_sec = time.time() - start_time
-            self._current_result = result
-            self._current_data_cache = None  # 由 _save_result_to_cache 填充
+            self._set_current_result(result)
 
             self._save_result_to_cache(result)
-            self._event_bus.publish(EventType.DATA_CHANGED)
+            self._publish_data_changed("parse_existing_data")
             self._event_bus.publish(EventType.PARSE_COMPLETED)
             logger.info(
                 "解析完成: %d 张表, %d 个过程, %d 条血缘, 耗时 %.2fs",
@@ -526,14 +551,13 @@ class ParserService:
                     progress_callback(96, "", "合并增量数据（去重更新中）...")
                 with self._result_lock:
                     self._current_result.merge(result)
-                    self._current_data_cache = None  # 数据变更，清除缓存
+                    self._set_current_result(self._current_result)
                 self._save_result_to_cache(self._current_result)
             else:
-                self._current_result = result
-                self._current_data_cache = None
+                self._set_current_result(result)
                 self._save_result_to_cache(result)
 
-            self._event_bus.publish(EventType.DATA_CHANGED)
+            self._publish_data_changed("parse_uploaded_files")
             self._event_bus.publish(EventType.PARSE_COMPLETED)
 
             if progress_callback:
@@ -615,9 +639,6 @@ class ParserService:
         return []
 
     def get_lineage_tracer(self) -> Any | None:
-        if self._tracer_factory.lineage_tracer is not None:
-            return self._tracer_factory.lineage_tracer
-
         try:
             if self._current_result is not None:
                 result = self._current_result
@@ -631,6 +652,7 @@ class ParserService:
                     procedures=procedures,
                     table_lineages=result.table_lineages,
                     field_mappings=result.field_mappings,
+                    generation=self._data_generation,
                 )
 
             logger.warning("无可用的解析数据或缓存，无法构建 LineageTracer")
@@ -641,9 +663,6 @@ class ParserService:
             return None
 
     def get_caliber_tracer(self) -> Any | None:
-        if self._tracer_factory.caliber_tracer is not None:
-            return self._tracer_factory.caliber_tracer
-
         try:
             if self._current_result is not None:
                 result = self._current_result
@@ -657,6 +676,7 @@ class ParserService:
                     table_lineages=result.table_lineages,
                     field_mappings=result.field_mappings,
                     caliber_infos=result.caliber_infos,
+                    generation=self._data_generation,
                 )
 
             logger.warning("无可用的解析数据或缓存，无法构建 CaliberTracer")
@@ -668,9 +688,6 @@ class ParserService:
 
     def get_unified_tracer(self) -> Any | None:
         """获取或懒加载 UnifiedTracer（P1 引入，P2 由 API 使用）。"""
-        if self._tracer_factory.unified_tracer is not None:
-            return self._tracer_factory.unified_tracer
-
         try:
             if self._current_result is not None:
                 result = self._current_result
@@ -682,6 +699,7 @@ class ParserService:
                     table_lineages=result.table_lineages,
                     field_mappings=result.field_mappings,
                     caliber_infos=result.caliber_infos,
+                    generation=self._data_generation,
                 )
 
             logger.warning("无可用的解析数据或缓存，无法构建 UnifiedTracer")
@@ -777,6 +795,7 @@ class ParserService:
                 "total_field_mappings": len(result.field_mappings),
                 "total_caliber_infos": len(result.caliber_infos),
                 "parser_version": "unified-v1",
+                "data_generation": self._data_generation,
                 "data_sources": [ds.name for ds in config.datasource_configs] if config else [],
             },
             **serializable,

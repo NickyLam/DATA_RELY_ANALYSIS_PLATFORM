@@ -12,6 +12,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from app.utils.path_utils import get_base_dir
+from app.version import get_project_version
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,7 @@ class AppConfig:
     """应用全局配置"""
 
     app_title: str = "数据血缘分析系统"
-    app_version: str = "2.0.0"
+    app_version: str = field(default_factory=get_project_version)
     debug: bool = False
 
     host: str = "0.0.0.0"

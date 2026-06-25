@@ -756,7 +756,7 @@ class TestOracleTabAdapter:
         as_completed 确保快文件先处理，不阻塞在慢文件上。
         """
         slow_file = self._write_tab_file(tmp_path, "ICL", "SLOW_TABLE", "慢表")
-        fast_file = self._write_tab_file(tmp_path, "IML", "FAST_TABLE", "快表")
+        self._write_tab_file(tmp_path, "IML", "FAST_TABLE", "快表")
 
         original_parse_file = self.adapter.parse_file
         call_log: list[str] = []
@@ -780,7 +780,7 @@ class TestOracleTabAdapter:
 
     def test_partial_failure_does_not_block_other_results(self, tmp_path: Path):
         """T11: 单个文件解析失败不应阻塞其他文件的结果收集。"""
-        good_file = self._write_tab_file(tmp_path, "ICL", "GOOD_TABLE", "好表")
+        self._write_tab_file(tmp_path, "ICL", "GOOD_TABLE", "好表")
         bad_file = tmp_path / "bad.tab"
         bad_file.write_text("invalid content without create table", encoding="utf-8")
 

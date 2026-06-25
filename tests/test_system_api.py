@@ -98,10 +98,10 @@ class TestGetSystems:
     def test_system_has_required_fields(self, client_with_data):
         resp = client_with_data.get("/api/systems")
         systems = resp.json()["data"]
-        for sys in systems:
-            assert "name" in sys
-            assert "display_name" in sys
-            assert "table_count" in sys
+        for system in systems:
+            assert "name" in system
+            assert "display_name" in system
+            assert "table_count" in system
 
     def test_systems_have_table_counts(self, client_with_data):
         resp = client_with_data.get("/api/systems")

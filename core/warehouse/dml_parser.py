@@ -22,6 +22,7 @@ from pathlib import Path
 
 from core.field_cleaner import FieldCleaner
 from core.models import FieldMapping, ProcedureInfo, TableInfo, TableLineage
+from core.parser_protocol import ParseOutput
 from core.warehouse.schema_resolver import SchemaResolver
 from core.warehouse.temp_table_filter import TempTableFilter
 
@@ -254,8 +255,6 @@ class DMLParser:
         Returns:
             ParseOutput 统一产出
         """
-        from core.parser_protocol import ParseOutput
-
         try:
             with open(file_path, encoding="utf-8", errors="ignore") as f:
                 content = f.read()
@@ -291,8 +290,6 @@ class DMLParser:
 
     def parse_directory(self, dir_path: Path) -> ParseOutput:
         """递归解析目录下所有 .sql DML 文件"""
-        from core.parser_protocol import ParseOutput
-
         output = ParseOutput()
 
         if not dir_path.exists() or not dir_path.is_dir():
@@ -1287,8 +1284,6 @@ class DMLParser:
 
     def _proc_info_to_output(self, proc_info: ProcedureInfo) -> ParseOutput:
         """将 ProcedureInfo 转换为 ParseOutput"""
-        from core.parser_protocol import ParseOutput
-
         output = ParseOutput()
 
         # 过滤临时表的血缘和映射

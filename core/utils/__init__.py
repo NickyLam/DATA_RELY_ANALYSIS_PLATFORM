@@ -1,7 +1,12 @@
 """Core layer shared utility functions"""
 from __future__ import annotations
 
-from core.utils.bracket_matcher import find_matching_bracket, find_matching_paren_sql
+from core.utils.bracket_matcher import (
+    find_matching_bracket as find_matching_bracket,
+)
+from core.utils.bracket_matcher import (
+    find_matching_paren_sql,
+)
 from core.warehouse.temp_table_filter import TempTableFilter
 
 # Alias for the SQL-aware parenthesis matcher

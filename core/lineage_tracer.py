@@ -764,7 +764,6 @@ class LineageTracer(BaseTracer):
 
             if reverse:
                 path = path[::-1]
-            max_layer = len(path) - 1
 
             chain_id = "→".join(path)
             if chain_id in seen_chains:

@@ -12,9 +12,9 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from core.parser_protocol import ParseOutput
 from core.pam.pam_ddl_parser import PamDDLParser
 from core.pam.pam_dml_parser import PamDMLParser
+from core.parser_protocol import ParseOutput
 
 logger = logging.getLogger(__name__)
 

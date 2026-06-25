@@ -6,7 +6,6 @@ from pathlib import Path
 
 from app.services.parser_service import ParserService
 from core.layer_detector import detect_layer, detect_layer_str
-from core.models import TableInfo
 from core.procedure_parser import EnhancedProcedureParser
 
 
@@ -157,7 +156,7 @@ class TestProcedureParserCacheConcurrency:
         assert not errors, f"Unexpected errors: {errors}"
         assert len(collected) == 4
         # Verify each proc_info has isolated data
-        for name, pi in collected.items():
+        for _name, pi in collected.items():
             assert hasattr(pi, '_parsed_content')
             assert pi.proc_name in pi._parsed_content
 

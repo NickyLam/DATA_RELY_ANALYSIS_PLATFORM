@@ -8,7 +8,7 @@ from pathlib import Path
 import openpyxl
 import pytest
 
-from core.indicator_config_parser import IndicatorConfigParser, _BASE_CALC_COLUMNS, _GL_CALC_COLUMNS
+from core.indicator_config_parser import _BASE_CALC_COLUMNS, _GL_CALC_COLUMNS, IndicatorConfigParser
 
 
 # ── fixtures ──────────────────────────────────────────────

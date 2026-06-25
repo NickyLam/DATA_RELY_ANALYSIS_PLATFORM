@@ -3,8 +3,8 @@ import asyncio
 import pytest
 from fastapi.testclient import TestClient
 
-from app.config import AppConfig
 from app import main as app_main
+from app.config import AppConfig
 from app.main import app
 
 

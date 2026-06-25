@@ -331,7 +331,7 @@ class PamDMLParser:
                 # 通过别名解析到正确源表，而非固定 sources[0]。
                 if target_cols and select_tokens and len(target_cols) == len(select_tokens):
                     alias_map = self._build_alias_map(table_aliases)
-                    for t_col, token in zip(target_cols, select_tokens):
+                    for t_col, token in zip(target_cols, select_tokens, strict=True):
                         col_info = self._parse_select_token(token)
                         mapping = self._build_field_mapping(
                             t_col, col_info, alias_map, sources, target, proc_name

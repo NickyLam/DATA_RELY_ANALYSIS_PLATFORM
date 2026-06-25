@@ -296,7 +296,7 @@ class TestConcurrentMultiDatasource:
 
         with ThreadPoolExecutor(max_workers=3) as pool:
             futures = []
-            for name, path in datasources.items():
+            for _name, path in datasources.items():
                 futures.append(pool.submit(parser.parse_directory, path))
             for future in as_completed(futures):
                 output = future.result()
@@ -526,7 +526,7 @@ class TestRaceConditionStress:
         src_vars = ["src_schema", "msl_schema", "itl_schema", "iol_schema", "src_schema", "src_schema"]
 
         datasources: dict[str, Path] = {}
-        for i, (ds_name, schema_var, src_var) in enumerate(zip(ds_names, schema_vars, src_vars, strict=True)):
+        for ds_name, schema_var, src_var in zip(ds_names, schema_vars, src_vars, strict=True):
             table_name = f"stress_tbl_{ds_name.lower()}"
             _setup_datasource_dir(
                 tmp_path,
@@ -560,7 +560,7 @@ class TestRaceConditionStress:
         assert not errors, f"并发解析出错: {errors}"
         assert len(results) == 6, f"期望 6 个结果，实际 {len(results)}"
 
-        for ds_name, schema_var in zip(ds_names, schema_vars, strict=True):
+        for ds_name, _schema_var in zip(ds_names, schema_vars, strict=True):
             output = results[ds_name]
             table_names = {t["table_name"] for t in output.tables}
             expected_table = f"STRESS_TBL_{ds_name.upper()}"

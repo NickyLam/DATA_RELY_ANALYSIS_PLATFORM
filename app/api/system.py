@@ -52,10 +52,7 @@ async def health_check():
 
         try:
             lineage_svc = get_lineage_service()
-            if lineage_svc.is_index_ready():
-                index_status = "ready"
-            else:
-                index_status = "empty"
+            index_status = "ready" if lineage_svc.is_index_ready() else "empty"
         except Exception:
             index_status = "error"
     except Exception:
@@ -233,4 +230,4 @@ def force_reparse(_: None = Depends(admin_required)):
         }
     except Exception as e:
         logger.error("Force reparse failed: %s", e)
-        raise HTTPException(status_code=500, detail="重新解析失败")
+        raise HTTPException(status_code=500, detail="重新解析失败") from e

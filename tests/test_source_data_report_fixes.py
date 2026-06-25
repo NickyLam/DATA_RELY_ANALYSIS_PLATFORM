@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from app.config import _load_datasource_configs_from_manifest
 from app.services.parser_service import ParseResult
 from app.services.table_query_service import TableQueryService

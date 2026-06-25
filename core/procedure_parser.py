@@ -22,9 +22,15 @@ from core.models import (
     TableLineage,
 )
 from core.procedure_helpers import (
-    is_valid_table as _is_valid_table_helper,
-    looks_like_unresolved_alias as _looks_like_unresolved_alias_helper,
     is_temp_table as _is_temp_table_helper,
+)
+from core.procedure_helpers import (
+    is_valid_table as _is_valid_table_helper,
+)
+from core.procedure_helpers import (
+    looks_like_unresolved_alias as _looks_like_unresolved_alias_helper,
+)
+from core.procedure_helpers import (
     parse_from_aliases as _parse_from_aliases_helper,
 )
 
@@ -54,10 +60,6 @@ class SQLOperation:
 # 常量：无效表名前缀 / 临时表后缀 — 已迁移到 core/procedure_helpers.py
 # 保留 re-export 以兼容潜在的模块级引用（本文件内已全部改为委托调用）。
 # ---------------------------------------------------------------------------
-from core.procedure_helpers import (  # noqa: E402
-    INVALID_TABLE_PREFIXES as _INVALID_TABLE_PREFIXES,
-    TEMP_TABLE_SUFFIXES as _TEMP_TABLE_SUFFIXES,
-)
 
 # 正则：INSERT INTO ... (cols) SELECT ... FROM / UNION / ;
 # 分组说明：

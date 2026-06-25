@@ -5,8 +5,8 @@
 
 from __future__ import annotations
 
-import logging
 import asyncio
+import logging
 import threading
 import time
 import uuid
@@ -265,7 +265,7 @@ class ProgressService:
                     if event["type"] in ("complete", "error"):
                         break
 
-                except asyncio.TimeoutError:
+                except TimeoutError:
                     with task.lock:
                         current_status = task.status
                         current_percent = task.progress.percent
