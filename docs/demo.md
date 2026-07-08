@@ -1,5 +1,7 @@
 # Demo: field-level lineage in 30 seconds
 
+Language: [中文](demo.zh-CN.md) | English
+
 This page is the reviewer-facing demo entry point. It explains what the project does without requiring access to private enterprise SQL assets.
 
 ## What it does

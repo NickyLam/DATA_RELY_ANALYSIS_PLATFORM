@@ -1,5 +1,7 @@
 # Contributing
 
+Language: [中文](CONTRIBUTING.zh-CN.md) | English
+
 Thanks for helping improve the data lineage analyzer. This project handles SQL and metadata that may come from sensitive enterprise environments, so contributions must be careful about test data, logs, and reproducibility.
 
 ## Development setup
@@ -51,7 +53,7 @@ Do not commit:
 - Logs, credentials, API keys, screenshots containing customer names, or proprietary SQL.
 - Compressed archives with unknown contents.
 
-Use synthetic SQL samples like `examples/oracle_warehouse_lineage.sql` when filing issues or tests.
+Use synthetic SQL samples like `docs/examples/oracle_warehouse_lineage.sql` when filing issues or tests.
 
 ## Coding standards
 

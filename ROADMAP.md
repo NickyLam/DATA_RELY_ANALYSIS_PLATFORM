@@ -1,5 +1,7 @@
 # Roadmap
 
+Language: [中文](ROADMAP.zh-CN.md) | English
+
 This roadmap is intentionally practical: it focuses on making the project easier to evaluate, run, extend, and trust as an open-source data lineage analyzer.
 
 ## Now: v2.2.x

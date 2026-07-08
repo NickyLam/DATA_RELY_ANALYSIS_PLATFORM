@@ -1,5 +1,7 @@
 # Security Policy
 
+Language: [中文](SECURITY.zh-CN.md) | English
+
 ## Supported versions
 
 The active supported line is the current `v2.x` release series. Security fixes should target the latest `main` branch unless a maintainer explicitly requests a backport.

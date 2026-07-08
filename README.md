@@ -1,31 +1,33 @@
-# Open-source data lineage analyzer for Oracle and enterprise data warehouse SQL
+# 数据血缘分析系统
 
-> 数据血缘分析系统 / Field-level Data Lineage Analysis System
+> Oracle 与企业数仓 SQL 的开源字段级数据血缘分析器
 
 > 项目版本: v2.2.0
 > 最后更新: 2026-07-08
 
-## English summary
+语言版本：中文 | [English](README.en.md)
 
-This project is an open-source field-level data lineage analyzer for Oracle scripts and enterprise data warehouse SQL. It parses DDL, DML, stored procedures, SQL files, control files, and indicator spreadsheets, then builds table/field lineage graphs, caliber tracing chains, and visual lineage diagrams for review, governance, and impact analysis.
+## 30 秒看懂
 
 ![Demo lineage graph](docs/assets/demo-lineage-graph.png)
 
-**What reviewers can verify in 30 seconds:**
+这是一个面向 Oracle 脚本和企业数仓 SQL 的开源字段级数据血缘分析系统。它可以解析 DDL、DML、存储过程、SQL 文件、控制文件和指标表格，构建表级/字段级血缘图、口径追溯链和可视化图谱，用于数据治理、影响分析、审计复核和系统改造评估。
 
-- Parse Oracle and warehouse SQL into table-level and field-level lineage.
-- Trace upstream/downstream dependencies through layered warehouse schemas such as SRC, MSL, ITL, IOL, ICL, IML, IDL, IEL, and DQC.
-- Visualize the result in a D3.js graph with layer colors, highlighted paths, search, and node details.
-- Export lineage/caliber evidence for audits and data governance reviews.
+审核人员可以快速验证：
 
-Useful open-source links:
+- 将 Oracle 与数仓 SQL 解析为表级、字段级血缘。
+- 沿 SRC、MSL、ITL、IOL、ICL、IML、IDL、IEL、DQC 等企业数仓层级追踪上下游依赖。
+- 用 D3.js 可视化血缘路径、分层颜色、节点详情和搜索结果。
+- 导出口径/血缘证据，用于审计和数据治理复核。
 
-- [Demo walkthrough](docs/demo.md)
-- [v2.2.0 release notes](docs/releases/v2.2.0.md)
-- [Changelog](CHANGELOG.md)
-- [Contributing guide](CONTRIBUTING.md)
-- [Security policy](SECURITY.md)
-- [Roadmap](ROADMAP.md)
+常用文档：
+
+- [演示说明](docs/demo.zh-CN.md) / [Demo walkthrough](docs/demo.md)
+- [v2.2.0 发布说明](docs/releases/v2.2.0.zh-CN.md) / [Release notes](docs/releases/v2.2.0.md)
+- [变更日志](CHANGELOG.zh-CN.md) / [Changelog](CHANGELOG.md)
+- [贡献指南](CONTRIBUTING.zh-CN.md) / [Contributing](CONTRIBUTING.md)
+- [安全策略](SECURITY.zh-CN.md) / [Security](SECURITY.md)
+- [路线图](ROADMAP.zh-CN.md) / [Roadmap](ROADMAP.md)
 
 ## 项目简介
 
@@ -79,7 +81,7 @@ python3.11 run_app.py --reparse
 
 前端页面：`http://localhost:8899/static/index.html`
 
-### Example SQL
+### 示例 SQL
 
 更多示例见 [`docs/examples/oracle_warehouse_lineage.sql`](docs/examples/oracle_warehouse_lineage.sql)。
 
@@ -95,7 +97,7 @@ LEFT JOIN IOL.ACCOUNT_BALANCE a
     ON c.CUST_ID = a.CUST_ID;
 ```
 
-Query the generated lineage:
+查询生成的字段血缘：
 
 ```bash
 curl -X POST http://localhost:8899/api/lineage/query \
@@ -107,7 +109,7 @@ curl -X POST http://localhost:8899/api/lineage/query \
   }'
 ```
 
-Example output is available at [`docs/examples/lineage_query_output.json`](docs/examples/lineage_query_output.json).
+输出示例见 [`docs/examples/lineage_query_output.json`](docs/examples/lineage_query_output.json)。
 
 ### 数据准备
 

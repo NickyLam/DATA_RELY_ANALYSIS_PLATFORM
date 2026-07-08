@@ -1,5 +1,7 @@
 # Changelog
 
+Language: [中文](CHANGELOG.zh-CN.md) | English
+
 All notable changes to this project are documented here. The project uses semantic versioning for public release notes.
 
 ## [v2.2.0] - 2026-07-08
@@ -10,7 +12,7 @@ All notable changes to this project are documented here. The project uses semant
 - Formal release notes with install commands, demo screenshots, example SQL, and sample API output.
 - Demo assets under `docs/assets/`, including a lineage graph screenshot and short GIF walkthrough.
 - Open-source maintenance documents: `CONTRIBUTING.md`, `SECURITY.md`, `ROADMAP.md`, and GitHub issue templates.
-- Example SQL and API response fixtures under `examples/`.
+- Example SQL and API response fixtures under `docs/examples/`.
 
 ### Fixed
 
