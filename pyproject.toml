@@ -1,6 +1,6 @@
 [project]
 name = "data-rely-analysis-sys"
-version = "2.1.0"
+version = "2.2.0"
 description = "数据血缘分析系统 - 双TAB架构（解析层 + 展示层）"
 requires-python = ">=3.11"
 dependencies = [
@@ -20,6 +20,19 @@ test = [
 [tool.ruff]
 line-length = 120
 target-version = "py311"
+# 排除历史归档/根目录调试脚本，避免污染主代码库的 lint 结果
+exclude = [
+    "deprecated",
+    "_basic_test.py",
+    "_full_test.py",
+    "_test_graph.py",
+    "_test_parser.py",
+    "_excel_full_output.txt",
+    "comprehensive_test.py",
+    "e2e_verify.py",
+    "test_display_bug_fixes.py",
+    "test_indicator_service.py",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "N", "UP", "B", "SIM"]

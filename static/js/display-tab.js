@@ -201,7 +201,7 @@ async function loadTableFields(tableFullName) {
                 fieldSelect.innerHTML = options;
                 fieldSelect.disabled = false;
 
-                console.log(`✅ 已加载 ${tableInfo.columns.length} 个字段`);
+                console.log(`已加载 ${tableInfo.columns.length} 个字段`);
             } else {
                 // 没有字段信息，提示用户手动输入
                 fieldSelect.innerHTML = '<option value="">-- 无字段数据，请手动输入 --</option>';
@@ -276,7 +276,7 @@ async function executeFieldQuery() {
 
         // 如果输入框中没有"."，尝试搜索完整表名
         if (!fullTableName.includes('.')) {
-            console.log(`🔍 [DEBUG] 正在搜索完整表名: ${tableName}`);
+            console.log(`[DEBUG] 正在搜索完整表名: ${tableName}`);
             try {
                 const searchResult = await apiRequest(`/api/tables?keyword=${encodeURIComponent(tableName)}&limit=5`);
 
@@ -288,7 +288,7 @@ async function executeFieldQuery() {
                         const short = table.full_name.split('.').pop();
                         if (short === tableName || short.toUpperCase() === tableName.toUpperCase()) {
                             bestMatch = table;
-                            console.log(`✅ [DEBUG] 找到精确匹配: ${table.full_name}`);
+                            console.log(`[DEBUG] 找到精确匹配: ${table.full_name}`);
                             break;
                         }
                     }
@@ -296,7 +296,7 @@ async function executeFieldQuery() {
                     fullTableName = bestMatch.full_name;
                     console.log(`📌 [DEBUG] 使用完整表名: ${fullTableName}`);
                 } else {
-                    console.warn(`⚠️ [DEBUG] 未找到表名匹配: ${tableName}`);
+                    console.warn(`[DEBUG] 未找到表名匹配: ${tableName}`);
                 }
             } catch (e) {
                 console.error('表名解析失败:', e);
@@ -327,7 +327,7 @@ async function executeFieldQuery() {
         currentQuery = { table: resolvedTable, field: fieldName };
 
         // 调试日志：输出接收到的完整数据
-        console.log('📊 [DEBUG] 接收到后端数据:');
+        console.log('[DEBUG] 接收到后端数据:');
         console.log(`   目标表: ${resolvedTable}`);
         console.log(`   目标字段: ${fieldName}`);
         console.log(`   节点总数: ${graphData.nodes_count}`);
@@ -344,7 +344,7 @@ async function executeFieldQuery() {
         }
 
         if (graphData.edges && graphData.edges.length > 0) {
-            console.log('🔗 [DEBUG] 前5条边:');
+            console.log('[DEBUG] 前5条边:');
             graphData.edges.slice(0, 5).forEach((edge, i) => {
                 const src = edge.source_table?.split('.')?.pop() || edge.source_table;
                 const tgt = edge.target_table?.split('.')?.pop() || edge.target_table;
@@ -358,7 +358,7 @@ async function executeFieldQuery() {
         document.getElementById('legend').classList.add('show');
         document.querySelector('.zoom-controls').style.display = 'flex';
 
-        console.log(`✅ 字段级查询完成: ${fullTableName}.${fieldName}`);
+        console.log(`字段级查询完成: ${fullTableName}.${fieldName}`);
         console.log(`   节点: ${graphData.nodes_count}, 边: ${graphData.edges_count}, 字段映射: ${graphData.field_mapping_count}`);
 
     } catch (error) {
@@ -504,7 +504,7 @@ function renderGraphVertical(data) {
             visited.add(targetNode.id);
         } else {
             // 如果找不到目标表，将所有节点设为第0层
-            console.warn('⚠️ 未找到目标表:', targetTableId, '可用节点:', nodes.map(n => n.id));
+            console.warn('未找到目标表:', targetTableId, '可用节点:', nodes.map(n => n.id));
             nodes.forEach(node => {
                 nodeDepths[node.id] = 0;
             });
@@ -529,12 +529,12 @@ function renderGraphVertical(data) {
         nodes.forEach(node => {
             if (!(node.id in nodeDepths)) {
                 nodeDepths[node.id] = maxDepth + 1;
-                console.warn(`⚠️ 孤立节点未被访问: ${node.id}, 设为深度 ${maxDepth + 1}`);
+                console.warn(`孤立节点未被访问: ${node.id}, 设为深度 ${maxDepth + 1}`);
             }
         });
 
         // 调试输出：打印每个节点的深度
-        console.log('📊 节点深度分布:', Object.entries(nodeDepths)
+        console.log('节点深度分布:', Object.entries(nodeDepths)
             .sort((a, b) => a[1] - b[1])
             .map(([id, depth]) => `  L${depth}: ${id}`)
             .join('\n'));
@@ -851,11 +851,11 @@ function renderDetailPanel(data, queryId) {
     let html = '';
 
     // 查询目标高亮显示
-    html += `<div style="margin-bottom:16px;padding:14px;background:linear-gradient(135deg,#fef2f2,#fff7ed);border-radius:8px;border-left:4px solid #ef4444;">
-        <strong style="color:#dc2626;font-size:14px;">🎯 查询目标</strong><br>
+    html += `<div style="margin-bottom:16px;padding:14px;background:#eff6ff;border-radius:12px;border:1px solid #bfdbfe;">
+        <strong style="color:#1d4ed8;font-size:14px;">查询目标</strong><br>
         <span style="font-family:monospace;font-size:13px;color:#1e293b;">${escapeHtml(targetTable.split('.').pop())}</span>
-        <span style="color:#dc2626;margin:0 4px;">.</span>
-        <span style="font-family:monospace;font-size:13px;color:#dc2626;font-weight:600;">${escapeHtml(targetField || '')}</span>
+        <span style="color:#94a3b8;margin:0 4px;">.</span>
+        <span style="font-family:monospace;font-size:13px;color:#1d4ed8;font-weight:600;">${escapeHtml(targetField || '')}</span>
         <br>
         <span style="font-size:12px;color:#64748b;margin-top:4px;display:inline-block;">
             深度: ${AppState.queryDepth}层 | 涉及: ${data.nodes_count}表, ${data.edges_count}关系 | 耗时: ${data.query_time_ms}ms
@@ -864,7 +864,7 @@ function renderDetailPanel(data, queryId) {
 
     // 字段映射列表
     if (data.field_mappings && data.field_mappings.length > 0) {
-        html += `<h4 style="color:#6366f1;margin:16px 0 8px;font-size:13px;">🔗 字段血缘映射 (${data.field_mapping_count || data.field_mappings.length} 条)</h4>`;
+        html += `<h4 style="color:#2563eb;margin:16px 0 8px;font-size:13px;">字段血缘映射 (${data.field_mapping_count || data.field_mappings.length} 条)</h4>`;
         html += `<div style="max-height:280px;overflow-y:auto;background:#fafafa;border-radius:8px;padding:10px;border:1px solid #e2e8f0;">`;
 
         data.field_mappings.slice(0, 80).forEach(fm => {
@@ -989,7 +989,7 @@ function setDepth(depth) {
 function setMode(mode) {
     // 安全检查：不允许both模式
     if (mode === 'both') {
-        console.warn('⚠️ both模式已禁用，默认使用upstream');
+        console.warn('both模式已禁用，默认使用upstream');
         mode = 'upstream';
     }
 

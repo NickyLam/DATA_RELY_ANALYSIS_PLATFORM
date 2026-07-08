@@ -12,6 +12,7 @@ SUPPORT_PREFIXES = (
     ".githooks/",
     ".github/",
     "docs/",
+    "openspec/",
     "scripts/",
     "tests/",
 )

@@ -122,7 +122,7 @@
 
         try {
             startBtn.disabled = true;
-            startBtn.textContent = '⏳ 上传中...';
+            startBtn.textContent = '上传中...';
 
             const formData = new FormData();
             selectedFilesArray.forEach(file => {
@@ -155,7 +155,7 @@
             console.error('上传失败:', error);
             showNotification('文件上传失败: ' + error.message, 'error');
             startBtn.disabled = false;
-            startBtn.textContent = '⚡ 开始解析';
+            startBtn.textContent = '开始解析';
         }
     }
 
@@ -296,7 +296,7 @@
 
         document.getElementById('progressBarFill').style.width = '100%';
         document.getElementById('progressPercent').textContent = '100%';
-        document.getElementById('progressMessage').textContent = '✅ 解析完成！';
+        document.getElementById('progressMessage').textContent = '解析完成';
 
         addLogEntry('success', `解析完成！共发现 ${data.tables_parsed || 0} 张表，${data.procedures_parsed || 0} 个过程`);
 
@@ -316,7 +316,7 @@
         statusBadge.className = 'status-badge error';
 
         const errorMessage = data.message || data.errors?.[0] || '未知错误';
-        document.getElementById('progressMessage').textContent = `❌ 解析失败: ${errorMessage}`;
+        document.getElementById('progressMessage').textContent = `解析失败: ${errorMessage}`;
 
         addLogEntry('error', `解析失败: ${errorMessage}`);
 
@@ -327,7 +327,7 @@
         showNotification('解析任务失败: ' + errorMessage, 'error');
 
         document.getElementById('startParseBtn').disabled = false;
-        document.getElementById('startParseBtn').textContent = '⚡ 开始解析';
+        document.getElementById('startParseBtn').textContent = '开始解析';
     }
 
     // ============================================

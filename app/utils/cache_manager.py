@@ -80,11 +80,21 @@ class CacheManager:
                 index.clear()
 
     def build_index(self, tables: list[dict], procedures: list[dict]) -> None:
-        """批量构建倒排索引（启动时调用）"""
+        """批量构建倒排索引（启动时调用）。
+
+        D-02 修复：本方法现在自包含幂等——构建前先清空所有缓存和索引，
+        避免外部未调用 clear() 时旧 table_name/procedure_name/field_name
+        索引及 _cache 残留累积。
+        """
         logger.info("开始构建内存索引...")
         start_time = time.time()
 
         with self._lock:
+            # 先清空旧缓存与全部索引，保证幂等
+            self._cache.clear()
+            for index in self._indexes.values():
+                index.clear()
+
             table_index: dict[str, set] = {}
             procedure_index: dict[str, set] = {}
 

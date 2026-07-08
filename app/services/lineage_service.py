@@ -10,12 +10,19 @@ import logging
 import time
 from collections import deque
 from collections.abc import Callable
+from datetime import datetime
 from typing import Any
 
 from app.repository import search_table_dicts
 from app.services.event_bus import DataChangedEvent, EventType, get_event_bus
 from app.services.lineage_query_index import LineageQueryIndex
 from app.services.parser_service import ParserService
+from app.services.system_membership import (
+    build_schema_to_system,
+    enabled_system_names,
+    table_belongs_to_system,
+    table_system_name,
+)
 from app.services.table_lineage_tracer import TableLineageTracer
 from app.utils.cache_manager import CacheManager
 from core.table_name_resolver import TableNameResolver
@@ -46,6 +53,168 @@ class LineageService:
         self._event_bus.subscribe(EventType.CACHE_INVALIDATED, self._on_cache_invalidated)
 
         self._build_indexes(generation=getattr(self.parser, "data_generation", None))
+
+    def export_system_full_lineage(self, system_name: str) -> dict[str, Any]:
+        system = system_name.strip().lower()
+        if system not in enabled_system_names():
+            raise ValueError(f"unknown system: {system_name}")
+
+        data = self.parser.get_current_data()
+        if not data:
+            raise ValueError("no parsed data available")
+
+        tables = data.get("tables", [])
+        schema_to_system = build_schema_to_system(tables)
+        table_by_name = {
+            table.get("full_name", "").upper(): table
+            for table in tables
+            if table.get("full_name")
+        }
+
+        system_node_names = {
+            table.get("full_name", "").upper()
+            for table in tables
+            if table.get("full_name") and table_belongs_to_system(table, system, schema_to_system)
+        }
+        export_node_names = set(system_node_names)
+
+        table_lineages = [
+            lineage
+            for lineage in data.get("table_lineages", [])
+            if self._lineage_record_touches_system(lineage, system, table_by_name, schema_to_system)
+        ]
+        field_mappings = [
+            mapping
+            for mapping in data.get("field_mappings", [])
+            if self._field_mapping_touches_system(mapping, system, table_by_name, schema_to_system)
+        ]
+
+        for lineage in table_lineages:
+            export_node_names.update(
+                name.upper()
+                for name in (lineage.get("source_table"), lineage.get("target_table"))
+                if name
+            )
+        for mapping in field_mappings:
+            export_node_names.update(
+                name.upper()
+                for name in (mapping.get("source_table"), mapping.get("target_table"))
+                if name
+            )
+
+        table_rows = [
+            self._build_export_table_row(name, system, table_by_name, schema_to_system)
+            for name in sorted(export_node_names)
+        ]
+        table_lineage_rows = [self._build_export_lineage_row(lineage) for lineage in table_lineages]
+        field_mapping_rows = [self._build_export_mapping_row(mapping) for mapping in field_mappings]
+        external_nodes = sum(1 for row in table_rows if row["is_external"])
+
+        return {
+            "summary": {
+                "system_name": system,
+                "generated_at": datetime.now().isoformat(timespec="seconds"),
+                "data_mtime": self._get_data_mtime(),
+                "parser_generation": getattr(self.parser, "data_generation", None),
+                "total_nodes": len(table_rows),
+                "system_nodes": len(table_rows) - external_nodes,
+                "external_nodes": external_nodes,
+                "table_lineages": len(table_lineage_rows),
+                "field_mappings": len(field_mapping_rows),
+            },
+            "tables": table_rows,
+            "table_lineages": table_lineage_rows,
+            "field_mappings": field_mapping_rows,
+        }
+
+    def _lineage_record_touches_system(
+        self,
+        lineage: dict,
+        system_name: str,
+        table_by_name: dict[str, dict],
+        schema_to_system: dict[str, str],
+    ) -> bool:
+        return self._table_name_belongs_to_system(lineage.get("source_table"), system_name, table_by_name, schema_to_system) or self._table_name_belongs_to_system(
+            lineage.get("target_table"), system_name, table_by_name, schema_to_system
+        )
+
+    def _field_mapping_touches_system(
+        self,
+        mapping: dict,
+        system_name: str,
+        table_by_name: dict[str, dict],
+        schema_to_system: dict[str, str],
+    ) -> bool:
+        return self._table_name_belongs_to_system(mapping.get("source_table"), system_name, table_by_name, schema_to_system) or self._table_name_belongs_to_system(
+            mapping.get("target_table"), system_name, table_by_name, schema_to_system
+        )
+
+    def _table_name_belongs_to_system(
+        self,
+        table_name: str | None,
+        system_name: str,
+        table_by_name: dict[str, dict],
+        schema_to_system: dict[str, str],
+    ) -> bool:
+        if not table_name:
+            return False
+        table = table_by_name.get(table_name.upper()) or {"full_name": table_name}
+        return table_belongs_to_system(table, system_name, schema_to_system)
+
+    def _build_export_table_row(
+        self,
+        table_name_upper: str,
+        selected_system: str,
+        table_by_name: dict[str, dict],
+        schema_to_system: dict[str, str],
+    ) -> dict[str, Any]:
+        table = table_by_name.get(table_name_upper) or {"full_name": table_name_upper}
+        full_name = table.get("full_name") or table_name_upper
+        system_name = table_system_name(table, schema_to_system, default_non_oracle=False)
+        columns = table.get("columns", [])
+        return {
+            "full_name": full_name,
+            "short_name": table.get("table_name") or full_name.split(".")[-1],
+            "layer": self._detect_layer(full_name),
+            "field_count": len([column for column in columns if column.get("name")]),
+            "system_name": system_name or "",
+            "is_external": system_name != selected_system,
+        }
+
+    @staticmethod
+    def _build_export_lineage_row(lineage: dict) -> dict[str, Any]:
+        return {
+            "source_table": lineage.get("source_table", ""),
+            "target_table": lineage.get("target_table", ""),
+            "procedure": lineage.get("procedure", ""),
+            "data_source": lineage.get("data_source", ""),
+            "operation_type": lineage.get("operation_type", ""),
+        }
+
+    @staticmethod
+    def _build_export_mapping_row(mapping: dict) -> dict[str, Any]:
+        return {
+            "source_table": mapping.get("source_table", ""),
+            "source_column": mapping.get("source_column", ""),
+            "target_table": mapping.get("target_table", ""),
+            "target_column": mapping.get("target_column", ""),
+            "procedure": mapping.get("procedure", ""),
+            "transform_logic": mapping.get("transform_logic", ""),
+            "condition_metadata": LineageService._format_condition_metadata(mapping),
+        }
+
+    @staticmethod
+    def _format_condition_metadata(mapping: dict) -> str:
+        parts: list[str] = []
+        for key in ("where_conditions", "join_conditions"):
+            conditions = mapping.get(key) or []
+            texts = [
+                condition.get("raw_text", str(condition)) if isinstance(condition, dict) else str(condition)
+                for condition in conditions
+            ]
+            if texts:
+                parts.append(f"{key}: {'; '.join(texts)}")
+        return " | ".join(parts)
 
     def _build_indexes(self, generation: int | None = None) -> None:
         """启动时构建内存索引和图预处理数据"""
@@ -544,8 +713,22 @@ class LineageService:
         field: str | None,
         limit: int,
     ) -> dict[str, Any]:
+        # 过滤 BAK/BAK$ 备份表：备份表不应出现在血缘结果中
+        # (用户要求"不查带BAK的表"，既包含查询目标也包含血缘节点)
+        all_nodes, all_edges, all_mappings = self._filter_backup_tables(
+            all_nodes, all_edges, all_mappings, keep_query_table=table,
+        )
+        # 过滤幽灵表节点：血缘中引用但无 DDL 定义（0 列）的表无法提供字段元数据，
+        # 保留会导致节点缺少"字段+字段类型"，违反验收标准 2。
+        # 查询目标表始终保留（即便无 DDL），避免用户输入被静默清空。
+        all_nodes, all_edges, all_mappings = self._filter_ghost_tables(
+            all_nodes, all_edges, all_mappings, data, keep_query_table=table,
+        )
         field_map = self._build_node_field_map(all_nodes, all_edges, all_mappings, table, field)
-        nodes_list = self._build_nodes(all_nodes, data, include_fields, field_map=field_map)
+        nodes_list = self._build_nodes(
+            all_nodes, data, include_fields,
+            field_map=field_map, query_field=field,
+        )
         edges_list = self._deduplicate_edges(all_edges)
         if field and len(nodes_list) > limit:
             nodes_list = self._prioritize_field_lineage_nodes(nodes_list, edges_list, table, field, limit)
@@ -563,6 +746,127 @@ class LineageService:
             "field_mappings": all_mappings[:500] if all_mappings else [],
             "field_mapping_count": len(all_mappings),
         }
+
+    @staticmethod
+    def _is_backup_table(name: str) -> bool:
+        """判断表名是否为备份表（含 BAK / BAK$ / BAK_$ / _BAK 等变体，大小写不敏感）。
+
+        判定规则（短名去 schema 后匹配任一即视为备份表）：
+          - 以 BAK 开头且后跟非字母字符（如 BAK_OLD、BAK2024、BAK$、BAK_$）
+          - 以 _BAK / _BAK$ / _BAK_$ 结尾或作为独立段（如 TBL_BAK、TBL_BAK$）
+          - 完全等于 BAK
+
+        避免 BAKERY 等含 BAK 子串的正常表名被误判。
+        """
+        if not name:
+            return False
+        short = name.split(".")[-1] if "." in name else name
+        upper = short.upper()
+        if upper == "BAK":
+            return True
+        # 以 BAK 开头 + 非字母（_ $ 数字）
+        if upper.startswith("BAK") and len(upper) > 3 and not upper[3].isalpha():
+            return True
+        # 以 _BAK / _BAK$ / _BAK_$ 结尾
+        return any(
+            upper.endswith(suffix) and len(upper) > len(suffix)
+            for suffix in ("_BAK_$", "_BAK$", "_BAK")
+        )
+
+    def _filter_backup_tables(
+        self,
+        all_nodes: set,
+        all_edges: list,
+        all_mappings: list,
+        keep_query_table: str,
+    ) -> tuple[set, list, list]:
+        """从血缘结果中剔除备份表节点及关联的边/映射。
+
+        查询目标表始终保留（即便名字含 BAK），避免用户输入被静默清空。
+        """
+        keep_upper = (keep_query_table or "").upper()
+        filtered_nodes = {n for n in all_nodes if (n.upper() == keep_upper) or not self._is_backup_table(n)}
+        if len(filtered_nodes) == len(all_nodes):
+            return all_nodes, all_edges, all_mappings
+
+        removed = all_nodes - filtered_nodes
+        filtered_edges = [
+            e for e in all_edges
+            if e.get("source_table", "") not in removed
+            and e.get("target_table", "") not in removed
+        ]
+        filtered_mappings = [
+            m for m in all_mappings
+            if m.get("source_table", "") not in removed
+            and m.get("target_table", "") not in removed
+        ]
+        logger.debug("过滤备份表节点 %s，剔除边 %d / 映射 %d",
+                     sorted(removed), len(all_edges) - len(filtered_edges),
+                     len(all_mappings) - len(filtered_mappings))
+        return filtered_nodes, filtered_edges, filtered_mappings
+
+    def _filter_ghost_tables(
+        self,
+        all_nodes: set,
+        all_edges: list,
+        all_mappings: list,
+        data: dict,
+        keep_query_table: str,
+    ) -> tuple[set, list, list]:
+        """剔除幽灵表节点（血缘中引用但无 DDL 定义、0 列的表）。
+
+        幽灵表无字段元数据，保留会导致节点缺少"字段+字段类型"，
+        违反验收标准 2。查询目标表始终保留。
+
+        判定：节点表名在 data.tables 中找不到 full_name 匹配，
+        或匹配到的表 columns 为空。
+        """
+        keep_upper = (keep_query_table or "").upper()
+        # 构建 full_name → table_info 索引（优先用预构建索引）
+        table_map = (
+            self._index.table_by_full
+            if self._index.is_built
+            else {t.get("full_name", ""): t for t in data.get("tables", [])}
+        )
+
+        removed: set[str] = set()
+        for node_name in all_nodes:
+            if node_name.upper() == keep_upper:
+                continue
+            table_info = table_map.get(node_name, {})
+            # 短名回退
+            if not table_info and "." in node_name:
+                short_upper = node_name.split(".")[-1].upper()
+                if self._index.is_built:
+                    tbls = self._index.table_by_short.get(short_upper, [])
+                    table_info = tbls[0] if tbls else {}
+                else:
+                    for t in data.get("tables", []):
+                        if t.get("table_name", "").upper() == short_upper:
+                            table_info = t
+                            break
+            columns = table_info.get("columns", []) if table_info else []
+            if not columns:
+                removed.add(node_name)
+
+        if not removed:
+            return all_nodes, all_edges, all_mappings
+
+        filtered_nodes = all_nodes - removed
+        filtered_edges = [
+            e for e in all_edges
+            if e.get("source_table", "") not in removed
+            and e.get("target_table", "") not in removed
+        ]
+        filtered_mappings = [
+            m for m in all_mappings
+            if m.get("source_table", "") not in removed
+            and m.get("target_table", "") not in removed
+        ]
+        logger.debug("过滤幽灵表节点 %s，剔除边 %d / 映射 %d",
+                     sorted(removed), len(all_edges) - len(filtered_edges),
+                     len(all_mappings) - len(filtered_mappings))
+        return filtered_nodes, filtered_edges, filtered_mappings
 
     def search_tables(
         self,
@@ -753,6 +1057,10 @@ class LineageService:
             self._table_tracer.adjacency_up.clear()
             self._table_tracer.adjacency_down.clear()
             self._transitive_cache.clear()
+            # D-01 修复：同步失效 ParserService 的 TracerFactory 缓存，
+            # 避免 mtime 检测到数据更新后仍返回旧的 LineageTracer/CaliberTracer 实例
+            if hasattr(self.parser, "reset_tracer"):
+                self.parser.reset_tracer()
             self._build_indexes(generation=getattr(self.parser, "data_generation", None))
             self._last_data_mtime = current_mtime
 
@@ -1227,8 +1535,16 @@ class LineageService:
         data: dict,
         include_fields: bool,
         field_map: dict[str, str] | None = None,
+        query_field: str | None = None,
     ) -> list[dict]:
-        """构建节点数据列表，可选地为每个节点附加当前链路字段元数据。"""
+        """构建节点数据列表，可选地为每个节点附加当前链路字段元数据。
+
+        字段元数据回退策略（保证"数据库表+字段+字段类型"三要素齐全）：
+        1. field_map 中存在该节点 → 直接使用映射字段
+        2. field_map 缺失但节点表 columns 含 query_field → 用 query_field
+        3. 仍无匹配 → 用表的第一列（columns[0]）作为兜底
+        4. 表无任何列信息 → 输出 {"name": "", "data_type": ""} 显式暴露数据缺口
+        """
         # 使用预构建索引替代每次扫描全量 tables
         table_map = (
             self._index.table_by_full
@@ -1248,6 +1564,8 @@ class LineageService:
                 sn = t.get("table_name", "").upper()
                 if sn:
                     table_by_short.setdefault(sn, t)
+
+        query_field_upper = (query_field or "").upper()
 
         nodes = []
         for name in sorted(node_names):
@@ -1271,17 +1589,47 @@ class LineageService:
             # Attach current-lineage field metadata (independent of include_fields)
             if field_map is not None:
                 raw_field = field_map.get(name, "")
+                # 校验 field_map 的字段是否真实存在于节点表的 columns 中。
+                # 临时表过滤后字段映射可能引用了目标表不存在的列（如 ETL_DT vs ETL_TIMESTAMP），
+                # 此类字段不应展示，触发回退到真实存在的列。
+                if raw_field and not self._match_column_name(table_info, raw_field.upper()):
+                    raw_field = ""
+                # 回退 1：尝试用查询字段匹配节点表的列
+                if not raw_field and query_field_upper:
+                    raw_field = self._match_column_name(table_info, query_field_upper)
+                # 回退 2：用表的第一列兜底
+                if not raw_field:
+                    raw_field = self._first_column_name(table_info)
+
                 if raw_field:
                     col_name, col_type = self._resolve_column_type(table_info, raw_field)
                     node["field"] = {"name": col_name, "data_type": col_type}
                 else:
-                    # No field for this node (e.g. table-only supplemental node)
-                    # Omit the key entirely for backward compatibility
-                    pass
+                    # 无任何字段信息：显式输出空字段以暴露数据缺口
+                    node["field"] = {"name": "", "data_type": ""}
 
             nodes.append(node)
 
         return nodes
+
+    @staticmethod
+    def _match_column_name(table_info: dict, field_upper: str) -> str:
+        """在表的 columns 中按大小写不敏感匹配字段名，命中则返回原始大小写字段名。"""
+        for col in table_info.get("columns", []) or []:
+            col_name = col.get("name", "")
+            if col_name and col_name.upper() == field_upper:
+                return col_name
+        return ""
+
+    @staticmethod
+    def _first_column_name(table_info: dict) -> str:
+        """返回表的第一列字段名（用于兜底字段元数据）。"""
+        columns = table_info.get("columns", []) or []
+        for col in columns:
+            name = col.get("name", "")
+            if name:
+                return name
+        return ""
 
     @staticmethod
     def _deduplicate_edges(edges: list[dict]) -> list[dict]:

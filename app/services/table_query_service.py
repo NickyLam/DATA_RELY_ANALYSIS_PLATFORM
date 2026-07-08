@@ -9,6 +9,12 @@ from typing import Any
 
 from app.repository import search_table_dicts
 from app.services.parser_service import ParserService
+from app.services.system_membership import (
+    build_schema_to_system,
+    normalize_data_source,
+    table_belongs_to_system,
+    table_system_name,
+)
 from app.utils.cache_manager import CacheManager
 from core.table_name_resolver import TableNameResolver
 
@@ -173,54 +179,9 @@ class TableQueryService:
 
         每次调用时从数据和配置中重新计算，确保数据刷新后映射正确。
         """
-        from app.config import config
-
-        schema_to_system: dict[str, str] = {}
-        oracle_systems: list[str] = []
-        non_oracle_system_names: list[tuple[str, str]] = []
-
-        for ds_cfg in config.datasource_configs:
-            if not ds_cfg.enabled:
-                continue
-            system_prefix = ds_cfg.name.upper()
-            for schema_dir in ds_cfg.schema_dirs:
-                schema_to_system[schema_dir.upper()] = ds_cfg.name
-            # 非 Oracle 解析器（warehouse/pam）的表通常以数据源名作为 schema
-            # 自动注册数据源名 → 系统映射，确保 PAM 等系统的表能正确归属
-            if ds_cfg.parser != "oracle":
-                schema_to_system[system_prefix] = ds_cfg.name
-                non_oracle_system_names.append((system_prefix, ds_cfg.name))
-                for schema_dir in ds_cfg.schema_dirs:
-                    schema_to_system[f"{system_prefix}_{schema_dir.upper()}"] = ds_cfg.name
-            if ds_cfg.parser == "oracle":
-                oracle_systems.append(ds_cfg.name)
-
-        # 如果有 Oracle 系统，将数据中未知 schema 自动归属
         data = self._parser.get_current_data()
         all_tables = data.get("tables", []) if data else []
-
-        unknown_schemas: set[str] = set()
-        for t in all_tables:
-            full_name = t.get("full_name") or ""
-            if not full_name or "." not in full_name:
-                continue
-            schema = full_name.split(".")[0].upper()
-            if schema not in schema_to_system:
-                for system_prefix, system_name in non_oracle_system_names:
-                    if schema.startswith(f"{system_prefix}_"):
-                        schema_to_system[schema] = system_name
-                        break
-                if schema in schema_to_system:
-                    continue
-                unknown_schemas.add(schema)
-
-        # 将未知 schema 归属到第一个 Oracle 系统
-        if oracle_systems and unknown_schemas:
-            oracle_sys = oracle_systems[0]
-            for schema in unknown_schemas:
-                schema_to_system[schema] = oracle_sys
-
-        return schema_to_system
+        return build_schema_to_system(all_tables)
 
     def get_systems(self) -> list[dict]:
         """返回所有启用的数据源列表（含表计数）。"""
@@ -235,26 +196,12 @@ class TableQueryService:
         system_table_counts: dict[str, int] = {c.name: 0 for c in config.datasource_configs if c.enabled}
 
         for t in all_tables:
-            full_name = t.get("full_name") or ""
-            if not full_name:
+            if not (t.get("full_name") or ""):
                 continue
 
-            data_source = self._normalize_data_source(t.get("data_source"))
-            if data_source and data_source in system_table_counts:
-                system_table_counts[data_source] = system_table_counts.get(data_source, 0) + 1
-                continue
-
-            if "." in full_name:
-                schema = full_name.split(".")[0].upper()
-                if schema in schema_to_system:
-                    sys_name = schema_to_system[schema]
-                    system_table_counts[sys_name] = system_table_counts.get(sys_name, 0) + 1
-            else:
-                # 无 schema 前缀的表，归属第一个非 Oracle 系统
-                warehouse_systems = [c for c in config.datasource_configs if c.enabled and c.parser != "oracle"]
-                if warehouse_systems:
-                    ws = warehouse_systems[0].name
-                    system_table_counts[ws] = system_table_counts.get(ws, 0) + 1
+            sys_name = table_system_name(t, schema_to_system)
+            if sys_name in system_table_counts:
+                system_table_counts[sys_name] = system_table_counts.get(sys_name, 0) + 1
 
         result = []
         for ds_cfg in config.datasource_configs:
@@ -355,20 +302,8 @@ class TableQueryService:
             if not full_name:
                 continue
 
-            data_source = self._normalize_data_source(t.get("data_source"))
-            if data_source and data_source != system_name:
+            if not table_belongs_to_system(t, system_name, schema_to_system):
                 continue
-
-            # 确定该表是否属于该系统
-            if "." in full_name:
-                table_schema = full_name.split(".")[0].upper()
-                mapped_system = data_source or schema_to_system.get(table_schema)
-                if mapped_system != system_name:
-                    continue
-            else:
-                # 无 schema 的表归属数仓类系统
-                if not data_source and ds_cfg.parser == "oracle":
-                    continue
 
             short_name = full_name.split(".")[-1] if "." in full_name else full_name
 
@@ -463,7 +398,7 @@ class TableQueryService:
 
     @staticmethod
     def _normalize_data_source(value: Any) -> str:
-        return str(value or "").strip().lower()
+        return normalize_data_source(value)
 
     @staticmethod
     def _detect_layer(table_name: str) -> str:

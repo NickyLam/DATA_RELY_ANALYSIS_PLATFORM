@@ -235,7 +235,7 @@
 
         // ── 概览：指标 + 技术口径摘要 ──
         html += `<div class="info-section">
-            <div class="section-title">🎯 指标口径</div>
+            <div class="section-title">指标口径</div>
             <div style="font-size:12px;color:#0f172a;font-weight:600;margin-bottom:6px;">${_escape(indicator)}</div>`;
         if (tech) {
             html += `<div style="font-size:11px;line-height:1.5;color:#334155;background:#f8fafc;border:1px solid #e2e8f0;border-radius:4px;padding:6px 8px;font-family:monospace;word-break:break-all;">${_escape(tech)}</div>`;
@@ -244,7 +244,7 @@
 
         // ── 数字卡：并行路径 / 步骤 / 表 / 过程 ──
         html += `<div class="info-section">
-            <div class="section-title">📊 加工统计</div>
+            <div class="section-title">加工统计</div>
             <div class="ov-mini">
                 <div class="ov-mini-card"><div class="ov-mini-val">${parallelPaths}</div><div class="ov-mini-lbl">并行路径</div></div>
                 <div class="ov-mini-card"><div class="ov-mini-val">${totalSteps}</div><div class="ov-mini-lbl">加工步骤</div></div>
@@ -258,7 +258,7 @@
         if (tables.length > 0) {
             const tableTags = tables.map(t => `<span class="step-tag tag-join">${_escape(t)}</span>`).join(' ');
             html += `<div class="info-section">
-                <div class="section-title">🗄️ 涉及表 (${tables.length})</div>
+                <div class="section-title">涉及表 (${tables.length})</div>
                 <div style="line-height:2;">${tableTags}</div>
             </div>`;
         }
@@ -267,7 +267,7 @@
         if (procs.length > 0) {
             const procTags = procs.map(p => `<span class="step-tag tag-where" title="${_escape(p)}">${_escape(p.split('.').pop())}</span>`).join(' ');
             html += `<div class="info-section">
-                <div class="section-title">⚙️ 加工过程 (${procs.length})</div>
+                <div class="section-title">加工过程 (${procs.length})</div>
                 <div style="line-height:2;">${procTags}</div>
             </div>`;
         }
@@ -284,7 +284,7 @@
         if (qFlags.length > 0) {
             const flagTags = qFlags.map(([t, c]) => `<span class="step-tag ${c}">${_escape(t)}</span>`).join(' ');
             html += `<div class="info-section">
-                <div class="section-title">⚠️ 质量标记</div>
+                <div class="section-title">质量标记</div>
                 <div style="line-height:2;">${flagTags}</div>
             </div>`;
         }
@@ -297,7 +297,7 @@
             </div>`).join('');
             html += `<div class="info-section caliber-spec-section">
                 <div class="section-title spec-toggle">
-                    <span class="spec-arrow">▶</span> 📋 完整口径规格 (${chainText.length} 步)
+                    <span class="spec-arrow">▶</span> 完整口径规格 (${chainText.length} 步)
                 </div>
                 <div class="section-content spec-body" style="display:none;">${chainHtml}</div>
             </div>`;

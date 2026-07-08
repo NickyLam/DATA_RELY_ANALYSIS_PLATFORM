@@ -96,7 +96,7 @@ def check_dependencies() -> bool:
         pass
 
     try:
-        import pyinstaller
+        import pyinstaller  # noqa: F401  检测可导入性，不直接使用
 
         print("  ✅ PyInstaller 已安装")
         return True
@@ -163,7 +163,7 @@ def run_build() -> bool:
     print("=" * 60 + "\n")
 
     try:
-        result = subprocess.run(
+        subprocess.run(
             [sys.executable, "-m", "PyInstaller", "build.spec", "--clean"],
             check=True,
         )

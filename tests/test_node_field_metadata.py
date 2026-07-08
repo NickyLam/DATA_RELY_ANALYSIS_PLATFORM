@@ -409,7 +409,12 @@ class TestDegradation:
     """Task 1.4: unknown field type, supplemental table-only nodes, short-name ambiguity."""
 
     def test_field_name_exists_but_type_unavailable(self):
-        """Node field known but no matching column definition."""
+        """Node field_map 引用了表不存在的列时，回退到真实存在的列。
+
+        验收标准：查询出来的血缘字段必须是实际存在的字段，且字段类型正常显示。
+        因此 field_map 中的 MISSING_FIELD（不存在于 columns）应被忽略，
+        回退到表的第一列 OTHER_COL 并显示其类型。
+        """
         tables = [
             {
                 "full_name": "S.TBL",
@@ -428,8 +433,9 @@ class TestDegradation:
         )
         assert len(nodes) == 1
         assert "field" in nodes[0]
-        assert nodes[0]["field"]["name"] == "MISSING_FIELD"
-        assert nodes[0]["field"]["data_type"] == ""
+        # MISSING_FIELD 不存在于表 columns，回退到第一列 OTHER_COL
+        assert nodes[0]["field"]["name"] == "OTHER_COL"
+        assert nodes[0]["field"]["data_type"] == "NUMBER"
 
     def test_supplemental_table_node_no_field(self):
         """Table-only node (no field endpoint) may omit field metadata."""

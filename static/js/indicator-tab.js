@@ -18,7 +18,7 @@
         if (!d3Available) {
             const container = document.getElementById('indicatorGraphContainer');
             if (container) {
-                container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ef4444;font-size:15px;flex-direction:column;gap:8px;"><span style="font-size:32px;">⚠️</span><span>D3.js 未加载，血缘图谱无法渲染</span><span style="font-size:12px;color:#94a3b8;">请检查网络连接或刷新页面（已切换为本地部署）</span></div>';
+                container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#ef4444;font-size:15px;flex-direction:column;gap:8px;"><span>D3.js 未加载，血缘图谱无法渲染</span><span style="font-size:12px;color:#94a3b8;">请检查网络连接或刷新页面（已切换为本地部署）</span></div>';
             }
             return false;
         }

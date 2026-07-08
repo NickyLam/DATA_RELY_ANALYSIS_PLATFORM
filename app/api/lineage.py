@@ -13,7 +13,7 @@ from __future__ import annotations
 import logging
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 
 from app.dependencies import LineageServiceDep, ParserServiceDep, TableQueryServiceDep, admin_required
 from app.models import (
@@ -32,6 +32,7 @@ from app.models import (
     TableInfoResponse,
     TableListItem,
 )
+from app.services.lineage_export_writer import build_lineage_export_workbook
 
 logger = logging.getLogger(__name__)
 
@@ -118,6 +119,39 @@ def get_system_tables(
     return SystemTablesResponse(
         data=[TableBrief(**t) for t in limited],
         total=len(tables),
+    )
+
+
+@router.get(
+    "/systems/{system_name}/lineage/export",
+    summary="导出指定系统全量血缘 XLSX",
+    description="返回指定数据源系统的全量表级血缘和字段映射 XLSX 文件",
+    responses={
+        200: {
+            "description": "XLSX workbook",
+            "content": {
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                    "schema": {"type": "string", "format": "binary"}
+                }
+            },
+        }
+    },
+)
+def export_system_full_lineage(
+    system_name: str,
+    lineage_service: LineageServiceDep,
+) -> Response:
+    try:
+        export = lineage_service.export_system_full_lineage(system_name)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+    workbook = build_lineage_export_workbook(export)
+    filename = f"{system_name.strip().lower()}-full-lineage.xlsx"
+    return Response(
+        content=workbook,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )
 
 

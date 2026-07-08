@@ -153,13 +153,14 @@ function showNotification(message, type = 'info') {
         top: 80px;
         right: 24px;
         padding: 12px 24px;
-        background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#22c55e' : '#6366f1'};
+        background: ${type === 'error' ? '#ef4444' : type === 'success' ? '#16a34a' : '#2563eb'};
         color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border-radius: 12px;
+        box-shadow: 0 12px 28px rgba(15,23,42,0.18);
         z-index: 9999;
         animation: slideIn 0.3s ease;
         font-size: 14px;
+        font-weight: 600;
     `;
 
     document.body.appendChild(notification);
@@ -193,32 +194,32 @@ async function showSystemStats() {
         const stats = response.data;
 
         let html = `
-            <div style="max-width:500px;margin:auto;padding:32px;background:white;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.1);">
-                <h2 style="margin-bottom:20px;color:#1e293b;">📊 系统统计信息</h2>
+            <div style="max-width:500px;margin:auto;padding:32px;background:white;border-radius:16px;border:1px solid #e5eaf2;box-shadow:0 18px 38px rgba(15,23,42,0.10);">
+                <h2 style="margin-bottom:20px;color:#172033;font-size:18px;">系统统计信息</h2>
                 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
-                    <div style="padding:16px;background:#f8fafc;border-radius:8px;text-align:center;">
-                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${escapeHtml(String(stats.total_tables || 0))}</div>
+                    <div style="padding:16px;background:#f8fafc;border:1px solid #e5eaf2;border-radius:12px;text-align:center;">
+                        <div style="font-size:28px;font-weight:700;color:#2563eb;">${escapeHtml(String(stats.total_tables || 0))}</div>
                         <div style="font-size:12px;color:#64748b;margin-top:4px;">表数量</div>
                     </div>
-                    <div style="padding:16px;background:#f8fafc;border-radius:8px;text-align:center;">
-                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${escapeHtml(String(stats.total_procedures || 0))}</div>
+                    <div style="padding:16px;background:#f8fafc;border:1px solid #e5eaf2;border-radius:12px;text-align:center;">
+                        <div style="font-size:28px;font-weight:700;color:#2563eb;">${escapeHtml(String(stats.total_procedures || 0))}</div>
                         <div style="font-size:12px;color:#64748b;margin-top:4px;">存储过程</div>
                     </div>
-                    <div style="padding:16px;background:#f8fafc;border-radius:8px;text-align:center;">
-                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${escapeHtml(String(stats.total_table_lineages || 0))}</div>
+                    <div style="padding:16px;background:#f8fafc;border:1px solid #e5eaf2;border-radius:12px;text-align:center;">
+                        <div style="font-size:28px;font-weight:700;color:#2563eb;">${escapeHtml(String(stats.total_table_lineages || 0))}</div>
                         <div style="font-size:12px;color:#64748b;margin-top:4px;">表级血缘</div>
                     </div>
-                    <div style="padding:16px;background:#f8fafc;border-radius:8px;text-align:center;">
-                        <div style="font-size:28px;font-weight:700;color:#6366f1;">${escapeHtml(String(stats.total_field_mappings || 0))}</div>
+                    <div style="padding:16px;background:#f8fafc;border:1px solid #e5eaf2;border-radius:12px;text-align:center;">
+                        <div style="font-size:28px;font-weight:700;color:#2563eb;">${escapeHtml(String(stats.total_field_mappings || 0))}</div>
                         <div style="font-size:12px;color:#64748b;margin-top:4px;">字段映射</div>
                     </div>
                 </div>
                 ${stats.cache_size !== undefined ? `
-                <div style="margin-top:20px;padding:16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;">
-                    <div style="font-size:13px;color:#166534;">✅ 缓存已启用 | 缓存条目: ${escapeHtml(String(stats.cache_size || 0))}</div>
+                <div style="margin-top:20px;padding:16px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;">
+                    <div style="font-size:13px;color:#166534;">缓存已启用 | 缓存条目: ${escapeHtml(String(stats.cache_size || 0))}</div>
                 </div>` : ''}
                 <button onclick="this.closest('div').remove()"
-                    style="margin-top:20px;width:100%;padding:10px;background:#f1f5f9;border:none;border-radius:6px;cursor:pointer;font-size:13px;">
+                    style="margin-top:20px;width:100%;padding:10px;background:#f8fafc;border:1px solid #e5eaf2;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;color:#5f6f86;">
                     关闭
                 </button>
             </div>
@@ -242,7 +243,7 @@ async function showSystemStats() {
 // 初始化
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('%c🔗 数据血缘分析系统 v2.0 已启动', 'color:#6366f1;font-size:14px;font-weight:bold;');
+    console.log('%c数据血缘分析系统 v2.0 已启动', 'color:#2563eb;font-size:14px;font-weight:bold;');
 
     checkSystemHealth();
 
@@ -274,11 +275,11 @@ async function checkSystemHealth(retryCount = 0) {
 // 强制重新解析
 // ============================================
 async function forceReparse() {
-    if (!confirm('⚠️ 确定要重新全量解析吗？\n\n这将清除缓存并重新解析所有数据文件，耗时约6-10分钟。\n期间服务仍可用（使用旧数据），解析完成后自动刷新。')) {
+    if (!confirm('确定要重新全量解析吗？\n\n这将清除缓存并重新解析所有数据文件，耗时约6-10分钟。\n期间服务仍可用（使用旧数据），解析完成后自动刷新。')) {
         return;
     }
 
-    showNotification('🔄 开始全量重新解析，请耐心等待...', 'info');
+    showNotification('开始全量重新解析，请耐心等待...', 'info');
 
     try {
         const response = await apiRequest('/api/system/reparse', { method: 'POST' });
@@ -286,13 +287,13 @@ async function forceReparse() {
         if (response.success) {
             const data = response.data;
             showNotification(
-                `✅ 重新解析完成！${data.tables} 张表, ${data.procedures} 个过程, 耗时 ${data.parse_time_sec}s`,
+                `重新解析完成：${data.tables} 张表，${data.procedures} 个过程，耗时 ${data.parse_time_sec}s`,
                 'success'
             );
         } else {
-            showNotification('❌ 重新解析失败: ' + (response.error || '未知错误'), 'error');
+            showNotification('重新解析失败: ' + (response.error || '未知错误'), 'error');
         }
     } catch (error) {
-        showNotification('❌ 重新解析请求失败: ' + error.message, 'error');
+        showNotification('重新解析请求失败: ' + error.message, 'error');
     }
 }

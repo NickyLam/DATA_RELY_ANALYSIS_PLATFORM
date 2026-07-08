@@ -161,7 +161,6 @@ def main():
     # 验证
     loaded = store.load()
     if loaded:
-        loaded_meta = loaded.get("metadata", {})
         logger.info("验证结果:")
         logger.info("  表: %d", len(loaded.get("tables", [])))
         logger.info("  过程: %d", len(loaded.get("procedures", [])))

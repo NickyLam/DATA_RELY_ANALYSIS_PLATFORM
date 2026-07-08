@@ -18,6 +18,7 @@ from pathlib import Path
 
 from core.field_cleaner import FieldCleaner
 from core.parser_protocol import ParseOutput
+from core.utils.sql_comment_stripper import strip_sql_comments
 
 logger = logging.getLogger(__name__)
 
@@ -497,19 +498,26 @@ class PamDMLParser:
         }
 
     def _extract_insert_columns(self, sql: str) -> list[str]:
-        """提取 INSERT INTO ... (col1, col2, ...) 的目标列"""
+        """提取 INSERT INTO ... (col1, col2, ...) 的目标列。
+
+        先剥离 SQL 注释再按逗号拆分，避免注释内逗号
+        （如 ``--产品分类(易贷,字节)``）污染列拆分。
+        """
         m = _INSERT_COLS_RE.search(sql)
         if not m:
             return []
-        cols_str = m.group(1)
+        cols_str = strip_sql_comments(m.group(1))
         return [c.strip() for c in cols_str.split(",") if c.strip()]
 
     def _extract_select_columns(self, sql: str) -> list[str]:
-        """提取 SELECT col1, col2 ... FROM 的选择列"""
+        """提取 SELECT col1, col2 ... FROM 的选择列。
+
+        先剥离 SQL 注释再按逗号拆分，避免注释内逗号污染列拆分。
+        """
         m = _SELECT_COLS_RE.search(sql)
         if not m:
             return []
-        select_str = m.group(1)
+        select_str = strip_sql_comments(m.group(1))
         # 按逗号拆分，去除别名
         cols: list[str] = []
         for part in select_str.split(","):

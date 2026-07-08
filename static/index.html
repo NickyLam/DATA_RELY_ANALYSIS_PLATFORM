@@ -4,42 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>数据血缘分析系统 v2.0</title>
-    <link rel="stylesheet" href="/static/css/style.css?v=combo-fix-02">
+    <link rel="stylesheet" href="/static/css/style.css?v=light-ui-01">
 </head>
 <body>
     <!-- 顶部导航栏 -->
     <header class="app-header">
         <div class="header-content">
             <div class="logo-section">
-                <h1 class="app-title">🔗 数据血缘分析系统</h1>
+                <h1 class="app-title">数据血缘分析系统</h1>
                 <span class="version-badge">v2.0</span>
             </div>
 
-            <!-- 四TAB 切换 -->
+            <!-- TAB 切换 -->
             <nav class="tab-navigation">
                 <button class="tab-btn" data-tab="parse" onclick="switchTab('parse')">
-                    <span class="tab-icon">📂</span>
                     <span class="tab-text">解析层</span>
                 </button>
                 <button class="tab-btn active" data-tab="display" onclick="switchTab('display')">
-                    <span class="tab-icon">📊</span>
                     <span class="tab-text">展示层</span>
                 </button>
                 <button class="tab-btn" data-tab="indicator" onclick="switchTab('indicator')">
-                    <span class="tab-icon">📈</span>
                     <span class="tab-text">指标血缘</span>
                 </button>
             </nav>
 
             <div class="header-actions">
                 <button class="action-btn" onclick="forceReparse()" title="清除缓存并重新全量解析（耗时约6-10分钟）">
-                    🔄 重新解析
+                    重新解析
                 </button>
                 <button class="action-btn" onclick="showSystemStats()" title="系统统计">
-                    📈 统计
+                    统计
                 </button>
                 <a href="/docs" target="_blank" class="action-btn" title="API 文档">
-                    📚 API文档
+                    API 文档
                 </a>
             </div>
         </div>
@@ -55,7 +52,7 @@
                 <!-- 左侧：文件上传区 -->
                 <div class="upload-panel">
                     <div class="panel-header">
-                        <h2>📁 数据文件上传</h2>
+                        <h2>数据文件上传</h2>
                         <p class="panel-desc">上传 .tab (表结构) 或 .prc (存储过程) 文件进行解析</p>
                     </div>
 
@@ -69,7 +66,7 @@
                         onclick="document.getElementById('fileInput').click()"
                     >
                         <div class="drop-zone-content">
-                            <div class="upload-icon">�</div>
+                            <div class="upload-kicker">上传入口</div>
                             <p class="upload-text">拖拽文件到此处，或点击选择</p>
                             <p class="upload-hint">支持 .tab / .prc 文件，单次最多 100MB</p>
                         </div>
@@ -106,20 +103,20 @@
                             onclick="startParsing()"
                             disabled
                         >
-                            ⚡ 开始解析
+                            开始解析
                         </button>
                         <button
                             class="btn btn-secondary"
                             onclick="clearSelectedFiles()"
                         >
-                            🗑️ 清空列表
+                            清空列表
                         </button>
                     </div>
 
                     <!-- 快捷操作 -->
                     <div class="quick-actions">
                         <button class="btn btn-outline" onclick="triggerFullParse()">
-                            🔄 解析现有目录
+                            解析现有目录
                         </button>
                     </div>
                 </div>
@@ -129,7 +126,7 @@
                     <!-- 进度条区域 -->
                     <div id="progressSection" class="progress-section" style="display:none;">
                         <div class="panel-header">
-                            <h2>⏳ 解析进度</h2>
+                            <h2>解析进度</h2>
                             <span id="taskStatus" class="status-badge processing">处理中...</span>
                         </div>
 
@@ -163,7 +160,7 @@
 
                         <!-- 日志输出 -->
                         <div class="log-container">
-                            <h3>� 实时日志</h3>
+                            <h3>实时日志</h3>
                             <div id="logOutput" class="log-output"></div>
                         </div>
                     </div>
@@ -171,7 +168,7 @@
                     <!-- 结果展示区 -->
                     <div id="resultSection" class="result-section" style="display:none;">
                         <div class="panel-header">
-                            <h2>✅ 解析结果</h2>
+                            <h2>解析结果</h2>
                             <span id="resultStatus" class="status-badge success">完成</span>
                         </div>
 
@@ -193,14 +190,14 @@
 
                         <div class="result-actions">
                             <button class="btn btn-primary" onclick="switchTab('display')">
-                                📊 查看血缘图谱
+                                查看血缘图谱
                             </button>
                         </div>
                     </div>
 
                     <!-- 初始状态提示 -->
                     <div id="initialState" class="initial-state">
-                        <div class="empty-icon">📥</div>
+                        <div class="empty-title">等待数据</div>
                         <p>请上传文件或触发全量解析以开始</p>
                     </div>
                 </div>
@@ -214,9 +211,9 @@
                 <!-- 顶部：搜索与控制栏（横向布局） -->
                 <header class="query-header">
                     <!-- 查询模式切换 -->
-                    <div class="query-mode-toggle" style="display:flex;justify-content:center;gap:8px;margin-bottom:8px;">
-                        <button id="wizardModeBtn" class="mode-btn active" onclick="setQueryMode('wizard')" style="padding:4px 12px;border-radius:6px;font-size:12px;">🔗 级联查询</button>
-                        <button id="advancedModeBtn" class="mode-btn" onclick="setQueryMode('advanced')" style="padding:4px 12px;border-radius:6px;font-size:12px;">🔍 高级搜索</button>
+                    <div class="query-mode-toggle">
+                        <button id="wizardModeBtn" class="mode-btn active" onclick="setQueryMode('wizard')">级联查询</button>
+                        <button id="advancedModeBtn" class="mode-btn" onclick="setQueryMode('advanced')">高级搜索</button>
                     </div>
 
                     <!-- 级联查询面板（默认显示） -->
@@ -224,7 +221,7 @@
                         <div class="query-inputs-row">
                             <!-- 系统选择 -->
                             <div class="input-group">
-                                <label class="input-label">🏢 系统</label>
+                                <label class="input-label">系统</label>
                                 <select id="systemSelect" onchange="onSystemChange()">
                                     <option value="">-- 加载中... --</option>
                                 </select>
@@ -232,7 +229,7 @@
 
                             <!-- 表名 combobox（输入模糊匹配 + 下拉选择） -->
                             <div class="input-group">
-                                <label class="input-label">📋 表名</label>
+                                <label class="input-label">表名</label>
                                 <input
                                     type="text"
                                     id="tableComboInput"
@@ -245,7 +242,7 @@
 
                             <!-- 字段名 combobox（输入模糊匹配 + 下拉选择） -->
                             <div class="input-group">
-                                <label class="input-label">✏️ 字段名</label>
+                                <label class="input-label">字段名</label>
                                 <input
                                     type="text"
                                     id="fieldComboInput"
@@ -258,7 +255,7 @@
 
                             <!-- 查询方向选择 -->
                             <div class="input-group mode-group">
-                                <label class="input-label">🧭 方向</label>
+                                <label class="input-label">方向</label>
                                 <div class="mode-buttons-inline">
                                     <button class="mode-btn active" data-mode="upstream" onclick="setMode('upstream')">↑ 上游追溯</button>
                                     <button class="mode-btn" data-mode="downstream" onclick="setMode('downstream')">↓ 下游去向</button>
@@ -269,7 +266,7 @@
                             <div class="input-group btn-group">
                                 <label class="input-label">&nbsp;</label>
                                 <button id="cascadingQueryBtn" class="btn btn-primary query-btn" onclick="executeCascadingQuery()" disabled>
-                                    🔍 开始查询
+                                    开始查询
                                 </button>
                             </div>
                         </div>
@@ -280,7 +277,7 @@
                         <div class="query-inputs-row">
                             <!-- 表名输入 -->
                             <div class="input-group">
-                                <label class="input-label">📋 表名</label>
+                                <label class="input-label">表名</label>
                                 <input
                                     type="text"
                                     id="tableInput"
@@ -295,7 +292,7 @@
 
                             <!-- 字段输入 -->
                             <div class="input-group">
-                                <label class="input-label">✏️ 字段名</label>
+                                <label class="input-label">字段名</label>
                                 <input
                                     type="text"
                                     id="fieldInput"
@@ -310,7 +307,7 @@
 
                             <!-- 查询方向选择 -->
                             <div class="input-group mode-group">
-                                <label class="input-label">🧭 方向</label>
+                                <label class="input-label">方向</label>
                                 <div class="mode-buttons-inline">
                                     <button class="mode-btn active" data-mode="upstream" onclick="setMode('upstream')">↑ 上游追溯</button>
                                     <button class="mode-btn" data-mode="downstream" onclick="setMode('downstream')">↓ 下游去向</button>
@@ -321,15 +318,15 @@
                             <div class="input-group btn-group">
                                 <label class="input-label">&nbsp;</label>
                                 <button id="queryBtn" class="btn btn-primary query-btn" onclick="executeFieldQuery()" disabled>
-                                    🔍 开始查询
+                                    开始查询
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     <!-- 提示信息 -->
-                    <p style="margin-top:8px;color:#94a3b8;font-size:11px;text-align:center;">
-                        💡 依次选择系统、表名、字段名后点击查询，默认展示全部层级血缘关系
+                    <p class="query-hint">
+                        依次选择系统、表名、字段名后点击查询，默认展示全部层级血缘关系
                     </p>
                 </header>
 
@@ -337,7 +334,7 @@
                 <main class="content-area">
                     <!-- 左侧：详情面板 -->
                     <aside id="detailPanel" class="detail-panel-sidebar" style="display:none;">
-                        <h3>📊 查询详情</h3>
+                        <h3>查询详情</h3>
                         <div id="detailContent" class="detail-content"></div>
                     </aside>
 
@@ -347,7 +344,7 @@
 
                         <!-- 空状态提示 -->
                         <div id="emptyHint" class="empty-hint">
-                            <div class="empty-icon">🔍</div>
+                            <div class="empty-title">尚未查询</div>
                             <p>输入表名和字段名开始查询血缘关系</p>
                         </div>
 
@@ -385,7 +382,7 @@
                 <!-- 左侧：搜索与流水线 -->
                 <div class="indicator-left-panel">
                     <div class="panel-header">
-                        <h2>🔍 指标搜索</h2>
+                        <h2>指标搜索</h2>
                     </div>
                     <div class="indicator-search-box">
                         <input type="text" id="indicatorSearchInput" placeholder="输入指标编号 (如 FM0100011)" class="search-input">
@@ -395,7 +392,7 @@
 
                     <!-- 加工流水线 -->
                     <div class="pipeline-section">
-                        <h3>⚙️ 加工流水线</h3>
+                        <h3>加工流水线</h3>
                         <div id="indicatorPipeline" class="indicator-pipeline-container"></div>
                     </div>
                 </div>
@@ -403,7 +400,7 @@
                 <!-- 右侧：血缘图谱 -->
                 <div class="indicator-right-panel">
                     <div class="panel-header">
-                        <h2>📈 指标血缘图谱</h2>
+                        <h2>指标血缘图谱</h2>
                         <div class="view-switcher">
                             <button class="view-btn active" data-view="dag" onclick="switchIndicatorView('dag')">DAG</button>
                             <button class="view-btn" data-view="pipeline" onclick="switchIndicatorView('pipeline')">流水线</button>

@@ -23,6 +23,7 @@ from pathlib import Path
 from core.field_cleaner import FieldCleaner
 from core.models import FieldMapping, ProcedureInfo, TableInfo, TableLineage
 from core.parser_protocol import ParseOutput
+from core.utils.sql_comment_stripper import strip_sql_comments
 from core.warehouse.schema_resolver import SchemaResolver
 from core.warehouse.temp_table_filter import TempTableFilter
 
@@ -962,63 +963,12 @@ class DMLParser:
 
     @staticmethod
     def _strip_sql_comments(sql: str) -> str:
-        """移除 SQL 注释，保留字符串内容和换行边界。"""
-        result: list[str] = []
-        in_single_quote = False
-        in_double_quote = False
-        in_line_comment = False
-        in_block_comment = False
-        i = 0
+        """移除 SQL 注释，保留字符串内容和换行边界。
 
-        while i < len(sql):
-            ch = sql[i]
-            next_ch = sql[i + 1] if i + 1 < len(sql) else ""
-
-            if in_line_comment:
-                if ch == "\n":
-                    in_line_comment = False
-                    result.append(ch)
-                else:
-                    result.append(" ")
-                i += 1
-                continue
-
-            if in_block_comment:
-                if ch == "*" and next_ch == "/":
-                    in_block_comment = False
-                    result.extend("  ")
-                    i += 2
-                else:
-                    result.append("\n" if ch == "\n" else " ")
-                    i += 1
-                continue
-
-            if not in_single_quote and not in_double_quote:
-                if ch == "-" and next_ch == "-":
-                    in_line_comment = True
-                    result.extend("  ")
-                    i += 2
-                    continue
-                if ch == "/" and next_ch == "*":
-                    in_block_comment = True
-                    result.extend("  ")
-                    i += 2
-                    continue
-
-            result.append(ch)
-
-            if ch == "'" and not in_double_quote:
-                if next_ch == "'":
-                    result.append(next_ch)
-                    i += 2
-                    continue
-                in_single_quote = not in_single_quote
-            elif ch == '"' and not in_single_quote:
-                in_double_quote = not in_double_quote
-
-            i += 1
-
-        return "".join(result)
+        委托到 core.utils.sql_comment_stripper.strip_sql_comments，
+        避免各解析器重复实现（CodeReview D-07）。
+        """
+        return strip_sql_comments(sql)
 
     def _is_valid_table_name(self, name: str) -> bool:
         """判断名称是否为有效的表名（排除函数、关键字、常量等）
@@ -1088,11 +1038,16 @@ class DMLParser:
         """解析目标字段列表
 
         处理格式: "col1 -- 注释, col2 -- 注释, col3"
+
+        注意：必须先剥离整段注释再按逗号拆分，否则注释中的逗号
+        （如 "--产品分类(易贷,字节)"）会被误判为列分隔符，导致
+        "字节)" 被提取为列名。
         """
+        # 先剥离 SQL 注释（含 -- 行注释和 /* */ 块注释），避免注释内逗号污染拆分
+        cleaned = self._strip_sql_comments(columns_raw)
         columns = []
-        for col in columns_raw.split(","):
-            # 去掉行内注释
-            col = col.split("--")[0].strip()
+        for col in cleaned.split(","):
+            col = col.strip()
             col = col.strip('"').strip("'").strip()
             if col:
                 columns.append(col.upper())
