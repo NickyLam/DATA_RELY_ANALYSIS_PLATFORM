@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/NickyLam/DATA_RELY_ANALYSIS_PLATFORM/security/advisories/new
+    about: Please use private vulnerability reporting if enabled. Do not disclose sensitive details in public issues.

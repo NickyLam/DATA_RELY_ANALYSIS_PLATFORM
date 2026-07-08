@@ -1,0 +1,55 @@
+name: Bug report
+description: Report a reproducible defect using synthetic data only.
+title: "[Bug]: "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not attach real `SOURCE_DATA/`, database files, logs with secrets, or proprietary SQL. Use a minimal synthetic SQL sample.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What went wrong?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Provide commands, endpoint calls, or UI steps.
+      placeholder: |
+        1. Start with python3.11 run_app.py
+        2. Upload or parse this synthetic SQL...
+        3. Query /api/lineage/query...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: sample_sql
+    attributes:
+      label: Minimal synthetic SQL
+      render: sql
+      description: Include only safe synthetic SQL.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: v2.2.0 or commit SHA
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Python version, OS, browser, storage backend.

@@ -1,0 +1,41 @@
+name: Feature request
+description: Propose a capability, parser improvement, or UX enhancement.
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user or governance problem should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior, API, parser support, or UI change.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Safe examples
+      description: Use synthetic SQL or anonymized schemas only.
+      render: sql
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Parser
+        - Lineage engine
+        - Caliber tracing
+        - Indicator analysis
+        - API
+        - Frontend
+        - Storage/cache
+        - Documentation
+        - Other
+    validations:
+      required: true

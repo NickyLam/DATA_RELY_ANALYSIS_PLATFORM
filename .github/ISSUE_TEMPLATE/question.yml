@@ -1,0 +1,21 @@
+name: Question
+description: Ask setup, usage, extension, or roadmap questions.
+title: "[Question]: "
+labels: ["question", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please avoid real business SQL, screenshots with sensitive data, and local cache/database files.
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What are you trying to understand or decide?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Include synthetic examples or local setup details if relevant.

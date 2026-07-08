@@ -1,7 +1,31 @@
-# 数据血缘分析系统 (Data Lineage Analysis System)
+# Open-source data lineage analyzer for Oracle and enterprise data warehouse SQL
 
-> 项目版本: v2.1.0
-> 最后更新: 2026-05-22
+> 数据血缘分析系统 / Field-level Data Lineage Analysis System
+
+> 项目版本: v2.2.0
+> 最后更新: 2026-07-08
+
+## English summary
+
+This project is an open-source field-level data lineage analyzer for Oracle scripts and enterprise data warehouse SQL. It parses DDL, DML, stored procedures, SQL files, control files, and indicator spreadsheets, then builds table/field lineage graphs, caliber tracing chains, and visual lineage diagrams for review, governance, and impact analysis.
+
+![Demo lineage graph](docs/assets/demo-lineage-graph.png)
+
+**What reviewers can verify in 30 seconds:**
+
+- Parse Oracle and warehouse SQL into table-level and field-level lineage.
+- Trace upstream/downstream dependencies through layered warehouse schemas such as SRC, MSL, ITL, IOL, ICL, IML, IDL, IEL, and DQC.
+- Visualize the result in a D3.js graph with layer colors, highlighted paths, search, and node details.
+- Export lineage/caliber evidence for audits and data governance reviews.
+
+Useful open-source links:
+
+- [Demo walkthrough](docs/demo.md)
+- [v2.2.0 release notes](docs/releases/v2.2.0.md)
+- [Changelog](CHANGELOG.md)
+- [Contributing guide](CONTRIBUTING.md)
+- [Security policy](SECURITY.md)
+- [Roadmap](ROADMAP.md)
 
 ## 项目简介
 
@@ -25,7 +49,7 @@
 | 数据模型 | Pydantic v2 + dataclass |
 | SQL 解析 | sqlglot |
 | 前端可视化 | D3.js v7 + 原生 JS |
-| 缓存 | 内存 TTL/LRU 缓存 + pickle/json 双写持久化 |
+| 缓存 | SQLite 结果缓存 + 内存索引 + 可选 legacy pickle/json 兼容 |
 
 ## 快速开始
 
@@ -37,16 +61,53 @@
 ### 安装与启动
 
 ```bash
-# 1. 安装依赖
-pip install -r requirements.txt
+# 1. 建议使用 Python 3.11+
+python3.11 -m venv .venv
+source .venv/bin/activate
 
-# 2. 启动服务
-python run_app.py
+# 2. 安装依赖
+python3.11 -m pip install -r requirements.txt
+
+# 3. 启动服务（默认端口 8899）
+python3.11 run_app.py
+
+# 如需强制重新解析数据源
+python3.11 run_app.py --reparse
 ```
 
 服务默认运行在 `http://localhost:8899`，API 文档可通过 `http://localhost:8899/docs` 访问。
 
 前端页面：`http://localhost:8899/static/index.html`
+
+### Example SQL
+
+更多示例见 [`docs/examples/oracle_warehouse_lineage.sql`](docs/examples/oracle_warehouse_lineage.sql)。
+
+```sql
+CREATE TABLE ICL.CUSTOMER_DAILY_SNAPSHOT AS
+SELECT
+    c.CUST_ID,
+    c.CUST_NAME,
+    a.ACCT_BALANCE,
+    CASE WHEN a.ACCT_BALANCE > 100000 THEN 'VIP' ELSE 'STANDARD' END AS CUSTOMER_TIER
+FROM IML.CUSTOMER_PROFILE c
+LEFT JOIN IOL.ACCOUNT_BALANCE a
+    ON c.CUST_ID = a.CUST_ID;
+```
+
+Query the generated lineage:
+
+```bash
+curl -X POST http://localhost:8899/api/lineage/query \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "target_table": "ICL.CUSTOMER_DAILY_SNAPSHOT",
+    "target_field": "CUSTOMER_TIER",
+    "direction": "upstream"
+  }'
+```
+
+Example output is available at [`docs/examples/lineage_query_output.json`](docs/examples/lineage_query_output.json).
 
 ### 数据准备
 

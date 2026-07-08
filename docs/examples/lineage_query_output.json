@@ -1,0 +1,59 @@
+{
+  "target": {
+    "table": "ICL.CUSTOMER_DAILY_SNAPSHOT",
+    "field": "CUSTOMER_TIER"
+  },
+  "direction": "upstream",
+  "summary": {
+    "node_count": 4,
+    "edge_count": 3,
+    "max_depth": 2
+  },
+  "nodes": [
+    {
+      "id": "ICL.CUSTOMER_DAILY_SNAPSHOT.CUSTOMER_TIER",
+      "table": "ICL.CUSTOMER_DAILY_SNAPSHOT",
+      "field": "CUSTOMER_TIER",
+      "layer": "ICL",
+      "role": "target"
+    },
+    {
+      "id": "IOL.ACCOUNT_BALANCE.ACCT_BALANCE",
+      "table": "IOL.ACCOUNT_BALANCE",
+      "field": "ACCT_BALANCE",
+      "layer": "IOL",
+      "role": "source"
+    },
+    {
+      "id": "IML.CUSTOMER_PROFILE.CUST_ID",
+      "table": "IML.CUSTOMER_PROFILE",
+      "field": "CUST_ID",
+      "layer": "IML",
+      "role": "join_key"
+    },
+    {
+      "id": "IOL.ACCOUNT_BALANCE.CUST_ID",
+      "table": "IOL.ACCOUNT_BALANCE",
+      "field": "CUST_ID",
+      "layer": "IOL",
+      "role": "join_key"
+    }
+  ],
+  "edges": [
+    {
+      "source": "IOL.ACCOUNT_BALANCE.ACCT_BALANCE",
+      "target": "ICL.CUSTOMER_DAILY_SNAPSHOT.CUSTOMER_TIER",
+      "transform": "CASE WHEN ACCT_BALANCE > 100000 THEN 'VIP' ELSE 'STANDARD' END"
+    },
+    {
+      "source": "IML.CUSTOMER_PROFILE.CUST_ID",
+      "target": "ICL.CUSTOMER_DAILY_SNAPSHOT.CUSTOMER_TIER",
+      "transform": "LEFT JOIN customer profile to account balance"
+    },
+    {
+      "source": "IOL.ACCOUNT_BALANCE.CUST_ID",
+      "target": "ICL.CUSTOMER_DAILY_SNAPSHOT.CUSTOMER_TIER",
+      "transform": "LEFT JOIN account balance to customer profile"
+    }
+  ]
+}
