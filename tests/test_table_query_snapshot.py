@@ -6,14 +6,6 @@ from app.services.index_snapshot import FieldLineageTracingView, IndexSnapshot, 
 from app.services.table_query_service import TableQueryService
 
 
-class _Parser:
-    def __init__(self, data: dict[str, Any]) -> None:
-        self.data = data
-
-    def get_current_data(self) -> dict[str, Any]:
-        return self.data
-
-
 class _Cache:
     size = 7
 
@@ -72,8 +64,7 @@ def _snapshot(marker: str, generation: int) -> IndexSnapshot:
 
 def test_each_table_query_reader_uses_one_captured_generation() -> None:
     owner = _Owner(_snapshot("N1", 1))
-    parser = _Parser(_data("LIVE"))
-    service = TableQueryService(parser, _Cache(), owner)
+    service = TableQueryService(_Cache(), owner)
     owner.after_capture = lambda: setattr(owner, "snapshot", _snapshot("N2", 2))
 
     readers = [
@@ -98,7 +89,7 @@ def test_each_table_query_reader_uses_one_captured_generation() -> None:
 
 def test_no_snapshot_never_falls_back_to_live_parser_or_cache_projection() -> None:
     owner = _Owner(None)
-    service = TableQueryService(_Parser(_data("LIVE")), _Cache(), owner)
+    service = TableQueryService(_Cache(), owner)
 
     assert service.search_tables("LIVE") == []
     assert service.search_procedures("LIVE") == []

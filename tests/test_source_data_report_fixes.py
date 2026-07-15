@@ -28,7 +28,7 @@ def _table_query_service(parser: _Parser) -> TableQueryService:
         publication_revision=1,
     )
     owner = type("Owner", (), {"capture_snapshot": lambda self: snapshot})()
-    return TableQueryService(parser, _Cache(), owner)
+    return TableQueryService(_Cache(), owner)
 
 
 def test_manifest_loader_prefers_child_manifest_parser(tmp_path: Path):

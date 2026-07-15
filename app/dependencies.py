@@ -87,10 +87,8 @@ def get_progress_service() -> ProgressService:
 
 @lru_cache
 def get_table_query_service() -> TableQueryService:
-    parser = get_parser_service()
     cache = get_cache_manager()
     return TableQueryService(
-        parser_service=parser,
         cache_manager=cache,
         index_service=get_index_service(),
     )

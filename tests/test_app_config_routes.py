@@ -84,7 +84,6 @@ def test_index_owner_is_cached_and_injected_into_query_services():
         index_service=owner,
     )
     table_query_type.assert_called_once_with(
-        parser_service=parser,
         cache_manager=cache,
         index_service=owner,
     )

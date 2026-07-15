@@ -95,7 +95,7 @@ def client_with_data(mock_parser_service, mock_cache_manager):
             publication_revision=1,
         )
         owner = SimpleNamespace(capture_snapshot=lambda: snapshot)
-        table_query_service = TableQueryService(mock_parser_service, mock_cache_manager, owner)
+        table_query_service = TableQueryService(mock_cache_manager, owner)
         app.dependency_overrides[get_table_query_service] = lambda: table_query_service
 
         try:

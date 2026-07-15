@@ -9,7 +9,6 @@ from typing import Any
 
 from app.services.index_service import IndexService
 from app.services.index_snapshot import IndexSnapshot
-from app.services.parser_service import ParserService
 from app.services.system_membership import (
     build_schema_to_system,
     normalize_data_source,
@@ -25,11 +24,9 @@ class TableQueryService:
 
     def __init__(
         self,
-        parser_service: ParserService,
         cache_manager: CacheManager,
         index_service: IndexService,
     ):
-        self._parser = parser_service
         self._cache = cache_manager
         self._index_service = index_service
         self._resolver = TableNameResolver()
@@ -155,11 +152,7 @@ class TableQueryService:
         if snapshot is None:
             return None
 
-        table_upper = table.upper()
-        for table_info in snapshot.get_source_data().get("tables", []):
-            if table_info.get("full_name", "").upper() == table_upper:
-                return table_info
-        return None
+        return snapshot.query_index.get_table_by_full(table)
 
     def get_system_stats(self) -> dict[str, Any]:
         """获取系统统计信息"""
