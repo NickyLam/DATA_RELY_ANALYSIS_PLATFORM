@@ -129,8 +129,7 @@ class _ParserWithRepositorySearch:
 
 
 class _NoopCache:
-    def build_index(self, tables, procedures):
-        pass
+    pass
 
 
 def test_lineage_service_search_tables_uses_captured_snapshot():

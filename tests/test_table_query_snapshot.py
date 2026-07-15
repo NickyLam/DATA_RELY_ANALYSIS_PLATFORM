@@ -17,9 +17,6 @@ class _Parser:
 class _Cache:
     size = 7
 
-    def search_by_keyword(self, *args, **kwargs) -> list[str]:
-        return ["LIVE.P_LIVE"]
-
 
 class _Owner:
     def __init__(self, snapshot: IndexSnapshot | None) -> None:

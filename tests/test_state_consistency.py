@@ -45,22 +45,16 @@ def test_parser_service_rebuilds_unified_tracer_after_data_reload(tmp_path: Path
     assert old_tracer.get_node_detail("OLD_SCHEMA.OLD_TABLE")["table"] == "OLD_SCHEMA.OLD_TABLE"
 
 
-def test_cache_manager_build_index_replaces_old_table_and_procedure_indexes() -> None:
-    cache = CacheManager()
-    cache.build_index(
-        tables=[{"full_name": "OLD_SCHEMA.OLD_TABLE"}],
-        procedures=[{"full_name": "OLD_PROC.P_OLD"}],
-    )
+def test_cache_manager_keeps_only_ttl_lru_cache_responsibilities() -> None:
+    cache = CacheManager(max_size=2)
+    cache.set("first", {"value": 1})
+    cache.set("second", {"value": 2})
 
-    assert cache.search_by_keyword("OLD_TABLE") == ["OLD_SCHEMA.OLD_TABLE"]
-    assert cache.search_by_keyword("P_OLD", index_type="procedure_name") == ["OLD_PROC.P_OLD"]
+    assert cache.get("first") == {"value": 1}
 
-    cache.build_index(
-        tables=[{"full_name": "NEW_SCHEMA.NEW_TABLE"}],
-        procedures=[{"full_name": "NEW_PROC.P_NEW"}],
-    )
+    cache.set("third", {"value": 3})
 
-    assert "OLD_SCHEMA.OLD_TABLE" not in cache.search_by_keyword("OLD_TABLE")
-    assert "OLD_PROC.P_OLD" not in cache.search_by_keyword("P_OLD", index_type="procedure_name")
-    assert cache.search_by_keyword("NEW_TABLE") == ["NEW_SCHEMA.NEW_TABLE"]
-    assert cache.search_by_keyword("P_NEW", index_type="procedure_name") == ["NEW_PROC.P_NEW"]
+    assert cache.get("second") is None
+    assert cache.get("first") == {"value": 1}
+    assert cache.get("third") == {"value": 3}
+    assert cache.stats == {"size": 2, "max_size": 2, "ttl": 3600}

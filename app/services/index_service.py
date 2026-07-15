@@ -13,8 +13,6 @@ from typing import Any
 from app.services.event_bus import DataChangedEvent, EventBus, EventType, get_event_bus
 from app.services.index_snapshot import IndexSnapshot, ParserStateCapture
 from app.services.parser_service import ParserService
-from app.services.table_lineage_tracer import TableLineageTracer
-from app.utils.cache_manager import CacheManager
 
 logger = logging.getLogger(__name__)
 
@@ -53,6 +51,15 @@ class RefreshResult:
     failure_code: str | None = None
     completed_at: float = 0.0
 
+    @property
+    def request_superseded(self) -> bool:
+        """事件请求的 generation 已被原子 capture 中的更新 generation 超越。"""
+        return (
+            self.requested_generation is not None
+            and self.candidate_generation is not None
+            and self.candidate_generation > self.requested_generation
+        )
+
 
 @dataclass(frozen=True)
 class IndexOwnerState:
@@ -85,17 +92,12 @@ class IndexService:
     def __init__(
         self,
         parser_service: ParserService,
-        cache_manager: CacheManager | None = None,
-        table_tracer: TableLineageTracer | None = None,
         *,
         event_bus: EventBus | None = None,
         snapshot_builder: SnapshotBuilder | None = None,
         auto_start: bool = True,
     ) -> None:
         self._parser = parser_service
-        # U3 切换 reader 前保留旧构造参数；候选构建绝不改写这些外部可变对象。
-        self._cache = cache_manager
-        self._table_tracer = table_tracer
         self._snapshot_builder = snapshot_builder or _build_snapshot
         self._event_bus = event_bus or get_event_bus()
 
@@ -111,10 +113,6 @@ class IndexService:
         self._next_publication_revision = 0
         self._event_flights: dict[int, _EventFlight] = {}
         self._start_result: RefreshResult | None = None
-
-        # U6 在迁移出口删除；U2 期间保持旧 API 兼容，但不再参与快照发布。
-        self._transitive_cache: dict[tuple, set] = {}
-        self._last_data_mtime = 0.0
 
         if auto_start:
             self.start()
@@ -144,6 +142,7 @@ class IndexService:
             "outcome": attempt.outcome.value,
             "requested_generation": attempt.requested_generation,
             "candidate_generation": attempt.candidate_generation,
+            "request_superseded": attempt.request_superseded,
             "failure_component": attempt.failure_component,
             "failure_code": attempt.failure_code,
             "completed_at": attempt.completed_at,
@@ -273,9 +272,14 @@ class IndexService:
                 self._record_attempt_locked(result)
                 return result
             if committed == candidate_generation and not force:
+                outcome = (
+                    RefreshOutcome.COALESCED
+                    if self._state.publication_namespace != base_namespace
+                    else RefreshOutcome.DUPLICATE
+                )
                 result = RefreshResult(
                     attempt_id,
-                    RefreshOutcome.DUPLICATE,
+                    outcome,
                     requested_generation,
                     candidate_generation,
                     base_namespace,
@@ -353,9 +357,14 @@ class IndexService:
                     )
                     self._record_attempt_locked(result)
                 elif committed == candidate_generation and not force:
+                    outcome = (
+                        RefreshOutcome.COALESCED
+                        if self._state.publication_namespace != base_namespace
+                        else RefreshOutcome.DUPLICATE
+                    )
                     result = RefreshResult(
                         attempt_id,
-                        RefreshOutcome.DUPLICATE,
+                        outcome,
                         requested_generation,
                         candidate_generation,
                         base_namespace,
@@ -506,42 +515,3 @@ class IndexService:
     def _on_cache_invalidated(self, **_kwargs: Any) -> None:
         # 缓存失效不是数据 generation，不能绕过同代去重。
         self.refresh(requested_generation=self._parser.data_generation, trigger="event")
-
-    # ---- U2 迁移期旧调用面；U3/U6 完成后移除 ----
-    def build_indexes(self) -> None:
-        self.refresh(trigger="legacy")
-
-    def rebuild_indexes(self) -> RefreshResult:
-        return self.refresh(force=True, trigger="explicit")
-
-    def check_and_refresh_cache(self) -> None:
-        current_mtime = self._get_data_mtime()
-        if current_mtime is None:
-            return
-        if self._last_data_mtime == 0:
-            self._last_data_mtime = current_mtime
-            return
-        if current_mtime > self._last_data_mtime:
-            self.refresh(requested_generation=self._parser.data_generation, trigger="event")
-            self._last_data_mtime = current_mtime
-
-    def clear_transitive_cache(self) -> None:
-        self._transitive_cache.clear()
-
-    @property
-    def transitive_cache(self) -> dict[tuple, set]:
-        return self._transitive_cache
-
-    def _get_data_mtime(self) -> float | None:
-        try:
-            repo = self._parser.get_repository()
-            metadata = repo.get_metadata()
-            last_updated = metadata.get("last_updated", "")
-            if last_updated:
-                from datetime import datetime
-
-                return datetime.strptime(str(last_updated), "%Y-%m-%d %H:%M:%S").timestamp()
-        except Exception:
-            pass
-        cache_file = self._parser.output_dir / "lineage_data.json"
-        return cache_file.stat().st_mtime if cache_file.exists() else None

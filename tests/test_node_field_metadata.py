@@ -17,9 +17,6 @@ from app.services.lineage_service import LineageService
 class _NoopCache:
     """Minimal cache stub that satisfies LineageService queries."""
 
-    def build_index(self, tables, procedures):
-        pass
-
     def clear(self):
         pass
 
@@ -28,9 +25,6 @@ class _NoopCache:
 
     def set(self, key, value):
         pass
-
-    def search_by_keyword(self, keyword, index_type="", limit=50):
-        return []
 
     @property
     def size(self):

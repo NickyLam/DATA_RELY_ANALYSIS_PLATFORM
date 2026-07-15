@@ -21,9 +21,6 @@ class _Parser:
 class _Cache:
     size = 0
 
-    def search_by_keyword(self, *args, **kwargs):
-        return []
-
 
 def _table_query_service(parser: _Parser) -> TableQueryService:
     snapshot = IndexSnapshot.build(

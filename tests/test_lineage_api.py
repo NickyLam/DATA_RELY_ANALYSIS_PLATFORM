@@ -172,7 +172,6 @@ class TestCacheRebuild:
             assert response.json()["success"] is True
             assert response.json()["message"] == "索引重建完成"
             owner.refresh.assert_called_once_with(force=True, trigger="explicit")
-            mock_lineage_service.rebuild_indexes.assert_not_called()
         finally:
             app.dependency_overrides.pop(get_index_service, None)
 

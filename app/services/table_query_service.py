@@ -27,7 +27,7 @@ class TableQueryService:
         self,
         parser_service: ParserService,
         cache_manager: CacheManager,
-        index_service: IndexService | None = None,
+        index_service: IndexService,
     ):
         self._parser = parser_service
         self._cache = cache_manager
@@ -35,9 +35,7 @@ class TableQueryService:
         self._resolver = TableNameResolver()
 
     def _capture_snapshot(self) -> IndexSnapshot | None:
-        """兼容 U5 composition 接线前的无 owner 构造，不回退 live parser。"""
-        if self._index_service is None:
-            return None
+        """捕获一次 committed 快照，供整个查询调用链一致使用。"""
         return self._index_service.capture_snapshot()
 
     def search_tables(

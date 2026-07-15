@@ -12,6 +12,7 @@ from app.services.index_service import (
     CandidateBuildError,
     IndexService,
     RefreshOutcome,
+    RefreshResult,
 )
 from app.services.index_snapshot import IndexSnapshot, ParserStateCapture
 from app.services.parser_service import ParseResult, ParserService
@@ -388,6 +389,81 @@ def test_concurrent_duplicate_event_is_single_flight(parser: ParserService) -> N
         owner.close()
 
 
+def test_same_generation_published_during_capture_is_coalesced(parser: ParserService) -> None:
+    generation = _publish_parser_generation(parser, 1)
+    owner = _owner(parser)
+    owner.start()
+    entered = threading.Event()
+    release = threading.Event()
+    worker_id: int | None = None
+    original_capture = parser.capture_query_state
+
+    def capture_with_pause() -> ParserStateCapture | None:
+        capture = original_capture()
+        if threading.get_ident() == worker_id:
+            entered.set()
+            assert release.wait(2)
+        return capture
+
+    parser.capture_query_state = capture_with_pause  # type: ignore[method-assign]
+    outcomes: list[RefreshResult] = []
+
+    def refresh_in_worker() -> None:
+        nonlocal worker_id
+        worker_id = threading.get_ident()
+        outcomes.append(owner.refresh(requested_generation=generation))
+
+    thread = threading.Thread(target=refresh_in_worker)
+    thread.start()
+    assert entered.wait(2)
+    forced = owner.refresh(requested_generation=generation, force=True)
+    release.set()
+    thread.join(2)
+    try:
+        assert forced.outcome is RefreshOutcome.FORCED_PUBLISHED
+        assert [result.outcome for result in outcomes] == [RefreshOutcome.COALESCED]
+        assert outcomes[0].base_publication_namespace == (generation, 1)
+        assert outcomes[0].publication_namespace == (generation, 2)
+    finally:
+        owner.close()
+
+
+def test_same_generation_published_during_build_is_coalesced(parser: ParserService) -> None:
+    entered = threading.Event()
+    release = threading.Event()
+    build_count = 0
+
+    def builder(capture: ParserStateCapture, revision: int) -> IndexSnapshot:
+        nonlocal build_count
+        build_count += 1
+        if build_count == 2:
+            entered.set()
+            assert release.wait(2)
+        return IndexSnapshot.build(capture, publication_revision=revision)
+
+    generation_one = _publish_parser_generation(parser, 1)
+    owner = _owner(parser, builder=builder)
+    assert owner.start().outcome is RefreshOutcome.PUBLISHED
+    generation_two = _publish_parser_generation(parser, 2)
+    outcomes: list[RefreshResult] = []
+    thread = threading.Thread(
+        target=lambda: outcomes.append(owner.refresh(requested_generation=generation_two))
+    )
+    thread.start()
+    assert entered.wait(2)
+    forced = owner.refresh(requested_generation=generation_two, force=True)
+    release.set()
+    thread.join(2)
+    try:
+        assert generation_one == 1
+        assert forced.outcome is RefreshOutcome.PUBLISHED
+        assert [result.outcome for result in outcomes] == [RefreshOutcome.COALESCED]
+        assert outcomes[0].base_publication_namespace == (generation_one, 1)
+        assert outcomes[0].publication_namespace == (generation_two, 3)
+    finally:
+        owner.close()
+
+
 def test_forced_rebuilds_serialize_and_capture_generation_is_authoritative(parser: ParserService) -> None:
     active = 0
     max_active = 0
@@ -419,6 +495,7 @@ def test_forced_rebuilds_serialize_and_capture_generation_is_authoritative(parse
         _publish_parser_generation(parser, 2)
         delayed_event = owner.refresh(requested_generation=generation, trigger="event")
         assert delayed_event.candidate_generation == 2
+        assert delayed_event.request_superseded is True
         assert delayed_event.outcome is RefreshOutcome.PUBLISHED
         assert owner.capture_snapshot().generation == 2  # type: ignore[union-attr]
     finally:

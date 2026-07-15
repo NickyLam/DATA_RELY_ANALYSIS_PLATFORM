@@ -34,9 +34,6 @@ class _Parser:
 class _Cache:
     size = 0
 
-    def build_index(self, *args, **kwargs):
-        return None
-
     def clear(self):
         return None
 
@@ -45,9 +42,6 @@ class _Cache:
 
     def set(self, *args, **kwargs):
         return None
-
-    def search_by_keyword(self, *args, **kwargs):
-        return []
 
 
 class _UnusedTracer:

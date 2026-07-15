@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -667,6 +668,83 @@ def test_cutover_gate_requires_all_four_independent_evidence_classes() -> None:
                 production_legacy_call_sites_absent=False,
             )
         )
+
+    assert_cutover_ready(
+        CutoverEvidence(
+            equivalence=True,
+            failed_candidate_fallback=True,
+            mixed_generation_concurrency=True,
+            production_legacy_call_sites_absent=True,
+        )
+    )
+
+
+def test_production_legacy_projection_call_sites_are_absent() -> None:
+    """U6 structural gate: IndexService is the only production projection writer."""
+    repository_root = Path(__file__).resolve().parents[1]
+    service_sources = {
+        path.name: path.read_text(encoding="utf-8")
+        for path in (repository_root / "app" / "services").glob("*.py")
+    }
+    lineage_source = service_sources["lineage_service.py"]
+    table_query_source = service_sources["table_query_service.py"]
+    owner_source = service_sources["index_service.py"]
+    cache_source = (repository_root / "app" / "utils" / "cache_manager.py").read_text(
+        encoding="utf-8"
+    )
+
+    for event_type in ("DATA_CHANGED", "CACHE_INVALIDATED"):
+        subscribers = [
+            name
+            for name, source in service_sources.items()
+            if f"subscribe(EventType.{event_type}" in source
+        ]
+        assert subscribers == ["index_service.py"]
+
+    forbidden_lineage_state = (
+        "_transitive_cache",
+        "_last_data_mtime",
+        "_index_generation",
+        "self._table_tracer",
+        "self._index = LineageQueryIndex()",
+        "adjacency_up.clear()",
+        "adjacency_down.clear()",
+        "def _build_indexes(",
+        "def rebuild_indexes(",
+        "def _check_and_refresh_cache(",
+        "if self._index_service is None",
+    )
+    assert not [token for token in forbidden_lineage_state if token in lineage_source]
+    assert "if self._index_service is None" not in table_query_source
+
+    forbidden_owner_facades = (
+        "_transitive_cache",
+        "_last_data_mtime",
+        "def build_indexes(",
+        "def rebuild_indexes(",
+        "def check_and_refresh_cache(",
+        "def clear_transitive_cache(",
+        "def transitive_cache(",
+        "def _get_data_mtime(",
+    )
+    assert not [token for token in forbidden_owner_facades if token in owner_source]
+
+    forbidden_cache_search = (
+        "self._indexes",
+        "def build_index(",
+        "def search_by_keyword(",
+        "def _tokenize(",
+        "def _add_to_indexes(",
+        "def _remove_from_indexes(",
+    )
+    assert not [token for token in forbidden_cache_search if token in cache_source]
+
+    query_index_builders = [
+        name
+        for name, source in service_sources.items()
+        if "LineageQueryIndex()" in source
+    ]
+    assert query_index_builders == ["index_snapshot.py"]
 
     assert_cutover_ready(
         CutoverEvidence(
