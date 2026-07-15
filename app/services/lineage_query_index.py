@@ -203,7 +203,9 @@ class LineageQueryIndex:
 
         short_hits = self.table_by_short.get(table_upper)
         if short_hits:
-            return short_hits[0].get("full_name", table_name)
+            # Legacy TableLineageTracer used a short-name dictionary populated
+            # in source order, so duplicate definitions resolve last-wins.
+            return short_hits[-1].get("full_name", table_name)
 
         # 步骤1: 显式 schema 直接返回
         if "." in table_upper:
