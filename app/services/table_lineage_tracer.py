@@ -7,14 +7,19 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING
+from copy import deepcopy
+from typing import Protocol
 
 from core.table_name_resolver import TableNameResolver
 
-if TYPE_CHECKING:
-    from app.services.lineage_query_index import LineageQueryIndex
-
 logger = logging.getLogger(__name__)
+
+
+class TableNameQueryIndex(Protocol):
+    @property
+    def is_built(self) -> bool: ...
+
+    def resolve_table_name(self, table_name: str, adjacency_keys: set[str] | None = None) -> str: ...
 
 
 class TableLineageTracer:
@@ -30,6 +35,11 @@ class TableLineageTracer:
         self._resolver = resolver
         self._adjacency_up: dict[str, set[str]] = {}
         self._adjacency_down: dict[str, set[str]] = {}
+        self._built = False
+
+    @property
+    def is_built(self) -> bool:
+        return self._built
 
     @property
     def adjacency_up(self) -> dict[str, set[str]]:
@@ -54,6 +64,8 @@ class TableLineageTracer:
             self._adjacency_up.setdefault(tgt, set()).add(src)
             self._adjacency_down.setdefault(src, set()).add(tgt)
 
+        self._built = True
+
         node_count = len(set(list(self._adjacency_up.keys()) + list(self._adjacency_down.keys())))
         edge_count = sum(len(v) for v in self._adjacency_up.values())
         logger.info("图预处理完成: %d 个节点, %d 条边", node_count, edge_count)
@@ -61,6 +73,13 @@ class TableLineageTracer:
     def clear(self) -> None:
         self._adjacency_up.clear()
         self._adjacency_down.clear()
+        self._built = False
+
+    def as_read_only(self) -> ReadOnlyTableLineageTracer:
+        """返回不暴露可变邻接表的查询外观。"""
+        if not self._built:
+            raise RuntimeError("TableLineageTracer 尚未构建")
+        return ReadOnlyTableLineageTracer(self)
 
     def trace(
         self,
@@ -68,7 +87,7 @@ class TableLineageTracer:
         data: dict,
         max_depth: int,
         direction: str = "up",
-        query_index: LineageQueryIndex | None = None,
+        query_index: TableNameQueryIndex | None = None,
     ) -> tuple[set[str], list[dict]]:
         """追踪表级血缘关系（BFS）。
 
@@ -211,3 +230,36 @@ class TableLineageTracer:
 
         # 3d) 无真实表候选时，回退到邻接表候选（最短匹配）
         return min(candidates, key=len)
+
+
+class ReadOnlyTableLineageTracer:
+    """表级追踪器的不可变接口；所有集合结果均与内部状态隔离。"""
+
+    def __init__(self, source: TableLineageTracer) -> None:
+        self._tracer = deepcopy(source)
+
+    @property
+    def is_built(self) -> bool:
+        return self._tracer.is_built
+
+    @property
+    def adjacency_up(self) -> dict[str, set[str]]:
+        return {table: set(neighbors) for table, neighbors in self._tracer.adjacency_up.items()}
+
+    @property
+    def adjacency_down(self) -> dict[str, set[str]]:
+        return {table: set(neighbors) for table, neighbors in self._tracer.adjacency_down.items()}
+
+    def trace(
+        self,
+        start_table: str,
+        data: dict,
+        max_depth: int,
+        direction: str = "up",
+        query_index: TableNameQueryIndex | None = None,
+    ) -> tuple[set[str], list[dict]]:
+        nodes, edges = self._tracer.trace(start_table, data, max_depth, direction, query_index)
+        return set(nodes), deepcopy(edges)
+
+    def resolve_table_name(self, table_name: str, data: dict) -> str:
+        return self._tracer.resolve_table_name(table_name, data)

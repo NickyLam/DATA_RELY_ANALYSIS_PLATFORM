@@ -51,6 +51,7 @@ Thumbs.db
 .trae-cn/
 .workbuddy/
 .codex/
+.worktrees/
 
 # Sensitive files
 .env

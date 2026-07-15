@@ -27,6 +27,25 @@ def test_search_tables_ranks_exact_short_name_before_contains_match(tmp_path: Pa
     assert all(isinstance(result, dict) for result in results)
 
 
+def test_repository_search_preserves_partial_schema_limit_and_no_match_contract():
+    repo = DataRepository()
+    exact_table = {
+        "full_name": "DWH.CUSTOMER",
+        "table_name": "CUSTOMER",
+        "columns": [],
+    }
+    archive_table = {
+        "full_name": "DWH.CUSTOMER_ARCHIVE",
+        "table_name": "CUSTOMER_ARCHIVE",
+        "columns": [],
+    }
+    repo.update({"tables": [archive_table, exact_table]})
+
+    assert repo.search_tables("CUSTOM", limit=1) == [exact_table]
+    assert repo.search_tables("DWH.CUSTOMER") == [exact_table, archive_table]
+    assert repo.search_tables("NO_MATCH") == []
+
+
 def test_parser_service_search_tables_delegates_to_repository(tmp_path: Path):
     output_dir = tmp_path / "output"
     output_dir.mkdir()

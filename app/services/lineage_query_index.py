@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import logging
 import time
+from copy import deepcopy
 from typing import Any
 
 from core.table_name_resolver import TableNameResolver
@@ -90,6 +91,12 @@ class LineageQueryIndex:
         self.table_lineages_by_target.clear()
         self.table_lineages_by_source.clear()
         self._built = False
+
+    def as_read_only(self) -> ReadOnlyLineageQueryIndex:
+        """返回与当前构建结果隔离的只读查询外观。"""
+        if not self._built:
+            raise RuntimeError("LineageQueryIndex 尚未构建")
+        return ReadOnlyLineageQueryIndex(self)
 
     # ── 表索引查询接口 ─────────────────────────────────────────
 
@@ -288,3 +295,63 @@ class LineageQueryIndex:
             if node_bare == bare:
                 return True
         return False
+
+
+class ReadOnlyLineageQueryIndex:
+    """不暴露 builder 状态、查询结果使用防御性副本的索引视图。"""
+
+    def __init__(self, source: LineageQueryIndex) -> None:
+        self._index = deepcopy(source)
+
+    @property
+    def is_built(self) -> bool:
+        return self._index.is_built
+
+    def get_table_by_full(self, full_name: str) -> dict | None:
+        return deepcopy(self._index.get_table_by_full(full_name))
+
+    def get_tables_by_short(self, short_name: str) -> list[dict]:
+        return deepcopy(self._index.get_tables_by_short(short_name))
+
+    def has_table(self, full_name: str) -> bool:
+        return self._index.has_table(full_name)
+
+    def get_field_mappings_by_target(self, table: str, column: str) -> list[dict]:
+        return deepcopy(self._index.get_field_mappings_by_target(table, column))
+
+    def get_field_mappings_by_source(self, table: str, column: str) -> list[dict]:
+        return deepcopy(self._index.get_field_mappings_by_source(table, column))
+
+    def get_field_mappings_by_bare_pair(
+        self,
+        src_bare: str,
+        src_col: str,
+        tgt_bare: str,
+        tgt_col: str,
+    ) -> list[dict]:
+        return deepcopy(
+            self._index.get_field_mappings_by_bare_pair(src_bare, src_col, tgt_bare, tgt_col)
+        )
+
+    def get_all_field_mappings_for_nodes(
+        self,
+        nodes: set[str],
+        target_table: str = "",
+        target_field: str = "",
+    ) -> list[dict]:
+        return deepcopy(
+            self._index.get_all_field_mappings_for_nodes(nodes, target_table, target_field)
+        )
+
+    def get_upstream_lineages(self, table: str) -> list[dict]:
+        return deepcopy(self._index.get_upstream_lineages(table))
+
+    def get_downstream_lineages(self, table: str) -> list[dict]:
+        return deepcopy(self._index.get_downstream_lineages(table))
+
+    def resolve_table_name(self, table_name: str, adjacency_keys: set[str] | None = None) -> str:
+        return self._index.resolve_table_name(table_name, adjacency_keys)
+
+    @staticmethod
+    def node_in_set(table_name: str, nodes: set[str]) -> bool:
+        return LineageQueryIndex.node_in_set(table_name, nodes)
