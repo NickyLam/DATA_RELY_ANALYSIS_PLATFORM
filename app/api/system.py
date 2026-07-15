@@ -13,10 +13,13 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from app.config import config
 from app.dependencies import (
+    IndexServiceDep,
+    ParserServiceDep,
     TableQueryServiceDep,
     admin_required,
     get_layer_detector,
 )
+from app.services.index_service import RefreshOutcome
 
 logger = logging.getLogger(__name__)
 
@@ -178,22 +181,31 @@ async def get_layer_configs():
     summary="强制重新解析",
     description="清除缓存并重新全量解析所有数据文件（耗时约6-10分钟）",
 )
-def force_reparse(_: None = Depends(admin_required)):
+def force_reparse(
+    parser: ParserServiceDep,
+    index_service: IndexServiceDep,
+    _: None = Depends(admin_required),
+):
     """强制重新全量解析，覆盖缓存"""
-    from app.dependencies import get_lineage_service, get_parser_service
-
     try:
-        parser = get_parser_service()
-
         # 清除旧的 LineageTracer 缓存
         parser.reset_tracer()
 
         # 强制全量解析
         result = parser.parse_existing_data(force=True)
 
-        # 重建 LineageService 索引
-        lineage_svc = get_lineage_service()
-        lineage_svc.rebuild_indexes()
+        # DATA_CHANGED 通常已同步发布新 generation；此兼容检查必须保持非强制并去重。
+        generation = parser.data_generation
+        refresh = index_service.refresh(
+            requested_generation=generation,
+            force=False,
+            trigger="post-reparse",
+        )
+        if (
+            refresh.outcome not in {RefreshOutcome.PUBLISHED, RefreshOutcome.DUPLICATE}
+            or index_service.state.committed_generation != generation
+        ):
+            raise RuntimeError("projection_not_published")
 
         return {
             "success": True,

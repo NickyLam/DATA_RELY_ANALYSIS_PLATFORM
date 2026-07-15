@@ -30,10 +30,13 @@ from app.api.parse import router as parse_router
 from app.api.system import router as system_router
 from app.config import config
 from app.dependencies import (
+    get_cache_manager,
+    get_index_service,
     get_indicator_service,
     get_lineage_service,
     get_parser_service,
     get_progress_service,
+    get_table_query_service,
 )
 from app.utils.path_utils import get_static_dir
 
@@ -42,6 +45,22 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
 logger = logging.getLogger(__name__)
+
+
+def _clear_lifecycle_service_caches() -> None:
+    """丢弃绑定到已关闭 parser/owner 的进程内 singleton。"""
+    for provider in (
+        get_indicator_service,
+        get_table_query_service,
+        get_lineage_service,
+        get_index_service,
+        get_cache_manager,
+        get_parser_service,
+        get_progress_service,
+    ):
+        cache_clear = getattr(provider, "cache_clear", None)
+        if cache_clear is not None:
+            cache_clear()
 
 
 @asynccontextmanager
@@ -54,6 +73,7 @@ async def lifespan(app: FastAPI):
     start_time = time.time()
     parser_service = None
     progress_service = None
+    index_service = None
 
     try:
         parser_service = get_parser_service()
@@ -79,6 +99,8 @@ async def lifespan(app: FastAPI):
             logger.warning("⚠️ 数据目录不存在: %s", config.data_path)
 
         logger.info("步骤 2/3: 构建性能优化索引...")
+        index_service = get_index_service()
+        index_service.start()
         get_lineage_service()
         get_indicator_service()
         logger.info("✅ 索引构建完成")
@@ -92,18 +114,26 @@ async def lifespan(app: FastAPI):
         logger.info("前端页面: http://localhost:%s/static/index.html", config.port)
         logger.info("=" * 60)
 
+        yield
     except Exception as e:
         logger.error("❌ 启动初始化失败: %s", e, exc_info=True)
         raise
-
-    yield
-
-    logger.info("正在关闭服务...")
-    if progress_service is not None:
-        progress_service.cleanup_old_tasks(max_age_sec=0)
-    if parser_service is not None:
-        parser_service.shutdown()
-    logger.info("服务已安全关闭")
+    finally:
+        logger.info("正在关闭服务...")
+        try:
+            if index_service is not None:
+                index_service.close()
+        finally:
+            try:
+                if progress_service is not None:
+                    progress_service.cleanup_old_tasks(max_age_sec=0)
+            finally:
+                try:
+                    if parser_service is not None:
+                        parser_service.shutdown()
+                finally:
+                    _clear_lifecycle_service_caches()
+        logger.info("服务已安全关闭")
 
 
 app = FastAPI(

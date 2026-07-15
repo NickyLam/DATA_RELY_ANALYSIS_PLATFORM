@@ -52,10 +52,11 @@ class LineageService:
         self._index_generation: int | None = None
 
         self._event_bus = get_event_bus()
-        self._event_bus.subscribe(EventType.DATA_CHANGED, self._on_data_changed)
-        self._event_bus.subscribe(EventType.CACHE_INVALIDATED, self._on_cache_invalidated)
-
-        self._build_indexes(generation=getattr(self.parser, "data_generation", None))
+        if self._index_service is None:
+            # U5 生产 composition 由 IndexService 独占订阅/发布；无 owner 构造仅保留旧测试兼容。
+            self._event_bus.subscribe(EventType.DATA_CHANGED, self._on_data_changed)
+            self._event_bus.subscribe(EventType.CACHE_INVALIDATED, self._on_cache_invalidated)
+            self._build_indexes(generation=getattr(self.parser, "data_generation", None))
 
     def _capture_snapshot(self) -> IndexSnapshot | None:
         """兼容 U5 composition 接线前的无 owner 构造，不回退 live parser。"""

@@ -15,6 +15,7 @@ from fastapi import Depends, HTTPException, Security
 from fastapi.security import APIKeyHeader
 
 from app.config import config
+from app.services.index_service import IndexService
 from app.services.indicator_service import IndicatorService
 from app.services.lineage_service import LineageService
 from app.services.parser_service import ParserService
@@ -51,6 +52,18 @@ def get_parser_service() -> ParserService:
 
 
 @lru_cache
+def get_index_service() -> IndexService:
+    try:
+        return IndexService(
+            parser_service=get_parser_service(),
+            auto_start=False,
+        )
+    except Exception:
+        get_index_service.cache_clear()
+        raise
+
+
+@lru_cache
 def get_lineage_service() -> LineageService:
     try:
         parser = get_parser_service()
@@ -58,6 +71,7 @@ def get_lineage_service() -> LineageService:
         return LineageService(
             parser_service=parser,
             cache_manager=cache,
+            index_service=get_index_service(),
         )
     except Exception:
         get_lineage_service.cache_clear()
@@ -78,6 +92,7 @@ def get_table_query_service() -> TableQueryService:
     return TableQueryService(
         parser_service=parser,
         cache_manager=cache,
+        index_service=get_index_service(),
     )
 
 
@@ -107,6 +122,7 @@ def get_indicator_service() -> IndicatorService:
 
 CacheManagerDep = Annotated[CacheManager, Depends(get_cache_manager)]
 ParserServiceDep = Annotated[ParserService, Depends(get_parser_service)]
+IndexServiceDep = Annotated[IndexService, Depends(get_index_service)]
 LineageServiceDep = Annotated[LineageService, Depends(get_lineage_service)]
 ProgressServiceDep = Annotated[ProgressService, Depends(get_progress_service)]
 IndicatorServiceDep = Annotated[IndicatorService, Depends(get_indicator_service)]

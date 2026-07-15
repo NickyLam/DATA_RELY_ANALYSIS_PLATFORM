@@ -8,8 +8,9 @@ from unittest.mock import MagicMock
 import pytest
 from fastapi.testclient import TestClient
 
-from app.dependencies import get_lineage_service, get_table_query_service
+from app.dependencies import get_index_service, get_lineage_service, get_table_query_service
 from app.main import app
+from app.services.index_service import RefreshOutcome, RefreshResult
 
 
 @pytest.fixture
@@ -151,12 +152,66 @@ class TestCacheRebuild:
 
     def test_rebuild_cache_with_admin_key(self, client, mock_lineage_service, mock_caliber_service, monkeypatch):
         """TC-108: 缓存重建（配置 ADMIN_API_KEY 后应成功）"""
-        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
-        response = client.post(
-            "/api/cache/rebuild",
-            headers={"X-Admin-Key": "test-admin-key"},
+        owner = MagicMock()
+        owner.refresh.return_value = RefreshResult(
+            1,
+            RefreshOutcome.FORCED_PUBLISHED,
+            7,
+            7,
+            (7, 1),
+            publication_namespace=(7, 2),
         )
-        assert response.status_code == 200
+        app.dependency_overrides[get_index_service] = lambda: owner
+        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
+        try:
+            response = client.post(
+                "/api/cache/rebuild",
+                headers={"X-Admin-Key": "test-admin-key"},
+            )
+            assert response.status_code == 200
+            assert response.json()["success"] is True
+            assert response.json()["message"] == "索引重建完成"
+            owner.refresh.assert_called_once_with(force=True, trigger="explicit")
+            mock_lineage_service.rebuild_indexes.assert_not_called()
+        finally:
+            app.dependency_overrides.pop(get_index_service, None)
+
+    @pytest.mark.parametrize(
+        "outcome",
+        [
+            RefreshOutcome.FAILED,
+            RefreshOutcome.NO_DATA,
+            RefreshOutcome.STALE,
+            RefreshOutcome.CLOSED,
+            RefreshOutcome.DUPLICATE,
+            RefreshOutcome.COALESCED,
+        ],
+    )
+    def test_rebuild_cache_rejects_non_published_outcomes(self, client, monkeypatch, outcome):
+        owner = MagicMock()
+        owner.refresh.return_value = RefreshResult(
+            1,
+            outcome,
+            8,
+            8,
+            (7, 1),
+            failure_component="source_data",
+            failure_code="build_failed",
+        )
+        app.dependency_overrides[get_index_service] = lambda: owner
+        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
+        try:
+            response = client.post(
+                "/api/cache/rebuild",
+                headers={"X-Admin-Key": "test-admin-key"},
+            )
+        finally:
+            app.dependency_overrides.pop(get_index_service, None)
+
+        assert response.status_code == 500
+        assert response.json() == {"detail": "索引重建失败"}
+        assert "source_data" not in response.text
+        assert "build_failed" not in response.text
 
 
 class TestEdgeCaliber:

@@ -15,7 +15,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
 
-from app.dependencies import LineageServiceDep, TableQueryServiceDep, admin_required
+from app.dependencies import IndexServiceDep, LineageServiceDep, TableQueryServiceDep, admin_required
 from app.models import (
     BaseResponse,
     LineageQueryOptions,
@@ -32,6 +32,7 @@ from app.models import (
     TableInfoResponse,
     TableListItem,
 )
+from app.services.index_service import RefreshOutcome
 from app.services.lineage_export_writer import build_lineage_export_workbook
 
 logger = logging.getLogger(__name__)
@@ -260,10 +261,12 @@ def get_system_stats(
     description="强制清空并重建内存索引和图预处理数据",
 )
 def rebuild_cache(
-    lineage_service: LineageServiceDep,
+    index_service: IndexServiceDep,
     _: None = Depends(admin_required),
 ) -> dict:
-    lineage_service.rebuild_indexes()
+    result = index_service.refresh(force=True, trigger="explicit")
+    if result.outcome not in {RefreshOutcome.PUBLISHED, RefreshOutcome.FORCED_PUBLISHED}:
+        raise HTTPException(status_code=500, detail="索引重建失败")
 
     return {
         "success": True,
