@@ -7,7 +7,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from app.repository import search_table_dicts
+from app.services.index_service import IndexService
+from app.services.index_snapshot import IndexSnapshot
 from app.services.parser_service import ParserService
 from app.services.system_membership import (
     build_schema_to_system,
@@ -26,10 +27,18 @@ class TableQueryService:
         self,
         parser_service: ParserService,
         cache_manager: CacheManager,
+        index_service: IndexService | None = None,
     ):
         self._parser = parser_service
         self._cache = cache_manager
+        self._index_service = index_service
         self._resolver = TableNameResolver()
+
+    def _capture_snapshot(self) -> IndexSnapshot | None:
+        """兼容 U5 composition 接线前的无 owner 构造，不回退 live parser。"""
+        if self._index_service is None:
+            return None
+        return self._index_service.capture_snapshot()
 
     def search_tables(
         self,
@@ -44,16 +53,10 @@ class TableQueryService:
         2. 全名以关键词结尾（如 RRP_MDL.EAST5_201_GRJCXXB）
         3. 包含匹配（如 T_COM_RRP_EAST_EAST5_201_GRJCXXB）
         """
-        parser_search = getattr(self._parser, "search_tables", None)
-        if callable(parser_search):
-            return self._format_table_search_results(
-                parser_search(keyword, limit=limit),
-                limit,
-            )
-
-        data = self._parser.get_current_data()
-        table_results = search_table_dicts(data.get("tables", []), keyword, limit) if data else []
-        return self._format_table_search_results(table_results, limit)
+        snapshot = self._capture_snapshot()
+        if snapshot is None:
+            return []
+        return self._format_table_search_results(snapshot.search_tables(keyword, limit), limit)
 
     def _format_table_search_results(self, table_results: list[dict], limit: int) -> list[dict]:
         tables = []
@@ -86,11 +89,17 @@ class TableQueryService:
         limit: int = 50,
     ) -> list[dict]:
         """搜索存储过程名称"""
-        results = self._cache.search_by_keyword(keyword, index_type="procedure_name", limit=limit)
+        snapshot = self._capture_snapshot()
+        if snapshot is None:
+            return []
+        results = snapshot.search_procedures(keyword, limit)
 
         procedures = []
         seen = set()
-        for name in results[:limit]:
+        for procedure in results[:limit]:
+            name = procedure.get("full_name", "")
+            if not name:
+                continue
             if name not in seen:
                 seen.add(name)
                 short = name.split(".")[-1] if "." in name else name
@@ -106,9 +115,10 @@ class TableQueryService:
         2. 从字段映射中查找过程表（短名或全名）
         3. 模糊匹配过程表
         """
-        data = self._parser.get_current_data()
-        if not data:
+        snapshot = self._capture_snapshot()
+        if snapshot is None:
             return None
+        data = snapshot.get_source_data()
 
         norm_name = table.strip().upper()
 
@@ -141,9 +151,22 @@ class TableQueryService:
 
         return None
 
+    def get_table_info(self, table: str) -> dict | None:
+        """获取指定表的详细结构信息。"""
+        snapshot = self._capture_snapshot()
+        if snapshot is None:
+            return None
+
+        table_upper = table.upper()
+        for table_info in snapshot.get_source_data().get("tables", []):
+            if table_info.get("full_name", "").upper() == table_upper:
+                return table_info
+        return None
+
     def get_system_stats(self) -> dict[str, Any]:
         """获取系统统计信息"""
-        data = self._parser.get_current_data()
+        snapshot = self._capture_snapshot()
+        data = snapshot.get_source_data() if snapshot is not None else None
 
         base_stats = {
             "total_tables": 0,
@@ -172,25 +195,48 @@ class TableQueryService:
 
         return base_stats
 
+    def get_runtime_stats(self) -> dict[str, Any]:
+        """返回 system API 所需的同代运行态查询统计。"""
+        snapshot = self._capture_snapshot()
+        if snapshot is None:
+            return {
+                "loaded": False,
+                "tables": 0,
+                "procedures": 0,
+                "lineages": 0,
+                "index_status": "empty",
+            }
+
+        data = snapshot.get_source_data()
+        metadata = data.get("metadata", {})
+        return {
+            "loaded": bool(data),
+            "tables": metadata.get("total_tables", 0),
+            "procedures": metadata.get("total_procedures", 0),
+            "lineages": metadata.get("total_table_lineages", 0),
+            "index_status": "ready" if snapshot.is_ready else "empty",
+        }
+
     # --- 级联查询方法（系统→Schema→表）---
 
-    def _build_schema_to_system(self) -> dict[str, str]:
+    @staticmethod
+    def _build_schema_to_system(data: dict[str, Any]) -> dict[str, str]:
         """构建 schema_name → system_name 映射。
 
         每次调用时从数据和配置中重新计算，确保数据刷新后映射正确。
         """
-        data = self._parser.get_current_data()
-        all_tables = data.get("tables", []) if data else []
+        all_tables = data.get("tables", [])
         return build_schema_to_system(all_tables)
 
     def get_systems(self) -> list[dict]:
         """返回所有启用的数据源列表（含表计数）。"""
         from app.config import config
 
-        data = self._parser.get_current_data()
-        all_tables = data.get("tables", []) if data else []
+        snapshot = self._capture_snapshot()
+        data = snapshot.get_source_data() if snapshot is not None else {}
+        all_tables = data.get("tables", [])
 
-        schema_to_system = self._build_schema_to_system()
+        schema_to_system = self._build_schema_to_system(data)
 
         # 统计每个系统的表数
         system_table_counts: dict[str, int] = {c.name: 0 for c in config.datasource_configs if c.enabled}
@@ -220,14 +266,15 @@ class TableQueryService:
         """返回指定系统下的 schema 列表（含表计数）。"""
         from app.config import config
 
-        data = self._parser.get_current_data()
-        all_tables = data.get("tables", []) if data else []
+        snapshot = self._capture_snapshot()
+        data = snapshot.get_source_data() if snapshot is not None else {}
+        all_tables = data.get("tables", [])
 
         ds_cfg = next((c for c in config.datasource_configs if c.name == system), None)
         if not ds_cfg:
             return []
 
-        schema_to_system = self._build_schema_to_system()
+        schema_to_system = self._build_schema_to_system(data)
 
         # 从数据中提取所有 schema 及其表计数
         system_schemas: dict[str, int] = {}
@@ -285,14 +332,15 @@ class TableQueryService:
         """
         from app.config import config
 
-        data = self._parser.get_current_data()
-        all_tables = data.get("tables", []) if data else []
+        snapshot = self._capture_snapshot()
+        data = snapshot.get_source_data() if snapshot is not None else {}
+        all_tables = data.get("tables", [])
 
         ds_cfg = next((c for c in config.datasource_configs if c.name == system_name), None)
         if not ds_cfg:
             return []
 
-        schema_to_system = self._build_schema_to_system()
+        schema_to_system = self._build_schema_to_system(data)
 
         keyword_upper = keyword.upper() if keyword else ""
 
@@ -333,14 +381,15 @@ class TableQueryService:
         """返回指定系统+schema 下的表列表。"""
         from app.config import config
 
-        data = self._parser.get_current_data()
-        all_tables = data.get("tables", []) if data else []
+        snapshot = self._capture_snapshot()
+        data = snapshot.get_source_data() if snapshot is not None else {}
+        all_tables = data.get("tables", [])
 
         ds_cfg = next((c for c in config.datasource_configs if c.name == system), None)
         if not ds_cfg:
             return []
 
-        schema_to_system = self._build_schema_to_system()
+        schema_to_system = self._build_schema_to_system(data)
 
         keyword_upper = keyword.upper() if keyword else ""
 

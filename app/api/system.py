@@ -13,9 +13,9 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from app.config import config
 from app.dependencies import (
+    TableQueryServiceDep,
     admin_required,
     get_layer_detector,
-    get_lineage_service,
 )
 
 logger = logging.getLogger(__name__)
@@ -31,32 +31,23 @@ _start_time = time.time()
     summary="健康检查",
     description="检查服务运行状态",
 )
-async def health_check():
+async def health_check(table_query_service: TableQueryServiceDep):
     uptime = time.time() - _start_time
 
     data_loaded = False
-    index_status = "not_built"
+    index_status = "empty"
     table_count = 0
     proc_count = 0
 
     try:
-        from app.dependencies import get_parser_service
-
-        parser = get_parser_service()
-        data = parser.get_current_data()
-        if data:
-            data_loaded = True
-            metadata = data.get("metadata", {})
-            table_count = metadata.get("total_tables", 0)
-            proc_count = metadata.get("total_procedures", 0)
-
-        try:
-            lineage_svc = get_lineage_service()
-            index_status = "ready" if lineage_svc.is_index_ready() else "empty"
-        except Exception:
-            index_status = "error"
+        stats = table_query_service.get_runtime_stats()
+        data_loaded = stats["loaded"]
+        table_count = stats["tables"]
+        proc_count = stats["procedures"]
+        index_status = stats["index_status"]
     except Exception:
         data_loaded = False
+        index_status = "error"
 
     status = "healthy" if data_loaded else "degraded"
 
@@ -129,35 +120,21 @@ async def system_info():
     summary="系统运行统计",
     description="获取系统运行时的数据统计信息",
 )
-async def system_stats():
-    from app.dependencies import get_parser_service
-
-    data_loaded = False
-    table_count = 0
-    proc_count = 0
-    lineage_count = 0
-
+async def system_stats(table_query_service: TableQueryServiceDep):
     try:
-        parser = get_parser_service()
-        data = parser.get_current_data()
-        if data:
-            data_loaded = True
-            metadata = data.get("metadata", {})
-            table_count = metadata.get("total_tables", 0)
-            proc_count = metadata.get("total_procedures", 0)
-            lineage_count = metadata.get("total_table_lineages", 0)
+        stats = table_query_service.get_runtime_stats()
     except Exception:
-        pass
+        stats = {"loaded": False, "tables": 0, "procedures": 0, "lineages": 0}
 
     uptime = time.time() - _start_time
 
     return {
         "success": True,
         "data": {
-            "loaded": data_loaded,
-            "tables": table_count,
-            "procedures": proc_count,
-            "lineages": lineage_count,
+            "loaded": stats["loaded"],
+            "tables": stats["tables"],
+            "procedures": stats["procedures"],
+            "lineages": stats["lineages"],
             "uptime_seconds": round(uptime, 2),
         },
     }

@@ -13,9 +13,10 @@ from collections.abc import Callable
 from datetime import datetime
 from typing import Any
 
-from app.repository import search_table_dicts
 from app.services.event_bus import DataChangedEvent, EventType, get_event_bus
-from app.services.lineage_query_index import LineageQueryIndex
+from app.services.index_service import IndexService
+from app.services.index_snapshot import IndexSnapshot
+from app.services.lineage_query_index import LineageQueryIndex, ReadOnlyLineageQueryIndex
 from app.services.parser_service import ParserService
 from app.services.system_membership import (
     build_schema_to_system,
@@ -37,9 +38,11 @@ class LineageService:
         self,
         parser_service: ParserService,
         cache_manager: CacheManager,
+        index_service: IndexService | None = None,
     ):
         self.parser = parser_service
         self.cache = cache_manager
+        self._index_service = index_service
 
         self._resolver = TableNameResolver()
         self._table_tracer = TableLineageTracer(self._resolver)
@@ -54,14 +57,21 @@ class LineageService:
 
         self._build_indexes(generation=getattr(self.parser, "data_generation", None))
 
+    def _capture_snapshot(self) -> IndexSnapshot | None:
+        """兼容 U5 composition 接线前的无 owner 构造，不回退 live parser。"""
+        if self._index_service is None:
+            return None
+        return self._index_service.capture_snapshot()
+
     def export_system_full_lineage(self, system_name: str) -> dict[str, Any]:
         system = system_name.strip().lower()
         if system not in enabled_system_names():
             raise ValueError(f"unknown system: {system_name}")
 
-        data = self.parser.get_current_data()
-        if not data:
+        snapshot = self._capture_snapshot()
+        if snapshot is None:
             raise ValueError("no parsed data available")
+        data = snapshot.get_source_data()
 
         tables = data.get("tables", [])
         schema_to_system = build_schema_to_system(tables)
@@ -114,8 +124,8 @@ class LineageService:
             "summary": {
                 "system_name": system,
                 "generated_at": datetime.now().isoformat(timespec="seconds"),
-                "data_mtime": self._get_data_mtime(),
-                "parser_generation": getattr(self.parser, "data_generation", None),
+                "data_mtime": snapshot.data_mtime,
+                "parser_generation": snapshot.generation,
                 "total_nodes": len(table_rows),
                 "system_nodes": len(table_rows) - external_nodes,
                 "external_nodes": external_nodes,
@@ -266,13 +276,23 @@ class LineageService:
     ) -> dict[str, Any]:
         start_time = time.perf_counter()
         t_refresh = start_time
-
-        self._check_and_refresh_cache()
+        snapshot = self._capture_snapshot()
         t_after_refresh = time.perf_counter()
+
+        if snapshot is None:
+            return self._empty_result(start_time)
 
         cache_key = None
         if use_cache:
-            cache_key = self._generate_cache_key(table, field, depth, mode, include_fields, limit)
+            cache_key = self._generate_cache_key(
+                table,
+                field,
+                depth,
+                mode,
+                include_fields,
+                limit,
+                snapshot.publication_namespace,
+            )
             cached = self.cache.get(cache_key)
             if cached:
                 # 返回深拷贝，避免修改缓存对象本身
@@ -282,35 +302,41 @@ class LineageService:
                 return result_copy
 
         t_cache_check = time.perf_counter()
-        data = self.parser.get_current_data()
-        if not data:
-            return self._empty_result(start_time)
+        data = snapshot.get_source_data()
 
         t_get_data = time.perf_counter()
         table_upper = table.upper().strip()
         field_upper = field.upper().strip() if field else None
 
         # 使用预构建索引解析表名，替代每次扫描全量 tables
-        adjacency_keys = set(self._table_tracer.adjacency_up.keys()) | set(self._table_tracer.adjacency_down.keys())
-        resolved_table = self._index.resolve_table_name(table_upper, adjacency_keys) if self._index.is_built else self._table_tracer.resolve_table_name(table_upper, data)
+        adjacency_keys = set(snapshot.adjacency_up) | set(snapshot.adjacency_down)
+        resolved_table = snapshot.query_index.resolve_table_name(table_upper, adjacency_keys)
 
-        if not self._validate_schema(table_upper, resolved_table):
+        if not self._validate_schema(table_upper, resolved_table, snapshot):
             return self._empty_result(start_time)
 
         t_resolve = time.perf_counter()
         if field_upper:
-            result = self._query_field_lineage(resolved_table, field_upper, depth, mode, data, include_fields, limit)
+            result = self._query_field_lineage(
+                resolved_table, field_upper, depth, mode, data, include_fields, limit, snapshot
+            )
         else:
-            result = self._query_table_lineage(resolved_table, depth, mode, data, include_fields, field_upper, limit)
+            result = self._query_table_lineage(
+                resolved_table, depth, mode, data, include_fields, field_upper, limit, snapshot
+            )
 
         if result.get("nodes_count", 0) == 0 and "." in resolved_table:
-            alt_table = self._find_alternate_schema_table(resolved_table)
+            alt_table = self._find_alternate_schema_table(resolved_table, snapshot)
             if alt_table:
                 logger.info("同名表重定向: %s → %s", resolved_table, alt_table)
                 if field_upper:
-                    result = self._query_field_lineage(alt_table, field_upper, depth, mode, data, include_fields, limit)
+                    result = self._query_field_lineage(
+                        alt_table, field_upper, depth, mode, data, include_fields, limit, snapshot
+                    )
                 else:
-                    result = self._query_table_lineage(alt_table, depth, mode, data, include_fields, field_upper, limit)
+                    result = self._query_table_lineage(
+                        alt_table, depth, mode, data, include_fields, field_upper, limit, snapshot
+                    )
                 if result.get("nodes_count", 0) > 0:
                     result["redirected_from"] = resolved_table
                     result["resolved_table"] = alt_table
@@ -335,7 +361,11 @@ class LineageService:
         )
         return result
 
-    def _find_alternate_schema_table(self, resolved_table: str) -> str | None:
+    def _find_alternate_schema_table(
+        self,
+        resolved_table: str,
+        snapshot: IndexSnapshot,
+    ) -> str | None:
         if "." not in resolved_table:
             return None
         schema, short_name = resolved_table.rsplit(".", 1)
@@ -350,11 +380,16 @@ class LineageService:
 
         alt_full = f"{alt_schema}.{short_name}"
         # 使用预构建索引，替代每次扫描全量 tables
-        if self._index.is_built and self._index.has_table(alt_full):
+        if snapshot.query_index.has_table(alt_full):
             return alt_full
         return None
 
-    def _validate_schema(self, table_upper: str, resolved_table: str) -> bool:
+    def _validate_schema(
+        self,
+        table_upper: str,
+        resolved_table: str,
+        snapshot: IndexSnapshot,
+    ) -> bool:
         if "." in table_upper:
             parts = table_upper.split(".")
             if len(parts) == 2:
@@ -366,8 +401,7 @@ class LineageService:
                         table_short,
                     )
                     return True
-            actual_tables = self._index.table_full_names if self._index.is_built else set()
-            if resolved_table.upper() not in actual_tables:
+            if not snapshot.query_index.has_table(resolved_table):
                 logger.warning(
                     "显式 schema 表不存在: 输入=%s, 解析=%s",
                     table_upper,
@@ -385,17 +419,29 @@ class LineageService:
         data: dict,
         include_fields: bool,
         limit: int,
+        snapshot: IndexSnapshot,
     ) -> dict[str, Any]:
-        all_nodes, all_edges, all_mappings = set(), [], []
-        tracer = self.parser.get_lineage_tracer()
-        if tracer:
-            self._trace_field_with_tracer(tracer, table, field, depth, mode, all_nodes, all_edges, all_mappings)
-        else:
-            self._trace_field_legacy(table, field, depth, mode, data, all_nodes, all_edges, all_mappings)
+        all_nodes: set[str] = set()
+        all_edges: list[dict] = []
+        all_mappings: list[dict] = []
+        self._trace_field_with_tracer(
+            snapshot.field_tracing,
+            table,
+            field,
+            depth,
+            mode,
+            all_nodes,
+            all_edges,
+            all_mappings,
+        )
         if len(all_nodes) < 3:
-            self._supplement_table_lineage(table, mode, data, all_nodes, all_edges)
+            self._supplement_table_lineage(table, mode, all_nodes, all_edges, snapshot)
         if include_fields:
-            self._supplement_field_mappings(data, all_nodes, all_mappings, table, field)
+            self._supplement_field_mappings(
+                all_nodes,
+                all_mappings,
+                snapshot.query_index,
+            )
         return self._assemble_result(
             all_nodes,
             all_edges,
@@ -472,13 +518,13 @@ class LineageService:
         self,
         table: str,
         mode: str,
-        data: dict,
         all_nodes: set,
         all_edges: list,
+        snapshot: IndexSnapshot,
     ) -> None:
         logger.info("字段级血缘节点过少(%d个)，补充1层直接表级血缘", len(all_nodes))
         if mode in ("upstream", "both"):
-            up_nodes_tbl, up_edges_tbl = self._table_tracer.trace(table, data, max_depth=1, direction="up", query_index=self._index)
+            up_nodes_tbl, up_edges_tbl = snapshot.trace_tables(table, max_depth=1, direction="up")
             for node in up_nodes_tbl:
                 if node not in all_nodes:
                     all_nodes.add(node)
@@ -486,7 +532,7 @@ class LineageService:
                 if edge not in all_edges and edge["source_table"] in all_nodes and edge["target_table"] in all_nodes:
                     all_edges.append(edge)
         if mode in ("downstream", "both"):
-            down_nodes_tbl, down_edges_tbl = self._table_tracer.trace(table, data, max_depth=1, direction="down", query_index=self._index)
+            down_nodes_tbl, down_edges_tbl = snapshot.trace_tables(table, max_depth=1, direction="down")
             for node in down_nodes_tbl:
                 if node not in all_nodes:
                     all_nodes.add(node)
@@ -496,11 +542,9 @@ class LineageService:
 
     def _supplement_field_mappings(
         self,
-        data: dict,
         all_nodes: set,
         all_mappings: list,
-        table: str,
-        field: str,
+        query_index: ReadOnlyLineageQueryIndex,
     ) -> None:
         """补充 tracer 产出的映射中缺少 procedure 信息的版本。
 
@@ -529,24 +573,18 @@ class LineageService:
 
         # 使用索引按 bare_pair 精确查找候选映射，替代扫描全量 field_mappings
         candidates: list[dict] = []
-        if self._index.is_built:
-            for (src_bare, src_col, tgt_bare, tgt_col) in existing_keys_4:
-                index_hits = self._index.get_field_mappings_by_bare_pair(src_bare, src_col, tgt_bare, tgt_col)
-                for fm in index_hits:
-                    # 只保留双端都在节点集合中的映射
-                    src_tbl = fm.get("source_table", "").upper()
-                    tgt_tbl = fm.get("target_table", "").upper()
-                    if self._index.node_in_set(src_tbl, all_nodes) and self._index.node_in_set(tgt_tbl, all_nodes):
-                        candidates.append(fm)
-        else:
-            # Fallback: 全量扫描（仅在索引未构建时使用）
-            logger.debug("LineageQueryIndex 未构建，回退到全量扫描 _supplement_field_mappings")
-            candidates = self._filter_field_mappings(
-                data.get("field_mappings", []),
-                all_nodes,
-                target_table=table,
-                target_field=field,
+        for (src_bare, src_col, tgt_bare, tgt_col) in existing_keys_4:
+            index_hits = query_index.get_field_mappings_by_bare_pair(
+                src_bare, src_col, tgt_bare, tgt_col
             )
+            for fm in index_hits:
+                # 只保留双端都在节点集合中的映射
+                src_tbl = fm.get("source_table", "").upper()
+                tgt_tbl = fm.get("target_table", "").upper()
+                if query_index.node_in_set(src_tbl, all_nodes) and query_index.node_in_set(
+                    tgt_tbl, all_nodes
+                ):
+                    candidates.append(fm)
 
         seen_dedup = {self._field_mapping_dedup_key(m) for m in all_mappings}
         for fm in candidates:
@@ -581,14 +619,15 @@ class LineageService:
         include_fields: bool,
         field: str | None,
         limit: int,
+        snapshot: IndexSnapshot,
     ) -> dict[str, Any]:
         all_nodes, all_edges = set(), []
         if mode in ("upstream", "both"):
-            up_nodes, up_edges = self._table_tracer.trace(table, data, depth, direction="up", query_index=self._index)
+            up_nodes, up_edges = snapshot.trace_tables(table, max_depth=depth, direction="up")
             all_nodes.update(up_nodes)
             all_edges.extend(up_edges)
         if mode in ("downstream", "both"):
-            down_nodes, down_edges = self._table_tracer.trace(table, data, depth, direction="down", query_index=self._index)
+            down_nodes, down_edges = snapshot.trace_tables(table, max_depth=depth, direction="down")
             all_nodes.update(down_nodes)
             all_edges.extend(down_edges)
         all_mappings = []
@@ -822,12 +861,7 @@ class LineageService:
         或匹配到的表 columns 为空。
         """
         keep_upper = (keep_query_table or "").upper()
-        # 构建 full_name → table_info 索引（优先用预构建索引）
-        table_map = (
-            self._index.table_by_full
-            if self._index.is_built
-            else {t.get("full_name", ""): t for t in data.get("tables", [])}
-        )
+        table_map = {t.get("full_name", ""): t for t in data.get("tables", [])}
 
         removed: set[str] = set()
         for node_name in all_nodes:
@@ -837,14 +871,10 @@ class LineageService:
             # 短名回退
             if not table_info and "." in node_name:
                 short_upper = node_name.split(".")[-1].upper()
-                if self._index.is_built:
-                    tbls = self._index.table_by_short.get(short_upper, [])
-                    table_info = tbls[0] if tbls else {}
-                else:
-                    for t in data.get("tables", []):
-                        if t.get("table_name", "").upper() == short_upper:
-                            table_info = t
-                            break
+                for t in data.get("tables", []):
+                    if t.get("table_name", "").upper() == short_upper:
+                        table_info = t
+                        break
             columns = table_info.get("columns", []) if table_info else []
             if not columns:
                 removed.add(node_name)
@@ -888,16 +918,10 @@ class LineageService:
         Returns:
             list[dict]: 匹配的表信息列表（按相关度排序）
         """
-        parser_search = getattr(self.parser, "search_tables", None)
-        if callable(parser_search):
-            return self._format_table_search_results(
-                parser_search(keyword, limit=limit),
-                limit,
-            )
-
-        data = self.parser.get_current_data()
-        table_results = search_table_dicts(data.get("tables", []), keyword, limit) if data else []
-        return self._format_table_search_results(table_results, limit)
+        snapshot = self._capture_snapshot()
+        if snapshot is None:
+            return []
+        return self._format_table_search_results(snapshot.search_tables(keyword, limit), limit)
 
     def _format_table_search_results(self, table_results: list[dict], limit: int) -> list[dict]:
         tables = []
@@ -930,11 +954,15 @@ class LineageService:
         limit: int = 50,
     ) -> list[dict]:
         """搜索存储过程名称"""
-        results = self.cache.search_by_keyword(keyword, index_type="procedure_name", limit=limit)
+        snapshot = self._capture_snapshot()
+        if snapshot is None:
+            return []
+        results = snapshot.search_procedures(keyword, limit)
 
         procedures = []
         seen = set()
-        for name in results[:limit]:
+        for procedure in results[:limit]:
+            name = procedure.get("full_name", "")
             if name not in seen:
                 seen.add(name)
                 short = name.split(".")[-1] if "." in name else name
@@ -986,7 +1014,8 @@ class LineageService:
 
     def get_system_stats(self) -> dict[str, Any]:
         """获取系统统计信息"""
-        data = self.parser.get_current_data()
+        snapshot = self._capture_snapshot()
+        data = snapshot.get_source_data() if snapshot is not None else None
 
         base_stats = {
             "total_tables": 0,
@@ -1029,7 +1058,8 @@ class LineageService:
 
     def is_index_ready(self) -> bool:
         """检查血缘索引是否已构建且可用。"""
-        return bool(self._table_tracer.adjacency_up or self._table_tracer.adjacency_down)
+        snapshot = self._capture_snapshot()
+        return snapshot is not None and snapshot.is_ready
 
     def _check_and_refresh_cache(self) -> None:
         """检查数据是否已更新，如果更新则自动清除缓存。
@@ -1545,25 +1575,13 @@ class LineageService:
         3. 仍无匹配 → 用表的第一列（columns[0]）作为兜底
         4. 表无任何列信息 → 输出 {"name": "", "data_type": ""} 显式暴露数据缺口
         """
-        # 使用预构建索引替代每次扫描全量 tables
-        table_map = (
-            self._index.table_by_full
-            if self._index.is_built
-            else {t["full_name"]: t for t in data.get("tables", [])}
-        )
+        table_map = {t["full_name"]: t for t in data.get("tables", [])}
         # Build short-name -> table_info fallback for field resolution
         table_by_short: dict[str, dict] = {}
-        if self._index.is_built:
-            table_by_short = {
-                short: tbls[0]
-                for short, tbls in self._index.table_by_short.items()
-                if tbls
-            }
-        else:
-            for t in data.get("tables", []):
-                sn = t.get("table_name", "").upper()
-                if sn:
-                    table_by_short.setdefault(sn, t)
+        for t in data.get("tables", []):
+            sn = t.get("table_name", "").upper()
+            if sn:
+                table_by_short.setdefault(sn, t)
 
         query_field_upper = (query_field or "").upper()
 
@@ -1760,9 +1778,12 @@ class LineageService:
         mode: str,
         include_fields: bool = True,
         limit: int = 1000,
+        publication_namespace: tuple[int, int] | None = None,
     ) -> str:
         """生成缓存键（含 include_fields 和 limit，避免不同参数命中同一缓存）"""
         parts = [table.upper(), str(depth), mode]
+        if publication_namespace is not None:
+            parts.append(f"ns={publication_namespace[0]}.{publication_namespace[1]}")
         if field:
             parts.append(field.upper())
         parts.append(f"f={int(include_fields)}")

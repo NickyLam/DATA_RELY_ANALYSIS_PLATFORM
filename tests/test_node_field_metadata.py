@@ -78,21 +78,31 @@ def _make_data(
 def _build_service(data: dict) -> LineageService:
     parser = _StubParser(data)
     cache = _NoopCache()
-    # Bypass event_bus subscription by patching _on_data_changed / _on_cache_invalidated
-    service = LineageService.__new__(LineageService)
-    service.parser = parser
-    service.cache = cache
-    from app.services.lineage_query_index import LineageQueryIndex
-    from app.services.table_lineage_tracer import TableLineageTracer
-    from core.table_name_resolver import TableNameResolver
-    service._resolver = TableNameResolver()
-    service._table_tracer = TableLineageTracer(service._resolver)
-    service._index = LineageQueryIndex()
-    service._transitive_cache = {}
-    service._last_data_mtime = 0
-    # Build indexes from data
-    service._build_indexes()
-    return service
+    from app.services.index_snapshot import FieldLineageTracingView, IndexSnapshot, ParserStateCapture
+    from app.services.parser_service import ParseResult
+    from app.services.tracer_factory import TracerFactory
+
+    result = ParseResult.from_serializable(data)
+    tables = {table.full_name: table for table in result.tables}
+    procedures = {procedure.full_name: procedure for procedure in result.procedures}
+    tracer = TracerFactory().create_lineage_tracer(
+        tables=tables,
+        procedures=procedures,
+        table_lineages=result.table_lineages,
+        field_mappings=result.field_mappings,
+        generation=1,
+    )
+    snapshot = IndexSnapshot.build(
+        ParserStateCapture(1, data, FieldLineageTracingView(tracer)),
+        publication_revision=1,
+    )
+
+    class _Owner:
+        @staticmethod
+        def capture_snapshot():
+            return snapshot
+
+    return LineageService(parser, cache, _Owner())
 
 
 # ---------------------------------------------------------------------------

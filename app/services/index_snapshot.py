@@ -41,21 +41,31 @@ class FieldLineageTracingView:
     ) -> list[Any]:
         return deepcopy(self._tracer.trace_field_downstream(source_table, source_field, max_depth))
 
+    def to_graph_result(
+        self,
+        chains: list[Any],
+        *,
+        direction: str,
+    ) -> tuple[set[str], list[dict], list[dict]]:
+        return deepcopy(self._tracer.to_graph_result(chains, direction=direction))
+
 
 class ParserStateCapture:
     """Parser 在同一锁边界内捕获的 generation、数据和字段追踪视图。"""
 
-    __slots__ = ("_field_tracing", "_generation", "_source_data")
+    __slots__ = ("_data_mtime", "_field_tracing", "_generation", "_source_data")
 
     def __init__(
         self,
         generation: int,
         source_data: dict[str, Any],
         field_tracing: FieldLineageTracingView,
+        data_mtime: float | None = None,
         *,
         _take_ownership: bool = False,
     ) -> None:
         self._generation = generation
+        self._data_mtime = data_mtime
         self._source_data = source_data if _take_ownership else deepcopy(source_data)
         self._field_tracing = field_tracing
 
@@ -67,6 +77,10 @@ class ParserStateCapture:
     def field_tracing(self) -> FieldLineageTracingView:
         return self._field_tracing
 
+    @property
+    def data_mtime(self) -> float | None:
+        return self._data_mtime
+
     def get_source_data(self) -> dict[str, Any]:
         return deepcopy(self._source_data)
 
@@ -77,6 +91,7 @@ class IndexSnapshot:
     __slots__ = (
         "_field_tracing",
         "_generation",
+        "_data_mtime",
         "_publication_namespace",
         "_query_index",
         "_source_data",
@@ -92,8 +107,10 @@ class IndexSnapshot:
         query_index: ReadOnlyLineageQueryIndex,
         table_tracer: ReadOnlyTableLineageTracer,
         field_tracing: FieldLineageTracingView,
+        data_mtime: float | None = None,
     ) -> None:
         self._generation = generation
+        self._data_mtime = data_mtime
         self._publication_namespace = publication_namespace
         self._source_data = source_data
         self._query_index = query_index
@@ -127,6 +144,7 @@ class IndexSnapshot:
             query_index=query_index_builder.as_read_only(),
             table_tracer=table_tracer_builder.as_read_only(),
             field_tracing=capture.field_tracing,
+            data_mtime=capture.data_mtime,
         )
 
     @property
@@ -136,6 +154,10 @@ class IndexSnapshot:
     @property
     def generation(self) -> int:
         return self._generation
+
+    @property
+    def data_mtime(self) -> float | None:
+        return self._data_mtime
 
     @property
     def publication_namespace(self) -> tuple[int, int]:
@@ -162,6 +184,17 @@ class IndexSnapshot:
 
     def search_tables(self, keyword: str, limit: int = 50) -> list[dict]:
         return deepcopy(search_table_dicts(self._source_data.get("tables", []), keyword, limit))
+
+    def search_procedures(self, keyword: str, limit: int = 50) -> list[dict]:
+        normalized = keyword.upper().strip()
+        if not normalized:
+            return []
+        procedures = [
+            procedure
+            for procedure in self._source_data.get("procedures", [])
+            if normalized in procedure.get("full_name", "").upper()
+        ]
+        return deepcopy(procedures[:limit])
 
     def trace_tables(
         self,

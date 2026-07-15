@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from app.config import _load_datasource_configs_from_manifest
+from app.services.index_snapshot import FieldLineageTracingView, IndexSnapshot, ParserStateCapture
 from app.services.parser_service import ParseResult
 from app.services.table_query_service import TableQueryService
 from core.models import FieldMapping, TableInfo
@@ -22,6 +23,15 @@ class _Cache:
 
     def search_by_keyword(self, *args, **kwargs):
         return []
+
+
+def _table_query_service(parser: _Parser) -> TableQueryService:
+    snapshot = IndexSnapshot.build(
+        ParserStateCapture(1, parser.get_current_data(), FieldLineageTracingView(object())),
+        publication_revision=1,
+    )
+    owner = type("Owner", (), {"capture_snapshot": lambda self: snapshot})()
+    return TableQueryService(parser, _Cache(), owner)
 
 
 def test_manifest_loader_prefers_child_manifest_parser(tmp_path: Path):
@@ -91,7 +101,7 @@ def test_system_table_counts_prefer_data_source_over_schema():
             "caliber_infos": [],
         }
     )
-    service = TableQueryService(parser, _Cache())
+    service = _table_query_service(parser)
 
     systems = {item["name"]: item for item in service.get_systems()}
 
@@ -134,7 +144,7 @@ def test_system_table_counts_infer_system_from_schema_prefix_without_data_source
             "caliber_infos": [],
         }
     )
-    service = TableQueryService(parser, _Cache())
+    service = _table_query_service(parser)
 
     systems = {item["name"]: item for item in service.get_systems()}
 

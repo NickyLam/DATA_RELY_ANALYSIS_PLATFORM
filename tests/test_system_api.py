@@ -13,6 +13,9 @@ from unittest.mock import MagicMock, patch
 import pytest
 from fastapi.testclient import TestClient
 
+from app.services.index_snapshot import FieldLineageTracingView, IndexSnapshot, ParserStateCapture
+from app.services.table_query_service import TableQueryService
+
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
@@ -77,10 +80,26 @@ def client_with_data(mock_parser_service, mock_cache_manager):
         patch("app.main.get_lineage_service", return_value=MagicMock()),
         patch("app.main.get_indicator_service", return_value=MagicMock()),
     ):
+        from app.dependencies import get_table_query_service
         from app.main import app
 
-        with TestClient(app) as client:
-            yield client
+        snapshot = IndexSnapshot.build(
+            ParserStateCapture(
+                1,
+                mock_parser_service.get_current_data.return_value,
+                FieldLineageTracingView(object()),
+            ),
+            publication_revision=1,
+        )
+        owner = SimpleNamespace(capture_snapshot=lambda: snapshot)
+        table_query_service = TableQueryService(mock_parser_service, mock_cache_manager, owner)
+        app.dependency_overrides[get_table_query_service] = lambda: table_query_service
+
+        try:
+            with TestClient(app) as client:
+                yield client
+        finally:
+            app.dependency_overrides.pop(get_table_query_service, None)
 
 
 # ── GET /api/systems ──────────────────────────────────────────

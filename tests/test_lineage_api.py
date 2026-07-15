@@ -8,7 +8,7 @@ from unittest.mock import MagicMock
 import pytest
 from fastapi.testclient import TestClient
 
-from app.dependencies import get_lineage_service, get_parser_service
+from app.dependencies import get_lineage_service, get_table_query_service
 from app.main import app
 
 
@@ -40,24 +40,21 @@ def mock_lineage_service():
 
 @pytest.fixture
 def mock_parser_service():
-    """模拟 ParserService"""
+    """模拟 TableQueryService（fixture 名保留以兼容既有测试）。"""
     service = MagicMock()
-    service.get_current_data.return_value = {
-        "tables": [
-            {
-                "full_name": "TEST_TABLE",
-                "columns": [
-                    {"name": "ID", "data_type": "NUMBER"},
-                    {"name": "NAME", "data_type": "VARCHAR2"},
-                ],
-            }
-        ]
+    service.get_table_fields.return_value = ["ID", "NAME"]
+    service.get_table_info.return_value = {
+        "full_name": "TEST_TABLE",
+        "columns": [
+            {"name": "ID", "data_type": "NUMBER"},
+            {"name": "NAME", "data_type": "VARCHAR2"},
+        ],
     }
-    app.dependency_overrides[get_parser_service] = lambda: service
+    app.dependency_overrides[get_table_query_service] = lambda: service
     try:
         yield service
     finally:
-        app.dependency_overrides.pop(get_parser_service, None)
+        app.dependency_overrides.pop(get_table_query_service, None)
 
 
 @pytest.fixture
@@ -130,7 +127,7 @@ class TestTableDetail:
     def test_get_table_detail_not_exists(self, client, mock_parser_service):
         """TC-105: 血缘查询 - 不存在的表"""
         # 修改 mock 返回空数据
-        mock_parser_service.get_current_data.return_value = {"tables": []}
+        mock_parser_service.get_table_info.return_value = None
         response = client.get("/api/tables/NON_EXISTENT_TABLE")
         assert response.status_code in [200, 404]
 

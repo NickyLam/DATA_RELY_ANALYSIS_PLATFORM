@@ -15,7 +15,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
 
-from app.dependencies import LineageServiceDep, ParserServiceDep, TableQueryServiceDep, admin_required
+from app.dependencies import LineageServiceDep, TableQueryServiceDep, admin_required
 from app.models import (
     BaseResponse,
     LineageQueryOptions,
@@ -187,7 +187,7 @@ def query_lineage(
 )
 def get_table_fields(
     table: str,
-    parser_service: ParserServiceDep,
+    table_query_service: TableQueryServiceDep,
 ) -> dict:
     """获取指定表的字段名列表。
 
@@ -196,41 +196,10 @@ def get_table_fields(
     2. 从字段映射中查找过程表（短名或全名）
     3. 模糊匹配过程表
     """
-    data = parser_service.get_current_data()
-    if not data:
-        raise HTTPException(status_code=404, detail="无可用数据")
-
-    norm_name = table.strip().upper()
-
-    # 1. 精确匹配 .tab 表
-    for t in data.get("tables", []):
-        tbl_name = (t.get("table_name") or "").upper()
-        full_name = (t.get("full_name") or "").upper()
-        if tbl_name == norm_name or full_name == norm_name:
-            columns = t.get("columns", [])
-            field_names = [c.get("name", "") for c in columns if c.get("name")]
-            return {"success": True, "data": field_names}
-
-    # 2. 从字段映射中查找过程表（按 target_table 聚合字段名）
-    field_mappings = data.get("field_mappings", [])
-    proc_fields: dict[str, set[str]] = {}
-    for fm in field_mappings:
-        tgt_table = (fm.get("target_table") or "").upper()
-        tgt_col = fm.get("target_column", "")
-        if tgt_table and tgt_col:
-            proc_fields.setdefault(tgt_table, set()).add(tgt_col)
-
-    for proc_tbl, fields in proc_fields.items():
-        short = proc_tbl.split(".")[-1] if "." in proc_tbl else proc_tbl
-        if short == norm_name or proc_tbl == norm_name:
-            return {"success": True, "data": sorted(fields)}
-
-    # 3. 模糊匹配过程表
-    for proc_tbl, fields in proc_fields.items():
-        if norm_name in proc_tbl or proc_tbl.endswith(norm_name):
-            return {"success": True, "data": sorted(fields)}
-
-    raise HTTPException(status_code=404, detail="指定的表不存在")
+    fields = table_query_service.get_table_fields(table)
+    if fields is None:
+        raise HTTPException(status_code=404, detail="指定的表不存在")
+    return {"success": True, "data": fields}
 
 
 @router.get(
@@ -241,17 +210,12 @@ def get_table_fields(
 )
 def get_table_info(
     table: str,
-    parser_service: ParserServiceDep,
+    table_query_service: TableQueryServiceDep,
 ) -> SingleTableInfoResponse:
-    data = parser_service.get_current_data()
-    if not data:
-        raise HTTPException(status_code=404, detail="无可用数据")
-
-    for t in data.get("tables", []):
-        if t.get("full_name", "").upper() == table.upper():
-            return SingleTableInfoResponse(data=t)
-
-    raise HTTPException(status_code=404, detail="指定的表不存在")
+    table_info = table_query_service.get_table_info(table)
+    if table_info is None:
+        raise HTTPException(status_code=404, detail="指定的表不存在")
+    return SingleTableInfoResponse(data=table_info)
 
 
 @router.get(

@@ -133,13 +133,41 @@ class _NoopCache:
         pass
 
 
-def test_lineage_service_search_tables_uses_parser_repository_search_when_available():
+def test_lineage_service_search_tables_uses_captured_snapshot():
+    from app.services.index_snapshot import FieldLineageTracingView, IndexSnapshot, ParserStateCapture
+
     parser = _ParserWithRepositorySearch()
-    service = LineageService(parser, _NoopCache())
+    snapshot_data = {
+        "tables": [
+            {
+                "full_name": "RRP_MDL.CUSTOMER",
+                "table_name": "CUSTOMER",
+                "columns": [{"name": "ID"}, {"name": "NAME"}],
+            }
+        ],
+        "procedures": [],
+        "table_lineages": [],
+        "field_mappings": [],
+    }
+
+    class _Tracer:
+        pass
+
+    snapshot = IndexSnapshot.build(
+        ParserStateCapture(1, snapshot_data, FieldLineageTracingView(_Tracer())),
+        publication_revision=1,
+    )
+
+    class _Owner:
+        @staticmethod
+        def capture_snapshot():
+            return snapshot
+
+    service = LineageService(parser, _NoopCache(), _Owner())
 
     results = service.search_tables("customer", limit=10)
 
-    assert parser.search_calls == [("customer", 10)]
+    assert parser.search_calls == []
     assert results == [
         {
             "full_name": "RRP_MDL.CUSTOMER",

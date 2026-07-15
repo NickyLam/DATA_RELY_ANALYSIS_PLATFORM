@@ -663,6 +663,7 @@ class ParserService:
                 generation=generation,
                 source_data=captured_data,
                 field_tracing=FieldLineageTracingView(tracer),
+                data_mtime=self.get_data_mtime(),
                 _take_ownership=True,
             )
 
