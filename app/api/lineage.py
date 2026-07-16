@@ -34,6 +34,7 @@ from app.models import (
 )
 from app.services.index_service import RefreshOutcome
 from app.services.lineage_export_writer import build_lineage_export_workbook
+from app.services.table_query_service import NoCommittedSnapshotError
 
 logger = logging.getLogger(__name__)
 
@@ -197,7 +198,10 @@ def get_table_fields(
     2. 从字段映射中查找过程表（短名或全名）
     3. 模糊匹配过程表
     """
-    fields = table_query_service.get_table_fields(table)
+    try:
+        fields = table_query_service.get_table_fields(table)
+    except NoCommittedSnapshotError as exc:
+        raise HTTPException(status_code=404, detail="无可用数据") from exc
     if fields is None:
         raise HTTPException(status_code=404, detail="指定的表不存在")
     return {"success": True, "data": fields}
@@ -213,7 +217,10 @@ def get_table_info(
     table: str,
     table_query_service: TableQueryServiceDep,
 ) -> SingleTableInfoResponse:
-    table_info = table_query_service.get_table_info(table)
+    try:
+        table_info = table_query_service.get_table_info(table)
+    except NoCommittedSnapshotError as exc:
+        raise HTTPException(status_code=404, detail="无可用数据") from exc
     if table_info is None:
         raise HTTPException(status_code=404, detail="指定的表不存在")
     return SingleTableInfoResponse(data=table_info)

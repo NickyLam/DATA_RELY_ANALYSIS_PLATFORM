@@ -180,11 +180,17 @@ class IndexService:
                     return self._start_result
             return self._new_terminal_result(RefreshOutcome.CLOSED, None, None)
 
-        result = self.refresh(trigger="startup", _epoch=epoch)
-        with self._lock:
-            self._start_result = result
-            self._starting = False
-            self._start_completed.set()
+        try:
+            result = self.refresh(trigger="startup", _epoch=epoch)
+            with self._lock:
+                self._start_result = result
+        except BaseException:
+            self.close()
+            raise
+        finally:
+            with self._lock:
+                self._starting = False
+                self._start_completed.set()
         if result.outcome is RefreshOutcome.FAILED and self.state.snapshot is None:
             # 构造期首次发布失败时，调用方拿不到 owner 引用，必须在抛错前退订。
             self.close()
@@ -240,7 +246,23 @@ class IndexService:
             attempt_id = self._next_attempt()
             base_namespace = self._state.publication_namespace
 
-        capture = self._parser.capture_query_state()
+        try:
+            capture = self._parser.capture_query_state()
+        except Exception:
+            failure = self._failure_result(
+                attempt_id,
+                requested_generation,
+                None,
+                base_namespace,
+                CandidateBuildError("source_data", "build_failed"),
+            )
+            self._record_attempt(failure, active_epoch)
+            logger.warning(
+                "查询快照捕获失败: component=%s code=%s",
+                failure.failure_component,
+                failure.failure_code,
+            )
+            return failure
         if capture is None:
             result = RefreshResult(
                 attempt_id,
@@ -418,7 +440,7 @@ class IndexService:
     def _failure_result(
         attempt_id: int,
         requested_generation: int | None,
-        candidate_generation: int,
+        candidate_generation: int | None,
         base_namespace: tuple[int, int] | None,
         exc: Exception,
     ) -> RefreshResult:

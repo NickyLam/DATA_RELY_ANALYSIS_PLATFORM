@@ -202,7 +202,12 @@ def force_reparse(
             trigger="post-reparse",
         )
         if (
-            refresh.outcome not in {RefreshOutcome.PUBLISHED, RefreshOutcome.DUPLICATE}
+            refresh.outcome
+            not in {
+                RefreshOutcome.PUBLISHED,
+                RefreshOutcome.DUPLICATE,
+                RefreshOutcome.COALESCED,
+            }
             or index_service.state.committed_generation != generation
         ):
             raise RuntimeError("projection_not_published")

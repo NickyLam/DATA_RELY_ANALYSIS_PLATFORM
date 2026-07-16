@@ -19,6 +19,10 @@ from app.utils.cache_manager import CacheManager
 from core.table_name_resolver import TableNameResolver
 
 
+class NoCommittedSnapshotError(RuntimeError):
+    """查询时尚无已提交的数据快照。"""
+
+
 class TableQueryService:
     """表信息查询服务（从 LineageService 拆分）"""
 
@@ -112,7 +116,7 @@ class TableQueryService:
         """
         snapshot = self._capture_snapshot()
         if snapshot is None:
-            return None
+            raise NoCommittedSnapshotError
         data = snapshot.get_source_data()
 
         norm_name = table.strip().upper()
@@ -150,7 +154,7 @@ class TableQueryService:
         """获取指定表的详细结构信息。"""
         snapshot = self._capture_snapshot()
         if snapshot is None:
-            return None
+            raise NoCommittedSnapshotError
 
         return snapshot.query_index.get_table_by_full(table)
 

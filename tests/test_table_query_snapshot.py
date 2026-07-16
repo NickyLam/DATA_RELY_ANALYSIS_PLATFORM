@@ -2,8 +2,10 @@ from __future__ import annotations
 
 from typing import Any
 
+import pytest
+
 from app.services.index_snapshot import FieldLineageTracingView, IndexSnapshot, ParserStateCapture
-from app.services.table_query_service import TableQueryService
+from app.services.table_query_service import NoCommittedSnapshotError, TableQueryService
 
 
 class _Cache:
@@ -93,8 +95,10 @@ def test_no_snapshot_never_falls_back_to_live_parser_or_cache_projection() -> No
 
     assert service.search_tables("LIVE") == []
     assert service.search_procedures("LIVE") == []
-    assert service.get_table_fields("T_LIVE") is None
-    assert service.get_table_info("RRP_MDL.T_LIVE") is None
+    with pytest.raises(NoCommittedSnapshotError):
+        service.get_table_fields("T_LIVE")
+    with pytest.raises(NoCommittedSnapshotError):
+        service.get_table_info("RRP_MDL.T_LIVE")
     assert service.get_system_stats()["total_tables"] == 0
     runtime_stats = service.get_runtime_stats()
     assert runtime_stats["loaded"] is False

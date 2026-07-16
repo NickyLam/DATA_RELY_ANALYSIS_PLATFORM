@@ -206,14 +206,22 @@ class TestForceReparse:
             parse_time_sec=1.25,
         )
 
-    def test_reparse_uses_non_forcing_compatibility_refresh(self, monkeypatch):
+    @pytest.mark.parametrize(
+        "refresh_outcome",
+        [RefreshOutcome.DUPLICATE, RefreshOutcome.COALESCED],
+    )
+    def test_reparse_accepts_non_forcing_compatibility_refresh(
+        self,
+        monkeypatch,
+        refresh_outcome: RefreshOutcome,
+    ):
         parser = MagicMock(data_generation=12)
         parser.parse_existing_data.return_value = self._parse_result()
         owner = MagicMock()
         owner.state = SimpleNamespace(committed_generation=12)
         owner.refresh.return_value = RefreshResult(
             1,
-            RefreshOutcome.DUPLICATE,
+            refresh_outcome,
             12,
             12,
             (12, 1),

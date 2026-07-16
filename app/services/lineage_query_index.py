@@ -36,6 +36,9 @@ class LineageQueryIndex:
         self.table_by_short: dict[str, list[dict]] = {}
         # 所有完整表名集合（upper）
         self.table_full_names: set[str] = set()
+        # legacy procedure token -> full names / full name -> procedure
+        self.procedure_names_by_token: dict[str, set[str]] = {}
+        self.procedure_by_full: dict[str, dict] = {}
 
         # ── 字段映射索引 ──
         # (target_table_upper, target_column_upper) -> list[mapping dict]
@@ -63,10 +66,12 @@ class LineageQueryIndex:
         self.clear()
 
         tables = data.get("tables", [])
+        procedures = data.get("procedures", [])
         field_mappings = data.get("field_mappings", [])
         table_lineages = data.get("table_lineages", [])
 
         self._build_table_indexes(tables)
+        self._build_procedure_indexes(procedures)
         self._build_field_mapping_indexes(field_mappings)
         self._build_table_lineage_indexes(table_lineages)
 
@@ -85,6 +90,8 @@ class LineageQueryIndex:
         self.table_by_full.clear()
         self.table_by_short.clear()
         self.table_full_names.clear()
+        self.procedure_names_by_token.clear()
+        self.procedure_by_full.clear()
         self.field_mappings_by_target.clear()
         self.field_mappings_by_source.clear()
         self.field_mappings_by_bare_pair.clear()
@@ -111,6 +118,21 @@ class LineageQueryIndex:
     def has_table(self, full_name: str) -> bool:
         """检查完整表名是否存在（upper）。"""
         return full_name.upper() in self.table_full_names
+
+    def search_procedures(self, keyword: str, limit: int = 50) -> list[dict]:
+        """按 legacy CacheManager token 交集语义搜索存储过程。"""
+        normalized = keyword.upper().strip()
+        if not normalized:
+            return []
+        result_sets = [
+            self.procedure_names_by_token[token]
+            for token in self._tokenize_search_text(normalized)
+            if token in self.procedure_names_by_token
+        ]
+        if not result_sets:
+            return []
+        names = set.intersection(*result_sets) if len(result_sets) > 1 else result_sets[0]
+        return [self.procedure_by_full[name] for name in list(names)[:limit]]
 
     # ── 字段映射查询接口 ───────────────────────────────────────
 
@@ -257,6 +279,28 @@ class LineageQueryIndex:
             if short:
                 self.table_by_short.setdefault(short, []).append(t)
 
+    def _build_procedure_indexes(self, procedures: list[dict]) -> None:
+        for procedure in procedures:
+            name = procedure.get("full_name", "").upper()
+            if not name:
+                continue
+            self.procedure_by_full[name] = procedure
+            for token in self._tokenize_search_text(name):
+                self.procedure_names_by_token.setdefault(token, set()).add(name)
+
+    @staticmethod
+    def _tokenize_search_text(text: str) -> list[str]:
+        text = text.upper()
+        tokens = {text}
+        parts = text.replace("_", " ").split()
+        for start in range(len(parts)):
+            for end in range(start + 1, len(parts) + 1):
+                tokens.add("_".join(parts[start:end]))
+        tokens.update(parts)
+        if "." in text:
+            tokens.add(text.split(".")[0])
+        return list(tokens)
+
     def _build_field_mapping_indexes(self, field_mappings: list[dict]) -> None:
         for fm in field_mappings:
             src_tbl = fm.get("source_table", "").upper()
@@ -317,6 +361,9 @@ class ReadOnlyLineageQueryIndex:
 
     def has_table(self, full_name: str) -> bool:
         return self._index.has_table(full_name)
+
+    def search_procedures(self, keyword: str, limit: int = 50) -> list[dict]:
+        return deepcopy(self._index.search_procedures(keyword, limit))
 
     def get_field_mappings_by_target(self, table: str, column: str) -> list[dict]:
         return deepcopy(self._index.get_field_mappings_by_target(table, column))

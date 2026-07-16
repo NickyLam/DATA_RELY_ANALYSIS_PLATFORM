@@ -25,6 +25,19 @@ _IGNORED_METADATA = {
 _UNORDERED_LISTS = {"nodes", "edges", "field_mappings", "mappings"}
 
 
+def _legacy_search_tokens(text: str) -> list[str]:
+    text = text.upper()
+    tokens = {text}
+    parts = text.replace("_", " ").split()
+    for start in range(len(parts)):
+        for end in range(start + 1, len(parts) + 1):
+            tokens.add("_".join(parts[start:end]))
+    tokens.update(parts)
+    if "." in text:
+        tokens.add(text.split(".")[0])
+    return list(tokens)
+
+
 class EquivalenceMismatch(AssertionError):
     """A semantic difference with a stable category for cutover diagnostics."""
 
@@ -274,13 +287,24 @@ class _LegacyProjection:
         normalized = keyword.upper().strip()
         if not normalized:
             return []
-        return deepcopy(
-            [
-                procedure
-                for procedure in self.data.get("procedures", [])
-                if normalized in procedure.get("full_name", "").upper()
-            ][:limit]
-        )
+        procedure_by_full = {
+            procedure.get("full_name", "").upper(): procedure
+            for procedure in self.data.get("procedures", [])
+            if procedure.get("full_name")
+        }
+        index: dict[str, set[str]] = {}
+        for name in procedure_by_full:
+            for token in _legacy_search_tokens(name):
+                index.setdefault(token, set()).add(name)
+        result_sets = [
+            index[token]
+            for token in _legacy_search_tokens(normalized)
+            if token in index
+        ]
+        if not result_sets:
+            return []
+        names = set.intersection(*result_sets) if len(result_sets) > 1 else result_sets[0]
+        return deepcopy([procedure_by_full[name] for name in list(names)[:limit]])
 
     def resolve(self, table: str) -> str:
         return self.tracer.resolve_table_name(table, self.data)

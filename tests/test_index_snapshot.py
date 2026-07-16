@@ -107,6 +107,40 @@ def test_snapshot_binds_generation_data_and_all_query_projections(parser: Parser
     assert chains[0].chain[0].table_name == "SRC.GEN_1"
 
 
+def test_procedure_search_preserves_legacy_token_intersection_semantics(parser: ParserService):
+    result = _result(1)
+    result.procedures = [
+        ProcedureInfo(schema="ETL_DAILY", proc_name="P_LOAD_CUSTOMER", full_name="ETL_DAILY.P_LOAD_CUSTOMER"),
+        ProcedureInfo(schema="ETL_DAILY", proc_name="P_LOAD_ACCOUNT", full_name="ETL_DAILY.P_LOAD_ACCOUNT"),
+        ProcedureInfo(schema="OPS", proc_name="P_REBUILD_CUSTOMER", full_name="OPS.P_REBUILD_CUSTOMER"),
+    ]
+    parser._set_current_result(result)
+    capture = parser.capture_query_state()
+    assert capture is not None
+    snapshot = IndexSnapshot.build(capture, publication_revision=1)
+
+    assert {item["full_name"] for item in snapshot.search_procedures("ETL_DAILY")} == {
+        "ETL_DAILY.P_LOAD_CUSTOMER",
+        "ETL_DAILY.P_LOAD_ACCOUNT",
+    }
+    assert {item["full_name"] for item in snapshot.search_procedures("LOAD")} == {
+        "ETL_DAILY.P_LOAD_CUSTOMER",
+        "ETL_DAILY.P_LOAD_ACCOUNT",
+    }
+    assert [item["full_name"] for item in snapshot.search_procedures("LOAD_CUSTOMER")] == [
+        "ETL_DAILY.P_LOAD_CUSTOMER"
+    ]
+    assert snapshot.search_procedures("OAD") == []
+    assert snapshot.search_procedures("  ") == []
+
+    limited = snapshot.search_procedures("ETL_DAILY", limit=1)
+    assert len(limited) == 1
+    assert limited[0]["full_name"] in {
+        "ETL_DAILY.P_LOAD_CUSTOMER",
+        "ETL_DAILY.P_LOAD_ACCOUNT",
+    }
+
+
 def test_zero_edge_snapshot_is_complete_and_queryable(parser: ParserService):
     snapshot = _snapshot(parser, with_edges=False)
 

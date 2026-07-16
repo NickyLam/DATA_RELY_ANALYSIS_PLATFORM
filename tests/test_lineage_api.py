@@ -11,6 +11,7 @@ from fastapi.testclient import TestClient
 from app.dependencies import get_index_service, get_lineage_service, get_table_query_service
 from app.main import app
 from app.services.index_service import RefreshOutcome, RefreshResult
+from app.services.table_query_service import NoCommittedSnapshotError
 
 
 @pytest.fixture
@@ -130,7 +131,29 @@ class TestTableDetail:
         # 修改 mock 返回空数据
         mock_parser_service.get_table_info.return_value = None
         response = client.get("/api/tables/NON_EXISTENT_TABLE")
-        assert response.status_code in [200, 404]
+        assert response.status_code == 404
+        assert response.json() == {"detail": "指定的表不存在"}
+
+    @pytest.mark.parametrize(
+        ("path", "service_method"),
+        [
+            ("/api/tables/ANY/fields", "get_table_fields"),
+            ("/api/tables/ANY", "get_table_info"),
+        ],
+    )
+    def test_table_lookup_without_snapshot_preserves_no_data_error(
+        self,
+        client,
+        mock_parser_service,
+        path: str,
+        service_method: str,
+    ):
+        getattr(mock_parser_service, service_method).side_effect = NoCommittedSnapshotError
+
+        response = client.get(path)
+
+        assert response.status_code == 404
+        assert response.json() == {"detail": "无可用数据"}
 
 
 class TestSystemStats:

@@ -183,15 +183,7 @@ class IndexSnapshot:
         return deepcopy(search_table_dicts(self._source_data.get("tables", []), keyword, limit))
 
     def search_procedures(self, keyword: str, limit: int = 50) -> list[dict]:
-        normalized = keyword.upper().strip()
-        if not normalized:
-            return []
-        procedures = [
-            procedure
-            for procedure in self._source_data.get("procedures", [])
-            if normalized in procedure.get("full_name", "").upper()
-        ]
-        return deepcopy(procedures[:limit])
+        return self._query_index.search_procedures(keyword, limit)
 
     def trace_tables(
         self,

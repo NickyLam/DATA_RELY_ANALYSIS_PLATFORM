@@ -127,6 +127,35 @@ def test_candidate_failure_preserves_committed_snapshot_and_sanitizes_diagnostic
         owner.close()
 
 
+def test_capture_failure_preserves_committed_snapshot_and_records_sanitized_failure(
+    parser: ParserService,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _publish_parser_generation(parser, 1)
+    owner = _owner(parser)
+    try:
+        owner.start()
+        committed = owner.capture_snapshot()
+
+        def fail_capture() -> ParserStateCapture | None:
+            raise RuntimeError("/secret/source.sql token=do-not-expose")
+
+        monkeypatch.setattr(parser, "capture_query_state", fail_capture)
+        outcome = owner.refresh(requested_generation=2)
+
+        assert outcome.outcome is RefreshOutcome.FAILED
+        assert outcome.candidate_generation is None
+        assert outcome.failure_component == "source_data"
+        assert outcome.failure_code == "build_failed"
+        assert owner.capture_snapshot() is committed
+        assert owner.state.committed_generation == 1
+        assert owner.state.last_failure is outcome
+        assert "/secret" not in repr(owner.diagnostics)
+        assert "do-not-expose" not in repr(owner.diagnostics)
+    finally:
+        owner.close()
+
+
 def test_duplicate_event_skips_build_but_force_republishes_same_generation(parser: ParserService) -> None:
     builds = 0
 
@@ -307,6 +336,50 @@ def test_close_wakes_concurrent_start_waiter_before_builder_finishes(parser: Par
         assert follower_result[0].outcome is RefreshOutcome.CLOSED
     finally:
         release.set()
+        leader.join(2)
+        follower.join(2)
+
+
+def test_capture_failure_wakes_concurrent_start_waiter(
+    parser: ParserService,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    entered = threading.Event()
+    release = threading.Event()
+    _publish_parser_generation(parser, 1)
+
+    def fail_capture() -> ParserStateCapture | None:
+        entered.set()
+        assert release.wait(2)
+        raise RuntimeError("capture failed")
+
+    monkeypatch.setattr(parser, "capture_query_state", fail_capture)
+    owner = _owner(parser)
+    leader_errors: list[Exception] = []
+    follower_results: list[RefreshResult] = []
+
+    def start_leader() -> None:
+        try:
+            owner.start()
+        except Exception as exc:
+            leader_errors.append(exc)
+
+    leader = threading.Thread(target=start_leader)
+    follower = threading.Thread(target=lambda: follower_results.append(owner.start()))
+    leader.start()
+    assert entered.wait(2)
+    follower.start()
+    release.set()
+    leader.join(2)
+    follower.join(0.2)
+    try:
+        assert not leader.is_alive()
+        assert not follower.is_alive()
+        assert len(leader_errors) == 1
+        assert isinstance(leader_errors[0], CandidateBuildError)
+        assert follower_results[0].outcome is RefreshOutcome.FAILED
+    finally:
+        owner.close()
         leader.join(2)
         follower.join(2)
 
