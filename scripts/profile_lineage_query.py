@@ -28,6 +28,7 @@ sys.path.insert(0, str(_project_root))
 def profile_via_service(table: str, field: str | None, depth: int, mode: str, repeat: int) -> None:
     """通过服务层直接调用测量性能。"""
     from app.config import config
+    from app.services.index_service import IndexService
     from app.services.lineage_service import LineageService
     from app.services.parser_service import ParserService
     from app.utils.cache_manager import CacheManager
@@ -42,9 +43,11 @@ def profile_via_service(table: str, field: str | None, depth: int, mode: str, re
         max_size=config.max_cache_size,
         ttl=config.cache_ttl_seconds,
     )
+    index_service = IndexService(parser_service=parser_service)
     lineage_service = LineageService(
         parser_service=parser_service,
         cache_manager=cache_manager,
+        index_service=index_service,
     )
 
     # 预热：加载缓存数据
@@ -52,6 +55,8 @@ def profile_via_service(table: str, field: str | None, depth: int, mode: str, re
     data = parser_service.get_current_data()
     if not data:
         print("[ERROR] 无可用数据，请先运行解析")
+        index_service.close()
+        parser_service.shutdown()
         return
 
     metadata = data.get("metadata", {})
@@ -133,6 +138,7 @@ def profile_via_service(table: str, field: str | None, depth: int, mode: str, re
         }, f, ensure_ascii=False, indent=2)
     print(f"\n详细结果已保存到: {output_path}")
 
+    index_service.close()
     parser_service.shutdown()
 
 

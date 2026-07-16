@@ -9,6 +9,7 @@ from fastapi.testclient import TestClient
 
 from app.dependencies import get_lineage_service
 from app.main import app
+from app.services.index_snapshot import FieldLineageTracingView, IndexSnapshot, ParserStateCapture
 from app.services.lineage_service import LineageService
 
 
@@ -33,9 +34,6 @@ class _Parser:
 class _Cache:
     size = 0
 
-    def build_index(self, *args, **kwargs):
-        return None
-
     def clear(self):
         return None
 
@@ -45,8 +43,33 @@ class _Cache:
     def set(self, *args, **kwargs):
         return None
 
-    def search_by_keyword(self, *args, **kwargs):
-        return []
+
+class _UnusedTracer:
+    pass
+
+
+class _Owner:
+    def __init__(self, snapshot: IndexSnapshot | None):
+        self.snapshot = snapshot
+
+    def capture_snapshot(self) -> IndexSnapshot | None:
+        return self.snapshot
+
+
+def _service(parser: _Parser) -> LineageService:
+    data = parser.get_current_data()
+    snapshot = None
+    if data is not None:
+        snapshot = IndexSnapshot.build(
+            ParserStateCapture(
+                parser.data_generation,
+                data,
+                FieldLineageTracingView(_UnusedTracer()),
+                data_mtime=parser.get_data_mtime(),
+            ),
+            publication_revision=1,
+        )
+    return LineageService(parser, _Cache(), _Owner(snapshot))
 
 
 def _sample_lineage_data() -> dict:
@@ -125,7 +148,7 @@ def _sample_lineage_data() -> dict:
 
 def test_lineage_service_exports_system_rows_and_external_nodes():
     parser = _Parser(_sample_lineage_data())
-    service = LineageService(parser, _Cache())
+    service = _service(parser)
 
     export = service.export_system_full_lineage("edw")
 
@@ -145,12 +168,12 @@ def test_lineage_service_exports_system_rows_and_external_nodes():
 
 
 def test_lineage_service_export_rejects_unknown_system_and_no_data():
-    service = LineageService(_Parser(_sample_lineage_data()), _Cache())
+    service = _service(_Parser(_sample_lineage_data()))
 
     with pytest.raises(ValueError, match="unknown system"):
         service.export_system_full_lineage("unknown")
 
-    empty_service = LineageService(_Parser(None), _Cache())
+    empty_service = _service(_Parser(None))
     with pytest.raises(ValueError, match="no parsed data"):
         empty_service.export_system_full_lineage("edw")
 
@@ -164,7 +187,7 @@ def test_xlsx_writer_creates_required_workbook_sheets_and_headers():
         build_lineage_export_workbook,
     )
 
-    service = LineageService(_Parser(_sample_lineage_data()), _Cache())
+    service = _service(_Parser(_sample_lineage_data()))
     workbook_bytes = build_lineage_export_workbook(service.export_system_full_lineage("edw"))
 
     wb = openpyxl.load_workbook(BytesIO(workbook_bytes), read_only=True, data_only=True)

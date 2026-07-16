@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import contextlib
+import copy
 import json
 import logging
 import threading
@@ -27,6 +28,7 @@ from app.config import config
 from app.repository import DataRepository, search_table_dicts
 from app.services.cache_store import CacheStore
 from app.services.event_bus import DataChangedEvent, EventType, get_event_bus
+from app.services.index_snapshot import FieldLineageTracingView, ParserStateCapture
 from app.services.tracer_factory import TracerFactory
 from core.parser_protocol import ParseOutput
 
@@ -219,7 +221,9 @@ class ParserService:
         self._data_generation = 0
         self._cache_store = CacheStore(self.output_dir, config=config)
         self._tracer_factory = TracerFactory()
-        self._result_lock = threading.Lock()
+        # Parser 发布态与 tracer 生命周期共享同一个可重入边界。
+        # 增量合并路径会在持锁时调用 _set_current_result，因此不能使用普通 Lock。
+        self._result_lock = threading.RLock()
         self._cached_procedures: dict[str, Any] = {}
         self._event_bus = get_event_bus()
 
@@ -242,21 +246,25 @@ class ParserService:
 
     @property
     def data_generation(self) -> int:
-        return self._data_generation
+        with self._result_lock:
+            return self._data_generation
 
     def _set_current_result(
         self,
         result: ParseResult,
         data_cache: dict[str, Any] | None = None,
     ) -> None:
-        self._current_result = result
-        self._current_data_cache = data_cache
-        self._data_generation += 1
-        self._tracer_factory.invalidate()
+        with self._result_lock:
+            self._current_result = result
+            self._current_data_cache = data_cache
+            self._data_generation += 1
+            self._tracer_factory.invalidate()
 
     def _publish_data_changed(self, source: str) -> None:
+        with self._result_lock:
+            generation = self._data_generation
         event = DataChangedEvent(
-            generation=self._data_generation,
+            generation=generation,
             source=source,
             changed_at=time.time(),
         )
@@ -546,16 +554,23 @@ class ParserService:
 
             result.parse_time_sec = time.time() - start_time
 
-            if mode == "incremental" and self._current_result:
-                if progress_callback:
-                    progress_callback(96, "", "合并增量数据（去重更新中）...")
+            if mode == "incremental":
                 with self._result_lock:
-                    self._current_result.merge(result)
-                    self._set_current_result(self._current_result)
-                self._save_result_to_cache(self._current_result)
+                    current_result = self._current_result
+                    if current_result is not None:
+                        current_result.merge(result)
+                        self._set_current_result(current_result)
+                        published_result = current_result
+                    else:
+                        self._set_current_result(result)
+                        published_result = result
+                if current_result is not None and progress_callback:
+                    progress_callback(96, "", "合并增量数据（去重更新中）...")
+                self._save_result_to_cache(published_result)
             else:
                 self._set_current_result(result)
                 self._save_result_to_cache(result)
+                published_result = result
 
             self._publish_data_changed("parse_uploaded_files")
             self._event_bus.publish(EventType.PARSE_COMPLETED)
@@ -565,8 +580,8 @@ class ParserService:
 
             logger.info(
                 "文件解析完成: %d 张表, %d 个过程, 耗时 %.2fs",
-                len(self._current_result.tables),
-                len(self._current_result.procedures),
+                len(published_result.tables),
+                len(published_result.procedures),
                 result.parse_time_sec,
             )
 
@@ -598,41 +613,79 @@ class ParserService:
         return None
 
     def get_current_data(self) -> dict[str, Any] | None:
-        # 优先返回缓存的 data dict，避免重复全量 to_serializable()
-        if self._current_data_cache is not None:
-            return self._current_data_cache
-        if self._current_result is not None:
-            # 惰性构建并缓存
-            self._current_data_cache = self._current_result.to_serializable()
-            return self._current_data_cache
-        repo = self._get_repository()
-        cached = repo.get_raw_data()
-        if cached:
-            self._current_data_cache = cached
-            return cached
-        # Fallback: 从存储后端加载（SQLite 或 legacy）
-        data = self._cache_store.load_from_cache()
-        if data:
-            self._current_data_cache = data
-            return data
-        return None
+        with self._result_lock:
+            # 优先返回缓存的 data dict，避免重复全量 to_serializable()
+            if self._current_data_cache is not None:
+                return self._current_data_cache
+            if self._current_result is not None:
+                # 惰性构建并缓存
+                self._current_data_cache = self._current_result.to_serializable()
+                return self._current_data_cache
+
+            repo = self._get_repository()
+            cached = repo.get_raw_data()
+            if cached:
+                self._current_data_cache = cached
+                return cached
+
+            # Fallback: 从存储后端加载（SQLite 或 legacy）
+            data = self._cache_store.load_from_cache()
+            if data:
+                self._current_data_cache = data
+                return data
+            return None
+
+    def capture_query_state(self) -> ParserStateCapture | None:
+        """原子捕获 generation、数据副本与匹配的字段追踪视图。
+
+        防御性数据副本和 tracer 都在共享 Parser 状态锁内创建，确保调用者不会
+        观察到 N generation 配上 N+1 data/tracer。TracerFactory 仍负责 tracer
+        的创建与失效；capture 仅持有 generation-bound 只读查询外观。
+        """
+        with self._result_lock:
+            data = self.get_current_data()
+            if data is None:
+                return None
+
+            generation = self._data_generation
+            captured_data = copy.deepcopy(data)
+            captured_result = ParseResult.from_serializable(captured_data)
+            tables = {table.full_name: table for table in captured_result.tables}
+            procedures = {procedure.full_name: procedure for procedure in captured_result.procedures}
+            tracer = self._tracer_factory.create_lineage_tracer(
+                tables=tables,
+                procedures=procedures,
+                table_lineages=captured_result.table_lineages,
+                field_mappings=captured_result.field_mappings,
+                generation=("query-capture", generation),
+            )
+            return ParserStateCapture(
+                generation=generation,
+                source_data=captured_data,
+                field_tracing=FieldLineageTracingView(tracer),
+                data_mtime=self.get_data_mtime(),
+                _take_ownership=True,
+            )
 
     def get_table_list(self) -> list[dict]:
-        if self._current_result is not None:
-            return [t.to_dict() for t in self._current_result.tables]
+        with self._result_lock:
+            if self._current_result is not None:
+                return [t.to_dict() for t in self._current_result.tables]
         data = self.get_current_data()
         if data:
             return data.get("tables", [])
         return []
 
     def search_tables(self, keyword: str, limit: int = 50) -> list[dict]:
-        if self._current_result is not None:
-            return search_table_dicts([t.to_dict() for t in self._current_result.tables], keyword, limit)
+        with self._result_lock:
+            if self._current_result is not None:
+                return search_table_dicts([t.to_dict() for t in self._current_result.tables], keyword, limit)
         return self._get_repository().search_tables(keyword, limit)
 
     def get_procedure_list(self) -> list[dict]:
-        if self._current_result is not None:
-            return [p.to_dict() for p in self._current_result.procedures]
+        with self._result_lock:
+            if self._current_result is not None:
+                return [p.to_dict() for p in self._current_result.procedures]
         data = self.get_current_data()
         if data:
             return data.get("procedures", [])
@@ -640,20 +693,21 @@ class ParserService:
 
     def get_lineage_tracer(self) -> Any | None:
         try:
-            if self._current_result is not None:
-                result = self._current_result
-                tables = {t.full_name: t for t in result.tables}
-                procedures = {}
-                for p in result.procedures:
-                    procedures[p.full_name] = p
-                    self._cached_procedures[p.full_name] = p
-                return self._tracer_factory.create_lineage_tracer(
-                    tables=tables,
-                    procedures=procedures,
-                    table_lineages=result.table_lineages,
-                    field_mappings=result.field_mappings,
-                    generation=self._data_generation,
-                )
+            with self._result_lock:
+                if self._current_result is not None:
+                    result = self._current_result
+                    tables = {t.full_name: t for t in result.tables}
+                    procedures = {}
+                    for p in result.procedures:
+                        procedures[p.full_name] = p
+                        self._cached_procedures[p.full_name] = p
+                    return self._tracer_factory.create_lineage_tracer(
+                        tables=tables,
+                        procedures=procedures,
+                        table_lineages=result.table_lineages,
+                        field_mappings=result.field_mappings,
+                        generation=self._data_generation,
+                    )
 
             logger.warning("无可用的解析数据或缓存，无法构建 LineageTracer")
             return None
@@ -664,20 +718,21 @@ class ParserService:
 
     def get_caliber_tracer(self) -> Any | None:
         try:
-            if self._current_result is not None:
-                result = self._current_result
-                tables = {t.full_name: t for t in result.tables}
-                procedures = {}
-                for p in result.procedures:
-                    procedures[p.full_name] = p
-                return self._tracer_factory.create_caliber_tracer(
-                    tables=tables,
-                    procedures=procedures,
-                    table_lineages=result.table_lineages,
-                    field_mappings=result.field_mappings,
-                    caliber_infos=result.caliber_infos,
-                    generation=self._data_generation,
-                )
+            with self._result_lock:
+                if self._current_result is not None:
+                    result = self._current_result
+                    tables = {t.full_name: t for t in result.tables}
+                    procedures = {}
+                    for p in result.procedures:
+                        procedures[p.full_name] = p
+                    return self._tracer_factory.create_caliber_tracer(
+                        tables=tables,
+                        procedures=procedures,
+                        table_lineages=result.table_lineages,
+                        field_mappings=result.field_mappings,
+                        caliber_infos=result.caliber_infos,
+                        generation=self._data_generation,
+                    )
 
             logger.warning("无可用的解析数据或缓存，无法构建 CaliberTracer")
             return None
@@ -689,18 +744,19 @@ class ParserService:
     def get_unified_tracer(self) -> Any | None:
         """获取或懒加载 UnifiedTracer（P1 引入，P2 由 API 使用）。"""
         try:
-            if self._current_result is not None:
-                result = self._current_result
-                tables = {t.full_name: t for t in result.tables}
-                procedures = {p.full_name: p for p in result.procedures}
-                return self._tracer_factory.create_unified_tracer(
-                    tables=tables,
-                    procedures=procedures,
-                    table_lineages=result.table_lineages,
-                    field_mappings=result.field_mappings,
-                    caliber_infos=result.caliber_infos,
-                    generation=self._data_generation,
-                )
+            with self._result_lock:
+                if self._current_result is not None:
+                    result = self._current_result
+                    tables = {t.full_name: t for t in result.tables}
+                    procedures = {p.full_name: p for p in result.procedures}
+                    return self._tracer_factory.create_unified_tracer(
+                        tables=tables,
+                        procedures=procedures,
+                        table_lineages=result.table_lineages,
+                        field_mappings=result.field_mappings,
+                        caliber_infos=result.caliber_infos,
+                        generation=self._data_generation,
+                    )
 
             logger.warning("无可用的解析数据或缓存，无法构建 UnifiedTracer")
             return None
@@ -710,15 +766,17 @@ class ParserService:
             return None
 
     def clear_cache(self) -> None:
-        self._current_data_cache = None
+        with self._result_lock:
+            self._current_data_cache = None
+            self._tracer_factory.invalidate()
         self._cache_store.clear_cache()
-        self._tracer_factory.invalidate()
         self._event_bus.publish(EventType.CACHE_INVALIDATED)
 
     def reset_tracer(self) -> None:
         """重置血缘追踪器和过程缓存，用于强制重新解析前清理旧状态。"""
-        self._tracer_factory.invalidate()
-        self._cached_procedures.clear()
+        with self._result_lock:
+            self._tracer_factory.invalidate()
+            self._cached_procedures.clear()
 
     def _parse_tab_directory(self, directory: Path, result: ParseResult) -> None:
         if not self._table_parser:
@@ -786,22 +844,27 @@ class ParserService:
             result.errors.append(f"文件 {file_path.name}: {str(e)}")
 
     def _save_result_to_cache(self, result: ParseResult) -> None:
-        serializable = result.to_serializable()
-        data = {
-            "metadata": {
-                "total_tables": len(result.tables),
-                "total_procedures": len(result.procedures),
-                "total_table_lineages": len(result.table_lineages),
-                "total_field_mappings": len(result.field_mappings),
-                "total_caliber_infos": len(result.caliber_infos),
-                "parser_version": "unified-v1",
-                "data_generation": self._data_generation,
-                "data_sources": [ds.name for ds in config.datasource_configs] if config else [],
-            },
-            **serializable,
-        }
+        with self._result_lock:
+            generation = self._data_generation
+            serializable = result.to_serializable()
+            data = {
+                "metadata": {
+                    "total_tables": len(result.tables),
+                    "total_procedures": len(result.procedures),
+                    "total_table_lineages": len(result.table_lineages),
+                    "total_field_mappings": len(result.field_mappings),
+                    "total_caliber_infos": len(result.caliber_infos),
+                    "parser_version": "unified-v1",
+                    "data_generation": generation,
+                    "data_sources": [ds.name for ds in config.datasource_configs] if config else [],
+                },
+                **serializable,
+            }
         self._cache_store.save_to_cache(data)
-        self._current_data_cache = data  # 同步填充 data cache，避免后续重复 to_serializable()
+        with self._result_lock:
+            # 慢存储写不能用旧结果覆盖已经前进的新一代内存态。
+            if self._current_result is result and self._data_generation == generation:
+                self._current_data_cache = data  # 同步填充 data cache，避免后续重复 to_serializable()
 
     def _resolve_ds_path(self, data_dir: str) -> Path:
         path = Path(data_dir)

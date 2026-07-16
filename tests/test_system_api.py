@@ -13,6 +13,12 @@ from unittest.mock import MagicMock, patch
 import pytest
 from fastapi.testclient import TestClient
 
+from app.dependencies import get_index_service, get_parser_service
+from app.main import app
+from app.services.index_service import RefreshOutcome, RefreshResult
+from app.services.index_snapshot import FieldLineageTracingView, IndexSnapshot, ParserStateCapture
+from app.services.table_query_service import TableQueryService
+
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
@@ -77,10 +83,26 @@ def client_with_data(mock_parser_service, mock_cache_manager):
         patch("app.main.get_lineage_service", return_value=MagicMock()),
         patch("app.main.get_indicator_service", return_value=MagicMock()),
     ):
+        from app.dependencies import get_table_query_service
         from app.main import app
 
-        with TestClient(app) as client:
-            yield client
+        snapshot = IndexSnapshot.build(
+            ParserStateCapture(
+                1,
+                mock_parser_service.get_current_data.return_value,
+                FieldLineageTracingView(object()),
+            ),
+            publication_revision=1,
+        )
+        owner = SimpleNamespace(capture_snapshot=lambda: snapshot)
+        table_query_service = TableQueryService(mock_cache_manager, owner)
+        app.dependency_overrides[get_table_query_service] = lambda: table_query_service
+
+        try:
+            with TestClient(app) as client:
+                yield client
+        finally:
+            app.dependency_overrides.pop(get_table_query_service, None)
 
 
 # ── GET /api/systems ──────────────────────────────────────────
@@ -171,3 +193,107 @@ class TestGetSystemTables:
         data = resp.json()
         assert data["data"] == []
         assert data["total"] == 0
+
+
+class TestForceReparse:
+    @staticmethod
+    def _parse_result():
+        return SimpleNamespace(
+            tables=[{}],
+            procedures=[{}],
+            table_lineages=[{}],
+            field_mappings=[{}],
+            parse_time_sec=1.25,
+        )
+
+    @pytest.mark.parametrize(
+        "refresh_outcome",
+        [RefreshOutcome.DUPLICATE, RefreshOutcome.COALESCED],
+    )
+    def test_reparse_accepts_non_forcing_compatibility_refresh(
+        self,
+        monkeypatch,
+        refresh_outcome: RefreshOutcome,
+    ):
+        parser = MagicMock(data_generation=12)
+        parser.parse_existing_data.return_value = self._parse_result()
+        owner = MagicMock()
+        owner.state = SimpleNamespace(committed_generation=12)
+        owner.refresh.return_value = RefreshResult(
+            1,
+            refresh_outcome,
+            12,
+            12,
+            (12, 1),
+            publication_namespace=(12, 1),
+        )
+        app.dependency_overrides[get_parser_service] = lambda: parser
+        app.dependency_overrides[get_index_service] = lambda: owner
+        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
+        try:
+            response = TestClient(app).post(
+                "/api/system/reparse",
+                headers={"X-Admin-Key": "test-admin-key"},
+            )
+        finally:
+            app.dependency_overrides.pop(get_parser_service, None)
+            app.dependency_overrides.pop(get_index_service, None)
+
+        assert response.status_code == 200
+        assert response.json()["data"]["tables"] == 1
+        parser.parse_existing_data.assert_called_once_with(force=True)
+        owner.refresh.assert_called_once_with(
+            requested_generation=12,
+            force=False,
+            trigger="post-reparse",
+        )
+
+    def test_reparse_reports_projection_failure_without_raw_details(self, monkeypatch):
+        parser = MagicMock(data_generation=13)
+        parser.parse_existing_data.return_value = self._parse_result()
+        owner = MagicMock()
+        owner.state = SimpleNamespace(committed_generation=12)
+        owner.refresh.return_value = RefreshResult(
+            1,
+            RefreshOutcome.FAILED,
+            13,
+            13,
+            (12, 1),
+            failure_component="source_data",
+            failure_code="build_failed",
+        )
+        app.dependency_overrides[get_parser_service] = lambda: parser
+        app.dependency_overrides[get_index_service] = lambda: owner
+        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
+        try:
+            response = TestClient(app).post(
+                "/api/system/reparse",
+                headers={"X-Admin-Key": "test-admin-key"},
+            )
+        finally:
+            app.dependency_overrides.pop(get_parser_service, None)
+            app.dependency_overrides.pop(get_index_service, None)
+
+        assert response.status_code == 500
+        assert response.json() == {"detail": "重新解析失败"}
+        assert "source_data" not in response.text
+        assert "build_failed" not in response.text
+
+    def test_reparse_auth_denial_does_not_parse(self, monkeypatch):
+        parser = MagicMock()
+        owner = MagicMock()
+        app.dependency_overrides[get_parser_service] = lambda: parser
+        app.dependency_overrides[get_index_service] = lambda: owner
+        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
+        try:
+            response = TestClient(app).post(
+                "/api/system/reparse",
+                headers={"X-Admin-Key": "wrong"},
+            )
+        finally:
+            app.dependency_overrides.pop(get_parser_service, None)
+            app.dependency_overrides.pop(get_index_service, None)
+
+        assert response.status_code == 403
+        parser.parse_existing_data.assert_not_called()
+        owner.refresh.assert_not_called()

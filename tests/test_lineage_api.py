@@ -8,8 +8,10 @@ from unittest.mock import MagicMock
 import pytest
 from fastapi.testclient import TestClient
 
-from app.dependencies import get_lineage_service, get_parser_service
+from app.dependencies import get_index_service, get_lineage_service, get_table_query_service
 from app.main import app
+from app.services.index_service import RefreshOutcome, RefreshResult
+from app.services.table_query_service import NoCommittedSnapshotError
 
 
 @pytest.fixture
@@ -40,24 +42,21 @@ def mock_lineage_service():
 
 @pytest.fixture
 def mock_parser_service():
-    """模拟 ParserService"""
+    """模拟 TableQueryService（fixture 名保留以兼容既有测试）。"""
     service = MagicMock()
-    service.get_current_data.return_value = {
-        "tables": [
-            {
-                "full_name": "TEST_TABLE",
-                "columns": [
-                    {"name": "ID", "data_type": "NUMBER"},
-                    {"name": "NAME", "data_type": "VARCHAR2"},
-                ],
-            }
-        ]
+    service.get_table_fields.return_value = ["ID", "NAME"]
+    service.get_table_info.return_value = {
+        "full_name": "TEST_TABLE",
+        "columns": [
+            {"name": "ID", "data_type": "NUMBER"},
+            {"name": "NAME", "data_type": "VARCHAR2"},
+        ],
     }
-    app.dependency_overrides[get_parser_service] = lambda: service
+    app.dependency_overrides[get_table_query_service] = lambda: service
     try:
         yield service
     finally:
-        app.dependency_overrides.pop(get_parser_service, None)
+        app.dependency_overrides.pop(get_table_query_service, None)
 
 
 @pytest.fixture
@@ -130,9 +129,31 @@ class TestTableDetail:
     def test_get_table_detail_not_exists(self, client, mock_parser_service):
         """TC-105: 血缘查询 - 不存在的表"""
         # 修改 mock 返回空数据
-        mock_parser_service.get_current_data.return_value = {"tables": []}
+        mock_parser_service.get_table_info.return_value = None
         response = client.get("/api/tables/NON_EXISTENT_TABLE")
-        assert response.status_code in [200, 404]
+        assert response.status_code == 404
+        assert response.json() == {"detail": "指定的表不存在"}
+
+    @pytest.mark.parametrize(
+        ("path", "service_method"),
+        [
+            ("/api/tables/ANY/fields", "get_table_fields"),
+            ("/api/tables/ANY", "get_table_info"),
+        ],
+    )
+    def test_table_lookup_without_snapshot_preserves_no_data_error(
+        self,
+        client,
+        mock_parser_service,
+        path: str,
+        service_method: str,
+    ):
+        getattr(mock_parser_service, service_method).side_effect = NoCommittedSnapshotError
+
+        response = client.get(path)
+
+        assert response.status_code == 404
+        assert response.json() == {"detail": "无可用数据"}
 
 
 class TestSystemStats:
@@ -154,12 +175,65 @@ class TestCacheRebuild:
 
     def test_rebuild_cache_with_admin_key(self, client, mock_lineage_service, mock_caliber_service, monkeypatch):
         """TC-108: 缓存重建（配置 ADMIN_API_KEY 后应成功）"""
-        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
-        response = client.post(
-            "/api/cache/rebuild",
-            headers={"X-Admin-Key": "test-admin-key"},
+        owner = MagicMock()
+        owner.refresh.return_value = RefreshResult(
+            1,
+            RefreshOutcome.FORCED_PUBLISHED,
+            7,
+            7,
+            (7, 1),
+            publication_namespace=(7, 2),
         )
-        assert response.status_code == 200
+        app.dependency_overrides[get_index_service] = lambda: owner
+        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
+        try:
+            response = client.post(
+                "/api/cache/rebuild",
+                headers={"X-Admin-Key": "test-admin-key"},
+            )
+            assert response.status_code == 200
+            assert response.json()["success"] is True
+            assert response.json()["message"] == "索引重建完成"
+            owner.refresh.assert_called_once_with(force=True, trigger="explicit")
+        finally:
+            app.dependency_overrides.pop(get_index_service, None)
+
+    @pytest.mark.parametrize(
+        "outcome",
+        [
+            RefreshOutcome.FAILED,
+            RefreshOutcome.NO_DATA,
+            RefreshOutcome.STALE,
+            RefreshOutcome.CLOSED,
+            RefreshOutcome.DUPLICATE,
+            RefreshOutcome.COALESCED,
+        ],
+    )
+    def test_rebuild_cache_rejects_non_published_outcomes(self, client, monkeypatch, outcome):
+        owner = MagicMock()
+        owner.refresh.return_value = RefreshResult(
+            1,
+            outcome,
+            8,
+            8,
+            (7, 1),
+            failure_component="source_data",
+            failure_code="build_failed",
+        )
+        app.dependency_overrides[get_index_service] = lambda: owner
+        monkeypatch.setenv("ADMIN_API_KEY", "test-admin-key")
+        try:
+            response = client.post(
+                "/api/cache/rebuild",
+                headers={"X-Admin-Key": "test-admin-key"},
+            )
+        finally:
+            app.dependency_overrides.pop(get_index_service, None)
+
+        assert response.status_code == 500
+        assert response.json() == {"detail": "索引重建失败"}
+        assert "source_data" not in response.text
+        assert "build_failed" not in response.text
 
 
 class TestEdgeCaliber:

@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import logging
 import time
+from copy import deepcopy
 from typing import Any
 
 from core.table_name_resolver import TableNameResolver
@@ -35,6 +36,9 @@ class LineageQueryIndex:
         self.table_by_short: dict[str, list[dict]] = {}
         # 所有完整表名集合（upper）
         self.table_full_names: set[str] = set()
+        # legacy procedure token -> full names / full name -> procedure
+        self.procedure_names_by_token: dict[str, set[str]] = {}
+        self.procedure_by_full: dict[str, dict] = {}
 
         # ── 字段映射索引 ──
         # (target_table_upper, target_column_upper) -> list[mapping dict]
@@ -62,10 +66,12 @@ class LineageQueryIndex:
         self.clear()
 
         tables = data.get("tables", [])
+        procedures = data.get("procedures", [])
         field_mappings = data.get("field_mappings", [])
         table_lineages = data.get("table_lineages", [])
 
         self._build_table_indexes(tables)
+        self._build_procedure_indexes(procedures)
         self._build_field_mapping_indexes(field_mappings)
         self._build_table_lineage_indexes(table_lineages)
 
@@ -84,12 +90,20 @@ class LineageQueryIndex:
         self.table_by_full.clear()
         self.table_by_short.clear()
         self.table_full_names.clear()
+        self.procedure_names_by_token.clear()
+        self.procedure_by_full.clear()
         self.field_mappings_by_target.clear()
         self.field_mappings_by_source.clear()
         self.field_mappings_by_bare_pair.clear()
         self.table_lineages_by_target.clear()
         self.table_lineages_by_source.clear()
         self._built = False
+
+    def as_read_only(self) -> ReadOnlyLineageQueryIndex:
+        """返回与当前构建结果隔离的只读查询外观。"""
+        if not self._built:
+            raise RuntimeError("LineageQueryIndex 尚未构建")
+        return ReadOnlyLineageQueryIndex(self)
 
     # ── 表索引查询接口 ─────────────────────────────────────────
 
@@ -104,6 +118,21 @@ class LineageQueryIndex:
     def has_table(self, full_name: str) -> bool:
         """检查完整表名是否存在（upper）。"""
         return full_name.upper() in self.table_full_names
+
+    def search_procedures(self, keyword: str, limit: int = 50) -> list[dict]:
+        """按 legacy CacheManager token 交集语义搜索存储过程。"""
+        normalized = keyword.upper().strip()
+        if not normalized:
+            return []
+        result_sets = [
+            self.procedure_names_by_token[token]
+            for token in self._tokenize_search_text(normalized)
+            if token in self.procedure_names_by_token
+        ]
+        if not result_sets:
+            return []
+        names = set.intersection(*result_sets) if len(result_sets) > 1 else result_sets[0]
+        return [self.procedure_by_full[name] for name in list(names)[:limit]]
 
     # ── 字段映射查询接口 ───────────────────────────────────────
 
@@ -196,7 +225,9 @@ class LineageQueryIndex:
 
         short_hits = self.table_by_short.get(table_upper)
         if short_hits:
-            return short_hits[0].get("full_name", table_name)
+            # Legacy TableLineageTracer used a short-name dictionary populated
+            # in source order, so duplicate definitions resolve last-wins.
+            return short_hits[-1].get("full_name", table_name)
 
         # 步骤1: 显式 schema 直接返回
         if "." in table_upper:
@@ -248,6 +279,28 @@ class LineageQueryIndex:
             if short:
                 self.table_by_short.setdefault(short, []).append(t)
 
+    def _build_procedure_indexes(self, procedures: list[dict]) -> None:
+        for procedure in procedures:
+            name = procedure.get("full_name", "").upper()
+            if not name:
+                continue
+            self.procedure_by_full[name] = procedure
+            for token in self._tokenize_search_text(name):
+                self.procedure_names_by_token.setdefault(token, set()).add(name)
+
+    @staticmethod
+    def _tokenize_search_text(text: str) -> list[str]:
+        text = text.upper()
+        tokens = {text}
+        parts = text.replace("_", " ").split()
+        for start in range(len(parts)):
+            for end in range(start + 1, len(parts) + 1):
+                tokens.add("_".join(parts[start:end]))
+        tokens.update(parts)
+        if "." in text:
+            tokens.add(text.split(".")[0])
+        return list(tokens)
+
     def _build_field_mapping_indexes(self, field_mappings: list[dict]) -> None:
         for fm in field_mappings:
             src_tbl = fm.get("source_table", "").upper()
@@ -288,3 +341,66 @@ class LineageQueryIndex:
             if node_bare == bare:
                 return True
         return False
+
+
+class ReadOnlyLineageQueryIndex:
+    """不暴露 builder 状态、查询结果使用防御性副本的索引视图。"""
+
+    def __init__(self, source: LineageQueryIndex) -> None:
+        self._index = deepcopy(source)
+
+    @property
+    def is_built(self) -> bool:
+        return self._index.is_built
+
+    def get_table_by_full(self, full_name: str) -> dict | None:
+        return deepcopy(self._index.get_table_by_full(full_name))
+
+    def get_tables_by_short(self, short_name: str) -> list[dict]:
+        return deepcopy(self._index.get_tables_by_short(short_name))
+
+    def has_table(self, full_name: str) -> bool:
+        return self._index.has_table(full_name)
+
+    def search_procedures(self, keyword: str, limit: int = 50) -> list[dict]:
+        return deepcopy(self._index.search_procedures(keyword, limit))
+
+    def get_field_mappings_by_target(self, table: str, column: str) -> list[dict]:
+        return deepcopy(self._index.get_field_mappings_by_target(table, column))
+
+    def get_field_mappings_by_source(self, table: str, column: str) -> list[dict]:
+        return deepcopy(self._index.get_field_mappings_by_source(table, column))
+
+    def get_field_mappings_by_bare_pair(
+        self,
+        src_bare: str,
+        src_col: str,
+        tgt_bare: str,
+        tgt_col: str,
+    ) -> list[dict]:
+        return deepcopy(
+            self._index.get_field_mappings_by_bare_pair(src_bare, src_col, tgt_bare, tgt_col)
+        )
+
+    def get_all_field_mappings_for_nodes(
+        self,
+        nodes: set[str],
+        target_table: str = "",
+        target_field: str = "",
+    ) -> list[dict]:
+        return deepcopy(
+            self._index.get_all_field_mappings_for_nodes(nodes, target_table, target_field)
+        )
+
+    def get_upstream_lineages(self, table: str) -> list[dict]:
+        return deepcopy(self._index.get_upstream_lineages(table))
+
+    def get_downstream_lineages(self, table: str) -> list[dict]:
+        return deepcopy(self._index.get_downstream_lineages(table))
+
+    def resolve_table_name(self, table_name: str, adjacency_keys: set[str] | None = None) -> str:
+        return self._index.resolve_table_name(table_name, adjacency_keys)
+
+    @staticmethod
+    def node_in_set(table_name: str, nodes: set[str]) -> bool:
+        return LineageQueryIndex.node_in_set(table_name, nodes)

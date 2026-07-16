@@ -27,6 +27,25 @@ def test_search_tables_ranks_exact_short_name_before_contains_match(tmp_path: Pa
     assert all(isinstance(result, dict) for result in results)
 
 
+def test_repository_search_preserves_partial_schema_limit_and_no_match_contract():
+    repo = DataRepository()
+    exact_table = {
+        "full_name": "DWH.CUSTOMER",
+        "table_name": "CUSTOMER",
+        "columns": [],
+    }
+    archive_table = {
+        "full_name": "DWH.CUSTOMER_ARCHIVE",
+        "table_name": "CUSTOMER_ARCHIVE",
+        "columns": [],
+    }
+    repo.update({"tables": [archive_table, exact_table]})
+
+    assert repo.search_tables("CUSTOM", limit=1) == [exact_table]
+    assert repo.search_tables("DWH.CUSTOMER") == [exact_table, archive_table]
+    assert repo.search_tables("NO_MATCH") == []
+
+
 def test_parser_service_search_tables_delegates_to_repository(tmp_path: Path):
     output_dir = tmp_path / "output"
     output_dir.mkdir()
@@ -110,17 +129,44 @@ class _ParserWithRepositorySearch:
 
 
 class _NoopCache:
-    def build_index(self, tables, procedures):
+    pass
+
+
+def test_lineage_service_search_tables_uses_captured_snapshot():
+    from app.services.index_snapshot import FieldLineageTracingView, IndexSnapshot, ParserStateCapture
+
+    parser = _ParserWithRepositorySearch()
+    snapshot_data = {
+        "tables": [
+            {
+                "full_name": "RRP_MDL.CUSTOMER",
+                "table_name": "CUSTOMER",
+                "columns": [{"name": "ID"}, {"name": "NAME"}],
+            }
+        ],
+        "procedures": [],
+        "table_lineages": [],
+        "field_mappings": [],
+    }
+
+    class _Tracer:
         pass
 
+    snapshot = IndexSnapshot.build(
+        ParserStateCapture(1, snapshot_data, FieldLineageTracingView(_Tracer())),
+        publication_revision=1,
+    )
 
-def test_lineage_service_search_tables_uses_parser_repository_search_when_available():
-    parser = _ParserWithRepositorySearch()
-    service = LineageService(parser, _NoopCache())
+    class _Owner:
+        @staticmethod
+        def capture_snapshot():
+            return snapshot
+
+    service = LineageService(parser, _NoopCache(), _Owner())
 
     results = service.search_tables("customer", limit=10)
 
-    assert parser.search_calls == [("customer", 10)]
+    assert parser.search_calls == []
     assert results == [
         {
             "full_name": "RRP_MDL.CUSTOMER",
